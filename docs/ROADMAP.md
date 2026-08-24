@@ -8,18 +8,19 @@
 - Add a renderer benchmark/report mode that records estimated and measured costs.
 - Keep `step` and `bytechunk` as regression baselines while optimizing `yunroll`.
 
-## Mesh / OBJ pipeline
+## Mesh / asset pipeline
 
 Implemented foundation:
 
 - Wavefront OBJ parsing for vertices and polygon faces.
-- Named `objects/` presets with JSON metadata.
-- `import-obj`, `list-objects`, `inspect`, and `--object` workflow.
+- Named `objects/` presets with JSON metadata for OBJ and SVG assets.
+- `import-obj`, `import-svg`, `list-objects`, `inspect`, and `--object` workflow.
 - Y-up/Z-up conversion.
-- X/Y/Z spin-axis selection.
+- X/Y/Z spin-axis selection plus `recede` and tilted-plane `crawl` animation transforms.
 - Topology diagnostics.
 - Consistent winding repair for concave closed meshes.
-- Bundled `horse_head.obj` non-procedural reference object.
+- Bundled `horse_head.obj`, `sunflower_torus.obj`, and `space_horse.svg` reference assets.
+- SVG path/primitive flattening, contour simplification, optional wire extrusion, and SVG-colour -> C64-colour mapping.
 
 Next:
 
@@ -32,7 +33,7 @@ Next:
 
 ## Host UI / tooling
 
-- Optional graphical OBJ import/preview application.
+- Optional graphical OBJ/SVG import/preview application.
 - Interactive orientation and up-axis selection.
 - Detail/poly/vertex budget slider.
 - Preview projected hidden-line output for any sampled orientation.
@@ -42,10 +43,10 @@ Next:
 ## Intended workflow
 
 ```text
-Blender / modeller / generated mesh
-    -> Wavefront OBJ
-    -> c64-3d-toolkit import-obj
-    -> topology diagnostics / repair
+Blender / modeller / vector editor / generated asset
+    -> Wavefront OBJ / SVG
+    -> c64-3d-toolkit import-obj / import-svg
+    -> topology diagnostics / contour simplification
     -> simplify to a C64-friendly budget
     -> preview / cost estimate
     -> vector/hidden-line compile
@@ -57,6 +58,8 @@ The CLI remains first-class even if a GUI is added.
 
 ## Host-side asset workflow additions
 
-- Interactive/graphical OBJ preview and rotation inspection while retaining a first-class CLI workflow.
+- Interactive/graphical OBJ/SVG preview and animation inspection while retaining a first-class CLI workflow.
 - Topology-aware mesh simplification/decimation to a C64 vertex/edge/face and table-RAM budget.
 - Optional use of preserved OBJ/MTL material groups in host preview and future C64 style/export modes.
+- Richer C64 colour planning for vector assets beyond the current one-foreground-colour demo mode.
+- SVG clipping/mask/text-layout support where it can be made deterministic and C64-budget aware.

@@ -14,7 +14,7 @@ fi
 #   ./build.sh --generate-examples       -> compile reference PRGs into examples/
 #   ./build.sh doctor                    -> check 64tass/VICE availability
 #   ./build.sh inspect ...               -> direct CLI subcommand
-#   ./build.sh import-obj ...            -> direct CLI subcommand
+#   ./build.sh import-obj/import-svg ... -> direct CLI subcommand
 case "${1:-}" in
   run)
     shift
@@ -24,7 +24,7 @@ case "${1:-}" in
     shift
     exec python3 ./c643d.py generate-examples "$@"
     ;;
-  build|inspect|import-obj|generate-examples|doctor|list-shapes|list-objects)
+  build|inspect|import-obj|import-svg|generate-examples|doctor|list-shapes|list-objects)
     exec python3 ./c643d.py "$@"
     ;;
   *)

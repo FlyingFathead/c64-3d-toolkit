@@ -56,5 +56,23 @@
       "--renderer",
       "yunroll"
     ]
+  },
+  {
+    "name": "space_horse_spin",
+    "args": [
+      "--object",
+      "space_horse",
+      "--renderer",
+      "yunroll"
+    ]
+  },
+  {
+    "name": "space_horse_crawl",
+    "args": [
+      "--object",
+      "space_horse_crawl",
+      "--renderer",
+      "yunroll"
+    ]
   }
 ]

@@ -39,6 +39,7 @@
 ; -----------------------------------------------------------------------------
 
 FRAME_COUNT = 48
+SCREEN_COLOR = $10              ; high nibble=foreground, low nibble=background
 
 SCREEN0     = $0400
 BITMAP0     = $2000
@@ -114,8 +115,8 @@ start:
         and #$ef                    ; no multicolour
         sta $d016
 
-        ; White foreground / black background in every bitmap cell, all 3 banks.
-        lda #$10
+        ; Per-build foreground/background colour in every bitmap cell, all 3 banks.
+        lda #SCREEN_COLOR
         ldx #0
 init_screen_colours:
         sta $0400,x

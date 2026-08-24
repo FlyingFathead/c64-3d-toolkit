@@ -1,0 +1,19 @@
+{
+  "name": "SPACE HORSE CRAWL",
+  "file": "space_horse.svg",
+  "spin_axis": "y",
+  "rotate": [0.0, 0.0, 0.0],
+  "scale": 1.0,
+  "visibility": "surface",
+  "z_tolerance": 0.0012,
+  "color": "yellow",
+  "animation": "crawl",
+  "animation_tilt": 62.0,
+  "animation_travel": 105.0,
+  "animation_rise": 42.0,
+  "svg_tolerance": 20.0,
+  "svg_curve_step": 12.0,
+  "svg_depth": 0.0,
+  "svg_connector_stride": 8,
+  "notes": "Flat SPACE HORSE SVG on a tilted virtual plane, rising and receding toward a horizon in a crawl-like loop."
+}

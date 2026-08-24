@@ -17,6 +17,15 @@ class ObjectPreset:
     z_tolerance: float = 0.0008
     feature_angle: float = 40.0
     materials: tuple[str, ...] = ()
+    color: str = 'white'
+    animation: str = 'spin'
+    animation_tilt: float = 62.0
+    animation_travel: float = 120.0
+    animation_rise: float = 54.0
+    svg_tolerance: float = 3.0
+    svg_curve_step: float = 12.0
+    svg_depth: float = 5.0
+    svg_connector_stride: int = 4
 
 
 def slugify(value: str) -> str:
@@ -38,16 +47,26 @@ def load_object_preset(objects_dir: Path, name: str) -> ObjectPreset:
     data={}
     if meta_path.exists():
         data=json.loads(meta_path.read_text(encoding='utf-8'))
-    obj_name=data.get('file',f'{slug}.obj')
+    if 'file' in data:
+        obj_name=data['file']
+    elif (objects_dir/f'{slug}.obj').exists():
+        obj_name=f'{slug}.obj'
+    elif (objects_dir/f'{slug}.svg').exists():
+        obj_name=f'{slug}.svg'
+    else:
+        obj_name=f'{slug}.obj'
     obj_path=objects_dir/obj_name
     if not obj_path.exists():
-        raise FileNotFoundError(f'object preset {slug!r} points to missing OBJ: {obj_path}')
+        raise FileNotFoundError(f'object preset {slug!r} points to missing asset: {obj_path}')
     up=data.get('up_axis','y')
     spin=data.get('spin_axis','y')
     if up not in ('y','z'):
         raise ValueError(f'{meta_path}: up_axis must be y or z')
     if spin not in ('x','y','z'):
         raise ValueError(f'{meta_path}: spin_axis must be x, y or z')
+    animation=str(data.get('animation','spin'))
+    if animation not in ('spin','recede','crawl'):
+        raise ValueError(f'{meta_path}: animation must be spin, recede or crawl')
     rot=data.get('rotate',[0.0,0.0,0.0])
     if len(rot)!=3:
         raise ValueError(f'{meta_path}: rotate must contain three degree values')
@@ -64,6 +83,15 @@ def load_object_preset(objects_dir: Path, name: str) -> ObjectPreset:
         z_tolerance=float(data.get('z_tolerance',0.0008)),
         feature_angle=float(data.get('feature_angle',40.0)),
         materials=tuple(str(x) for x in data.get('materials',[])),
+        color=str(data.get('color','white')),
+        animation=animation,
+        animation_tilt=float(data.get('animation_tilt',62.0)),
+        animation_travel=float(data.get('animation_travel',120.0)),
+        animation_rise=float(data.get('animation_rise',54.0)),
+        svg_tolerance=float(data.get('svg_tolerance',3.0)),
+        svg_curve_step=float(data.get('svg_curve_step',12.0)),
+        svg_depth=float(data.get('svg_depth',5.0)),
+        svg_connector_stride=int(data.get('svg_connector_stride',4)),
     )
 
 
@@ -76,7 +104,7 @@ def list_object_presets(objects_dir: Path) -> list[ObjectPreset]:
         except (OSError,ValueError,json.JSONDecodeError):
             continue
         seen.add(slug); out.append(preset)
-    for p in sorted(objects_dir.glob('*.obj')):
+    for p in sorted(list(objects_dir.glob('*.obj'))+list(objects_dir.glob('*.svg'))):
         if p.stem.endswith('_fallback') or p.stem in seen:
             continue
         try: out.append(load_object_preset(objects_dir,p.stem))
@@ -157,6 +185,69 @@ def import_obj_asset(
         'visibility': 'surface',
         'z_tolerance': 0.0012,
         'feature_angle': 40.0,
+    }
+    meta.write_text(json.dumps(payload,indent=2)+"\n",encoding='utf-8')
+    return load_object_preset(objects_dir,slug)
+
+
+def import_svg_asset(
+    source: str | Path,
+    objects_dir: Path,
+    *,
+    slug: str | None = None,
+    display_name: str | None = None,
+    spin_axis: str = 'y',
+    rotate: tuple[float,float,float] = (0.0,0.0,0.0),
+    scale: float = 1.0,
+    color: str = 'auto',
+    animation: str = 'spin',
+    animation_tilt: float = 62.0,
+    animation_travel: float = 120.0,
+    animation_rise: float = 54.0,
+    svg_tolerance: float = 3.0,
+    svg_curve_step: float = 12.0,
+    svg_depth: float = 5.0,
+    svg_connector_stride: int = 4,
+    overwrite: bool = False,
+) -> ObjectPreset:
+    """Copy an SVG into objects/ and create a wire-extrusion preset."""
+    from .svgio import load_svg, c64_color_index, c64_color_name
+    source=Path(source)
+    if not source.exists():
+        raise FileNotFoundError(source)
+    if source.suffix.lower()!='.svg':
+        raise ValueError('import-svg accepts .svg files only')
+    if spin_axis not in ('x','y','z'):
+        raise ValueError('spin axis must be x, y or z')
+    if animation not in ('spin','recede','crawl'):
+        raise ValueError('animation must be spin, recede or crawl')
+    slug=slugify(slug or source.stem)
+    objects_dir.mkdir(parents=True,exist_ok=True)
+    dest=objects_dir/f'{slug}.svg'; meta=_metadata_path(objects_dir,slug)
+    if (dest.exists() or meta.exists()) and not overwrite:
+        raise FileExistsError(f'objects/{slug} already exists; pass --overwrite to replace it')
+    info=load_svg(source,display_name or slug.replace('_',' ').upper(),tolerance=svg_tolerance,curve_step=svg_curve_step,depth=svg_depth,connector_stride=svg_connector_stride)
+    chosen=info.c64_color if color=='auto' else c64_color_name(c64_color_index(color))
+    if source.resolve()!=dest.resolve():
+        shutil.copy2(source,dest)
+    payload={
+        'name': display_name or slug.replace('_',' ').upper(),
+        'file': dest.name,
+        'spin_axis': spin_axis,
+        'rotate': [float(x) for x in rotate],
+        'scale': float(scale),
+        'visibility': 'surface',
+        'z_tolerance': 0.0012,
+        'color': chosen,
+        'animation': animation,
+        'animation_tilt': float(animation_tilt),
+        'animation_travel': float(animation_travel),
+        'animation_rise': float(animation_rise),
+        'svg_tolerance': float(svg_tolerance),
+        'svg_curve_step': float(svg_curve_step),
+        'svg_depth': float(svg_depth),
+        'svg_connector_stride': int(svg_connector_stride),
+        'notes': f'SVG wire extrusion; source colour {info.source_color or "unknown"} mapped to C64 {chosen}.',
     }
     meta.write_text(json.dumps(payload,indent=2)+"\n",encoding='utf-8')
     return load_object_preset(objects_dir,slug)

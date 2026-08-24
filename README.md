@@ -2,7 +2,7 @@
 
 Host-assisted low-poly wireframe 3D compiler/runtime for a **stock Commodore 64**.
 
-The toolkit preprocesses 3D geometry on the host machine and generates 6510/6502 assembly data and runnable C64 `.prg` files. It includes procedural test meshes, OBJ import, several visibility modes, multiple renderers, and prebuilt example programs.
+The toolkit preprocesses 3D geometry on the host machine and generates 6510/6502 assembly data and runnable C64 `.prg` files. It includes procedural test meshes, OBJ and SVG import, several visibility modes, multiple animation transforms, multiple renderers, and prebuilt example programs.
 
 ## Requirements
 
@@ -42,6 +42,13 @@ or:
 
 ```bash
 ./build.sh --object sunflower_torus --run
+```
+
+The bundled SVG logo can be spun as a 3-D plane or sent away on a tilted crawl plane:
+
+```bash
+./build.sh --object space_horse --run
+./build.sh --object space_horse_crawl --run
 ```
 
 Build all included example `.prg` files:
@@ -97,6 +104,23 @@ Or compile a one-off OBJ without importing it:
 ./build.sh --obj ~/models/my_ship.obj --obj-up z --name MY_SHIP --run
 ```
 
+SVG artwork can be imported as wire geometry too. Curves are flattened and simplified on the host; `--svg-depth` optionally gives the contours a shallow Z extrusion:
+
+```bash
+./build.sh import-svg ~/art/logo.svg --as logo --animation spin
+./build.sh --object logo --run
+
+# one-off, shallow 3-D extrusion
+./build.sh --svg ~/art/logo.svg --svg-depth 4 --color yellow --run
+```
+
+Animation modes are `spin`, `recede`, and `crawl`. `recede` keeps the artwork front-facing while moving it away from the camera; `crawl` tilts it onto a virtual plane and moves it upward/away toward a horizon:
+
+```bash
+./build.sh --object space_horse --animation recede --run
+./build.sh --object space_horse --animation crawl --animation-tilt 62 --run
+```
+
 Renderer comparison:
 
 ```bash
@@ -138,7 +162,7 @@ The repository has an `examples/` manifest. Build all reference PRGs at once:
 ./build.sh generate-examples
 ```
 
-This currently produces `torus.prg`, `torus_dense.prg`, `cube.prg`, `sphere.prg`, `horse_head.prg`, and `sunflower_torus.prg`. Auxiliary labels/listings remain in `build/`; the runnable PRGs are copied to `examples/`.
+This currently produces `torus.prg`, `torus_dense.prg`, `cube.prg`, `sphere.prg`, `horse_head.prg`, `sunflower_torus.prg`, `space_horse_spin.prg`, and `space_horse_crawl.prg`. Auxiliary labels/listings remain in `build/`; the runnable PRGs are copied to `examples/`.
 
 ## Dependency checks
 
@@ -156,16 +180,16 @@ The reference torus now runs around **15-18 FPS** with `yunroll` on stock PAL C6
 
 The project grew out of the rotating-torus benchmark, a.k.a. **THE WORLD'S MOST DANGEROUS ROTATING DONUT**, and is now being generalized into a reusable mesh-to-C64 pipeline.
 
-The repository includes the actual `objects/horse_head.obj` low-poly model (64 vertices / 124 edges / 65 faces) and `objects/sunflower_torus.obj` + `.mtl` (76 vertices / 142 edges / 70 faces) as bundled non-procedural reference objects.
+The repository includes the actual `objects/horse_head.obj` low-poly model (64 vertices / 124 edges / 65 faces), `objects/sunflower_torus.obj` + `.mtl` (76 vertices / 142 edges / 70 faces), and the bundled `objects/space_horse.svg` vector-logo demo.
 
 ## What happens on the host vs. the C64?
 
 The host-side Python compiler performs expensive work that makes sense to precompute for a ~1 MHz target:
 
-- procedural mesh generation or Wavefront OBJ parsing
+- procedural mesh generation, Wavefront OBJ parsing, or SVG contour flattening/simplification
 - normalization and coordinate-system conversion
 - face-winding repair
-- sampled rotation orientations
+- sampled animation transforms (`spin`, `recede`, or tilted-plane `crawl`)
 - perspective projection
 - face visibility
 - host-side Z-buffer hidden-line clipping
@@ -192,6 +216,9 @@ objects/horse_head.json
 objects/sunflower_torus.obj
 objects/sunflower_torus.mtl
 objects/sunflower_torus.json
+objects/space_horse.svg
+objects/space_horse.json
+objects/space_horse_crawl.json
 ```
 
 For procedural shapes, use either the actual segmentation or an approximate target:
@@ -272,6 +299,48 @@ Texture/normal indices are currently ignored. Polygon faces are triangulated int
 
 The toolkit does **not yet contain a general mesh decimator**. Imported meshes should currently already be reasonably low-poly. Automatic simplification to a requested C64 face/edge budget is on the roadmap; it will be implemented as a real topology-aware stage rather than deleting random faces and pretending that is decimation.
 
+## SVG pipeline
+
+SVG artwork is treated as vector contour geometry rather than as a bitmap. The importer understands common SVG path commands and basic vector primitives, flattens Bezier/arc curves to line segments, simplifies them for the C64 budget, flips SVG Y-down coordinates into the toolkit's Y-up space, and stores the result as explicit wire edges. This avoids inventing filled triangles through concave glyphs or letter holes.
+
+Import and build:
+
+```bash
+./build.sh import-svg path/to/logo.svg --as logo
+./build.sh --object logo --run
+```
+
+Useful controls:
+
+```text
+--svg-tolerance N          contour simplification tolerance in source SVG units
+--svg-curve-step N         curve sampling step before simplification
+--svg-depth N              shallow wire extrusion depth; 0 keeps a flat plane
+--svg-connector-stride N   connect every Nth front/back vertex when extruded
+--color NAME|0..15         C64 foreground colour override
+--animation spin|recede|crawl
+--animation-tilt DEG       crawl-plane tilt
+--animation-travel N       distance travelled away from the camera
+--animation-rise N         upward travel for crawl mode
+```
+
+`import-svg` inspects SVG stroke/fill colours and maps the dominant artwork colour to the nearest C64 palette entry. The bundled SPACE HORSE asset uses `#FFE81F`, which maps to C64 yellow. The current hires renderer still uses one foreground/background colour pair for the generated demo, so this is object-level colour selection rather than per-vector multicolour rendering.
+
+The bundled examples are:
+
+```bash
+./build.sh --object space_horse --run        # Y-axis spinner
+./build.sh --object space_horse_crawl --run  # tilted plane -> horizon
+```
+
+`recede` is also available for the front-facing logo-moving-away effect:
+
+```bash
+./build.sh --object space_horse --animation recede --run
+```
+
+See [`docs/SVG_PIPELINE.md`](docs/SVG_PIPELINE.md) for the current parser/geometry details and limitations.
+
 ## Horse head
 
 The canonical included object is:
@@ -312,6 +381,14 @@ Initial pose can be changed with:
 
 ```bash
 --rotate-x DEG --rotate-y DEG --rotate-z DEG
+```
+
+The historical spinner is now one animation mode. Named presets may select another mode, and the CLI can override it:
+
+```bash
+--animation spin
+--animation recede
+--animation crawl --animation-tilt 62 --animation-travel 105 --animation-rise 42
 ```
 
 ## Renderers
@@ -356,6 +433,7 @@ c64-3d-toolkit/
 │   ├── mesh.py
 │   ├── shapes.py
 │   ├── objio.py
+│   ├── svgio.py
 │   ├── pipeline.py
 │   ├── emit.py
 │   └── font.py
@@ -365,13 +443,17 @@ c64-3d-toolkit/
 │   ├── horse_head.json
 │   ├── sunflower_torus.obj
 │   ├── sunflower_torus.mtl
-│   └── sunflower_torus.json
+│   ├── sunflower_torus.json
+│   ├── space_horse.svg
+│   ├── space_horse.json
+│   └── space_horse_crawl.json
 ├── generated/
 ├── build/
 ├── tests/
 └── docs/
     ├── ARCHITECTURE.md
     ├── OBJ_PIPELINE.md
+    ├── SVG_PIPELINE.md
     ├── REFERENCES.md
     └── ROADMAP.md
 ```
@@ -381,10 +463,10 @@ c64-3d-toolkit/
 The intended eventual workflow is:
 
 ```text
-Blender / modeller / generated mesh
+Blender / modeller / vector editor / generated asset
         |
         v
-Wavefront OBJ
+Wavefront OBJ / SVG
         |
         v
 import + inspect
@@ -409,7 +491,7 @@ A graphical host-side importer/previewer is planned, but the command-line path w
 
 ## Status
 
-Still WIP. The torus remains the performance/reference object; the horse head and sunflower are bundled arbitrary low-poly OBJ references. The next major mesh-pipeline feature is topology-aware simplification/decimation, while renderer work can continue independently.
+Still WIP. The torus remains the performance/reference object; horse head and sunflower exercise arbitrary low-poly OBJ input, while SPACE HORSE exercises SVG contour import, C64 colour mapping, and non-spin animation transforms. The next major mesh-pipeline feature remains topology-aware OBJ simplification/decimation, while SVG geometry/animation and renderer work can continue independently.
 
 ## Credits
 

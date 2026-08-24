@@ -1,5 +1,5 @@
 from __future__ import annotations
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Iterable
 import math
 
@@ -10,9 +10,14 @@ class Mesh:
     name: str
     vertices: list[Vec3]
     faces: list[tuple[int, ...]]
+    # Optional wire-only edges. OBJ/procedural meshes normally derive their
+    # edges from polygon faces. SVG artwork is fundamentally contour geometry,
+    # so keeping explicit edges lets it become a real 3-D wire object without
+    # inventing bogus filled faces or triangulating glyph holes.
+    line_edges: list[tuple[int, int]] = field(default_factory=list)
 
     def copy(self, *, name: str | None = None) -> "Mesh":
-        return Mesh(name or self.name, list(self.vertices), list(self.faces))
+        return Mesh(name or self.name, list(self.vertices), list(self.faces), list(self.line_edges))
 
     @property
     def edges(self) -> list[tuple[int, int]]:
@@ -26,6 +31,13 @@ class Mesh:
                 if e not in seen:
                     seen.add(e)
                     out.append(e)
+        for a,b in self.line_edges:
+            if a == b:
+                continue
+            e = (a,b) if a < b else (b,a)
+            if e not in seen:
+                seen.add(e)
+                out.append(e)
         return out
 
     def edge_faces(self) -> dict[tuple[int, int], list[int]]:
@@ -34,6 +46,12 @@ class Mesh:
             for a, b in zip(face, face[1:] + face[:1]):
                 e = (a, b) if a < b else (b, a)
                 out.setdefault(e, []).append(fi)
+        # Explicit wire edges deliberately have no owning surface. Hidden-line
+        # modes therefore leave them alone unless real polygon geometry covers
+        # them in the depth buffer.
+        for a,b in self.line_edges:
+            e=(a,b) if a < b else (b,a)
+            out.setdefault(e,[])
         return out
 
     def triangulated_faces(self) -> list[tuple[int, int, int, int]]:
@@ -143,7 +161,7 @@ def fix_winding_outward(mesh: Mesh) -> Mesh:
     """
     faces = [tuple(f) for f in mesh.faces if len(f) >= 3]
     if not faces:
-        return Mesh(mesh.name, list(mesh.vertices), [])
+        return Mesh(mesh.name, list(mesh.vertices), [], list(mesh.line_edges))
 
     # undirected edge -> [(face index, direction sign)]
     # sign +1 means low->high in that face, -1 means high->low.
@@ -196,7 +214,7 @@ def fix_winding_outward(mesh: Mesh) -> Mesh:
         oriented.append(tuple(reversed(face)) if flip[fi] else face)
 
     # Decide outward orientation once per connected component, never per face.
-    c0 = mesh_center(Mesh(mesh.name, list(mesh.vertices), oriented))
+    c0 = mesh_center(Mesh(mesh.name, list(mesh.vertices), oriented, list(mesh.line_edges)))
     for comp in components:
         comp_set=set(comp)
         closed=True
@@ -217,15 +235,15 @@ def fix_winding_outward(mesh: Mesh) -> Mesh:
             score=0.0
             for fi in comp:
                 f=oriented[fi]
-                score += dot(face_normal(Mesh(mesh.name, mesh.vertices, oriented), f),
-                             vsub(face_center(Mesh(mesh.name, mesh.vertices, oriented), f), c0))
+                score += dot(face_normal(Mesh(mesh.name, mesh.vertices, oriented, list(mesh.line_edges)), f),
+                             vsub(face_center(Mesh(mesh.name, mesh.vertices, oriented, list(mesh.line_edges)), f), c0))
             flip_component = score < 0.0
 
         if flip_component:
             for fi in comp:
                 oriented[fi] = tuple(reversed(oriented[fi]))
 
-    return Mesh(mesh.name, list(mesh.vertices), oriented)
+    return Mesh(mesh.name, list(mesh.vertices), oriented, list(mesh.line_edges))
 
 
 def normalize_mesh(mesh: Mesh, target_half_extent: float = 46.0) -> Mesh:
@@ -237,7 +255,7 @@ def normalize_mesh(mesh: Mesh, target_half_extent: float = 46.0) -> Mesh:
     h=max(hx,hy,hz,1e-9)
     s=target_half_extent/h
     verts=[((x-cx)*s,(y-cy)*s,(z-cz)*s) for x,y,z in mesh.vertices]
-    return Mesh(mesh.name, verts, list(mesh.faces))
+    return Mesh(mesh.name, verts, list(mesh.faces), list(mesh.line_edges))
 
 
 def rotate_xyz(p: Vec3, rx: float=0.0, ry: float=0.0, rz: float=0.0) -> Vec3:
@@ -252,7 +270,7 @@ def rotate_xyz(p: Vec3, rx: float=0.0, ry: float=0.0, rz: float=0.0) -> Vec3:
 
 
 def transform_mesh(mesh: Mesh, *, rx=0.0, ry=0.0, rz=0.0, scale=1.0) -> Mesh:
-    return Mesh(mesh.name, [vmul(rotate_xyz(p,rx,ry,rz),scale) for p in mesh.vertices], list(mesh.faces))
+    return Mesh(mesh.name, [vmul(rotate_xyz(p,rx,ry,rz),scale) for p in mesh.vertices], list(mesh.faces), list(mesh.line_edges))
 
 
 def mesh_diagnostics(mesh: Mesh) -> dict[str, int | dict[int,int]]:
@@ -262,6 +280,8 @@ def mesh_diagnostics(mesh: Mesh) -> dict[str, int | dict[int,int]]:
     isolated=set(range(len(mesh.vertices)))
     for face in mesh.faces:
         isolated.difference_update(face)
+    for a,b in mesh.line_edges:
+        isolated.discard(a); isolated.discard(b)
     face_sizes: dict[int,int]={}
     for face in mesh.faces:
         face_sizes[len(face)]=face_sizes.get(len(face),0)+1

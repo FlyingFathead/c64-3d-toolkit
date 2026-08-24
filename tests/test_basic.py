@@ -5,12 +5,13 @@ from tools.c643d.shapes import (
     choose_sphere_segments_by_vertices,
 )
 from tools.c643d.objio import load_obj
-from tools.c643d.assets import load_object_preset, import_obj_asset
+from tools.c643d.assets import load_object_preset, import_obj_asset, import_svg_asset
 from tools.c643d.mesh import (
     normalize_mesh,fix_winding_outward,transform_mesh,face_center,face_normal,dot,
     mesh_diagnostics,
 )
 from tools.c643d.pipeline import Camera,fit_scale,build_frames,classify_feature_edges,decode_record_points
+from tools.c643d.svgio import load_svg
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -135,7 +136,7 @@ class TestObjVisibilityAndMaterials(unittest.TestCase):
                     polycount=None,vertices=None,major_segments=10,minor_segments=5,
                     lat_segments=6,lon_segments=10,rotate_x=0.0,rotate_y=0.0,rotate_z=0.0,
                     scale=1.0,spin_axis=None,keep_winding=False,visibility='auto',z_tolerance=None)
-        m,label,axis,vis,ztol,feature_angle=build_mesh(a)
+        m,label,axis,vis,ztol,feature_angle,*_=build_mesh(a)
         cam=Camera(); s=fit_scale(m,36,cam,spin_axis=axis); m=transform_mesh(m,scale=s)
         frames,_=build_frames(m,36,cam,spin_axis=axis,visibility_mode=vis,z_tolerance=ztol,feature_angle=feature_angle)
         self.assertEqual(len(frames),36)
@@ -151,7 +152,7 @@ class TestCreaseAwareFeatures(unittest.TestCase):
                     polycount=None,vertices=None,major_segments=10,minor_segments=5,
                     lat_segments=6,lon_segments=10,rotate_x=0.0,rotate_y=0.0,rotate_z=0.0,
                     scale=1.0,spin_axis=None,keep_winding=False,visibility='auto',z_tolerance=None,feature_angle=None)
-        m,label,axis,vis,ztol,fa=build_mesh(a)
+        m,label,axis,vis,ztol,fa,*_=build_mesh(a)
         features,stats=classify_feature_edges(m,fa)
         # OBJ 1-based edges (4,10), (5,11), (2,8) are sharp structural
         # muzzle edges that the old surface_features pre-cull could drop.
@@ -170,7 +171,7 @@ class TestSegmentedTablePacking(unittest.TestCase):
                     polycount=None,vertices=None,major_segments=10,minor_segments=5,
                     lat_segments=6,lon_segments=10,rotate_x=0.0,rotate_y=0.0,rotate_z=0.0,
                     scale=1.0,spin_axis=None,keep_winding=False,visibility='auto',z_tolerance=None,feature_angle=None)
-        m,label,axis,vis,ztol,fa=build_mesh(a)
+        m,label,axis,vis,ztol,fa,*_=build_mesh(a)
         self.assertEqual(vis,'surface')
         cam=Camera(); scale=fit_scale(m,48,cam,spin_axis=axis); m=transform_mesh(m,scale=scale)
         frames,edges=build_frames(m,36,cam,spin_axis=axis,visibility_mode=vis,z_tolerance=ztol,feature_angle=fa)
@@ -188,7 +189,7 @@ class TestSegmentedTablePacking(unittest.TestCase):
                   lat_segments=6,lon_segments=10,rotate_x=0.0,rotate_y=0.0,rotate_z=0.0,
                   scale=1.0,spin_axis=None,keep_winding=False,z_tolerance=None,feature_angle=None)
         a=Namespace(**base,visibility='surface')
-        m,label,axis,vis,ztol,fa=build_mesh(a); cam=Camera(); scale=fit_scale(m,36,cam,spin_axis=axis); m=transform_mesh(m,scale=scale)
+        m,label,axis,vis,ztol,fa,*_=build_mesh(a); cam=Camera(); scale=fit_scale(m,36,cam,spin_axis=axis); m=transform_mesh(m,scale=scale)
         surf,_=build_frames(m,36,cam,spin_axis=axis,visibility_mode='surface',z_tolerance=ztol,feature_angle=fa)
         feat,_=build_frames(m,36,cam,spin_axis=axis,visibility_mode='surface_features',z_tolerance=ztol,feature_angle=40.0)
         # The old mode really did drop visible horse pixels; this regression
@@ -212,7 +213,7 @@ class TestVisibilityRegressionSemantics(unittest.TestCase):
                     lat_segments=6,lon_segments=10,rotate_x=0.0,rotate_y=0.0,rotate_z=0.0,
                     scale=1.0,spin_axis=None,keep_winding=False,visibility=visibility,
                     z_tolerance=None,feature_angle=None)
-        m,label,axis,vis,ztol,fa=build_mesh(a)
+        m,label,axis,vis,ztol,fa,*_=build_mesh(a)
         cam=Camera(); scale=fit_scale(m,48,cam,spin_axis=axis); m=transform_mesh(m,scale=scale)
         frames,_=build_frames(m,count,cam,spin_axis=axis,visibility_mode=vis,z_tolerance=ztol,feature_angle=fa)
         return frames
@@ -238,3 +239,52 @@ class TestGeneratedMemoryMap(unittest.TestCase):
             _,end=scan(ROOT/'c64'/name)
             self.assertLessEqual(end+HUD_MAX_BYTES,PTR_BASE,name)
         self.assertLessEqual(PTR_BASE+48*4,PTR_LIMIT)
+
+
+class TestSvgPipeline(unittest.TestCase):
+    def test_space_horse_svg_imports_and_maps_yellow(self):
+        info=load_svg(ROOT/'objects'/'space_horse.svg','SPACE HORSE',tolerance=20.0,curve_step=12.0,depth=0.0)
+        self.assertEqual(info.c64_color,'yellow')
+        self.assertEqual(info.contours,14)
+        self.assertGreaterEqual(len(info.mesh.edges),100)
+        self.assertEqual(len(info.mesh.faces),0)
+        self.assertEqual(mesh_diagnostics(info.mesh)['isolated_vertices'],0)
+
+    def test_space_horse_presets(self):
+        spin=load_object_preset(ROOT/'objects','space_horse')
+        crawl=load_object_preset(ROOT/'objects','space_horse_crawl')
+        self.assertEqual(spin.obj_path.name,'space_horse.svg')
+        self.assertEqual(spin.color,'yellow')
+        self.assertEqual(spin.animation,'spin')
+        self.assertEqual(crawl.animation,'crawl')
+        self.assertEqual(crawl.color,'yellow')
+
+    def test_import_svg_asset_roundtrip(self):
+        with tempfile.TemporaryDirectory() as td:
+            objects=Path(td)
+            p=import_svg_asset(ROOT/'objects'/'space_horse.svg',objects,slug='logo',svg_tolerance=20.0,svg_depth=0.0)
+            self.assertTrue((objects/'logo.svg').exists())
+            self.assertTrue((objects/'logo.json').exists())
+            self.assertEqual(p.color,'yellow')
+            self.assertEqual(p.obj_path.name,'logo.svg')
+
+    def test_crawl_animation_builds_frames(self):
+        info=load_svg(ROOT/'objects'/'space_horse.svg','SPACE HORSE',tolerance=40.0,curve_step=14.0,depth=0.0)
+        m=normalize_mesh(info.mesh,46.0); cam=Camera()
+        scale=fit_scale(m,8,cam,animation='crawl',animation_tilt=62.0,animation_travel=105.0,animation_rise=42.0)
+        m=transform_mesh(m,scale=scale)
+        frames,edges=build_frames(m,8,cam,animation='crawl',animation_tilt=62.0,animation_travel=105.0,animation_rise=42.0)
+        self.assertEqual(len(frames),8)
+        self.assertEqual(edges,len(m.edges))
+        self.assertTrue(all(f.records for f in frames))
+
+    def test_example_manifest_includes_svg_demos(self):
+        import json
+        names={x['name'] for x in json.loads((ROOT/'examples'/'examples.json').read_text())}
+        self.assertIn('space_horse_spin',names)
+        self.assertIn('space_horse_crawl',names)
+
+    def test_renderer_colour_is_patched_for_svg_demo(self):
+        from tools.c643d.cli import prepare_asm
+        asm=prepare_asm('yunroll',8,7).read_text()
+        self.assertIn('SCREEN_COLOR = $70',asm)

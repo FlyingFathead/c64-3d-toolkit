@@ -151,12 +151,47 @@ def _rotate_axis(p,a,axis='y'):
     raise ValueError(f'unknown spin axis: {axis}')
 
 
-def fit_scale(mesh:Mesh, frames:int, camera:Camera, margin:int=4, max_scale:float=1.4, spin_axis:str="y"):
+
+
+def _frame_transform(p, fi:int, frames:int, *, spin_axis:str='y', animation:str='spin', animation_tilt:float=62.0, animation_travel:float=120.0, animation_rise:float=54.0):
+    """Apply the host-side per-frame object transform.
+
+    spin    - historical 360-degree spinner.
+    recede  - Star-Wars-logo style front-facing move away from the camera.
+    crawl   - a tilted virtual plane that rises and recedes toward a horizon.
+    """
+    if animation=='spin':
+        a=2*math.pi*fi/frames
+        return _rotate_axis(p,a,spin_axis)
+    t=0.0 if frames<=1 else fi/(frames-1)
+    x,y,z=p
+    if animation=='recede':
+        return x,y,z+animation_travel*t
+    if animation=='crawl':
+        a=math.radians(animation_tilt)
+        x,y,z=_rotate_axis((x,y,z),a,'x')
+        # Start slightly low/near, then rise while travelling away. The finite
+        # precomputed sequence loops back to frame zero like the spinner.
+        y += animation_rise*(t-0.28)
+        z += animation_travel*t
+        return x,y,z
+    raise ValueError(f'unknown animation mode: {animation}')
+
+
+def _frame_rotate_vector(v, fi:int, frames:int, *, spin_axis:str='y', animation:str='spin', animation_tilt:float=62.0):
+    if animation=='spin':
+        return _rotate_axis(v,2*math.pi*fi/frames,spin_axis)
+    if animation=='crawl':
+        return _rotate_axis(v,math.radians(animation_tilt),'x')
+    if animation=='recede':
+        return v
+    raise ValueError(f'unknown animation mode: {animation}')
+
+def fit_scale(mesh:Mesh, frames:int, camera:Camera, margin:int=4, max_scale:float=1.4, spin_axis:str="y", animation:str='spin', animation_tilt:float=62.0, animation_travel:float=120.0, animation_rise:float=54.0):
     def ok(s):
         for fi in range(frames):
-            a=2*math.pi*fi/frames
             for p in mesh.vertices:
-                x,y,z0=_rotate_axis((p[0]*s,p[1]*s,p[2]*s),a,spin_axis); z=camera.distance+z0
+                x,y,z0=_frame_transform((p[0]*s,p[1]*s,p[2]*s),fi,frames,spin_axis=spin_axis,animation=animation,animation_tilt=animation_tilt,animation_travel=animation_travel,animation_rise=animation_rise); z=camera.distance+z0
                 if z<=1: return False
                 sx=camera.cx+camera.focal*x/z; sy=camera.cy-camera.focal*y/z
                 if sx<margin or sx>W-1-margin or sy<margin or sy>H-1-margin:return False
@@ -193,7 +228,7 @@ def classify_feature_edges(mesh:Mesh, feature_angle:float=40.0):
     return out, {'boundary':boundary,'nonmanifold':nonmanifold,'crease':crease,'features':sum(out.values()),'edges':len(out)}
 
 
-def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibility_mode:str="surface", z_tolerance:float=Z_TOL, feature_angle:float=40.0) -> tuple[list[FrameBuild],int]:
+def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibility_mode:str="surface", z_tolerance:float=Z_TOL, feature_angle:float=40.0, animation:str='spin', animation_tilt:float=62.0, animation_travel:float=120.0, animation_rise:float=54.0) -> tuple[list[FrameBuild],int]:
     if not 1<=frames<=255: raise ValueError('frames must be 1..255')
     # Precompute face geometry in object space.
     fcent=[face_center(mesh,f) for f in mesh.faces]
@@ -205,15 +240,14 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
         feature_edges,_feature_stats=classify_feature_edges(mesh,feature_angle)
     all_frames=[]
     for fi in range(frames):
-        angle=2*math.pi*fi/frames
         projected=[]
         for p0 in mesh.vertices:
-            x,y,z0=_rotate_axis(p0,angle,spin_axis); z=camera.distance+z0
+            x,y,z0=_frame_transform(p0,fi,frames,spin_axis=spin_axis,animation=animation,animation_tilt=animation_tilt,animation_travel=animation_travel,animation_rise=animation_rise); z=camera.distance+z0
             sx=camera.cx+camera.focal*x/z; sy=camera.cy-camera.focal*y/z
             projected.append((sx,sy,1.0/z))
         front=[]
         for c0,n0 in zip(fcent,fnorm):
-            px,py,pz0=_rotate_axis(c0,angle,spin_axis); nx,ny,nz=_rotate_axis(n0,angle,spin_axis); pz=camera.distance+pz0
+            px,py,pz0=_frame_transform(c0,fi,frames,spin_axis=spin_axis,animation=animation,animation_tilt=animation_tilt,animation_travel=animation_travel,animation_rise=animation_rise); nx,ny,nz=_frame_rotate_vector(n0,fi,frames,spin_axis=spin_axis,animation=animation,animation_tilt=animation_tilt); pz=camera.distance+pz0
             front.append((nx*px+ny*py+nz*pz)<0.0)
         zbuf=[0.0]*(W*H)
         zowner=[-1]*(W*H)

@@ -1,0 +1,20 @@
+{
+  "name": "SPACE HORSE",
+  "file": "space_horse.svg",
+  "spin_axis": "y",
+  "rotate": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "scale": 1.0,
+  "visibility": "surface",
+  "z_tolerance": 0.0012,
+  "color": "yellow",
+  "animation": "spin",
+  "svg_tolerance": 20.0,
+  "svg_curve_step": 12.0,
+  "svg_depth": 0.0,
+  "svg_connector_stride": 8,
+  "notes": "Bundled SPACE HORSE SVG demo. The yellow SVG stroke maps to C64 yellow; simplified contours become a planar wire object in 3-D space and spin around Y. Use --svg-depth on one-off SVG builds/imports to add a shallow wire extrusion."
+}
