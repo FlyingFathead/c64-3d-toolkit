@@ -24,6 +24,50 @@ Verify that the required tools are available with:
 ./build.sh doctor
 ```
 
+### Toolchain configuration and macOS/Windows paths
+
+The toolkit now has an optional local configuration file for tool paths and default arguments. Copy the example if `64tass` or `x64sc` are not directly in `PATH`, or if your installation needs custom command-line arguments:
+
+```bash
+cp config/c643d.ini.example config/c643d.ini
+```
+
+`config/c643d.ini` is gitignored. If it is absent, built-in defaults are used. Command-line options override the config. The default VICE arguments include `+VICIIfull`, so `--run` opens VICE windowed rather than inheriting a saved fullscreen setting.
+
+```ini
+[toolchain]
+tass = 64tass
+vice = x64sc
+tass_args =
+vice_args = +VICIIfull
+
+[macos]
+# tass = /opt/homebrew/bin/64tass
+# vice = /Applications/VICE.app
+
+[windows]
+# tass = C:\Tools\64tass\64tass.exe
+# vice = C:\Tools\VICE\bin\x64sc.exe
+```
+
+On macOS, the easiest command-line installation is typically:
+
+```bash
+brew install tass64 vice
+```
+
+Downloaded VICE macOS packages sometimes hide the usable CLI `x64sc` in a sibling `tools/` or `bin/` directory, or inside a `.app` bundle. The toolkit probes common layouts and also accepts a VICE distribution directory or `.app` path in addition to the exact executable path.
+
+Existing direct overrides still work:
+
+```bash
+./build.sh --shape torus --tass /path/to/64tass --vice /path/to/x64sc --run
+./build.sh --shape torus --vice-arg=+VICIIfull --run
+./build.sh --shape torus --no-vice-default-args --run
+```
+
+See [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md) for precedence, per-platform sections, `C643D_CONFIG`, `--config`/`--no-config`, and macOS bundle details.
+
 ## Quickstart
 
 Build and run one of the included procedural objects:
@@ -423,6 +467,8 @@ c64-3d-toolkit/
 ├── README.md
 ├── build.sh
 ├── c643d.py
+├── config/
+│   └── c643d.ini.example
 ├── c64/
 │   ├── renderer-step.asm
 │   ├── renderer-bytechunk.asm
@@ -434,6 +480,7 @@ c64-3d-toolkit/
 │   ├── shapes.py
 │   ├── objio.py
 │   ├── svgio.py
+│   ├── toolchain.py
 │   ├── pipeline.py
 │   ├── emit.py
 │   └── font.py
@@ -452,6 +499,7 @@ c64-3d-toolkit/
 ├── tests/
 └── docs/
     ├── ARCHITECTURE.md
+    ├── CONFIGURATION.md
     ├── OBJ_PIPELINE.md
     ├── SVG_PIPELINE.md
     ├── REFERENCES.md
@@ -491,7 +539,7 @@ A graphical host-side importer/previewer is planned, but the command-line path w
 
 ## Status
 
-Version 0.4.0 is an early public release. The torus remains the performance/reference object; horse head and sunflower exercise arbitrary low-poly OBJ input, while SPACE HORSE exercises SVG contour import, C64 colour mapping, and non-spin animation transforms. The next major mesh-pipeline feature remains topology-aware OBJ simplification/decimation, while SVG geometry/animation and renderer work can continue independently.
+Version 0.4.1 adds cross-platform toolchain configuration and executable discovery on top of the 0.4.0 OBJ/SVG pipeline. The torus remains the performance/reference object; horse head and sunflower exercise arbitrary low-poly OBJ input, while SPACE HORSE exercises SVG contour import, C64 colour mapping, and non-spin animation transforms. The next major mesh-pipeline feature remains topology-aware OBJ simplification/decimation, while SVG geometry/animation and renderer work can continue independently.
 
 ## Credits
 

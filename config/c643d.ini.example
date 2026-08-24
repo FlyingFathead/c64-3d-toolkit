@@ -1,0 +1,43 @@
+# c64-3d-toolkit local configuration
+#
+# Copy this file to config/c643d.ini and edit it for your machine.
+# config/c643d.ini is intentionally gitignored.
+#
+# Precedence:
+#   built-in defaults -> [toolchain] -> current OS section -> command line
+#
+# Executable values may be command names in PATH, full executable paths,
+# VICE distribution directories, or (on macOS) VICE .app bundle paths.
+
+[toolchain]
+tass = 64tass
+vice = x64sc
+
+# Extra arguments are shell-style whitespace-separated lists.
+tass_args =
+
+# VICE's '+' prefix DISABLES a boolean resource. This keeps development
+# runs windowed rather than inheriting a saved fullscreen preference.
+vice_args = +VICIIfull
+
+[linux]
+# Usually no overrides are needed if 64tass and x64sc are in PATH.
+# tass = /usr/bin/64tass
+# vice = /usr/local/bin/x64sc
+
+[macos]
+# Homebrew installs both tools into PATH:
+#   brew install tass64 vice
+#
+# If using a downloaded VICE bundle instead, either point at the actual
+# CLI binary or simply at the containing VICE.app/distribution directory.
+# Examples (actual package names/locations vary):
+# vice = /Applications/VICE.app
+# vice = /Applications/vice-arm64-gtk3-3.8/VICE.app
+# vice = ~/Downloads/vice-arm64-gtk3-3.8
+# tass = /opt/homebrew/bin/64tass
+
+[windows]
+# PATH names normally work. Full paths are also accepted.
+# tass = C:\Tools\64tass\64tass.exe
+# vice = C:\Tools\VICE\bin\x64sc.exe

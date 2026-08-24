@@ -288,3 +288,59 @@ class TestSvgPipeline(unittest.TestCase):
         from tools.c643d.cli import prepare_asm
         asm=prepare_asm('yunroll',8,7).read_text()
         self.assertIn('SCREEN_COLOR = $70',asm)
+
+class TestToolchainConfig(unittest.TestCase):
+    def test_builtin_defaults_keep_vice_windowed(self):
+        from tools.c643d.toolchain import load_toolchain_settings
+        with tempfile.TemporaryDirectory() as td:
+            cfg=load_toolchain_settings(Path(td)/'missing.ini',system='Linux')
+        self.assertEqual(cfg.tass,'64tass')
+        self.assertEqual(cfg.vice,'x64sc')
+        self.assertEqual(cfg.vice_args,('+VICIIfull',))
+        self.assertIsNone(cfg.config_path)
+
+    def test_platform_section_overrides_generic_toolchain(self):
+        from tools.c643d.toolchain import load_toolchain_settings
+        with tempfile.TemporaryDirectory() as td:
+            path=Path(td)/'c643d.ini'
+            path.write_text('''[toolchain]\ntass = generic-tass\nvice = generic-vice\nvice_args = +VICIIfull\n\n[macos]\ntass = /opt/homebrew/bin/64tass\nvice = /Applications/VICE.app\nvice_args = +VICIIfull -confirmexit\n''')
+            cfg=load_toolchain_settings(path,system='Darwin',require=True)
+        self.assertEqual(cfg.tass,'/opt/homebrew/bin/64tass')
+        self.assertEqual(cfg.vice,'/Applications/VICE.app')
+        self.assertEqual(cfg.vice_args,('+VICIIfull','-confirmexit'))
+        self.assertEqual(cfg.platform_key,'macos')
+
+    def test_explicit_executable_path_resolves(self):
+        import os
+        from tools.c643d.toolchain import resolve_executable
+        with tempfile.TemporaryDirectory() as td:
+            exe=Path(td)/'my-x64sc'
+            exe.write_text('#!/bin/sh\nexit 0\n')
+            exe.chmod(0o755)
+            self.assertEqual(Path(resolve_executable(str(exe),'vice')),exe.resolve())
+
+    def test_macos_x64sc_app_prefers_real_sibling_cli_binary(self):
+        from tools.c643d.toolchain import resolve_executable
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            wrapper=root/'x64sc.app'/'Contents'/'MacOS'/'x64sc'
+            real=root/'VICE.app'/'Contents'/'Resources'/'bin'/'x64sc'
+            wrapper.parent.mkdir(parents=True); real.parent.mkdir(parents=True)
+            wrapper.write_text('#!/bin/sh\nexit 0\n'); wrapper.chmod(0o755)
+            real.write_text('#!/bin/sh\nexit 0\n'); real.chmod(0o755)
+            self.assertEqual(Path(resolve_executable(str(root/'x64sc.app'),'vice')),real.resolve())
+
+    def test_macos_distribution_directory_finds_tools_launcher(self):
+        from tools.c643d.toolchain import resolve_executable
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)/'vice-arm64-gtk3-3.10'
+            launcher=root/'tools'/'x64sc'
+            launcher.parent.mkdir(parents=True)
+            launcher.write_text('#!/bin/sh\nexit 0\n')
+            launcher.chmod(0o755)
+            self.assertEqual(Path(resolve_executable(str(root),'vice')),launcher.resolve())
+
+    def test_tool_command_places_default_args_before_prg(self):
+        from tools.c643d.toolchain import command
+        self.assertEqual(command('/usr/bin/x64sc',['+VICIIfull'],['demo.prg']),
+                         ['/usr/bin/x64sc','+VICIIfull','demo.prg'])

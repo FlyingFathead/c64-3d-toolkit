@@ -12,41 +12,54 @@ from .svgio import load_svg, c64_color_index, c64_color_name
 from .assets import load_object_preset, list_object_presets, import_obj_asset, import_svg_asset
 from .pipeline import Camera, fit_scale, build_frames, classify_feature_edges
 from .emit import emit_tables, emit_hud
+from .toolchain import (
+    command as tool_command, config_request, load_toolchain_settings,
+    resolve_executable,
+)
 
 ROOT=Path(__file__).resolve().parents[2]
 OBJECTS=ROOT/'objects'; GENERATED=ROOT/'generated'; BUILD=ROOT/'build'; C64=ROOT/'c64'; EXAMPLES=ROOT/'examples'
 RENDERERS={'step':'renderer-step.asm','bytechunk':'renderer-bytechunk.asm','yunroll':'renderer-yunroll.asm'}
 
 
-def preflight(*, tass_name='64tass', vice_name='x64sc', need_assemble=True, need_run=False, verbose=True):
-    tass=shutil.which(tass_name)
-    vice=shutil.which(vice_name)
+def preflight(*, tass_name='64tass', vice_name='x64sc', tass_args=(), vice_args=(), need_assemble=True, need_run=False, verbose=True):
+    tass=resolve_executable(tass_name,'tass')
+    vice=resolve_executable(vice_name,'vice')
     ok=True
     if need_assemble and not tass:
-        print(f'error: 64tass not found as {tass_name!r}; install 64tass or pass --tass PATH.', file=sys.stderr)
+        print(f'error: 64tass not found as {tass_name!r}; install 64tass, configure config/c643d.ini, or pass --tass PATH.', file=sys.stderr)
         ok=False
     elif verbose and tass:
         print(f'preflight: 64tass = {tass}')
+        if tass_args: print(f'preflight: 64tass args = {" ".join(tass_args)}')
     if need_run and not vice:
-        print(f'error: VICE C64 emulator not found as {vice_name!r}; install VICE or pass --vice PATH.', file=sys.stderr)
+        print(f'error: VICE C64 emulator not found as {vice_name!r}; install VICE, configure config/c643d.ini, or pass --vice PATH.', file=sys.stderr)
+        if sys.platform=='darwin':
+            print('hint: macOS VICE packages may keep x64sc inside VICE.app/Contents/Resources/bin/ or a top-level bin/ directory.', file=sys.stderr)
         ok=False
     elif not vice and verbose:
         print(f'warning: VICE C64 emulator {vice_name!r} not found; PRG build is still available, but --run will fail.', file=sys.stderr)
+        if sys.platform=='darwin':
+            print('hint: macOS users can use Homebrew (brew install vice) or set vice=... in config/c643d.ini.', file=sys.stderr)
     elif verbose and vice:
         print(f'preflight: VICE = {vice}')
+        if vice_args: print(f'preflight: VICE args = {" ".join(vice_args)}')
     return ok,tass,vice
 
 
 def cmd_doctor(a):
-    ok,_,_=preflight(tass_name=a.tass,vice_name=a.vice,need_assemble=True,need_run=False,verbose=True)
+    ok,_,_=preflight(tass_name=a.tass,vice_name=a.vice,tass_args=a.tass_args,vice_args=a.vice_args,need_assemble=True,need_run=False,verbose=True)
     print(f'python:    {sys.executable} ({sys.version.split()[0]})')
+    print(f'platform:  {getattr(a,"_tool_platform",sys.platform)}')
+    cfg=getattr(a,'_tool_config_path',None)
+    print(f'config:    {cfg if cfg else "built-in defaults (no config/c643d.ini found)"}')
     print(f'objects:   {OBJECTS}')
     print(f'examples:  {EXAMPLES}')
     return 0 if ok else 2
 
 
 def cmd_generate_examples(a):
-    ok,tass,_=preflight(tass_name=a.tass,vice_name=a.vice,need_assemble=True,need_run=False,verbose=True)
+    ok,tass,_=preflight(tass_name=a.tass,vice_name=a.vice,tass_args=a.tass_args,vice_args=a.vice_args,need_assemble=True,need_run=False,verbose=True)
     if not ok:
         return 2
     manifest=EXAMPLES/'examples.json'
@@ -56,6 +69,12 @@ def cmd_generate_examples(a):
     for spec in specs:
         name=spec['name']; args=list(spec['args'])
         cmd=[sys.executable,str(ROOT/'c643d.py'),'build',*args,'--output',name,'--tass',a.tass,'--vice',a.vice]
+        for extra in a.tass_args: cmd.append(f'--tass-arg={extra}')
+        for extra in a.vice_args: cmd.append(f'--vice-arg={extra}')
+        if getattr(a,'no_tass_default_args',False): cmd.append('--no-tass-default-args')
+        if getattr(a,'no_vice_default_args',False): cmd.append('--no-vice-default-args')
+        if getattr(a,'_config_disabled',False): cmd.append('--no-config')
+        elif getattr(a,'_tool_config_path',None): cmd.extend(['--config',str(a._tool_config_path)])
         print('\n==',name,'==')
         print('+',' '.join(cmd))
         subprocess.run(cmd,cwd=ROOT,check=True)
@@ -193,7 +212,7 @@ def print_stats(mesh:Mesh,label:str,renderer:str,scale:float,stats:dict,hud:str,
 
 
 def cmd_build(a):
-    ok,tass_found,vice_found=preflight(tass_name=a.tass,vice_name=a.vice,need_assemble=not a.no_assemble,need_run=a.run,verbose=True)
+    ok,tass_found,vice_found=preflight(tass_name=a.tass,vice_name=a.vice,tass_args=a.tass_args,vice_args=a.vice_args,need_assemble=not a.no_assemble,need_run=a.run,verbose=True)
     if not ok: return 2
     GENERATED.mkdir(exist_ok=True); BUILD.mkdir(exist_ok=True); OBJECTS.mkdir(exist_ok=True)
     mesh,label,spin_axis,visibility,z_tolerance,feature_angle,color_name,animation,anim_tilt,anim_travel,anim_rise=build_mesh(a)
@@ -231,13 +250,13 @@ def cmd_build(a):
     if a.no_assemble:
         print(f'generated assembler: {asm}')
         return 0
-    tass=tass_found or shutil.which(a.tass)
-    cmd=[tass,'--cbm-prg','--vice-labels','-l',str(lbl),'-L',str(lst),'-o',str(prg),str(asm)]
+    tass=tass_found or resolve_executable(a.tass,'tass')
+    cmd=tool_command(tass,a.tass_args,['--cbm-prg','--vice-labels','-l',str(lbl),'-L',str(lst),'-o',str(prg),str(asm)])
     print('+',' '.join(cmd)); subprocess.run(cmd,cwd=ROOT,check=True)
     print(f'built {prg.relative_to(ROOT)}')
     if a.run:
-        vice=vice_found or shutil.which(a.vice)
-        subprocess.run([vice,str(prg)],cwd=ROOT,check=False)
+        vice=vice_found or resolve_executable(a.vice,'vice')
+        subprocess.run(tool_command(vice,a.vice_args,[str(prg)]),cwd=ROOT,check=False)
     return 0
 
 
@@ -309,7 +328,22 @@ def cmd_list_objects():
     return 0
 
 
-def make_parser():
+def _add_config_args(q):
+    q.add_argument('--config',help='toolchain config file (default: config/c643d.ini; env: C643D_CONFIG)')
+    q.add_argument('--no-config',action='store_true',help='ignore config files and use built-in/CLI toolchain settings')
+
+
+def _add_toolchain_args(q,settings):
+    _add_config_args(q)
+    q.add_argument('--tass',default=settings.tass,help='64tass executable name, path, or containing directory')
+    q.add_argument('--vice',default=settings.vice,help='x64sc executable name/path, VICE directory, or macOS .app bundle')
+    q.add_argument('--tass-arg',dest='tass_args',action='append',default=None,metavar='ARG',help='64tass argument; repeatable; when used, replaces configured default args')
+    q.add_argument('--vice-arg',dest='vice_args',action='append',default=None,metavar='ARG',help='VICE argument; repeatable; when used, replaces configured default args')
+    q.add_argument('--no-tass-default-args',action='store_true',help='discard configured/built-in 64tass default arguments for this invocation')
+    q.add_argument('--no-vice-default-args',action='store_true',help='discard configured/built-in VICE default arguments for this invocation')
+
+
+def make_parser(settings):
     p=argparse.ArgumentParser(prog='c643d',description='C64 3D wireframe compiler/toolkit')
     p.add_argument('--version',action='version',version=__version__)
     sub=p.add_subparsers(dest='command')
@@ -355,8 +389,7 @@ def make_parser():
     b.add_argument('--no-auto-fit',action='store_true')
     b.add_argument('--output',help='output basename')
     b.add_argument('--output-dir',help='directory for PRG/LBL/LST outputs (default: build/)')
-    b.add_argument('--tass',default='64tass')
-    b.add_argument('--vice',default='x64sc')
+    _add_toolchain_args(b,settings)
     b.add_argument('--no-assemble',action='store_true')
     b.add_argument('--run',action='store_true')
     i=sub.add_parser('inspect',help='report mesh topology/diagnostics'); common(i)
@@ -389,16 +422,23 @@ def make_parser():
     isvg.add_argument('--svg-connector-stride',type=int,default=4)
     isvg.add_argument('--overwrite',action='store_true')
     ge=sub.add_parser('generate-examples',help='compile bundled reference PRGs into examples/')
-    ge.add_argument('--tass',default='64tass'); ge.add_argument('--vice',default='x64sc')
+    _add_toolchain_args(ge,settings)
     doc=sub.add_parser('doctor',help='check local 64tass/VICE toolchain availability')
-    doc.add_argument('--tass',default='64tass'); doc.add_argument('--vice',default='x64sc')
+    _add_toolchain_args(doc,settings)
     sub.add_parser('list-shapes',help='list procedural/built-in shapes')
     sub.add_parser('list-objects',help='list imported OBJ/SVG presets in objects/')
     return p
 
 
 def main(argv=None):
-    p=make_parser(); argv=list(sys.argv[1:] if argv is None else argv)
+    argv=list(sys.argv[1:] if argv is None else argv)
+    config_path,config_explicit,config_disabled=config_request(argv,ROOT)
+    try:
+        settings=load_toolchain_settings(config_path,require=config_explicit and not config_disabled)
+    except (OSError,ValueError) as e:
+        print(f'error: could not load toolchain config: {e}',file=sys.stderr)
+        return 2
+    p=make_parser(settings)
     if not argv:
         argv=['build']
     elif argv[0]=='--generate-examples':
@@ -406,6 +446,13 @@ def main(argv=None):
     elif argv[0].startswith('-') and argv[0] not in ('-h','--help','--version'):
         argv=['build']+argv
     a=p.parse_args(argv)
+    if hasattr(a,'tass_args') and a.tass_args is None:
+        a.tass_args=[] if getattr(a,'no_tass_default_args',False) else list(settings.tass_args)
+    if hasattr(a,'vice_args') and a.vice_args is None:
+        a.vice_args=[] if getattr(a,'no_vice_default_args',False) else list(settings.vice_args)
+    a._tool_config_path=settings.config_path
+    a._tool_platform=settings.platform_key
+    a._config_disabled=config_disabled
     if a.command=='list-shapes':
         print('torus       procedural; --major-segments/--minor-segments, --polycount or --vertices')
         print('cube        built-in 8-vertex cube')
