@@ -13,7 +13,7 @@
 - Fixed intermittent horse muzzle/snout line loss: the bundled horse now defaults to full `surface` Z-buffer visibility, so unreliable face normals on its open/non-manifold topology cannot pre-cull legitimate edges.
 - Kept `surface_features` as an optional crease-aware mode with `--feature-angle`; boundary, non-manifold and sharp crease edges are preserved before Z testing.
 - Added segmented generated-line packing: whole orientation blocks can spill into otherwise-unused RAM below bitmap #2, allowing the full 64-vertex horse to keep 36 sampled orientations in `surface` mode.
-- Moved generated frame pointer tables into the safe `$1500-$16ff` gap.
+- Moved generated frame pointer tables to `$1500-$16ff`; this later proved unsafe for long generated HUD strings and was corrected in 0.3.3.
 - Build diagnostics now print boundary/non-manifold topology counts when present.
 - Added regression tests for horse full-surface visibility, crease edges, and segmented table packing.
 
@@ -78,10 +78,3 @@
 - Added generated lower-left topology HUD plus lower-right FPS display.
 - Added automatic reduction of orientation-table count when a higher-detail mesh would exceed the current C64 table RAM layout.
 - Added source-level assembler sanity checks for relative-branch range and the $1700 LUT boundary before invoking 64tass.
-
-## 0.3.2-wip
-- Horse preset now uses full `surface` Z-buffer visibility; this fixes muzzle/snout lines lost by face-normal pre-culling on the open/non-manifold reference OBJ.
-- Generated frame pointer tables moved to the safe `$1500-$16ff` gap.
-- Line-record emitter can spill whole orientation blocks into unused RAM between clear data and bitmap #2 (`$xxxx-$5fff`).
-- This lets the full 64-vertex horse retain 36 sampled orientations in `surface` mode instead of dropping to 28.
-- Added regressions for full-surface horse visibility and segmented table packing.
