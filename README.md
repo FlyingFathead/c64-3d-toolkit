@@ -413,4 +413,4 @@ Still WIP. The torus remains the performance/reference object; the horse head an
 
 ## Credits
 
-By [FlyingFathead](https://github.com/FlyingFathead) with ChaosWhisperer lurking somewhere in the machinery.
+By [FlyingFathead](https://github.com/FlyingFathead), _with ChaosWhisperer lurking somewhere in the machinery._
