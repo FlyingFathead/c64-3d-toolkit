@@ -1,24 +1,50 @@
-# c64-3d-toolkit (WIP)
+# c64-3d-toolkit
 
 Host-assisted low-poly wireframe 3D compiler/runtime for a **stock Commodore 64**.
 
-Planned repository: `https://github.com/FlyingFathead/c64-3d-toolkit`
+The toolkit preprocesses 3D geometry on the host machine and generates 6510/6502 assembly data and runnable C64 `.prg` files. It includes procedural test meshes, OBJ import, several visibility modes, multiple renderers, and prebuilt example programs.
 
-## Quickstart
+## Requirements
 
-Requirements:
+Requires:
+
+* [VICE](https://vice-emu.sourceforge.io/) — Commodore 64 emulator; the toolkit uses `x64sc` by default.
+* [64tass](https://tass64.sourceforge.net/) — 6502/6510 cross-assembler.
+* Python 3.
+
+On Debian/Ubuntu and derivatives, VICE and 64tass can normally be installed with:
 
 ```bash
-sudo apt install 64tass vice
+sudo apt install vice 64tass
 ```
 
-Check the local toolchain:
+Verify that the required tools are available with:
 
 ```bash
 ./build.sh doctor
 ```
 
-Compile all bundled example PRGs into `examples/`:
+## Quickstart
+
+Build and run one of the included procedural objects:
+
+```bash
+./build.sh --shape torus --run
+```
+
+Build and run an imported OBJ preset:
+
+```bash
+./build.sh --object horse_head --run
+```
+
+or:
+
+```bash
+./build.sh --object sunflower_torus --run
+```
+
+Build all included example `.prg` files:
 
 ```bash
 ./build.sh --generate-examples
@@ -384,3 +410,7 @@ A graphical host-side importer/previewer is planned, but the command-line path w
 ## Status
 
 Still WIP. The torus remains the performance/reference object; the horse head and sunflower are bundled arbitrary low-poly OBJ references. The next major mesh-pipeline feature is topology-aware simplification/decimation, while renderer work can continue independently.
+
+## Credits
+
+By [FlyingFathead](https://github.com/FlyingFathead)) with ChaosWhisperer lurking somewhere in the machinery.
