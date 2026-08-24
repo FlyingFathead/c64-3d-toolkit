@@ -491,7 +491,7 @@ A graphical host-side importer/previewer is planned, but the command-line path w
 
 ## Status
 
-Still WIP. The torus remains the performance/reference object; horse head and sunflower exercise arbitrary low-poly OBJ input, while SPACE HORSE exercises SVG contour import, C64 colour mapping, and non-spin animation transforms. The next major mesh-pipeline feature remains topology-aware OBJ simplification/decimation, while SVG geometry/animation and renderer work can continue independently.
+Version 0.4.0 is an early public release. The torus remains the performance/reference object; horse head and sunflower exercise arbitrary low-poly OBJ input, while SPACE HORSE exercises SVG contour import, C64 colour mapping, and non-spin animation transforms. The next major mesh-pipeline feature remains topology-aware OBJ simplification/decimation, while SVG geometry/animation and renderer work can continue independently.
 
 ## Credits
 

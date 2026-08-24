@@ -6,3 +6,5 @@ build/*.lst
 generated/*.inc
 
 build/main.asm
+
+build/*.zip

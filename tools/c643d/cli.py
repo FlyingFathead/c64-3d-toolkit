@@ -310,7 +310,7 @@ def cmd_list_objects():
 
 
 def make_parser():
-    p=argparse.ArgumentParser(prog='c643d',description='C64 3D wireframe compiler/toolkit (WIP)')
+    p=argparse.ArgumentParser(prog='c643d',description='C64 3D wireframe compiler/toolkit')
     p.add_argument('--version',action='version',version=__version__)
     sub=p.add_subparsers(dest='command')
     def common(q):
