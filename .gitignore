@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+build/*.prg
+build/*.lbl
+build/*.lst
+generated/*.inc
+
+build/main.asm

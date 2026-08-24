@@ -1,0 +1,18 @@
+{
+  "name": "SUNFLOWER TORUS",
+  "file": "sunflower_torus.obj",
+  "materials": [
+    "sunflower_torus.mtl"
+  ],
+  "up_axis": "z",
+  "spin_axis": "y",
+  "rotate": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "scale": 1.0,
+  "visibility": "surface_features",
+  "z_tolerance": 0.0012,
+  "notes": "Bundled low-poly sunflower OBJ with a torus-shaped flower centre. MTL is preserved for host-side interchange/future preview; the current C64 wireframe renderer ignores materials. The preset uses surface_features visibility so open petal/stem feature edges survive while ordinary back-facing manifold edges are suppressed."
+}

@@ -1,0 +1,60 @@
+[
+  {
+    "name": "torus",
+    "args": [
+      "--shape",
+      "torus",
+      "--renderer",
+      "yunroll"
+    ]
+  },
+  {
+    "name": "torus_dense",
+    "args": [
+      "--shape",
+      "torus",
+      "--renderer",
+      "yunroll",
+      "--vertices",
+      "72"
+    ]
+  },
+  {
+    "name": "cube",
+    "args": [
+      "--shape",
+      "cube",
+      "--renderer",
+      "yunroll"
+    ]
+  },
+  {
+    "name": "sphere",
+    "args": [
+      "--shape",
+      "sphere",
+      "--renderer",
+      "yunroll",
+      "--polycount",
+      "48"
+    ]
+  },
+  {
+    "name": "horse_head",
+    "args": [
+      "--object",
+      "horse_head",
+      "--renderer",
+      "yunroll"
+    ]
+  },
+  {
+    "name": "sunflower_torus",
+    "args": [
+      "--object",
+      "sunflower_torus",
+      "--renderer",
+      "yunroll"
+    ]
+  }
+]

@@ -1,0 +1,13 @@
+# Materials for sunflower_torus.obj
+
+newmtl center
+Kd 0.42 0.23 0.06
+
+newmtl petals
+Kd 0.95 0.72 0.04
+
+newmtl stem
+Kd 0.16 0.45 0.10
+
+newmtl leaves
+Kd 0.12 0.38 0.08

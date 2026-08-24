@@ -1,0 +1,15 @@
+{
+  "name": "HORSE HEAD",
+  "file": "horse_head.obj",
+  "up_axis": "z",
+  "spin_axis": "y",
+  "rotate": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "scale": 1.0,
+  "notes": "Canonical low-poly horse head included with the project. Source OBJ uses +Z as up; the toolkit converts it to Y-up before compilation. The mesh is open/non-manifold in places, so the preset deliberately uses full surface Z-buffer visibility rather than face-normal pre-culling. This preserves muzzle/snout edges whose adjacent face normals are unreliable on this topology.",
+  "visibility": "surface",
+  "z_tolerance": 0.0012
+}
