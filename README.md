@@ -1,3 +1,9 @@
+<p align="center">
+  <img src="assets/c64-3d-toolkit_banner.png"
+       alt="c64-3d-toolkit — Build modern 3D. Fit it in 64K."
+       width="100%">
+</p>
+
 # c64-3d-toolkit
 
 Host-assisted low-poly wireframe 3D compiler/runtime for a **stock Commodore 64**.
