@@ -29,11 +29,14 @@ vice_args = +VICIIfull
 # Homebrew installs both tools into PATH:
 #   brew install tass64 vice
 #
-# If using a downloaded VICE bundle instead, either point at the actual
-# CLI binary or simply at the containing VICE.app/distribution directory.
-# Examples (actual package names/locations vary):
-# vice = /Applications/VICE.app
-# vice = /Applications/vice-arm64-gtk3-3.8/VICE.app
+# If using a VICE package downloaded from the VICE site and moved into
+# /Applications, prefer its actual CLI binary under bin/. The package name
+# varies with architecture/frontend/version (ARM64/Intel, GTK3/SDL2, etc.).
+# Example:
+# vice = /Applications/vice-arm64-gtk3-3.8/bin/x64sc
+#
+# The containing distribution directory is also accepted when convenient:
+# vice = /Applications/vice-arm64-gtk3-3.8
 # vice = ~/Downloads/vice-arm64-gtk3-3.8
 # tass = /opt/homebrew/bin/64tass
 

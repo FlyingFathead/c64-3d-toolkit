@@ -330,6 +330,17 @@ class TestToolchainConfig(unittest.TestCase):
             real.write_text('#!/bin/sh\nexit 0\n'); real.chmod(0o755)
             self.assertEqual(Path(resolve_executable(str(root/'x64sc.app'),'vice')),real.resolve())
 
+    def test_macos_downloaded_distribution_prefers_bin_x64sc(self):
+        from tools.c643d.toolchain import resolve_executable
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)/'vice-arm64-gtk3-3.8'
+            cli=root/'bin'/'x64sc'
+            launcher=root/'tools'/'x64sc'
+            cli.parent.mkdir(parents=True); launcher.parent.mkdir(parents=True)
+            cli.write_text('#!/bin/sh\nexit 0\n'); cli.chmod(0o755)
+            launcher.write_text('#!/bin/sh\nexit 0\n'); launcher.chmod(0o755)
+            self.assertEqual(Path(resolve_executable(str(root),'vice')),cli.resolve())
+
     def test_macos_distribution_directory_finds_tools_launcher(self):
         from tools.c643d.toolchain import resolve_executable
         with tempfile.TemporaryDirectory() as td:

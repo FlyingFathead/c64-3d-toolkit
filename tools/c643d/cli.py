@@ -35,12 +35,12 @@ def preflight(*, tass_name='64tass', vice_name='x64sc', tass_args=(), vice_args=
     if need_run and not vice:
         print(f'error: VICE C64 emulator not found as {vice_name!r}; install VICE, configure config/c643d.ini, or pass --vice PATH.', file=sys.stderr)
         if sys.platform=='darwin':
-            print('hint: macOS VICE packages may keep x64sc inside VICE.app/Contents/Resources/bin/ or a top-level bin/ directory.', file=sys.stderr)
+            print('hint: downloaded macOS VICE packages commonly use a path such as /Applications/vice-arm64-gtk3-3.8/bin/x64sc; use the directory name of your installed package.', file=sys.stderr)
         ok=False
     elif not vice and verbose:
         print(f'warning: VICE C64 emulator {vice_name!r} not found; PRG build is still available, but --run will fail.', file=sys.stderr)
         if sys.platform=='darwin':
-            print('hint: macOS users can use Homebrew (brew install vice) or set vice=... in config/c643d.ini.', file=sys.stderr)
+            print('hint: macOS users can use Homebrew (brew install vice) or set vice to the installed package bin/x64sc path in config/c643d.ini.', file=sys.stderr)
     elif verbose and vice:
         print(f'preflight: VICE = {vice}')
         if vice_args: print(f'preflight: VICE args = {" ".join(vice_args)}')

@@ -49,7 +49,7 @@ vice_args = +VICIIfull
 
 [macos]
 # tass = /opt/homebrew/bin/64tass
-# vice = /Applications/VICE.app
+# vice = /Applications/vice-arm64-gtk3-3.8/bin/x64sc
 
 [windows]
 # tass = C:\Tools\64tass\64tass.exe
@@ -62,7 +62,7 @@ On macOS, the easiest command-line installation is typically:
 brew install tass64 vice
 ```
 
-Downloaded VICE macOS packages sometimes hide the usable CLI `x64sc` in a sibling `tools/` or `bin/` directory, or inside a `.app` bundle. The toolkit probes common layouts and also accepts a VICE distribution directory or `.app` path in addition to the exact executable path.
+For a VICE package downloaded from the VICE site and moved into `/Applications`, prefer the package's real command-line binary directly, for example `vice = /Applications/vice-arm64-gtk3-3.8/bin/x64sc`. The architecture/frontend/version part of the directory name varies by download (for example ARM64 vs. Intel and GTK3 vs. SDL2). The toolkit also probes common package layouts and accepts a VICE distribution directory or `.app` path, but pointing straight at `bin/x64sc` is the least ambiguous option.
 
 Existing direct overrides still work:
 
@@ -72,7 +72,7 @@ Existing direct overrides still work:
 ./build.sh --shape torus --no-vice-default-args --run
 ```
 
-See [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md) for precedence, per-platform sections, `C643D_CONFIG`, `--config`/`--no-config`, and macOS bundle details.
+See [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md) for precedence, per-platform sections, `C643D_CONFIG`, `--config`/`--no-config`, and macOS package details.
 
 ## Quickstart
 
@@ -545,7 +545,7 @@ A graphical host-side importer/previewer is planned, but the command-line path w
 
 ## Status
 
-Version 0.4.1 adds cross-platform toolchain configuration and executable discovery on top of the 0.4.0 OBJ/SVG pipeline. The torus remains the performance/reference object; horse head and sunflower exercise arbitrary low-poly OBJ input, while SPACE HORSE exercises SVG contour import, C64 colour mapping, and non-spin animation transforms. The next major mesh-pipeline feature remains topology-aware OBJ simplification/decimation, while SVG geometry/animation and renderer work can continue independently.
+Version 0.4.2 tightens the macOS VICE setup guidance around the actual downloaded-package `bin/x64sc` path while retaining the cross-platform toolchain configuration and executable discovery added in 0.4.1. The torus remains the performance/reference object; horse head and sunflower exercise arbitrary low-poly OBJ input, while SPACE HORSE exercises SVG contour import, C64 colour mapping, and non-spin animation transforms. The next major mesh-pipeline feature remains topology-aware OBJ simplification/decimation, while SVG geometry/animation and renderer work can continue independently.
 
 ## Credits
 

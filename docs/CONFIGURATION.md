@@ -40,7 +40,7 @@ vice_args = +VICIIfull
 
 [macos]
 tass = /opt/homebrew/bin/64tass
-vice = /Applications/VICE.app
+vice = /Applications/vice-arm64-gtk3-3.8/bin/x64sc
 
 [windows]
 tass = C:\Tools\64tass\64tass.exe
@@ -111,14 +111,21 @@ The simplest command-line installation is currently Homebrew:
 brew install tass64 vice
 ```
 
-Downloaded VICE packages can have a less obvious layout. Depending on the package/version, `x64sc.app` may be a launcher while the usable command-line launcher/binary lives in a sibling `tools/x64sc`, `bin/x64sc`, or inside `VICE.app/Contents/Resources/bin/x64sc`. The toolkit probes those layouts automatically when possible.
+If you download a VICE macOS package directly and move it into `/Applications` as recommended by the package, point the toolkit at the real command-line binary under that package's `bin/` directory. A typical ARM64/GTK3 install looks like:
 
-For example, any of these can be used as `vice = ...` if they match the local installation:
+```ini
+[macos]
+vice = /Applications/vice-arm64-gtk3-3.8/bin/x64sc
+```
+
+The directory name is package-dependent: architecture (ARM64/Intel), frontend (GTK3/SDL2), and VICE version can all change. In other words, treat `vice-arm64-gtk3-3.8` above as an example, not a fixed name.
+
+This direct `bin/x64sc` path is preferred because some downloaded distributions also contain nested `.app` launchers that can be easy to confuse with the CLI executable. With the default `vice = x64sc`, the toolkit also scans common locations such as the `/Applications/vice*/bin/x64sc` pattern automatically. It can additionally accept the containing distribution directory or compatible `.app` paths when needed. For example:
 
 ```text
-/Applications/VICE.app
-/Applications/vice-arm64-gtk3-3.8/VICE.app
-~/Downloads/vice-arm64-gtk3-3.8
+/Applications/vice-arm64-gtk3-3.8/bin/x64sc   # preferred exact CLI path
+/Applications/vice-arm64-gtk3-3.8             # containing distribution directory
+~/Downloads/vice-arm64-gtk3-3.8                # unpacked/downloaded distribution
 ```
 
 Run `doctor` after configuring:
