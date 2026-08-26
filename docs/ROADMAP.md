@@ -21,6 +21,7 @@ Implemented foundation:
 - Consistent winding repair for concave closed meshes.
 - Bundled `horse_head.obj`, `sunflower_torus.obj`, and `space_horse.svg` reference assets.
 - SVG path/primitive flattening, contour simplification, optional wire extrusion, and SVG-colour -> C64-colour mapping.
+- Per-face OBJ/MTL and per-contour SVG colour propagation into dominant-colour VIC-II hires cells, with a compile-time-isolated monochrome path.
 
 Next:
 
@@ -60,6 +61,6 @@ The CLI remains first-class even if a GUI is added.
 
 - Interactive/graphical OBJ/SVG preview and animation inspection while retaining a first-class CLI workflow.
 - Topology-aware mesh simplification/decimation to a C64 vertex/edge/face and table-RAM budget.
-- Optional use of preserved OBJ/MTL material groups in host preview and future C64 style/export modes.
-- Richer C64 colour planning for vector assets beyond the current one-foreground-colour demo mode.
+- Display existing OBJ/MTL material groups and SVG contour colours in the future host preview.
+- Explore optional dither/style policies for mixed-colour hires cells while preserving the current deterministic dominant-colour mode.
 - SVG clipping/mask/text-layout support where it can be made deterministic and C64-budget aware.

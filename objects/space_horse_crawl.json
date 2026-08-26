@@ -7,6 +7,7 @@
   "visibility": "surface",
   "z_tolerance": 0.0012,
   "color": "yellow",
+  "use_colors": true,
   "animation": "crawl",
   "animation_tilt": 62.0,
   "animation_travel": 105.0,

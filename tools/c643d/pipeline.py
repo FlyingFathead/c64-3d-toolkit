@@ -1,7 +1,8 @@
 from __future__ import annotations
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from .mesh import Mesh, face_center, face_normal, rotate_xyz, dot
+from .colors import hires_screen_byte
 
 W,H=256,144
 Z_TOL=0.0008
@@ -20,6 +21,13 @@ class FrameBuild:
     raw_pixels: int
     unique_pixels: int
     dda_mismatches: list[int]
+    # Coloured builds update hires screen RAM in same-colour horizontal spans.
+    # Entries are (screen offset lo, offset hi, cell count, ready screen byte).
+    # Monochrome builds leave this empty and retain the historical table format.
+    color_spans: list[tuple[int,int,int,int]] = field(default_factory=list)
+    color_cells: int = 0
+    color_conflicts: int = 0
+    color_palette: tuple[int,...] = ()
 
 
 def raster_triangle(zbuf, owner, face_index, p0, p1, p2):
@@ -228,13 +236,15 @@ def classify_feature_edges(mesh:Mesh, feature_angle:float=40.0):
     return out, {'boundary':boundary,'nonmanifold':nonmanifold,'crease':crease,'features':sum(out.values()),'edges':len(out)}
 
 
-def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibility_mode:str="surface", z_tolerance:float=Z_TOL, feature_angle:float=40.0, animation:str='spin', animation_tilt:float=62.0, animation_travel:float=120.0, animation_rise:float=54.0) -> tuple[list[FrameBuild],int]:
+def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibility_mode:str="surface", z_tolerance:float=Z_TOL, feature_angle:float=40.0, animation:str='spin', animation_tilt:float=62.0, animation_travel:float=120.0, animation_rise:float=54.0, enable_source_colors:bool=False, fallback_color:int=1) -> tuple[list[FrameBuild],int]:
     if not 1<=frames<=255: raise ValueError('frames must be 1..255')
+    if not 0<=fallback_color<=15: raise ValueError('fallback colour must be 0..15')
     # Precompute face geometry in object space.
     fcent=[face_center(mesh,f) for f in mesh.faces]
     fnorm=[face_normal(mesh,f) for f in mesh.faces]
     tris=mesh.triangulated_faces()
     edges=mesh.edges; ef=mesh.edge_faces()
+    explicit_colors=mesh.explicit_edge_colors()
     feature_edges={}
     if visibility_mode == "surface_creases":
         feature_edges,_feature_stats=classify_feature_edges(mesh,feature_angle)
@@ -245,10 +255,11 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
             x,y,z0=_frame_transform(p0,fi,frames,spin_axis=spin_axis,animation=animation,animation_tilt=animation_tilt,animation_travel=animation_travel,animation_rise=animation_rise); z=camera.distance+z0
             sx=camera.cx+camera.focal*x/z; sy=camera.cy-camera.focal*y/z
             projected.append((sx,sy,1.0/z))
-        front=[]
+        front=[]; face_depth=[]
         for c0,n0 in zip(fcent,fnorm):
             px,py,pz0=_frame_transform(c0,fi,frames,spin_axis=spin_axis,animation=animation,animation_tilt=animation_tilt,animation_travel=animation_travel,animation_rise=animation_rise); nx,ny,nz=_frame_rotate_vector(n0,fi,frames,spin_axis=spin_axis,animation=animation,animation_tilt=animation_tilt); pz=camera.distance+pz0
             front.append((nx*px+ny*py+nz*pz)<0.0)
+            face_depth.append(1.0/pz if pz>1.0e-12 else -math.inf)
         zbuf=[0.0]*(W*H)
         zowner=[-1]*(W*H)
         if visibility_mode not in ("surface", "surface_features", "surface_creases", "frontface"):
@@ -262,10 +273,24 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
             if visibility_mode in ("surface", "surface_features", "surface_creases") or front[facei]:
                 raster_triangle(zbuf,zowner,facei,projected[a],projected[b],projected[c])
         records=[]; touched=set(); raw=0; mism=[]
+        cell_color_counts: dict[tuple[int,int],dict[int,int]]={}
         for v0,v1 in edges:
             adjacent=ef[(v0,v1)]
             if visibility_mode == "frontface" and adjacent and not any(front[i] for i in adjacent):
                 continue
+            edge=(v0,v1)
+            edge_color=fallback_color
+            if enable_source_colors:
+                if edge in explicit_colors:
+                    edge_color=explicit_colors[edge]
+                else:
+                    colored=[facei for facei in adjacent if mesh.face_color(facei) is not None]
+                    if colored:
+                        # Prefer a front-facing material, then the nearest
+                        # adjacent face. This resolves material boundaries
+                        # consistently as the object rotates.
+                        owner=max(colored,key=lambda facei:(front[facei],face_depth[facei]))
+                        edge_color=int(mesh.face_color(owner))
             if (visibility_mode == "surface_features" and adjacent and len(adjacent)==2
                     and not any(front[i] for i in adjacent)):
                 # Lightweight v0.3.1 semantics: closed-manifold edges whose
@@ -332,6 +357,10 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
                             rec=encode_run(dda,seg_start,seg_end); exp=pts[seg_start:seg_end+1]
                             if decode_record_points(rec)!=exp:raise RuntimeError('encoded DDA verify failed')
                             records.append(rec); raw+=len(exp); touched.update(exp)
+                            if enable_source_colors:
+                                for x,y in exp:
+                                    counts=cell_color_counts.setdefault((x>>3,y>>3),{})
+                                    counts[edge_color]=counts.get(edge_color,0)+1
                             seg_start=seg_end+1
                     start=None
         if len(records)>255: raise RuntimeError(f'frame {fi}: {len(records)} visible runs >255')
@@ -347,7 +376,31 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
                 off=cy*320+run0*8; count=prev-run0+1
                 spans.append((off&255,(off>>8)&255,count))
                 if cx is not None:run0=prev=cx
-        all_frames.append(FrameBuild(records,spans,raw,len(touched),mism))
+        color_spans=[]; color_conflicts=0; palette=set()
+        if enable_source_colors:
+            colored_cells=[]
+            for (cx,cy),counts in sorted(cell_color_counts.items(),key=lambda item:(item[0][1],item[0][0])):
+                color_conflicts+=int(len(counts)>1)
+                # dict insertion order is stable, so equal coverage follows the
+                # stable source-edge order instead of flickering arbitrarily.
+                color=max(counts,key=counts.get); palette.add(color)
+                colored_cells.append((cx,cy,color))
+            start_off=prev_cx=prev_cy=run_color=run_count=None
+            for cx,cy,color in colored_cells:
+                if (run_count is not None and cy==prev_cy and cx==prev_cx+1
+                        and color==run_color and run_count<255):
+                    run_count+=1; prev_cx=cx
+                    continue
+                if run_count is not None:
+                    color_spans.append((start_off&255,start_off>>8,run_count,hires_screen_byte(run_color)))
+                start_off=cy*40+cx; prev_cx=cx; prev_cy=cy
+                run_color=color; run_count=1
+            if run_count is not None:
+                color_spans.append((start_off&255,start_off>>8,run_count,hires_screen_byte(run_color)))
+        all_frames.append(FrameBuild(
+            records,spans,raw,len(touched),mism,color_spans,
+            len(cell_color_counts),color_conflicts,tuple(sorted(palette)),
+        ))
     return all_frames,len(edges)
 
 

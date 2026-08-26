@@ -40,6 +40,7 @@
 
 FRAME_COUNT = 48
 SCREEN_COLOR = $10              ; high nibble=foreground, low nibble=background
+COLORS_ENABLED = 0              ; 1 adds generated per-cell source colours
 
 SCREEN0     = $0400
 BITMAP0     = $2000
@@ -176,6 +177,9 @@ init_screen_colours:
 main_loop:
 frame_begin:
         jsr prepare_render_buffer
+.if COLORS_ENABLED
+        jsr apply_current_frame_colors
+.endif
         jsr draw_current_lines
 
         ; Remember which angular frame now occupies this physical bitmap.
@@ -279,7 +283,16 @@ prepare_render_buffer:
         cmp #$ff
         beq prb_done
         tax
+.if COLORS_ENABLED
+        stx color_old_frame_temp
+.endif
         jsr clear_old_frame_spans
+.if COLORS_ENABLED
+        ; Screen RAM is triple-buffered alongside the bitmaps. Restore the old
+        ; frame's material cells before applying the new frame's colours.
+        ldx color_old_frame_temp
+        jsr reset_old_frame_colors
+.endif
 prb_done:
         rts
 
@@ -352,6 +365,92 @@ cofs_cell:
         bne cofs_span
 cofs_done:
         rts
+
+.if COLORS_ENABLED
+; Apply the current frame's host-resolved hires colours to the screen RAM paired
+; with the render bitmap. RGB/MTL/SVG work is already gone: each table entry is
+; just screen offset, cell count, and a ready-to-store VIC-II screen byte.
+apply_current_frame_colors:
+        ldx frame_index
+        lda frame_clear_ptr_lo,x
+        sta STREAM_LO
+        lda frame_clear_ptr_hi,x
+        sta STREAM_HI
+
+        ; Skip the old-frame clear list: one count byte plus 3 bytes per span.
+        ldy #0
+        lda (STREAM_LO),y
+        sta color_skip_temp
+        inc STREAM_LO
+        bne acfc_skip_test
+        inc STREAM_HI
+acfc_skip_test:
+        lda color_skip_temp
+        beq acfc_read_count
+acfc_skip_span:
+        clc
+        lda STREAM_LO
+        adc #3
+        sta STREAM_LO
+        bcc acfc_skip_ok
+        inc STREAM_HI
+acfc_skip_ok:
+        dec color_skip_temp
+        bne acfc_skip_span
+
+acfc_read_count:
+        ldy #0
+        lda (STREAM_LO),y
+        sta color_spans_remaining
+        beq acfc_done
+        inc STREAM_LO
+        bne acfc_count_advanced
+        inc STREAM_HI
+acfc_count_advanced:
+        ldx render_slot
+        lda screen_base_hi,x
+        sta color_screen_base_hi
+
+acfc_span:
+        ldy #0
+        lda (STREAM_LO),y
+        sta PTR_LO
+        iny
+        lda (STREAM_LO),y
+        clc
+        adc color_screen_base_hi
+        sta PTR_HI
+        iny
+        lda (STREAM_LO),y
+        sta color_cells_temp
+        iny
+        lda (STREAM_LO),y
+        sta color_value_temp
+
+        clc
+        lda STREAM_LO
+        adc #4
+        sta STREAM_LO
+        bcc acfc_stream_ok
+        inc STREAM_HI
+acfc_stream_ok:
+        ldy #0
+        ldx color_cells_temp
+        lda color_value_temp
+acfc_store:
+        sta (PTR_LO),y
+        iny
+        dex
+        bne acfc_store
+
+        dec color_spans_remaining
+        bne acfc_span
+acfc_done:
+        rts
+
+screen_base_hi:
+        .byte $04,$44,$c8
+.endif
 
 ; Startup-only complete bitmap clears.
 clear_bitmap0_all:
@@ -1678,6 +1777,15 @@ lines_remaining:        .byte 0
 line_count_temp:        .byte 0
 line_ctl_temp:          .byte 0
 
+.if COLORS_ENABLED
+color_skip_temp:        .byte 0
+color_spans_remaining:  .byte 0
+color_screen_base_hi:   .byte 0
+color_cells_temp:       .byte 0
+color_value_temp:       .byte 0
+color_old_frame_temp:   .byte 0
+.endif
+
 fps_hundreds:           .byte 0
 fps_tens:               .byte 0
 fps_ones:               .byte 0
@@ -1712,5 +1820,88 @@ digit_glyphs:
         .byte $3c,$66,$66,$3c,$66,$66,$3c,$00 ; 8
         .byte $3c,$66,$66,$3e,$06,$0c,$38,$00 ; 9
 
+renderer_hud_start:
         .include "generated/hud.inc"
+
+.if COLORS_ENABLED
+; Cold-path helper in the unused $4000-$43ff gap between bitmap #0 and screen
+; RAM #1. X is the old angular frame stored in the render slot being recycled.
+* = $4000
+reset_old_frame_colors:
+        lda frame_clear_ptr_lo,x
+        sta STREAM_LO
+        lda frame_clear_ptr_hi,x
+        sta STREAM_HI
+
+        ; Skip the old frame's bitmap-clear list (count + 3 bytes per span).
+        ldy #0
+        lda (STREAM_LO),y
+        sta color_skip_temp
+        inc STREAM_LO
+        bne rofc_skip_test
+        inc STREAM_HI
+rofc_skip_test:
+        lda color_skip_temp
+        beq rofc_read_count
+rofc_skip_span:
+        clc
+        lda STREAM_LO
+        adc #3
+        sta STREAM_LO
+        bcc rofc_skip_ok
+        inc STREAM_HI
+rofc_skip_ok:
+        dec color_skip_temp
+        bne rofc_skip_span
+
+rofc_read_count:
+        ldy #0
+        lda (STREAM_LO),y
+        sta color_spans_remaining
+        beq rofc_done
+        inc STREAM_LO
+        bne rofc_count_advanced
+        inc STREAM_HI
+rofc_count_advanced:
+        ldx render_slot
+        lda screen_base_hi,x
+        sta color_screen_base_hi
+
+rofc_span:
+        ldy #0
+        lda (STREAM_LO),y
+        sta PTR_LO
+        iny
+        lda (STREAM_LO),y
+        clc
+        adc color_screen_base_hi
+        sta PTR_HI
+        iny
+        lda (STREAM_LO),y
+        sta color_cells_temp
+
+        ; Four bytes per source span; the fourth is the old colour value and
+        ; can be skipped because every cell is restored to SCREEN_COLOR.
+        clc
+        lda STREAM_LO
+        adc #4
+        sta STREAM_LO
+        bcc rofc_stream_ok
+        inc STREAM_HI
+rofc_stream_ok:
+        ldy #0
+        ldx color_cells_temp
+        lda #SCREEN_COLOR
+rofc_store:
+        sta (PTR_LO),y
+        iny
+        dex
+        bne rofc_store
+
+        dec color_spans_remaining
+        bne rofc_span
+rofc_done:
+        rts
+.endif
+
         .include "generated/tables.inc"

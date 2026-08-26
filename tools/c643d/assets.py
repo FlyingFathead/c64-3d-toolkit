@@ -18,6 +18,7 @@ class ObjectPreset:
     feature_angle: float = 40.0
     materials: tuple[str, ...] = ()
     color: str = 'white'
+    use_colors: bool = True
     animation: str = 'spin'
     animation_tilt: float = 62.0
     animation_travel: float = 120.0
@@ -84,6 +85,7 @@ def load_object_preset(objects_dir: Path, name: str) -> ObjectPreset:
         feature_angle=float(data.get('feature_angle',40.0)),
         materials=tuple(str(x) for x in data.get('materials',[])),
         color=str(data.get('color','white')),
+        use_colors=bool(data.get('use_colors',True)),
         animation=animation,
         animation_tilt=float(data.get('animation_tilt',62.0)),
         animation_travel=float(data.get('animation_travel',120.0)),
@@ -115,10 +117,8 @@ def list_object_presets(objects_dir: Path) -> list[ObjectPreset]:
 def _copy_obj_with_materials(source: Path, dest: Path, *, overwrite: bool) -> list[str]:
     """Copy an OBJ and any directly referenced mtllib files next to it.
 
-    Material data is currently preserved for interchange/future preview use; the
-    C64 wireframe compiler itself does not consume MTL shading yet. References
-    containing subdirectories are flattened to the destination directory and the
-    copied OBJ's mtllib line is rewritten accordingly.
+    References containing subdirectories are flattened to the destination
+    directory and the copied OBJ's mtllib line is rewritten accordingly.
     """
     lines=source.read_text(encoding='utf-8',errors='replace').splitlines()
     materials=[]; rewritten=[]
@@ -159,6 +159,7 @@ def import_obj_asset(
     spin_axis: str = 'y',
     rotate: tuple[float,float,float] = (0.0,0.0,0.0),
     scale: float = 1.0,
+    use_colors: bool = True,
     overwrite: bool = False,
 ) -> ObjectPreset:
     source=Path(source)
@@ -185,6 +186,7 @@ def import_obj_asset(
         'visibility': 'surface',
         'z_tolerance': 0.0012,
         'feature_angle': 40.0,
+        'use_colors': bool(use_colors),
     }
     meta.write_text(json.dumps(payload,indent=2)+"\n",encoding='utf-8')
     return load_object_preset(objects_dir,slug)
@@ -208,6 +210,7 @@ def import_svg_asset(
     svg_curve_step: float = 12.0,
     svg_depth: float = 5.0,
     svg_connector_stride: int = 4,
+    use_colors: bool = True,
     overwrite: bool = False,
 ) -> ObjectPreset:
     """Copy an SVG into objects/ and create a wire-extrusion preset."""
@@ -239,6 +242,7 @@ def import_svg_asset(
         'visibility': 'surface',
         'z_tolerance': 0.0012,
         'color': chosen,
+        'use_colors': bool(use_colors),
         'animation': animation,
         'animation_tilt': float(animation_tilt),
         'animation_travel': float(animation_travel),

@@ -24,6 +24,9 @@ case "${1:-}" in
     shift
     exec python3 ./c643d.py generate-examples "$@"
     ;;
+  --version)
+    exec python3 ./c643d.py --version
+    ;;
   build|inspect|import-obj|import-svg|generate-examples|doctor|list-shapes|list-objects)
     exec python3 ./c643d.py "$@"
     ;;

@@ -15,9 +15,49 @@ class Mesh:
     # so keeping explicit edges lets it become a real 3-D wire object without
     # inventing bogus filled faces or triangulating glyph holes.
     line_edges: list[tuple[int, int]] = field(default_factory=list)
+    # Native VIC-II palette indices attached to source faces/explicit wire
+    # edges. ``None`` means that the build's monochrome fallback colour applies.
+    # Keeping the 0..15 code here avoids dragging RGB material data beyond the
+    # host import stage.
+    face_colors: list[int | None] = field(default_factory=list)
+    line_colors: list[int | None] = field(default_factory=list)
 
     def copy(self, *, name: str | None = None) -> "Mesh":
-        return Mesh(name or self.name, list(self.vertices), list(self.faces), list(self.line_edges))
+        return Mesh(
+            name or self.name, list(self.vertices), list(self.faces),
+            list(self.line_edges), list(self.face_colors), list(self.line_colors),
+        )
+
+    @property
+    def source_colors(self) -> tuple[int, ...]:
+        return tuple(sorted({
+            color for color in (*self.face_colors,*self.line_colors)
+            if color is not None
+        }))
+
+    @property
+    def has_source_colors(self) -> bool:
+        return bool(self.source_colors)
+
+    @property
+    def source_colors_cover_all_edges(self) -> bool:
+        explicit=self.explicit_edge_colors(); edge_faces=self.edge_faces()
+        return all(
+            edge in explicit or any(self.face_color(facei) is not None for facei in edge_faces[edge])
+            for edge in self.edges
+        )
+
+    def face_color(self, face_index: int) -> int | None:
+        return self.face_colors[face_index] if face_index < len(self.face_colors) else None
+
+    def explicit_edge_colors(self) -> dict[tuple[int,int], int]:
+        """Return explicit wire colours keyed by canonical undirected edge."""
+        out={}
+        for i,(a,b) in enumerate(self.line_edges):
+            color=self.line_colors[i] if i < len(self.line_colors) else None
+            if color is not None:
+                out[(a,b) if a<b else (b,a)]=color
+        return out
 
     @property
     def edges(self) -> list[tuple[int, int]]:
@@ -159,9 +199,14 @@ def fix_winding_outward(mesh: Mesh) -> Mesh:
     centroid heuristic as a best-effort fallback; crucially, faces are never
     independently flipped based on concavity.
     """
-    faces = [tuple(f) for f in mesh.faces if len(f) >= 3]
+    valid_face_indices=[i for i,f in enumerate(mesh.faces) if len(f)>=3]
+    faces = [tuple(mesh.faces[i]) for i in valid_face_indices]
+    face_colors=[mesh.face_color(i) for i in valid_face_indices]
     if not faces:
-        return Mesh(mesh.name, list(mesh.vertices), [], list(mesh.line_edges))
+        return Mesh(
+            mesh.name, list(mesh.vertices), [], list(mesh.line_edges), [],
+            list(mesh.line_colors),
+        )
 
     # undirected edge -> [(face index, direction sign)]
     # sign +1 means low->high in that face, -1 means high->low.
@@ -214,7 +259,11 @@ def fix_winding_outward(mesh: Mesh) -> Mesh:
         oriented.append(tuple(reversed(face)) if flip[fi] else face)
 
     # Decide outward orientation once per connected component, never per face.
-    c0 = mesh_center(Mesh(mesh.name, list(mesh.vertices), oriented, list(mesh.line_edges)))
+    oriented_mesh=Mesh(
+        mesh.name, list(mesh.vertices), oriented, list(mesh.line_edges),
+        face_colors, list(mesh.line_colors),
+    )
+    c0 = mesh_center(oriented_mesh)
     for comp in components:
         comp_set=set(comp)
         closed=True
@@ -235,15 +284,18 @@ def fix_winding_outward(mesh: Mesh) -> Mesh:
             score=0.0
             for fi in comp:
                 f=oriented[fi]
-                score += dot(face_normal(Mesh(mesh.name, mesh.vertices, oriented, list(mesh.line_edges)), f),
-                             vsub(face_center(Mesh(mesh.name, mesh.vertices, oriented, list(mesh.line_edges)), f), c0))
+                score += dot(face_normal(oriented_mesh, f),
+                             vsub(face_center(oriented_mesh, f), c0))
             flip_component = score < 0.0
 
         if flip_component:
             for fi in comp:
                 oriented[fi] = tuple(reversed(oriented[fi]))
 
-    return Mesh(mesh.name, list(mesh.vertices), oriented, list(mesh.line_edges))
+    return Mesh(
+        mesh.name, list(mesh.vertices), oriented, list(mesh.line_edges),
+        face_colors, list(mesh.line_colors),
+    )
 
 
 def normalize_mesh(mesh: Mesh, target_half_extent: float = 46.0) -> Mesh:
@@ -255,7 +307,10 @@ def normalize_mesh(mesh: Mesh, target_half_extent: float = 46.0) -> Mesh:
     h=max(hx,hy,hz,1e-9)
     s=target_half_extent/h
     verts=[((x-cx)*s,(y-cy)*s,(z-cz)*s) for x,y,z in mesh.vertices]
-    return Mesh(mesh.name, verts, list(mesh.faces), list(mesh.line_edges))
+    return Mesh(
+        mesh.name, verts, list(mesh.faces), list(mesh.line_edges),
+        list(mesh.face_colors), list(mesh.line_colors),
+    )
 
 
 def rotate_xyz(p: Vec3, rx: float=0.0, ry: float=0.0, rz: float=0.0) -> Vec3:
@@ -270,7 +325,12 @@ def rotate_xyz(p: Vec3, rx: float=0.0, ry: float=0.0, rz: float=0.0) -> Vec3:
 
 
 def transform_mesh(mesh: Mesh, *, rx=0.0, ry=0.0, rz=0.0, scale=1.0) -> Mesh:
-    return Mesh(mesh.name, [vmul(rotate_xyz(p,rx,ry,rz),scale) for p in mesh.vertices], list(mesh.faces), list(mesh.line_edges))
+    return Mesh(
+        mesh.name,
+        [vmul(rotate_xyz(p,rx,ry,rz),scale) for p in mesh.vertices],
+        list(mesh.faces), list(mesh.line_edges), list(mesh.face_colors),
+        list(mesh.line_colors),
+    )
 
 
 def mesh_diagnostics(mesh: Mesh) -> dict[str, int | dict[int,int]]:

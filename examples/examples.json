@@ -54,11 +54,21 @@
       "--object",
       "sunflower_torus",
       "--renderer",
+      "yunroll",
+      "--no-colors"
+    ]
+  },
+  {
+    "name": "sunflower_torus_color",
+    "args": [
+      "--object",
+      "sunflower_torus",
+      "--renderer",
       "yunroll"
     ]
   },
   {
-    "name": "space_horse_spin",
+    "name": "space_horse_spin_color",
     "args": [
       "--object",
       "space_horse",
@@ -67,7 +77,7 @@
     ]
   },
   {
-    "name": "space_horse_crawl",
+    "name": "space_horse_crawl_color",
     "args": [
       "--object",
       "space_horse_crawl",

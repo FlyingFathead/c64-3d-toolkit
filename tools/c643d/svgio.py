@@ -17,6 +17,10 @@ from pathlib import Path
 from xml.etree import ElementTree as ET
 
 from .mesh import Mesh
+from .colors import (
+    C64_PALETTE, c64_color_index, c64_color_name, nearest_c64_color,
+    nearest_c64_color_index, parse_source_color,
+)
 
 Point2 = tuple[float, float]
 Matrix = tuple[float, float, float, float, float, float]  # SVG a,b,c,d,e,f
@@ -24,34 +28,6 @@ Matrix = tuple[float, float, float, float, float, float]  # SVG a,b,c,d,e,f
 _TOKEN_RE = re.compile(r"[AaCcHhLlMmQqSsTtVvZz]|[-+]?(?:\d*\.\d+|\d+\.?)(?:[eE][-+]?\d+)?")
 _TRANSFORM_RE = re.compile(r"([A-Za-z]+)\s*\(([^)]*)\)")
 _NUM_RE = re.compile(r"[-+]?(?:\d*\.\d+|\d+\.?)(?:[eE][-+]?\d+)?")
-
-# A pragmatic Pepto-ish C64 palette. Exact analogue output varies by machine,
-# but these are useful for nearest-colour mapping of SVG artwork.
-C64_PALETTE: dict[str, tuple[int, tuple[int, int, int]]] = {
-    'black':       (0,  (0, 0, 0)),
-    'white':       (1,  (255, 255, 255)),
-    'red':         (2,  (136, 0, 0)),
-    'cyan':        (3,  (170, 255, 238)),
-    'purple':      (4,  (204, 68, 204)),
-    'green':       (5,  (0, 204, 85)),
-    'blue':        (6,  (0, 0, 170)),
-    'yellow':      (7,  (238, 238, 119)),
-    'orange':      (8,  (221, 136, 85)),
-    'brown':       (9,  (102, 68, 0)),
-    'light_red':   (10, (255, 119, 119)),
-    'dark_gray':   (11, (51, 51, 51)),
-    'gray':        (12, (119, 119, 119)),
-    'light_green': (13, (170, 255, 102)),
-    'light_blue':  (14, (0, 136, 255)),
-    'light_gray':  (15, (187, 187, 187)),
-}
-
-_COLOR_NAMES = {
-    'black':'#000000','white':'#ffffff','red':'#ff0000','yellow':'#ffff00',
-    'blue':'#0000ff','green':'#008000','cyan':'#00ffff','aqua':'#00ffff',
-    'magenta':'#ff00ff','fuchsia':'#ff00ff','gray':'#808080','grey':'#808080',
-    'orange':'#ffa500','purple':'#800080','brown':'#a52a2a',
-}
 
 @dataclass
 class SvgInfo:
@@ -61,68 +37,12 @@ class SvgInfo:
     simplified_points: int
     source_color: str | None
     c64_color: str
+    source_colors: tuple[str, ...] = ()
+    c64_colors: tuple[str, ...] = ()
 
 
-def c64_color_index(value: str | int | None) -> int:
-    if value is None:
-        return C64_PALETTE['white'][0]
-    if isinstance(value, int):
-        if 0 <= value <= 15:
-            return value
-        raise ValueError('C64 colour index must be 0..15')
-    s=str(value).strip().lower().replace('-','_').replace(' ','_')
-    if s.isdigit():
-        n=int(s)
-        if 0 <= n <= 15:
-            return n
-    aliases={'grey':'gray','dark_grey':'dark_gray','light_grey':'light_gray','lightred':'light_red','lightgreen':'light_green','lightblue':'light_blue'}
-    s=aliases.get(s,s)
-    if s not in C64_PALETTE:
-        raise ValueError(f'unknown C64 colour {value!r}; use a palette name or 0..15')
-    return C64_PALETTE[s][0]
-
-
-def c64_color_name(index: int) -> str:
-    for name,(n,_rgb) in C64_PALETTE.items():
-        if n == index:
-            return name
-    raise ValueError(index)
-
-
-def _parse_css_color(value: str | None) -> tuple[int,int,int] | None:
-    if not value:
-        return None
-    s=value.strip().lower()
-    if s in ('none','transparent','currentcolor','inherit'):
-        return None
-    s=_COLOR_NAMES.get(s,s)
-    if s.startswith('#'):
-        h=s[1:]
-        if len(h)==3:
-            h=''.join(ch*2 for ch in h)
-        if len(h)==6:
-            try:return tuple(int(h[i:i+2],16) for i in (0,2,4))
-            except ValueError:return None
-    m=re.fullmatch(r'rgb\(\s*([\d.]+)%?\s*,\s*([\d.]+)%?\s*,\s*([\d.]+)%?\s*\)',s)
-    if m:
-        vals=[]
-        pct='%' in s
-        for x in m.groups():
-            v=float(x)
-            vals.append(round(v*2.55) if pct else round(v))
-        return tuple(max(0,min(255,v)) for v in vals)
-    return None
-
-
-def nearest_c64_color(rgb: tuple[int,int,int]) -> str:
-    # Perceptual-ish weighted RGB distance, good enough for 16 colours.
-    r,g,b=rgb
-    best=None; bestd=None
-    for name,(_idx,(rr,gg,bb)) in C64_PALETTE.items():
-        d=2*(r-rr)**2 + 4*(g-gg)**2 + 3*(b-bb)**2
-        if bestd is None or d < bestd:
-            best=name; bestd=d
-    return str(best)
+# Backwards-compatible private alias for callers/tests from the v0.4 module.
+_parse_css_color=parse_source_color
 
 
 def _identity() -> Matrix:
@@ -386,8 +306,37 @@ def load_svg(path:Path, name:str|None=None, *, tolerance:float=3.0, curve_step:f
             m=_NUM_RE.search(v or ''); return float(m.group()) if m else 0.0
         vb_x=vb_y=0.0; vb_w=dim(root.get('width')); vb_h=dim(root.get('height'))
 
-    raw_contours:list[tuple[list[Point2],bool]]=[]
-    colors:list[tuple[int,tuple[int,int,int],str]]=[]  # priority,rgb,source
+    raw_contours:list[tuple[list[Point2],bool,int|None,str|None]]=[]
+    colors:list[tuple[int,tuple[int,int,int],str]]=[]  # c64 index,rgb,source
+
+    def opacity_value(value:str)->float:
+        value=value.strip()
+        try:
+            return max(0.0,min(1.0,float(value[:-1])/100.0 if value.endswith('%') else float(value)))
+        except ValueError:
+            return 1.0
+
+    def opacity(st:dict[str,str],specific:str)->float:
+        return opacity_value(st.get('opacity','1'))*opacity_value(st.get(specific,'1'))
+
+    def shape_color(st:dict[str,str])->tuple[int|None,tuple[int,int,int]|None,str|None]:
+        # A wire contour represents the SVG stroke when one exists; otherwise
+        # its fill supplies the contour colour. This also handles the common
+        # black-fill/yellow-stroke logo export without treating black as canvas.
+        for kind in ('stroke','fill'):
+            if opacity(st,f'{kind}-opacity')<=0:
+                continue
+            if kind=='stroke':
+                try:
+                    if float(st.get('stroke-width','1'))<=0:
+                        continue
+                except ValueError:
+                    pass
+            source=st.get(kind)
+            rgb=parse_source_color(source)
+            if rgb is not None:
+                return nearest_c64_color_index(rgb),rgb,str(source)
+        return None,None,None
 
     def walk(elem:ET.Element,parent_m:Matrix,parent_style:dict[str,str]):
         st=dict(parent_style); st.update(_style(elem))
@@ -402,55 +351,58 @@ def load_svg(path:Path, name:str|None=None, *, tolerance:float=3.0, curve_step:f
             full=(abs(min(xs)-vb_x)<1e-6 and abs(min(ys)-vb_y)<1e-6 and abs(max(xs)-(vb_x+vb_w))<1e-6 and abs(max(ys)-(vb_y+vb_h))<1e-6)
             if full:shapes=[]
         if shapes:
+            color_index,rgb,source=shape_color(st)
             for pts,closed in shapes:
-                raw_contours.append(([_apply(m,p) for p in pts],closed))
-            stroke=st.get('stroke'); fill=st.get('fill')
-            for priority,val in ((0,stroke),(1,fill)):
-                rgb=_parse_css_color(val)
-                if rgb is not None:colors.append((priority,rgb,str(val)))
+                raw_contours.append(([_apply(m,p) for p in pts],closed,color_index,source))
+            if color_index is not None and rgb is not None and source is not None:
+                colors.append((color_index,rgb,source))
         for child in list(elem):walk(child,m,st)
     walk(root,_identity(),{})
     if not raw_contours:raise ValueError(f'{path}: no supported visible SVG vector contours found')
 
     contours=[]; source_points=0
-    for pts,closed in raw_contours:
+    for pts,closed,color_index,source in raw_contours:
         source_points+=len(pts)
         simp=_simplify(pts,closed,max(0.0,tolerance))
-        if len(simp)>=2:contours.append((simp,closed))
+        if len(simp)>=2:contours.append((simp,closed,color_index,source))
     if not contours:raise ValueError(f'{path}: SVG contours vanished after simplification')
 
     # Convert SVG Y-down -> toolkit Y-up. Centreing/scaling is handled by the
     # normal mesh pipeline, but source span is needed to express Z extrusion in
     # normalised toolkit units.
-    flat=[p for pts,_ in contours for p in pts]
+    flat=[p for pts,_closed,_color,_source in contours for p in pts]
     xs=[p[0] for p in flat]; ys=[p[1] for p in flat]
     span=max(max(xs)-min(xs),max(ys)-min(ys),1e-9)
     source_depth=max(0.0,depth)*span/92.0
     zf=-source_depth/2; zb=source_depth/2
-    verts=[]; edges=[]
+    verts=[]; edges=[]; edge_colors=[]
     stride=max(1,int(connector_stride))
-    for pts,closed in contours:
+    for pts,closed,color_index,_source in contours:
         front=[]
         for x,y in pts:
             front.append(len(verts)); verts.append((x,-y,zf))
         count=len(front); lim=count if closed else count-1
-        for j in range(lim):edges.append((front[j],front[(j+1)%count]))
+        for j in range(lim):
+            edges.append((front[j],front[(j+1)%count])); edge_colors.append(color_index)
         if source_depth>0:
             back=[]
             for x,y in pts:
                 back.append(len(verts)); verts.append((x,-y,zb))
-            for j in range(lim):edges.append((back[j],back[(j+1)%count]))
-            for j in range(0,count,stride):edges.append((front[j],back[j]))
-            if not closed and count>1 and (count-1)%stride:edges.append((front[-1],back[-1]))
+            for j in range(lim):
+                edges.append((back[j],back[(j+1)%count])); edge_colors.append(color_index)
+            for j in range(0,count,stride):
+                edges.append((front[j],back[j])); edge_colors.append(color_index)
+            if not closed and count>1 and (count-1)%stride:
+                edges.append((front[-1],back[-1])); edge_colors.append(color_index)
 
-    # Prefer stroke colour, then fill. Ignore a black canvas colour when there
-    # is another candidate (SPACE HORSE is black fill + yellow stroke).
-    chosen=None
-    for priority,rgb,src in sorted(colors,key=lambda x:x[0]):
-        if rgb!=(0,0,0):chosen=(rgb,src); break
-    if chosen is None and colors:
-        chosen=(colors[0][1],colors[0][2])
-    source_color=chosen[1] if chosen else None
-    c64=nearest_c64_color(chosen[0]) if chosen else 'white'
-    mesh=Mesh(name or path.stem.upper(),verts,[],edges)
-    return SvgInfo(mesh,len(contours),source_points,sum(len(p) for p,_ in contours),source_color,c64)
+    chosen=next((item for item in colors if item[0]!=0),colors[0] if colors else None)
+    source_color=chosen[2] if chosen else None
+    c64=c64_color_name(chosen[0]) if chosen else 'white'
+    source_colors=tuple(dict.fromkeys(source for _index,_rgb,source in colors))
+    c64_colors=tuple(dict.fromkeys(c64_color_name(index) for index,_rgb,_source in colors))
+    mesh=Mesh(name or path.stem.upper(),verts,[],edges,[],edge_colors)
+    return SvgInfo(
+        mesh,len(contours),source_points,
+        sum(len(points) for points,_closed,_color,_source in contours),
+        source_color,c64,source_colors,c64_colors,
+    )

@@ -4,6 +4,7 @@
   "materials": [
     "sunflower_torus.mtl"
   ],
+  "use_colors": true,
   "up_axis": "z",
   "spin_axis": "y",
   "rotate": [
@@ -14,5 +15,5 @@
   "scale": 1.0,
   "visibility": "surface_features",
   "z_tolerance": 0.0012,
-  "notes": "Bundled low-poly sunflower OBJ with a torus-shaped flower centre. MTL is preserved for host-side interchange/future preview; the current C64 wireframe renderer ignores materials. The preset uses surface_features visibility so open petal/stem feature edges survive while ordinary back-facing manifold edges are suppressed."
+  "notes": "Bundled low-poly sunflower OBJ with a torus-shaped flower centre. MTL diffuse colours map to native C64 brown/yellow/green hires wire colours. The preset uses surface_features visibility so open petal/stem feature edges survive while ordinary back-facing manifold edges are suppressed."
 }

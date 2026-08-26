@@ -38,7 +38,7 @@ Included reference assets:
 - `sunflower_torus.obj` + `sunflower_torus.mtl` (76 vertices, 142 edges, 70 faces)
 - `space_horse.svg` with spinner and crawl presets
 
-OBJ metadata can define source up-axis, pose, scale, visibility and feature-angle settings. SVG presets additionally carry contour simplification/extrusion settings, a C64 foreground colour, and an animation mode (`spin`, `recede`, or `crawl`).
+OBJ metadata can define source up-axis, pose, scale, visibility, feature-angle, and source-colour settings. SVG presets additionally carry contour simplification/extrusion settings, a monochrome fallback colour, and an animation mode (`spin`, `recede`, or `crawl`).
 
 Example SVG preset fields:
 
@@ -52,6 +52,7 @@ Example SVG preset fields:
   "animation_travel": 105.0,
   "animation_rise": 42.0,
   "color": "yellow",
+  "use_colors": true,
   "svg_tolerance": 20.0,
   "svg_curve_step": 12.0,
   "svg_depth": 0.0,
@@ -61,4 +62,8 @@ Example SVG preset fields:
 
 Current OBJ compilation expects meshes to already be reasonably low-poly. Automatic topology-aware OBJ simplification is roadmap work. SVG contours already have a dedicated geometric simplification stage controlled by `--svg-tolerance`.
 
-`import-obj` preserves directly referenced `mtllib` files next to the imported OBJ. MTL data is kept for interchange/future host preview; the current C64 wireframe renderer does not use MTL shading.
+`import-obj` preserves directly referenced `mtllib` files next to the imported OBJ. The compiler consumes `usemtl` plus diffuse MTL `Kd` values and maps them to native C64 wire colours. `import-svg` does the same for per-contour stroke/fill colours.
+
+Pass `--no-colors` while importing to write `"use_colors": false` into the
+preset, or while building to ignore colours for that invocation. `--color`
+forces a single named/numeric C64 foreground colour.

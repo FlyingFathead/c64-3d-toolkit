@@ -11,6 +11,7 @@
   "visibility": "surface",
   "z_tolerance": 0.0012,
   "color": "yellow",
+  "use_colors": true,
   "animation": "spin",
   "svg_tolerance": 20.0,
   "svg_curve_step": 12.0,

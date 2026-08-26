@@ -59,6 +59,7 @@ def _choose_overflow_frames(block_sizes:list[int], primary_cap:int, overflow_cap
 
 def emit_tables(path:Path, frames:list[FrameBuild], renderer:str, candidate_edges:int):
     nframes=len(frames)
+    colors_enabled=any(bool(frame.color_spans) for frame in frames)
     ptr_end=PTR_BASE+nframes*4
     if ptr_end>PTR_LIMIT:
         raise RuntimeError(f'frame pointer tables reach ${ptr_end:04x}, limit ${PTR_LIMIT:04x}; reduce --frames')
@@ -66,14 +67,26 @@ def emit_tables(path:Path, frames:list[FrameBuild], renderer:str, candidate_edge
     # Clear blocks live contiguously at $4800. Pointer arrays are deliberately
     # kept out of this arena so the remaining bytes below $6000 can be used as
     # a second line-record arena for complex imported meshes.
-    clear_blob=[]; clear_addrs=[]; cur=CLEAR_BASE
+    clear_blob=[]; clear_addrs=[]; cur=CLEAR_BASE; color_table_bytes=0
     for fr in frames:
         clear_addrs.append(cur); block=[len(fr.clear_spans)]
         for span in fr.clear_spans:block.extend(span)
+        if colors_enabled:
+            count=len(fr.color_spans)
+            if count>255:
+                raise RuntimeError(f'frame colour table contains {count} spans >255; simplify the source geometry')
+            block.append(count); color_table_bytes+=1+count*4
+            for offlo,offhi,cells,screen_byte in fr.color_spans:
+                if not 1<=cells<=255:
+                    raise RuntimeError(f'invalid colour span cell count {cells}')
+                if not 0<=screen_byte<=255:
+                    raise RuntimeError(f'invalid hires screen colour byte {screen_byte}')
+                block.extend((offlo,offhi,cells,screen_byte))
         clear_blob.extend(block); cur+=len(block)
     clear_data_end=cur
     if clear_data_end>CLEAR_LIMIT:
-        raise RuntimeError(f'clear tables reach ${clear_data_end:04x}, limit ${CLEAR_LIMIT:04x}')
+        kind='clear/colour' if colors_enabled else 'clear'
+        raise RuntimeError(f'{kind} tables reach ${clear_data_end:04x}, limit ${CLEAR_LIMIT:04x}')
 
     # Build independent per-orientation line blocks. The primary arena is the
     # historical $8000-$c7ff range. Overflow whole frame blocks may be packed
@@ -119,6 +132,16 @@ def emit_tables(path:Path, frames:list[FrameBuild], renderer:str, candidate_edge
            f'; unique pixels/frame min={min(uniq)} max={max(uniq)} avg={sum(uniq)/nframes:.1f}',
            f'; clear bytes/frame min={min(clears)} max={max(clears)} avg={sum(clears)/nframes:.1f}',
            f'; line arenas: primary={len(primary_blob)} bytes overflow={len(overflow_blob)} bytes','']
+    if colors_enabled:
+        color_cells=[f.color_cells for f in frames]; color_spans=[len(f.color_spans) for f in frames]
+        color_conflicts=[f.color_conflicts for f in frames]
+        palette=sorted({color for frame in frames for color in frame.color_palette})
+        lines[6:6]=[
+            f'; colour cells/frame min={min(color_cells)} max={max(color_cells)} avg={sum(color_cells)/nframes:.1f}',
+            f'; colour spans/frame min={min(color_spans)} max={max(color_spans)} avg={sum(color_spans)/nframes:.1f}',
+            f'; colour conflicts/frame min={min(color_conflicts)} max={max(color_conflicts)} avg={sum(color_conflicts)/nframes:.1f}',
+            f'; VIC-II palette indices={",".join(str(value) for value in palette)}; colour table={color_table_bytes} bytes',
+        ]
 
     fast_stats=None
     if renderer in ('bytechunk','yunroll'):
@@ -167,8 +190,21 @@ def emit_tables(path:Path, frames:list[FrameBuild], renderer:str, candidate_edge
         'clear_min':min(clears),'clear_max':max(clears),'clear_avg':sum(clears)/nframes,
         'clear_table_bytes':len(clear_blob),'line_table_bytes':sum(sizes),
         'line_primary_bytes':len(primary_blob),'line_overflow_bytes':len(overflow_blob),
-        'dda_mismatch_max':max(mism),'dda_mismatch_avg':sum(mism)/len(mism)
+        'dda_mismatch_max':max(mism),'dda_mismatch_avg':sum(mism)/len(mism),
+        'colors_enabled':colors_enabled,'color_table_bytes':color_table_bytes,
     }
+    if colors_enabled:
+        color_cells=[f.color_cells for f in frames]; color_spans=[len(f.color_spans) for f in frames]
+        color_conflicts=[f.color_conflicts for f in frames]
+        stats.update(
+            color_cells_min=min(color_cells),color_cells_max=max(color_cells),
+            color_cells_avg=sum(color_cells)/nframes,
+            color_spans_min=min(color_spans),color_spans_max=max(color_spans),
+            color_spans_avg=sum(color_spans)/nframes,
+            color_conflicts_min=min(color_conflicts),color_conflicts_max=max(color_conflicts),
+            color_conflicts_avg=sum(color_conflicts)/nframes,
+            color_palette=tuple(sorted({color for frame in frames for color in frame.color_palette})),
+        )
     if fast_stats:
         c,p,o=fast_stats; stats.update(xchunks=c,xchunk_pixels=p,xchunk_ops=o,xchunk_reduction=(1-o/p)*100 if p else 0)
     return stats

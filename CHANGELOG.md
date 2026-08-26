@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.5.0
+
+- Added host-side Wavefront MTL `Kd` parsing and per-face material propagation. Source RGB values are mapped to native VIC-II indices before table generation; the bundled sunflower maps to brown centre, yellow petals, and green stem/leaves.
+- Upgraded SVG import from one dominant object colour to per-contour stroke/fill colour propagation, including inherited styles and opacity handling.
+- Added per-frame hires screen-colour spans. When differently coloured wires occupy one VIC-II 8x8 cell, the host selects the dominant visible line colour for that cell.
+- Recycled triple-buffer screen cells are restored before applying the next frame's colour spans, preventing material colours from trailing across frames.
+- Single-colour OBJ/SVG sources reuse the original global hires foreground byte and allocate no colour table, avoiding needless runtime or frame-budget cost.
+- Kept RGB/palette work off the C64: generated tables carry native 4-bit colour codes as ready-to-store screen-RAM bytes, so the 6510 performs no palette lookup.
+- Added `--no-color`, `--no-colors`, and `--ignore-colors` aliases for classic white-on-black output. `--color NAME|0..15` remains a forced monochrome override.
+- Builds now announce the selected color path before frame generation, including a named OBJ/MTL or SVG fallback notice when no usable source color layer exists.
+- Kept the monochrome renderer path compile-time isolated. Colour code and calls are assembled out, monochrome clear/line tables retain their previous byte layout, and regression tests compare colour-bearing meshes with their colour metadata disabled.
+- Coloured default output basenames now gain `_color`; bundled coloured example targets are `sunflower_torus_color.prg`, `space_horse_spin_color.prg`, and `space_horse_crawl_color.prg`.
+
 ## 0.4.2
 
 - Clarified macOS VICE setup based on tester feedback: for downloaded VICE distributions moved into `/Applications`, documentation now points first to the actual package CLI, e.g. `/Applications/vice-arm64-gtk3-3.8/bin/x64sc`.

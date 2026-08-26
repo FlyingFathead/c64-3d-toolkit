@@ -64,9 +64,9 @@ The generated frame table is no longer limited to a 360-degree spin. Available h
 
 The animation is still a finite precomputed orientation/pose sequence; the C64 loops through the generated frames and rasterizes every vector line itself.
 
-## SVG colour -> C64 colour
+## SVG colours -> C64 hires colours
 
-`import-svg` inspects visible stroke/fill colours and maps the first useful artwork colour to the nearest entry in the 16-colour C64 palette. The source SPACE HORSE stroke is `#FFE81F`, which maps to C64 yellow.
+`import-svg` inspects every visible contour, prefers its stroke over its fill, and maps the source RGB colour to the nearest entry in the 16-colour C64 palette. The source SPACE HORSE stroke is `#FFE81F`, which maps to C64 yellow; SVGs containing several colours retain their per-contour mappings.
 
 Override it with:
 
@@ -75,7 +75,17 @@ Override it with:
 ./build.sh --svg logo.svg --color 7 --run
 ```
 
-Current hires demos use one foreground/background colour pair across the generated bitmap screens, so this is object/demo-level colour selection, not per-vector multicolour rendering.
+`--color` forces a single foreground colour. Use `--no-colors` (also
+`--no-color`/`--ignore-colors`) for classic white-on-black output.
+
+VIC-II hires colours are selected per 8x8 cell. The host assigns each touched
+cell its dominant visible contour colour and emits ready-to-store screen-RAM
+bytes. This retains 320-pixel horizontal bitmap resolution; switching to VIC-II
+multicolour mode would halve it. The C64 does no RGB parsing or palette search.
+An SVG that maps to only one C64 colour uses the original global foreground byte,
+so it pays no per-frame colour-table cost.
+An SVG with no explicit usable stroke/fill colour likewise stays on the default
+white single-colour path.
 
 ## Current SVG support
 

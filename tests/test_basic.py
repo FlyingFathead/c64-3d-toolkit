@@ -4,7 +4,7 @@ from tools.c643d.shapes import (
     torus,cube,sphere,choose_torus_segments_by_vertices,
     choose_sphere_segments_by_vertices,
 )
-from tools.c643d.objio import load_obj
+from tools.c643d.objio import load_obj, load_mtl
 from tools.c643d.assets import load_object_preset, import_obj_asset, import_svg_asset
 from tools.c643d.mesh import (
     normalize_mesh,fix_winding_outward,transform_mesh,face_center,face_normal,dot,
@@ -12,6 +12,7 @@ from tools.c643d.mesh import (
 )
 from tools.c643d.pipeline import Camera,fit_scale,build_frames,classify_feature_edges,decode_record_points
 from tools.c643d.svgio import load_svg
+from tools.c643d.colors import c64_color_name
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -70,6 +71,7 @@ class ToolkitSmokeTests(unittest.TestCase):
             q=load_object_preset(objects,'pony')
             self.assertEqual(q.up_axis,'z')
             self.assertEqual(q.obj_path.name,'pony.obj')
+            self.assertTrue(q.use_colors)
 
     def test_small_cube_pipeline_all_spin_axes(self):
         m=fix_winding_outward(normalize_mesh(cube(),46))
@@ -94,6 +96,20 @@ class TestProjectFeatures(unittest.TestCase):
         self.assertIn('horse_head',names)
         self.assertIn('torus_dense',names)
 
+    def test_default_colored_output_name_gets_color_suffix(self):
+        from tools.c643d.cli import default_output_basename
+        self.assertEqual(default_output_basename('SUNFLOWER TORUS','yunroll',True),'sunflower_torus_color-yunroll')
+        self.assertEqual(default_output_basename('SUNFLOWER TORUS','yunroll',False),'sunflower_torus-yunroll')
+
+    def test_build_notice_announces_missing_obj_color_layer(self):
+        from tools.c643d.cli import color_build_notice
+        mesh=load_obj(ROOT/'objects'/'horse_head.obj')
+        notice=color_build_notice(mesh,ROOT/'objects'/'horse_head.obj','white',False,False)
+        self.assertEqual(
+            notice,
+            'color: no usable MTL color layer found for horse_head.obj; using white monochrome default pipeline',
+        )
+
 
 class TestObjVisibilityAndMaterials(unittest.TestCase):
     def test_horse_preset_uses_full_surface_visibility(self):
@@ -110,6 +126,57 @@ class TestObjVisibilityAndMaterials(unittest.TestCase):
         self.assertIn('sunflower_torus.mtl',p.materials)
         self.assertTrue((ROOT/'objects'/'sunflower_torus.mtl').exists())
 
+    def test_sunflower_mtl_maps_all_materials_to_native_c64_codes(self):
+        colors=load_mtl(ROOT/'objects'/'sunflower_torus.mtl')
+        self.assertEqual(
+            {name:c64_color_name(index) for name,index in colors.items()},
+            {'center':'brown','petals':'yellow','stem':'green','leaves':'green'},
+        )
+        mesh=load_obj(ROOT/'objects'/'sunflower_torus.obj')
+        self.assertEqual([c64_color_name(c) for c in mesh.face_colors[:48]],['brown']*48)
+        self.assertEqual([c64_color_name(c) for c in mesh.face_colors[48:60]],['yellow']*12)
+        self.assertEqual([c64_color_name(c) for c in mesh.face_colors[60:]],['green']*10)
+
+    def test_obj_without_material_colors_keeps_monochrome_path(self):
+        from tools.c643d.cli import build_mesh, make_parser
+        from tools.c643d.toolchain import load_toolchain_settings
+        mesh=load_obj(ROOT/'objects'/'horse_head.obj')
+        self.assertFalse(mesh.has_source_colors)
+        with tempfile.TemporaryDirectory() as td:
+            parser=make_parser(load_toolchain_settings(Path(td)/'missing.ini'))
+        built=build_mesh(parser.parse_args(['inspect','--object','horse_head']))
+        self.assertEqual(built[6],'white')
+        self.assertFalse(built[7])
+        self.assertFalse(built[8])
+
+    def test_ignoring_material_colors_is_geometry_table_neutral(self):
+        from tools.c643d.emit import emit_tables
+        mesh=fix_winding_outward(normalize_mesh(load_obj(ROOT/'objects'/'sunflower_torus.obj'),46.0))
+        plain=mesh.copy(); plain.face_colors=[]
+        cam=Camera(); scale=fit_scale(mesh,8,cam); mesh=transform_mesh(mesh,scale=scale); plain=transform_mesh(plain,scale=scale)
+        with_colors,edges=build_frames(mesh,8,cam,visibility_mode='surface_features',enable_source_colors=False)
+        without_colors,_=build_frames(plain,8,cam,visibility_mode='surface_features')
+        self.assertEqual(with_colors,without_colors)
+        with tempfile.TemporaryDirectory() as td:
+            a=Path(td)/'a.inc'; b=Path(td)/'b.inc'
+            sa=emit_tables(a,with_colors,'yunroll',edges)
+            sb=emit_tables(b,without_colors,'yunroll',edges)
+            self.assertEqual(a.read_bytes(),b.read_bytes())
+        self.assertFalse(sa['colors_enabled']); self.assertEqual(sa,sb)
+
+    def test_sunflower_build_generates_per_cell_color_spans(self):
+        from tools.c643d.emit import emit_tables
+        mesh=fix_winding_outward(normalize_mesh(load_obj(ROOT/'objects'/'sunflower_torus.obj'),46.0))
+        cam=Camera(); scale=fit_scale(mesh,8,cam); mesh=transform_mesh(mesh,scale=scale)
+        frames,edges=build_frames(mesh,8,cam,visibility_mode='surface_features',enable_source_colors=True)
+        self.assertTrue(all(frame.color_spans for frame in frames))
+        palette={color for frame in frames for color in frame.color_palette}
+        self.assertEqual({c64_color_name(color) for color in palette},{'brown','yellow','green'})
+        with tempfile.TemporaryDirectory() as td:
+            stats=emit_tables(Path(td)/'color.inc',frames,'yunroll',edges)
+        self.assertTrue(stats['colors_enabled'])
+        self.assertGreater(stats['color_table_bytes'],0)
+
     def test_import_obj_preserves_mtllib(self):
         with tempfile.TemporaryDirectory() as td:
             objects=Path(td)
@@ -120,11 +187,17 @@ class TestObjVisibilityAndMaterials(unittest.TestCase):
             self.assertIn('mtllib sunflower_torus.mtl',text)
             self.assertIn('sunflower_torus.mtl',p.materials)
 
+    def test_import_obj_can_persist_source_color_opt_out(self):
+        with tempfile.TemporaryDirectory() as td:
+            p=import_obj_asset(ROOT/'objects'/'sunflower_torus.obj',Path(td),slug='plain_flower',use_colors=False)
+        self.assertFalse(p.use_colors)
+
     def test_example_manifest_includes_sunflower(self):
         import json
         data=json.loads((ROOT/'examples'/'examples.json').read_text())
         names={x['name'] for x in data}
         self.assertIn('sunflower_torus',names)
+        self.assertIn('sunflower_torus_color',names)
 
     def test_horse_owner_aware_visibility_pipeline(self):
         # Smoke/regression check for the muzzle self-occlusion fix. The robust
@@ -236,8 +309,10 @@ class TestGeneratedMemoryMap(unittest.TestCase):
         from tools.asm_sanity import scan, HUD_MAX_BYTES
         from tools.c643d.emit import PTR_BASE, PTR_LIMIT
         for name in ('renderer-step.asm','renderer-bytechunk.asm','renderer-yunroll.asm'):
-            _,end=scan(ROOT/'c64'/name)
-            self.assertLessEqual(end+HUD_MAX_BYTES,PTR_BASE,name)
+            labels={}
+            _,end=scan(ROOT/'c64'/name,labels=labels)
+            code_end=labels.get('renderer_hud_start',end)
+            self.assertLessEqual(code_end+HUD_MAX_BYTES,PTR_BASE,name)
         self.assertLessEqual(PTR_BASE+48*4,PTR_LIMIT)
 
 
@@ -259,6 +334,20 @@ class TestSvgPipeline(unittest.TestCase):
         self.assertEqual(crawl.animation,'crawl')
         self.assertEqual(crawl.color,'yellow')
 
+    def test_single_source_color_uses_zero_overhead_global_hires_path(self):
+        from tools.c643d.cli import build_mesh, make_parser
+        from tools.c643d.toolchain import load_toolchain_settings
+        with tempfile.TemporaryDirectory() as td:
+            parser=make_parser(load_toolchain_settings(Path(td)/'missing.ini'))
+        colored=build_mesh(parser.parse_args(['inspect','--object','space_horse']))
+        plain=build_mesh(parser.parse_args(['inspect','--object','space_horse','--no-colors']))
+        self.assertEqual(colored[6],'yellow')
+        self.assertTrue(colored[7])
+        self.assertFalse(colored[8])
+        self.assertEqual(plain[6],'white')
+        self.assertFalse(plain[7])
+        self.assertFalse(plain[8])
+
     def test_import_svg_asset_roundtrip(self):
         with tempfile.TemporaryDirectory() as td:
             objects=Path(td)
@@ -267,6 +356,31 @@ class TestSvgPipeline(unittest.TestCase):
             self.assertTrue((objects/'logo.json').exists())
             self.assertEqual(p.color,'yellow')
             self.assertEqual(p.obj_path.name,'logo.svg')
+            self.assertTrue(p.use_colors)
+
+    def test_import_svg_can_persist_source_color_opt_out(self):
+        with tempfile.TemporaryDirectory() as td:
+            p=import_svg_asset(ROOT/'objects'/'space_horse.svg',Path(td),slug='plain_logo',svg_tolerance=20.0,svg_depth=0.0,use_colors=False)
+        self.assertFalse(p.use_colors)
+
+    def test_svg_keeps_distinct_source_colors_on_contour_edges(self):
+        with tempfile.TemporaryDirectory() as td:
+            svg=Path(td)/'two-colors.svg'
+            svg.write_text('''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<path d="M 5 20 L 95 20" fill="none" stroke="#ff0000"/>
+<path d="M 5 80 L 95 80" fill="none" stroke="#0000ff"/>
+</svg>''')
+            info=load_svg(svg,tolerance=0.0,depth=0.0)
+        self.assertEqual({c64_color_name(color) for color in info.mesh.line_colors},{'red','blue'})
+        self.assertEqual(set(info.c64_colors),{'red','blue'})
+
+    def test_svg_without_explicit_colors_keeps_monochrome_path(self):
+        with tempfile.TemporaryDirectory() as td:
+            svg=Path(td)/'plain.svg'
+            svg.write_text('<svg xmlns="http://www.w3.org/2000/svg"><path d="M0 0 L20 0 L20 20 Z"/></svg>')
+            info=load_svg(svg,tolerance=0.0,depth=0.0)
+        self.assertFalse(info.mesh.has_source_colors)
+        self.assertEqual(info.c64_color,'white')
 
     def test_crawl_animation_builds_frames(self):
         info=load_svg(ROOT/'objects'/'space_horse.svg','SPACE HORSE',tolerance=40.0,curve_step=14.0,depth=0.0)
@@ -281,13 +395,22 @@ class TestSvgPipeline(unittest.TestCase):
     def test_example_manifest_includes_svg_demos(self):
         import json
         names={x['name'] for x in json.loads((ROOT/'examples'/'examples.json').read_text())}
-        self.assertIn('space_horse_spin',names)
-        self.assertIn('space_horse_crawl',names)
+        self.assertIn('space_horse_spin_color',names)
+        self.assertIn('space_horse_crawl_color',names)
 
     def test_renderer_colour_is_patched_for_svg_demo(self):
         from tools.c643d.cli import prepare_asm
-        asm=prepare_asm('yunroll',8,7).read_text()
+        asm=prepare_asm('yunroll',8,7,True).read_text()
         self.assertIn('SCREEN_COLOR = $70',asm)
+        self.assertIn('COLORS_ENABLED = 1',asm)
+
+    def test_colored_renderers_restore_recycled_screen_cells(self):
+        from tools.c643d.cli import prepare_asm
+        for renderer in ('step','bytechunk','yunroll'):
+            asm=prepare_asm(renderer,8,1,True).read_text()
+            self.assertIn('jsr reset_old_frame_colors',asm,renderer)
+            self.assertIn('* = $4000\nreset_old_frame_colors:',asm,renderer)
+            self.assertIn('lda #SCREEN_COLOR\nrofc_store:',asm,renderer)
 
 class TestToolchainConfig(unittest.TestCase):
     def test_builtin_defaults_keep_vice_windowed(self):

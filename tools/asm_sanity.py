@@ -62,14 +62,18 @@ def main(argv=None):
     # entire worst-case 31-cell source bitmap below the pointer arena at $1600.
     # v0.3.2 incorrectly used $1500 for pointers, which overwrote the tail of
     # longer HUD strings (e.g. sunflower E:142) in the assembled PRG.
-    hud_end=end+HUD_MAX_BYTES
+    # Some colour-only cold helpers live in the free $4000-$43ff gap after the
+    # HUD include. Use the explicit pre-HUD marker when present rather than the
+    # numerically highest source segment.
+    code_end=labels.get('renderer_hud_start',end)
+    hud_end=code_end+HUD_MAX_BYTES
     if hud_end>PTR_BASE:
-        print(f'asm sanity: ERROR code end ${end:04x} + HUD would reach ${hud_end:04x}, overlapping pointer arena at ${PTR_BASE:04x}',file=sys.stderr);return 1
+        print(f'asm sanity: ERROR code end ${code_end:04x} + HUD would reach ${hud_end:04x}, overlapping pointer arena at ${PTR_BASE:04x}',file=sys.stderr);return 1
     if PTR_BASE+48*4>LUT_BASE:
         print(f'asm sanity: ERROR max frame pointer tables would overlap LUT at ${LUT_BASE:04x}',file=sys.stderr);return 1
     if bad:
         for b in bad:print(f'asm sanity: ERROR line {b[0]} {b[1]} {b[2]} offset {b[3]}',file=sys.stderr)
         return 1
-    print(f'asm sanity: estimated code end ${end:04x}; {len(branches)} relative branches in range')
+    print(f'asm sanity: estimated code end ${code_end:04x}; {len(branches)} relative branches in range')
     return 0
 if __name__=='__main__':raise SystemExit(main())

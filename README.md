@@ -8,7 +8,7 @@
 
 Host-assisted low-poly wireframe 3D compiler/runtime for a **stock Commodore 64**.
 
-The toolkit preprocesses 3D geometry on the host machine and generates 6510/6502 assembly data and runnable C64 `.prg` files. It includes procedural test meshes, OBJ and SVG import, several visibility modes, multiple animation transforms, multiple renderers, and prebuilt example programs.
+The toolkit preprocesses 3D geometry on the host machine and generates 6510/6502 assembly data and runnable C64 `.prg` files. It includes procedural test meshes, OBJ/MTL and SVG import with nearest-palette wire colours, several visibility modes, multiple animation transforms, multiple renderers, and prebuilt example programs.
 
 ## Requirements
 
@@ -92,6 +92,14 @@ or:
 
 ```bash
 ./build.sh --object sunflower_torus --run
+```
+
+The sunflower reads `usemtl`/`Kd` data from `sunflower_torus.mtl` and maps it to
+C64 brown, yellow, and green. To deliberately keep the historical white-on-black
+wireframe path:
+
+```bash
+./build.sh --object sunflower_torus --no-colors --run
 ```
 
 The bundled SVG logo can be spun as a 3-D plane or sent away on a tilted crawl plane:
@@ -212,7 +220,7 @@ The repository has an `examples/` manifest. Build all reference PRGs at once:
 ./build.sh generate-examples
 ```
 
-This currently produces `torus.prg`, `torus_dense.prg`, `cube.prg`, `sphere.prg`, `horse_head.prg`, `sunflower_torus.prg`, `space_horse_spin.prg`, and `space_horse_crawl.prg`. Auxiliary labels/listings remain in `build/`; the runnable PRGs are copied to `examples/`.
+This currently produces `torus.prg`, `torus_dense.prg`, `cube.prg`, `sphere.prg`, `horse_head.prg`, monochrome `sunflower_torus.prg`, coloured `sunflower_torus_color.prg`, `space_horse_spin_color.prg`, and `space_horse_crawl_color.prg`. Auxiliary labels/listings remain in `build/`; the runnable PRGs are copied to `examples/`.
 
 ## Dependency checks
 
@@ -244,7 +252,7 @@ The host-side Python compiler performs expensive work that makes sense to precom
 - face visibility
 - host-side Z-buffer hidden-line clipping
 - C64-oriented line-step encoding
-- dirty-area generation
+- dirty-area and hires screen-colour span generation
 
 The C64 still rasterizes the visible wireframe itself into VIC-II hires bitmap RAM. `step`, `bytechunk`, and `yunroll` are vector/line renderers, not bitmap-frame players.
 
@@ -343,7 +351,26 @@ The parser supports:
 - `v/vt`, `v//vn`, and `v/vt/vn` tokens
 - triangles, quads, and n-gons
 
-Texture/normal indices are currently ignored. Polygon faces are triangulated internally for visibility/Z-buffer work while polygon boundary edges remain the wireframe edges. Direct `mtllib` references are preserved by `import-obj`; MTL data is currently kept for interchange/future host preview rather than used by the C64 wireframe renderer.
+Texture/normal indices are currently ignored. Polygon faces are triangulated internally for visibility/Z-buffer work while polygon boundary edges remain the wireframe edges. Direct `mtllib` references are preserved by `import-obj`; `usemtl` assignments and diffuse `Kd` colours are read and mapped to the nearest C64 palette entries.
+
+OBJ/MTL and SVG source colours are enabled automatically. Disable them with any
+of the equivalent flags below; this retains the original monochrome table format
+and hot renderer loop:
+
+```bash
+./build.sh --object sunflower_torus --no-color --run
+./build.sh --object sunflower_torus --no-colors --run
+./build.sh --object sunflower_torus --ignore-colors --run
+```
+
+If an OBJ has no usable `mtllib`/`usemtl`/`Kd` data, or an SVG has no explicit
+usable stroke/fill colour, the compiler simply uses the single-colour path
+(white by default). It does not enable the per-cell colour machinery. Before
+frame generation, the build prints which of those paths it selected and names
+the source file it inspected.
+
+`--color yellow` (or `--color 7`) forces one monochrome foreground colour and
+also bypasses per-material/per-contour mapping.
 
 ### Current limitation
 
@@ -367,14 +394,23 @@ Useful controls:
 --svg-curve-step N         curve sampling step before simplification
 --svg-depth N              shallow wire extrusion depth; 0 keeps a flat plane
 --svg-connector-stride N   connect every Nth front/back vertex when extruded
---color NAME|0..15         C64 foreground colour override
+--color NAME|0..15         force one C64 foreground colour
+--no-colors                ignore source colours; classic white-on-black
 --animation spin|recede|crawl
 --animation-tilt DEG       crawl-plane tilt
 --animation-travel N       distance travelled away from the camera
 --animation-rise N         upward travel for crawl mode
 ```
 
-`import-svg` inspects SVG stroke/fill colours and maps the dominant artwork colour to the nearest C64 palette entry. The bundled SPACE HORSE asset uses `#FFE81F`, which maps to C64 yellow. The current hires renderer still uses one foreground/background colour pair for the generated demo, so this is object-level colour selection rather than per-vector multicolour rendering.
+`import-svg` inspects each visible contour's stroke/fill colour and maps it to the nearest C64 palette entry. The bundled SPACE HORSE asset uses `#FFE81F`, which maps to C64 yellow. Multi-colour SVGs retain distinct contour colours.
+
+Native hires bitmap mode selects foreground/background per 8x8 character cell,
+not per pixel. The host therefore counts the visible coloured line pixels in each
+touched cell and assigns the dominant colour when several materials/contours
+share that cell. It emits horizontal screen-colour spans containing ready-to-store
+VIC-II colour bytes. RGB parsing and nearest-colour searches never run on the C64.
+Single-colour sources use the existing global hires foreground byte and therefore
+need no colour table or runtime update pass.
 
 The bundled examples are:
 
@@ -482,6 +518,7 @@ c64-3d-toolkit/
 ├── tools/c643d/
 │   ├── assets.py
 │   ├── cli.py
+│   ├── colors.py
 │   ├── mesh.py
 │   ├── shapes.py
 │   ├── objio.py
@@ -545,7 +582,7 @@ A graphical host-side importer/previewer is planned, but the command-line path w
 
 ## Status
 
-Version 0.4.2 tightens the macOS VICE setup guidance around the actual downloaded-package `bin/x64sc` path while retaining the cross-platform toolchain configuration and executable discovery added in 0.4.1. The torus remains the performance/reference object; horse head and sunflower exercise arbitrary low-poly OBJ input, while SPACE HORSE exercises SVG contour import, C64 colour mapping, and non-spin animation transforms. The next major mesh-pipeline feature remains topology-aware OBJ simplification/decimation, while SVG geometry/animation and renderer work can continue independently.
+Version 0.5.0 adds real per-material OBJ/MTL and per-contour SVG colour propagation into VIC-II hires screen cells. The coloured path uses compact native colour codes and is compile-time isolated; monochrome builds retain the previous geometry tables and hot line loop. The torus remains the performance/reference object, while the sunflower is the bundled multi-material acceptance case.
 
 ## Credits
 

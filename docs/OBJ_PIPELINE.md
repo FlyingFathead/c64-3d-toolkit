@@ -3,7 +3,7 @@
 ## Current pipeline
 
 ```text
-OBJ -> parse -> inspect -> coordinate conversion -> normalize -> winding repair
+OBJ + optional MTL -> parse/material-map -> inspect -> coordinate conversion -> normalize -> winding repair
     -> sampled rotations -> projection -> hidden-line clipping -> C64 vector records
     -> 64tass -> PRG
 ```
@@ -62,6 +62,22 @@ default; `sunflower_torus` uses `surface_features`.
 ## Materials
 
 `import-obj` preserves directly referenced `mtllib` files next to the imported
-OBJ and rewrites flattened references when necessary. Material data is not yet
-used by the C64 wireframe renderer; preserving it keeps imported assets intact
-for future graphical preview/material tooling.
+OBJ and rewrites flattened references when necessary. The compiler reads
+`usemtl` assignments and diffuse `Kd r g b` values, then maps each face material
+to a native 0..15 VIC-II colour code on the host.
+
+An edge shared by differently coloured faces takes the front-facing material,
+with nearest-face depth as the stable fallback. After hidden-line clipping, the
+host resolves all visible edges into VIC-II hires cells. If multiple colours land
+in one 8x8 cell, the colour with the most visible line pixels wins that cell.
+An OBJ without usable material colours remains on the white single-colour path
+and gets no colour tables or colour-runtime calls.
+
+```bash
+./build.sh --object sunflower_torus --run             # MTL colours
+./build.sh --object sunflower_torus --no-colors --run # classic white wire
+./build.sh --object sunflower_torus --color cyan --run # forced monochrome
+```
+
+`--no-color`, `--no-colors`, and `--ignore-colors` are aliases. Imports accept
+the same opt-out and store `"use_colors": false` in the generated preset.

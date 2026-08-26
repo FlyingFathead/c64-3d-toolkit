@@ -8,7 +8,8 @@ from .shapes import (
     choose_torus_segments_by_vertices, choose_sphere_segments_by_vertices,
 )
 from .objio import load_obj
-from .svgio import load_svg, c64_color_index, c64_color_name
+from .svgio import load_svg
+from .colors import c64_color_index, c64_color_name
 from .assets import load_object_preset, list_object_presets, import_obj_asset, import_svg_asset
 from .pipeline import Camera, fit_scale, build_frames, classify_feature_edges
 from .emit import emit_tables, emit_hud
@@ -108,7 +109,8 @@ def build_mesh(a):
     """Build the selected source asset and return mesh + render/animation metadata."""
     preset_rotate=(0.0,0.0,0.0); preset_scale=1.0; spin_axis='y'
     preset_visibility='auto'; preset_ztol=0.0008; preset_feature_angle=40.0
-    preset_color='white'; preset_animation='spin'; preset_anim_tilt=62.0; preset_anim_travel=120.0; preset_anim_rise=54.0
+    preset_color='white'; preset_use_colors=True
+    preset_animation='spin'; preset_anim_tilt=62.0; preset_anim_travel=120.0; preset_anim_rise=54.0
     is_imported=False; is_svg=False
 
     if getattr(a,'svg',None):
@@ -131,7 +133,8 @@ def build_mesh(a):
             mesh=_apply_up_axis(mesh,preset.up_axis)
         preset_rotate=preset.rotate; preset_scale=preset.scale; spin_axis=preset.spin_axis
         preset_visibility=preset.visibility; preset_ztol=preset.z_tolerance; preset_feature_angle=preset.feature_angle
-        preset_color=preset.color; preset_animation=preset.animation; preset_anim_tilt=preset.animation_tilt
+        preset_color=preset.color; preset_use_colors=preset.use_colors
+        preset_animation=preset.animation; preset_anim_tilt=preset.animation_tilt
         preset_anim_travel=preset.animation_travel; preset_anim_rise=preset.animation_rise
     elif a.shape=='cube':
         mesh=cube(); label='CUBE'
@@ -165,25 +168,84 @@ def build_mesh(a):
     if feature_angle is None: feature_angle=preset_feature_angle
 
     requested_color=getattr(a,'color',None)
-    color_name=c64_color_name(c64_color_index(requested_color if requested_color is not None else preset_color))
+    ignore_colors=getattr(a,'ignore_colors',False) or not preset_use_colors
+    use_source_colors=bool(mesh.has_source_colors and not ignore_colors and requested_color is None)
+    if requested_color is not None:
+        color_value=requested_color
+    elif ignore_colors:
+        color_value='white'
+    else:
+        color_value=preset_color
+    per_cell_colors=False
+    if use_source_colors:
+        effective_colors=set(mesh.source_colors)
+        if not mesh.source_colors_cover_all_edges:
+            effective_colors.add(c64_color_index(color_value))
+        per_cell_colors=len(effective_colors)>1
+        if not per_cell_colors:
+            # A one-colour OBJ/SVG uses the original global hires foreground
+            # byte: same result, no colour table or runtime update cost.
+            color_value=next(iter(effective_colors))
+    color_name=c64_color_name(c64_color_index(color_value))
     animation=getattr(a,'animation',None) or preset_animation
     anim_tilt=getattr(a,'animation_tilt',None); anim_tilt=preset_anim_tilt if anim_tilt is None else anim_tilt
     anim_travel=getattr(a,'animation_travel',None); anim_travel=preset_anim_travel if anim_travel is None else anim_travel
     anim_rise=getattr(a,'animation_rise',None); anim_rise=preset_anim_rise if anim_rise is None else anim_rise
-    return mesh,label,(a.spin_axis or spin_axis),visibility,float(ztol),float(feature_angle),color_name,animation,float(anim_tilt),float(anim_travel),float(anim_rise)
+    return mesh,label,(a.spin_axis or spin_axis),visibility,float(ztol),float(feature_angle),color_name,use_source_colors,per_cell_colors,animation,float(anim_tilt),float(anim_travel),float(anim_rise)
 
 
-def prepare_asm(renderer:str,frames:int,color_index:int=1) -> Path:
+def prepare_asm(renderer:str,frames:int,color_index:int=1,colors_enabled:bool=False) -> Path:
     src=(C64/RENDERERS[renderer]).read_text()
     src=src.replace('FRAME_COUNT = 48',f'FRAME_COUNT = {frames}',1)
     src=src.replace('SCREEN_COLOR = $10',f'SCREEN_COLOR = ${color_index:X}0',1)
+    src=src.replace('COLORS_ENABLED = 0',f'COLORS_ENABLED = {int(colors_enabled)}',1)
     src=src.replace('.include "generated/hud.inc"', '.include "../generated/hud.inc"')
     src=src.replace('.include "generated/tables.inc"', '.include "../generated/tables.inc"')
     out=BUILD/'main.asm'; out.write_text(src)
     return out
 
 
-def print_stats(mesh:Mesh,label:str,renderer:str,scale:float,stats:dict,hud:str,spin_axis:str,visibility:str,z_tolerance:float,feature_angle:float,color_name:str,animation:str):
+def default_output_basename(label:str,renderer:str,use_source_colors:bool) -> str:
+    slug=label.lower().replace(' ','_')
+    return f'{slug}{"_color" if use_source_colors else ""}-{renderer}'
+
+
+def _selected_source_path(a) -> Path | None:
+    if getattr(a,'svg',None):
+        return Path(a.svg)
+    if getattr(a,'obj',None):
+        return Path(a.obj)
+    slug=getattr(a,'object',None) or ('horse_head' if getattr(a,'shape',None)=='horse_head' else None)
+    if slug:
+        return load_object_preset(OBJECTS,slug).obj_path
+    return None
+
+
+def color_build_notice(mesh:Mesh,source:Path|None,color_name:str,use_source_colors:bool,
+                       per_cell_colors:bool,*,forced:bool=False,disabled:bool=False) -> str | None:
+    """Describe the selected colour path before expensive frame generation."""
+    if source is None:
+        return None
+    if forced:
+        return f'color: forced C64 {color_name}; using single-color pipeline'
+    if not mesh.has_source_colors:
+        if source.suffix.lower()=='.obj':
+            layer='MTL color layer'
+            where=f'for {source.name}'
+        else:
+            layer='SVG stroke/fill color layer'
+            where=f'in {source.name}'
+        default='monochrome default' if color_name=='white' else 'single-color'
+        return f'color: no usable {layer} found {where}; using {color_name} {default} pipeline'
+    if disabled:
+        return f'color: source colors disabled for {source.name}; using {color_name} monochrome pipeline'
+    palette=', '.join(c64_color_name(index) for index in mesh.source_colors)
+    if per_cell_colors:
+        return f'color: source color layer found in {source.name}; mapping {palette} to VIC-II hires cells'
+    return f'color: source color layer found in {source.name}; using {color_name} single-color fast path'
+
+
+def print_stats(mesh:Mesh,label:str,renderer:str,scale:float,stats:dict,hud:str,spin_axis:str,visibility:str,z_tolerance:float,feature_angle:float,color_name:str,use_source_colors:bool,animation:str):
     print(f'shape:      {label}')
     print(f'vertices:   {len(mesh.vertices)}')
     print(f'edges:      {len(mesh.edges)}')
@@ -194,7 +256,12 @@ def print_stats(mesh:Mesh,label:str,renderer:str,scale:float,stats:dict,hud:str,
     print(f'renderer:   {renderer}')
     print(f'spin axis:  {spin_axis}')
     print(f'animation:  {animation}')
-    print(f'color:      {color_name}')
+    if use_source_colors:
+        palette=', '.join(c64_color_name(index) for index in mesh.source_colors)
+        mode='per-cell VIC-II hires spans' if stats.get('colors_enabled') else 'global hires foreground'
+        print(f'colors:     source -> {palette} ({mode})')
+    else:
+        print(f'color:      {color_name} (monochrome)')
     print(f'visibility: {visibility} (z tolerance {z_tolerance:g})')
     if visibility=='surface_creases':
         _,fs=classify_feature_edges(mesh,feature_angle)
@@ -208,6 +275,9 @@ def print_stats(mesh:Mesh,label:str,renderer:str,scale:float,stats:dict,hud:str,
         print(f'table spill: {stats["line_overflow_bytes"]} line bytes in low-RAM overflow arena; {stats["line_primary_bytes"]} in primary arena')
     if 'xchunk_reduction' in stats:
         print(f'x-byte LUT: {stats["xchunk_reduction"]:.1f}% RMW reduction in eligible full X chunks')
+    if stats.get('colors_enabled'):
+        print(f'color map:  {stats["color_spans_min"]}..{stats["color_spans_max"]} spans/frame; {stats["color_table_bytes"]} table bytes')
+        print(f'cell mixes: {stats["color_conflicts_min"]}..{stats["color_conflicts_max"]} cells/frame resolved by dominant visible colour')
     print(f'HUD:        {hud}')
 
 
@@ -215,7 +285,15 @@ def cmd_build(a):
     ok,tass_found,vice_found=preflight(tass_name=a.tass,vice_name=a.vice,tass_args=a.tass_args,vice_args=a.vice_args,need_assemble=not a.no_assemble,need_run=a.run,verbose=True)
     if not ok: return 2
     GENERATED.mkdir(exist_ok=True); BUILD.mkdir(exist_ok=True); OBJECTS.mkdir(exist_ok=True)
-    mesh,label,spin_axis,visibility,z_tolerance,feature_angle,color_name,animation,anim_tilt,anim_travel,anim_rise=build_mesh(a)
+    mesh,label,spin_axis,visibility,z_tolerance,feature_angle,color_name,use_source_colors,per_cell_colors,animation,anim_tilt,anim_travel,anim_rise=build_mesh(a)
+    source=_selected_source_path(a)
+    notice=color_build_notice(
+        mesh,source,color_name,use_source_colors,per_cell_colors,
+        forced=getattr(a,'color',None) is not None,
+        disabled=bool(getattr(a,'ignore_colors',False) or (mesh.has_source_colors and not use_source_colors)),
+    )
+    if notice:
+        print(notice,flush=True)
     cam=Camera(distance=a.camera,focal=a.focal,cx=128.0,cy=72.0)
     fitted=fit_scale(mesh,a.frames,cam,margin=a.margin,max_scale=a.max_fit_scale,spin_axis=spin_axis,animation=animation,animation_tilt=anim_tilt,animation_travel=anim_travel,animation_rise=anim_rise) if not a.no_auto_fit else 1.0
     mesh=transform_mesh(mesh,scale=fitted)
@@ -226,12 +304,12 @@ def cmd_build(a):
             if n<a.frames and n not in frame_candidates: frame_candidates.append(n)
     last_error=None
     for actual_frames in frame_candidates:
-        frames,candidate_edges=build_frames(mesh,actual_frames,cam,spin_axis=spin_axis,visibility_mode=visibility,z_tolerance=z_tolerance,feature_angle=feature_angle,animation=animation,animation_tilt=anim_tilt,animation_travel=anim_travel,animation_rise=anim_rise)
+        frames,candidate_edges=build_frames(mesh,actual_frames,cam,spin_axis=spin_axis,visibility_mode=visibility,z_tolerance=z_tolerance,feature_angle=feature_angle,animation=animation,animation_tilt=anim_tilt,animation_travel=anim_travel,animation_rise=anim_rise,enable_source_colors=per_cell_colors,fallback_color=c64_color_index(color_name))
         try:
             stats=emit_tables(GENERATED/'tables.inc',frames,a.renderer,candidate_edges)
             break
         except RuntimeError as e:
-            if not any(k in str(e) for k in ('line tables reach','line tables need','clear tables reach','frame pointer tables reach')): raise
+            if not any(k in str(e) for k in ('line tables reach','line tables need','clear tables reach','clear/colour tables reach','frame pointer tables reach')): raise
             last_error=e
             if a.strict_frames: raise
             print(f'note: table RAM: {actual_frames} orientations do not fit ({e}); trying fewer orientations; mesh detail unchanged')
@@ -240,10 +318,10 @@ def cmd_build(a):
     if actual_frames != a.frames:
         print(f'table RAM auto-fit: orientations {a.frames} -> {actual_frames}; mesh vertices/edges/faces preserved')
     hud=emit_hud(GENERATED/'hud.inc',label,len(mesh.vertices),len(mesh.edges))
-    asm=prepare_asm(a.renderer,actual_frames,c64_color_index(color_name))
+    asm=prepare_asm(a.renderer,actual_frames,c64_color_index(color_name),stats['colors_enabled'])
     subprocess.run([sys.executable,str(ROOT/'tools'/'asm_sanity.py'),str(asm)],cwd=ROOT,check=True)
-    print_stats(mesh,label,a.renderer,fitted,stats,hud,spin_axis,visibility,z_tolerance,feature_angle,color_name,animation)
-    outname=a.output or f'{label.lower().replace(" ","_")}-{a.renderer}'
+    print_stats(mesh,label,a.renderer,fitted,stats,hud,spin_axis,visibility,z_tolerance,feature_angle,color_name,use_source_colors,animation)
+    outname=a.output or default_output_basename(label,a.renderer,use_source_colors)
     outdir=Path(a.output_dir).resolve() if getattr(a,'output_dir',None) else BUILD
     outdir.mkdir(parents=True,exist_ok=True)
     prg=outdir/f'{outname}.prg'; lbl=outdir/f'{outname}.lbl'; lst=outdir/f'{outname}.lst'
@@ -269,11 +347,17 @@ def _print_mesh_report(label:str,mesh:Mesh):
 
 
 def cmd_inspect(a):
-    mesh,label,spin_axis,visibility,z_tolerance,feature_angle,color_name,animation,anim_tilt,anim_travel,anim_rise=build_mesh(a)
+    mesh,label,spin_axis,visibility,z_tolerance,feature_angle,color_name,use_source_colors,per_cell_colors,animation,anim_tilt,anim_travel,anim_rise=build_mesh(a)
     _print_mesh_report(label,mesh)
     print(f'spin axis: {spin_axis}')
     print(f'animation: {animation}; tilt={anim_tilt:g} travel={anim_travel:g} rise={anim_rise:g}')
-    print(f'color: {color_name}')
+    source_palette=', '.join(c64_color_name(index) for index in mesh.source_colors) or '(none)'
+    print(f'source colors: {source_palette}')
+    if use_source_colors:
+        mode='per-cell source mapping' if per_cell_colors else f'{color_name} global source colour'
+    else:
+        mode=f'{color_name} monochrome'
+    print(f'render colors: {mode}')
     print(f'visibility: {visibility} (z tolerance {z_tolerance:g})')
     if visibility=='surface_creases':
         _,fs=classify_feature_edges(mesh,feature_angle)
@@ -289,11 +373,13 @@ def cmd_import_obj(a):
     preset=import_obj_asset(
         source,OBJECTS,slug=a.as_name,display_name=a.name,up_axis=a.up,
         spin_axis=a.spin_axis,rotate=(a.rotate_x,a.rotate_y,a.rotate_z),
-        scale=a.scale,overwrite=a.overwrite,
+        scale=a.scale,use_colors=not a.ignore_colors,overwrite=a.overwrite,
     )
     print(f'imported:   {preset.obj_path.relative_to(ROOT)}')
     if preset.materials:
         print(f'materials:  {", ".join(preset.materials)}')
+    palette=', '.join(c64_color_name(index) for index in mesh.source_colors) or '(none detected)'
+    print(f'colors:     {palette}; {"ignored by preset" if a.ignore_colors else "enabled"}')
     print(f'metadata:   {(OBJECTS/(preset.slug+".json")).relative_to(ROOT)}')
     print(f'build with: ./build.sh --object {preset.slug} --run')
     return 0
@@ -304,13 +390,15 @@ def cmd_import_svg(a):
     info=load_svg(source,a.name or source.stem,tolerance=a.svg_tolerance,curve_step=a.svg_curve_step,depth=a.svg_depth,connector_stride=a.svg_connector_stride)
     _print_mesh_report((a.name or source.stem).upper(),info.mesh)
     print(f'svg:        contours {info.contours}; points {info.source_points} -> {info.simplified_points}')
-    print(f'color:      {info.source_color or "unknown"} -> C64 {info.c64_color}')
+    pairs=', '.join(f'{source} -> {mapped}' for source,mapped in zip(info.source_colors,info.c64_colors))
+    print(f'colors:     {pairs or "unknown -> C64 white"}')
     preset=import_svg_asset(
         source,OBJECTS,slug=a.as_name,display_name=a.name,spin_axis=a.spin_axis,
         rotate=(a.rotate_x,a.rotate_y,a.rotate_z),scale=a.scale,color=a.color,
         animation=a.animation,animation_tilt=a.animation_tilt,animation_travel=a.animation_travel,
         animation_rise=a.animation_rise,svg_tolerance=a.svg_tolerance,svg_curve_step=a.svg_curve_step,
-        svg_depth=a.svg_depth,svg_connector_stride=a.svg_connector_stride,overwrite=a.overwrite,
+        svg_depth=a.svg_depth,svg_connector_stride=a.svg_connector_stride,
+        use_colors=not a.ignore_colors,overwrite=a.overwrite,
     )
     print(f'imported:   {preset.obj_path.relative_to(ROOT)}')
     print(f'metadata:   {(OBJECTS/(preset.slug+".json")).relative_to(ROOT)}')
@@ -324,7 +412,8 @@ def cmd_list_objects():
         print('(no imported objects)'); return 0
     for p in presets:
         mtl=(' mtl='+','.join(p.materials)) if p.materials else ''
-        print(f'{p.slug:20} {p.name:20} spin={p.spin_axis} anim={p.animation} color={p.color} file={p.obj_path.name}{mtl}')
+        color_mode='source' if p.use_colors else 'off'
+        print(f'{p.slug:20} {p.name:20} spin={p.spin_axis} anim={p.animation} colors={color_mode} fallback={p.color} file={p.obj_path.name}{mtl}')
     return 0
 
 
@@ -373,7 +462,8 @@ def make_parser(settings):
         q.add_argument('--animation-tilt',type=float,help='crawl-plane X tilt in degrees')
         q.add_argument('--animation-travel',type=float,help='recede/crawl Z travel over the precomputed sequence')
         q.add_argument('--animation-rise',type=float,help='crawl Y travel over the precomputed sequence')
-        q.add_argument('--color',help='C64 foreground colour name or index 0..15; SVG presets can infer this from artwork')
+        q.add_argument('--color',help='force one C64 foreground colour name/index 0..15 instead of source colours')
+        q.add_argument('--no-color','--no-colors','--ignore-colors',dest='ignore_colors',action='store_true',help='ignore OBJ/MTL or SVG source colours and render classic white-on-black wireframe')
         q.add_argument('--keep-winding',action='store_true',help='do not best-effort reorient mesh face winding')
         q.add_argument('--visibility',choices=('auto','surface_features','surface_creases','surface','frontface'),default='auto',help='hidden-line surface mode; auto uses robust surface Z-buffer for OBJ and front-face mode for procedural closed meshes')
         q.add_argument('--z-tolerance',type=float,help='reciprocal-depth tolerance for visible wire edges; object presets may provide a default')
@@ -403,6 +493,7 @@ def make_parser(settings):
     imp.add_argument('--rotate-y',type=float,default=0.0)
     imp.add_argument('--rotate-z',type=float,default=0.0)
     imp.add_argument('--scale',type=float,default=1.0)
+    imp.add_argument('--no-color','--no-colors','--ignore-colors',dest='ignore_colors',action='store_true',help='create a preset that ignores source MTL colours')
     imp.add_argument('--overwrite',action='store_true')
     isvg=sub.add_parser('import-svg',help='copy an SVG into objects/ and create a 3-D wire preset')
     isvg.add_argument('file')
@@ -420,6 +511,7 @@ def make_parser(settings):
     isvg.add_argument('--svg-curve-step',type=float,default=12.0)
     isvg.add_argument('--svg-depth',type=float,default=5.0)
     isvg.add_argument('--svg-connector-stride',type=int,default=4)
+    isvg.add_argument('--no-color','--no-colors','--ignore-colors',dest='ignore_colors',action='store_true',help='create a preset that ignores SVG stroke/fill colours')
     isvg.add_argument('--overwrite',action='store_true')
     ge=sub.add_parser('generate-examples',help='compile bundled reference PRGs into examples/')
     _add_toolchain_args(ge,settings)
