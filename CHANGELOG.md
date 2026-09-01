@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.1
+
+- Added `setup-windows.cmd` and `setup-windows.ps1` for assisted Windows 11 setup.
+- Added WinGet-based detection and installation support for Python 3, Git, and VICE, including explicit keep, upgrade, and same-version reinstall choices for already installed packages.
+- Kept 64tass installation deliberately manual on Windows. Setup can locate or accept an existing `64tass.exe`, validate it without executing it, compute SHA-256, and configure the `[windows] tass` path.
+- Added common-location and optional whole-drive 64tass search. Whole-drive scans can be stopped with Q or Esc while preserving and presenting valid candidates already found.
+- Added explicit confirmation for manually entered or directly pasted 64tass paths after non-executing validation and hash reporting.
+- Added safe handling of existing `config/c643d.ini` Windows paths, preserving unrelated settings and requiring confirmation before path changes are written.
+- Added `docs/WINDOWS_SETUP.md` with Windows bootstrap, recovery, path configuration, search options, and 64tass trust/provenance guidance.
+- No C64 renderer or colour-pipeline changes from v0.5.0.
+
 ## 0.5.0
 
 - Added host-side Wavefront MTL `Kd` parsing and per-face material propagation. Source RGB values are mapped to native VIC-II indices before table generation; the bundled sunflower maps to brown centre, yellow petals, and green stem/leaves.

@@ -18,6 +18,8 @@ Requires:
 * [64tass](https://tass64.sourceforge.net/) — 6502/6510 cross-assembler.
 * Python 3.
 
+### 🐧 Linux setup
+
 On Debian/Ubuntu and derivatives, VICE and 64tass can normally be installed with:
 
 ```bash
@@ -29,6 +31,34 @@ Verify that the required tools are available with:
 ```bash
 ./build.sh doctor
 ```
+
+### 🪟 Windows setup
+
+If Git is not already installed, install Git for Windows first through WinGet:
+
+```powershell
+winget install --id Git.Git -e --source winget
+```
+
+Then clone the toolkit and run the Windows setup helper:
+
+```powershell
+git clone https://github.com/FlyingFathead/c64-3d-toolkit.git
+cd c64-3d-toolkit
+.\setup-windows.cmd
+```
+
+For installer and recovery help:
+
+```powershell
+.\setup-windows.cmd -Help
+```
+
+If the toolkit came from a release ZIP or was copied from another machine, run `setup-windows.cmd` directly from the toolkit directory. The helper detects existing tools and can install missing Python, Git, and VICE through Microsoft's WinGet `winget` source. Existing WinGet packages are kept by default, with explicit upgrade and same-version reinstall choices.
+
+64tass remains a deliberate manual trust decision on Windows: setup does not automatically download or execute it. You can provide an existing `64tass.exe`, search common locations, or optionally scan a selected drive. Manual candidates are validated without execution and SHA-256 is shown before confirmation. Existing `[windows]` paths in `config/c643d.ini` are preserved unless you explicitly change them.
+
+See [`docs/WINDOWS_SETUP.md`](docs/WINDOWS_SETUP.md) for the complete Windows bootstrap, recovery, path-search, and trust/provenance notes.
 
 ### Toolchain configuration and macOS/Windows paths
 
@@ -509,6 +539,8 @@ c64-3d-toolkit/
 ├── README.md
 ├── build.sh
 ├── c643d.py
+├── setup-windows.cmd
+├── setup-windows.ps1
 ├── config/
 │   └── c643d.ini.example
 ├── c64/
@@ -545,6 +577,7 @@ c64-3d-toolkit/
     ├── CONFIGURATION.md
     ├── OBJ_PIPELINE.md
     ├── SVG_PIPELINE.md
+    ├── WINDOWS_SETUP.md
     ├── REFERENCES.md
     └── ROADMAP.md
 ```
@@ -582,7 +615,7 @@ A graphical host-side importer/previewer is planned, but the command-line path w
 
 ## Status
 
-Version 0.5.0 adds real per-material OBJ/MTL and per-contour SVG colour propagation into VIC-II hires screen cells. The coloured path uses compact native colour codes and is compile-time isolated; monochrome builds retain the previous geometry tables and hot line loop. The torus remains the performance/reference object, while the sunflower is the bundled multi-material acceptance case.
+Version 0.5.1 is a small Windows-setup release on top of 0.5.0's colour-wireframe pipeline. It adds the Windows setup helper and documentation without changing the C64 renderer: Python, Git, and VICE can be detected or installed through WinGet, while 64tass remains an explicit manual trust decision on Windows.
 
 ## Credits
 
