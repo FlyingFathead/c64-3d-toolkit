@@ -22,6 +22,8 @@ Implemented foundation:
 - Bundled `horse_head.obj`, `sunflower_torus.obj`, and `space_horse.svg` reference assets.
 - SVG path/primitive flattening, contour simplification, optional wire extrusion, and SVG-colour -> C64-colour mapping.
 - Per-face OBJ/MTL and per-contour SVG colour propagation into dominant-colour VIC-II hires cells, with a compile-time-isolated monochrome path.
+- Optional headless Blender scene evaluation through Blender's bundled `bpy`, including multiple mesh objects, evaluated stable-topology animation, active-camera projection, material colour mapping, strict authored-frame semantics, and a Blender-neutral `.c643dscene` interchange.
+- Script-generated falling-cubes rigid-body Blender example.
 
 Next:
 
@@ -31,6 +33,8 @@ Next:
 - Preserve/select sharp and silhouette-important edges during simplification.
 - Cost-aware detail target: not only face count, but estimated line pixels / table RAM / renderer cycles.
 - More built-ins (icosphere, pyramid, ship-like benchmark meshes).
+- Near-plane clipping for Blender shots that deliberately cross the camera plane.
+- Optional topology-changing Blender scene support and compressed/delta frame tables.
 
 ## Host UI / tooling
 
@@ -45,7 +49,7 @@ Next:
 
 ```text
 Blender / modeller / vector editor / generated asset
-    -> Wavefront OBJ / SVG
+    -> Wavefront OBJ / SVG, or evaluated Blender scene frames
     -> c64-3d-toolkit import-obj / import-svg
     -> topology diagnostics / contour simplification
     -> simplify to a C64-friendly budget

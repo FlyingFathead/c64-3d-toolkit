@@ -1,6 +1,6 @@
 # Windows setup
 
-`c64-3d-toolkit` v0.5.1 adds a Windows 11 setup helper.
+`c64-3d-toolkit` v0.6.0-wip includes a Windows 11 setup helper with optional Blender support.
 
 ## First-time bootstrap on Windows 11
 
@@ -29,16 +29,32 @@ The batch file launches `setup-windows.ps1` from the toolkit root.
 
 ## What the installer does
 
-The installer first detects existing tools. When Python, Git, or VICE is missing, it may install the missing component through Microsoft's WinGet `winget` source:
+The installer first detects existing tools. When Python, Git, or VICE is missing, it may install the missing component through Microsoft's WinGet `winget` source. It also detects optional Blender and asks before installing it when absent:
 
 - Python: `Python.Python.3.13`
 - Git: `Git.Git`
 - VICE (preferred): `VICE-Team.VICE.GTK3`
 - VICE (also recognized): `VICE-Team.VICE.SDL2`
+- Blender (optional, highly recommended): `BlenderFoundation.Blender`
+
+Blender is optional for procedural, OBJ, and SVG workflows but highly
+recommended because it enables authored multi-object animation and camera
+scenes. Setup searches `PATH`, normal Blender Foundation directories under
+Program Files, local Programs, and the matching WinGet-managed package tree.
+If it is not found, setup offers:
+
+```powershell
+winget install --exact --id BlenderFoundation.Blender --source winget
+```
+
+The offer defaults to yes but requires an explicit prompt response; declining
+does not make setup fail. Setup validates the executable path without running
+Blender. The actual first `--blend` build performs a headless `import bpy`
+probe and reports Blender's version.
 
 The installer does **not** proactively probe Internet hosts. WinGet may contact only its configured `winget` source for exact package-state queries and install/upgrade/reinstall operations. The local preflight reports whether `winget.exe` and Windows `curl.exe` exist; `curl.exe` is informational only and is not used by this installer revision.
 
-The installer does **not** run `64tass`, `c643d.py doctor`, a build, or VICE during setup.
+The installer does **not** run Blender, `64tass`, `c643d.py doctor`, a build, or VICE during setup.
 
 
 ### Existing Windows config behavior
@@ -54,6 +70,12 @@ If setup ends up with a path different from what is currently stored, it shows t
 ## 64tass on Windows
 
 64tass is deliberately **detect/configure only**. The installer will not automatically download it and will not install MSYS2, pacman, Scoop, Chocolatey, or another third-party package manager.
+
+64tass is nevertheless **required for assembly and runnable `.prg` output**.
+Setup permits temporarily skipping it so the rest of the machine can be
+configured, but normal builds cannot finish until a trusted `64tass.exe` is
+selected. Only host-side source/table generation with `--no-assemble` works
+without it.
 
 If 64tass is already in `PATH`, setup will use it. You can also specify the exact executable:
 
@@ -155,7 +177,7 @@ If setup installed or updated a tool through WinGet, close the current terminal 
 
 Selecting `Q` / `QUIT` no longer silently discards the setup state. The helper prints a summary of what it has discovered or changed so far, including existing/installed package actions, selected paths, and any pending `[windows]` `tass`/`vice` values. If valid tool paths are pending, you can save those configuration changes before quitting or discard them.
 
-This is **not** a rollback mechanism: a Python/Git/VICE install, upgrade, or reinstall already performed by WinGet remains installed even if you choose to quit and discard the INI changes.
+This is **not** a rollback mechanism: a Python/Git/VICE install, upgrade, or reinstall, or a user-approved Blender install, already performed by WinGet remains installed even if you choose to quit and discard the INI changes.
 
 ### 64tass path/search options
 

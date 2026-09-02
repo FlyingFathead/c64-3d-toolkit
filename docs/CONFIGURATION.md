@@ -5,6 +5,7 @@
 ```ini
 64tass executable: 64tass
 VICE executable:   x64sc
+Blender executable: blender (optional; used only by --blend)
 VICE arguments:    +VICIIfull
 ```
 
@@ -35,6 +36,7 @@ Example:
 [toolchain]
 tass = 64tass
 vice = x64sc
+blender = blender
 tass_args =
 vice_args = +VICIIfull
 
@@ -45,6 +47,7 @@ vice = /Applications/vice-arm64-gtk3-3.8/bin/x64sc
 [windows]
 tass = C:\Tools\64tass\64tass.exe
 vice = C:\Tools\VICE\bin\x64sc.exe
+blender = C:\Program Files\Blender Foundation\Blender 4.0\blender.exe
 ```
 
 Executable settings can be a command name in `PATH` or a full path. For VICE, a containing distribution directory or a macOS `.app` bundle can also be supplied; the toolkit probes common internal CLI locations.
@@ -135,6 +138,15 @@ Run `doctor` after configuring:
 ```
 
 It reports the resolved executables, configured arguments, active platform and loaded config file.
+
+64tass and VICE preflight output includes the version reported by each resolved
+executable. `doctor` also runs a headless Blender probe and reports
+`<version>; bpy OK` when the optional Blender pipeline is usable.
+
+Blender is optional. When `--blend` is selected, the toolkit performs a real
+headless `bpy` import probe in addition to executable discovery. Configure an
+unusual installation with `blender = ...` or `--blender PATH`. See
+[`BLENDER_PIPELINE.md`](BLENDER_PIPELINE.md).
 
 ## Windows
 

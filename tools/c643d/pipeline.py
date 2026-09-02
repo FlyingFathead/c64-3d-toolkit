@@ -13,6 +13,9 @@ class Camera:
     focal: float = 180.0
     cx: float = 128.0
     cy: float = 72.0
+    # Legacy sources use square projection and leave this unset. Scene sources
+    # can preserve Blender's independent vertical focal length.
+    focal_y: float | None = None
 
 @dataclass
 class FrameBuild:
@@ -106,6 +109,30 @@ def oriented_dda(x0:int,y0:int,x1:int,y1:int):
     return {'axis':axis,'negative':negative,'slope':slope,'phase':phase,'mismatch':mismatch,'points':points,'errors':errors}
 
 
+def clip_line_to_viewport(x0:float,y0:float,x1:float,y1:float):
+    """Clip a projected line to the C64 viewport using Liang-Barsky."""
+    dx=x1-x0; dy=y1-y0
+    enter=0.0; leave=1.0
+    for p,q in (
+        (-dx,x0), (dx,(W-1)-x0),
+        (-dy,y0), (dy,(H-1)-y0),
+    ):
+        if abs(p)<1.0e-12:
+            if q<0.0:return None
+            continue
+        t=q/p
+        if p<0.0:
+            if t>leave:return None
+            enter=max(enter,t)
+        else:
+            if t<enter:return None
+            leave=min(leave,t)
+    return (
+        x0+enter*dx,y0+enter*dy,
+        x0+leave*dx,y0+leave*dy,
+    )
+
+
 def make_step_chunks(dda,start:int,end:int):
     pts=dda['points'][start:end+1]; count=len(pts); axis=dda['axis']
     startmod=(pts[0][0] if axis==0 else pts[0][1])&7
@@ -196,12 +223,13 @@ def _frame_rotate_vector(v, fi:int, frames:int, *, spin_axis:str='y', animation:
     raise ValueError(f'unknown animation mode: {animation}')
 
 def fit_scale(mesh:Mesh, frames:int, camera:Camera, margin:int=4, max_scale:float=1.4, spin_axis:str="y", animation:str='spin', animation_tilt:float=62.0, animation_travel:float=120.0, animation_rise:float=54.0):
+    focal_y=camera.focal if camera.focal_y is None else camera.focal_y
     def ok(s):
         for fi in range(frames):
             for p in mesh.vertices:
                 x,y,z0=_frame_transform((p[0]*s,p[1]*s,p[2]*s),fi,frames,spin_axis=spin_axis,animation=animation,animation_tilt=animation_tilt,animation_travel=animation_travel,animation_rise=animation_rise); z=camera.distance+z0
                 if z<=1: return False
-                sx=camera.cx+camera.focal*x/z; sy=camera.cy-camera.focal*y/z
+                sx=camera.cx+camera.focal*x/z; sy=camera.cy-focal_y*y/z
                 if sx<margin or sx>W-1-margin or sy<margin or sy>H-1-margin:return False
         return True
     lo,hi=0.01,max_scale
@@ -236,7 +264,7 @@ def classify_feature_edges(mesh:Mesh, feature_angle:float=40.0):
     return out, {'boundary':boundary,'nonmanifold':nonmanifold,'crease':crease,'features':sum(out.values()),'edges':len(out)}
 
 
-def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibility_mode:str="surface", z_tolerance:float=Z_TOL, feature_angle:float=40.0, animation:str='spin', animation_tilt:float=62.0, animation_travel:float=120.0, animation_rise:float=54.0, enable_source_colors:bool=False, fallback_color:int=1) -> tuple[list[FrameBuild],int]:
+def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibility_mode:str="surface", z_tolerance:float=Z_TOL, feature_angle:float=40.0, animation:str='spin', animation_tilt:float=62.0, animation_travel:float=120.0, animation_rise:float=54.0, enable_source_colors:bool=False, fallback_color:int=1, clip_viewport:bool=False) -> tuple[list[FrameBuild],int]:
     if not 1<=frames<=255: raise ValueError('frames must be 1..255')
     if not 0<=fallback_color<=15: raise ValueError('fallback colour must be 0..15')
     # Precompute face geometry in object space.
@@ -249,11 +277,14 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
     if visibility_mode == "surface_creases":
         feature_edges,_feature_stats=classify_feature_edges(mesh,feature_angle)
     all_frames=[]
+    focal_y=camera.focal if camera.focal_y is None else camera.focal_y
     for fi in range(frames):
         projected=[]
         for p0 in mesh.vertices:
             x,y,z0=_frame_transform(p0,fi,frames,spin_axis=spin_axis,animation=animation,animation_tilt=animation_tilt,animation_travel=animation_travel,animation_rise=animation_rise); z=camera.distance+z0
-            sx=camera.cx+camera.focal*x/z; sy=camera.cy-camera.focal*y/z
+            if z<=1.0e-6:
+                raise RuntimeError(f'frame {fi}: vertex lies on or behind the camera near plane (z={z:g})')
+            sx=camera.cx+camera.focal*x/z; sy=camera.cy-focal_y*y/z
             projected.append((sx,sy,1.0/z))
         front=[]; face_depth=[]
         for c0,n0 in zip(fcent,fnorm):
@@ -304,11 +335,21 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
                 # sharp manifold creases survive back-face pre-culling and go
                 # through the full surface Z-buffer visibility test.
                 continue
-            x0=int(round(projected[v0][0])); y0=int(round(projected[v0][1]))
-            x1=int(round(projected[v1][0])); y1=int(round(projected[v1][1]))
-            # Projected mesh is fitted; still guard a bad imported mesh.
-            if not (0<=x0<W and 0<=x1<W and 0<=y0<H and 0<=y1<H):
-                raise RuntimeError(f'frame {fi}: projected edge outside viewport: {(x0,y0)} {(x1,y1)}')
+            sx0,sy0=projected[v0][0],projected[v0][1]
+            sx1,sy1=projected[v1][0],projected[v1][1]
+            if clip_viewport:
+                clipped=clip_line_to_viewport(sx0,sy0,sx1,sy1)
+                if clipped is None:
+                    continue
+                cx0,cy0,cx1,cy1=clipped
+                x0=max(0,min(W-1,int(round(cx0)))); y0=max(0,min(H-1,int(round(cy0))))
+                x1=max(0,min(W-1,int(round(cx1)))); y1=max(0,min(H-1,int(round(cy1))))
+            else:
+                x0=int(round(sx0)); y0=int(round(sy0))
+                x1=int(round(sx1)); y1=int(round(sy1))
+                # Legacy sources are auto-fitted; retain the historical guard.
+                if not (0<=x0<W and 0<=x1<W and 0<=y0<H and 0<=y1<H):
+                    raise RuntimeError(f'frame {fi}: projected edge outside viewport: {(x0,y0)} {(x1,y1)}')
             dda=oriented_dda(x0,y0,x1,y1); mism.append(dda['mismatch']); pts=dda['points']
             q0=projected[v0][2]; q1=projected[v1][2]
             if pts[0]!=(x0,y0):q0,q1=q1,q0
@@ -321,8 +362,6 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
             # q=1/z is perspective-correct when interpolated linearly in screen space.
             # Project each raster pixel centre onto the original projected edge rather
             # than using DDA-step index, which also avoids depth drift on steep lines.
-            sx0,sy0=projected[v0][0],projected[v0][1]
-            sx1,sy1=projected[v1][0],projected[v1][1]
             ex=sx1-sx0; ey=sy1-sy0; el2=ex*ex+ey*ey
             adjacent_set=set(adjacent)
             vis=[]
@@ -402,6 +441,48 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
             len(cell_color_counts),color_conflicts,tuple(sorted(palette)),
         ))
     return all_frames,len(edges)
+
+
+def build_scene_frames(scene, *, visibility_mode:str='surface', z_tolerance:float=Z_TOL,
+                       feature_angle:float=40.0, enable_source_colors:bool=False,
+                       fallback_color:int=1) -> tuple[list[FrameBuild],int]:
+    """Render camera-space frames loaded from a ``.c643dscene`` source.
+
+    Each authored frame is fed through the same hidden-line/DDA implementation
+    as the legacy procedural/OBJ/SVG path.  Calling the established renderer
+    one frame at a time keeps all legacy frame-generation semantics isolated:
+    Blender supplies evaluated vertices and projection, while the C64 tables
+    remain exactly the format the existing runtime already consumes.
+    """
+    if not 1<=len(scene.frames)<=255:
+        raise ValueError('scene frames must be 1..255')
+    all_frames=[]; candidate_edges=None
+    for scene_index,frame in enumerate(scene.frames):
+        current=Mesh(
+            scene.mesh.name,list(frame.vertices),list(scene.mesh.faces),
+            list(scene.mesh.line_edges),list(scene.mesh.face_colors),list(scene.mesh.line_colors),
+        )
+        camera=Camera(
+            distance=0.0,focal=frame.projection.fx,cx=frame.projection.cx,
+            cy=frame.projection.cy,focal_y=frame.projection.fy,
+        )
+        try:
+            built,edges=build_frames(
+                current,1,camera,animation='recede',animation_travel=0.0,
+                visibility_mode=visibility_mode,z_tolerance=z_tolerance,
+                feature_angle=feature_angle,enable_source_colors=enable_source_colors,
+                fallback_color=fallback_color,clip_viewport=True,
+            )
+        except RuntimeError as e:
+            raise RuntimeError(
+                f'scene frame {scene_index} (Blender frame {frame.source_frame}): {e}'
+            ) from e
+        if candidate_edges is None:
+            candidate_edges=edges
+        elif edges!=candidate_edges:
+            raise RuntimeError('scene topology changed while rendering')
+        all_frames.append(built[0])
+    return all_frames,int(candidate_edges or 0)
 
 
 def build_xchunk_tables():

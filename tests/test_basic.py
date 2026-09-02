@@ -419,6 +419,7 @@ class TestToolchainConfig(unittest.TestCase):
             cfg=load_toolchain_settings(Path(td)/'missing.ini',system='Linux')
         self.assertEqual(cfg.tass,'64tass')
         self.assertEqual(cfg.vice,'x64sc')
+        self.assertEqual(cfg.blender,'blender')
         self.assertEqual(cfg.vice_args,('+VICIIfull',))
         self.assertIsNone(cfg.config_path)
 
@@ -478,3 +479,205 @@ class TestToolchainConfig(unittest.TestCase):
         from tools.c643d.toolchain import command
         self.assertEqual(command('/usr/bin/x64sc',['+VICIIfull'],['demo.prg']),
                          ['/usr/bin/x64sc','+VICIIfull','demo.prg'])
+
+    def test_blender_path_is_configurable_per_platform(self):
+        from tools.c643d.toolchain import load_toolchain_settings
+        with tempfile.TemporaryDirectory() as td:
+            path=Path(td)/'c643d.ini'
+            path.write_text('[toolchain]\nblender = generic-blender\n\n[linux]\nblender = /opt/blender/blender\n')
+            cfg=load_toolchain_settings(path,system='Linux',require=True)
+        self.assertEqual(cfg.blender,'/opt/blender/blender')
+
+    def test_preflight_version_probe_reads_first_output_line(self):
+        from tools.c643d.cli import _executable_version
+        with tempfile.TemporaryDirectory() as td:
+            fake=Path(td)/'tool'
+            fake.write_text('#!/bin/sh\nprintf "Example Tool 1.2.3\\nmore detail\\n"\n')
+            fake.chmod(0o755)
+            self.assertEqual(_executable_version(str(fake)),'Example Tool 1.2.3')
+
+
+class TestBlenderScenePipeline(unittest.TestCase):
+    def _scene_file(self,root:Path):
+        import json
+        base=normalize_mesh(cube(),18.0)
+        frames=[]
+        for source_frame,dx in ((1,-4.0),(4,5.0)):
+            frames.append({
+                'source_frame':source_frame,
+                'projection':{'fx':180.0,'fy':176.0,'cx':128.0,'cy':72.0},
+                'vertices':[[x+dx,y,z+110.0] for x,y,z in base.vertices],
+            })
+        path=root/'moving_cube.c643dscene'
+        path.write_text(json.dumps({
+            'format':'c643dscene','version':1,'name':'MOVING CUBE',
+            'source':{'kind':'blender','fps':24.0,'sample_step':3},
+            'topology':{
+                'faces':[list(f) for f in base.faces],'line_edges':[],
+                'face_colors':[7]*len(base.faces),'line_colors':[],
+            },
+            'frames':frames,
+        }))
+        return path
+
+    def test_scene_loader_and_renderer_accept_authored_frames(self):
+        from tools.c643d.sceneio import load_scene
+        from tools.c643d.pipeline import build_scene_frames
+        with tempfile.TemporaryDirectory() as td:
+            scene=load_scene(self._scene_file(Path(td)))
+        self.assertEqual(scene.name,'MOVING CUBE')
+        self.assertEqual([f.source_frame for f in scene.frames],[1,4])
+        self.assertEqual(scene.sample_step,3)
+        built,edges=build_scene_frames(scene,enable_source_colors=False)
+        self.assertEqual(len(built),2)
+        self.assertEqual(edges,12)
+        self.assertTrue(all(frame.records for frame in built))
+
+    def test_blender_sampling_evaluates_intervening_physics_frames(self):
+        from tools.c643d.blender import blender_frame_plan
+        evaluation,captures=blender_frame_plan(
+            1,72,3,scene_start=1,simulation_start=1,
+        )
+        self.assertEqual(list(evaluation),list(range(1,73)))
+        self.assertEqual(captures[:4],(1,4,7,10))
+        self.assertEqual(captures[-1],70)
+        self.assertEqual(len(captures),24)
+
+    def test_blender_exporter_warns_if_sampled_scene_is_static(self):
+        text=(ROOT/'tools'/'blender_export.py').read_text(encoding='utf-8')
+        self.assertIn('for evaluation_frame in evaluation_frames:',text)
+        self.assertIn('if evaluation_frame not in capture_frames:',text)
+        self.assertIn('all sampled frames are geometrically identical',text)
+        self.assertNotIn('for source_frame in source_frames:',text)
+
+    def test_scene_renderer_clips_authored_edges_to_viewport(self):
+        import json
+        from tools.c643d.sceneio import load_scene
+        from tools.c643d.pipeline import build_scene_frames, decode_record_points
+        with tempfile.TemporaryDirectory() as td:
+            path=self._scene_file(Path(td))
+            data=json.loads(path.read_text())
+            for frame in data['frames']:
+                for vertex in frame['vertices']:
+                    vertex[1]+=45.0
+            path.write_text(json.dumps(data))
+            scene=load_scene(path)
+            built,_=build_scene_frames(scene,enable_source_colors=False)
+        points=[point for record in built[0].records for point in decode_record_points(record)]
+        self.assertTrue(points)
+        self.assertTrue(all(0<=x<256 and 0<=y<144 for x,y in points))
+
+    def test_viewport_clipper_handles_reported_falling_cube_edge(self):
+        from tools.c643d.pipeline import clip_line_to_viewport
+        clipped=clip_line_to_viewport(95.0,12.0,94.0,-11.0)
+        self.assertIsNotNone(clipped)
+        self.assertAlmostEqual(clipped[3],0.0)
+        self.assertTrue(all((0<=x<256 and 0<=y<144)
+                            for x,y in ((clipped[0],clipped[1]),(clipped[2],clipped[3]))))
+
+    def test_legacy_renderer_retains_outside_viewport_guard(self):
+        from tools.c643d.mesh import Mesh
+        mesh=normalize_mesh(cube(),18.0)
+        shifted=Mesh(
+            mesh.name,[(x,y+60.0,z) for x,y,z in mesh.vertices],
+            list(mesh.faces),list(mesh.line_edges),
+            list(mesh.face_colors),list(mesh.line_colors),
+        )
+        with self.assertRaisesRegex(RuntimeError,'projected edge outside viewport'):
+            build_frames(shifted,1,Camera(distance=110.0,focal=180.0))
+
+    def test_scene_loader_rejects_topology_changes(self):
+        import json
+        from tools.c643d.sceneio import load_scene
+        with tempfile.TemporaryDirectory() as td:
+            path=self._scene_file(Path(td))
+            data=json.loads(path.read_text())
+            data['frames'][1]['vertices'].pop()
+            path.write_text(json.dumps(data))
+            with self.assertRaisesRegex(ValueError,'topology changed'):
+                load_scene(path)
+
+    def test_missing_blender_gives_ubuntu_install_command(self):
+        from tools.c643d.blender import require_blender
+        with self.assertRaisesRegex(RuntimeError,'sudo apt install blender'):
+            require_blender('definitely-not-a-real-blender-command',system='Linux')
+
+    def test_bpy_probe_reports_blender_version(self):
+        from tools.c643d.blender import probe_blender
+        with tempfile.TemporaryDirectory() as td:
+            fake=Path(td)/'blender'
+            fake.write_text(
+                '#!/bin/sh\n'
+                'case "$*" in *hasattr*|*bpy.types*) exit 9;; esac\n'
+                'printf "C6433D ignored\\nC643D_BPY_OK:4.0.2\\n"\n'
+            )
+            fake.chmod(0o755)
+            self.assertEqual(probe_blender(str(fake)),'4.0.2')
+
+    def test_bpy_probe_does_not_introspect_blender_rna_types(self):
+        text=(ROOT/'tools'/'c643d'/'blender.py').read_text(encoding='utf-8')
+        self.assertIn('import bpy; print',text)
+        self.assertNotIn('hasattr(',text)
+        self.assertNotIn('bpy.types.',text)
+        self.assertIn("'--python-exit-code','1'",text)
+
+    def test_bpy_probe_preserves_useful_failure_tail(self):
+        from tools.c643d.blender import probe_blender
+        with tempfile.TemporaryDirectory() as td:
+            fake=Path(td)/'blender'
+            fake.write_text(
+                '#!/bin/sh\n'
+                'printf "Traceback (most recent call last):\\n" >&2\n'
+                'printf "ImportError: bpy failed to import\\n" >&2\n'
+                'printf "Error: script failed, exiting.\\n" >&2\n'
+                'exit 1\n'
+            )
+            fake.chmod(0o755)
+            with self.assertRaisesRegex(RuntimeError,'ImportError: bpy failed to import'):
+                probe_blender(str(fake))
+
+    def test_blender_export_uses_camera_object_api(self):
+        text=(ROOT/'tools'/'blender_export.py').read_text(encoding='utf-8')
+        self.assertIn('evaluated_camera.calc_matrix_camera(',text)
+        self.assertNotIn('evaluated_camera.data.calc_matrix_camera(',text)
+
+    def test_blender_export_turns_python_tracebacks_into_failure(self):
+        from types import SimpleNamespace
+        from unittest.mock import patch
+        from tools.c643d.blender import export_blend_scene
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            source=root/'scene.blend'
+            output=root/'scene.c643dscene'
+            source.write_bytes(b'BLENDER')
+            (root/'tools').mkdir()
+            (root/'tools'/'blender_export.py').write_text('# test exporter\n')
+
+            def fake_run(command,**kwargs):
+                output.write_text('{}')
+                self.assertLess(command.index('--python-exit-code'),command.index('--python'))
+                self.assertEqual(command[command.index('--python-exit-code')+1],'1')
+                return SimpleNamespace(returncode=0)
+
+            with patch('tools.c643d.blender.subprocess.run',side_effect=fake_run):
+                self.assertEqual(
+                    export_blend_scene(
+                        source,output,blender='/fake/blender',root=root,
+                        blender_is_verified=True,
+                    ),
+                    output.resolve(),
+                )
+
+    def test_falling_cubes_examples_are_packaged_under_examples(self):
+        directory=ROOT/'examples'/'blender'
+        self.assertTrue((directory/'falling_cubes_c64.py').is_file())
+        self.assertTrue((directory/'falling_cubes_full.py').is_file())
+        blend=directory/'falling_cubes_full.blend'
+        self.assertTrue(blend.is_file())
+        self.assertEqual(blend.read_bytes()[:7],b'BLENDER')
+
+    def test_windows_setup_offers_exact_optional_blender_package(self):
+        text=(ROOT/'setup-windows.ps1').read_text(encoding='utf-8')
+        self.assertIn("WingetId = 'BlenderFoundation.Blender'",text)
+        self.assertIn('Request-BlenderInstall',text)
+        self.assertIn('64tass is REQUIRED to assemble a runnable .prg',text)

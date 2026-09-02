@@ -7,7 +7,7 @@
 Python owns the expensive/general operations:
 
 ```text
-procedural shape / OBJ / SVG preset
+procedural shape / OBJ / SVG preset, or Blender-authored scene frames
         -> mesh/contour cleanup + source colour conversion to VIC-II 0..15
         -> initial pose
         -> sampled animation transform (spin / recede / crawl)
@@ -19,6 +19,14 @@ procedural shape / OBJ / SVG preset
 ```
 
 Named OBJ and SVG assets live under `objects/`. JSON sidecars store stable object metadata so the CLI and future graphical tooling can use the same project format.
+
+Animated `.blend` files follow a separate optional front end. The normal Python
+process launches Blender headlessly; Blender's bundled Python and `bpy` evaluate
+the dependency graph, object/world/camera transforms, modifiers, armatures,
+rigid bodies, materials, and camera projection. A versioned `.c643dscene`
+interchange carries camera-space geometry into the same hidden-line, colour,
+DDA, table-emission, assembler, and C64 runtime used by legacy sources. The
+normal toolkit never imports `bpy`.
 
 OBJ data enters as polygon surfaces; `usemtl` assigns MTL `Kd` colours to faces. SVG data enters as explicit contour edges with per-contour stroke/fill colours: curves are flattened and simplified on the host, and an optional shallow Z extrusion can duplicate/connect those contours without pretending glyph holes are simple filled polygons.
 
@@ -55,12 +63,17 @@ The runtime still only advances a finite table of precomputed frames. What chang
 - `spin` rotates around X/Y/Z as before;
 - `recede` translates a front-facing object away from the camera;
 - `crawl` fixes the object onto an X-tilted virtual plane and translates it upward/away.
+- Blender scene frames preserve arbitrary authored object/deformation/camera state.
 
 This lets 2-D vector artwork behave as geometry in perspective without adding a matrix engine to the 6510 runtime.
 
 ## Memory pressure
 
 Geometry detail affects both runtime cost and generated table RAM. The compiler therefore keeps requested geometry first and reduces sampled frame count when necessary. `--strict-frames` changes that policy to fail instead.
+
+Blender scene frames are always strict. Automatically reducing an authored
+frame sequence could remove semantically important animation states, so an
+oversized scene fails with sampling/range/detail suggestions instead.
 
 This is particularly relevant for arbitrary OBJ meshes and vector logos. The bundled 64-vertex horse head currently compiles at 36 sampled orientations; the bundled SPACE HORSE SVG presets are intentionally simplified to a C64-friendly wire count and auto-fit to the table budget.
 

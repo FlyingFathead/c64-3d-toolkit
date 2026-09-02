@@ -14,6 +14,7 @@ from typing import Iterable, Optional, Sequence, Tuple
 class ToolchainSettings:
     tass: str = '64tass'
     vice: str = 'x64sc'
+    blender: str = 'blender'
     tass_args: Tuple[str, ...] = ()
     # Development runs should open in a normal window unless the user asks
     # otherwise. VICE uses '+' to disable this boolean resource.
@@ -55,6 +56,7 @@ def load_toolchain_settings(path: Optional[Path], *, system: Optional[str] = Non
     values={
         'tass':'64tass',
         'vice':'x64sc',
+        'blender':'blender',
         'tass_args':(),
         'vice_args':('+VICIIfull',),
     }
@@ -66,7 +68,7 @@ def load_toolchain_settings(path: Optional[Path], *, system: Optional[str] = Non
             with path.open('r',encoding='utf-8') as f:
                 cfg.read_file(f)
             for section in ('toolchain',pkey):
-                for key in ('tass','vice'):
+                for key in ('tass','vice','blender'):
                     raw=_section_value(cfg,section,key)
                     if raw is not None and raw.strip():
                         values[key]=raw.strip().strip('"').strip("'")
@@ -78,7 +80,7 @@ def load_toolchain_settings(path: Optional[Path], *, system: Optional[str] = Non
         elif require:
             raise FileNotFoundError(f'config file not found: {path}')
     return ToolchainSettings(
-        tass=values['tass'], vice=values['vice'],
+        tass=values['tass'], vice=values['vice'], blender=values['blender'],
         tass_args=tuple(values['tass_args']), vice_args=tuple(values['vice_args']),
         config_path=loaded, platform_key=pkey,
     )
@@ -112,7 +114,7 @@ def _is_executable(path: Path) -> bool:
 
 
 def _probe_path(path: Path, tool: str) -> Optional[str]:
-    """Accept an executable, a VICE .app, or a distribution directory."""
+    """Accept an executable, supported macOS .app, or distribution directory."""
     path=Path(os.path.expandvars(str(path))).expanduser()
     if _is_executable(path):
         return str(path.resolve())
@@ -132,6 +134,10 @@ def _probe_path(path: Path, tool: str) -> Optional[str]:
             for candidate in app_candidates:
                 if _is_executable(candidate):
                     return str(candidate.resolve())
+        if tool=='blender' and path.suffix.lower()=='.app':
+            candidate=path/'Contents/MacOS/Blender'
+            if _is_executable(candidate):
+                return str(candidate.resolve())
         names=[]
         if tool=='vice':
             names=[
@@ -142,8 +148,10 @@ def _probe_path(path: Path, tool: str) -> Optional[str]:
                 Path('VICE.app/Contents/Resources/bin/x64sc'),
                 Path('x64sc.app/Contents/MacOS/x64sc'),
             ]
-        else:
+        elif tool=='tass':
             names=[Path('64tass'),Path('64tass.exe'),Path('bin/64tass'),Path('bin/64tass.exe')]
+        else:
+            names=[Path('blender'),Path('blender.exe'),Path('Blender.app/Contents/MacOS/Blender')]
         for rel in names:
             candidate=path/rel
             if _is_executable(candidate):
@@ -173,7 +181,7 @@ def platform_candidates(tool: str, *, system: Optional[str] = None, home: Option
     if pkey=='macos':
         if tool=='tass':
             out.extend([Path('/opt/homebrew/bin/64tass'),Path('/usr/local/bin/64tass')])
-        else:
+        elif tool=='vice':
             out.extend([Path('/opt/homebrew/bin/x64sc'),Path('/usr/local/bin/x64sc')])
             roots=[Path('/Applications'),home/'Applications',home/'Downloads']
             for root in roots:
@@ -190,6 +198,12 @@ def platform_candidates(tool: str, *, system: Optional[str] = None, home: Option
                         'vice*/VICE.app/Contents/Resources/bin/x64sc',
                     ):
                         out.extend(sorted(root.glob(pat)))
+        else:
+            out.extend([
+                Path('/Applications/Blender.app/Contents/MacOS/Blender'),
+                home/'Applications/Blender.app/Contents/MacOS/Blender',
+                Path('/opt/homebrew/bin/blender'),Path('/usr/local/bin/blender'),
+            ])
     elif pkey=='windows':
         pf=Path(env.get('ProgramFiles','C:/Program Files'))
         pf86=Path(env.get('ProgramFiles(x86)','C:/Program Files (x86)'))
@@ -199,11 +213,15 @@ def platform_candidates(tool: str, *, system: Optional[str] = None, home: Option
                 pf/'64tass/64tass.exe',pf86/'64tass/64tass.exe',
                 local/'Programs/64tass/64tass.exe',
             ])
-        else:
+        elif tool=='vice':
             for base in (pf,pf86,local/'Programs'):
                 out.extend([base/'VICE/x64sc.exe',base/'VICE/bin/x64sc.exe'])
+        else:
+            for base in (pf/'Blender Foundation',pf86/'Blender Foundation',local/'Programs'):
+                if base.exists():
+                    out.extend(sorted(base.glob('Blender*/blender.exe'),reverse=True))
     else:
-        name='64tass' if tool=='tass' else 'x64sc'
+        name={'tass':'64tass','vice':'x64sc','blender':'blender'}[tool]
         out.extend([Path('/usr/local/bin')/name,Path('/usr/bin')/name,home/'.local/bin'/name])
     # Preserve order while removing duplicates.
     seen=set(); unique=[]
@@ -226,7 +244,11 @@ def resolve_executable(spec: str, tool: str, *, system: Optional[str] = None) ->
     found=shutil.which(spec)
     if found:
         return str(Path(found).resolve())
-    default_names={'tass':{'64tass','64tass.exe'},'vice':{'x64sc','x64sc.exe'}}[tool]
+    default_names={
+        'tass':{'64tass','64tass.exe'},
+        'vice':{'x64sc','x64sc.exe'},
+        'blender':{'blender','blender.exe'},
+    }[tool]
     if spec.lower() not in default_names:
         return None
     for candidate in _existing_candidates(platform_candidates(tool,system=system)):

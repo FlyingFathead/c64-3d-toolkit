@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.6.0
+
+- Fixed static Blender rigid-body exports: stateful scenes are now evaluated through every intervening source frame while `--sample-step` controls only which frames enter the C64 tables. Added an explicit warning when all captured frames are geometrically identical.
+- Fixed Blender 4.x scene export by calling `calc_matrix_camera()` on the evaluated camera object instead of its data block. Blender exporter tracebacks now also produce a nonzero process exit code and a truthful build failure.
+- Added viewport clipping for authored Blender/interchange scene edges, allowing normal camera compositions with partially offscreen geometry while retaining the classic auto-fit guard for legacy OBJ/SVG/procedural builds.
+- Restored Blender preflight to its proper scope: start Blender headlessly, import its bundled `bpy`, and report the version. Removed unreliable `bpy.types.Object` method introspection that produced false failures on Blender 4.0.2; the real scene exporter remains the capability test and reports API failures with a nonzero exit code and traceback. Documented current Blender 5.2 LTS as recommended, with Ubuntu 24.04's Blender 4.0.2 package retained as a supported older fallback and an explicit warning about newer `.blend` files not being backward-compatible.
+- Added optional animated Blender scene compilation with `--blend`, frame-range sampling, active Blender camera projection, multiple evaluated mesh objects, stable-topology deformation/rigid-body support, and Blender material colours.
+- Added a versioned Blender-neutral `.c643dscene` interchange and direct `--scene` compilation path. Blender runs `tools/blender_export.py` with its own bundled Python; the ordinary toolkit remains dependency-free and never imports `bpy`.
+- Added executable discovery plus a real headless `import bpy` preflight. Missing/broken Blender stops only the `--blend` path and prints platform-specific installation instructions, including `sudo apt install blender` for Ubuntu/Debian.
+- Blender animations use strict authored-frame semantics: table overflow fails with sampling/range/detail suggestions instead of silently reducing frame count.
+- Added `examples/blender/falling_cubes_c64.py`, which generates a six-cube rigid-body demo `.blend` from the command line, plus Harry's deterministic 40-cube `falling_cubes_full.py` and Blender-4.00 `.blend` authoring/stress example.
+- Preserved classic procedural/OBJ/SVG behavior and byte-identical generated output in legacy regression comparisons.
+
 ## 0.5.1
 
 - Added `setup-windows.cmd` and `setup-windows.ps1` for assisted Windows 11 setup.

@@ -1,5 +1,5 @@
 from __future__ import annotations
-import argparse, json, math, shutil, subprocess, sys
+import argparse, json, math, shutil, subprocess, sys, tempfile
 from pathlib import Path
 from . import __version__
 from .mesh import Mesh, normalize_mesh, transform_mesh, fix_winding_outward, mesh_diagnostics
@@ -11,7 +11,9 @@ from .objio import load_obj
 from .svgio import load_svg
 from .colors import c64_color_index, c64_color_name
 from .assets import load_object_preset, list_object_presets, import_obj_asset, import_svg_asset
-from .pipeline import Camera, fit_scale, build_frames, classify_feature_edges
+from .pipeline import Camera, fit_scale, build_frames, build_scene_frames, classify_feature_edges
+from .sceneio import load_scene
+from .blender import export_blend_scene, probe_blender, require_blender
 from .emit import emit_tables, emit_hud
 from .toolchain import (
     command as tool_command, config_request, load_toolchain_settings,
@@ -23,6 +25,17 @@ OBJECTS=ROOT/'objects'; GENERATED=ROOT/'generated'; BUILD=ROOT/'build'; C64=ROOT
 RENDERERS={'step':'renderer-step.asm','bytechunk':'renderer-bytechunk.asm','yunroll':'renderer-yunroll.asm'}
 
 
+def _executable_version(executable:str) -> str | None:
+    try:
+        completed=subprocess.run(
+            [executable,'--version'],capture_output=True,text=True,check=False,timeout=15,
+        )
+    except (OSError,subprocess.TimeoutExpired):
+        return None
+    lines=[line.strip() for line in (completed.stdout+'\n'+completed.stderr).splitlines() if line.strip()]
+    return lines[0] if lines else None
+
+
 def preflight(*, tass_name='64tass', vice_name='x64sc', tass_args=(), vice_args=(), need_assemble=True, need_run=False, verbose=True):
     tass=resolve_executable(tass_name,'tass')
     vice=resolve_executable(vice_name,'vice')
@@ -31,7 +44,8 @@ def preflight(*, tass_name='64tass', vice_name='x64sc', tass_args=(), vice_args=
         print(f'error: 64tass not found as {tass_name!r}; install 64tass, configure config/c643d.ini, or pass --tass PATH.', file=sys.stderr)
         ok=False
     elif verbose and tass:
-        print(f'preflight: 64tass = {tass}')
+        version=_executable_version(tass)
+        print(f'preflight: 64tass = {tass}{f" ({version})" if version else " (version unavailable)"}')
         if tass_args: print(f'preflight: 64tass args = {" ".join(tass_args)}')
     if need_run and not vice:
         print(f'error: VICE C64 emulator not found as {vice_name!r}; install VICE, configure config/c643d.ini, or pass --vice PATH.', file=sys.stderr)
@@ -43,7 +57,8 @@ def preflight(*, tass_name='64tass', vice_name='x64sc', tass_args=(), vice_args=
         if sys.platform=='darwin':
             print('hint: macOS users can use Homebrew (brew install vice) or set vice to the installed package bin/x64sc path in config/c643d.ini.', file=sys.stderr)
     elif verbose and vice:
-        print(f'preflight: VICE = {vice}')
+        version=_executable_version(vice)
+        print(f'preflight: VICE = {vice}{f" ({version})" if version else " (version unavailable)"}')
         if vice_args: print(f'preflight: VICE args = {" ".join(vice_args)}')
     return ok,tass,vice
 
@@ -56,6 +71,15 @@ def cmd_doctor(a):
     print(f'config:    {cfg if cfg else "built-in defaults (no config/c643d.ini found)"}')
     print(f'objects:   {OBJECTS}')
     print(f'examples:  {EXAMPLES}')
+    blender=resolve_executable(a.blender,'blender')
+    if blender:
+        try:
+            blender_version=probe_blender(blender)
+            print(f'blender:   {blender} ({blender_version}; bpy OK)')
+        except RuntimeError as e:
+            print(f'blender:   {blender} (bpy FAILED: {e})')
+    else:
+        print('blender:   not found (optional; required only for --blend)')
     return 0 if ok else 2
 
 
@@ -282,6 +306,8 @@ def print_stats(mesh:Mesh,label:str,renderer:str,scale:float,stats:dict,hud:str,
 
 
 def cmd_build(a):
+    if getattr(a,'blend',None) or getattr(a,'scene',None):
+        return cmd_build_scene(a)
     ok,tass_found,vice_found=preflight(tass_name=a.tass,vice_name=a.vice,tass_args=a.tass_args,vice_args=a.vice_args,need_assemble=not a.no_assemble,need_run=a.run,verbose=True)
     if not ok: return 2
     GENERATED.mkdir(exist_ok=True); BUILD.mkdir(exist_ok=True); OBJECTS.mkdir(exist_ok=True)
@@ -295,13 +321,14 @@ def cmd_build(a):
     if notice:
         print(notice,flush=True)
     cam=Camera(distance=a.camera,focal=a.focal,cx=128.0,cy=72.0)
-    fitted=fit_scale(mesh,a.frames,cam,margin=a.margin,max_scale=a.max_fit_scale,spin_axis=spin_axis,animation=animation,animation_tilt=anim_tilt,animation_travel=anim_travel,animation_rise=anim_rise) if not a.no_auto_fit else 1.0
+    requested_frames=a.frames if a.frames is not None else 48
+    fitted=fit_scale(mesh,requested_frames,cam,margin=a.margin,max_scale=a.max_fit_scale,spin_axis=spin_axis,animation=animation,animation_tilt=anim_tilt,animation_travel=anim_travel,animation_rise=anim_rise) if not a.no_auto_fit else 1.0
     mesh=transform_mesh(mesh,scale=fitted)
 
-    frame_candidates=[a.frames]
+    frame_candidates=[requested_frames]
     if not a.strict_frames:
         for n in (40,36,32,28,24,20,16,12,8):
-            if n<a.frames and n not in frame_candidates: frame_candidates.append(n)
+            if n<requested_frames and n not in frame_candidates: frame_candidates.append(n)
     last_error=None
     for actual_frames in frame_candidates:
         frames,candidate_edges=build_frames(mesh,actual_frames,cam,spin_axis=spin_axis,visibility_mode=visibility,z_tolerance=z_tolerance,feature_angle=feature_angle,animation=animation,animation_tilt=anim_tilt,animation_travel=anim_travel,animation_rise=anim_rise,enable_source_colors=per_cell_colors,fallback_color=c64_color_index(color_name))
@@ -315,14 +342,123 @@ def cmd_build(a):
             print(f'note: table RAM: {actual_frames} orientations do not fit ({e}); trying fewer orientations; mesh detail unchanged')
     else:
         raise RuntimeError(f'could not fit generated tables: {last_error}')
-    if actual_frames != a.frames:
-        print(f'table RAM auto-fit: orientations {a.frames} -> {actual_frames}; mesh vertices/edges/faces preserved')
+    if actual_frames != requested_frames:
+        print(f'table RAM auto-fit: orientations {requested_frames} -> {actual_frames}; mesh vertices/edges/faces preserved')
     hud=emit_hud(GENERATED/'hud.inc',label,len(mesh.vertices),len(mesh.edges))
     asm=prepare_asm(a.renderer,actual_frames,c64_color_index(color_name),stats['colors_enabled'])
     subprocess.run([sys.executable,str(ROOT/'tools'/'asm_sanity.py'),str(asm)],cwd=ROOT,check=True)
     print_stats(mesh,label,a.renderer,fitted,stats,hud,spin_axis,visibility,z_tolerance,feature_angle,color_name,use_source_colors,animation)
     outname=a.output or default_output_basename(label,a.renderer,use_source_colors)
     outdir=Path(a.output_dir).resolve() if getattr(a,'output_dir',None) else BUILD
+    outdir.mkdir(parents=True,exist_ok=True)
+    prg=outdir/f'{outname}.prg'; lbl=outdir/f'{outname}.lbl'; lst=outdir/f'{outname}.lst'
+    if a.no_assemble:
+        print(f'generated assembler: {asm}')
+        return 0
+    tass=tass_found or resolve_executable(a.tass,'tass')
+    cmd=tool_command(tass,a.tass_args,['--cbm-prg','--vice-labels','-l',str(lbl),'-L',str(lst),'-o',str(prg),str(asm)])
+    print('+',' '.join(cmd)); subprocess.run(cmd,cwd=ROOT,check=True)
+    print(f'built {prg.relative_to(ROOT)}')
+    if a.run:
+        vice=vice_found or resolve_executable(a.vice,'vice')
+        subprocess.run(tool_command(vice,a.vice_args,[str(prg)]),cwd=ROOT,check=False)
+    return 0
+
+
+def _scene_color_policy(mesh:Mesh,a):
+    requested=getattr(a,'color',None)
+    disabled=bool(getattr(a,'ignore_colors',False))
+    use_source_colors=bool(mesh.has_source_colors and not disabled and requested is None)
+    if requested is not None:
+        color_name=c64_color_name(c64_color_index(requested))
+    elif disabled or not mesh.has_source_colors:
+        color_name='white'
+    else:
+        palette=mesh.source_colors
+        color_name=c64_color_name(palette[0])
+    per_cell_colors=use_source_colors and len(mesh.source_colors)>1
+    return color_name,use_source_colors,per_cell_colors
+
+
+def cmd_build_scene(a):
+    selected=sum(bool(x) for x in (a.blend,a.scene,a.obj,a.svg,a.object))
+    if selected>1:
+        print('error: --blend/--scene cannot be combined with --object, --obj, or --svg',file=sys.stderr)
+        return 2
+    if a.frames is not None:
+        print('error: --frames is for generated legacy animations; use --frame-start/--frame-end/--sample-step with --blend',file=sys.stderr)
+        return 2
+    if not a.scene:
+        try:
+            blender_found,blender_version=require_blender(a.blender,system=getattr(a,'_tool_platform',None))
+        except RuntimeError as e:
+            print(str(e),file=sys.stderr)
+            return 2
+        print(f'preflight: Blender = {blender_found} ({blender_version}; bpy OK)')
+    else:
+        blender_found=None
+    ok,tass_found,vice_found=preflight(
+        tass_name=a.tass,vice_name=a.vice,tass_args=a.tass_args,vice_args=a.vice_args,
+        need_assemble=not a.no_assemble,need_run=a.run,verbose=True,
+    )
+    if not ok:
+        return 2
+    GENERATED.mkdir(exist_ok=True); BUILD.mkdir(exist_ok=True)
+    try:
+        if a.scene:
+            scene=load_scene(a.scene)
+        else:
+            with tempfile.TemporaryDirectory(prefix='c643d-blender-') as td:
+                exported=Path(td)/'scene.c643dscene'
+                export_blend_scene(
+                    a.blend,exported,blender=blender_found,
+                    frame_start=a.frame_start,frame_end=a.frame_end,
+                    sample_step=a.sample_step,system=getattr(a,'_tool_platform',None),root=ROOT,
+                    blender_is_verified=True,
+                )
+                scene=load_scene(exported)
+    except (OSError,ValueError,RuntimeError) as e:
+        print(f'error: {e}',file=sys.stderr)
+        return 2
+    if len(scene.frames)>255:
+        print(f'error: scene has {len(scene.frames)} frames; maximum is 255',file=sys.stderr)
+        return 2
+    mesh=scene.mesh
+    if a.name:
+        mesh.name=a.name.upper()
+    label=mesh.name
+    visibility='surface' if a.visibility=='auto' else a.visibility
+    z_tolerance=0.0008 if a.z_tolerance is None else float(a.z_tolerance)
+    feature_angle=40.0 if a.feature_angle is None else float(a.feature_angle)
+    color_name,use_source_colors,per_cell_colors=_scene_color_policy(mesh,a)
+    palette=', '.join(c64_color_name(index) for index in mesh.source_colors) or '(none)'
+    print(f'scene:      {Path(a.blend or a.scene).name}')
+    print(f'sampling:   {len(scene.frames)} authored frames; source frames {scene.frames[0].source_frame}..{scene.frames[-1].source_frame}; step {scene.sample_step}')
+    print(f'materials:  {palette}; {"source colours enabled" if use_source_colors else color_name+" monochrome"}',flush=True)
+    try:
+        frames,candidate_edges=build_scene_frames(
+            scene,visibility_mode=visibility,z_tolerance=z_tolerance,
+            feature_angle=feature_angle,enable_source_colors=per_cell_colors,
+            fallback_color=c64_color_index(color_name),
+        )
+        stats=emit_tables(GENERATED/'tables.inc',frames,a.renderer,candidate_edges)
+    except RuntimeError as e:
+        message=str(e)
+        if any(k in message for k in ('line tables reach','line tables need','clear tables reach','clear/colour tables reach','frame pointer tables reach')):
+            print(f'error: Blender animation does not fit table RAM: {message}',file=sys.stderr)
+            print('hint: increase --sample-step, shorten --frame-end, or reduce scene geometry; authored frames are never silently discarded.',file=sys.stderr)
+            return 2
+        print(f'error: {message}',file=sys.stderr)
+        return 2
+    hud=emit_hud(GENERATED/'hud.inc',label,len(mesh.vertices),len(mesh.edges))
+    asm=prepare_asm(a.renderer,len(frames),c64_color_index(color_name),stats['colors_enabled'])
+    subprocess.run([sys.executable,str(ROOT/'tools'/'asm_sanity.py'),str(asm)],cwd=ROOT,check=True)
+    print_stats(
+        mesh,label,a.renderer,1.0,stats,hud,'authored',visibility,z_tolerance,
+        feature_angle,color_name,use_source_colors,'Blender scene',
+    )
+    outname=a.output or default_output_basename(label,a.renderer,use_source_colors)
+    outdir=Path(a.output_dir).resolve() if a.output_dir else BUILD
     outdir.mkdir(parents=True,exist_ok=True)
     prg=outdir/f'{outname}.prg'; lbl=outdir/f'{outname}.lbl'; lst=outdir/f'{outname}.lst'
     if a.no_assemble:
@@ -426,6 +562,7 @@ def _add_toolchain_args(q,settings):
     _add_config_args(q)
     q.add_argument('--tass',default=settings.tass,help='64tass executable name, path, or containing directory')
     q.add_argument('--vice',default=settings.vice,help='x64sc executable name/path, VICE directory, or macOS .app bundle')
+    q.add_argument('--blender',default=settings.blender,help='Blender executable name/path, installation directory, or macOS .app bundle')
     q.add_argument('--tass-arg',dest='tass_args',action='append',default=None,metavar='ARG',help='64tass argument; repeatable; when used, replaces configured default args')
     q.add_argument('--vice-arg',dest='vice_args',action='append',default=None,metavar='ARG',help='VICE argument; repeatable; when used, replaces configured default args')
     q.add_argument('--no-tass-default-args',action='store_true',help='discard configured/built-in 64tass default arguments for this invocation')
@@ -470,13 +607,18 @@ def make_parser(settings):
         q.add_argument('--feature-angle',type=float,help='surface_creases threshold in degrees; sharp manifold edges at/above this angle are preserved')
     b=sub.add_parser('build',help='generate tables, assemble PRG, optionally run VICE'); common(b)
     b.add_argument('--renderer',choices=tuple(RENDERERS),default='yunroll',help='step=v0.7, bytechunk=v0.8, yunroll=current fastest')
-    b.add_argument('--frames',type=int,default=48,help='precomputed animation frames/orientations (default 48)')
+    b.add_argument('--frames',type=int,help='precomputed legacy animation frames/orientations (default 48; not used by --blend)')
     b.add_argument('--strict-frames',action='store_true',help='fail instead of reducing orientation count when table RAM overflows')
     b.add_argument('--camera',type=float,default=110.0)
     b.add_argument('--focal',type=float,default=180.0)
     b.add_argument('--margin',type=int,default=4)
     b.add_argument('--max-fit-scale',type=float,default=1.4)
     b.add_argument('--no-auto-fit',action='store_true')
+    b.add_argument('--blend',help='evaluate an animated .blend scene through headless Blender')
+    b.add_argument('--scene',help='compile an already exported .c643dscene file without launching Blender')
+    b.add_argument('--frame-start',type=int,help='first Blender source frame (default: scene start)')
+    b.add_argument('--frame-end',type=int,help='last Blender source frame, inclusive (default: scene end)')
+    b.add_argument('--sample-step',type=int,default=1,help='sample every Nth Blender frame (default 1)')
     b.add_argument('--output',help='output basename')
     b.add_argument('--output-dir',help='directory for PRG/LBL/LST outputs (default: build/)')
     _add_toolchain_args(b,settings)

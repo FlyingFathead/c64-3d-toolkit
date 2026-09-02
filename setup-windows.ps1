@@ -1,10 +1,10 @@
 <#
  c64-3d-toolkit Windows installer / configuration assistant
- Installer revision: r23 (2026-09-01)
- Target toolkit release: v0.5.1
+ Installer revision: r24 (2026-09-02)
+ Target toolkit release: v0.6.0
 
  Security model:
- - Python, Git and VICE are checked against exact package IDs in Microsoft's
+ - Python, Git, VICE and optional Blender are checked against exact package IDs in Microsoft's
    WinGet `winget` source before any new WinGet install is attempted.
  - Existing WinGet packages are kept by default; the user may explicitly request
    an upgrade or same-version force-reinstall/repair attempt through WinGet.
@@ -14,7 +14,7 @@
  - No MSYS2, pacman, Scoop, Chocolatey or other third-party package manager is
    installed or invoked automatically.
  - No proactive Internet connectivity probes are made. Network access occurs
-   only if WinGet actually needs to install Python, Git or VICE.
+   only if WinGet actually needs to install Python, Git, VICE or user-approved Blender.
  - User-supplied/configured .exe paths are validated without execution: the expected
    filename must exist and the file must have a recognizable Windows PE executable header. This
    does not prove publisher identity, authenticity or runtime correctness.
@@ -35,8 +35,8 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-$InstallerRevision = 'r23'
-$TargetRelease = '0.5.1'
+$InstallerRevision = 'r24'
+$TargetRelease = '0.6.0'
 $ToolkitRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $ConfigDir = Join-Path $ToolkitRoot 'config'
 $ConfigPath = Join-Path $ConfigDir 'c643d.ini'
@@ -55,6 +55,11 @@ $KnownLocations = @{
     Git = @{
         WingetId = 'Git.Git'
         Download = 'https://git-scm.com/download/win'
+    }
+    Blender = @{
+        WingetId = 'BlenderFoundation.Blender'
+        Download = 'https://www.blender.org/download/'
+        ExeName = 'blender.exe'
     }
     VICE = @{
         PreferredWingetId = 'VICE-Team.VICE.GTK3'
@@ -420,6 +425,11 @@ function Write-SetupSessionSummary {
     if ($GitExe) { Write-Host "  Path:   $GitExe" } else { Write-Host '  Path:   <not selected/found>' }
 
     Write-Host ''
+    Write-Host 'Blender (optional, highly recommended)'
+    Write-Host "  Action: $blenderAction"
+    if ($blender) { Write-Host "  Path:   $blender" } else { Write-Host '  Path:   <not installed/found>' }
+
+    Write-Host ''
     Write-Host 'VICE'
     Write-Host "  Action: $ViceAction"
     if ($ViceExe) { Write-Host "  Path:   $ViceExe" } else { Write-Host '  Path:   <not selected/found>' }
@@ -528,8 +538,10 @@ function Show-InstallerHelp {
     Write-Host '  .\setup-windows.cmd -FindTass'
     Write-Host ''
     Write-Host 'What setup manages:'
-    Write-Host '  - Python 3, Git and VICE: exact WinGet package detection plus optional install/upgrade/reinstall.'
+    Write-Host '  - Python 3, Git and VICE: exact WinGet package detection plus install/upgrade/reinstall support.'
+    Write-Host '  - Blender: optional but highly recommended; if absent, setup asks before installing BlenderFoundation.Blender.'
     Write-Host '  - 64tass: manual acquisition only; setup never downloads or executes it.'
+    Write-Host '    64tass is REQUIRED to assemble generated data into a runnable .prg; only --no-assemble works without it.'
     Write-Host '    Existing valid 64tass config gets its own K/KEEP, C/CHANGE or Q/QUIT prompt.'
     Write-Host '    E/ENTER accepts either 64tass.exe itself or the directory containing it.'
     Write-Host '    Manual/direct paths are validated and hashed first, then require Y/YES confirmation before use.'
@@ -833,6 +845,32 @@ function Show-GitFallback {
     Write-SetupHelpHint
 }
 
+function Show-BlenderFallback {
+    Write-FallbackHeader 'Blender (optional, highly recommended)'
+    Write-Host 'Blender is required only for animated .blend scene builds; classic OBJ/SVG/procedural builds still work without it.'
+    Write-Host 'Official Blender download:'
+    Write-Host "  $($KnownLocations.Blender.Download)"
+    Write-Host 'Preferred Windows install command:'
+    Write-Host "  winget install --exact --id $($KnownLocations.Blender.WingetId) --source winget"
+}
+
+function Request-BlenderInstall {
+    while ($true) {
+        Write-Host ''
+        Write-Host 'Blender was not found. Installing it is HIGHLY RECOMMENDED for the authored 3-D scene/camera pipeline.' -ForegroundColor Cyan
+        Write-Host 'Blender remains optional for the existing OBJ, SVG and procedural workflows.'
+        Write-Host 'Install Blender now through the exact WinGet package BlenderFoundation.Blender?'
+        Write-Host '  Y / YES = install Blender (default)'
+        Write-Host '  N / NO  = skip Blender and continue setup'
+        $answer = Read-Host 'Choice [Y]'
+        if ($null -eq $answer) { $answer = '' }
+        $answer = $answer.Trim()
+        if (($answer -eq '') -or ($answer -ieq 'y') -or ($answer -ieq 'yes')) { return $true }
+        if (($answer -ieq 'n') -or ($answer -ieq 'no') -or ($answer -ieq 'skip')) { return $false }
+        Write-Host 'Please enter Y or N.' -ForegroundColor Yellow
+    }
+}
+
 function Show-ViceFallback {
     Write-FallbackHeader 'VICE'
     Write-Host 'Official VICE project/downloads:'
@@ -847,6 +885,8 @@ function Show-ViceFallback {
 function Show-64tassFallback {
     Write-FallbackHeader '64tass'
     Write-Host '64tass was not found. This installer deliberately does NOT download or install it automatically.' -ForegroundColor Yellow
+    Write-Host '64tass is REQUIRED to assemble a runnable .prg. You may skip it temporarily, but normal builds cannot finish until it is configured.' -ForegroundColor Yellow
+    Write-Host 'Only table/source generation with --no-assemble can run without 64tass.'
     Write-Host ''
     Write-Host 'Easiest Windows option:'
     Write-Host '  1. Download the current Windows binary yourself from:'
@@ -1602,6 +1642,42 @@ function Find-Git {
     return Find-Executable -Names @('git.exe') -ExtraPaths $candidates
 }
 
+function Find-Blender {
+    $found = Find-Executable -Names @($KnownLocations.Blender.ExeName, 'blender')
+    if ($found) { return $found }
+
+    $wingetPackageRoot = Join-Path $env:LOCALAPPDATA 'Microsoft\WinGet\Packages'
+    if (Test-Path -LiteralPath $wingetPackageRoot -PathType Container) {
+        $packageDirs = Get-ChildItem -LiteralPath $wingetPackageRoot -Directory -ErrorAction SilentlyContinue |
+            Where-Object { $_.Name -like "$($KnownLocations.Blender.WingetId)*" }
+        foreach ($packageDir in $packageDirs) {
+            $candidate = Get-ChildItem -LiteralPath $packageDir.FullName -Filter $KnownLocations.Blender.ExeName -File -Recurse -ErrorAction SilentlyContinue |
+                Select-Object -First 1
+            if ($candidate -and (Test-WindowsExecutableHeader -Path $candidate.FullName)) {
+                return $candidate.FullName
+            }
+        }
+    }
+
+    $roots = @(
+        (Join-Path $env:ProgramFiles 'Blender Foundation'),
+        (Join-Path $env:LOCALAPPDATA 'Programs')
+    )
+    if (${env:ProgramFiles(x86)}) {
+        $roots += (Join-Path ${env:ProgramFiles(x86)} 'Blender Foundation')
+    }
+    $roots = @($roots | Where-Object { $_ -and (Test-Path -LiteralPath $_ -PathType Container) })
+    foreach ($root in $roots) {
+        $candidate = Get-ChildItem -LiteralPath $root -Filter $KnownLocations.Blender.ExeName -File -Recurse -ErrorAction SilentlyContinue |
+            Sort-Object FullName -Descending |
+            Select-Object -First 1
+        if ($candidate -and (Test-WindowsExecutableHeader -Path $candidate.FullName)) {
+            return $candidate.FullName
+        }
+    }
+    return $null
+}
+
 function Find-Vice {
     param([string]$ConfiguredPath)
 
@@ -1856,10 +1932,12 @@ if ($Help) {
 # quit can still report exactly what setup discovered/changed up to that point.
 $python = $null
 $git = $null
+$blender = $null
 $vice = $null
 $tass = $null
 $pythonAction = 'not processed'
 $gitAction = 'not processed'
+$blenderAction = 'not processed'
 $viceAction = 'not processed'
 $tassAction = 'not processed'
 $existingConfig = Get-WindowsConfigState
@@ -1914,7 +1992,7 @@ try {
         Write-Host "WinGet: found ($winget)"
     }
     else {
-        Write-Host 'WinGet: NOT FOUND (automatic Python/Git/VICE installation unavailable)' -ForegroundColor Yellow
+        Write-Host 'WinGet: NOT FOUND (automatic Python/Git/VICE and optional Blender installation unavailable)' -ForegroundColor Yellow
         Show-WinGetFallback
     }
 
@@ -2023,6 +2101,58 @@ try {
     else {
         Show-GitFallback
         Write-Host 'Git is still missing. Setup will continue so tool paths can still be configured.' -ForegroundColor Yellow
+    }
+
+    Write-Section 'Blender (optional, highly recommended)'
+    $blender = Find-Blender
+    $blenderAction = if ($blender) { 'existing executable found; not executed by setup' } else { 'not found yet' }
+    if ($blender) {
+        Write-Host "Found Blender: $blender"
+        Write-Host 'Blender was NOT executed by setup. The first --blend build performs the real headless bpy probe.'
+    }
+    else {
+        $blenderPkg = if ($winget) { Get-WinGetPackageState -Id $KnownLocations.Blender.WingetId } else { $null }
+        if ($blenderPkg) {
+            Write-WinGetPackageState -Label 'Blender' -State $blenderPkg
+        }
+        if ($blenderPkg -and ($blenderPkg.Status -eq 'Installed')) {
+            $blenderAction = 'WinGet package installed, but blender.exe was not discovered'
+            Write-Host 'WinGet reports Blender installed, but blender.exe was not found in PATH or normal installation locations.' -ForegroundColor Yellow
+            Write-Host 'Open a new terminal and rerun setup; an unusual install can later be selected with --blender PATH.'
+        }
+        elseif ($blenderPkg -and ($blenderPkg.Status -eq 'Unknown')) {
+            $blenderAction = 'not found; WinGet state unknown, install not offered'
+            Write-Host 'Blender was not found, but WinGet package state is UNKNOWN; setup will not risk a duplicate install.' -ForegroundColor Yellow
+            Show-BlenderFallback
+        }
+        elseif (-not $winget) {
+            $blenderAction = 'not found; WinGet unavailable'
+            Show-BlenderFallback
+        }
+        elseif (Request-BlenderInstall) {
+            try {
+                Install-WinGetPackage -Id $KnownLocations.Blender.WingetId -Label 'Blender'
+                $blenderAction = 'installed through WinGet'
+                $blender = Find-Blender
+                if ($blender) {
+                    Write-Host "Blender selected: $blender"
+                }
+                else {
+                    $blenderAction = 'installed through WinGet; executable discovery pending new shell'
+                    Write-Host 'WinGet completed, but blender.exe is not visible to this process yet.' -ForegroundColor Yellow
+                    Write-Host 'Open a new PowerShell/CMD window before using --blend.'
+                }
+            }
+            catch {
+                $blenderAction = 'user-approved WinGet install failed'
+                Show-BlenderFallback
+                Write-Host "Blender automatic installation failed: $($_.Exception.Message)" -ForegroundColor Yellow
+            }
+        }
+        else {
+            $blenderAction = 'user declined optional installation'
+            Write-Host 'Blender skipped. Existing OBJ/SVG/procedural workflows remain available.' -ForegroundColor Yellow
+        }
     }
 
     Write-Section 'VICE'
@@ -2202,6 +2332,7 @@ try {
     }
     else {
         Write-Host '64tass skipped for now.' -ForegroundColor Yellow
+        Write-Host 'Assembly is unavailable until 64tass is configured; use --no-assemble only for host-side generation.' -ForegroundColor Yellow
     }
 
     Write-Section 'Configuration'
@@ -2252,6 +2383,9 @@ try {
         Write-Host 'Install/configure the missing component(s) and rerun:'
         Write-Host '  .\setup-windows.cmd'
         Write-SetupHelpHint
+        if (-not $tass) {
+            Write-Host 'Reminder: 64tass is required for assembly and runnable .prg output.' -ForegroundColor Yellow
+        }
     }
     else {
         Write-Host 'c64-3d-toolkit Windows setup/configuration complete.'

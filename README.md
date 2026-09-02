@@ -6,17 +6,24 @@
 
 # c64-3d-toolkit
 
-Host-assisted low-poly wireframe 3D compiler/runtime for a **stock Commodore 64**.
+Host-assisted low-poly wireframe 3D compiler/runtime for a **stock Commodore 64**, with first-class support for animated **Blender `.blend` scenes**, **Wavefront OBJ + MTL**, **SVG artwork**, and built-in procedural geometry.
 
-The toolkit preprocesses 3D geometry on the host machine and generates 6510/6502 assembly data and runnable C64 `.prg` files. It includes procedural test meshes, OBJ/MTL and SVG import with nearest-palette wire colours, several visibility modes, multiple animation transforms, multiple renderers, and prebuilt example programs.
+Animate objects, cameras, modifiers, armatures, or rigid-body scenes in Blender; import coloured OBJ/MTL meshes or SVG paths; or use the classic procedural meshes and animation transforms. The toolkit preprocesses the result on the host, performs projection and hidden-line visibility, then generates 6510/6502 assembly data and runnable C64 `.prg` files whose vectors are drawn live by the C64.
 
 ## Requirements
 
-Requires:
+Required:
 
 * [VICE](https://vice-emu.sourceforge.io/) — Commodore 64 emulator; the toolkit uses `x64sc` by default.
 * [64tass](https://tass64.sourceforge.net/) — 6502/6510 cross-assembler.
 * Python 3.
+
+Recommended:
+
+* [Blender](https://www.blender.org/) 4.0 or newer — the key authored-scene pipeline: animate geometry, physics, and a virtual camera in Blender, then compile those sampled scene frames into vectors drawn live on the C64. Blender supplies its own `bpy` Python environment; do **not** add `bpy` to `requirements.txt` or install it with `pip`.
+
+Blender is required for `.blend` scene builds. Classic procedural, OBJ/MTL,
+and SVG builds remain fully usable without it.
 
 ### 🐧 Linux setup
 
@@ -26,11 +33,31 @@ On Debian/Ubuntu and derivatives, VICE and 64tass can normally be installed with
 sudo apt install vice 64tass
 ```
 
+Blender is recommended. Ubuntu 24.04 LTS (`noble`) provides Blender 4.0.2 with
+a working bundled `bpy`; install it to use the animated `.blend` scene pipeline:
+
+```bash
+sudo apt install blender
+```
+
+The same distribution-package route is appropriate on later Ubuntu/Debian
+releases when `apt show blender` reports an available package. Verify the
+headless Python integration with:
+
+```bash
+blender --background --python-expr 'import bpy; print("BLENDER:", bpy.app.version_string); print("BPY OK")'
+```
+
 Verify that the required tools are available with:
 
 ```bash
 ./build.sh doctor
 ```
+
+Preflight reports resolved executable paths and versions for 64tass and VICE.
+`doctor` additionally launches optional Blender headlessly and reports both its
+version and whether `bpy` imports successfully. Every `--blend` build repeats
+that Blender/`bpy` check before reading the scene.
 
 ### 🪟 Windows setup
 
@@ -47,6 +74,24 @@ git clone https://github.com/FlyingFathead/c64-3d-toolkit.git
 cd c64-3d-toolkit
 .\setup-windows.cmd
 ```
+
+For the optional Blender scene pipeline, install the official Blender package
+through WinGet:
+
+```powershell
+winget install -e --id BlenderFoundation.Blender
+```
+
+Open a new PowerShell window after installation and verify Blender's bundled
+Python environment:
+
+```powershell
+blender --background --python-expr 'import bpy; print("BLENDER:", bpy.app.version_string); print("BPY OK")'
+```
+
+If `blender` is not added to `PATH`, the toolkit also searches normal Blender
+Foundation installation directories under Program Files. An exact executable
+can be selected with `--blender` or `config/c643d.ini`.
 
 For installer and recovery help:
 
@@ -117,6 +162,40 @@ Build and run an imported OBJ preset:
 ```bash
 ./build.sh --object horse_head --run
 ```
+
+Compile an authored Blender scene and camera animation:
+
+```bash
+./build.sh --blend scenes/intro.blend --frame-start 1 --frame-end 96 --sample-step 2 --run
+```
+
+The toolkit checks that Blender can run headlessly and import its bundled
+`bpy` module before processing a `.blend` file. See
+[`docs/BLENDER_PIPELINE.md`](docs/BLENDER_PIPELINE.md) for installation,
+stable-topology constraints, material colours, and the generated falling-cubes
+rigid-body example.
+
+The Blender examples live under `examples/blender/`, not in the project root:
+
+```bash
+# Generate the C64-budget-oriented six-cube scene beside its script.
+blender --background --python examples/blender/falling_cubes_c64.py
+
+# Compile 24 samples from that generated scene.
+./build.sh --blend examples/blender/falling_cubes_c64.blend \
+    --frame-start 1 --frame-end 72 --sample-step 3 --run
+```
+
+For stateful simulations such as rigid bodies, the exporter evaluates every
+intervening Blender frame sequentially and stores only the requested samples.
+Thus `--sample-step 3` reduces C64 table frames without skipping physics steps.
+The exporter warns explicitly if every sampled frame is geometrically identical.
+
+`falling_cubes_full.py` and the included Blender-4.00
+`falling_cubes_full.blend` contain Harry's deterministic 40-cube authoring
+scene. They are useful as a Blender/rigid-body stress example; the smaller
+variant exists because the full scene can exceed the C64 renderer's per-frame
+vector and table-RAM budgets.
 
 or:
 
