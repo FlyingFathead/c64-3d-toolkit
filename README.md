@@ -18,9 +18,9 @@ Required:
 * [64tass](https://tass64.sourceforge.net/) — 6502/6510 cross-assembler.
 * Python 3.
 
-Recommended:
+Recommended for the authored `.blend` scene path:
 
-* [Blender](https://www.blender.org/) 4.0 or newer — the key authored-scene pipeline: animate geometry, physics, and a virtual camera in Blender, then compile those sampled scene frames into vectors drawn live on the C64. Blender supplies its own `bpy` Python environment; do **not** add `bpy` to `requirements.txt` or install it with `pip`.
+* [Blender](https://www.blender.org/) — use the current Blender LTS for newly authored scenes. Blender 4.0.2 remains a supported older fallback on Ubuntu 24.04. Animate geometry, physics, modifiers, armatures, materials, and a virtual camera in Blender, then compile sampled scene frames into vectors drawn live on the C64. Blender supplies its own `bpy` Python environment; do **not** add `bpy` to `requirements.txt` or install it with `pip`.
 
 Blender is required for `.blend` scene builds. Classic procedural, OBJ/MTL,
 and SVG builds remain fully usable without it.
@@ -163,10 +163,11 @@ Build and run an imported OBJ preset:
 ./build.sh --object horse_head --run
 ```
 
-Compile an authored Blender scene and camera animation:
+Compile the included authored Blender rigid-body scene:
 
 ```bash
-./build.sh --blend scenes/intro.blend --frame-start 1 --frame-end 96 --sample-step 2 --run
+./build.sh --blend examples/blender/falling_cubes_c64.blend \
+    --frame-start 1 --frame-end 72 --sample-step 3 --run
 ```
 
 The toolkit checks that Blender can run headlessly and import its bundled
@@ -218,11 +219,15 @@ The bundled SVG logo can be spun as a 3-D plane or sent away on a tilted crawl p
 ./build.sh --object space_horse_crawl --run
 ```
 
-Build all included example `.prg` files:
+Build the manifest-driven procedural/OBJ/SVG reference `.prg` files:
 
 ```bash
 ./build.sh --generate-examples
 ```
+
+The Blender example is kept separate because Blender is optional. The repository
+also includes `examples/falling_cubes_c64_color-yunroll.prg`, produced from the
+bundled six-cube `.blend` scene.
 
 Build + run the reference torus with the current fastest renderer:
 
@@ -321,7 +326,8 @@ The emitter can spill whole per-orientation line blocks into otherwise-unused RA
 
 ## Examples
 
-The repository has an `examples/` manifest. Build all reference PRGs at once:
+The repository has an `examples/` manifest for the dependency-free procedural,
+OBJ/MTL, and SVG reference builds:
 
 ```bash
 ./build.sh --generate-examples
@@ -329,7 +335,16 @@ The repository has an `examples/` manifest. Build all reference PRGs at once:
 ./build.sh generate-examples
 ```
 
-This currently produces `torus.prg`, `torus_dense.prg`, `cube.prg`, `sphere.prg`, `horse_head.prg`, monochrome `sunflower_torus.prg`, coloured `sunflower_torus_color.prg`, `space_horse_spin_color.prg`, and `space_horse_crawl_color.prg`. Auxiliary labels/listings remain in `build/`; the runnable PRGs are copied to `examples/`.
+This produces `torus.prg`, `torus_dense.prg`, `cube.prg`, `sphere.prg`,
+`horse_head.prg`, monochrome `sunflower_torus.prg`, coloured
+`sunflower_torus_color.prg`, `space_horse_spin_color.prg`, and
+`space_horse_crawl_color.prg`. Auxiliary labels/listings remain in `build/`;
+the runnable PRGs are copied to `examples/`.
+
+Blender-authored examples are intentionally outside `examples.json` because
+Blender is optional. `examples/blender/` contains the six-cube C64 scene and the
+40-cube authoring/stress scene, and the repository includes the compiled
+`examples/falling_cubes_c64_color-yunroll.prg` reference output.
 
 ## Dependency checks
 
@@ -343,27 +358,52 @@ On Debian/Ubuntu, distro VICE packages can be DFSG-stripped and omit Commodore R
 
 ## Current state
 
-The reference torus now runs around **15-18 FPS** with `yunroll` on stock PAL C64 timing in VICE during development. It is native 320x200 hires, hidden-line clipped, triple-buffered, and does not use pre-rendered bitmap animation frames.
+The reference torus runs around **15-18 FPS** with `yunroll` on stock PAL C64
+timing in VICE during development. It is native 320x200 hires, hidden-line
+clipped, triple-buffered, and does not use pre-rendered bitmap animation frames.
 
-The project grew out of the rotating-torus benchmark, a.k.a. **THE WORLD'S MOST DANGEROUS ROTATING DONUT**, and is now being generalized into a reusable mesh-to-C64 pipeline.
+As of **v0.6.0**, the toolkit is a reusable multi-source compiler/runtime rather
+than only a rotating-mesh benchmark. It accepts procedural geometry, OBJ/MTL,
+SVG, versioned `.c643dscene` interchange data, and animated Blender `.blend`
+scenes. Blender-authored builds can preserve arbitrary object motion, stable-
+topology deformation, rigid-body simulation, materials, and active-camera
+animation while the stock C64 still rasterizes the resulting vectors itself.
 
-The repository includes the actual `objects/horse_head.obj` low-poly model (64 vertices / 124 edges / 65 faces), `objects/sunflower_torus.obj` + `.mtl` (76 vertices / 142 edges / 70 faces), and the bundled `objects/space_horse.svg` vector-logo demo.
+The project grew out of the rotating-torus benchmark, a.k.a. **THE WORLD'S MOST
+DANGEROUS ROTATING DONUT**.
+
+The repository includes the actual `objects/horse_head.obj` low-poly model
+(64 vertices / 124 edges / 65 faces), `objects/sunflower_torus.obj` + `.mtl`
+(76 vertices / 142 edges / 70 faces), the bundled `objects/space_horse.svg`
+vector-logo demo, and Blender rigid-body examples under `examples/blender/`.
 
 ## What happens on the host vs. the C64?
 
-The host-side Python compiler performs expensive work that makes sense to precompute for a ~1 MHz target:
+The host side performs the expensive/general work that makes sense to precompute
+for a ~1 MHz target:
 
-- procedural mesh generation, Wavefront OBJ parsing, or SVG contour flattening/simplification
-- normalization and coordinate-system conversion
-- face-winding repair
-- sampled animation transforms (`spin`, `recede`, or tilted-plane `crawl`)
-- perspective projection
-- face visibility
-- host-side Z-buffer hidden-line clipping
+- procedural mesh generation, Wavefront OBJ/MTL parsing, and SVG contour
+  flattening/simplification
+- optional headless Blender scene evaluation through Blender's bundled `bpy`
+- dependency-graph evaluation of object transforms, rigid bodies, modifiers,
+  armatures, stable-topology deformation, materials, and the active camera
+- versioned `.c643dscene` interchange loading for Blender-neutral scene builds
+- normalization, coordinate conversion, and face-winding repair for legacy
+  procedural/OBJ/SVG sources
+- sampled legacy transforms (`spin`, `recede`, or tilted-plane `crawl`) or
+  authored Blender frame selection
+- perspective projection and viewport clipping for authored scene sources
+- face visibility and host-side Z-buffer hidden-line clipping
 - C64-oriented line-step encoding
 - dirty-area and hires screen-colour span generation
 
-The C64 still rasterizes the visible wireframe itself into VIC-II hires bitmap RAM. `step`, `bytechunk`, and `yunroll` are vector/line renderers, not bitmap-frame players.
+Blender scenes use strict authored-frame semantics: if the selected samples do
+not fit the C64 table budget, the build fails with sampling/range/detail
+suggestions rather than silently discarding authored frames.
+
+The C64 still rasterizes the visible wireframe itself into VIC-II hires bitmap
+RAM. `step`, `bytechunk`, and `yunroll` are vector/line renderers, not
+bitmap-frame players.
 
 ## Shapes and topology
 
@@ -626,18 +666,31 @@ c64-3d-toolkit/
 │   ├── renderer-step.asm
 │   ├── renderer-bytechunk.asm
 │   └── renderer-yunroll.asm
-├── tools/c643d/
-│   ├── assets.py
-│   ├── cli.py
-│   ├── colors.py
-│   ├── mesh.py
-│   ├── shapes.py
-│   ├── objio.py
-│   ├── svgio.py
-│   ├── toolchain.py
-│   ├── pipeline.py
-│   ├── emit.py
-│   └── font.py
+├── tools/
+│   ├── blender_export.py
+│   ├── asm_sanity.py
+│   └── c643d/
+│       ├── assets.py
+│       ├── blender.py
+│       ├── cli.py
+│       ├── colors.py
+│       ├── emit.py
+│       ├── font.py
+│       ├── mesh.py
+│       ├── objio.py
+│       ├── pipeline.py
+│       ├── sceneio.py
+│       ├── shapes.py
+│       ├── svgio.py
+│       └── toolchain.py
+├── examples/
+│   ├── blender/
+│   │   ├── falling_cubes_c64.py
+│   │   ├── falling_cubes_c64.blend
+│   │   ├── falling_cubes_full.py
+│   │   └── falling_cubes_full.blend
+│   ├── examples.json
+│   └── *.prg
 ├── objects/
 │   ├── README.md
 │   ├── horse_head.obj
@@ -653,6 +706,7 @@ c64-3d-toolkit/
 ├── tests/
 └── docs/
     ├── ARCHITECTURE.md
+    ├── BLENDER_PIPELINE.md
     ├── CONFIGURATION.md
     ├── OBJ_PIPELINE.md
     ├── SVG_PIPELINE.md
@@ -663,38 +717,48 @@ c64-3d-toolkit/
 
 ## Roadmap
 
-The intended eventual workflow is:
+The current source paths already converge on the same host compiler/runtime:
 
 ```text
-Blender / modeller / vector editor / generated asset
-        |
-        v
-Wavefront OBJ / SVG
-        |
-        v
-import + inspect
-        |
-        v
-normalize / repair / simplify
-        |
-        v
-preview + C64 cost estimate
-        |
-        v
-hidden-line / vector compilation
-        |
-        v
-64tass
-        |
-        v
-PRG -> VICE / real C64
+Blender .blend      .c643dscene      OBJ/MTL      SVG      procedural
+     |                   |              |          |           |
+     v                   |              v          v           v
+headless bpy export -----+------> source-specific ingest / scene frames
+                                      |
+                                      v
+                         projection / visibility / clipping
+                                      |
+                                      v
+                           vector + colour table emission
+                                      |
+                                      v
+                                   64tass
+                                      |
+                                      v
+                              PRG -> VICE / real C64
 ```
 
-A graphical host-side importer/previewer is planned, but the command-line path will remain first-class.
+Future work includes topology-aware mesh simplification, better host-side preview
+and C64 cost estimation, and richer authoring tools. A graphical importer/
+previewer is planned, but the command-line path will remain first-class.
 
 ## Status
 
-Version 0.5.1 is a small Windows-setup release on top of 0.5.0's colour-wireframe pipeline. It adds the Windows setup helper and documentation without changing the C64 renderer: Python, Git, and VICE can be detected or installed through WinGet, while 64tass remains an explicit manual trust decision on Windows.
+**Version 0.6.0** adds the optional animated Blender scene pipeline and the
+versioned `.c643dscene` interchange path. `.blend` builds run Blender headlessly
+with its own bundled `bpy`, evaluate authored object/camera/material state
+including stable-topology deformation and rigid-body motion, and feed the same
+hidden-line, colour, vector-table, assembler, and stock-C64 runtime used by the
+existing procedural, OBJ/MTL, and SVG paths.
+
+Authored Blender frame selection is strict: table overflow fails with actionable
+sampling/range/detail suggestions instead of silently reducing the animation.
+Legacy procedural/OBJ/SVG behaviour remains available without Blender, with
+regression checks preserving the established generated output.
+
+The Windows setup helper introduced in v0.5.1 remains included: Python, Git, and
+VICE can be detected or installed through WinGet, while 64tass remains an
+explicit manual trust decision on Windows.
 
 ## Credits
 
