@@ -760,6 +760,13 @@ The Windows setup helper introduced in v0.5.1 remains included: Python, Git, and
 VICE can be detected or installed through WinGet, while 64tass remains an
 explicit manual trust decision on Windows.
 
+---
+
+For the complete release history and detailed changes, see
+[`CHANGELOG.md`](CHANGELOG.md).
+
+---
+
 ## Credits
 
 By [FlyingFathead](https://github.com/FlyingFathead), _with ChaosWhisperer lurking somewhere in the machinery._
