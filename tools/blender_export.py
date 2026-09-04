@@ -22,7 +22,6 @@ from tools.c643d.blender import blender_frame_plan
 
 
 WIDTH=256
-HEIGHT=144
 def _args():
     argv=sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
     p=argparse.ArgumentParser(description='Export evaluated Blender animation for c64-3d-toolkit')
@@ -30,6 +29,7 @@ def _args():
     p.add_argument('--frame-start',type=int)
     p.add_argument('--frame-end',type=int)
     p.add_argument('--sample-step',type=int,default=1)
+    p.add_argument('--viewport-height',type=int,default=144)
     return p.parse_args(argv)
 
 
@@ -78,6 +78,9 @@ def main():
     args=_args()
     if args.sample_step<1:
         raise RuntimeError('--sample-step must be at least 1')
+    if args.viewport_height<8 or args.viewport_height>200 or args.viewport_height%8:
+        raise RuntimeError('--viewport-height must be a multiple of 8 from 8..200')
+    height=args.viewport_height
     scene=bpy.context.scene
     camera=scene.camera
     if camera is None:
@@ -145,12 +148,12 @@ def main():
             # calc_matrix_camera is an Object method in both Blender 4.x and
             # 5.x. Calling it on the Camera datablock fails on Blender 4.0.2.
             matrix=evaluated_camera.calc_matrix_camera(
-                depsgraph,x=WIDTH,y=HEIGHT,scale_x=1.0,scale_y=1.0
+                depsgraph,x=WIDTH,y=height,scale_x=1.0,scale_y=1.0
             )
             fx=float(matrix[0][0])*WIDTH/2.0
-            fy=float(matrix[1][1])*HEIGHT/2.0
+            fy=float(matrix[1][1])*height/2.0
             cx=WIDTH/2.0*(1.0-float(matrix[0][2]))
-            cy=HEIGHT/2.0*(1.0+float(matrix[1][2]))
+            cy=height/2.0*(1.0+float(matrix[1][2]))
             out_frames.append({
                 'source_frame':source_frame,
                 'projection':{'fx':fx,'fy':fy,'cx':cx,'cy':cy},

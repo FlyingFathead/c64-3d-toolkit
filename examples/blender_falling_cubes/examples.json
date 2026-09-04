@@ -1,0 +1,46 @@
+[
+  {
+    "name": "falling_cubes_c64_color-yunroll",
+    "args": [
+      "--blend",
+      "examples/blender_falling_cubes/falling_cubes_c64.blend",
+      "--frame-start",
+      "1",
+      "--frame-end",
+      "72",
+      "--sample-step",
+      "4",
+      "--renderer",
+      "yunroll"
+    ],
+    "directory": "blender_falling_cubes",
+    "variant_args": {
+      "_legacy144": [
+        "--sample-step",
+        "3"
+      ]
+    }
+  },
+  {
+    "name": "falling_cubes_c64-yunroll",
+    "args": [
+      "--blend",
+      "examples/blender_falling_cubes/falling_cubes_c64.blend",
+      "--frame-start",
+      "1",
+      "--frame-end",
+      "72",
+      "--sample-step",
+      "4",
+      "--renderer",
+      "yunroll",
+      "--no-colors"
+    ],
+    "directory": "blender_falling_cubes",
+    "variants": [
+      "",
+      "_no_overlay",
+      "_rastertime_profiler"
+    ]
+  }
+]

@@ -21,6 +21,10 @@ class ToolchainSettings:
     vice_args: Tuple[str, ...] = ('+VICIIfull',)
     config_path: Optional[Path] = None
     platform_key: str = 'linux'
+    text_overlay: bool = True
+    viewport_height: Optional[int] = None
+    overwrite_policy: str = 'warn'
+    rastertime_profiler: bool = False
 
 
 def platform_key(system: Optional[str] = None) -> str:
@@ -59,6 +63,10 @@ def load_toolchain_settings(path: Optional[Path], *, system: Optional[str] = Non
         'blender':'blender',
         'tass_args':(),
         'vice_args':('+VICIIfull',),
+        'text_overlay':True,
+        'viewport_height':None,
+        'overwrite_policy':'warn',
+        'rastertime_profiler':False,
     }
     loaded=None
     if path is not None:
@@ -76,6 +84,26 @@ def load_toolchain_settings(path: Optional[Path], *, system: Optional[str] = Non
                     raw=_section_value(cfg,section,key)
                     if raw is not None:
                         values[key]=split_args(raw,windows=(pkey=='windows'))
+            if cfg.has_section('render_defaults'):
+                section=cfg['render_defaults']
+                if 'text_overlay' in section:
+                    values['text_overlay']=section.getboolean('text_overlay')
+                if 'rastertime_profiler' in section:
+                    values['rastertime_profiler']=section.getboolean('rastertime_profiler')
+                if 'viewport_height' in section:
+                    raw=section.get('viewport_height',raw=True).strip().lower()
+                    if raw in ('','auto'):
+                        values['viewport_height']=None
+                    else:
+                        height=int(raw)
+                        if height<8 or height>200 or height%8:
+                            raise ValueError('render_defaults.viewport_height must be auto or a multiple of 8 from 8..200')
+                        values['viewport_height']=height
+                if 'overwrite_policy' in section:
+                    policy=section.get('overwrite_policy',raw=True).strip().lower()
+                    if policy not in ('allow','warn','error'):
+                        raise ValueError('render_defaults.overwrite_policy must be allow, warn, or error')
+                    values['overwrite_policy']=policy
             loaded=path.resolve()
         elif require:
             raise FileNotFoundError(f'config file not found: {path}')
@@ -83,6 +111,8 @@ def load_toolchain_settings(path: Optional[Path], *, system: Optional[str] = Non
         tass=values['tass'], vice=values['vice'], blender=values['blender'],
         tass_args=tuple(values['tass_args']), vice_args=tuple(values['vice_args']),
         config_path=loaded, platform_key=pkey,
+        text_overlay=bool(values['text_overlay']), viewport_height=values['viewport_height'],
+        overwrite_policy=str(values['overwrite_policy']), rastertime_profiler=bool(values['rastertime_profiler']),
     )
 
 

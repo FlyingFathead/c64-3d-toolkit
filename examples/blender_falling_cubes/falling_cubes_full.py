@@ -4,7 +4,7 @@ This is the fuller Blender authoring/stress example. The much smaller
 ``falling_cubes_c64.py`` variant is intended for C64 table compilation.
 
 Usage:
-    blender --background --python examples/blender/falling_cubes_full.py
+    blender --background --python examples/blender_falling_cubes/falling_cubes_full.py
 """
 
 from __future__ import annotations

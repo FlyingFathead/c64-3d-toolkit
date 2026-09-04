@@ -48,3 +48,23 @@ vice_args = +VICIIfull
 # tass = C:\Tools\64tass\64tass.exe
 # vice = C:\Tools\VICE\bin\x64sc.exe
 # blender = C:\Program Files\Blender Foundation\Blender 4.0\blender.exe
+
+
+# Optional user defaults for generated C64 output.
+# Command-line switches always override these values.
+[render_defaults]
+
+# true  = production renderer with HUD/FPS; auto viewport = 192 lines
+# false = separate no-overlay ASM variant; auto viewport = full 200 lines
+text_overlay = true
+
+# auto chooses 192 with the overlay and 200 without it.
+# An explicit value must be a multiple of 8 from 8 through 200.
+viewport_height = auto
+
+# Existing .prg/.lbl/.lst handling: allow, warn, or error.
+overwrite_policy = warn
+
+# Debug-only derivative of yunroll. This never instruments/bloats the normal
+# production renderer. Leave false for ordinary builds.
+rastertime_profiler = false

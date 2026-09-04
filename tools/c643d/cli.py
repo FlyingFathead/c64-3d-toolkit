@@ -1,5 +1,5 @@
 from __future__ import annotations
-import argparse, json, math, shutil, subprocess, sys, tempfile
+import argparse, json, math, re, shutil, subprocess, sys, tempfile
 from pathlib import Path
 from . import __version__
 from .mesh import Mesh, normalize_mesh, transform_mesh, fix_winding_outward, mesh_diagnostics
@@ -19,10 +19,14 @@ from .toolchain import (
     command as tool_command, config_request, load_toolchain_settings,
     resolve_executable,
 )
+from .checksums import compare_prg, load_checksum_manifest, reference_set
 
 ROOT=Path(__file__).resolve().parents[2]
 OBJECTS=ROOT/'objects'; GENERATED=ROOT/'generated'; BUILD=ROOT/'build'; C64=ROOT/'c64'; EXAMPLES=ROOT/'examples'
+CHECKSUM_MANIFEST=ROOT/'tests'/'data'/'golden_prg_checksums.json'
 RENDERERS={'step':'renderer-step.asm','bytechunk':'renderer-bytechunk.asm','yunroll':'renderer-yunroll.asm'}
+NO_OVERLAY_RENDERERS={name:f'variants/renderer-{name}-no-overlay.asm' for name in RENDERERS}
+RASTERTIME_RENDERERS={'yunroll':'debug/renderer-yunroll-rastertime.asm'}
 
 
 def _executable_version(executable:str) -> str | None:
@@ -83,30 +87,233 @@ def cmd_doctor(a):
     return 0 if ok else 2
 
 
-def cmd_generate_examples(a):
+def _example_variants(mode:str):
+    # Golden example builds are intentionally independent of local render
+    # defaults. Toolchain paths/arguments may come from config, but viewport
+    # and ASM variant selection are pinned here for deterministic PRGs.
+    normal=[('', ['--text-overlay','--no-rastertime-profiler','--viewport-height','192'])]
+    legacy144=[('_legacy144',['--text-overlay','--no-rastertime-profiler','--viewport-height','144'])]
+    no_overlay=[('_no_overlay',['--no-text-overlay','--no-rastertime-profiler','--viewport-height','200'])]
+    profiler=[('_rastertime_profiler',['--text-overlay','--rastertime-profiler','--viewport-height','192'])]
+    if mode=='normal': return normal
+    if mode=='legacy144': return legacy144
+    if mode=='no-overlay': return no_overlay
+    if mode=='rastertime-profiler': return profiler
+    if mode=='all': return normal+legacy144+no_overlay+profiler
+    raise ValueError(f'unknown example variant mode: {mode}')
+
+
+def _load_example_reference(name:str|None):
+    data=load_checksum_manifest(CHECKSUM_MANIFEST)
+    selected,ref=reference_set(data,name)
+    return data,selected,ref
+
+
+def _print_checksum_result(path:Path,ref:dict,*,filename:str|None=None):
+    result=compare_prg(path,ref,filename=filename)
+    print(
+        f'checksum:  {result["status"]:<8} {result["filename"]} '
+        f'sha256={result["actual_sha256"]} size={result["actual_size"]}'
+    )
+    if result['status']=='CHANGED':
+        print(f'           expected sha256={result["expected_sha256"]} size={result["expected_size"]}')
+    return result['status']
+
+
+def _example_manifest_path(a) -> Path:
+    if getattr(a,'blender_only',False):
+        return EXAMPLES/'blender_falling_cubes'/'examples.json'
+    return EXAMPLES/'examples.json'
+
+
+def _example_specs(a):
+    manifest=_example_manifest_path(a)
+    specs=json.loads(manifest.read_text(encoding='utf-8'))
+    only=getattr(a,'only',None)
+    if only:
+        selected=[spec for spec in specs if spec['name']==only]
+        if not selected:
+            available=', '.join(x['name'] for x in specs)
+            raise ValueError(f'unknown example {only!r} in {manifest.relative_to(ROOT)}; available: {available}')
+        specs=selected
+    return specs
+
+
+def _install_example_prg(prg:Path, *, spec:dict, install:bool) -> None:
+    if not install:
+        return
+    subdir=spec.get('directory')
+    installed_dir=EXAMPLES/subdir if subdir else EXAMPLES
+    installed_dir.mkdir(parents=True,exist_ok=True)
+    installed=installed_dir/prg.name
+    shutil.copy2(prg,installed)
+    print(f'example: {installed.relative_to(ROOT)}')
+
+
+def _assemble_profiler_from_current_tables(a, *, tass:str, output_root:Path, name:str) -> Path:
+    """Assemble the profiler derivative from the immediately preceding normal build.
+
+    Normal and raster-profiler variants intentionally use the same 192-line
+    geometry. Reusing generated tables here avoids doing the expensive host-side
+    visibility/projection pass twice while still assembling a distinct debug ASM
+    and distinct PRG. The production renderer source is never modified.
+    """
+    current=(BUILD/'main.asm').read_text(encoding='utf-8')
+    def number(pattern:str, label:str, base:int=10) -> int:
+        match=re.search(pattern,current,re.MULTILINE)
+        if not match:
+            raise RuntimeError(f'could not recover {label} from current generated assembler')
+        return int(match.group(1),base)
+    frames=number(r'^FRAME_COUNT\s*=\s*(\d+)\s*$', 'FRAME_COUNT')
+    screen=number(r'^SCREEN_COLOR\s*=\s*\$([0-9a-fA-F]+)\s*', 'SCREEN_COLOR',16)
+    colors=number(r'^COLORS_ENABLED\s*=\s*(\d+)\b', 'COLORS_ENABLED')
+    asm=prepare_asm('yunroll',frames,(screen>>4)&0x0f,bool(colors),text_overlay=True,rastertime_profiler=True)
+    subprocess.run([sys.executable,str(ROOT/'tools'/'asm_sanity.py'),str(asm)],cwd=ROOT,check=True)
+    prg=output_root/f'{name}.prg'; lbl=output_root/f'{name}.lbl'; lst=output_root/f'{name}.lst'
+    cmd=tool_command(tass,a.tass_args,['--cbm-prg','--vice-labels','-l',str(lbl),'-L',str(lst),'-o',str(prg),str(asm)])
+    print('+',' '.join(cmd)); subprocess.run(cmd,cwd=ROOT,check=True)
+    print(f'built {_display_path(prg)} (reused 192-line geometry tables; debug ASM reassembled)')
+    return prg
+
+
+def _merge_manifest_variant_args(base_args:list[str], override_args:list[str]) -> list[str]:
+    """Apply manifest variant overrides without emitting duplicate long options.
+
+    Example manifests sometimes need one historical variant to override a base
+    value (the Blender falling-cubes legacy build uses sample-step 3 while the
+    current builds use 4).  Keep the generated command line unambiguous by
+    replacing the earlier option/value pair instead of appending a duplicate.
+    """
+    result=list(base_args)
+    i=0
+    while i < len(override_args):
+        token=override_args[i]
+        has_value=i+1 < len(override_args) and not override_args[i+1].startswith('--')
+        if token.startswith('--'):
+            while token in result:
+                pos=result.index(token)
+                del result[pos]
+                if has_value and pos < len(result) and not result[pos].startswith('--'):
+                    del result[pos]
+        result.append(token)
+        if has_value:
+            result.append(override_args[i+1])
+            i+=2
+        else:
+            i+=1
+    return result
+
+
+def _run_example_build_command(a, *, spec:dict, variant_args:list[str], name:str, output_root:Path, extra_build_args=(), variant_suffix:str='') -> Path:
+    args=_merge_manifest_variant_args(
+        list(spec['args']),
+        list(spec.get('variant_args',{}).get(variant_suffix,())),
+    )
+    cmd=[
+        sys.executable,str(ROOT/'c643d.py'),'build',*args,*variant_args,*extra_build_args,
+        '--output',name,'--output-dir',str(output_root),
+        '--overwrite-policy','allow','--tass',a.tass,'--vice',a.vice,'--blender',a.blender,
+    ]
+    for extra in a.tass_args: cmd.append(f'--tass-arg={extra}')
+    for extra in a.vice_args: cmd.append(f'--vice-arg={extra}')
+    if getattr(a,'no_tass_default_args',False): cmd.append('--no-tass-default-args')
+    if getattr(a,'no_vice_default_args',False): cmd.append('--no-vice-default-args')
+    if getattr(a,'_config_disabled',False): cmd.append('--no-config')
+    elif getattr(a,'_tool_config_path',None): cmd.extend(['--config',str(a._tool_config_path)])
+    print('+',' '.join(cmd))
+    subprocess.run(cmd,cwd=ROOT,check=True)
+    return output_root/f'{name}.prg'
+
+
+def _run_example_batch(a,*,install:bool):
     ok,tass,_=preflight(tass_name=a.tass,vice_name=a.vice,tass_args=a.tass_args,vice_args=a.vice_args,need_assemble=True,need_run=False,verbose=True)
     if not ok:
         return 2
-    manifest=EXAMPLES/'examples.json'
-    specs=json.loads(manifest.read_text(encoding='utf-8'))
-    EXAMPLES.mkdir(parents=True,exist_ok=True)
-    print(f'generating {len(specs)} example PRGs -> {EXAMPLES.relative_to(ROOT)}/')
-    for spec in specs:
-        name=spec['name']; args=list(spec['args'])
-        cmd=[sys.executable,str(ROOT/'c643d.py'),'build',*args,'--output',name,'--tass',a.tass,'--vice',a.vice]
-        for extra in a.tass_args: cmd.append(f'--tass-arg={extra}')
-        for extra in a.vice_args: cmd.append(f'--vice-arg={extra}')
-        if getattr(a,'no_tass_default_args',False): cmd.append('--no-tass-default-args')
-        if getattr(a,'no_vice_default_args',False): cmd.append('--no-vice-default-args')
-        if getattr(a,'_config_disabled',False): cmd.append('--no-config')
-        elif getattr(a,'_tool_config_path',None): cmd.extend(['--config',str(a._tool_config_path)])
-        print('\n==',name,'==')
-        print('+',' '.join(cmd))
-        subprocess.run(cmd,cwd=ROOT,check=True)
-        src=BUILD/f'{name}.prg'; dst=EXAMPLES/f'{name}.prg'
-        shutil.copy2(src,dst)
-        print(f'example: {dst.relative_to(ROOT)}')
+    try:
+        specs=_example_specs(a)
+        _data,ref_name,ref=_load_example_reference(getattr(a,'reference_set',None))
+    except (OSError,ValueError,json.JSONDecodeError) as e:
+        print(f'error: {e}',file=sys.stderr)
+        return 2
+    reproduce_reference=bool(getattr(a,'reproduce_reference',False))
+    reference_overrides=tuple(ref.get('build_overrides',())) if reproduce_reference else ()
+    if reproduce_reference and a.variants!='normal':
+        print('error: --reproduce-reference requires --variants normal because historical build overrides describe the production reference lane',file=sys.stderr)
+        return 2
+    variants=_example_variants(a.variants)
+    total=sum(len([v for v in variants if not spec.get('variants') or v[0] in spec['variants']]) for spec in specs)
+    destination='examples/' if install else 'temporary build directory'
+    suite='Blender-only' if getattr(a,'blender_only',False) else 'standard'
+    print(f'{"generating" if install else "testing"} {total} {suite} example PRG build(s) -> {destination}')
+    print(f'checksum reference: {ref_name} ({ref.get("version","unknown version")})')
+    if reproduce_reference:
+        if reference_overrides:
+            print(f'reference build overrides: {" ".join(reference_overrides)}')
+        else:
+            print('reference build overrides: (none recorded)')
+    summary={'MATCHING':0,'CHANGED':0,'ABSENT':0}
+    with tempfile.TemporaryDirectory(prefix='c643d-example-test-') as td:
+        # Always assemble into a temporary directory. generate-examples copies
+        # only the runnable PRG into examples/, keeping assembler LBL/LST files
+        # out of the reference-output directory.
+        output_root=Path(td)
+        for spec in specs:
+            variant_map={suffix:args for suffix,args in variants if not spec.get('variants') or suffix in spec['variants']}
+            built={}
+
+            # Normal first. With `all`, its generated 192-line geometry can be
+            # reused for the profiler derivative before no-overlay replaces it.
+            if '' in variant_map:
+                name=spec['name']
+                print(f'\n== {name} ==')
+                prg=_run_example_build_command(a,spec=spec,variant_args=variant_map[''],name=name,output_root=output_root,extra_build_args=reference_overrides,variant_suffix='')
+                built['']=prg
+                _install_example_prg(prg,spec=spec,install=install)
+                status=_print_checksum_result(prg,ref); summary[status]+=1
+
+            profiler_suffix='_rastertime_profiler'
+            if profiler_suffix in variant_map:
+                name=spec['name']+profiler_suffix
+                print(f'\n== {name} ==')
+                can_reuse=(
+                    '' in built
+                    and '--renderer' in spec['args']
+                    and spec['args'][spec['args'].index('--renderer')+1]=='yunroll'
+                )
+                if can_reuse:
+                    prg=_assemble_profiler_from_current_tables(a,tass=tass,output_root=output_root,name=name)
+                else:
+                    prg=_run_example_build_command(a,spec=spec,variant_args=variant_map[profiler_suffix],name=name,output_root=output_root,variant_suffix=profiler_suffix)
+                _install_example_prg(prg,spec=spec,install=install)
+                status=_print_checksum_result(prg,ref); summary[status]+=1
+
+            legacy_suffix='_legacy144'
+            if legacy_suffix in variant_map:
+                name=spec['name']+legacy_suffix
+                print(f'\n== {name} ==')
+                prg=_run_example_build_command(a,spec=spec,variant_args=variant_map[legacy_suffix],name=name,output_root=output_root,variant_suffix=legacy_suffix)
+                _install_example_prg(prg,spec=spec,install=install)
+                status=_print_checksum_result(prg,ref); summary[status]+=1
+
+            no_suffix='_no_overlay'
+            if no_suffix in variant_map:
+                name=spec['name']+no_suffix
+                print(f'\n== {name} ==')
+                prg=_run_example_build_command(a,spec=spec,variant_args=variant_map[no_suffix],name=name,output_root=output_root,variant_suffix=no_suffix)
+                _install_example_prg(prg,spec=spec,install=install)
+                status=_print_checksum_result(prg,ref); summary[status]+=1
+
+    print('\nchecksum summary: '
+          f'{summary["MATCHING"]} MATCHING, {summary["CHANGED"]} CHANGED, '
+          f'{summary["ABSENT"]} ABSENT; {sum(summary.values())} total')
     return 0
+
+def cmd_generate_examples(a):
+    return _run_example_batch(a,install=True)
+
+
+def cmd_test_examples(a):
+    return _run_example_batch(a,install=False)
 
 
 def _apply_up_axis(mesh: Mesh, up_axis: str) -> Mesh:
@@ -218,8 +425,20 @@ def build_mesh(a):
     return mesh,label,(a.spin_axis or spin_axis),visibility,float(ztol),float(feature_angle),color_name,use_source_colors,per_cell_colors,animation,float(anim_tilt),float(anim_travel),float(anim_rise)
 
 
-def prepare_asm(renderer:str,frames:int,color_index:int=1,colors_enabled:bool=False) -> Path:
-    src=(C64/RENDERERS[renderer]).read_text()
+def prepare_asm(renderer:str,frames:int,color_index:int=1,colors_enabled:bool=False, *,
+                text_overlay:bool=True,rastertime_profiler:bool=False) -> Path:
+    if rastertime_profiler:
+        if renderer not in RASTERTIME_RENDERERS:
+            raise ValueError(
+                f'raster-time profiler is currently available only for '
+                f'{", ".join(RASTERTIME_RENDERERS)}'
+            )
+        source=RASTERTIME_RENDERERS[renderer]
+    elif not text_overlay:
+        source=NO_OVERLAY_RENDERERS[renderer]
+    else:
+        source=RENDERERS[renderer]
+    src=(C64/source).read_text()
     src=src.replace('FRAME_COUNT = 48',f'FRAME_COUNT = {frames}',1)
     src=src.replace('SCREEN_COLOR = $10',f'SCREEN_COLOR = ${color_index:X}0',1)
     src=src.replace('COLORS_ENABLED = 0',f'COLORS_ENABLED = {int(colors_enabled)}',1)
@@ -229,9 +448,41 @@ def prepare_asm(renderer:str,frames:int,color_index:int=1,colors_enabled:bool=Fa
     return out
 
 
-def default_output_basename(label:str,renderer:str,use_source_colors:bool) -> str:
+def default_output_basename(label:str,renderer:str,use_source_colors:bool, *,
+                            text_overlay:bool=True,rastertime_profiler:bool=False) -> str:
     slug=label.lower().replace(' ','_')
-    return f'{slug}{"_color" if use_source_colors else ""}-{renderer}'
+    name=f'{slug}{"_color" if use_source_colors else ""}-{renderer}'
+    if rastertime_profiler:
+        return name+'_rastertime_profiler'
+    if not text_overlay:
+        return name+'_no_overlay'
+    return name
+
+
+def _viewport_height(a) -> int:
+    explicit=getattr(a,'viewport_height',None)
+    if explicit is not None:
+        return int(explicit)
+    return 200 if not getattr(a,'text_overlay',True) else 192
+
+
+def _display_path(path:Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
+def _check_overwrite(paths,policy:str) -> bool:
+    existing=[Path(path) for path in paths if Path(path).exists()]
+    if not existing or policy=='allow':
+        return True
+    listing=', '.join(_display_path(path) for path in existing)
+    if policy=='error':
+        print(f'error: refusing to overwrite existing output(s): {listing}',file=sys.stderr)
+        return False
+    print(f'warning: overwriting existing output(s): {listing}',file=sys.stderr)
+    return True
 
 
 def _selected_source_path(a) -> Path | None:
@@ -308,6 +559,12 @@ def print_stats(mesh:Mesh,label:str,renderer:str,scale:float,stats:dict,hud:str,
 def cmd_build(a):
     if getattr(a,'blend',None) or getattr(a,'scene',None):
         return cmd_build_scene(a)
+    if getattr(a,'rastertime_profiler',False) and not getattr(a,'text_overlay',True):
+        print('error: --rastertime-profiler and --no-text-overlay are separate ASM variants; select one',file=sys.stderr)
+        return 2
+    if getattr(a,'rastertime_profiler',False) and a.renderer not in RASTERTIME_RENDERERS:
+        print(f'error: raster-time profiler is currently available only for {", ".join(RASTERTIME_RENDERERS)}',file=sys.stderr)
+        return 2
     ok,tass_found,vice_found=preflight(tass_name=a.tass,vice_name=a.vice,tass_args=a.tass_args,vice_args=a.vice_args,need_assemble=not a.no_assemble,need_run=a.run,verbose=True)
     if not ok: return 2
     GENERATED.mkdir(exist_ok=True); BUILD.mkdir(exist_ok=True); OBJECTS.mkdir(exist_ok=True)
@@ -320,9 +577,10 @@ def cmd_build(a):
     )
     if notice:
         print(notice,flush=True)
-    cam=Camera(distance=a.camera,focal=a.focal,cx=128.0,cy=72.0)
+    viewport_height=_viewport_height(a)
+    cam=Camera(distance=a.camera,focal=a.focal,cx=128.0,cy=viewport_height/2.0)
     requested_frames=a.frames if a.frames is not None else 48
-    fitted=fit_scale(mesh,requested_frames,cam,margin=a.margin,max_scale=a.max_fit_scale,spin_axis=spin_axis,animation=animation,animation_tilt=anim_tilt,animation_travel=anim_travel,animation_rise=anim_rise) if not a.no_auto_fit else 1.0
+    fitted=fit_scale(mesh,requested_frames,cam,margin=a.margin,max_scale=a.max_fit_scale,spin_axis=spin_axis,animation=animation,animation_tilt=anim_tilt,animation_travel=anim_travel,animation_rise=anim_rise,height=viewport_height) if not a.no_auto_fit else 1.0
     mesh=transform_mesh(mesh,scale=fitted)
 
     frame_candidates=[requested_frames]
@@ -331,7 +589,7 @@ def cmd_build(a):
             if n<requested_frames and n not in frame_candidates: frame_candidates.append(n)
     last_error=None
     for actual_frames in frame_candidates:
-        frames,candidate_edges=build_frames(mesh,actual_frames,cam,spin_axis=spin_axis,visibility_mode=visibility,z_tolerance=z_tolerance,feature_angle=feature_angle,animation=animation,animation_tilt=anim_tilt,animation_travel=anim_travel,animation_rise=anim_rise,enable_source_colors=per_cell_colors,fallback_color=c64_color_index(color_name))
+        frames,candidate_edges=build_frames(mesh,actual_frames,cam,spin_axis=spin_axis,visibility_mode=visibility,z_tolerance=z_tolerance,feature_angle=feature_angle,animation=animation,animation_tilt=anim_tilt,animation_travel=anim_travel,animation_rise=anim_rise,enable_source_colors=per_cell_colors,fallback_color=c64_color_index(color_name),height=viewport_height)
         try:
             stats=emit_tables(GENERATED/'tables.inc',frames,a.renderer,candidate_edges)
             break
@@ -344,21 +602,32 @@ def cmd_build(a):
         raise RuntimeError(f'could not fit generated tables: {last_error}')
     if actual_frames != requested_frames:
         print(f'table RAM auto-fit: orientations {requested_frames} -> {actual_frames}; mesh vertices/edges/faces preserved')
-    hud=emit_hud(GENERATED/'hud.inc',label,len(mesh.vertices),len(mesh.edges))
-    asm=prepare_asm(a.renderer,actual_frames,c64_color_index(color_name),stats['colors_enabled'])
+    hud=emit_hud(GENERATED/'hud.inc',label,len(mesh.vertices),len(mesh.edges)) if a.text_overlay else 'disabled'
+    asm=prepare_asm(
+        a.renderer,actual_frames,c64_color_index(color_name),stats['colors_enabled'],
+        text_overlay=a.text_overlay,rastertime_profiler=a.rastertime_profiler,
+    )
     subprocess.run([sys.executable,str(ROOT/'tools'/'asm_sanity.py'),str(asm)],cwd=ROOT,check=True)
     print_stats(mesh,label,a.renderer,fitted,stats,hud,spin_axis,visibility,z_tolerance,feature_angle,color_name,use_source_colors,animation)
-    outname=a.output or default_output_basename(label,a.renderer,use_source_colors)
+    print(f'viewport:   256x{viewport_height} ({"text overlay" if a.text_overlay else "no text overlay; full bitmap height"})')
+    if a.rastertime_profiler:
+        print('profiler:   raster-time border profiler (debug ASM variant)')
+    outname=a.output or default_output_basename(
+        label,a.renderer,use_source_colors,
+        text_overlay=a.text_overlay,rastertime_profiler=a.rastertime_profiler,
+    )
     outdir=Path(a.output_dir).resolve() if getattr(a,'output_dir',None) else BUILD
     outdir.mkdir(parents=True,exist_ok=True)
     prg=outdir/f'{outname}.prg'; lbl=outdir/f'{outname}.lbl'; lst=outdir/f'{outname}.lst'
     if a.no_assemble:
         print(f'generated assembler: {asm}')
         return 0
+    if not _check_overwrite((prg,lbl,lst),a.overwrite_policy):
+        return 2
     tass=tass_found or resolve_executable(a.tass,'tass')
     cmd=tool_command(tass,a.tass_args,['--cbm-prg','--vice-labels','-l',str(lbl),'-L',str(lst),'-o',str(prg),str(asm)])
     print('+',' '.join(cmd)); subprocess.run(cmd,cwd=ROOT,check=True)
-    print(f'built {prg.relative_to(ROOT)}')
+    print(f'built {_display_path(prg)}')
     if a.run:
         vice=vice_found or resolve_executable(a.vice,'vice')
         subprocess.run(tool_command(vice,a.vice_args,[str(prg)]),cwd=ROOT,check=False)
@@ -381,6 +650,13 @@ def _scene_color_policy(mesh:Mesh,a):
 
 
 def cmd_build_scene(a):
+    if getattr(a,'rastertime_profiler',False) and not getattr(a,'text_overlay',True):
+        print('error: --rastertime-profiler and --no-text-overlay are separate ASM variants; select one',file=sys.stderr)
+        return 2
+    if getattr(a,'rastertime_profiler',False) and a.renderer not in RASTERTIME_RENDERERS:
+        print(f'error: raster-time profiler is currently available only for {", ".join(RASTERTIME_RENDERERS)}',file=sys.stderr)
+        return 2
+    viewport_height=_viewport_height(a)
     selected=sum(bool(x) for x in (a.blend,a.scene,a.obj,a.svg,a.object))
     if selected>1:
         print('error: --blend/--scene cannot be combined with --object, --obj, or --svg',file=sys.stderr)
@@ -414,7 +690,7 @@ def cmd_build_scene(a):
                     a.blend,exported,blender=blender_found,
                     frame_start=a.frame_start,frame_end=a.frame_end,
                     sample_step=a.sample_step,system=getattr(a,'_tool_platform',None),root=ROOT,
-                    blender_is_verified=True,
+                    blender_is_verified=True,viewport_height=viewport_height,
                 )
                 scene=load_scene(exported)
     except (OSError,ValueError,RuntimeError) as e:
@@ -439,35 +715,76 @@ def cmd_build_scene(a):
         frames,candidate_edges=build_scene_frames(
             scene,visibility_mode=visibility,z_tolerance=z_tolerance,
             feature_angle=feature_angle,enable_source_colors=per_cell_colors,
-            fallback_color=c64_color_index(color_name),
+            fallback_color=c64_color_index(color_name),height=viewport_height,
         )
         stats=emit_tables(GENERATED/'tables.inc',frames,a.renderer,candidate_edges)
     except RuntimeError as e:
         message=str(e)
         if any(k in message for k in ('line tables reach','line tables need','clear tables reach','clear/colour tables reach','frame pointer tables reach')):
-            print(f'error: Blender animation does not fit table RAM: {message}',file=sys.stderr)
-            print('hint: increase --sample-step, shorten --frame-end, or reduce scene geometry; authored frames are never silently discarded.',file=sys.stderr)
+            print('error: Blender animation exceeds the safe C64 table-RAM area.',file=sys.stderr)
+            print('',file=sys.stderr)
+            print(f'  scene:       {Path(a.blend or a.scene).name}',file=sys.stderr)
+            print(f'  samples:     {len(scene.frames)} frames (step {scene.sample_step})',file=sys.stderr)
+            print(f'  viewport:    256x{viewport_height}',file=sys.stderr)
+            print(f'  renderer:    {a.renderer}',file=sys.stderr)
+            print(f'  colour:      {"source colours" if use_source_colors else color_name+" monochrome"}',file=sys.stderr)
+            reach=re.search(r'tables reach \$(?P<end>[0-9a-fA-F]+), limit \$(?P<limit>[0-9a-fA-F]+)',message)
+            need=re.search(r'line tables need (?P<need>\d+) bytes; available (?P<avail>\d+) bytes',message)
+            if reach:
+                end=int(reach.group('end'),16); limit=int(reach.group('limit'),16)
+                print(f'  table end:   ${end:04x}',file=sys.stderr)
+                print(f'  safe limit:  ${limit:04x}',file=sys.stderr)
+                print(f'  overflow:    {end-limit} bytes',file=sys.stderr)
+            elif need:
+                required=int(need.group('need')); available=int(need.group('avail'))
+                print(f'  required:    {required} bytes',file=sys.stderr)
+                print(f'  available:   {available} bytes',file=sys.stderr)
+                print(f'  overflow:    {required-available} bytes',file=sys.stderr)
+            print('',file=sys.stderr)
+            print(f'  detail:      {message}',file=sys.stderr)
+            print('',file=sys.stderr)
+            print('Nothing was assembled or overwritten.',file=sys.stderr)
+            print('This is a Commodore 64 memory-layout limit, not a shortage of host RAM.',file=sys.stderr)
+            next_step=max(2,int(scene.sample_step)+1)
+            print('',file=sys.stderr)
+            print('Try one or more of:',file=sys.stderr)
+            print(f'  - increase --sample-step (for example {scene.sample_step} -> {next_step})',file=sys.stderr)
+            print('  - shorten the animation with --frame-end',file=sys.stderr)
+            print('  - reduce drawable scene geometry',file=sys.stderr)
+            print('  - use a smaller --viewport-height',file=sys.stderr)
+            print('Authored Blender frames are never silently discarded.',file=sys.stderr)
             return 2
         print(f'error: {message}',file=sys.stderr)
         return 2
-    hud=emit_hud(GENERATED/'hud.inc',label,len(mesh.vertices),len(mesh.edges))
-    asm=prepare_asm(a.renderer,len(frames),c64_color_index(color_name),stats['colors_enabled'])
+    hud=emit_hud(GENERATED/'hud.inc',label,len(mesh.vertices),len(mesh.edges)) if a.text_overlay else 'disabled'
+    asm=prepare_asm(
+        a.renderer,len(frames),c64_color_index(color_name),stats['colors_enabled'],
+        text_overlay=a.text_overlay,rastertime_profiler=a.rastertime_profiler,
+    )
     subprocess.run([sys.executable,str(ROOT/'tools'/'asm_sanity.py'),str(asm)],cwd=ROOT,check=True)
     print_stats(
         mesh,label,a.renderer,1.0,stats,hud,'authored',visibility,z_tolerance,
         feature_angle,color_name,use_source_colors,'Blender scene',
     )
-    outname=a.output or default_output_basename(label,a.renderer,use_source_colors)
+    print(f'viewport:   256x{viewport_height} ({"text overlay" if a.text_overlay else "no text overlay; full bitmap height"})')
+    if a.rastertime_profiler:
+        print('profiler:   raster-time border profiler (debug ASM variant)')
+    outname=a.output or default_output_basename(
+        label,a.renderer,use_source_colors,
+        text_overlay=a.text_overlay,rastertime_profiler=a.rastertime_profiler,
+    )
     outdir=Path(a.output_dir).resolve() if a.output_dir else BUILD
     outdir.mkdir(parents=True,exist_ok=True)
     prg=outdir/f'{outname}.prg'; lbl=outdir/f'{outname}.lbl'; lst=outdir/f'{outname}.lst'
     if a.no_assemble:
         print(f'generated assembler: {asm}')
         return 0
+    if not _check_overwrite((prg,lbl,lst),a.overwrite_policy):
+        return 2
     tass=tass_found or resolve_executable(a.tass,'tass')
     cmd=tool_command(tass,a.tass_args,['--cbm-prg','--vice-labels','-l',str(lbl),'-L',str(lst),'-o',str(prg),str(asm)])
     print('+',' '.join(cmd)); subprocess.run(cmd,cwd=ROOT,check=True)
-    print(f'built {prg.relative_to(ROOT)}')
+    print(f'built {_display_path(prg)}')
     if a.run:
         vice=vice_found or resolve_executable(a.vice,'vice')
         subprocess.run(tool_command(vice,a.vice_args,[str(prg)]),cwd=ROOT,check=False)
@@ -553,6 +870,13 @@ def cmd_list_objects():
     return 0
 
 
+def _viewport_height_arg(value):
+    height=int(value)
+    if height<8 or height>200 or height%8:
+        raise argparse.ArgumentTypeError('viewport height must be a multiple of 8 from 8..200')
+    return height
+
+
 def _add_config_args(q):
     q.add_argument('--config',help='toolchain config file (default: config/c643d.ini; env: C643D_CONFIG)')
     q.add_argument('--no-config',action='store_true',help='ignore config files and use built-in/CLI toolchain settings')
@@ -621,6 +945,16 @@ def make_parser(settings):
     b.add_argument('--sample-step',type=int,default=1,help='sample every Nth Blender frame (default 1)')
     b.add_argument('--output',help='output basename')
     b.add_argument('--output-dir',help='directory for PRG/LBL/LST outputs (default: build/)')
+    overlay=b.add_mutually_exclusive_group()
+    overlay.add_argument('--text-overlay',dest='text_overlay',action='store_true',help='show object HUD and FPS counter')
+    overlay.add_argument('--no-text-overlay',dest='text_overlay',action='store_false',help='use separate no-overlay ASM and the full 200-line bitmap by default')
+    b.set_defaults(text_overlay=settings.text_overlay)
+    profiler=b.add_mutually_exclusive_group()
+    profiler.add_argument('--rastertime-profiler',dest='rastertime_profiler',action='store_true',help='use derivative yunroll debug ASM that marks render CPU time in the border')
+    profiler.add_argument('--no-rastertime-profiler',dest='rastertime_profiler',action='store_false',help=argparse.SUPPRESS)
+    b.set_defaults(rastertime_profiler=settings.rastertime_profiler)
+    b.add_argument('--viewport-height',type=_viewport_height_arg,default=settings.viewport_height,metavar='LINES',help='drawable height, multiple of 8 from 8..200; default auto=192 with overlay, 200 without')
+    b.add_argument('--overwrite-policy',choices=('allow','warn','error'),default=settings.overwrite_policy,help='existing output handling (built-in default: warn)')
     _add_toolchain_args(b,settings)
     b.add_argument('--no-assemble',action='store_true')
     b.add_argument('--run',action='store_true')
@@ -657,6 +991,17 @@ def make_parser(settings):
     isvg.add_argument('--overwrite',action='store_true')
     ge=sub.add_parser('generate-examples',help='compile bundled reference PRGs into examples/')
     _add_toolchain_args(ge,settings)
+    ge.add_argument('--only',metavar='NAME',help='build only one named entry from the selected example manifest')
+    ge.add_argument('--blender-only',action='store_true',help='build only canonical Blender-backed examples from examples/blender_falling_cubes/examples.json')
+    ge.add_argument('--variants',choices=('normal','legacy144','no-overlay','rastertime-profiler','all'),default='all',help='which PRG variants to generate (default: all)')
+    ge.add_argument('--reference-set',help='checksum reference set from tests/data/golden_prg_checksums.json (default: manifest default)')
+    te=sub.add_parser('test-examples',help='rebuild examples into a temporary directory and compare PRG checksums')
+    _add_toolchain_args(te,settings)
+    te.add_argument('--only',metavar='NAME',help='test only one named entry from the selected example manifest')
+    te.add_argument('--blender-only',action='store_true',help='rebuild only canonical Blender-backed examples from examples/blender_falling_cubes/examples.json')
+    te.add_argument('--variants',choices=('normal','legacy144','no-overlay','rastertime-profiler','all'),default='all',help='which PRG variants to test (default: all)')
+    te.add_argument('--reference-set',help='checksum reference set from tests/data/golden_prg_checksums.json (default: manifest default)')
+    te.add_argument('--reproduce-reference',action='store_true',help='apply the selected reference set build_overrides (for example the legacy 144-line viewport); requires --variants normal')
     doc=sub.add_parser('doctor',help='check local 64tass/VICE toolchain availability')
     _add_toolchain_args(doc,settings)
     sub.add_parser('list-shapes',help='list procedural/built-in shapes')
@@ -694,6 +1039,7 @@ def main(argv=None):
         print('horse_head  compatibility alias for --object horse_head')
         return 0
     if a.command=='generate-examples': return cmd_generate_examples(a)
+    if a.command=='test-examples': return cmd_test_examples(a)
     if a.command=='doctor': return cmd_doctor(a)
     if a.command=='list-objects': return cmd_list_objects()
     if a.command=='import-obj': return cmd_import_obj(a)

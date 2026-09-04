@@ -1,7 +1,7 @@
 """Generate the falling-cubes Blender demo without manual scene editing.
 
 Usage:
-    blender --background --python examples/blender/falling_cubes_c64.py
+    blender --background --python examples/blender_falling_cubes/falling_cubes_c64.py
 """
 
 from __future__ import annotations

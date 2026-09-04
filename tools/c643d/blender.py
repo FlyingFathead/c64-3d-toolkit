@@ -57,8 +57,8 @@ def probe_blender(executable: str) -> str:
     expression=f'import bpy; print("{marker}" + bpy.app.version_string)'
     try:
         completed=subprocess.run(
-            [executable,'--background','--factory-startup','--python-exit-code','1',
-             '--python-expr',expression],
+            [executable,'--background','--factory-startup','--disable-autoexec',
+             '--python-exit-code','1','--python-expr',expression],
             check=False,capture_output=True,text=True,timeout=45,
         )
     except (OSError,subprocess.TimeoutExpired) as e:
@@ -70,7 +70,7 @@ def probe_blender(executable: str) -> str:
         detail='\n'.join(diagnostic_lines[-8:]) if diagnostic_lines else 'no diagnostic output'
         raise RuntimeError(
             f'Blender/bpy preflight failed (exit {completed.returncode}):\n{detail}\n'
-            'hint: verify with: blender --background --python-expr '
+            'hint: verify with: blender --background --disable-autoexec --python-expr '
             '\'import bpy; print(bpy.app.version_string)\''
         )
     return version
@@ -96,6 +96,7 @@ def export_blend_scene(
     system: str | None=None,
     root: str | Path | None=None,
     blender_is_verified: bool=False,
+    viewport_height: int=144,
 ) -> Path:
     source=Path(blend_path).expanduser().resolve()
     if not source.is_file():
@@ -104,14 +105,17 @@ def export_blend_scene(
         raise ValueError(f'--blend expects a .blend file: {source}')
     if sample_step<1:
         raise ValueError('--sample-step must be at least 1')
+    if viewport_height<8 or viewport_height>200 or viewport_height%8:
+        raise ValueError('viewport height must be a multiple of 8 from 8..200')
     executable=str(blender) if blender_is_verified else require_blender(blender,system=system)[0]
     project_root=Path(root).resolve() if root else Path(__file__).resolve().parents[2]
     script=project_root/'tools'/'blender_export.py'
     output=Path(output_path).resolve()
     cmd=[
-        executable,'--background',str(source),
+        executable,'--background','--disable-autoexec',str(source),
         '--python-exit-code','1','--python',str(script),'--',
         '--output',str(output),'--sample-step',str(sample_step),
+        '--viewport-height',str(viewport_height),
     ]
     if frame_start is not None:
         cmd.extend(['--frame-start',str(frame_start)])

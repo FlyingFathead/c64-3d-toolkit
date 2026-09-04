@@ -36,7 +36,7 @@ by 5.2, or keep authoring/export on the same major version.
 Verify the exact integration used by the toolkit:
 
 ```bash
-blender --background --python-expr 'import bpy; print("BLENDER:", bpy.app.version_string); print("CAMERA API:", hasattr(bpy.types.Object, "calc_matrix_camera"))'
+blender --background --disable-autoexec --python-expr 'import bpy; print("BLENDER:", bpy.app.version_string); print("CAMERA API:", hasattr(bpy.types.Object, "calc_matrix_camera"))'
 ```
 
 Windows can install Blender through WinGet:
@@ -57,6 +57,18 @@ The `--blend` path performs its own headless `import bpy` preflight. Merely
 finding an executable is not considered enough. If Blender is absent or its
 embedded Python cannot import `bpy`, the build stops before scene processing
 and prints platform-specific installation instructions.
+
+### Embedded-script security
+
+The toolkit invokes Blender with `--disable-autoexec` before opening any
+`.blend` scene. This prevents embedded Blender Python scripts from being
+automatically executed merely because a scene is being compiled. The headless
+preflight uses the same setting.
+
+This is a secure default for imported or third-party `.blend` files. Scenes
+that intentionally depend on Blender auto-run scripts should be reviewed and
+exported explicitly in a trusted Blender workflow, then compiled from the
+resulting `.c643dscene` interchange file.
 
 Do not add `bpy` to the toolkit's Python requirements. `blender_export.py` is
 run by Blender's bundled Python, where `bpy` is already present. The ordinary
@@ -123,24 +135,26 @@ rigid-body gravity/collisions, a passive floor, and a camera:
 
 ```bash
 blender --background \
-    --python examples/blender/falling_cubes_c64.py
+    --python examples/blender_falling_cubes/falling_cubes_c64.py
 ```
 
-Compile 24 authored samples from its 72 Blender frames:
+Compile 18 authored samples from its 72 Blender frames:
 
 ```bash
 ./build.sh \
-    --blend examples/blender/falling_cubes_c64.blend \
+    --blend examples/blender_falling_cubes/falling_cubes_c64.blend \
     --frame-start 1 \
     --frame-end 72 \
-    --sample-step 3 \
+    --sample-step 4 \
     --run
 ```
 
 Rigid-body and other stateful simulations are evaluated sequentially from the
 scene/cache start through the last requested frame. Only frames selected by
 `--sample-step` are stored in the interchange and C64 tables. This preserves
-physics evolution while retaining the intended C64 frame budget. A warning is
+physics evolution while retaining the intended C64 frame budget. The canonical six-cube
+example uses a step of 4 because the expanded 192-line overlay viewport makes
+the older 24-sample/step-3 build exceed the fixed C64 table-RAM budget. A warning is
 printed if all captured frames are geometrically identical.
 
 The example uses separate stable-topology cubes. They fall, collide, tumble,
@@ -154,6 +168,21 @@ cubes, a passive floor, and deterministic rigid-body setup. That fuller scene
 is included as an authoring/stress reference. It can exceed the present C64
 limit of 255 visible runs in one frame and the available table RAM, so the
 six-cube variant is the canonical compile example.
+
+The canonical six-cube scene also has a dedicated regression selector. It builds
+both the authored-colour scene and a forced monochrome version in the current
+192/200-line lanes, plus the historical authored-colour 144-line reference and
+raster-time-profiler PRGs:
+
+```bash
+./build.sh test-examples --blender-only
+```
+
+This is deliberately separate from the normal example batch so Blender remains
+optional. Narrow the run with `--variants normal|legacy144|no-overlay|rastertime-profiler`
+or `--only falling_cubes_c64_color-yunroll` /
+`--only falling_cubes_c64-yunroll`. Use `generate-examples --blender-only` only
+when intentionally refreshing the checked-in Blender PRGs.
 
 ## Blender path configuration
 

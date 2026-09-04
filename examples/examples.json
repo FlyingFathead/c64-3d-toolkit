@@ -6,7 +6,8 @@
       "torus",
       "--renderer",
       "yunroll"
-    ]
+    ],
+    "directory": "torus"
   },
   {
     "name": "torus_dense",
@@ -17,7 +18,8 @@
       "yunroll",
       "--vertices",
       "72"
-    ]
+    ],
+    "directory": "torus_dense"
   },
   {
     "name": "cube",
@@ -26,7 +28,8 @@
       "cube",
       "--renderer",
       "yunroll"
-    ]
+    ],
+    "directory": "cube"
   },
   {
     "name": "sphere",
@@ -37,7 +40,8 @@
       "yunroll",
       "--polycount",
       "48"
-    ]
+    ],
+    "directory": "sphere"
   },
   {
     "name": "horse_head",
@@ -46,7 +50,8 @@
       "horse_head",
       "--renderer",
       "yunroll"
-    ]
+    ],
+    "directory": "horse_head"
   },
   {
     "name": "sunflower_torus",
@@ -56,7 +61,8 @@
       "--renderer",
       "yunroll",
       "--no-colors"
-    ]
+    ],
+    "directory": "sunflower_torus"
   },
   {
     "name": "sunflower_torus_color",
@@ -65,7 +71,8 @@
       "sunflower_torus",
       "--renderer",
       "yunroll"
-    ]
+    ],
+    "directory": "sunflower_torus"
   },
   {
     "name": "space_horse_spin_color",
@@ -74,7 +81,8 @@
       "space_horse",
       "--renderer",
       "yunroll"
-    ]
+    ],
+    "directory": "space_horse_spin"
   },
   {
     "name": "space_horse_crawl_color",
@@ -83,6 +91,7 @@
       "space_horse_crawl",
       "--renderer",
       "yunroll"
-    ]
+    ],
+    "directory": "space_horse_crawl"
   }
 ]

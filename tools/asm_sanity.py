@@ -65,8 +65,9 @@ def main(argv=None):
     # Some colour-only cold helpers live in the free $4000-$43ff gap after the
     # HUD include. Use the explicit pre-HUD marker when present rather than the
     # numerically highest source segment.
-    code_end=labels.get('renderer_hud_start',end)
-    hud_end=code_end+HUD_MAX_BYTES
+    no_overlay='renderer_no_overlay_end' in labels
+    code_end=labels.get('renderer_hud_start',labels.get('renderer_no_overlay_end',end))
+    hud_end=code_end+(0 if no_overlay else HUD_MAX_BYTES)
     if hud_end>PTR_BASE:
         print(f'asm sanity: ERROR code end ${code_end:04x} + HUD would reach ${hud_end:04x}, overlapping pointer arena at ${PTR_BASE:04x}',file=sys.stderr);return 1
     if PTR_BASE+48*4>LUT_BASE:

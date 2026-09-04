@@ -1,7 +1,7 @@
 <#
  c64-3d-toolkit Windows installer / configuration assistant
  Installer revision: r24 (2026-09-02)
- Target toolkit release: v0.6.0
+ Target toolkit release: v0.6.2
 
  Security model:
  - Python, Git, VICE and optional Blender are checked against exact package IDs in Microsoft's
@@ -36,7 +36,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $InstallerRevision = 'r24'
-$TargetRelease = '0.6.0'
+$TargetRelease = '0.6.2'
 $ToolkitRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $ConfigDir = Join-Path $ToolkitRoot 'config'
 $ConfigPath = Join-Path $ConfigDir 'c643d.ini'

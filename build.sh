@@ -12,6 +12,8 @@ fi
 #   ./build.sh --shape torus --run       -> build command
 #   ./build.sh run --shape torus         -> build + --run
 #   ./build.sh --generate-examples       -> compile reference PRGs into examples/
+#   ./build.sh test-examples             -> rebuild standard examples + checksum regression report
+#   ./build.sh test-examples --blender-only -> rebuild only canonical Blender examples
 #   ./build.sh doctor                    -> check 64tass/VICE availability
 #   ./build.sh inspect ...               -> direct CLI subcommand
 #   ./build.sh import-obj/import-svg ... -> direct CLI subcommand
@@ -27,7 +29,7 @@ case "${1:-}" in
   --version)
     exec python3 ./c643d.py --version
     ;;
-  build|inspect|import-obj|import-svg|generate-examples|doctor|list-shapes|list-objects)
+  build|inspect|import-obj|import-svg|generate-examples|test-examples|doctor|list-shapes|list-objects)
     exec python3 ./c643d.py "$@"
     ;;
   *)

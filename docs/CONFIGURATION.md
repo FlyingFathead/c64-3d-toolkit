@@ -156,3 +156,38 @@ unusual installation with `blender = ...` or `--blender PATH`. See
 python .\c643d.py doctor
 python .\c643d.py build --shape torus --run
 ```
+
+## Render/build defaults (v0.6.2)
+
+Optional output defaults live in a separate `[render_defaults]` section:
+
+```ini
+[render_defaults]
+text_overlay = true
+viewport_height = auto
+overwrite_policy = warn
+rastertime_profiler = false
+```
+
+`text_overlay = true` uses the normal production renderer and an automatic
+256x192 drawable viewport, leaving the bottom 8 bitmap scanlines for the HUD/FPS
+row. `text_overlay = false` selects a separate no-overlay ASM derivative and
+automatically uses the full 256x200 drawable height.
+
+`viewport_height = auto` follows those defaults. An explicit value must be a
+multiple of 8 from 8 through 200. Command-line overrides are available as
+`--text-overlay`, `--no-text-overlay`, and `--viewport-height LINES`.
+
+`overwrite_policy` controls existing `.prg`, `.lbl`, and `.lst` files:
+
+- `allow`: overwrite silently.
+- `warn`: print the exact outputs that already exist, then overwrite them.
+- `error`: refuse the build with exit status 2.
+
+`rastertime_profiler = true` selects the derivative yunroll raster-time debug
+renderer. It changes the border while the main-loop clear/colour/raster work is
+running, making the CPU budget visible in VICE or on a real C64. The production
+yunroll source is not conditionally instrumented and therefore pays no code-size
+or cycle cost when profiling is disabled.
+
+Command-line options always override `[render_defaults]` for that invocation.

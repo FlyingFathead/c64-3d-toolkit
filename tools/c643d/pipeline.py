@@ -33,14 +33,14 @@ class FrameBuild:
     color_palette: tuple[int,...] = ()
 
 
-def raster_triangle(zbuf, owner, face_index, p0, p1, p2):
+def raster_triangle(zbuf, owner, face_index, p0, p1, p2, *, width:int=W, height:int=H):
     x0,y0,q0=p0; x1,y1,q1=p1; x2,y2,q2=p2
     den=(y1-y2)*(x0-x2)+(x2-x1)*(y0-y2)
     if abs(den)<1e-12: return
-    minx=max(0,math.floor(min(x0,x1,x2))); maxx=min(W-1,math.ceil(max(x0,x1,x2)))
-    miny=max(0,math.floor(min(y0,y1,y2))); maxy=min(H-1,math.ceil(max(y0,y1,y2)))
+    minx=max(0,math.floor(min(x0,x1,x2))); maxx=min(width-1,math.ceil(max(x0,x1,x2)))
+    miny=max(0,math.floor(min(y0,y1,y2))); maxy=min(height-1,math.ceil(max(y0,y1,y2)))
     for y in range(miny,maxy+1):
-        py=y+0.5; row=y*W
+        py=y+0.5; row=y*width
         for x in range(minx,maxx+1):
             px=x+0.5
             w0=((y1-y2)*(px-x2)+(x2-x1)*(py-y2))/den
@@ -109,13 +109,13 @@ def oriented_dda(x0:int,y0:int,x1:int,y1:int):
     return {'axis':axis,'negative':negative,'slope':slope,'phase':phase,'mismatch':mismatch,'points':points,'errors':errors}
 
 
-def clip_line_to_viewport(x0:float,y0:float,x1:float,y1:float):
+def clip_line_to_viewport(x0:float,y0:float,x1:float,y1:float, *, width:int=W, height:int=H):
     """Clip a projected line to the C64 viewport using Liang-Barsky."""
     dx=x1-x0; dy=y1-y0
     enter=0.0; leave=1.0
     for p,q in (
-        (-dx,x0), (dx,(W-1)-x0),
-        (-dy,y0), (dy,(H-1)-y0),
+        (-dx,x0), (dx,(width-1)-x0),
+        (-dy,y0), (dy,(height-1)-y0),
     ):
         if abs(p)<1.0e-12:
             if q<0.0:return None
@@ -222,7 +222,7 @@ def _frame_rotate_vector(v, fi:int, frames:int, *, spin_axis:str='y', animation:
         return v
     raise ValueError(f'unknown animation mode: {animation}')
 
-def fit_scale(mesh:Mesh, frames:int, camera:Camera, margin:int=4, max_scale:float=1.4, spin_axis:str="y", animation:str='spin', animation_tilt:float=62.0, animation_travel:float=120.0, animation_rise:float=54.0):
+def fit_scale(mesh:Mesh, frames:int, camera:Camera, margin:int=4, max_scale:float=1.4, spin_axis:str="y", animation:str='spin', animation_tilt:float=62.0, animation_travel:float=120.0, animation_rise:float=54.0, *, width:int=W, height:int=H):
     focal_y=camera.focal if camera.focal_y is None else camera.focal_y
     def ok(s):
         for fi in range(frames):
@@ -230,7 +230,7 @@ def fit_scale(mesh:Mesh, frames:int, camera:Camera, margin:int=4, max_scale:floa
                 x,y,z0=_frame_transform((p[0]*s,p[1]*s,p[2]*s),fi,frames,spin_axis=spin_axis,animation=animation,animation_tilt=animation_tilt,animation_travel=animation_travel,animation_rise=animation_rise); z=camera.distance+z0
                 if z<=1: return False
                 sx=camera.cx+camera.focal*x/z; sy=camera.cy-focal_y*y/z
-                if sx<margin or sx>W-1-margin or sy<margin or sy>H-1-margin:return False
+                if sx<margin or sx>width-1-margin or sy<margin or sy>height-1-margin:return False
         return True
     lo,hi=0.01,max_scale
     for _ in range(32):
@@ -264,7 +264,7 @@ def classify_feature_edges(mesh:Mesh, feature_angle:float=40.0):
     return out, {'boundary':boundary,'nonmanifold':nonmanifold,'crease':crease,'features':sum(out.values()),'edges':len(out)}
 
 
-def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibility_mode:str="surface", z_tolerance:float=Z_TOL, feature_angle:float=40.0, animation:str='spin', animation_tilt:float=62.0, animation_travel:float=120.0, animation_rise:float=54.0, enable_source_colors:bool=False, fallback_color:int=1, clip_viewport:bool=False) -> tuple[list[FrameBuild],int]:
+def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibility_mode:str="surface", z_tolerance:float=Z_TOL, feature_angle:float=40.0, animation:str='spin', animation_tilt:float=62.0, animation_travel:float=120.0, animation_rise:float=54.0, enable_source_colors:bool=False, fallback_color:int=1, clip_viewport:bool=False, *, width:int=W, height:int=H) -> tuple[list[FrameBuild],int]:
     if not 1<=frames<=255: raise ValueError('frames must be 1..255')
     if not 0<=fallback_color<=15: raise ValueError('fallback colour must be 0..15')
     # Precompute face geometry in object space.
@@ -291,8 +291,8 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
             px,py,pz0=_frame_transform(c0,fi,frames,spin_axis=spin_axis,animation=animation,animation_tilt=animation_tilt,animation_travel=animation_travel,animation_rise=animation_rise); nx,ny,nz=_frame_rotate_vector(n0,fi,frames,spin_axis=spin_axis,animation=animation,animation_tilt=animation_tilt); pz=camera.distance+pz0
             front.append((nx*px+ny*py+nz*pz)<0.0)
             face_depth.append(1.0/pz if pz>1.0e-12 else -math.inf)
-        zbuf=[0.0]*(W*H)
-        zowner=[-1]*(W*H)
+        zbuf=[0.0]*(width*height)
+        zowner=[-1]*(width*height)
         if visibility_mode not in ("surface", "surface_features", "surface_creases", "frontface"):
             raise ValueError(f"unknown visibility mode: {visibility_mode}")
         # ``surface`` is winding-independent: rasterize every triangle and let
@@ -302,7 +302,7 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
         # the historical Elite-style fast host-side cull for comparison.
         for facei,a,b,c in tris:
             if visibility_mode in ("surface", "surface_features", "surface_creases") or front[facei]:
-                raster_triangle(zbuf,zowner,facei,projected[a],projected[b],projected[c])
+                raster_triangle(zbuf,zowner,facei,projected[a],projected[b],projected[c],width=width,height=height)
         records=[]; touched=set(); raw=0; mism=[]
         cell_color_counts: dict[tuple[int,int],dict[int,int]]={}
         for v0,v1 in edges:
@@ -338,17 +338,17 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
             sx0,sy0=projected[v0][0],projected[v0][1]
             sx1,sy1=projected[v1][0],projected[v1][1]
             if clip_viewport:
-                clipped=clip_line_to_viewport(sx0,sy0,sx1,sy1)
+                clipped=clip_line_to_viewport(sx0,sy0,sx1,sy1,width=width,height=height)
                 if clipped is None:
                     continue
                 cx0,cy0,cx1,cy1=clipped
-                x0=max(0,min(W-1,int(round(cx0)))); y0=max(0,min(H-1,int(round(cy0))))
-                x1=max(0,min(W-1,int(round(cx1)))); y1=max(0,min(H-1,int(round(cy1))))
+                x0=max(0,min(width-1,int(round(cx0)))); y0=max(0,min(height-1,int(round(cy0))))
+                x1=max(0,min(width-1,int(round(cx1)))); y1=max(0,min(height-1,int(round(cy1))))
             else:
                 x0=int(round(sx0)); y0=int(round(sy0))
                 x1=int(round(sx1)); y1=int(round(sy1))
                 # Legacy sources are auto-fitted; retain the historical guard.
-                if not (0<=x0<W and 0<=x1<W and 0<=y0<H and 0<=y1<H):
+                if not (0<=x0<width and 0<=x1<width and 0<=y0<height and 0<=y1<height):
                     raise RuntimeError(f'frame {fi}: projected edge outside viewport: {(x0,y0)} {(x1,y1)}')
             dda=oriented_dda(x0,y0,x1,y1); mism.append(dda['mismatch']); pts=dda['points']
             q0=projected[v0][2]; q1=projected[v1][2]
@@ -373,7 +373,7 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
                 else:
                     t=0.0
                 q=projected[v0][2]+(projected[v1][2]-projected[v0][2])*t
-                pi=y*W+x
+                pi=y*width+x
                 own_surface=(zowner[pi] in adjacent_set)
                 vis.append(own_surface or q>=zbuf[pi]-z_tolerance)
             start=None
@@ -406,7 +406,7 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
         if not touched: raise RuntimeError(f'frame {fi}: no visible pixels')
         # clear touched character-cell runs, as in v0.8
         cells={(x>>3,y>>3) for x,y in touched}; spans=[]
-        for cy in range(H//8):
+        for cy in range(height//8):
             row=sorted(cx for cx,yy in cells if yy==cy)
             if not row:continue
             run0=prev=row[0]
@@ -445,7 +445,7 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
 
 def build_scene_frames(scene, *, visibility_mode:str='surface', z_tolerance:float=Z_TOL,
                        feature_angle:float=40.0, enable_source_colors:bool=False,
-                       fallback_color:int=1) -> tuple[list[FrameBuild],int]:
+                       fallback_color:int=1, width:int=W, height:int=H) -> tuple[list[FrameBuild],int]:
     """Render camera-space frames loaded from a ``.c643dscene`` source.
 
     Each authored frame is fed through the same hidden-line/DDA implementation
@@ -471,7 +471,7 @@ def build_scene_frames(scene, *, visibility_mode:str='surface', z_tolerance:floa
                 current,1,camera,animation='recede',animation_travel=0.0,
                 visibility_mode=visibility_mode,z_tolerance=z_tolerance,
                 feature_angle=feature_angle,enable_source_colors=enable_source_colors,
-                fallback_color=fallback_color,clip_viewport=True,
+                fallback_color=fallback_color,clip_viewport=True,width=width,height=height,
             )
         except RuntimeError as e:
             raise RuntimeError(

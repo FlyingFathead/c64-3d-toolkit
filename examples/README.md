@@ -1,47 +1,89 @@
 # Examples
 
-## Blender animated-scene examples
+Generated/reference PRGs are grouped by logical demo so the examples tree does not become a flat pile of binaries.
 
-Blender sources live under `examples/blender/` so generated `.blend` files do
-not clutter the project root.
-
-- `falling_cubes_c64.py` generates the smaller six-cube, coloured rigid-body
-  scene intended for C64 compilation.
-- `falling_cubes_full.py` generates Harry's deterministic five-cluster / 40-cube
-  authoring and stress scene.
-- `falling_cubes_full.blend` is the actual Blender-4.00 scene generated and
-  tested on Ubuntu 24.04 with Blender 4.0.2.
-
-Generate and compile the C64-oriented variant:
-
-```bash
-blender --background --python examples/blender/falling_cubes_c64.py
-./build.sh --blend examples/blender/falling_cubes_c64.blend \
-    --frame-start 1 --frame-end 72 --sample-step 3 --run
+```text
+examples/
+  cube/
+  torus/
+  torus_dense/
+  sphere/
+  horse_head/
+  sunflower_torus/
+  space_horse_spin/
+  space_horse_crawl/
+  blender_falling_cubes/
+  examples.json
+  README.md
 ```
 
-The full 40-cube file proves the richer rigid-body authoring workflow but can
-exceed the current C64 limit of 255 visible runs per frame and available table
-RAM. It is not represented as a prebuilt PRG in `examples.json`.
+For normal non-Blender examples, the standard regression lanes are:
 
-Run `./build.sh --generate-examples` to compile the bundled reference programs into this directory.
+- `name.prg` - current 256x192 overlay/HUD build.
+- `name_legacy144.prg` - 256x144 performance/reference build. Historical files are retained byte-for-byte where available.
+- `name_no_overlay.prg` - separate no-overlay ASM using the full 256x200 bitmap height.
+- `name_rastertime_profiler.prg` - separate yunroll debug ASM, 256x192.
 
-Current generated reference set:
-
-- `torus.prg` - default 10x5 torus, `yunroll`
-- `torus_dense.prg` - 72-vertex 12x6 torus, `yunroll`
-- `cube.prg` - built-in cube
-- `sphere.prg` - modest procedural sphere
-- `horse_head.prg` - bundled 64-vertex OBJ reference model
-- `sunflower_torus.prg` - classic monochrome build of the bundled sunflower
-- `sunflower_torus_color.prg` - OBJ/MTL colour build; brown centre, yellow petals, green stem/leaves
-- `space_horse_spin_color.prg` - bundled SVG logo spinning as yellow planar 3-D wire geometry
-- `space_horse_crawl_color.prg` - same SVG on a tilted plane moving toward a horizon
-
-Reference PRGs are reproducible build products. Regenerate them after compiler/renderer or asset changes with:
+Run the complete standard matrix:
 
 ```bash
-./build.sh --generate-examples
+./build.sh test-examples
 ```
+
+Build only one viewport lane when comparing performance:
+
+```bash
+./build.sh test-examples --variants normal
+./build.sh test-examples --variants legacy144
+```
+
+Regenerate checked-in standard example PRGs deliberately with:
+
+```bash
+./build.sh generate-examples
+```
+
+## Blender falling-cubes example
+
+Blender sources and generated PRGs live together under `examples/blender_falling_cubes/`.
+
+- `falling_cubes_c64.py` generates the smaller six-cube rigid-body scene intended for C64 compilation.
+- `falling_cubes_full.py` / `.blend` are the 40-cube authoring/stress scene and can exceed C64 frame/table limits.
+- `falling_cubes_c64_color-yunroll_legacy144.prg` preserves the original 256x144, sample-step-3, 24-sample colour build.
+- Current 192/200-line falling-cubes builds use sample-step 4 (18 stored samples) to stay inside C64 table RAM.
+
+Generate the scene:
+
+```bash
+blender --background --python examples/blender_falling_cubes/falling_cubes_c64.py
+```
+
+Compile it directly:
+
+```bash
+./build.sh --blend examples/blender_falling_cubes/falling_cubes_c64.blend \
+  --frame-start 1 --frame-end 72 --sample-step 4 --run
+```
+
+Blender regression builds are intentionally separate because Blender is optional:
+
+```bash
+./build.sh test-examples --blender-only
+```
+
+The Blender-only matrix contains the authored-colour and forced-monochrome current 192/200/debug variants, plus the historical colour `_legacy144` build. Use `generate-examples --blender-only` only when intentionally refreshing those PRGs.
 
 Assembler labels/listings remain transient under `build/`.
+
+The old duplicate `space_horse_spin.prg` and `space_horse_crawl.prg` aliases are retained in the historical checksum database but are no longer shipped as duplicate files; the explicit `_color` / `_legacy144` names identify the maintained outputs.
+
+## Upgrading an older checkout
+
+An overlay ZIP cannot delete the old flat files by itself. Preview and apply the safe migration once:
+
+```bash
+python tools/migrate_examples_layout.py
+python tools/migrate_examples_layout.py --apply
+```
+
+Existing destination files are never overwritten when their contents differ.

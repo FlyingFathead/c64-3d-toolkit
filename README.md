@@ -45,7 +45,7 @@ releases when `apt show blender` reports an available package. Verify the
 headless Python integration with:
 
 ```bash
-blender --background --python-expr 'import bpy; print("BLENDER:", bpy.app.version_string); print("BPY OK")'
+blender --background --disable-autoexec --python-expr 'import bpy; print("BLENDER:", bpy.app.version_string); print("BPY OK")'
 ```
 
 Verify that the required tools are available with:
@@ -86,7 +86,7 @@ Open a new PowerShell window after installation and verify Blender's bundled
 Python environment:
 
 ```powershell
-blender --background --python-expr 'import bpy; print("BLENDER:", bpy.app.version_string); print("BPY OK")'
+blender --background --disable-autoexec --python-expr 'import bpy; print("BLENDER:", bpy.app.version_string); print("BPY OK")'
 ```
 
 If `blender` is not added to `PATH`, the toolkit also searches normal Blender
@@ -166,30 +166,32 @@ Build and run an imported OBJ preset:
 Compile the included authored Blender rigid-body scene:
 
 ```bash
-./build.sh --blend examples/blender/falling_cubes_c64.blend \
-    --frame-start 1 --frame-end 72 --sample-step 3 --run
+./build.sh --blend examples/blender_falling_cubes/falling_cubes_c64.blend \
+    --frame-start 1 --frame-end 72 --sample-step 4 --run
 ```
 
 The toolkit checks that Blender can run headlessly and import its bundled
-`bpy` module before processing a `.blend` file. See
+`bpy` module before processing a `.blend` file. Blender is invoked with
+`--disable-autoexec` before the scene is opened, so embedded scripts in a
+`.blend` file are not auto-executed by the toolkit. See
 [`docs/BLENDER_PIPELINE.md`](docs/BLENDER_PIPELINE.md) for installation,
 stable-topology constraints, material colours, and the generated falling-cubes
 rigid-body example.
 
-The Blender examples live under `examples/blender/`, not in the project root:
+The Blender examples live under `examples/blender_falling_cubes/`, not in the project root:
 
 ```bash
 # Generate the C64-budget-oriented six-cube scene beside its script.
-blender --background --python examples/blender/falling_cubes_c64.py
+blender --background --python examples/blender_falling_cubes/falling_cubes_c64.py
 
-# Compile 24 samples from that generated scene.
-./build.sh --blend examples/blender/falling_cubes_c64.blend \
-    --frame-start 1 --frame-end 72 --sample-step 3 --run
+# Compile 18 samples from that generated scene.
+./build.sh --blend examples/blender_falling_cubes/falling_cubes_c64.blend \
+    --frame-start 1 --frame-end 72 --sample-step 4 --run
 ```
 
 For stateful simulations such as rigid bodies, the exporter evaluates every
 intervening Blender frame sequentially and stores only the requested samples.
-Thus `--sample-step 3` reduces C64 table frames without skipping physics steps.
+Thus `--sample-step 4` keeps the 72-frame motion span while reducing the stored C64 table frames enough for the expanded 192-line default viewport, without skipping physics evaluation between samples.
 The exporter warns explicitly if every sampled frame is geometrically identical.
 
 `falling_cubes_full.py` and the included Blender-4.00
@@ -219,15 +221,24 @@ The bundled SVG logo can be spun as a 3-D plane or sent away on a tilted crawl p
 ./build.sh --object space_horse_crawl --run
 ```
 
-Build the manifest-driven procedural/OBJ/SVG reference `.prg` files:
+Build the manifest-driven procedural/OBJ/SVG reference `.prg` files and all release regression variants:
 
 ```bash
 ./build.sh --generate-examples
 ```
 
-The Blender example is kept separate because Blender is optional. The repository
-also includes `examples/falling_cubes_c64_color-yunroll.prg`, produced from the
-bundled six-cube `.blend` scene.
+Reference PRGs are grouped into per-example directories under `examples/`. The unsuffixed overlay build uses the current 256x192 viewport; `_legacy144.prg` keeps the older 256x144 performance/reference framing; `_no_overlay.prg` uses the full 256x200 bitmap height; `_rastertime_profiler.prg` is the separate debug renderer. This makes viewport/FPS comparisons explicit instead of silently replacing the old 144-line behavior.
+
+When upgrading an existing pre-0.6.2 checkout by overlay ZIP, preview and then apply the one-time layout migration so old flat PRGs / `examples/blender/` copies do not remain behind:
+
+```bash
+python tools/migrate_examples_layout.py
+python tools/migrate_examples_layout.py --apply
+```
+
+The migration never overwrites a differing destination file; identical duplicates are removed and conflicts are left untouched with a warning.
+
+The Blender regression set is kept separate because Blender is optional. The historical colour `falling_cubes_c64_color-yunroll_legacy144.prg` is retained in `examples/blender_falling_cubes/`; current 192/200/debug PRGs are generated and checksum-verified with `test-examples --blender-only` / `generate-examples --blender-only`.
 
 Build + run the reference torus with the current fastest renderer:
 
@@ -324,6 +335,52 @@ The bundled horse is deliberately compiled with `--visibility surface`. Its OBJ 
 The emitter can spill whole per-orientation line blocks into otherwise-unused RAM below bitmap #2, so the full horse surface mode still fits 36 sampled orientations without reducing the mesh.
 
 
+## v0.6.2 render/build controls
+
+v0.6.2 expands the default drawable area while keeping alternate/debug paths out of the production renderer:
+
+```bash
+# production HUD/FPS path: automatic 256x192 drawable viewport
+./build.sh --shape torus --run
+
+# legacy/performance framing: same production renderer, 256x144 drawable viewport
+./build.sh --shape torus --viewport-height 144 --run
+
+# separate no-overlay ASM: no HUD/FPS/text, automatic full 256x200 viewport
+./build.sh --shape torus --no-text-overlay --run
+
+# derivative yunroll debug ASM: border marks actual main-loop render CPU time
+./build.sh --shape torus --rastertime-profiler --run
+```
+
+`--viewport-height LINES` may override the automatic height (8..200, multiple of 8). `--overwrite-policy allow|warn|error` controls existing PRG/LBL/LST outputs; the built-in default is `warn`. These defaults may also be stored in `[render_defaults]` in `config/c643d.ini`; command-line options take precedence.
+
+The no-overlay and raster-profiler implementations are separate ASM derivatives. Normal `step`, `bytechunk`, and `yunroll` production sources contain no conditional profiler/overlay-removal instrumentation and pay no extra byte or cycle cost for these modes.
+
+### PRG checksum regression tests
+
+```bash
+# test every manifest example in 192-line normal, 144-line legacy, 200-line no-overlay and profiler variants
+./build.sh test-examples
+
+# one example only
+./build.sh test-examples --only cube
+
+# compare against a named historical/current checksum set
+./build.sh test-examples --reference-set legacy-v0.6.0-v0.6.1
+
+# actually reproduce that reference set's recorded historical build settings
+./build.sh test-examples --variants normal --reference-set legacy-v0.6.0-v0.6.1 --reproduce-reference
+```
+
+Each generated PRG is reported as `MATCHING`, `CHANGED`, or `ABSENT`, followed by totals. Reference SHA-256 values and byte sizes live in `tests/data/golden_prg_checksums.json`. The historical v0.6.0/v0.6.1 set is retained alongside the current v0.6.2 baseline instead of being overwritten.
+
+To install all deterministic reference PRGs into their per-example directories (normal, `_legacy144`, `_no_overlay`, and `_rastertime_profiler`):
+
+```bash
+./build.sh --generate-examples
+```
+
 ## Examples
 
 The repository has an `examples/` manifest for the dependency-free procedural,
@@ -335,16 +392,10 @@ OBJ/MTL, and SVG reference builds:
 ./build.sh generate-examples
 ```
 
-This produces `torus.prg`, `torus_dense.prg`, `cube.prg`, `sphere.prg`,
-`horse_head.prg`, monochrome `sunflower_torus.prg`, coloured
-`sunflower_torus_color.prg`, `space_horse_spin_color.prg`, and
-`space_horse_crawl_color.prg`. Auxiliary labels/listings remain in `build/`;
-the runnable PRGs are copied to `examples/`.
+For each manifest entry this produces the current 192-line normal `.prg`, a byte-comparable `_legacy144.prg` performance/reference build, a `_no_overlay.prg` full-height build, and a `_rastertime_profiler.prg` debug build. Auxiliary labels/listings remain transient; runnable reference PRGs are placed in the manifest entry's `examples/<name>/` directory.
 
 Blender-authored examples are intentionally outside `examples.json` because
-Blender is optional. `examples/blender/` contains the six-cube C64 scene and the
-40-cube authoring/stress scene, and the repository includes the compiled
-`examples/falling_cubes_c64_color-yunroll.prg` reference output.
+Blender is optional. `examples/blender_falling_cubes/` contains the six-cube C64 scene, the 40-cube authoring/stress scene, and the byte-exact historical 144-line colour PRG. Current Blender PRGs are regenerated only on Blender-capable hosts and verified against the current v0.6.2 checksum manifest.
 
 ## Dependency checks
 
@@ -358,11 +409,14 @@ On Debian/Ubuntu, distro VICE packages can be DFSG-stripped and omit Commodore R
 
 ## Current state
 
-The reference torus runs around **15-18 FPS** with `yunroll` on stock PAL C64
-timing in VICE during development. It is native 320x200 hires, hidden-line
-clipped, triple-buffered, and does not use pre-rendered bitmap animation frames.
+The historical 256x144 `yunroll` torus (`torus_legacy144.prg`) measured around
+**15-18 FPS** on stock PAL C64 timing in VICE during development. The current
+256x192 default and 256x200 no-overlay builds deliberately draw/clear more of
+the bitmap and can therefore run slower depending on scene complexity. All
+variants remain native hires, hidden-line clipped, triple-buffered, and do not
+use pre-rendered bitmap animation frames.
 
-As of **v0.6.0**, the toolkit is a reusable multi-source compiler/runtime rather
+As of **v0.6.2**, the toolkit is a reusable multi-source compiler/runtime rather
 than only a rotating-mesh benchmark. It accepts procedural geometry, OBJ/MTL,
 SVG, versioned `.c643dscene` interchange data, and animated Blender `.blend`
 scenes. Blender-authored builds can preserve arbitrary object motion, stable-
@@ -375,7 +429,7 @@ DANGEROUS ROTATING DONUT**.
 The repository includes the actual `objects/horse_head.obj` low-poly model
 (64 vertices / 124 edges / 65 faces), `objects/sunflower_torus.obj` + `.mtl`
 (76 vertices / 142 edges / 70 faces), the bundled `objects/space_horse.svg`
-vector-logo demo, and Blender rigid-body examples under `examples/blender/`.
+vector-logo demo, and Blender rigid-body examples under `examples/blender_falling_cubes/`.
 
 ## What happens on the host vs. the C64?
 
@@ -638,7 +692,7 @@ The v0.8 renderer. Full aligned X-major chunks are combined into VIC-II bitmap-b
 
 ### `yunroll`
 
-Current fastest path. Keeps byte-chunk X-major rendering and additionally unrolls Y-major scanline phases. Measured around **15-18 FPS** on the default 10x5 torus in the current development setup.
+Current fastest production renderer. Keeps byte-chunk X-major rendering and additionally unrolls Y-major scanline phases. The historical 256x144 default 10x5 torus measured around **15-18 FPS** in the development setup; wider 192/200-line viewport builds perform more drawing/clearing work and may run slower.
 
 ## HUD
 
@@ -673,6 +727,7 @@ c64-3d-toolkit/
 │       ├── assets.py
 │       ├── blender.py
 │       ├── cli.py
+│       ├── checksums.py
 │       ├── colors.py
 │       ├── emit.py
 │       ├── font.py
@@ -704,6 +759,7 @@ c64-3d-toolkit/
 ├── generated/
 ├── build/
 ├── tests/
+│   └── data/golden_prg_checksums.json
 └── docs/
     ├── ARCHITECTURE.md
     ├── BLENDER_PIPELINE.md

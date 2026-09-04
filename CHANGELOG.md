@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.6.2
+
+- Expand the default overlay-enabled drawable viewport from 256x144 to 256x192 while preserving explicit `_legacy144.prg` performance/reference builds; no-overlay builds use the full 256x200 bitmap height.
+- Document the viewport/performance tradeoff explicitly: 144-line legacy builds preserve the older performance profile, while 192/200-line builds intentionally do more drawing/clearing work and may report lower FPS on complex scenes.
+- Add `--no-text-overlay` using separate no-overlay ASM derivatives for `step`, `bytechunk`, and `yunroll`, so production renderers pay no code-size or cycle cost for the alternate path.
+- Add a separate `yunroll` raster-time debug renderer that marks actual main-loop render work with the border without instrumenting the production renderer.
+- Add `[render_defaults]` configuration for text overlay, viewport height, overwrite policy, and raster-time profiling; command-line options remain highest precedence.
+- Add `--overwrite-policy allow|warn|error`, warn before replacing existing build outputs by default, and fix output directories outside the repository root.
+- Add deterministic PRG checksum regression manifests and `test-examples` reporting `MATCHING`, `CHANGED`, or `ABSENT` per generated PRG plus totals. Historical v0.6.0/v0.6.1 hashes remain available for byte-exact compatibility checks.
+- Reorganize generated/reference artifacts into per-example directories under `examples/`; Blender falling-cubes sources and PRGs now live under `examples/blender_falling_cubes/`.
+- Add a safe one-time `tools/migrate_examples_layout.py` helper for upgrading older flat example layouts without overwriting locally modified files.
+- Remove redundant byte-identical `space_horse_spin.prg` / `space_horse_crawl.prg` aliases from the shipped example tree while retaining their historical hashes.
+- Extend standard example generation/testing to four lanes: 192-line normal, 144-line legacy/performance, 200-line no-overlay, and 192-line raster-profiler builds.
+- Add the Blender-only falling-cubes regression matrix with authored-colour and forced-monochrome current builds plus the original 144-line / sample-step-3 colour PRG as `falling_cubes_c64_color-yunroll_legacy144.prg`.
+- Use sample-step 4 for current 192/200-line falling-cubes builds so the expanded viewport remains within the fixed C64 table-RAM budget; retain sample-step 3 for the byte-exact legacy144 reference.
+- Clean manifest variant overrides so historical Blender builds replace `--sample-step 4` with `--sample-step 3` instead of emitting both options on the command line.
+- Improve Blender table-RAM overflow diagnostics with scene/sample/viewport context, overflow/headroom information where available, an explicit note that host RAM is not the problem, and actionable sampling/range/detail suggestions.
+- Harden Blender `.blend` imports by passing `--disable-autoexec` before opening the scene, and apply the same policy to the Blender/`bpy` preflight.
+- Make plain `pytest -q` work from the repository root via `tests/conftest.py` and expand regression coverage for the new release paths.
+- Final 0.6.2 PRG golden outputs are byte-identical to the verified 0.6.2-rc3 set; finalization changes release metadata/docs and the duplicate-option cleanup only.
+
 ## 0.6.0
 
 - Fixed static Blender rigid-body exports: stateful scenes are now evaluated through every intervening source frame while `--sample-step` controls only which frames enter the C64 tables. Added an explicit warning when all captured frames are geometrically identical.
@@ -10,7 +31,7 @@
 - Added a versioned Blender-neutral `.c643dscene` interchange and direct `--scene` compilation path. Blender runs `tools/blender_export.py` with its own bundled Python; the ordinary toolkit remains dependency-free and never imports `bpy`.
 - Added executable discovery plus a real headless `import bpy` preflight. Missing/broken Blender stops only the `--blend` path and prints platform-specific installation instructions, including `sudo apt install blender` for Ubuntu/Debian.
 - Blender animations use strict authored-frame semantics: table overflow fails with sampling/range/detail suggestions instead of silently reducing frame count.
-- Added `examples/blender/falling_cubes_c64.py`, which generates a six-cube rigid-body demo `.blend` from the command line, plus Harry's deterministic 40-cube `falling_cubes_full.py` and Blender-4.00 `.blend` authoring/stress example.
+- Added `examples/blender_falling_cubes/falling_cubes_c64.py`, which generates a six-cube rigid-body demo `.blend` from the command line, plus Harry's deterministic 40-cube `falling_cubes_full.py` and Blender-4.00 `.blend` authoring/stress example.
 - Preserved classic procedural/OBJ/SVG behavior and byte-identical generated output in legacy regression comparisons.
 
 ## 0.5.1

@@ -620,6 +620,20 @@ class TestBlenderScenePipeline(unittest.TestCase):
         self.assertNotIn('hasattr(',text)
         self.assertNotIn('bpy.types.',text)
         self.assertIn("'--python-exit-code','1'",text)
+        self.assertIn("'--disable-autoexec'",text)
+
+    def test_bpy_probe_disables_autoexec(self):
+        from types import SimpleNamespace
+        from unittest.mock import patch
+        from tools.c643d.blender import probe_blender
+
+        def fake_run(command,**kwargs):
+            self.assertIn('--disable-autoexec',command)
+            self.assertLess(command.index('--disable-autoexec'),command.index('--python-expr'))
+            return SimpleNamespace(returncode=0,stdout='C643D_BPY_OK:4.0.2\n',stderr='')
+
+        with patch('tools.c643d.blender.subprocess.run',side_effect=fake_run):
+            self.assertEqual(probe_blender('/fake/blender'),'4.0.2')
 
     def test_bpy_probe_preserves_useful_failure_tail(self):
         from tools.c643d.blender import probe_blender
@@ -655,6 +669,8 @@ class TestBlenderScenePipeline(unittest.TestCase):
 
             def fake_run(command,**kwargs):
                 output.write_text('{}')
+                self.assertIn('--disable-autoexec',command)
+                self.assertLess(command.index('--disable-autoexec'),command.index(str(source.resolve())))
                 self.assertLess(command.index('--python-exit-code'),command.index('--python'))
                 self.assertEqual(command[command.index('--python-exit-code')+1],'1')
                 return SimpleNamespace(returncode=0)
@@ -669,7 +685,7 @@ class TestBlenderScenePipeline(unittest.TestCase):
                 )
 
     def test_falling_cubes_examples_are_packaged_under_examples(self):
-        directory=ROOT/'examples'/'blender'
+        directory=ROOT/'examples'/'blender_falling_cubes'
         self.assertTrue((directory/'falling_cubes_c64.py').is_file())
         self.assertTrue((directory/'falling_cubes_full.py').is_file())
         blend=directory/'falling_cubes_full.blend'
@@ -681,3 +697,147 @@ class TestBlenderScenePipeline(unittest.TestCase):
         self.assertIn("WingetId = 'BlenderFoundation.Blender'",text)
         self.assertIn('Request-BlenderInstall',text)
         self.assertIn('64tass is REQUIRED to assemble a runnable .prg',text)
+
+class TestRc062RenderAndChecksumControls(unittest.TestCase):
+    def test_render_defaults_config(self):
+        from tools.c643d.toolchain import load_toolchain_settings
+        with tempfile.TemporaryDirectory() as td:
+            cfg=Path(td)/'c643d.ini'
+            cfg.write_text(
+                '[render_defaults]\n'
+                'text_overlay = false\n'
+                'viewport_height = auto\n'
+                'overwrite_policy = error\n'
+                'rastertime_profiler = false\n',
+                encoding='utf-8',
+            )
+            settings=load_toolchain_settings(cfg)
+        self.assertFalse(settings.text_overlay)
+        self.assertIsNone(settings.viewport_height)
+        self.assertEqual(settings.overwrite_policy,'error')
+        self.assertFalse(settings.rastertime_profiler)
+
+    def test_auto_viewport_height_reserves_only_hud_row(self):
+        from argparse import Namespace
+        from tools.c643d.cli import _viewport_height
+        self.assertEqual(_viewport_height(Namespace(viewport_height=None,text_overlay=True)),192)
+        self.assertEqual(_viewport_height(Namespace(viewport_height=None,text_overlay=False)),200)
+        self.assertEqual(_viewport_height(Namespace(viewport_height=144,text_overlay=False)),144)
+
+    def test_variant_output_suffixes(self):
+        from tools.c643d.cli import default_output_basename
+        self.assertEqual(
+            default_output_basename('CUBE','yunroll',False,text_overlay=False),
+            'cube-yunroll_no_overlay',
+        )
+        self.assertEqual(
+            default_output_basename('CUBE','yunroll',False,rastertime_profiler=True),
+            'cube-yunroll_rastertime_profiler',
+        )
+
+    def test_variant_sources_are_separate_from_production(self):
+        from tools.c643d.cli import C64, NO_OVERLAY_RENDERERS, RASTERTIME_RENDERERS, RENDERERS
+        production=(C64/RENDERERS['yunroll']).read_text(encoding='utf-8')
+        no_overlay=(C64/NO_OVERLAY_RENDERERS['yunroll']).read_text(encoding='utf-8')
+        profiler=(C64/RASTERTIME_RENDERERS['yunroll']).read_text(encoding='utf-8')
+        self.assertNotIn('RASTERTIME PROFILER DEBUG VARIANT',production)
+        self.assertNotIn('NO TEXT OVERLAY VARIANT',production)
+        self.assertIn('NO TEXT OVERLAY VARIANT',no_overlay)
+        self.assertIn('RASTERTIME PROFILER DEBUG VARIANT',profiler)
+
+    def test_checksum_comparison_states(self):
+        import hashlib
+        from tools.c643d.checksums import compare_prg
+        with tempfile.TemporaryDirectory() as td:
+            p=Path(td)/'demo.prg'; p.write_bytes(b'abc')
+            sha=hashlib.sha256(b'abc').hexdigest()
+            good={'files':{'demo.prg':{'sha256':sha,'size':3}}}
+            changed={'files':{'demo.prg':{'sha256':'0'*64,'size':3}}}
+            self.assertEqual(compare_prg(p,good)['status'],'MATCHING')
+            self.assertEqual(compare_prg(p,changed)['status'],'CHANGED')
+            self.assertEqual(compare_prg(p,{'files':{}})['status'],'ABSENT')
+
+    def test_generate_examples_defaults_to_all_variants(self):
+        from tools.c643d.cli import make_parser
+        from tools.c643d.toolchain import load_toolchain_settings
+        parser=make_parser(load_toolchain_settings(Path('/definitely/missing/c643d.ini')))
+        args=parser.parse_args(['generate-examples'])
+        self.assertEqual(args.variants,'all')
+
+    def test_legacy144_variant_parses(self):
+        from tools.c643d.cli import make_parser
+        from tools.c643d.toolchain import load_toolchain_settings
+        parser=make_parser(load_toolchain_settings(Path('/definitely/missing/c643d.ini')))
+        args=parser.parse_args(['test-examples','--variants','legacy144'])
+        self.assertEqual(args.variants,'legacy144')
+
+    def test_example_manifest_records_per_example_directories(self):
+        import json
+        specs=json.loads((ROOT/'examples'/'examples.json').read_text(encoding='utf-8'))
+        self.assertTrue(all(spec.get('directory') for spec in specs))
+        self.assertEqual({x['name']:x['directory'] for x in specs}['sunflower_torus_color'],'sunflower_torus')
+
+    def test_blender_only_selector_parses(self):
+        from tools.c643d.cli import make_parser
+        from tools.c643d.toolchain import load_toolchain_settings
+        parser=make_parser(load_toolchain_settings(Path('/definitely/missing/c643d.ini')))
+        args=parser.parse_args(['test-examples','--blender-only'])
+        self.assertTrue(args.blender_only)
+
+    def test_blender_example_manifest_has_color_and_monochrome_falling_cubes(self):
+        import json
+        manifest=ROOT/'examples'/'blender_falling_cubes'/'examples.json'
+        specs=json.loads(manifest.read_text(encoding='utf-8'))
+        self.assertEqual(
+            [spec['name'] for spec in specs],
+            ['falling_cubes_c64_color-yunroll','falling_cubes_c64-yunroll'],
+        )
+        color,mono=specs
+        for spec in (color,mono):
+            self.assertIn('--blend',spec['args'])
+            self.assertIn('examples/blender_falling_cubes/falling_cubes_c64.blend',spec['args'])
+            self.assertEqual(spec['args'][spec['args'].index('--sample-step')+1],'4')
+            self.assertEqual(spec['args'][spec['args'].index('--renderer')+1],'yunroll')
+        self.assertNotIn('--no-colors',color['args'])
+        self.assertIn('--no-colors',mono['args'])
+        self.assertEqual(color['directory'],'blender_falling_cubes')
+        self.assertEqual(mono['directory'],'blender_falling_cubes')
+        self.assertEqual(color['variant_args']['_legacy144'],['--sample-step','3'])
+        self.assertNotIn('_legacy144',mono['variants'])
+
+
+    def test_manifest_variant_override_replaces_duplicate_option(self):
+        from tools.c643d.cli import _merge_manifest_variant_args
+        merged=_merge_manifest_variant_args(
+            ['--sample-step','4','--renderer','yunroll'],
+            ['--sample-step','3'],
+        )
+        self.assertEqual(merged.count('--sample-step'),1)
+        self.assertEqual(merged[merged.index('--sample-step')+1],'3')
+        self.assertEqual(merged[merged.index('--renderer')+1],'yunroll')
+
+    def test_release_version_is_final_062(self):
+        from tools.c643d import __version__
+        self.assertEqual(__version__,'0.6.2')
+        self.assertEqual((ROOT/'VERSION').read_text(encoding='utf-8').strip(),'0.6.2')
+
+    def test_blender_only_selector_uses_blender_manifest(self):
+        from argparse import Namespace
+        from tools.c643d.cli import _example_specs
+        specs=_example_specs(Namespace(blender_only=True,only=None))
+        self.assertEqual(len(specs),2)
+        self.assertTrue(all('--blend' in spec['args'] for spec in specs))
+
+class TestReferenceReproductionMode(unittest.TestCase):
+    def test_legacy_manifest_records_144_line_reproduction_override(self):
+        import json
+        data=json.loads((ROOT/'tests'/'data'/'golden_prg_checksums.json').read_text(encoding='utf-8'))
+        ref=data['reference_sets']['legacy-v0.6.0-v0.6.1']
+        self.assertEqual(ref['build_overrides'],['--viewport-height','144'])
+
+    def test_reproduce_reference_flag_parses(self):
+        from tools.c643d.cli import make_parser
+        from tools.c643d.toolchain import load_toolchain_settings
+        parser=make_parser(load_toolchain_settings(Path('/definitely/missing/c643d.ini')))
+        args=parser.parse_args(['test-examples','--variants','normal','--reproduce-reference'])
+        self.assertTrue(args.reproduce_reference)

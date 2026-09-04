@@ -1,0 +1,658 @@
+{
+  "default_reference_set": "v0.6.2",
+  "reference_sets": {
+    "legacy-v0.6.0-v0.6.1": {
+      "build_overrides": [
+        "--viewport-height",
+        "144"
+      ],
+      "created_from": "checked-in example PRGs from the 2026-09-04 source snapshot; hashes independently supplied/verified by Harry",
+      "files": {
+        "cube.prg": {
+          "sha256": "2d6a13477b02c7db4917f1a39a0a29fea1ad8dad4f4e0755f9bdae1bf58b85b8",
+          "size": 35665
+        },
+        "falling_cubes_c64_color-yunroll.prg": {
+          "sha256": "6ee075225b0c1b672cc0f220319f5dc7980a3893923ab30c97018a03b4c36ca8",
+          "size": 39938
+        },
+        "horse_head.prg": {
+          "sha256": "307a335b2c15637fd9bb7c5eccc634cf17fd2ba40563753e7b032eca30b27b69",
+          "size": 49153
+        },
+        "space_horse_crawl.prg": {
+          "sha256": "0c9536fa38b3192db59f00ea6b4e8dc686a66ae04404b083f61c8b577259f196",
+          "size": 49153
+        },
+        "space_horse_crawl_color.prg": {
+          "sha256": "0c9536fa38b3192db59f00ea6b4e8dc686a66ae04404b083f61c8b577259f196",
+          "size": 49153
+        },
+        "space_horse_spin.prg": {
+          "sha256": "2d30225116b63afb20ed2699ce3c49c50de506fac22487825ff5d8c5477ba46b",
+          "size": 48935
+        },
+        "space_horse_spin_color.prg": {
+          "sha256": "2d30225116b63afb20ed2699ce3c49c50de506fac22487825ff5d8c5477ba46b",
+          "size": 48935
+        },
+        "sphere.prg": {
+          "sha256": "4d1b14e27a62ddaf679b7925f3f7e3c888f16b9c243c406871d2921752b0cb3b",
+          "size": 40871
+        },
+        "sunflower_torus.prg": {
+          "sha256": "23fe0d7610e9b00477c106444fddd12b541afbe819b41dd321d7993138b2ed11",
+          "size": 49153
+        },
+        "sunflower_torus_color.prg": {
+          "sha256": "eedb25985cee8cfd2fcf8c8d276b28b54d9602c1c51ea94538b3528166e64ece",
+          "size": 49151
+        },
+        "torus.prg": {
+          "sha256": "d32d4ae329213177cb1b8e89b460bfb11d94d48f7ab86e5e28ad618ea4fe2225",
+          "size": 48746
+        },
+        "torus_dense.prg": {
+          "sha256": "57117556714feb4d66eed432645625e6f1ca180f854a672e20e323255a0389f5",
+          "size": 49143
+        }
+      },
+      "notes": "Historical production-renderer baseline. Use 144-line compatibility viewport to reproduce these pre-0.6.2 outputs.",
+      "toolchain": "64tass Turbo Assembler Macro V1.59.3120",
+      "version": "0.6.0 / 0.6.1"
+    },
+    "v0.6.2-rc1": {
+      "created_from": "deterministic examples/examples.json build matrix generated for 0.6.2-rc1",
+      "files": {
+        "cube.prg": {
+          "sha256": "feb1105f202877ba6b7f8972870f6adacb36c07a9c19e71f2640b8864f0fa07a",
+          "size": 35381
+        },
+        "cube_no_overlay.prg": {
+          "sha256": "6ad3dd2c638ac962f48f851734893b67736bb6b53266abd4b8baf3cc94461885",
+          "size": 35469
+        },
+        "cube_rastertime_profiler.prg": {
+          "sha256": "4cdf3aca30d75f750d0fd8beb7890accaa87e5620abd39f5ff2ca27acde16f2a",
+          "size": 35381
+        },
+        "horse_head.prg": {
+          "sha256": "84e49ba99a66c69c49b5148e73cc709c48861e0161751fdd4239dba5bc55cdf9",
+          "size": 49076
+        },
+        "horse_head_no_overlay.prg": {
+          "sha256": "010ad924a5782e2beaf39f22f89ba459c8da1439069b2de7892fabe809b854de",
+          "size": 49139
+        },
+        "horse_head_rastertime_profiler.prg": {
+          "sha256": "de64390c1f0a898c4ed1c65fdbfb0e1bbd172714edafe2b472419a1e759bd9ce",
+          "size": 49076
+        },
+        "space_horse_crawl_color.prg": {
+          "sha256": "ea298e1828327748e1baa6d8f97bf220158aac6c4a64189628c40418cee86e2c",
+          "size": 49153
+        },
+        "space_horse_crawl_color_no_overlay.prg": {
+          "sha256": "a58bc479cb4866a4dae5d0c7b58b44cfbbe0d9770c28298274e5d48cf76dac25",
+          "size": 49153
+        },
+        "space_horse_crawl_color_rastertime_profiler.prg": {
+          "sha256": "de730b97332b43973c68dac923bfb972d337ac1a40e913b33cd276c786696f0d",
+          "size": 49153
+        },
+        "space_horse_spin_color.prg": {
+          "sha256": "3df8f5c317124095f499c120c7526a3491b47668a3542ac602ad0677d3522527",
+          "size": 48828
+        },
+        "space_horse_spin_color_no_overlay.prg": {
+          "sha256": "a318f3f8527ec496af4ee9b376b7a9d0ec200a6d08dea6d8c6c420f9d4f29284",
+          "size": 48924
+        },
+        "space_horse_spin_color_rastertime_profiler.prg": {
+          "sha256": "01746f5d0ac7f8381beb8b97a46fb190548f9114c671d94bdb115a835b576459",
+          "size": 48828
+        },
+        "sphere.prg": {
+          "sha256": "bc9a7e9f17a0431fa2ff54593efa64f542e6ed79c83a802dff903ac25b19343f",
+          "size": 37749
+        },
+        "sphere_no_overlay.prg": {
+          "sha256": "02f8d0b7714e75603c062be1d1bf9f06e8b24ea523c10b795620fb1cbc223aa7",
+          "size": 37979
+        },
+        "sphere_rastertime_profiler.prg": {
+          "sha256": "c5fc77f55849db6f035da591e325bfce5e912ab4645df8b54f7895190c4878e6",
+          "size": 37749
+        },
+        "sunflower_torus.prg": {
+          "sha256": "bd2b4cf5fc5fd6b557f143517e963644e5721366d54303a1a16283c866c5dbd3",
+          "size": 48971
+        },
+        "sunflower_torus_color.prg": {
+          "sha256": "1e164c3b211e2c929dca1fcbed8d9a34337976b9d515457dfeffa1ce72f19b4d",
+          "size": 44450
+        },
+        "sunflower_torus_color_no_overlay.prg": {
+          "sha256": "f011af504d89ea4f9ef970eb69d69498c613efca5fa546a26237052cf48173b6",
+          "size": 44568
+        },
+        "sunflower_torus_color_rastertime_profiler.prg": {
+          "sha256": "39b54552589f4f93938c4a706613954b3452e66290c3f9b381d9b5aa960c9d47",
+          "size": 44450
+        },
+        "sunflower_torus_no_overlay.prg": {
+          "sha256": "5baa13c62fbcd588a8d77c896e0f934cb68bd77d12af25574e21d19c6144c1a9",
+          "size": 49142
+        },
+        "sunflower_torus_rastertime_profiler.prg": {
+          "sha256": "450c5f77f90e1fb8988130f47100a2155d5db0d4182b468ce41adaade177adf2",
+          "size": 48971
+        },
+        "torus.prg": {
+          "sha256": "674d55e1a7ec0f8bbb72958507e1403af0aff9914baba55caa68ed74c2cfbd25",
+          "size": 43546
+        },
+        "torus_dense.prg": {
+          "sha256": "4495bf7b10c614c3682862884a65ed1bff0122f3404589b18474f5b4dd0261b0",
+          "size": 47017
+        },
+        "torus_dense_no_overlay.prg": {
+          "sha256": "a65151eeed9571f776b3c233172055270b6e8e50f69674be6ac9bf951939d5ca",
+          "size": 46994
+        },
+        "torus_dense_rastertime_profiler.prg": {
+          "sha256": "d8642e4332c6ea8d1f946289b7809296598471e880c47f151db6367b4faeaa95",
+          "size": 47017
+        },
+        "torus_no_overlay.prg": {
+          "sha256": "f943871b4da002ac982372fb828c02dbda67eb146df12edd517c97bed9fa81ab",
+          "size": 43617
+        },
+        "torus_rastertime_profiler.prg": {
+          "sha256": "df37cc09a6176e1e7d066057499bcbb7c57945909a53f308cdd32ed9482de5d9",
+          "size": 43546
+        }
+      },
+      "notes": "Current RC golden PRGs. normal=256x192 with HUD/FPS; _no_overlay=separate ASM at 256x200; _rastertime_profiler=separate yunroll debug ASM at 256x192.",
+      "toolchain": "64tass Turbo Assembler Macro V1.59.3120",
+      "version": "0.6.2-rc1"
+    },
+    "v0.6.2-rc2": {
+      "created_from": "deterministic examples/examples.json build matrix verified for 0.6.2-rc2",
+      "files": {
+        "cube.prg": {
+          "sha256": "feb1105f202877ba6b7f8972870f6adacb36c07a9c19e71f2640b8864f0fa07a",
+          "size": 35381
+        },
+        "cube_no_overlay.prg": {
+          "sha256": "6ad3dd2c638ac962f48f851734893b67736bb6b53266abd4b8baf3cc94461885",
+          "size": 35469
+        },
+        "cube_rastertime_profiler.prg": {
+          "sha256": "4cdf3aca30d75f750d0fd8beb7890accaa87e5620abd39f5ff2ca27acde16f2a",
+          "size": 35381
+        },
+        "horse_head.prg": {
+          "sha256": "84e49ba99a66c69c49b5148e73cc709c48861e0161751fdd4239dba5bc55cdf9",
+          "size": 49076
+        },
+        "horse_head_no_overlay.prg": {
+          "sha256": "010ad924a5782e2beaf39f22f89ba459c8da1439069b2de7892fabe809b854de",
+          "size": 49139
+        },
+        "horse_head_rastertime_profiler.prg": {
+          "sha256": "de64390c1f0a898c4ed1c65fdbfb0e1bbd172714edafe2b472419a1e759bd9ce",
+          "size": 49076
+        },
+        "space_horse_crawl_color.prg": {
+          "sha256": "ea298e1828327748e1baa6d8f97bf220158aac6c4a64189628c40418cee86e2c",
+          "size": 49153
+        },
+        "space_horse_crawl_color_no_overlay.prg": {
+          "sha256": "a58bc479cb4866a4dae5d0c7b58b44cfbbe0d9770c28298274e5d48cf76dac25",
+          "size": 49153
+        },
+        "space_horse_crawl_color_rastertime_profiler.prg": {
+          "sha256": "de730b97332b43973c68dac923bfb972d337ac1a40e913b33cd276c786696f0d",
+          "size": 49153
+        },
+        "space_horse_spin_color.prg": {
+          "sha256": "3df8f5c317124095f499c120c7526a3491b47668a3542ac602ad0677d3522527",
+          "size": 48828
+        },
+        "space_horse_spin_color_no_overlay.prg": {
+          "sha256": "a318f3f8527ec496af4ee9b376b7a9d0ec200a6d08dea6d8c6c420f9d4f29284",
+          "size": 48924
+        },
+        "space_horse_spin_color_rastertime_profiler.prg": {
+          "sha256": "01746f5d0ac7f8381beb8b97a46fb190548f9114c671d94bdb115a835b576459",
+          "size": 48828
+        },
+        "sphere.prg": {
+          "sha256": "bc9a7e9f17a0431fa2ff54593efa64f542e6ed79c83a802dff903ac25b19343f",
+          "size": 37749
+        },
+        "sphere_no_overlay.prg": {
+          "sha256": "02f8d0b7714e75603c062be1d1bf9f06e8b24ea523c10b795620fb1cbc223aa7",
+          "size": 37979
+        },
+        "sphere_rastertime_profiler.prg": {
+          "sha256": "c5fc77f55849db6f035da591e325bfce5e912ab4645df8b54f7895190c4878e6",
+          "size": 37749
+        },
+        "sunflower_torus.prg": {
+          "sha256": "bd2b4cf5fc5fd6b557f143517e963644e5721366d54303a1a16283c866c5dbd3",
+          "size": 48971
+        },
+        "sunflower_torus_color.prg": {
+          "sha256": "1e164c3b211e2c929dca1fcbed8d9a34337976b9d515457dfeffa1ce72f19b4d",
+          "size": 44450
+        },
+        "sunflower_torus_color_no_overlay.prg": {
+          "sha256": "f011af504d89ea4f9ef970eb69d69498c613efca5fa546a26237052cf48173b6",
+          "size": 44568
+        },
+        "sunflower_torus_color_rastertime_profiler.prg": {
+          "sha256": "39b54552589f4f93938c4a706613954b3452e66290c3f9b381d9b5aa960c9d47",
+          "size": 44450
+        },
+        "sunflower_torus_no_overlay.prg": {
+          "sha256": "5baa13c62fbcd588a8d77c896e0f934cb68bd77d12af25574e21d19c6144c1a9",
+          "size": 49142
+        },
+        "sunflower_torus_rastertime_profiler.prg": {
+          "sha256": "450c5f77f90e1fb8988130f47100a2155d5db0d4182b468ce41adaade177adf2",
+          "size": 48971
+        },
+        "torus.prg": {
+          "sha256": "674d55e1a7ec0f8bbb72958507e1403af0aff9914baba55caa68ed74c2cfbd25",
+          "size": 43546
+        },
+        "torus_dense.prg": {
+          "sha256": "4495bf7b10c614c3682862884a65ed1bff0122f3404589b18474f5b4dd0261b0",
+          "size": 47017
+        },
+        "torus_dense_no_overlay.prg": {
+          "sha256": "a65151eeed9571f776b3c233172055270b6e8e50f69674be6ac9bf951939d5ca",
+          "size": 46994
+        },
+        "torus_dense_rastertime_profiler.prg": {
+          "sha256": "d8642e4332c6ea8d1f946289b7809296598471e880c47f151db6367b4faeaa95",
+          "size": 47017
+        },
+        "torus_no_overlay.prg": {
+          "sha256": "f943871b4da002ac982372fb828c02dbda67eb146df12edd517c97bed9fa81ab",
+          "size": 43617
+        },
+        "torus_rastertime_profiler.prg": {
+          "sha256": "df37cc09a6176e1e7d066057499bcbb7c57945909a53f308cdd32ed9482de5d9",
+          "size": 43546
+        }
+      },
+      "notes": "0.6.2-rc2 keeps the 0.6.2-rc1 C64 output unchanged; Blender auto-exec hardening is host-side only. normal=256x192 with HUD/FPS; _no_overlay=separate ASM at 256x200; _rastertime_profiler=separate yunroll debug ASM at 256x192.",
+      "toolchain": "64tass Turbo Assembler Macro V1.59.3120",
+      "version": "0.6.2-rc2"
+    },
+    "v0.6.2-rc3": {
+      "created_from": "RC2 deterministic PRGs plus byte-exact historical 144-line PRGs and Blender 4.0.2 falling-cubes outputs generated/verified on Harry's Ubuntu workstation",
+      "files": {
+        "cube.prg": {
+          "sha256": "feb1105f202877ba6b7f8972870f6adacb36c07a9c19e71f2640b8864f0fa07a",
+          "size": 35381
+        },
+        "cube_legacy144.prg": {
+          "sha256": "2d6a13477b02c7db4917f1a39a0a29fea1ad8dad4f4e0755f9bdae1bf58b85b8",
+          "size": 35665
+        },
+        "cube_no_overlay.prg": {
+          "sha256": "6ad3dd2c638ac962f48f851734893b67736bb6b53266abd4b8baf3cc94461885",
+          "size": 35469
+        },
+        "cube_rastertime_profiler.prg": {
+          "sha256": "4cdf3aca30d75f750d0fd8beb7890accaa87e5620abd39f5ff2ca27acde16f2a",
+          "size": 35381
+        },
+        "falling_cubes_c64-yunroll.prg": {
+          "sha256": "1da2ef544235b93d2aae9c3f062dd277152e03653098be33d168c85f5f898b5a",
+          "size": 38586
+        },
+        "falling_cubes_c64-yunroll_no_overlay.prg": {
+          "sha256": "863ebfb70d5ab0da0e0e23e6edb2cfc656a292cdf2b2326240c38285e1f2657a",
+          "size": 38737
+        },
+        "falling_cubes_c64-yunroll_rastertime_profiler.prg": {
+          "sha256": "f9429c4c62795aee412066d04513d5b61b2278c75dd3dcd47e47a08761d46271",
+          "size": 38586
+        },
+        "falling_cubes_c64_color-yunroll.prg": {
+          "sha256": "671192dc9de36a57db7bf096ad29a706e46911912afb1a5485cd893cf9566353",
+          "size": 38586
+        },
+        "falling_cubes_c64_color-yunroll_legacy144.prg": {
+          "sha256": "6ee075225b0c1b672cc0f220319f5dc7980a3893923ab30c97018a03b4c36ca8",
+          "size": 39938
+        },
+        "falling_cubes_c64_color-yunroll_no_overlay.prg": {
+          "sha256": "0b0abf6a41786958457fbf6028aa6be806da26f3d0faf01b7a90ad41de29e86d",
+          "size": 38737
+        },
+        "falling_cubes_c64_color-yunroll_rastertime_profiler.prg": {
+          "sha256": "3251eaee9ebb691e4c6e5f1ab139293cbc8a5b01cbdd499dc59b1aa6ddd6eb34",
+          "size": 38586
+        },
+        "horse_head.prg": {
+          "sha256": "84e49ba99a66c69c49b5148e73cc709c48861e0161751fdd4239dba5bc55cdf9",
+          "size": 49076
+        },
+        "horse_head_legacy144.prg": {
+          "sha256": "307a335b2c15637fd9bb7c5eccc634cf17fd2ba40563753e7b032eca30b27b69",
+          "size": 49153
+        },
+        "horse_head_no_overlay.prg": {
+          "sha256": "010ad924a5782e2beaf39f22f89ba459c8da1439069b2de7892fabe809b854de",
+          "size": 49139
+        },
+        "horse_head_rastertime_profiler.prg": {
+          "sha256": "de64390c1f0a898c4ed1c65fdbfb0e1bbd172714edafe2b472419a1e759bd9ce",
+          "size": 49076
+        },
+        "space_horse_crawl_color.prg": {
+          "sha256": "ea298e1828327748e1baa6d8f97bf220158aac6c4a64189628c40418cee86e2c",
+          "size": 49153
+        },
+        "space_horse_crawl_color_legacy144.prg": {
+          "sha256": "0c9536fa38b3192db59f00ea6b4e8dc686a66ae04404b083f61c8b577259f196",
+          "size": 49153
+        },
+        "space_horse_crawl_color_no_overlay.prg": {
+          "sha256": "a58bc479cb4866a4dae5d0c7b58b44cfbbe0d9770c28298274e5d48cf76dac25",
+          "size": 49153
+        },
+        "space_horse_crawl_color_rastertime_profiler.prg": {
+          "sha256": "de730b97332b43973c68dac923bfb972d337ac1a40e913b33cd276c786696f0d",
+          "size": 49153
+        },
+        "space_horse_spin_color.prg": {
+          "sha256": "3df8f5c317124095f499c120c7526a3491b47668a3542ac602ad0677d3522527",
+          "size": 48828
+        },
+        "space_horse_spin_color_legacy144.prg": {
+          "sha256": "2d30225116b63afb20ed2699ce3c49c50de506fac22487825ff5d8c5477ba46b",
+          "size": 48935
+        },
+        "space_horse_spin_color_no_overlay.prg": {
+          "sha256": "a318f3f8527ec496af4ee9b376b7a9d0ec200a6d08dea6d8c6c420f9d4f29284",
+          "size": 48924
+        },
+        "space_horse_spin_color_rastertime_profiler.prg": {
+          "sha256": "01746f5d0ac7f8381beb8b97a46fb190548f9114c671d94bdb115a835b576459",
+          "size": 48828
+        },
+        "sphere.prg": {
+          "sha256": "bc9a7e9f17a0431fa2ff54593efa64f542e6ed79c83a802dff903ac25b19343f",
+          "size": 37749
+        },
+        "sphere_legacy144.prg": {
+          "sha256": "4d1b14e27a62ddaf679b7925f3f7e3c888f16b9c243c406871d2921752b0cb3b",
+          "size": 40871
+        },
+        "sphere_no_overlay.prg": {
+          "sha256": "02f8d0b7714e75603c062be1d1bf9f06e8b24ea523c10b795620fb1cbc223aa7",
+          "size": 37979
+        },
+        "sphere_rastertime_profiler.prg": {
+          "sha256": "c5fc77f55849db6f035da591e325bfce5e912ab4645df8b54f7895190c4878e6",
+          "size": 37749
+        },
+        "sunflower_torus.prg": {
+          "sha256": "bd2b4cf5fc5fd6b557f143517e963644e5721366d54303a1a16283c866c5dbd3",
+          "size": 48971
+        },
+        "sunflower_torus_color.prg": {
+          "sha256": "1e164c3b211e2c929dca1fcbed8d9a34337976b9d515457dfeffa1ce72f19b4d",
+          "size": 44450
+        },
+        "sunflower_torus_color_legacy144.prg": {
+          "sha256": "eedb25985cee8cfd2fcf8c8d276b28b54d9602c1c51ea94538b3528166e64ece",
+          "size": 49151
+        },
+        "sunflower_torus_color_no_overlay.prg": {
+          "sha256": "f011af504d89ea4f9ef970eb69d69498c613efca5fa546a26237052cf48173b6",
+          "size": 44568
+        },
+        "sunflower_torus_color_rastertime_profiler.prg": {
+          "sha256": "39b54552589f4f93938c4a706613954b3452e66290c3f9b381d9b5aa960c9d47",
+          "size": 44450
+        },
+        "sunflower_torus_legacy144.prg": {
+          "sha256": "23fe0d7610e9b00477c106444fddd12b541afbe819b41dd321d7993138b2ed11",
+          "size": 49153
+        },
+        "sunflower_torus_no_overlay.prg": {
+          "sha256": "5baa13c62fbcd588a8d77c896e0f934cb68bd77d12af25574e21d19c6144c1a9",
+          "size": 49142
+        },
+        "sunflower_torus_rastertime_profiler.prg": {
+          "sha256": "450c5f77f90e1fb8988130f47100a2155d5db0d4182b468ce41adaade177adf2",
+          "size": 48971
+        },
+        "torus.prg": {
+          "sha256": "674d55e1a7ec0f8bbb72958507e1403af0aff9914baba55caa68ed74c2cfbd25",
+          "size": 43546
+        },
+        "torus_dense.prg": {
+          "sha256": "4495bf7b10c614c3682862884a65ed1bff0122f3404589b18474f5b4dd0261b0",
+          "size": 47017
+        },
+        "torus_dense_legacy144.prg": {
+          "sha256": "57117556714feb4d66eed432645625e6f1ca180f854a672e20e323255a0389f5",
+          "size": 49143
+        },
+        "torus_dense_no_overlay.prg": {
+          "sha256": "a65151eeed9571f776b3c233172055270b6e8e50f69674be6ac9bf951939d5ca",
+          "size": 46994
+        },
+        "torus_dense_rastertime_profiler.prg": {
+          "sha256": "d8642e4332c6ea8d1f946289b7809296598471e880c47f151db6367b4faeaa95",
+          "size": 47017
+        },
+        "torus_legacy144.prg": {
+          "sha256": "d32d4ae329213177cb1b8e89b460bfb11d94d48f7ab86e5e28ad618ea4fe2225",
+          "size": 48746
+        },
+        "torus_no_overlay.prg": {
+          "sha256": "f943871b4da002ac982372fb828c02dbda67eb146df12edd517c97bed9fa81ab",
+          "size": 43617
+        },
+        "torus_rastertime_profiler.prg": {
+          "sha256": "df37cc09a6176e1e7d066057499bcbb7c57945909a53f308cdd32ed9482de5d9",
+          "size": 43546
+        }
+      },
+      "notes": "Per-example directories. Unsuffixed normal builds use 256x192 with HUD/FPS; _legacy144 preserves the 256x144 performance/reference viewport; _no_overlay uses separate ASM at 256x200; _rastertime_profiler uses separate yunroll debug ASM at 256x192. Blender falling-cubes current builds use sample-step 4; its color _legacy144 artifact preserves the original sample-step 3 / 24-frame build.",
+      "toolchain": "64tass Turbo Assembler Macro V1.59.3120",
+      "version": "0.6.2-rc3"
+    },
+    "v0.6.2": {
+      "created_from": "0.6.2 final release: byte-identical PRG set from the verified 0.6.2-rc3 baseline; final cleanup only removes duplicate manifest CLI options and finalizes release metadata/docs",
+      "files": {
+        "cube.prg": {
+          "sha256": "feb1105f202877ba6b7f8972870f6adacb36c07a9c19e71f2640b8864f0fa07a",
+          "size": 35381
+        },
+        "cube_legacy144.prg": {
+          "sha256": "2d6a13477b02c7db4917f1a39a0a29fea1ad8dad4f4e0755f9bdae1bf58b85b8",
+          "size": 35665
+        },
+        "cube_no_overlay.prg": {
+          "sha256": "6ad3dd2c638ac962f48f851734893b67736bb6b53266abd4b8baf3cc94461885",
+          "size": 35469
+        },
+        "cube_rastertime_profiler.prg": {
+          "sha256": "4cdf3aca30d75f750d0fd8beb7890accaa87e5620abd39f5ff2ca27acde16f2a",
+          "size": 35381
+        },
+        "falling_cubes_c64-yunroll.prg": {
+          "sha256": "1da2ef544235b93d2aae9c3f062dd277152e03653098be33d168c85f5f898b5a",
+          "size": 38586
+        },
+        "falling_cubes_c64-yunroll_no_overlay.prg": {
+          "sha256": "863ebfb70d5ab0da0e0e23e6edb2cfc656a292cdf2b2326240c38285e1f2657a",
+          "size": 38737
+        },
+        "falling_cubes_c64-yunroll_rastertime_profiler.prg": {
+          "sha256": "f9429c4c62795aee412066d04513d5b61b2278c75dd3dcd47e47a08761d46271",
+          "size": 38586
+        },
+        "falling_cubes_c64_color-yunroll.prg": {
+          "sha256": "671192dc9de36a57db7bf096ad29a706e46911912afb1a5485cd893cf9566353",
+          "size": 38586
+        },
+        "falling_cubes_c64_color-yunroll_legacy144.prg": {
+          "sha256": "6ee075225b0c1b672cc0f220319f5dc7980a3893923ab30c97018a03b4c36ca8",
+          "size": 39938
+        },
+        "falling_cubes_c64_color-yunroll_no_overlay.prg": {
+          "sha256": "0b0abf6a41786958457fbf6028aa6be806da26f3d0faf01b7a90ad41de29e86d",
+          "size": 38737
+        },
+        "falling_cubes_c64_color-yunroll_rastertime_profiler.prg": {
+          "sha256": "3251eaee9ebb691e4c6e5f1ab139293cbc8a5b01cbdd499dc59b1aa6ddd6eb34",
+          "size": 38586
+        },
+        "horse_head.prg": {
+          "sha256": "84e49ba99a66c69c49b5148e73cc709c48861e0161751fdd4239dba5bc55cdf9",
+          "size": 49076
+        },
+        "horse_head_legacy144.prg": {
+          "sha256": "307a335b2c15637fd9bb7c5eccc634cf17fd2ba40563753e7b032eca30b27b69",
+          "size": 49153
+        },
+        "horse_head_no_overlay.prg": {
+          "sha256": "010ad924a5782e2beaf39f22f89ba459c8da1439069b2de7892fabe809b854de",
+          "size": 49139
+        },
+        "horse_head_rastertime_profiler.prg": {
+          "sha256": "de64390c1f0a898c4ed1c65fdbfb0e1bbd172714edafe2b472419a1e759bd9ce",
+          "size": 49076
+        },
+        "space_horse_crawl_color.prg": {
+          "sha256": "ea298e1828327748e1baa6d8f97bf220158aac6c4a64189628c40418cee86e2c",
+          "size": 49153
+        },
+        "space_horse_crawl_color_legacy144.prg": {
+          "sha256": "0c9536fa38b3192db59f00ea6b4e8dc686a66ae04404b083f61c8b577259f196",
+          "size": 49153
+        },
+        "space_horse_crawl_color_no_overlay.prg": {
+          "sha256": "a58bc479cb4866a4dae5d0c7b58b44cfbbe0d9770c28298274e5d48cf76dac25",
+          "size": 49153
+        },
+        "space_horse_crawl_color_rastertime_profiler.prg": {
+          "sha256": "de730b97332b43973c68dac923bfb972d337ac1a40e913b33cd276c786696f0d",
+          "size": 49153
+        },
+        "space_horse_spin_color.prg": {
+          "sha256": "3df8f5c317124095f499c120c7526a3491b47668a3542ac602ad0677d3522527",
+          "size": 48828
+        },
+        "space_horse_spin_color_legacy144.prg": {
+          "sha256": "2d30225116b63afb20ed2699ce3c49c50de506fac22487825ff5d8c5477ba46b",
+          "size": 48935
+        },
+        "space_horse_spin_color_no_overlay.prg": {
+          "sha256": "a318f3f8527ec496af4ee9b376b7a9d0ec200a6d08dea6d8c6c420f9d4f29284",
+          "size": 48924
+        },
+        "space_horse_spin_color_rastertime_profiler.prg": {
+          "sha256": "01746f5d0ac7f8381beb8b97a46fb190548f9114c671d94bdb115a835b576459",
+          "size": 48828
+        },
+        "sphere.prg": {
+          "sha256": "bc9a7e9f17a0431fa2ff54593efa64f542e6ed79c83a802dff903ac25b19343f",
+          "size": 37749
+        },
+        "sphere_legacy144.prg": {
+          "sha256": "4d1b14e27a62ddaf679b7925f3f7e3c888f16b9c243c406871d2921752b0cb3b",
+          "size": 40871
+        },
+        "sphere_no_overlay.prg": {
+          "sha256": "02f8d0b7714e75603c062be1d1bf9f06e8b24ea523c10b795620fb1cbc223aa7",
+          "size": 37979
+        },
+        "sphere_rastertime_profiler.prg": {
+          "sha256": "c5fc77f55849db6f035da591e325bfce5e912ab4645df8b54f7895190c4878e6",
+          "size": 37749
+        },
+        "sunflower_torus.prg": {
+          "sha256": "bd2b4cf5fc5fd6b557f143517e963644e5721366d54303a1a16283c866c5dbd3",
+          "size": 48971
+        },
+        "sunflower_torus_color.prg": {
+          "sha256": "1e164c3b211e2c929dca1fcbed8d9a34337976b9d515457dfeffa1ce72f19b4d",
+          "size": 44450
+        },
+        "sunflower_torus_color_legacy144.prg": {
+          "sha256": "eedb25985cee8cfd2fcf8c8d276b28b54d9602c1c51ea94538b3528166e64ece",
+          "size": 49151
+        },
+        "sunflower_torus_color_no_overlay.prg": {
+          "sha256": "f011af504d89ea4f9ef970eb69d69498c613efca5fa546a26237052cf48173b6",
+          "size": 44568
+        },
+        "sunflower_torus_color_rastertime_profiler.prg": {
+          "sha256": "39b54552589f4f93938c4a706613954b3452e66290c3f9b381d9b5aa960c9d47",
+          "size": 44450
+        },
+        "sunflower_torus_legacy144.prg": {
+          "sha256": "23fe0d7610e9b00477c106444fddd12b541afbe819b41dd321d7993138b2ed11",
+          "size": 49153
+        },
+        "sunflower_torus_no_overlay.prg": {
+          "sha256": "5baa13c62fbcd588a8d77c896e0f934cb68bd77d12af25574e21d19c6144c1a9",
+          "size": 49142
+        },
+        "sunflower_torus_rastertime_profiler.prg": {
+          "sha256": "450c5f77f90e1fb8988130f47100a2155d5db0d4182b468ce41adaade177adf2",
+          "size": 48971
+        },
+        "torus.prg": {
+          "sha256": "674d55e1a7ec0f8bbb72958507e1403af0aff9914baba55caa68ed74c2cfbd25",
+          "size": 43546
+        },
+        "torus_dense.prg": {
+          "sha256": "4495bf7b10c614c3682862884a65ed1bff0122f3404589b18474f5b4dd0261b0",
+          "size": 47017
+        },
+        "torus_dense_legacy144.prg": {
+          "sha256": "57117556714feb4d66eed432645625e6f1ca180f854a672e20e323255a0389f5",
+          "size": 49143
+        },
+        "torus_dense_no_overlay.prg": {
+          "sha256": "a65151eeed9571f776b3c233172055270b6e8e50f69674be6ac9bf951939d5ca",
+          "size": 46994
+        },
+        "torus_dense_rastertime_profiler.prg": {
+          "sha256": "d8642e4332c6ea8d1f946289b7809296598471e880c47f151db6367b4faeaa95",
+          "size": 47017
+        },
+        "torus_legacy144.prg": {
+          "sha256": "d32d4ae329213177cb1b8e89b460bfb11d94d48f7ab86e5e28ad618ea4fe2225",
+          "size": 48746
+        },
+        "torus_no_overlay.prg": {
+          "sha256": "f943871b4da002ac982372fb828c02dbda67eb146df12edd517c97bed9fa81ab",
+          "size": 43617
+        },
+        "torus_rastertime_profiler.prg": {
+          "sha256": "df37cc09a6176e1e7d066057499bcbb7c57945909a53f308cdd32ed9482de5d9",
+          "size": 43546
+        }
+      },
+      "notes": "Per-example directories. Unsuffixed normal builds use 256x192 with HUD/FPS; _legacy144 preserves the 256x144 performance/reference viewport; _no_overlay uses separate ASM at 256x200; _rastertime_profiler uses separate yunroll debug ASM at 256x192. Blender falling-cubes current builds use sample-step 4; its color _legacy144 artifact preserves the original sample-step 3 / 24-frame build. Final 0.6.2 PRG bytes are unchanged from v0.6.2-rc3.",
+      "toolchain": "64tass Turbo Assembler Macro V1.59.3120",
+      "version": "0.6.2"
+    }
+  },
+  "schema": 1
+}

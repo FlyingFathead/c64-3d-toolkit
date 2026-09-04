@@ -1,6 +1,6 @@
 # Windows setup
 
-`c64-3d-toolkit` v0.6.0-wip includes a Windows 11 setup helper with optional Blender support.
+`c64-3d-toolkit` v0.6.2 includes a Windows 11 setup helper with optional Blender support.
 
 ## First-time bootstrap on Windows 11
 
