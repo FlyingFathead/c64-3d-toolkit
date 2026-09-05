@@ -1,0 +1,71 @@
+{
+  "renderer": "yunroll-cart-v4",
+  "run_counts": [
+    0,
+    1,
+    255,
+    256,
+    512,
+    257,
+    256
+  ],
+  "max_clear_spans": 255,
+  "max_metadata_bytes": 1024,
+  "max_directory_frames": 255,
+  "reports": [
+    {
+      "cartridge": "v4-boundaries-color.crt",
+      "menu_entry": null,
+      "verified_frames": 17,
+      "orientations": 7,
+      "bitmap_bytes_checked": 130560,
+      "color_bytes_checked": 16320,
+      "slots": {
+        "1": 6,
+        "2": 6,
+        "0": 5
+      },
+      "average_fps": 12.427153116648666,
+      "min_frame_cycles": 1529,
+      "max_frame_cycles": 166026,
+      "pixel_match": true,
+      "color_match": true
+    },
+    {
+      "cartridge": "v4-boundaries-mono.crt",
+      "menu_entry": null,
+      "verified_frames": 17,
+      "orientations": 7,
+      "bitmap_bytes_checked": 130560,
+      "color_bytes_checked": 16320,
+      "slots": {
+        "1": 6,
+        "2": 6,
+        "0": 5
+      },
+      "average_fps": 13.180994044961295,
+      "min_frame_cycles": 1164,
+      "max_frame_cycles": 154425,
+      "pixel_match": true,
+      "color_match": true
+    },
+    {
+      "cartridge": "v4-directory-255.crt",
+      "menu_entry": null,
+      "verified_frames": 513,
+      "orientations": 255,
+      "bitmap_bytes_checked": 3939840,
+      "color_bytes_checked": 492480,
+      "slots": {
+        "1": 171,
+        "2": 171,
+        "0": 171
+      },
+      "average_fps": 50.23704278365377,
+      "min_frame_cycles": 1165,
+      "max_frame_cycles": 20773,
+      "pixel_match": true,
+      "color_match": true
+    }
+  ]
+}

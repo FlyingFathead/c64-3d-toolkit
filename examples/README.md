@@ -87,3 +87,7 @@ python tools/migrate_examples_layout.py --apply
 ```
 
 Existing destination files are never overwritten when their contents differ.
+
+## Streamed HiFi cartridges
+
+[`hifi_showcase/`](hifi_showcase/README.md) contains separate horse and sunflower EasyFlash CRTs, each with 192 orientations. These use the independent `yunroll-cart-v2` frame streamer, with matching OBJ/MTL assets, VICE captures and validation reports.

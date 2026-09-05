@@ -1,0 +1,18 @@
+{
+  "cartridge": "c643d-demo.crt",
+  "menu_entry": 10,
+  "verified_frames": 259,
+  "orientations": 128,
+  "bitmap_bytes_checked": 1989120,
+  "color_bytes_checked": 248640,
+  "slots": {
+    "1": 87,
+    "2": 86,
+    "0": 86
+  },
+  "average_fps": 7.172349919752146,
+  "min_frame_cycles": 104995,
+  "max_frame_cycles": 150115,
+  "pixel_match": true,
+  "color_match": true
+}

@@ -1,0 +1,19 @@
+{
+  "name": "SUNFLOWER TORUS HIFI",
+  "file": "sunflower_torus_hifi.obj",
+  "materials": [
+    "sunflower_torus_hifi.mtl"
+  ],
+  "use_colors": true,
+  "up_axis": "y",
+  "spin_axis": "y",
+  "rotate": [
+    0,
+    -14,
+    7
+  ],
+  "scale": 1,
+  "visibility": "surface_features",
+  "z_tolerance": 0.00035,
+  "notes": "Separate HiFi title-art interpretation. Static facet materials, not runtime lighting. Original assets unchanged."
+}

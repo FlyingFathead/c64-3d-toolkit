@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.6.4: HiFi assets and cartridge streaming variants
+
+- Added separate `yunroll-cart-v4` with inline line dispatch and direct kernel continuation; modest further gains over V3 with identical vector data.
+- `cart-demos` now uses one selected renderer for all twelve entries (default V4). Shipped V3-all and V4-all cartridges preserve original samples, colours and visibility for matched A/B comparisons.
+- Added a ten-row scrolling menu with fixed horizontal borders and buffered character/colour updates in all three styles; navigation no longer clears the screen.
+- Archived superseded mixed-method carts under `examples/old/cart_demos/`; added an idempotent cleanup command for ZIP updates which preserves local modifications.
+- Verified all twelve entries for both renderers in PAL VICE, all three menu styles, control paths and V4 RAM/count boundaries.
+
+- Added opt-in `yunroll-cart-v3`, with direct line dispatch, cheaper run counting, vertical-loop fall-through, faster page copying and constant-time metadata skips. The vector format and frame/cache capacities match V2. PAL VICE HiFi throughput improves by approximately 12–13% with exact pixel/colour matches.
+- Added separate V3 standalone and twelve-entry demo cartridges, a stage profiler and VICE boundary checks. Use `cart-demos --stream-renderer yunroll-cart-v3`; standalone defaults are retained; superseded menu carts are archived below `examples/old/cart_demos/`.
+
+- Added title-art-inspired `horse_head_hifi` and `sunflower_torus_hifi` OBJ/MTL presets; originals unchanged.
+- Added separate `yunroll-cart-v2` renderer and `cart-stream` command: banked EasyFlash frame data, fixed RAM staging, per-buffer metadata caches and 16-bit visible-run counts.
+- Added two 192-orientation CRT demos, pixel/colour verification in VICE, and cartridge support in the README introduction.
+- The 0.6.4 menu cartridge includes all ten original demos plus both 128-orientation HiFi streams in ROMH, with versioned CRT aliases. Original PRG renderers and the `yunroll-cart` scaffold are retained.
+
 ## 0.6.3
 
 - Finalize the v0.6.3 EasyFlash milestone and ship a ready-to-run ten-animation demo cartridge at `examples/cart_demos/c643d-demo.crt`, alongside its cartridge map and JSON manifest.

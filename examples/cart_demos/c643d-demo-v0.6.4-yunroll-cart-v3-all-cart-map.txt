@@ -1,0 +1,15 @@
+Uniform yunroll-cart-v3 cartridge
+Bank 0: boot/control/font; ROMH 1: menus; ROMH 2: menu directory/helpers
+TORUS: 32 frames, 18664 stream bytes
+TORUS DENSE: 32 frames, 21985 stream bytes
+CUBE: 36 frames, 10156 stream bytes
+SPHERE: 24 frames, 12638 stream bytes
+HORSE HEAD: 32 frames, 22562 stream bytes
+SUNFLOWER TORUS: 28 frames, 21668 stream bytes
+SUNFLOWER COLOR: 20 frames, 19325 stream bytes
+SPACE HORSE SPIN: 24 frames, 21858 stream bytes
+SPACE HORSE CRAWL: 32 frames, 23584 stream bytes
+FALLING CUBES: 18 frames, 12750 stream bytes
+HORSE HEAD HIFI: 128 frames, 147346 stream bytes
+SUNFLOWER TORUS HIFI: 128 frames, 247481 stream bytes
+Frame chips: 3:romh, 4:romh, 5:romh, 6:romh, 7:romh, 8:romh, 9:romh, 10:romh, 11:romh, 12:romh, 13:romh, 14:romh, 15:romh, 16:romh, 17:romh, 18:romh, 19:romh, 20:romh, 21:romh, 22:romh, 23:romh, 24:romh, 25:romh, 26:romh, 27:romh, 28:romh, 29:romh, 30:romh, 31:romh, 32:romh, 33:romh, 34:romh, 35:romh, 36:romh, 37:romh, 38:romh, 39:romh, 40:romh, 41:romh, 42:romh, 43:romh, 44:romh, 45:romh, 46:romh, 47:romh, 48:romh, 49:romh, 50:romh, 51:romh, 52:romh, 53:romh, 54:romh, 55:romh, 56:romh, 57:romh, 58:romh, 59:romh, 60:romh, 61:romh, 62:romh, 63:romh, 37:roml, 38:roml, 39:roml, 40:roml, 41:roml, 42:roml, 43:roml, 44:roml, 45:roml, 46:roml, 47:roml, 48:roml, 49:roml, 50:roml, 51:roml, 52:roml, 53:roml

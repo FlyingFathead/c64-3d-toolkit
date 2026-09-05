@@ -35,6 +35,26 @@ MENU_STYLE_DEMOSCENE  = 2
 MENU_FONT_ROM         = $9000
 MENU_FONT_RAM         = $2000
 
+; Keep help below every entry. Fail a build instead of overwriting the list
+; if a future expanded menu requires pagination or a different footer layout.
+.if MENU_STYLE == MENU_STYLE_DEFAULT
+MENU_LIST_ROW = 2
+.else
+MENU_LIST_ROW = 5
+.endif
+MENU_HELP_ROW = MENU_LIST_ROW + DEMO_ENTRY_COUNT
+MENU_RESET_ROW = MENU_HELP_ROW + 1
+MENU_SEPARATOR_ROW = MENU_HELP_ROW + 2
+.if MENU_STYLE == MENU_STYLE_DEFAULT
+    .if MENU_RESET_ROW >= 17
+        .error "menu entries/help collide with footer; redesign required"
+    .endif
+.else
+    .if MENU_SEPARATOR_ROW >= 20
+        .error "menu entries/help/separator collide with footer; redesign required"
+    .endif
+.endif
+
 ; Menu/loader zero-page workspace. Existing yunroll PRGs replace/reinitialize
 ; their own state immediately after launch, so this is only live here.
 ZP_SCREEN_LO   = $f1
@@ -256,16 +276,16 @@ entry_next_row_ok:
 .if MENU_STYLE == MENU_STYLE_DEFAULT
     lda #$0e
     sta text_color
-    lda #<($0400+13*40)
+    lda #<($0400+MENU_HELP_ROW*40)
     sta ZP_SCREEN_LO
-    lda #>($0400+13*40)
+    lda #>($0400+MENU_HELP_ROW*40)
     sta ZP_SCREEN_HI
 .else
     lda #$03
     sta text_color
-    lda #<($0400+16*40+5)
+    lda #<($0400+MENU_HELP_ROW*40+5)
     sta ZP_SCREEN_LO
-    lda #>($0400+16*40+5)
+    lda #>($0400+MENU_HELP_ROW*40+5)
     sta ZP_SCREEN_HI
 .endif
     lda #<help_text
@@ -275,16 +295,16 @@ entry_next_row_ok:
     jsr print_z_line
 
 .if MENU_STYLE == MENU_STYLE_DEFAULT
-    lda #<($0400+14*40)
+    lda #<($0400+MENU_RESET_ROW*40)
     sta ZP_SCREEN_LO
-    lda #>($0400+14*40)
+    lda #>($0400+MENU_RESET_ROW*40)
     sta ZP_SCREEN_HI
 .else
     lda #$0c
     sta text_color
-    lda #<($0400+17*40+2)
+    lda #<($0400+MENU_RESET_ROW*40+2)
     sta ZP_SCREEN_LO
-    lda #>($0400+17*40+2)
+    lda #>($0400+MENU_RESET_ROW*40+2)
     sta ZP_SCREEN_HI
 .endif
     lda #<reset_text
@@ -551,9 +571,9 @@ draw_decorations:
 
     lda #$06
     sta text_color
-    lda #<($0400+18*40)
+    lda #<($0400+MENU_SEPARATOR_ROW*40)
     sta ZP_SCREEN_LO
-    lda #>($0400+18*40)
+    lda #>($0400+MENU_SEPARATOR_ROW*40)
     sta ZP_SCREEN_HI
     jsr print_z_line
 
@@ -1039,10 +1059,10 @@ gradient_palette:
     .byte $06,$0e,$03,$0d,$07,$0a,$02,$04,$0a,$07,$0d,$03,$0e,$06,$0b,$0c
 
 title_default:
-    .text "C64 3D TOOLKIT 0.6.3 CARTRIDGE DEMO"
+    .text "C64 3D TOOLKIT 0.6.4 CARTRIDGE DEMO"
     .byte 0
 title_fancy:
-    .text "C64-3D-TOOLKIT 0.6.3"
+    .text "C64-3D-TOOLKIT 0.6.4"
     .byte 0
 subtitle_fancy:
     .text "EASYFLASH ANIMATION DEMO"

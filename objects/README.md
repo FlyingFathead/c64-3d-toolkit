@@ -67,3 +67,10 @@ Current OBJ compilation expects meshes to already be reasonably low-poly. Automa
 Pass `--no-colors` while importing to write `"use_colors": false` into the
 preset, or while building to ignore colours for that invocation. `--color`
 forces a single named/numeric C64 foreground colour.
+
+## Title-art-inspired HiFi additions
+
+- `horse_head_hifi`: 135 vertices, 299 edges, 178 faces. Full bust, pointed ears, cheek/bridge facets, purple/blue/cyan MTL palette.
+- `sunflower_torus_hifi`: 243 vertices, 443 edges, 238 faces. Torus centre, 16 individually bent/cupped petals, curved stem and leaves.
+
+Both have separate OBJ/MTL/JSON presets, closed manifold components, and surface-depth hidden-line culling. The original assets are retained. Materials provide static facet colours; MTL specular settings apply in desktop viewers, while the C64 uses native hires wire colours. See [HiFi showcase](../examples/hifi_showcase/README.md).

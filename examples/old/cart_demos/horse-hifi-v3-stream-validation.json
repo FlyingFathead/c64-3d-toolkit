@@ -1,0 +1,18 @@
+{
+  "cartridge": "c643d-demo-v0.6.4-yunroll-cart-v3.crt",
+  "menu_entry": 10,
+  "verified_frames": 259,
+  "orientations": 128,
+  "bitmap_bytes_checked": 1989120,
+  "color_bytes_checked": 248640,
+  "slots": {
+    "1": 87,
+    "2": 86,
+    "0": 86
+  },
+  "average_fps": 8.004783333382145,
+  "min_frame_cycles": 92960,
+  "max_frame_cycles": 135622,
+  "pixel_match": true,
+  "color_match": true
+}

@@ -1,70 +1,31 @@
-# Cartridge demos
+# c64-3d-toolkit 0.6.4 comparison cartridges
 
-This directory contains runnable cartridge-image examples produced by the
-experimental cartridge backend.
+Both cartridges contain the same twelve demos, using one renderer throughout:
 
-Build the current EasyFlash multi-animation demo with:
+- `c643d-demo-v0.6.4-yunroll-cart-v4-all.crt`: current default, all V4.
+- `c643d-demo-v0.6.4-yunroll-cart-v3-all.crt`: comparison baseline, all V3.
 
 ```bash
+x64sc -cartcrt examples/cart_demos/c643d-demo-v0.6.4-yunroll-cart-v4-all.crt
 ./build.sh cart-demos
+./build.sh cart-demos --stream-renderer yunroll-cart-v3
 ```
 
-The matching convenience flag is also available:
+Cursor keys select; RETURN launches. Ten visible rows scroll between fixed
+horizontal borders. A `+` at a border means more entries in that direction.
+F1 cycles default/decorative/demoscene. During demos, F1 or RUN/STOP returns to
+the menu; SPACE launches the next demo and wraps after the last entry.
 
-```bash
-./build.sh --generate-cart-demos
-```
+The ten canonical PRGs retain their original samples through exact vector-table
+extraction. Each HiFi model uses 128 orientations. Both carts use the same frame
+bytes and ROM allocation. All entries passed pixel/colour comparisons in PAL
+VICE over more than two complete rotations. The JSON reports record per-demo
+FPS, scrolling, controls and boundary checks. Physical C64 testing remains open.
 
-Run it directly in VICE with:
+See [the V4 guide](../../docs/CARTRIDGE_STREAM_V4.md) for measurements, layout and
+verification commands. Standalone 192-frame HiFi carts remain in `../hifi_showcase/`.
 
-```bash
-./build.sh cart-demos --run
-```
-
-The final `.crt`, cartridge map, and manifest are written here by default.
-Temporary assembler outputs, the raw 1 MiB EasyFlash image, and generated
-includes stay under `build/`.
-
-## `c643d-demo.crt`
-
-The initial 0.6.3 demo cartridge is a deliberately simple integration bridge.
-It packs the canonical toolkit PRG animations into EasyFlash ROM and boots a
-small menu. Use the cursor keys to select an animation (up/left = previous,
-down/right = next), RETURN to launch it, and F1 to cycle the live menu style
-through `default` -> `decorative` -> `demoscene` -> `default`. While a demo is
-running, F1 or RUN/STOP returns to the cartridge menu and SPACE launches the
-next demo, wrapping back to the first entry after the last. The highlighted
-entry and selected menu style survive the switch/return path. The ordinary
-shipped PRGs are not modified; only their copies packed into this CRT receive
-the cart-control IRQ shim.
-
-This proves cartridge boot, bank switching, payload copying, and multi-demo
-packaging. It is **not** yet the continuous `yunroll-cart` frame/table streaming
-backend. That work is tracked in `docs/CARTRIDGE_ROADMAP.md`.
-
-## Menu styles
-
-Every demo CRT contains all three menu presentations. `--menu-style` chooses
-which one appears at startup; F1 cycles them live without rebuilding the cart:
-
-```bash
-./build.sh cart-demos --menu-style default
-./build.sh cart-demos --menu-style decorative --output c643d-demo-decorative
-./build.sh cart-demos --menu-style demoscene --output c643d-demo-demoscene
-```
-
-`default` is the plain/readable utility menu. `decorative` adds a static frame,
-colour treatment, and a menu-only compact 5x7 character set derived from the
-toolkit HUD font. `demoscene` adds a small raster IRQ which slowly cycles the
-header, footer, and border colours. The `--menu-style` flag therefore controls
-only the initial presentation. All styles include:
-
-```text
-by FlyingFathead, 2026
-
-github: flyingfathead/c64-3d-toolkit
-```
-
-Use `--output` when keeping differently configured/startup-style CRTs side by
-side. Because every CRT contains all three styles, separate files are not
-required merely to try the menu presentations.
+Superseded mixed-method carts are in `../old/cart_demos/`. After applying the
+changed-files ZIP, run `python tools/archive_old_carts.py` from the repo to move
+old copies out of this folder. `--dry-run` previews the moves. Modified local
+files get a content-hash suffix; custom cart names are untouched.

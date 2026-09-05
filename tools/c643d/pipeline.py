@@ -264,7 +264,7 @@ def classify_feature_edges(mesh:Mesh, feature_angle:float=40.0):
     return out, {'boundary':boundary,'nonmanifold':nonmanifold,'crease':crease,'features':sum(out.values()),'edges':len(out)}
 
 
-def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibility_mode:str="surface", z_tolerance:float=Z_TOL, feature_angle:float=40.0, animation:str='spin', animation_tilt:float=62.0, animation_travel:float=120.0, animation_rise:float=54.0, enable_source_colors:bool=False, fallback_color:int=1, clip_viewport:bool=False, *, width:int=W, height:int=H) -> tuple[list[FrameBuild],int]:
+def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibility_mode:str="surface", z_tolerance:float=Z_TOL, feature_angle:float=40.0, animation:str='spin', animation_tilt:float=62.0, animation_travel:float=120.0, animation_rise:float=54.0, enable_source_colors:bool=False, fallback_color:int=1, clip_viewport:bool=False, *, width:int=W, height:int=H, max_visible_runs:int=255) -> tuple[list[FrameBuild],int]:
     if not 1<=frames<=255: raise ValueError('frames must be 1..255')
     if not 0<=fallback_color<=15: raise ValueError('fallback colour must be 0..15')
     # Precompute face geometry in object space.
@@ -402,7 +402,7 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
                                     counts[edge_color]=counts.get(edge_color,0)+1
                             seg_start=seg_end+1
                     start=None
-        if len(records)>255: raise RuntimeError(f'frame {fi}: {len(records)} visible runs >255')
+        if len(records)>max_visible_runs: raise RuntimeError(f'frame {fi}: {len(records)} visible runs >{max_visible_runs}')
         if not touched: raise RuntimeError(f'frame {fi}: no visible pixels')
         # clear touched character-cell runs, as in v0.8
         cells={(x>>3,y>>3) for x,y in touched}; spans=[]

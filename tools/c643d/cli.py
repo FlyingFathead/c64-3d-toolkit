@@ -618,6 +618,9 @@ def print_stats(mesh:Mesh,label:str,renderer:str,scale:float,stats:dict,hud:str,
 
 
 def cmd_build(a):
+    if a.renderer in ("yunroll-cart-v2", "yunroll-cart-v3", "yunroll-cart-v4"):
+        from .cartstream import cmd_build_cart_v2
+        return cmd_build_cart_v2(a)
     if getattr(a,'blend',None) or getattr(a,'scene',None):
         return cmd_build_scene(a)
     if getattr(a,'rastertime_profiler',False) and not getattr(a,'text_overlay',True):
@@ -991,6 +994,10 @@ def cmd_cartridge_smoke(a):
 
 
 def cmd_cart_demos(a):
+    from .cartuniform import build
+    return build(a)
+
+def cmd_cart_demos_legacy(a):
     """Build a menu-driven EasyFlash cartridge from the canonical example PRGs."""
     tass=resolve_executable(a.tass,'tass')
     if not tass:
@@ -1017,7 +1024,7 @@ def cmd_cart_demos(a):
 
     outdir=Path(a.output_dir).resolve() if a.output_dir else CART_DEMOS
     outdir.mkdir(parents=True,exist_ok=True)
-    stem=a.output or 'c643d-demo'
+    stem=a.output or ('c643d-demo' if a.stream_renderer=='yunroll-cart-v2' else f'c643d-demo-v{__version__}-yunroll-cart-v3')
     workdir=BUILD/f'{stem}-cartridge-demo'
     workdir.mkdir(parents=True,exist_ok=True)
     include_dir=workdir/'generated'
@@ -1040,10 +1047,21 @@ def cmd_cart_demos(a):
     manifest_json=outdir/f'{stem}-cart-manifest.json'
     paths=(runtime,*runtime_style_files.values(),*runtime_style_labels.values(),*runtime_style_listings.values(),
            control,control_lbl,control_lst,menu_font,boot,boot_lbl,boot_lst,raw,crt,map_txt,manifest_json,include_path)
+    if not a.output and a.stream_renderer=='yunroll-cart-v2':
+        paths += tuple(outdir/f'c643d-demo-v{__version__}{suffix}' for suffix in ('.crt','-cart-manifest.json','-cart-map.txt'))
     if not _check_overwrite(paths,a.overwrite_policy):
         return 2
     try:
-        image,plans,manifest=pack_demo_prgs(CARTRIDGE_DEMO_ENTRIES,source_root=ROOT)
+        from .cartstream import prepare_menu_streams
+        stream_entries,stream_image,stream_info=prepare_menu_streams(ROOT,tass=tass,cartconv=cartconv,tass_args=a.tass_args,renderer=a.stream_renderer)
+        image,plans,manifest=pack_demo_prgs((*CARTRIDGE_DEMO_ENTRIES,*stream_entries),source_root=ROOT)
+        for bank in range(2,64):
+            off=bank*16384+8192
+            image[off:off+8192]=stream_image[off:off+8192]
+        manifest['version']=__version__
+        manifest['streamed_entries']=stream_info
+        manifest['note']=f'Ten legacy PRGs plus two {a.stream_renderer.rsplit("-",1)[1].upper()} frame-streamed HiFi animations. PRG payloads use ROML; streamed frame blocks use ROMH.'
+        if a.stream_renderer!='yunroll-cart-v2':manifest['stream_renderer']=a.stream_renderer
         manifest['menu_style']=a.menu_style
         manifest['menu_styles']=list(DEMO_MENU_STYLE_ORDER)
         manifest['menu_style_cycle_key']='F1'
@@ -1071,16 +1089,22 @@ def cmd_cart_demos(a):
         )
         raw.write_bytes(bytes(image))
         write_demo_map(map_txt,manifest)
+        with map_txt.open('a') as stream_map:
+            for entry in stream_info:
+                stream_map.write(f"\n{entry['name']}: {entry['frames']} streamed frames, ROMH banks {entry['first_bank']}..{entry['last_bank']}, {entry['rom_frame_bytes']} frame bytes\n")
         write_manifest(manifest_json,manifest)
-        convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name='C643D 0.6.3 DEMO',cwd=ROOT)
+        convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name=f'C643D {__version__} DEMO',cwd=ROOT)
         check_output=check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=ROOT)
     except (OSError,ValueError,RuntimeError,subprocess.CalledProcessError) as e:
         print(f'error: EasyFlash demo build failed: {e}',file=sys.stderr)
         return 2
 
+    if not a.output and a.stream_renderer=='yunroll-cart-v2':
+        for original,suffix in ((crt,'.crt'),(manifest_json,'-cart-manifest.json'),(map_txt,'-cart-map.txt')):
+            shutil.copyfile(original,outdir/f'c643d-demo-v{__version__}{suffix}')
     total=sum(p.length for p in plans)
     print(f'built {_display_path(crt)}')
-    print(f'entries:     {len(plans)} canonical animations / {total} PRG payload bytes')
+    print(f'entries:     {len(plans)} animations (10 legacy + 2 streamed HiFi) / {total} boot payload bytes')
     print(f'start style: {a.menu_style}')
     print('menu styles: default -> decorative -> demoscene -> default (F1)')
     print(f'banks used:  {manifest["highest_bank_used"]+1} / 64 (bank 0 boot + {manifest["data_banks_used"]} ROML data banks)')
@@ -1091,7 +1115,7 @@ def cmd_cart_demos(a):
         print(f'cartconv:    {check_output.splitlines()[-1]}')
     print('controls:    menu F1 cycles style; cursors select; RETURN plays')
     print('             in demo F1/RUN-STOP = menu, SPACE = next')
-    print('note:        this stage launches existing PRGs; true yunroll-cart streaming comes next')
+    print('streaming:   two HiFi demos use 128 orientations each from ROMH; original ten PRGs preserved')
     if a.run:
         cmd=tool_command(vice,a.vice_args,['-cartcrt',str(crt)])
         print('+',' '.join(cmd))
@@ -1159,7 +1183,7 @@ def make_parser(settings):
         q.add_argument('--z-tolerance',type=float,help='reciprocal-depth tolerance for visible wire edges; object presets may provide a default')
         q.add_argument('--feature-angle',type=float,help='surface_creases threshold in degrees; sharp manifold edges at/above this angle are preserved')
     b=sub.add_parser('build',help='generate tables, assemble PRG, optionally run VICE'); common(b)
-    b.add_argument('--renderer',choices=tuple(RENDERERS),default='yunroll',help='step=v0.7, bytechunk=v0.8, yunroll=current fastest')
+    b.add_argument('--renderer',choices=(*RENDERERS, 'yunroll-cart-v2', 'yunroll-cart-v3', 'yunroll-cart-v4'),default='yunroll',help='step/bytechunk/yunroll=PRG; yunroll-cart-v2/v3=streamed EasyFlash CRT')
     b.add_argument('--frames',type=int,help='precomputed legacy animation frames/orientations (default 48; not used by --blend)')
     b.add_argument('--strict-frames',action='store_true',help='fail instead of reducing orientation count when table RAM overflows')
     b.add_argument('--camera',type=float,default=110.0)
@@ -1239,18 +1263,21 @@ def make_parser(settings):
     cs.add_argument('--run',action='store_true',help='attach the generated CRT directly with VICE -cartcrt')
     cd=sub.add_parser('cart-demos',help='build shipped EasyFlash demo CRT(s) into examples/cart_demos/')
     _add_toolchain_args(cd,settings)
-    cd.add_argument('--output',help='output basename (default: c643d-demo)')
+    cd.add_argument('--output',help='output basename (default: version and renderer-labelled cart name)')
     cd.add_argument('--output-dir',help='final demo output directory (default: examples/cart_demos/; intermediates stay in build/)')
     cd.add_argument('--overwrite-policy',choices=('allow','warn','error'),default=settings.overwrite_policy,help='existing output handling (built-in default: warn)')
     cd.add_argument('--menu-style',choices=('default','decorative','demoscene'),default='default',help='initial cartridge menu presentation; F1 cycles all styles at runtime (default: default)')
     cd.add_argument('--run',action='store_true',help='attach the generated demo CRT directly with VICE -cartcrt')
+    cd.add_argument('--stream-renderer',choices=('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4'),default='yunroll-cart-v4',help='one renderer for every demo; writes a separate version-labelled comparison cart')
     cda=sub.add_parser('cartridge-demo',help=argparse.SUPPRESS)
     _add_toolchain_args(cda,settings)
-    cda.add_argument('--output',help='output basename (default: c643d-demo)')
+    cda.add_argument('--output',help='output basename (default: version and renderer-labelled cart name)')
     cda.add_argument('--output-dir',help='final demo output directory (default: examples/cart_demos/; intermediates stay in build/)')
     cda.add_argument('--overwrite-policy',choices=('allow','warn','error'),default=settings.overwrite_policy,help='existing output handling (built-in default: warn)')
     cda.add_argument('--menu-style',choices=('default','decorative','demoscene'),default='default',help='initial cartridge menu presentation; F1 cycles all styles at runtime (default: default)')
     cda.add_argument('--run',action='store_true',help='attach the generated demo CRT directly with VICE -cartcrt')
+    cda.add_argument('--stream-renderer',choices=('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4'),default='yunroll-cart-v4',help='one renderer for every demo; writes a separate version-labelled comparison cart')
+    sub.add_parser('cart-stream',help='build an experimental yunroll-cart-v2 streamed EasyFlash CRT (same source flags as build)')
     doc=sub.add_parser('doctor',help='check local 64tass/VICE and optional Blender/cartconv availability')
     _add_toolchain_args(doc,settings)
     sub.add_parser('list-shapes',help='list procedural/built-in shapes')
@@ -1267,6 +1294,8 @@ def main(argv=None):
         print(f'error: could not load toolchain config: {e}',file=sys.stderr)
         return 2
     p=make_parser(settings)
+    if argv and argv[0]=='cart-stream':
+        argv=['build', '--renderer', 'yunroll-cart-v2']+argv[1:]
     if not argv:
         argv=['build']
     elif argv[0]=='--generate-examples':

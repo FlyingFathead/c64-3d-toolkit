@@ -1,5 +1,7 @@
 # Cartridge pipeline (experimental)
 
+**New: independent [`yunroll-cart-v2` frame streaming](CARTRIDGE_STREAM_V2.md) is implemented alongside the earlier milestones below.** `cart-stream` builds real frame-streamed CRTs; `cart-demos` continues to package existing PRGs. The original `yunroll-cart` scaffold is preserved.
+
 `c64-3d-toolkit` is adding a cartridge-oriented rendering/data path alongside
 its existing `.prg` pipeline. The first target is **EasyFlash** and the first
 renderer consumer will be **`yunroll-cart`**, a separate derivative of the

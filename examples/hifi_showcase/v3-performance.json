@@ -1,0 +1,150 @@
+{
+  "clock": "PAL VICE 3.10, 985248 cycles/second",
+  "standalone_comparisons": [
+    {
+      "object": "horse_head_hifi",
+      "v2": {
+        "cartridge": "horse_head_hifi-yunroll-cart-v2.crt",
+        "verified_frames": 387,
+        "orientations": 192,
+        "bitmap_bytes_checked": 2972160,
+        "color_bytes_checked": 371520,
+        "slots": {
+          "1": 129,
+          "2": 129,
+          "0": 129
+        },
+        "average_fps": 7.195638498383115,
+        "min_frame_cycles": 104050,
+        "max_frame_cycles": 151202,
+        "pixel_match": true,
+        "color_match": true
+      },
+      "v3": {
+        "cartridge": "horse_head_hifi-yunroll-cart-v3.crt",
+        "menu_entry": null,
+        "verified_frames": 387,
+        "orientations": 192,
+        "bitmap_bytes_checked": 2972160,
+        "color_bytes_checked": 371520,
+        "slots": {
+          "1": 129,
+          "2": 129,
+          "0": 129
+        },
+        "average_fps": 8.030582904690094,
+        "min_frame_cycles": 92290,
+        "max_frame_cycles": 135888,
+        "pixel_match": true,
+        "color_match": true
+      },
+      "fps_increase_percent": 11.603479058801991,
+      "identical_frame_blocks": true
+    },
+    {
+      "object": "sunflower_torus_hifi",
+      "v2": {
+        "cartridge": "sunflower_torus_hifi-yunroll-cart-v2.crt",
+        "menu_entry": null,
+        "verified_frames": 387,
+        "orientations": 192,
+        "bitmap_bytes_checked": 2972160,
+        "color_bytes_checked": 371520,
+        "slots": {
+          "1": 129,
+          "2": 129,
+          "0": 129
+        },
+        "average_fps": 4.912446524665645,
+        "min_frame_cycles": 107753,
+        "max_frame_cycles": 258103,
+        "pixel_match": true,
+        "color_match": true
+      },
+      "v3": {
+        "cartridge": "sunflower_torus_hifi-yunroll-cart-v3.crt",
+        "menu_entry": null,
+        "verified_frames": 387,
+        "orientations": 192,
+        "bitmap_bytes_checked": 2972160,
+        "color_bytes_checked": 371520,
+        "slots": {
+          "1": 129,
+          "2": 129,
+          "0": 129
+        },
+        "average_fps": 5.55165800550019,
+        "min_frame_cycles": 94734,
+        "max_frame_cycles": 229515,
+        "pixel_match": true,
+        "color_match": true
+      },
+      "fps_increase_percent": 13.012080184996044,
+      "identical_frame_blocks": true
+    }
+  ],
+  "sunflower_stage_profiles": {
+    "v2": {
+      "object": "sunflower_torus_hifi",
+      "renderer": "v2",
+      "orientations": 192,
+      "mean_cycles": {
+        "fetch": 30522.3,
+        "recycle_bitmap_and_colors": 17501.11,
+        "cache_metadata": 5326.25,
+        "apply_colors": 7045.88,
+        "draw_lines": 139705.27,
+        "handoff_and_counters": 292.89
+      },
+      "percent": {
+        "fetch": 15.23,
+        "recycle_bitmap_and_colors": 8.73,
+        "cache_metadata": 2.66,
+        "apply_colors": 3.52,
+        "draw_lines": 69.72,
+        "handoff_and_counters": 0.15
+      }
+    },
+    "v3": {
+      "object": "sunflower_torus_hifi",
+      "renderer": "v3",
+      "orientations": 192,
+      "mean_cycles": {
+        "fetch": 27136.69,
+        "recycle_bitmap_and_colors": 16520.71,
+        "cache_metadata": 4716.8,
+        "apply_colors": 6027.46,
+        "draw_lines": 122645.39,
+        "handoff_and_counters": 270.73
+      },
+      "percent": {
+        "fetch": 15.3,
+        "recycle_bitmap_and_colors": 9.32,
+        "cache_metadata": 2.66,
+        "apply_colors": 3.4,
+        "draw_lines": 69.17,
+        "handoff_and_counters": 0.15
+      }
+    }
+  },
+  "color_grouping_storage_estimate": {
+    "horse_head_hifi": {
+      "frames": 192,
+      "color_spans": 8070,
+      "color_changes_in_address_order": 5783,
+      "distinct_color_groups": 740,
+      "raw_repeated_color_bytes": 2287,
+      "grouped_format_estimated_saved_bytes": 6590,
+      "percent_of_total_frame_rom": 2.98
+    },
+    "sunflower_torus_hifi": {
+      "frames": 192,
+      "color_spans": 10429,
+      "color_changes_in_address_order": 6383,
+      "distinct_color_groups": 669,
+      "raw_repeated_color_bytes": 4046,
+      "grouped_format_estimated_saved_bytes": 9091,
+      "percent_of_total_frame_rom": 2.45
+    }
+  }
+}

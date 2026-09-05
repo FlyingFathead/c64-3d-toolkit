@@ -37,7 +37,7 @@ case "${1:-}" in
   --version)
     exec python3 ./c643d.py --version
     ;;
-  build|inspect|import-obj|import-svg|generate-examples|test-examples|cartridge-smoke|cart-demos|cartridge-demo|doctor|list-shapes|list-objects)
+  build|cart-stream|inspect|import-obj|import-svg|generate-examples|test-examples|cartridge-smoke|cart-demos|cartridge-demo|doctor|list-shapes|list-objects)
     exec python3 ./c643d.py "$@"
     ;;
   *)

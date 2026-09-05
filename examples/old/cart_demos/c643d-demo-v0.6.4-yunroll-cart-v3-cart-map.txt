@@ -16,12 +16,18 @@ banks 35-40 ROML  SUNFLOWER COLOR           44448 bytes load $0801 entry $080d
 banks 41-46 ROML  SPACE HORSE SPIN          48826 bytes load $0801 entry $080d
 banks 47-52 ROML  SPACE HORSE CRAWL         49151 bytes load $0801 entry $080d
 banks 53-57 ROML  FALLING CUBES             38584 bytes load $0801 entry $080d
+banks 58-60 ROML  HORSE HEAD HIFI           18431 bytes load $0801 entry $080d
+banks 61-63 ROML  SUNFLOWER TORUS HIFI      18431 bytes load $0801 entry $080d
 
-data banks used: 57 / 63
+data banks used: 63 / 63
 startup style:   default
 live menu styles: default -> decorative -> demoscene -> default (F1)
-highest bank:    57 / 63
+highest bank:    63 / 63
 
 Bridge note: these are existing PRG payloads launched from cartridge.
 Menu F1 cycles styles; cartridge copies use F1/RUN-STOP menu + SPACE next-demo controls.
 True yunroll-cart frame/table streaming is the next backend milestone.
+
+HORSE HEAD HIFI: 128 streamed frames, ROMH banks 2..22, 147346 frame bytes
+
+SUNFLOWER TORUS HIFI: 128 streamed frames, ROMH banks 23..56, 247481 frame bytes

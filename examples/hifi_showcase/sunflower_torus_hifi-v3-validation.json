@@ -1,0 +1,18 @@
+{
+  "cartridge": "sunflower_torus_hifi-yunroll-cart-v3.crt",
+  "menu_entry": null,
+  "verified_frames": 387,
+  "orientations": 192,
+  "bitmap_bytes_checked": 2972160,
+  "color_bytes_checked": 371520,
+  "slots": {
+    "1": 129,
+    "2": 129,
+    "0": 129
+  },
+  "average_fps": 5.55165800550019,
+  "min_frame_cycles": 94734,
+  "max_frame_cycles": 229515,
+  "pixel_match": true,
+  "color_match": true
+}

@@ -6,23 +6,46 @@
 
 # c64-3d-toolkit
 
-Host-assisted low-poly wireframe 3D compiler/runtime for a **stock Commodore 64**, with first-class support for animated **Blender `.blend` scenes**, **Wavefront OBJ + MTL**, **SVG artwork**, and built-in procedural geometry.
+Host-assisted low-poly wireframe 3D compiler/runtime for a **stock Commodore 64**, with first-class support for animated **Blender `.blend` scenes**, **Wavefront OBJ + MTL**, **SVG artwork**, built-in procedural geometry, and **EasyFlash `.crt` cartridge output**.
 
-Animate objects, cameras, modifiers, armatures, or rigid-body scenes in Blender; import coloured OBJ/MTL meshes or SVG paths; or use the classic procedural meshes and animation transforms. The toolkit preprocesses the result on the host, performs projection and hidden-line visibility, then generates 6510/6502 assembly data and runnable C64 `.prg` files whose vectors are drawn live by the C64.
+Animate objects, cameras, modifiers, armatures, or rigid-body scenes in Blender; import coloured OBJ/MTL meshes or SVG paths; or use the classic procedural meshes and animation transforms. The toolkit preprocesses the result on the host, performs projection and hidden-line visibility, then generates 6510/6502 assembly data and runnable C64 demos whose vectors are drawn live by the C64.
+
+**More animation than one RAM load can hold.** Build standalone `.prg` demos, package animations into menu-driven `.crt` cartridges, or use the new experimental **`yunroll-cart-v2`** streamer. V2 keeps frame tables in EasyFlash ROM and reuses a small C64 RAM working set, making room for longer, more detailed rotations without squeezing the entire sequence into RAM. The new purple/blue **horse head HiFi** and **sunflower torus HiFi** demos each ship with **192 streamed orientations**, coloured wireframes, and surface-based hidden-line culling.
+
+See [the HiFi showcase](examples/hifi_showcase/README.md) and [the V2 streaming guide](docs/CARTRIDGE_STREAM_V2.md). V2 currently streams OBJ/SVG/procedural animations; the existing Blender-to-PRG pipeline and twelve-demo menu cartridge remain available.
+
+**One renderer per comparison cart.** The default `cart-demos` build now uses
+`yunroll-cart-v4` for **all twelve demos**, including the original Blender and SVG
+examples. A matching `yunroll-cart-v3` cart is included for A/B comparisons with
+identical frame data. The menu scrolls ten entries between fixed horizontal
+borders in all three styles, with buffered updates on navigation.
+
+V4 is a small further improvement over V3: the matched menu carts reach about
+**8.08 vs 8.00 FPS** for the HiFi horse and **5.60 vs 5.53 FPS** for the sunflower
+in PAL VICE. Both use 128 HiFi orientations; standalone HiFi carts retain 192.
+See [the uniform cart and V4 guide](docs/CARTRIDGE_STREAM_V4.md) for all twelve
+measurements, memory layout, rebuilding and verification.
 
 ## Try it first
 
 You do not need to author a scene or rebuild the toolkit just to see what it does.
 The repository ships **ready-to-run C64 examples**, including ordinary `.prg`
-demos and a bundled **EasyFlash demo cartridge** containing ten animations.
+demos and a bundled **EasyFlash demo cartridge** containing twelve animations.
 
-If you already have VICE installed, the fastest route is the shipped cartridge:
+Try the new streamed HiFi cartridges directly in VICE:
 
 ```bash
-x64sc -cartcrt examples/cart_demos/c643d-demo.crt
+x64sc -cartcrt examples/hifi_showcase/horse_head_hifi-yunroll-cart-v2.crt
+x64sc -cartcrt examples/hifi_showcase/sunflower_torus_hifi-yunroll-cart-v2.crt
 ```
 
-That boots the **c64-3d-toolkit v0.6.3 demo cart** directly. Use the cursor keys
+For the twelve-animation menu, launch the shipped demo cartridge:
+
+```bash
+x64sc -cartcrt examples/cart_demos/c643d-demo-v0.6.4-yunroll-cart-v4-all.crt
+```
+
+That boots the **c64-3d-toolkit v0.6.4 demo cart** directly. Use the cursor keys
 to choose an animation and RETURN to launch it. In the menu, F1 cycles the live
 presentation through `default`, `decorative`, and `demoscene`. While a demo is
 running, F1 or RUN/STOP returns to the menu and SPACE launches the next demo.
@@ -42,11 +65,11 @@ So there are two easy ways in:
 1. **Just run the included demos** in VICE and see the C64 output immediately.
 2. **Build your own** procedural, OBJ/MTL, SVG, or Blender-authored scene with the toolkit.
 
-### Cartridge output in v0.6.3
+### Cartridge output in v0.6.4
 
 c64-3d-toolkit can build bank-switched C64 cartridge images in **`.crt` format**
 in addition to traditional `.prg` files. The repository includes the ready-made
-[`examples/cart_demos/c643d-demo.crt`](examples/cart_demos/c643d-demo.crt), plus
+[`examples/cart_demos/c643d-demo-v0.6.4-yunroll-cart-v4-all.crt`](examples/cart_demos/c643d-demo-v0.6.4-yunroll-cart-v4-all.crt), plus
 its bank map and manifest, so the cartridge path can be tried without rebuilding
 it first.
 
@@ -58,7 +81,7 @@ To rebuild and immediately run the demo cartridge yourself:
 ./build.sh --generate-cart-demos
 ```
 
-The generated EasyFlash CRT contains ten bundled animations and all three menu
+The generated EasyFlash CRT contains twelve bundled animations and all three menu
 presentations. `--menu-style default|decorative|demoscene` selects only the
 startup style; F1 can switch styles live afterwards. For example:
 
@@ -67,15 +90,21 @@ startup style; F1 can switch styles live afterwards. For example:
 ./build.sh cart-demos --menu-style demoscene --output c643d-demo-demoscene --run
 ```
 
-This v0.6.3 cartridge stage proves native EasyFlash boot, deterministic bank
-switching, cartridge packaging, banked payload copying, VICE-side validation,
-and launching the existing production renderers from cartridge storage. The
-ordinary shipped PRGs remain untouched.
+Every entry uses the selected renderer. Original PRG vector tables are read
+without changing the source PRGs, preserving their camera, culling, colours and
+sample counts. Both HiFi models use 128 orientations. Frame data occupies
+580,017 bytes spread across available ROMH and ROML chips in one 1 MiB EasyFlash.
 
-It is **not yet** the final continuous `yunroll-cart` frame/table streaming
-backend. True long-form streaming with a bounded C64 RAM working set is the next
-major cartridge milestone. See [`docs/CARTRIDGE_PIPELINE.md`](docs/CARTRIDGE_PIPELINE.md)
-and [`docs/CARTRIDGE_ROADMAP.md`](docs/CARTRIDGE_ROADMAP.md).
+```bash
+./build.sh cart-demos --stream-renderer yunroll-cart-v3
+./build.sh cart-demos --stream-renderer yunroll-cart-v4
+# After overlaying an update ZIP, archive obsolete bundled cart names:
+python tools/archive_old_carts.py
+```
+
+The cleanup command moves only known superseded cart files into
+`examples/old/cart_demos/`, preserving any locally modified copies. It is safe
+to run repeatedly. See [the cart guide](docs/CARTRIDGE_STREAM_V4.md).
 
 ## Requirements
 
@@ -239,7 +268,7 @@ Build and run an imported OBJ preset:
 ./build.sh --object horse_head --run
 ```
 
-Rebuild the complete ten-animation EasyFlash demo cartridge:
+Rebuild the complete twelve-animation EasyFlash demo cartridge:
 
 ```bash
 ./build.sh cart-demos --run
@@ -420,9 +449,9 @@ The bundled horse is deliberately compiled with `--visibility surface`. Its OBJ 
 The emitter can spill whole per-orientation line blocks into otherwise-unused RAM below bitmap #2, so the full horse surface mode still fits 36 sampled orientations without reducing the mesh.
 
 
-## Current render/build controls (v0.6.3)
+## Current render/build controls (v0.6.4)
 
-These controls were introduced in v0.6.2 and remain the current v0.6.3 PRG behaviour. They expand the default drawable area while keeping alternate/debug paths out of the production renderer:
+These controls were introduced in v0.6.2 and remain the current v0.6.4 PRG behaviour. They expand the default drawable area while keeping alternate/debug paths out of the production renderer:
 
 ```bash
 # production HUD/FPS path: automatic 256x192 drawable viewport
@@ -501,19 +530,17 @@ the bitmap and can therefore run slower depending on scene complexity. All
 variants remain native hires, hidden-line clipped, triple-buffered, and do not
 use pre-rendered bitmap animation frames.
 
-As of **v0.6.3**, the toolkit is a reusable multi-source compiler/runtime rather
+As of **v0.6.4**, the toolkit is a reusable multi-source compiler/runtime rather
 than only a rotating-mesh benchmark. It accepts procedural geometry, OBJ/MTL,
 SVG, versioned `.c643dscene` interchange data, and animated Blender `.blend`
 scenes. Blender-authored builds can preserve arbitrary object motion, stable-
 topology deformation, rigid-body simulation, materials, and active-camera
 animation while the stock C64 still rasterizes the resulting vectors itself.
 
-Version 0.6.3 also introduces the separate EasyFlash cartridge path. The first useful cartridge integration can build a menu-driven `.crt`
-containing the ten canonical toolkit animations, launch them directly from
-cartridge storage, emit bank maps/manifests, and validate banked payload copies
-under VICE. The existing PRG renderers remain the compatibility baseline while
-`yunroll-cart` advances toward true frame/table streaming with a bounded RAM
-working set.
+Version 0.6.4 extends EasyFlash support with real per-frame streaming in the
+independent `yunroll-cart-v2` renderer. The menu cartridge combines ten original
+PRGs and two streamed HiFi models, with bank maps and VICE-verified copying,
+drawing and menu controls. The original `yunroll-cart` scaffold is retained.
 
 The project grew out of the rotating-torus benchmark, a.k.a. **THE WORLD'S MOST
 DANGEROUS ROTATING DONUT**.
@@ -904,7 +931,7 @@ previewer is planned, but the command-line path will remain first-class.
 
 ## Status
 
-**Version 0.6.3 is the current release.** The production PRG pipeline
+**Version 0.6.4 is the current release.** The production PRG pipeline
 remains compatible with the verified v0.6.2 baseline, while cartridge work is
 kept in a separate EasyFlash backend. Current cartridge milestones include:
 
@@ -916,13 +943,13 @@ kept in a separate EasyFlash backend. Current cartridge milestones include:
   `--generate-cart-demos`, with live F1 menu-style cycling, F1/RUN-STOP menu return, and SPACE next-demo controls;
 - cartridge bank maps and JSON manifests;
 - C64-side VICE/debug-cart validation of banked payload copying; and
-- the separate `yunroll-cart` assembly path and streaming roadmap.
+- the independent `yunroll-cart-v2` streamer, 16-bit run counts and HiFi demos.
 
-The current demo cartridge deliberately launches the existing known-good PRG
-renderers from EasyFlash. True continuous frame/table streaming is the next
-major cartridge milestone; it is not being faked by relabelling PRG packaging
-as streaming. The goal is to make animation duration consume cartridge ROM
-rather than requiring all sampled frame tables to coexist in C64 RAM.
+The demo cartridge now combines original PRG entries and two frame-streamed
+HiFi entries. Their animation tables consume cartridge ROM while a fixed frame
+buffer and per-bitmap metadata caches are reused in RAM. The current V2 limits
+include 255 orientations, an 8 KiB frame block, and OBJ/SVG/procedural inputs;
+Blender scene streaming remains a future extension.
 
 The animated Blender scene pipeline introduced in v0.6.0 remains first-class.
 `.blend` builds run Blender headlessly with its own bundled `bpy`, evaluate

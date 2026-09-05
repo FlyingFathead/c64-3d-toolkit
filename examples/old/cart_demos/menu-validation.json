@@ -1,0 +1,12 @@
+{
+  "version": "0.6.4",
+  "menu_entries": 12,
+  "all_payload_checksums": true,
+  "all_three_styles": true,
+  "version_text_all_styles": true,
+  "return_from_stream": true,
+  "next_horse_to_sunflower": true,
+  "next_last_to_first": true,
+  "torus_payload_after_wrap_exact": true,
+  "method": "VICE monitor enters the existing control-handler paths; keyboard matrix scanning itself is unchanged."
+}

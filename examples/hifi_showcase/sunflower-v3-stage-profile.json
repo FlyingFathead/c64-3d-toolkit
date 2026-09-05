@@ -1,0 +1,21 @@
+{
+  "cartridge": "sunflower_torus_hifi-yunroll-cart-v3.crt",
+  "renderer": "yunroll-cart-v3",
+  "orientations": 192,
+  "mean_cycles": {
+    "fetch": 27136.69,
+    "recycle_bitmap_and_colors": 16520.71,
+    "cache_metadata": 4716.8,
+    "apply_colors": 6027.46,
+    "draw_lines": 122645.39,
+    "handoff_and_counters": 270.73
+  },
+  "percent": {
+    "fetch": 15.3,
+    "recycle_bitmap_and_colors": 9.32,
+    "cache_metadata": 2.66,
+    "apply_colors": 3.4,
+    "draw_lines": 69.17,
+    "handoff_and_counters": 0.15
+  }
+}

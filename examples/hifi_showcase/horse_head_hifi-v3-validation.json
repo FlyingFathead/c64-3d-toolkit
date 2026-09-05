@@ -1,0 +1,18 @@
+{
+  "cartridge": "horse_head_hifi-yunroll-cart-v3.crt",
+  "menu_entry": null,
+  "verified_frames": 387,
+  "orientations": 192,
+  "bitmap_bytes_checked": 2972160,
+  "color_bytes_checked": 371520,
+  "slots": {
+    "1": 129,
+    "2": 129,
+    "0": 129
+  },
+  "average_fps": 8.030582904690094,
+  "min_frame_cycles": 92290,
+  "max_frame_cycles": 135888,
+  "pixel_match": true,
+  "color_match": true
+}

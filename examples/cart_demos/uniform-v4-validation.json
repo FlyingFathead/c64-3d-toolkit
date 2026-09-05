@@ -1,0 +1,234 @@
+{
+  "renderer": "yunroll-cart-v4",
+  "all_entries_verified": true,
+  "entries": [
+    {
+      "cartridge": "c643d-demo-v0.6.4-yunroll-cart-v4-all.crt",
+      "menu_entry": 0,
+      "verified_frames": 67,
+      "orientations": 32,
+      "bitmap_bytes_checked": 514560,
+      "color_bytes_checked": 64320,
+      "slots": {
+        "1": 23,
+        "2": 22,
+        "0": 22
+      },
+      "average_fps": 12.077266132213612,
+      "min_frame_cycles": 57064,
+      "max_frame_cycles": 94843,
+      "pixel_match": true,
+      "color_match": true,
+      "name": "TORUS"
+    },
+    {
+      "cartridge": "c643d-demo-v0.6.4-yunroll-cart-v4-all.crt",
+      "menu_entry": 1,
+      "verified_frames": 67,
+      "orientations": 32,
+      "bitmap_bytes_checked": 514560,
+      "color_bytes_checked": 64320,
+      "slots": {
+        "1": 23,
+        "2": 22,
+        "0": 22
+      },
+      "average_fps": 10.685598909261989,
+      "min_frame_cycles": 56983,
+      "max_frame_cycles": 108933,
+      "pixel_match": true,
+      "color_match": true,
+      "name": "TORUS DENSE"
+    },
+    {
+      "cartridge": "c643d-demo-v0.6.4-yunroll-cart-v4-all.crt",
+      "menu_entry": 2,
+      "verified_frames": 75,
+      "orientations": 36,
+      "bitmap_bytes_checked": 576000,
+      "color_bytes_checked": 72000,
+      "slots": {
+        "1": 25,
+        "2": 25,
+        "0": 25
+      },
+      "average_fps": 24.95685320889882,
+      "min_frame_cycles": 24720,
+      "max_frame_cycles": 45231,
+      "pixel_match": true,
+      "color_match": true,
+      "name": "CUBE"
+    },
+    {
+      "cartridge": "c643d-demo-v0.6.4-yunroll-cart-v4-all.crt",
+      "menu_entry": 3,
+      "verified_frames": 51,
+      "orientations": 24,
+      "bitmap_bytes_checked": 391680,
+      "color_bytes_checked": 48960,
+      "slots": {
+        "1": 17,
+        "2": 17,
+        "0": 17
+      },
+      "average_fps": 13.273799050508845,
+      "min_frame_cycles": 54741,
+      "max_frame_cycles": 80486,
+      "pixel_match": true,
+      "color_match": true,
+      "name": "SPHERE"
+    },
+    {
+      "cartridge": "c643d-demo-v0.6.4-yunroll-cart-v4-all.crt",
+      "menu_entry": 4,
+      "verified_frames": 67,
+      "orientations": 32,
+      "bitmap_bytes_checked": 514560,
+      "color_bytes_checked": 64320,
+      "slots": {
+        "1": 23,
+        "2": 22,
+        "0": 22
+      },
+      "average_fps": 11.793254853540923,
+      "min_frame_cycles": 60834,
+      "max_frame_cycles": 96999,
+      "pixel_match": true,
+      "color_match": true,
+      "name": "HORSE HEAD"
+    },
+    {
+      "cartridge": "c643d-demo-v0.6.4-yunroll-cart-v4-all.crt",
+      "menu_entry": 5,
+      "verified_frames": 59,
+      "orientations": 28,
+      "bitmap_bytes_checked": 453120,
+      "color_bytes_checked": 56640,
+      "slots": {
+        "1": 20,
+        "2": 20,
+        "0": 19
+      },
+      "average_fps": 10.460034895836003,
+      "min_frame_cycles": 69090,
+      "max_frame_cycles": 105061,
+      "pixel_match": true,
+      "color_match": true,
+      "name": "SUNFLOWER TORUS"
+    },
+    {
+      "cartridge": "c643d-demo-v0.6.4-yunroll-cart-v4-all.crt",
+      "menu_entry": 6,
+      "verified_frames": 43,
+      "orientations": 20,
+      "bitmap_bytes_checked": 330240,
+      "color_bytes_checked": 41280,
+      "slots": {
+        "1": 15,
+        "2": 14,
+        "0": 14
+      },
+      "average_fps": 8.965124758704512,
+      "min_frame_cycles": 83941,
+      "max_frame_cycles": 122056,
+      "pixel_match": true,
+      "color_match": true,
+      "name": "SUNFLOWER COLOR"
+    },
+    {
+      "cartridge": "c643d-demo-v0.6.4-yunroll-cart-v4-all.crt",
+      "menu_entry": 7,
+      "verified_frames": 51,
+      "orientations": 24,
+      "bitmap_bytes_checked": 391680,
+      "color_bytes_checked": 48960,
+      "slots": {
+        "1": 17,
+        "2": 17,
+        "0": 17
+      },
+      "average_fps": 9.49219427413108,
+      "min_frame_cycles": 91097,
+      "max_frame_cycles": 112987,
+      "pixel_match": true,
+      "color_match": true,
+      "name": "SPACE HORSE SPIN"
+    },
+    {
+      "cartridge": "c643d-demo-v0.6.4-yunroll-cart-v4-all.crt",
+      "menu_entry": 8,
+      "verified_frames": 67,
+      "orientations": 32,
+      "bitmap_bytes_checked": 514560,
+      "color_bytes_checked": 64320,
+      "slots": {
+        "1": 23,
+        "2": 22,
+        "0": 22
+      },
+      "average_fps": 14.431757587970836,
+      "min_frame_cycles": 55172,
+      "max_frame_cycles": 87277,
+      "pixel_match": true,
+      "color_match": true,
+      "name": "SPACE HORSE CRAWL"
+    },
+    {
+      "cartridge": "c643d-demo-v0.6.4-yunroll-cart-v4-all.crt",
+      "menu_entry": 9,
+      "verified_frames": 39,
+      "orientations": 18,
+      "bitmap_bytes_checked": 299520,
+      "color_bytes_checked": 37440,
+      "slots": {
+        "1": 13,
+        "2": 13,
+        "0": 13
+      },
+      "average_fps": 12.965086880231436,
+      "min_frame_cycles": 37886,
+      "max_frame_cycles": 97456,
+      "pixel_match": true,
+      "color_match": true,
+      "name": "FALLING CUBES"
+    },
+    {
+      "cartridge": "c643d-demo-v0.6.4-yunroll-cart-v4-all.crt",
+      "menu_entry": 10,
+      "verified_frames": 259,
+      "orientations": 128,
+      "bitmap_bytes_checked": 1989120,
+      "color_bytes_checked": 248640,
+      "slots": {
+        "1": 87,
+        "2": 86,
+        "0": 86
+      },
+      "average_fps": 8.078330515967426,
+      "min_frame_cycles": 91606,
+      "max_frame_cycles": 134582,
+      "pixel_match": true,
+      "color_match": true,
+      "name": "HORSE HEAD HIFI"
+    },
+    {
+      "cartridge": "c643d-demo-v0.6.4-yunroll-cart-v4-all.crt",
+      "menu_entry": 11,
+      "verified_frames": 259,
+      "orientations": 128,
+      "bitmap_bytes_checked": 1989120,
+      "color_bytes_checked": 248640,
+      "slots": {
+        "1": 87,
+        "2": 86,
+        "0": 86
+      },
+      "average_fps": 5.599011713599148,
+      "min_frame_cycles": 93532,
+      "max_frame_cycles": 227035,
+      "pixel_match": true,
+      "color_match": true,
+      "name": "SUNFLOWER TORUS HIFI"
+    }
+  ]
+}

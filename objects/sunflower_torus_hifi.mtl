@@ -1,0 +1,32 @@
+# Kd maps exactly to native C64 colours. Ks/Ns serve desktop viewers only.
+newmtl brown
+Ka 0.03 0.02 0.04
+Kd 0.400000 0.266667 0.000000
+Ks 0.16 0.16 0.2
+Ns 28
+d 1
+illum 2
+
+newmtl green
+Ka 0.03 0.02 0.04
+Kd 0.000000 0.800000 0.333333
+Ks 0.16 0.16 0.2
+Ns 28
+d 1
+illum 2
+
+newmtl light_green
+Ka 0.03 0.02 0.04
+Kd 0.666667 1.000000 0.400000
+Ks 0.16 0.16 0.2
+Ns 28
+d 1
+illum 2
+
+newmtl yellow
+Ka 0.03 0.02 0.04
+Kd 0.933333 0.933333 0.466667
+Ks 0.16 0.16 0.2
+Ns 28
+d 1
+illum 2

@@ -816,10 +816,10 @@ class TestRc062RenderAndChecksumControls(unittest.TestCase):
         self.assertEqual(merged[merged.index('--sample-step')+1],'3')
         self.assertEqual(merged[merged.index('--renderer')+1],'yunroll')
 
-    def test_development_version_is_063(self):
+    def test_development_version_is_064(self):
         from tools.c643d import __version__
-        self.assertEqual(__version__,'0.6.3')
-        self.assertEqual((ROOT/'VERSION').read_text(encoding='utf-8').strip(),'0.6.3')
+        self.assertEqual(__version__,'0.6.4')
+        self.assertEqual((ROOT/'VERSION').read_text(encoding='utf-8').strip(),'0.6.4')
 
     def test_blender_only_selector_uses_blender_manifest(self):
         from argparse import Namespace
