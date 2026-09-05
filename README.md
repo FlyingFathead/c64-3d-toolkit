@@ -10,6 +10,73 @@ Host-assisted low-poly wireframe 3D compiler/runtime for a **stock Commodore 64*
 
 Animate objects, cameras, modifiers, armatures, or rigid-body scenes in Blender; import coloured OBJ/MTL meshes or SVG paths; or use the classic procedural meshes and animation transforms. The toolkit preprocesses the result on the host, performs projection and hidden-line visibility, then generates 6510/6502 assembly data and runnable C64 `.prg` files whose vectors are drawn live by the C64.
 
+## Try it first
+
+You do not need to author a scene or rebuild the toolkit just to see what it does.
+The repository ships **ready-to-run C64 examples**, including ordinary `.prg`
+demos and a bundled **EasyFlash demo cartridge** containing ten animations.
+
+If you already have VICE installed, the fastest route is the shipped cartridge:
+
+```bash
+x64sc -cartcrt examples/cart_demos/c643d-demo.crt
+```
+
+That boots the **c64-3d-toolkit v0.6.3 demo cart** directly. Use the cursor keys
+to choose an animation and RETURN to launch it. In the menu, F1 cycles the live
+presentation through `default`, `decorative`, and `demoscene`. While a demo is
+running, F1 or RUN/STOP returns to the menu and SPACE launches the next demo.
+
+The repository also includes standalone PRG examples under [`examples/`](examples/),
+covering procedural geometry, OBJ/MTL models, SVG artwork, and the Blender
+falling-cubes scene. For example, with VICE:
+
+```bash
+x64sc -autostart examples/torus/torus.prg
+x64sc -autostart examples/horse_head/horse_head.prg
+x64sc -autostart examples/blender_falling_cubes/falling_cubes_c64_color-yunroll.prg
+```
+
+So there are two easy ways in:
+
+1. **Just run the included demos** in VICE and see the C64 output immediately.
+2. **Build your own** procedural, OBJ/MTL, SVG, or Blender-authored scene with the toolkit.
+
+### Cartridge output in v0.6.3
+
+c64-3d-toolkit can build bank-switched C64 cartridge images in **`.crt` format**
+in addition to traditional `.prg` files. The repository includes the ready-made
+[`examples/cart_demos/c643d-demo.crt`](examples/cart_demos/c643d-demo.crt), plus
+its bank map and manifest, so the cartridge path can be tried without rebuilding
+it first.
+
+To rebuild and immediately run the demo cartridge yourself:
+
+```bash
+./build.sh cart-demos --run
+# or build the shipped cartridge examples without running them:
+./build.sh --generate-cart-demos
+```
+
+The generated EasyFlash CRT contains ten bundled animations and all three menu
+presentations. `--menu-style default|decorative|demoscene` selects only the
+startup style; F1 can switch styles live afterwards. For example:
+
+```bash
+./build.sh cart-demos --menu-style decorative --output c643d-demo-decorative
+./build.sh cart-demos --menu-style demoscene --output c643d-demo-demoscene --run
+```
+
+This v0.6.3 cartridge stage proves native EasyFlash boot, deterministic bank
+switching, cartridge packaging, banked payload copying, VICE-side validation,
+and launching the existing production renderers from cartridge storage. The
+ordinary shipped PRGs remain untouched.
+
+It is **not yet** the final continuous `yunroll-cart` frame/table streaming
+backend. True long-form streaming with a bounded C64 RAM working set is the next
+major cartridge milestone. See [`docs/CARTRIDGE_PIPELINE.md`](docs/CARTRIDGE_PIPELINE.md)
+and [`docs/CARTRIDGE_ROADMAP.md`](docs/CARTRIDGE_ROADMAP.md).
+
 ## Requirements
 
 Required:
@@ -17,6 +84,10 @@ Required:
 * [VICE](https://vice-emu.sourceforge.io/) — Commodore 64 emulator; the toolkit uses `x64sc` by default.
 * [64tass](https://tass64.sourceforge.net/) — 6502/6510 cross-assembler.
 * Python 3.
+
+Required only for cartridge / `.crt` output:
+
+* `cartconv` from [VICE](https://vice-emu.sourceforge.io/) — converts packed cartridge ROM data to the EasyFlash `.crt` container. Normal `.prg` builds do **not** require `cartconv`.
 
 Recommended for the authored `.blend` scene path:
 
@@ -55,8 +126,9 @@ Verify that the required tools are available with:
 ```
 
 Preflight reports resolved executable paths and versions for 64tass and VICE.
-`doctor` additionally launches optional Blender headlessly and reports both its
-version and whether `bpy` imports successfully. Every `--blend` build repeats
+`doctor` also reports optional `cartconv` availability (required only for
+cartridge/`.crt` output) and launches optional Blender headlessly to report both
+its version and whether `bpy` imports successfully. Every `--blend` build repeats
 that Blender/`bpy` check before reading the scene.
 
 ### 🪟 Windows setup
@@ -119,16 +191,19 @@ cp config/c643d.ini.example config/c643d.ini
 [toolchain]
 tass = 64tass
 vice = x64sc
+cartconv = cartconv
 tass_args =
 vice_args = +VICIIfull
 
 [macos]
 # tass = /opt/homebrew/bin/64tass
 # vice = /Applications/vice-arm64-gtk3-3.8/bin/x64sc
+# cartconv = /Applications/vice-arm64-gtk3-3.8/bin/cartconv
 
 [windows]
 # tass = C:\Tools\64tass\64tass.exe
 # vice = C:\Tools\VICE\bin\x64sc.exe
+# cartconv = C:\Tools\VICE\bin\cartconv.exe
 ```
 
 On macOS, the easiest command-line installation is typically:
@@ -149,9 +224,10 @@ Existing direct overrides still work:
 
 See [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md) for precedence, per-platform sections, `C643D_CONFIG`, `--config`/`--no-config`, and macOS package details.
 
-## Quickstart
+## Build your own
 
-Build and run one of the included procedural objects:
+Once the toolchain is installed, the smallest build/run path is one of the
+included procedural objects:
 
 ```bash
 ./build.sh --shape torus --run
@@ -162,6 +238,15 @@ Build and run an imported OBJ preset:
 ```bash
 ./build.sh --object horse_head --run
 ```
+
+Rebuild the complete ten-animation EasyFlash demo cartridge:
+
+```bash
+./build.sh cart-demos --run
+```
+
+For low-level cartridge-backend development, the smaller bank-switch diagnostic
+is still available as `./build.sh cartridge-smoke --run`.
 
 Compile the included authored Blender rigid-body scene:
 
@@ -335,9 +420,9 @@ The bundled horse is deliberately compiled with `--visibility surface`. Its OBJ 
 The emitter can spill whole per-orientation line blocks into otherwise-unused RAM below bitmap #2, so the full horse surface mode still fits 36 sampled orientations without reducing the mesh.
 
 
-## v0.6.2 render/build controls
+## Current render/build controls (v0.6.3)
 
-v0.6.2 expands the default drawable area while keeping alternate/debug paths out of the production renderer:
+These controls were introduced in v0.6.2 and remain the current v0.6.3 PRG behaviour. They expand the default drawable area while keeping alternate/debug paths out of the production renderer:
 
 ```bash
 # production HUD/FPS path: automatic 256x192 drawable viewport
@@ -373,7 +458,7 @@ The no-overlay and raster-profiler implementations are separate ASM derivatives.
 ./build.sh test-examples --variants normal --reference-set legacy-v0.6.0-v0.6.1 --reproduce-reference
 ```
 
-Each generated PRG is reported as `MATCHING`, `CHANGED`, or `ABSENT`, followed by totals. Reference SHA-256 values and byte sizes live in `tests/data/golden_prg_checksums.json`. The historical v0.6.0/v0.6.1 set is retained alongside the current v0.6.2 baseline instead of being overwritten.
+Each generated PRG is reported as `MATCHING`, `CHANGED`, or `ABSENT`, followed by totals. Reference SHA-256 values and byte sizes live in `tests/data/golden_prg_checksums.json`. The historical v0.6.0/v0.6.1 set is retained alongside the preserved v0.6.2 PRG compatibility baseline instead of being overwritten. The v0.6.3 cartridge work does not replace that golden PRG set.
 
 To install all deterministic reference PRGs into their per-example directories (normal, `_legacy144`, `_no_overlay`, and `_rastertime_profiler`):
 
@@ -395,7 +480,7 @@ OBJ/MTL, and SVG reference builds:
 For each manifest entry this produces the current 192-line normal `.prg`, a byte-comparable `_legacy144.prg` performance/reference build, a `_no_overlay.prg` full-height build, and a `_rastertime_profiler.prg` debug build. Auxiliary labels/listings remain transient; runnable reference PRGs are placed in the manifest entry's `examples/<name>/` directory.
 
 Blender-authored examples are intentionally outside `examples.json` because
-Blender is optional. `examples/blender_falling_cubes/` contains the six-cube C64 scene, the 40-cube authoring/stress scene, and the byte-exact historical 144-line colour PRG. Current Blender PRGs are regenerated only on Blender-capable hosts and verified against the current v0.6.2 checksum manifest.
+Blender is optional. `examples/blender_falling_cubes/` contains the six-cube C64 scene, the 40-cube authoring/stress scene, and the byte-exact historical 144-line colour PRG. Current Blender PRGs are regenerated only on Blender-capable hosts and verified against the preserved v0.6.2 PRG checksum baseline.
 
 ## Dependency checks
 
@@ -416,12 +501,19 @@ the bitmap and can therefore run slower depending on scene complexity. All
 variants remain native hires, hidden-line clipped, triple-buffered, and do not
 use pre-rendered bitmap animation frames.
 
-As of **v0.6.2**, the toolkit is a reusable multi-source compiler/runtime rather
+As of **v0.6.3**, the toolkit is a reusable multi-source compiler/runtime rather
 than only a rotating-mesh benchmark. It accepts procedural geometry, OBJ/MTL,
 SVG, versioned `.c643dscene` interchange data, and animated Blender `.blend`
 scenes. Blender-authored builds can preserve arbitrary object motion, stable-
 topology deformation, rigid-body simulation, materials, and active-camera
 animation while the stock C64 still rasterizes the resulting vectors itself.
+
+Version 0.6.3 also introduces the separate EasyFlash cartridge path. The first useful cartridge integration can build a menu-driven `.crt`
+containing the ten canonical toolkit animations, launch them directly from
+cartridge storage, emit bank maps/manifests, and validate banked payload copies
+under VICE. The existing PRG renderers remain the compatibility baseline while
+`yunroll-cart` advances toward true frame/table streaming with a bounded RAM
+working set.
 
 The project grew out of the rotating-torus benchmark, a.k.a. **THE WORLD'S MOST
 DANGEROUS ROTATING DONUT**.
@@ -719,13 +811,17 @@ c64-3d-toolkit/
 ├── c64/
 │   ├── renderer-step.asm
 │   ├── renderer-bytechunk.asm
-│   └── renderer-yunroll.asm
+│   ├── renderer-yunroll.asm
+│   ├── renderer-yunroll-cart.asm
+│   └── cart/
+│       └── easyflash-smoke.asm
 ├── tools/
 │   ├── blender_export.py
 │   ├── asm_sanity.py
 │   └── c643d/
 │       ├── assets.py
 │       ├── blender.py
+│       ├── cartridge.py
 │       ├── cli.py
 │       ├── checksums.py
 │       ├── colors.py
@@ -763,6 +859,9 @@ c64-3d-toolkit/
 └── docs/
     ├── ARCHITECTURE.md
     ├── BLENDER_PIPELINE.md
+    ├── CARTRIDGE_PIPELINE.md
+    ├── CARTRIDGE_REFERENCES.md
+    ├── CARTRIDGE_ROADMAP.md
     ├── CONFIGURATION.md
     ├── OBJ_PIPELINE.md
     ├── SVG_PIPELINE.md
@@ -790,8 +889,13 @@ headless bpy export -----+------> source-specific ingest / scene frames
                                       v
                                    64tass
                                       |
-                                      v
-                              PRG -> VICE / real C64
+                         +------------+-------------+
+                         |                          |
+                         v                          v
+                  PRG -> VICE / C64       EasyFlash pack/cartconv
+                                                    |
+                                                    v
+                                             CRT -> VICE / cart
 ```
 
 Future work includes topology-aware mesh simplification, better host-side preview
@@ -800,21 +904,37 @@ previewer is planned, but the command-line path will remain first-class.
 
 ## Status
 
-**Version 0.6.0** adds the optional animated Blender scene pipeline and the
-versioned `.c643dscene` interchange path. `.blend` builds run Blender headlessly
-with its own bundled `bpy`, evaluate authored object/camera/material state
-including stable-topology deformation and rigid-body motion, and feed the same
-hidden-line, colour, vector-table, assembler, and stock-C64 runtime used by the
-existing procedural, OBJ/MTL, and SVG paths.
+**Version 0.6.3 is the current release.** The production PRG pipeline
+remains compatible with the verified v0.6.2 baseline, while cartridge work is
+kept in a separate EasyFlash backend. Current cartridge milestones include:
 
-Authored Blender frame selection is strict: table overflow fails with actionable
+- native EasyFlash boot and deterministic bank switching;
+- `.crt` creation through optional VICE `cartconv` tooling;
+- explicit `cartconv` discovery, configuration, `doctor` reporting, and useful
+  failure messages;
+- a menu-driven multi-animation demo cartridge built with `cart-demos` or
+  `--generate-cart-demos`, with live F1 menu-style cycling, F1/RUN-STOP menu return, and SPACE next-demo controls;
+- cartridge bank maps and JSON manifests;
+- C64-side VICE/debug-cart validation of banked payload copying; and
+- the separate `yunroll-cart` assembly path and streaming roadmap.
+
+The current demo cartridge deliberately launches the existing known-good PRG
+renderers from EasyFlash. True continuous frame/table streaming is the next
+major cartridge milestone; it is not being faked by relabelling PRG packaging
+as streaming. The goal is to make animation duration consume cartridge ROM
+rather than requiring all sampled frame tables to coexist in C64 RAM.
+
+The animated Blender scene pipeline introduced in v0.6.0 remains first-class.
+`.blend` builds run Blender headlessly with its own bundled `bpy`, evaluate
+authored object/camera/material state including stable-topology deformation and
+rigid-body motion, and feed the same hidden-line/colour/vector compiler used by
+the existing procedural, OBJ/MTL, and SVG paths. Authored Blender frame
+selection remains strict: table overflow fails with actionable
 sampling/range/detail suggestions instead of silently reducing the animation.
-Legacy procedural/OBJ/SVG behaviour remains available without Blender, with
-regression checks preserving the established generated output.
 
-The Windows setup helper introduced in v0.5.1 remains included: Python, Git, and
-VICE can be detected or installed through WinGet, while 64tass remains an
-explicit manual trust decision on Windows.
+The Windows setup helper introduced in v0.5.1 also remains included: Python,
+Git, and VICE can be detected or installed through WinGet, while 64tass remains
+an explicit manual trust decision on Windows.
 
 ---
 

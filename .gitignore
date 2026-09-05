@@ -10,3 +10,7 @@ build/main.asm
 build/*.zip
 
 config/c643d.ini
+
+# Generated build output
+build/*
+!build/.gitkeep

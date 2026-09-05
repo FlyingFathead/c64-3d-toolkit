@@ -816,10 +816,10 @@ class TestRc062RenderAndChecksumControls(unittest.TestCase):
         self.assertEqual(merged[merged.index('--sample-step')+1],'3')
         self.assertEqual(merged[merged.index('--renderer')+1],'yunroll')
 
-    def test_release_version_is_final_062(self):
+    def test_development_version_is_063(self):
         from tools.c643d import __version__
-        self.assertEqual(__version__,'0.6.2')
-        self.assertEqual((ROOT/'VERSION').read_text(encoding='utf-8').strip(),'0.6.2')
+        self.assertEqual(__version__,'0.6.3')
+        self.assertEqual((ROOT/'VERSION').read_text(encoding='utf-8').strip(),'0.6.3')
 
     def test_blender_only_selector_uses_blender_manifest(self):
         from argparse import Namespace
@@ -841,3 +841,215 @@ class TestReferenceReproductionMode(unittest.TestCase):
         parser=make_parser(load_toolchain_settings(Path('/definitely/missing/c643d.ini')))
         args=parser.parse_args(['test-examples','--variants','normal','--reproduce-reference'])
         self.assertTrue(args.reproduce_reference)
+
+class TestCartridgeStageOne(unittest.TestCase):
+    def test_toolchain_defaults_include_optional_cartconv(self):
+        from tools.c643d.toolchain import load_toolchain_settings
+        with tempfile.TemporaryDirectory() as td:
+            cfg=load_toolchain_settings(Path(td)/'missing.ini',system='Linux')
+        self.assertEqual(cfg.cartconv,'cartconv')
+
+    def test_cartconv_platform_override_is_loaded(self):
+        from tools.c643d.toolchain import load_toolchain_settings
+        with tempfile.TemporaryDirectory() as td:
+            path=Path(td)/'c643d.ini'
+            path.write_text(
+                '[toolchain]\ncartconv = generic-cartconv\n\n'
+                '[windows]\ncartconv = C:\\Tools\\VICE\\bin\\cartconv.exe\n',
+                encoding='utf-8',
+            )
+            cfg=load_toolchain_settings(path,system='Windows',require=True)
+        self.assertEqual(cfg.cartconv,r'C:\Tools\VICE\bin\cartconv.exe')
+
+    def test_cartconv_distribution_directory_resolves(self):
+        from tools.c643d.toolchain import resolve_executable
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)/'vice-3.10'
+            exe=root/'bin'/'cartconv'
+            exe.parent.mkdir(parents=True)
+            exe.write_text('#!/bin/sh\nexit 0\n',encoding='utf-8')
+            exe.chmod(0o755)
+            self.assertEqual(Path(resolve_executable(str(root),'cartconv')),exe.resolve())
+
+    def test_easyflash_smoke_raw_layout(self):
+        from tools.c643d.cartridge import (
+            EASYFLASH_CHIP_SIZE,EASYFLASH_RAW_SIZE,build_smoke_raw,easyflash_offset,
+        )
+        romh=bytes([0x5a])*EASYFLASH_CHIP_SIZE
+        raw,manifest=build_smoke_raw(romh)
+        self.assertEqual(len(raw),EASYFLASH_RAW_SIZE)
+        self.assertEqual(raw[easyflash_offset(0,'romh'):easyflash_offset(0,'romh')+EASYFLASH_CHIP_SIZE],romh)
+        self.assertTrue(raw[easyflash_offset(1,'roml'):].startswith(b'C643D EASYFLASH BANK 1 OK\x00'))
+        self.assertTrue(raw[easyflash_offset(2,'roml'):].startswith(b'C643D EASYFLASH BANK 2 OK\x00'))
+        self.assertTrue(raw[easyflash_offset(3,'roml'):].startswith(b'C643D EASYFLASH BANK 3 OK\x00'))
+        self.assertEqual(raw[easyflash_offset(1,'roml',0x100)],1)
+        self.assertEqual(raw[easyflash_offset(2,'roml',0x100)],2)
+        self.assertEqual(raw[easyflash_offset(3,'roml',0x100)],3)
+        self.assertEqual(manifest['bank_count'],64)
+
+    def test_easyflash_info_validation(self):
+        from tools.c643d.cartridge import validate_easyflash_info
+        validate_easyflash_info(
+            'Hardware ID: 32 (EasyFlash)\n'
+            'Mode: exrom: 1 game: 0 (ultimax)\n'
+            'total banks: 4 size: $008000\n'
+        )
+        with self.assertRaises(RuntimeError):
+            validate_easyflash_info('Hardware ID: 0 (generic)\nMode: exrom: 0 game: 0\n')
+
+    def test_cartridge_smoke_cli_and_cartconv_override_parse(self):
+        from tools.c643d.cli import make_parser
+        from tools.c643d.toolchain import load_toolchain_settings
+        parser=make_parser(load_toolchain_settings(Path('/definitely/missing/c643d.ini')))
+        args=parser.parse_args(['cartridge-smoke','--cartconv','/opt/vice/bin/cartconv','--run'])
+        self.assertEqual(args.command,'cartridge-smoke')
+        self.assertEqual(args.cartconv,'/opt/vice/bin/cartconv')
+        self.assertTrue(args.run)
+
+    def test_yunroll_cart_is_separate_source_not_normal_renderer_choice(self):
+        from tools.c643d.cli import CARTRIDGE_RENDERERS,RENDERERS
+        self.assertEqual(CARTRIDGE_RENDERERS['yunroll-cart'],'renderer-yunroll-cart.asm')
+        self.assertNotIn('yunroll-cart',RENDERERS)
+        self.assertTrue((ROOT/'c64'/'renderer-yunroll-cart.asm').is_file())
+
+class TestCartridgeDemoControlPatch(unittest.TestCase):
+    def test_demo_packer_patches_only_cartridge_copy_irq(self):
+        from tools.c643d.cli import CARTRIDGE_DEMO_ENTRIES,ROOT
+        from tools.c643d.cartridge import easyflash_offset,pack_demo_prgs
+        originals={path:path.read_bytes() for _,path in CARTRIDGE_DEMO_ENTRIES}
+        image,plans,_=pack_demo_prgs(CARTRIDGE_DEMO_ENTRIES,source_root=ROOT)
+        self.assertEqual(len(plans),len(CARTRIDGE_DEMO_ENTRIES))
+        for (_,path),plan in zip(CARTRIDGE_DEMO_ENTRIES,plans):
+            self.assertEqual(path.read_bytes(),originals[path])
+            stored=image[easyflash_offset(plan.bank,'roml'):easyflash_offset(plan.bank,'roml')+plan.length]
+            self.assertIn(plan.irq_address,(0x0917,0x091a))
+            self.assertNotEqual(stored,originals[path][2:])
+
+class TestCartridgeFailureMessages(unittest.TestCase):
+    def test_missing_cartconv_is_targeted_and_prg_safe(self):
+        import contextlib, io
+        from tools.c643d.cli import require_cartconv
+        err=io.StringIO()
+        with contextlib.redirect_stderr(err):
+            resolved=require_cartconv('/definitely/missing/cartconv',verbose=False)
+        self.assertIsNone(resolved)
+        text=err.getvalue()
+        self.assertIn('EasyFlash cartridge output requires cartconv',text)
+        self.assertIn('--cartconv PATH',text)
+        self.assertIn('Normal .prg builds do not require cartconv.',text)
+
+class TestCartridgeDemoStageTwo(unittest.TestCase):
+    def test_cartridge_demo_cli_parses(self):
+        from tools.c643d.cli import make_parser
+        from tools.c643d.toolchain import load_toolchain_settings
+        parser=make_parser(load_toolchain_settings(Path('/definitely/missing/c643d.ini')))
+        args=parser.parse_args(['cart-demos','--run','--cartconv','/opt/vice/cartconv','--menu-style','demoscene'])
+        self.assertEqual(args.command,'cart-demos')
+        self.assertTrue(args.run)
+        self.assertEqual(args.cartconv,'/opt/vice/cartconv')
+        self.assertEqual(args.menu_style,'demoscene')
+        compat=parser.parse_args(['cartridge-demo','--menu-style','decorative'])
+        self.assertEqual(compat.command,'cartridge-demo')
+        self.assertEqual(compat.menu_style,'decorative')
+        plain=parser.parse_args(['cart-demos'])
+        self.assertEqual(plain.menu_style,'default')
+
+    def test_demo_pack_fits_canonical_examples(self):
+        from tools.c643d.cli import CARTRIDGE_DEMO_ENTRIES
+        from tools.c643d.cartridge import (
+            DEMO_RUNTIME_LOAD,EASYFLASH_RAW_SIZE,easyflash_offset,pack_demo_prgs,
+        )
+        from tools.c643d.cli import ROOT
+        image,plans,manifest=pack_demo_prgs(CARTRIDGE_DEMO_ENTRIES,source_root=ROOT)
+        self.assertEqual(len(image),EASYFLASH_RAW_SIZE)
+        self.assertEqual(len(plans),10)
+        self.assertLessEqual(manifest['highest_bank_used'],63)
+        self.assertEqual(manifest['data_banks_used'],57)
+        self.assertEqual(plans[0].name,'TORUS')
+        self.assertEqual(manifest['entries'][0]['source'],'examples/torus/torus.prg')
+        self.assertFalse(Path(manifest['entries'][0]['source']).is_absolute())
+        first_payload=bytearray(CARTRIDGE_DEMO_ENTRIES[0][1].read_bytes()[2:])
+        # Cartridge copies redirect only the generated raster IRQ target to the
+        # low-RAM cart-control shim; canonical PRGs on disk remain untouched.
+        patch=next(i for i in range(len(first_payload)-9)
+                   if first_payload[i]==0xa9 and first_payload[i+2:i+5]==bytes((0x8d,0xfe,0xff))
+                   and first_payload[i+5]==0xa9 and first_payload[i+7:i+10]==bytes((0x8d,0xff,0xff)))
+        original_irq=first_payload[patch+1] | (first_payload[patch+6]<<8)
+        first_payload[patch+1]=0x00
+        first_payload[patch+6]=0x02
+        stored=bytearray()
+        remaining=len(first_payload)
+        bank=plans[0].bank
+        while remaining:
+            n=min(0x2000,remaining)
+            start=easyflash_offset(bank,'roml')
+            stored.extend(image[start:start+n])
+            remaining-=n
+            bank+=1
+        self.assertEqual(bytes(stored),bytes(first_payload))
+        self.assertEqual(plans[0].irq_address,original_irq)
+        self.assertEqual(manifest['entries'][0]['cart_irq'],'$0200')
+        for plan in plans:
+            self.assertLessEqual(plan.load_address+plan.length,DEMO_RUNTIME_LOAD)
+
+    def test_demo_runtime_and_boot_install_use_both_bank0_chips(self):
+        from tools.c643d.cartridge import (
+            DEMO_CONTROL_ROM_OFFSET,DEMO_CONTROL_SIZE,DEMO_MENU_FONT_ROM_OFFSET,DEMO_MENU_FONT_SIZE,
+            DEMO_RUNTIME_SIZE,EASYFLASH_CHIP_SIZE,build_menu_charset,easyflash_offset,
+            install_demo_boot,new_easyflash_image,
+        )
+        image=new_easyflash_image()
+        boot=bytes([0x55])*EASYFLASH_CHIP_SIZE
+        runtime=bytes([0xaa])*DEMO_RUNTIME_SIZE
+        control=bytes([0x33])*DEMO_CONTROL_SIZE
+        menu_font=build_menu_charset()
+        self.assertEqual(len(menu_font),DEMO_MENU_FONT_SIZE)
+        styles=[bytes([0x10+i])*DEMO_RUNTIME_SIZE for i in range(3)]
+        install_demo_boot(image,boot,runtime,control,menu_font,styles)
+        romh=easyflash_offset(0,'romh')
+        roml=easyflash_offset(0,'roml')
+        self.assertEqual(bytes(image[romh:romh+EASYFLASH_CHIP_SIZE]),boot)
+        self.assertEqual(bytes(image[roml:roml+DEMO_RUNTIME_SIZE]),runtime)
+        self.assertEqual(bytes(image[roml+DEMO_CONTROL_ROM_OFFSET:roml+DEMO_CONTROL_ROM_OFFSET+DEMO_CONTROL_SIZE]),control)
+        self.assertEqual(image[roml+DEMO_CONTROL_ROM_OFFSET+DEMO_CONTROL_SIZE],0xff)
+        self.assertEqual(bytes(image[roml+DEMO_MENU_FONT_ROM_OFFSET:roml+DEMO_MENU_FONT_ROM_OFFSET+DEMO_MENU_FONT_SIZE]),menu_font)
+        style_romh=easyflash_offset(1,'romh')
+        for i,payload in enumerate(styles):
+            start=style_romh+i*DEMO_RUNTIME_SIZE
+            self.assertEqual(bytes(image[start:start+DEMO_RUNTIME_SIZE]),payload)
+        self.assertNotEqual(menu_font[1*8:2*8],menu_font[0x41*8:0x42*8])
+
+    def test_demo_menu_footer_and_style_source_are_cartridge_only(self):
+        runtime=(ROOT/'c64'/'cart'/'easyflash-demo-runtime.asm').read_text(encoding='utf-8')
+        self.assertIn('by FlyingFathead, 2026',runtime)
+        self.assertIn('github: flyingfathead/c64-3d-toolkit',runtime)
+        self.assertIn('MENU_STYLE_DEMOSCENE',runtime)
+        self.assertIn('CONTROL_CYCLE     = $0203',runtime)
+        self.assertIn('F1 STYLE',runtime)
+        # $02F8-$02FF is persistent state. Reinstalling the executable shim
+        # must stop before that tail or F1 style cycling collapses back to 0.
+        self.assertIn('cpx #$f8',runtime.lower())
+        self.assertIn('$02F8-$02FF is persistent control state',runtime)
+        control=(ROOT/'c64'/'cart'/'easyflash-demo-control.asm').read_text(encoding='utf-8')
+        self.assertIn('default -> decorative -> demoscene -> default',control)
+        self.assertIn('STYLE_ROMH      = $a000',control)
+        self.assertNotIn('github: flyingfathead/c64-3d-toolkit',(ROOT/'c64'/'renderer-yunroll.asm').read_text(encoding='utf-8'))
+
+    def test_demo_include_contains_generated_metadata(self):
+        from tools.c643d.cartridge import DemoEntryPlan,write_demo_include
+        with tempfile.TemporaryDirectory() as td:
+            out=Path(td)/'cart-demo-data.inc'
+            plans=[DemoEntryPlan(
+                name='TEST DEMO',path=Path('demo.prg'),bank=3,banks=2,
+                load_address=0x0801,entry_address=0x080d,length=0x2345,
+                checksum16=0xabcd,irq_address=0x0917,
+            )]
+            write_demo_include(out,plans)
+            text=out.read_text(encoding='utf-8')
+        self.assertIn('DEMO_ENTRY_COUNT = 1',text)
+        self.assertIn('demo_bank:',text)
+        self.assertIn('$03',text)
+        self.assertIn('demo_irq_lo:',text)
+        self.assertIn('$17',text)
+        self.assertIn('demo_name_0:',text)
+        self.assertIn('TEST DEMO',text)

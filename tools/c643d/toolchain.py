@@ -15,6 +15,7 @@ class ToolchainSettings:
     tass: str = '64tass'
     vice: str = 'x64sc'
     blender: str = 'blender'
+    cartconv: str = 'cartconv'
     tass_args: Tuple[str, ...] = ()
     # Development runs should open in a normal window unless the user asks
     # otherwise. VICE uses '+' to disable this boolean resource.
@@ -61,6 +62,7 @@ def load_toolchain_settings(path: Optional[Path], *, system: Optional[str] = Non
         'tass':'64tass',
         'vice':'x64sc',
         'blender':'blender',
+        'cartconv':'cartconv',
         'tass_args':(),
         'vice_args':('+VICIIfull',),
         'text_overlay':True,
@@ -76,7 +78,7 @@ def load_toolchain_settings(path: Optional[Path], *, system: Optional[str] = Non
             with path.open('r',encoding='utf-8') as f:
                 cfg.read_file(f)
             for section in ('toolchain',pkey):
-                for key in ('tass','vice','blender'):
+                for key in ('tass','vice','blender','cartconv'):
                     raw=_section_value(cfg,section,key)
                     if raw is not None and raw.strip():
                         values[key]=raw.strip().strip('"').strip("'")
@@ -108,7 +110,7 @@ def load_toolchain_settings(path: Optional[Path], *, system: Optional[str] = Non
         elif require:
             raise FileNotFoundError(f'config file not found: {path}')
     return ToolchainSettings(
-        tass=values['tass'], vice=values['vice'], blender=values['blender'],
+        tass=values['tass'], vice=values['vice'], blender=values['blender'], cartconv=values['cartconv'],
         tass_args=tuple(values['tass_args']), vice_args=tuple(values['vice_args']),
         config_path=loaded, platform_key=pkey,
         text_overlay=bool(values['text_overlay']), viewport_height=values['viewport_height'],
@@ -180,6 +182,8 @@ def _probe_path(path: Path, tool: str) -> Optional[str]:
             ]
         elif tool=='tass':
             names=[Path('64tass'),Path('64tass.exe'),Path('bin/64tass'),Path('bin/64tass.exe')]
+        elif tool=='cartconv':
+            names=[Path('cartconv'),Path('cartconv.exe'),Path('bin/cartconv'),Path('bin/cartconv.exe'),Path('tools/cartconv')]
         else:
             names=[Path('blender'),Path('blender.exe'),Path('Blender.app/Contents/MacOS/Blender')]
         for rel in names:
@@ -228,6 +232,14 @@ def platform_candidates(tool: str, *, system: Optional[str] = None, home: Option
                         'vice*/VICE.app/Contents/Resources/bin/x64sc',
                     ):
                         out.extend(sorted(root.glob(pat)))
+        elif tool=='cartconv':
+            out.extend([Path('/opt/homebrew/bin/cartconv'),Path('/usr/local/bin/cartconv')])
+            roots=[Path('/Applications'),home/'Applications',home/'Downloads']
+            for root in roots:
+                out.extend([root/'VICE.app/Contents/Resources/bin/cartconv', root/'VICE/tools/cartconv'])
+                if root.exists():
+                    for pat in ('vice*/bin/cartconv','vice*/tools/cartconv','vice*/VICE.app/Contents/Resources/bin/cartconv'):
+                        out.extend(sorted(root.glob(pat)))
         else:
             out.extend([
                 Path('/Applications/Blender.app/Contents/MacOS/Blender'),
@@ -246,12 +258,15 @@ def platform_candidates(tool: str, *, system: Optional[str] = None, home: Option
         elif tool=='vice':
             for base in (pf,pf86,local/'Programs'):
                 out.extend([base/'VICE/x64sc.exe',base/'VICE/bin/x64sc.exe'])
+        elif tool=='cartconv':
+            for base in (pf,pf86,local/'Programs'):
+                out.extend([base/'VICE/cartconv.exe',base/'VICE/bin/cartconv.exe',base/'VICE/tools/cartconv.exe'])
         else:
             for base in (pf/'Blender Foundation',pf86/'Blender Foundation',local/'Programs'):
                 if base.exists():
                     out.extend(sorted(base.glob('Blender*/blender.exe'),reverse=True))
     else:
-        name={'tass':'64tass','vice':'x64sc','blender':'blender'}[tool]
+        name={'tass':'64tass','vice':'x64sc','blender':'blender','cartconv':'cartconv'}[tool]
         out.extend([Path('/usr/local/bin')/name,Path('/usr/bin')/name,home/'.local/bin'/name])
     # Preserve order while removing duplicates.
     seen=set(); unique=[]
@@ -278,6 +293,7 @@ def resolve_executable(spec: str, tool: str, *, system: Optional[str] = None) ->
         'tass':{'64tass','64tass.exe'},
         'vice':{'x64sc','x64sc.exe'},
         'blender':{'blender','blender.exe'},
+        'cartconv':{'cartconv','cartconv.exe'},
     }[tool]
     if spec.lower() not in default_names:
         return None

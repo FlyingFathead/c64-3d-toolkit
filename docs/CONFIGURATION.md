@@ -6,6 +6,7 @@
 64tass executable: 64tass
 VICE executable:   x64sc
 Blender executable: blender (optional; used only by --blend)
+cartconv executable: cartconv (optional; required only for cartridge/.crt builds)
 VICE arguments:    +VICIIfull
 ```
 
@@ -37,20 +38,25 @@ Example:
 tass = 64tass
 vice = x64sc
 blender = blender
+cartconv = cartconv
 tass_args =
 vice_args = +VICIIfull
 
 [macos]
 tass = /opt/homebrew/bin/64tass
 vice = /Applications/vice-arm64-gtk3-3.8/bin/x64sc
+cartconv = /Applications/vice-arm64-gtk3-3.8/bin/cartconv
 
 [windows]
 tass = C:\Tools\64tass\64tass.exe
 vice = C:\Tools\VICE\bin\x64sc.exe
+cartconv = C:\Tools\VICE\bin\cartconv.exe
 blender = C:\Program Files\Blender Foundation\Blender 4.0\blender.exe
 ```
 
-Executable settings can be a command name in `PATH` or a full path. For VICE, a containing distribution directory or a macOS `.app` bundle can also be supplied; the toolkit probes common internal CLI locations.
+Executable settings can be a command name in `PATH` or a full path. For VICE tools, a containing distribution directory can also be supplied; the toolkit probes common internal CLI locations for `x64sc` and `cartconv`. Compatible macOS `.app` layouts are also understood where applicable.
+
+`cartconv` is deliberately optional. It is not checked as a fatal dependency for ordinary `.prg` builds, but cartridge commands stop with installation/configuration guidance if it cannot be resolved. A one-shot override is available as `--cartconv PATH`.
 
 Extra argument values are parsed as shell-style whitespace-separated arguments. To let VICE use its own saved fullscreen setting instead of forcing windowed mode, clear the default:
 
@@ -72,6 +78,7 @@ Existing executable overrides continue to work:
 
 ```bash
 ./build.sh --object horse_head --vice /path/to/x64sc --tass /path/to/64tass --run
+./build.sh cartridge-smoke --cartconv /path/to/cartconv --run
 ```
 
 Extra tool arguments are repeatable. Supplying any CLI tool arguments replaces the corresponding configured argument list:
@@ -114,6 +121,10 @@ The simplest command-line installation is currently Homebrew:
 brew install tass64 vice
 ```
 
+The VICE package also supplies `cartconv`. Homebrew installations normally place
+it in the same command-line prefix; downloaded VICE distributions can be pointed
+at directly with, for example, `cartconv = /Applications/vice-arm64-gtk3-3.8/bin/cartconv`.
+
 If you download a VICE macOS package directly and move it into `/Applications` as recommended by the package, point the toolkit at the real command-line binary under that package's `bin/` directory. A typical ARM64/GTK3 install looks like:
 
 ```ini
@@ -140,8 +151,9 @@ Run `doctor` after configuring:
 It reports the resolved executables, configured arguments, active platform and loaded config file.
 
 64tass and VICE preflight output includes the version reported by each resolved
-executable. `doctor` also runs a headless Blender probe and reports
-`<version>; bpy OK` when the optional Blender pipeline is usable.
+executable. `doctor` reports `cartconv` as optional unless cartridge output is
+requested, and also runs a headless Blender probe and reports `<version>; bpy OK`
+when the optional Blender pipeline is usable.
 
 Blender is optional. When `--blend` is selected, the toolkit performs a real
 headless `bpy` import probe in addition to executable discovery. Configure an
@@ -157,9 +169,13 @@ python .\c643d.py doctor
 python .\c643d.py build --shape torus --run
 ```
 
-## Render/build defaults (v0.6.2)
+For cartridge builds, `cartconv.exe` is part of the VICE tool set. If it is not
+on `PATH`, configure its exact path (or the containing VICE directory) in the
+`[windows]` section, or pass `--cartconv` to the cartridge command.
 
-Optional output defaults live in a separate `[render_defaults]` section:
+## Render/build defaults (v0.6.3)
+
+These PRG defaults were introduced in v0.6.2 and remain current in v0.6.3. Optional output defaults live in a separate `[render_defaults]` section:
 
 ```ini
 [render_defaults]

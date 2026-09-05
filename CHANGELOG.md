@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.6.3
+
+- Finalize the v0.6.3 EasyFlash milestone and ship a ready-to-run ten-animation demo cartridge at `examples/cart_demos/c643d-demo.crt`, alongside its cartridge map and JSON manifest.
+- Preserve the cartridge menu style state across control-shim reinstalls, fixing F1 style cycling that previously only redrew the default menu.
+
+- Began the separate experimental `yunroll-cart` cartridge backend without changing the production `yunroll` PRG renderer.
+- Added a minimal native EasyFlash bank-switch smoke build that assembles an 8 KiB ROMH bootstrap, packs a 1 MiB raw EasyFlash image, converts it to `.crt` with `cartconv`, and emits a human-readable bank map plus JSON manifest.
+- Added optional `cartconv` discovery/configuration and `--cartconv` overrides. `doctor` reports it as optional; cartridge output fails with targeted setup guidance when it is missing, while normal `.prg` builds remain unaffected.
+- Added cartridge development roadmap and reference documentation. The implementation policy starts with simple measurable bank/stream tests before introducing direct ROM consumption, caching, compression, or long-form animation optimizations.
+- Set the release version to 0.6.3 while preserving the v0.6.2 PRG golden-output baseline.
+- Added `cart-demos` (with `cartridge-demo` compatibility alias), a menu-driven EasyFlash integration cartridge that packs the ten canonical toolkit animations into banked ROML storage. Menu controls use natural four-way cursor semantics (up/left previous, down/right next) and RETURN launches an animation.
+- Added a cart-only `$0200` raster-IRQ control shim: F1 or RUN/STOP returns from a running animation to the cartridge menu, while SPACE launches the next animation and wraps at the end. Only the copies packed into the CRT are IRQ-patched; the canonical `.prg` files remain untouched.
+- Added a RAM-resident cartridge demo loader at `$C800-$CFFF` plus a `$DF00` EasyFlash-RAM trampoline. Existing PRGs are copied through 256-byte staging pages so destination RAM hidden beneath `$8000-$9FFF` is handled explicitly rather than relying on write-under-ROM behaviour.
+- Added host-generated per-entry bank/load/length/checksum metadata and a VICE debug-cart validation path that loads and checksums every packed PRG before reporting success.
+- Verified an existing production torus PRG launches and renders from the generated EasyFlash CRT; this demo launcher is deliberately separate from the upcoming true `yunroll-cart` frame/table streamer.
+- Added `--generate-cart-demos` as a convenience counterpart to `cart-demos`; final demo artifacts live under `examples/cart_demos/` while temporary assembler/raw-ROM files remain under `build/`.
+- Keep generated demo manifests portable by recording repository-relative source PRG paths rather than machine-specific absolute build paths.
+- Added selectable cartridge-menu presentation with `--menu-style default|decorative|demoscene`. `default` keeps the simple utility menu, `decorative` adds a static framed/colour layout with a menu-only compact 5x7 charset derived from the existing HUD font, and `demoscene` adds a lightweight raster-IRQ colour-gradient animation.
+- Every demo CRT now carries all three menu runtimes. `--menu-style` selects the startup presentation, while F1 in the menu cycles live through `default` -> `decorative` -> `demoscene` -> `default`; the highlighted entry is preserved across style swaps and the selected style is preserved when returning from an animation.
+- Added a common cartridge-menu footer to every style: `by FlyingFathead, 2026` plus `github: flyingfathead/c64-3d-toolkit`. The custom lowercase glyphs are menu-only and do not alter the production HUD font or ordinary PRGs.
+- Updated the README with a new try-it-first/getting-started path that points directly to the shipped PRG examples and ready-to-run `examples/cart_demos/c643d-demo.crt`, while documenting the current cartridge capabilities, limitations, and the next measured-streaming milestone consistently.
+
 ## 0.6.2
 
 - Expand the default overlay-enabled drawable viewport from 256x144 to 256x192 while preserving explicit `_legacy144.prg` performance/reference builds; no-overlay builds use the full 256x200 bitmap height.

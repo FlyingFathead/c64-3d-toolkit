@@ -1,0 +1,27 @@
+c64-3d-toolkit EasyFlash demo cartridge map
+============================================
+
+bank 00 ROMH  native EasyFlash Ultimax bootstrap + reset vectors
+bank 00 ROML  startup $C800-$CFFF menu/loader + $0200 cart-control IRQ shim
+                + menu-only compact 5x7 charset at ROML $9000-$97FF
+bank 01 ROMH  switchable default/decorative/demoscene menu runtimes (3 x 2 KiB)
+
+banks 01-06 ROML  TORUS                     43544 bytes load $0801 entry $080d
+banks 07-12 ROML  TORUS DENSE               47015 bytes load $0801 entry $080d
+banks 13-17 ROML  CUBE                      35379 bytes load $0801 entry $080d
+banks 18-22 ROML  SPHERE                    37747 bytes load $0801 entry $080d
+banks 23-28 ROML  HORSE HEAD                49074 bytes load $0801 entry $080d
+banks 29-34 ROML  SUNFLOWER TORUS           48969 bytes load $0801 entry $080d
+banks 35-40 ROML  SUNFLOWER COLOR           44448 bytes load $0801 entry $080d
+banks 41-46 ROML  SPACE HORSE SPIN          48826 bytes load $0801 entry $080d
+banks 47-52 ROML  SPACE HORSE CRAWL         49151 bytes load $0801 entry $080d
+banks 53-57 ROML  FALLING CUBES             38584 bytes load $0801 entry $080d
+
+data banks used: 57 / 63
+startup style:   default
+live menu styles: default -> decorative -> demoscene -> default (F1)
+highest bank:    57 / 63
+
+Bridge note: these are existing PRG payloads launched from cartridge.
+Menu F1 cycles styles; cartridge copies use F1/RUN-STOP menu + SPACE next-demo controls.
+True yunroll-cart frame/table streaming is the next backend milestone.

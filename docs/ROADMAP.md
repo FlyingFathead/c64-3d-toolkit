@@ -36,6 +36,35 @@ Next:
 - Near-plane clipping for Blender shots that deliberately cross the camera plane.
 - Optional topology-changing Blender scene support and compressed/delta frame tables.
 
+
+## Cartridge / streaming backend
+
+Version v0.6.3 adds a separate EasyFlash path without changing
+the production PRG renderers. Completed groundwork includes native cartridge
+boot/bank switching, `cartconv` integration and diagnostics, generated bank maps
+and manifests, and a menu-driven multi-animation demo cartridge under
+`examples/cart_demos/`. Every demo CRT carries `default`, `decorative`, and
+`demoscene` menu runtimes; the build flag chooses the startup style and F1 cycles
+them live while all styles share the same loader and in-animation controls. The
+demo intentionally launches existing PRGs so that cartridge
+packaging, cart-only demo controls, and copying can be validated independently
+of the new renderer stream format.
+
+Next milestones:
+
+- define a deliberately simple frame/table segment format;
+- give `yunroll-cart` a fixed/bounded RAM working set;
+- stream successive generated segments from EasyFlash without requiring all
+  authored frame tables to fit in C64 RAM at once;
+- measure ROM read/copy cost, bank-switch overhead, bytes per frame, renderer
+  cycles, and worst-case frame budget before adding compression;
+- compare copy-to-RAM, direct-ROM, and hybrid/cache strategies;
+- only after measurement, explore topology sharing, frame deltas, cheap
+  compression, long-form 10/30/60-second targets, and SID/demo headroom.
+
+The detailed cartridge-specific plan lives in
+[`CARTRIDGE_ROADMAP.md`](CARTRIDGE_ROADMAP.md).
+
 ## Host UI / tooling
 
 - Optional graphical OBJ/SVG import/preview application.
@@ -57,6 +86,7 @@ Blender / modeller / vector editor / generated asset
     -> vector/hidden-line compile
     -> 64tass
     -> PRG / VICE / real C64
+       or EasyFlash pack -> cartconv -> CRT / VICE / cartridge
 ```
 
 The CLI remains first-class even if a GUI is added.

@@ -20,13 +20,37 @@ from .toolchain import (
     resolve_executable,
 )
 from .checksums import compare_prg, load_checksum_manifest, reference_set
+from .cartridge import (
+    assemble_smoke_bootstrap, build_smoke_raw, check_easyflash_crt,
+    convert_easyflash, write_manifest, write_smoke_map,
+    assemble_demo_boot, assemble_demo_control, assemble_demo_runtime, install_demo_boot,
+    build_menu_charset, pack_demo_prgs, write_demo_include, write_demo_map,
+    DEMO_MENU_STYLE_ORDER,
+)
 
 ROOT=Path(__file__).resolve().parents[2]
 OBJECTS=ROOT/'objects'; GENERATED=ROOT/'generated'; BUILD=ROOT/'build'; C64=ROOT/'c64'; EXAMPLES=ROOT/'examples'
+CART_DEMOS=EXAMPLES/'cart_demos'
 CHECKSUM_MANIFEST=ROOT/'tests'/'data'/'golden_prg_checksums.json'
+CART=C64/'cart'
 RENDERERS={'step':'renderer-step.asm','bytechunk':'renderer-bytechunk.asm','yunroll':'renderer-yunroll.asm'}
+CARTRIDGE_RENDERERS={'yunroll-cart':'renderer-yunroll-cart.asm'}
 NO_OVERLAY_RENDERERS={name:f'variants/renderer-{name}-no-overlay.asm' for name in RENDERERS}
 RASTERTIME_RENDERERS={'yunroll':'debug/renderer-yunroll-rastertime.asm'}
+
+
+CARTRIDGE_DEMO_ENTRIES=(
+    ('TORUS', EXAMPLES/'torus'/'torus.prg'),
+    ('TORUS DENSE', EXAMPLES/'torus_dense'/'torus_dense.prg'),
+    ('CUBE', EXAMPLES/'cube'/'cube.prg'),
+    ('SPHERE', EXAMPLES/'sphere'/'sphere.prg'),
+    ('HORSE HEAD', EXAMPLES/'horse_head'/'horse_head.prg'),
+    ('SUNFLOWER TORUS', EXAMPLES/'sunflower_torus'/'sunflower_torus.prg'),
+    ('SUNFLOWER COLOR', EXAMPLES/'sunflower_torus'/'sunflower_torus_color.prg'),
+    ('SPACE HORSE SPIN', EXAMPLES/'space_horse_spin'/'space_horse_spin_color.prg'),
+    ('SPACE HORSE CRAWL', EXAMPLES/'space_horse_crawl'/'space_horse_crawl_color.prg'),
+    ('FALLING CUBES', EXAMPLES/'blender_falling_cubes'/'falling_cubes_c64_color-yunroll.prg'),
+)
 
 
 def _executable_version(executable:str) -> str | None:
@@ -38,6 +62,37 @@ def _executable_version(executable:str) -> str | None:
         return None
     lines=[line.strip() for line in (completed.stdout+'\n'+completed.stderr).splitlines() if line.strip()]
     return lines[0] if lines else None
+
+
+def _cartconv_version(executable:str) -> str | None:
+    """cartconv 3.10 prints a harmless filename error before --version."""
+    try:
+        completed=subprocess.run(
+            [executable,'--version'],capture_output=True,text=True,check=False,timeout=15,
+        )
+    except (OSError,subprocess.TimeoutExpired):
+        return None
+    lines=[line.strip() for line in (completed.stdout+'\n'+completed.stderr).splitlines() if line.strip()]
+    for line in lines:
+        if line.lower().startswith('cartconv '):
+            return line
+    return lines[-1] if lines else None
+
+
+def require_cartconv(spec:str, *, verbose:bool=True) -> str | None:
+    found=resolve_executable(spec,'cartconv')
+    if not found:
+        print(
+            f'error: EasyFlash cartridge output requires cartconv, but it was not found as {spec!r}.',
+            file=sys.stderr,
+        )
+        print('Install VICE/cartconv, configure cartconv in config/c643d.ini, or pass --cartconv PATH.',file=sys.stderr)
+        print('Normal .prg builds do not require cartconv.',file=sys.stderr)
+        return None
+    if verbose:
+        version=_cartconv_version(found)
+        print(f'preflight: cartconv = {found}{f" ({version})" if version else " (version unavailable)"}')
+    return found
 
 
 def preflight(*, tass_name='64tass', vice_name='x64sc', tass_args=(), vice_args=(), need_assemble=True, need_run=False, verbose=True):
@@ -84,6 +139,12 @@ def cmd_doctor(a):
             print(f'blender:   {blender} (bpy FAILED: {e})')
     else:
         print('blender:   not found (optional; required only for --blend)')
+    cartconv=resolve_executable(a.cartconv,'cartconv')
+    if cartconv:
+        version=_cartconv_version(cartconv)
+        print(f'cartconv:  {cartconv}{f" ({version})" if version else ""}')
+    else:
+        print('cartconv:  not found (optional; required only for cartridge/.crt builds)')
     return 0 if ok else 2
 
 
@@ -870,6 +931,173 @@ def cmd_list_objects():
     return 0
 
 
+def cmd_cartridge_smoke(a):
+    """Build the deliberately small/measurable EasyFlash bank smoke test."""
+    tass=resolve_executable(a.tass,'tass')
+    if not tass:
+        print(f'error: 64tass not found as {a.tass!r}; install 64tass, configure config/c643d.ini, or pass --tass PATH.',file=sys.stderr)
+        return 2
+    cartconv=require_cartconv(a.cartconv,verbose=True)
+    if not cartconv:
+        return 2
+    vice=None
+    if a.run:
+        vice=resolve_executable(a.vice,'vice')
+        if not vice:
+            print(f'error: VICE C64 emulator not found as {a.vice!r}; install VICE, configure config/c643d.ini, or pass --vice PATH.',file=sys.stderr)
+            return 2
+    version=_executable_version(tass)
+    print(f'preflight: 64tass = {tass}{f" ({version})" if version else " (version unavailable)"}')
+    outdir=Path(a.output_dir).resolve() if a.output_dir else BUILD
+    outdir.mkdir(parents=True,exist_ok=True)
+    stem=a.output or 'easyflash-smoke'
+    boot=outdir/f'{stem}-romh0.bin'
+    raw=outdir/f'{stem}.bin'
+    crt=outdir/f'{stem}.crt'
+    labels=outdir/f'{stem}.lbl'
+    listing=outdir/f'{stem}.lst'
+    map_txt=outdir/f'{stem}-cart-map.txt'
+    manifest_json=outdir/f'{stem}-cart-manifest.json'
+    paths=(boot,raw,crt,labels,listing,map_txt,manifest_json)
+    if not _check_overwrite(paths,a.overwrite_policy):
+        return 2
+    try:
+        assemble_smoke_bootstrap(
+            tass=tass,tass_args=a.tass_args,source=CART/'easyflash-smoke.asm',
+            output=boot,labels=labels,listing=listing,cwd=ROOT,
+        )
+        raw_bytes,manifest=build_smoke_raw(boot.read_bytes())
+        raw.write_bytes(raw_bytes)
+        write_smoke_map(map_txt,manifest)
+        write_manifest(manifest_json,manifest)
+        convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name='C643D EF SMOKE',cwd=ROOT)
+        check_output=check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=ROOT)
+    except (OSError,ValueError,RuntimeError,subprocess.CalledProcessError) as e:
+        print(f'error: EasyFlash smoke build failed: {e}',file=sys.stderr)
+        return 2
+    print(f'built {_display_path(crt)}')
+    print(f'raw:        {_display_path(raw)} (1 MiB EasyFlash interleaved image)')
+    print(f'bank map:   {_display_path(map_txt)}')
+    print(f'manifest:   {_display_path(manifest_json)}')
+    if check_output:
+        print(f'cartconv:   {check_output.splitlines()[-1]}')
+    print('expected:   three lines: C643D EASYFLASH BANK 1/2/3 OK')
+    if a.run:
+        cmd=tool_command(vice,a.vice_args,['-cartcrt',str(crt)])
+        print('+',' '.join(cmd))
+        subprocess.run(cmd,cwd=ROOT,check=False)
+    return 0
+
+
+
+def cmd_cart_demos(a):
+    """Build a menu-driven EasyFlash cartridge from the canonical example PRGs."""
+    tass=resolve_executable(a.tass,'tass')
+    if not tass:
+        print(f'error: 64tass not found as {a.tass!r}; install 64tass, configure config/c643d.ini, or pass --tass PATH.',file=sys.stderr)
+        return 2
+    cartconv=require_cartconv(a.cartconv,verbose=True)
+    if not cartconv:
+        return 2
+    vice=None
+    if a.run:
+        vice=resolve_executable(a.vice,'vice')
+        if not vice:
+            print(f'error: VICE C64 emulator not found as {a.vice!r}; install VICE, configure config/c643d.ini, or pass --vice PATH.',file=sys.stderr)
+            return 2
+    missing=[path for _,path in CARTRIDGE_DEMO_ENTRIES if not path.is_file()]
+    if missing:
+        print('error: cartridge demo requires the canonical example PRGs; missing:',file=sys.stderr)
+        for path in missing:
+            print(f'  {_display_path(path)}',file=sys.stderr)
+        print('Run ./build.sh --generate-examples (and the Blender example build if needed), then retry.',file=sys.stderr)
+        return 2
+    version=_executable_version(tass)
+    print(f'preflight: 64tass = {tass}{f" ({version})" if version else " (version unavailable)"}')
+
+    outdir=Path(a.output_dir).resolve() if a.output_dir else CART_DEMOS
+    outdir.mkdir(parents=True,exist_ok=True)
+    stem=a.output or 'c643d-demo'
+    workdir=BUILD/f'{stem}-cartridge-demo'
+    workdir.mkdir(parents=True,exist_ok=True)
+    include_dir=workdir/'generated'
+    include_dir.mkdir(parents=True,exist_ok=True)
+    include_path=include_dir/'cart-demo-data.inc'
+    runtime=workdir/f'{stem}-runtime.bin'
+    runtime_style_files={style:workdir/f'{stem}-runtime-{style}.bin' for style in DEMO_MENU_STYLE_ORDER}
+    runtime_style_labels={style:workdir/f'{stem}-runtime-{style}.lbl' for style in DEMO_MENU_STYLE_ORDER}
+    runtime_style_listings={style:workdir/f'{stem}-runtime-{style}.lst' for style in DEMO_MENU_STYLE_ORDER}
+    control=workdir/f'{stem}-control.bin'
+    control_lbl=workdir/f'{stem}-control.lbl'
+    control_lst=workdir/f'{stem}-control.lst'
+    menu_font=workdir/f'{stem}-menu-font.bin'
+    boot=workdir/f'{stem}-romh0.bin'
+    boot_lbl=workdir/f'{stem}-boot.lbl'
+    boot_lst=workdir/f'{stem}-boot.lst'
+    raw=workdir/f'{stem}.bin'
+    crt=outdir/f'{stem}.crt'
+    map_txt=outdir/f'{stem}-cart-map.txt'
+    manifest_json=outdir/f'{stem}-cart-manifest.json'
+    paths=(runtime,*runtime_style_files.values(),*runtime_style_labels.values(),*runtime_style_listings.values(),
+           control,control_lbl,control_lst,menu_font,boot,boot_lbl,boot_lst,raw,crt,map_txt,manifest_json,include_path)
+    if not _check_overwrite(paths,a.overwrite_policy):
+        return 2
+    try:
+        image,plans,manifest=pack_demo_prgs(CARTRIDGE_DEMO_ENTRIES,source_root=ROOT)
+        manifest['menu_style']=a.menu_style
+        manifest['menu_styles']=list(DEMO_MENU_STYLE_ORDER)
+        manifest['menu_style_cycle_key']='F1'
+        menu_font.write_bytes(build_menu_charset())
+        write_demo_include(include_path,plans)
+        for style in DEMO_MENU_STYLE_ORDER:
+            assemble_demo_runtime(
+                tass=tass,tass_args=a.tass_args,source=CART/'easyflash-demo-runtime.asm',
+                include_dir=include_dir,output=runtime_style_files[style],
+                labels=runtime_style_labels[style],listing=runtime_style_listings[style],cwd=ROOT,
+                menu_style=style,
+            )
+        runtime.write_bytes(runtime_style_files[a.menu_style].read_bytes())
+        assemble_demo_control(
+            tass=tass,tass_args=a.tass_args,source=CART/'easyflash-demo-control.asm',
+            output=control,labels=control_lbl,listing=control_lst,cwd=ROOT,
+        )
+        assemble_demo_boot(
+            tass=tass,tass_args=a.tass_args,source=CART/'easyflash-demo-boot.asm',
+            output=boot,labels=boot_lbl,listing=boot_lst,cwd=ROOT,
+        )
+        install_demo_boot(
+            image,boot.read_bytes(),runtime.read_bytes(),control.read_bytes(),menu_font.read_bytes(),
+            [runtime_style_files[style].read_bytes() for style in DEMO_MENU_STYLE_ORDER],
+        )
+        raw.write_bytes(bytes(image))
+        write_demo_map(map_txt,manifest)
+        write_manifest(manifest_json,manifest)
+        convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name='C643D 0.6.3 DEMO',cwd=ROOT)
+        check_output=check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=ROOT)
+    except (OSError,ValueError,RuntimeError,subprocess.CalledProcessError) as e:
+        print(f'error: EasyFlash demo build failed: {e}',file=sys.stderr)
+        return 2
+
+    total=sum(p.length for p in plans)
+    print(f'built {_display_path(crt)}')
+    print(f'entries:     {len(plans)} canonical animations / {total} PRG payload bytes')
+    print(f'start style: {a.menu_style}')
+    print('menu styles: default -> decorative -> demoscene -> default (F1)')
+    print(f'banks used:  {manifest["highest_bank_used"]+1} / 64 (bank 0 boot + {manifest["data_banks_used"]} ROML data banks)')
+    print(f'raw:         {_display_path(raw)} (1 MiB EasyFlash image)')
+    print(f'bank map:    {_display_path(map_txt)}')
+    print(f'manifest:    {_display_path(manifest_json)}')
+    if check_output:
+        print(f'cartconv:    {check_output.splitlines()[-1]}')
+    print('controls:    menu F1 cycles style; cursors select; RETURN plays')
+    print('             in demo F1/RUN-STOP = menu, SPACE = next')
+    print('note:        this stage launches existing PRGs; true yunroll-cart streaming comes next')
+    if a.run:
+        cmd=tool_command(vice,a.vice_args,['-cartcrt',str(crt)])
+        print('+',' '.join(cmd))
+        subprocess.run(cmd,cwd=ROOT,check=False)
+    return 0
+
 def _viewport_height_arg(value):
     height=int(value)
     if height<8 or height>200 or height%8:
@@ -887,6 +1115,7 @@ def _add_toolchain_args(q,settings):
     q.add_argument('--tass',default=settings.tass,help='64tass executable name, path, or containing directory')
     q.add_argument('--vice',default=settings.vice,help='x64sc executable name/path, VICE directory, or macOS .app bundle')
     q.add_argument('--blender',default=settings.blender,help='Blender executable name/path, installation directory, or macOS .app bundle')
+    q.add_argument('--cartconv',default=settings.cartconv,help='cartconv executable name, path, or containing VICE directory (required only for cartridge/.crt builds)')
     q.add_argument('--tass-arg',dest='tass_args',action='append',default=None,metavar='ARG',help='64tass argument; repeatable; when used, replaces configured default args')
     q.add_argument('--vice-arg',dest='vice_args',action='append',default=None,metavar='ARG',help='VICE argument; repeatable; when used, replaces configured default args')
     q.add_argument('--no-tass-default-args',action='store_true',help='discard configured/built-in 64tass default arguments for this invocation')
@@ -1002,7 +1231,27 @@ def make_parser(settings):
     te.add_argument('--variants',choices=('normal','legacy144','no-overlay','rastertime-profiler','all'),default='all',help='which PRG variants to test (default: all)')
     te.add_argument('--reference-set',help='checksum reference set from tests/data/golden_prg_checksums.json (default: manifest default)')
     te.add_argument('--reproduce-reference',action='store_true',help='apply the selected reference set build_overrides (for example the legacy 144-line viewport); requires --variants normal')
-    doc=sub.add_parser('doctor',help='check local 64tass/VICE toolchain availability')
+    cs=sub.add_parser('cartridge-smoke',help='build a minimal EasyFlash bank-switch .crt diagnostic')
+    _add_toolchain_args(cs,settings)
+    cs.add_argument('--output',help='output basename (default: easyflash-smoke)')
+    cs.add_argument('--output-dir',help='output directory (default: build/)')
+    cs.add_argument('--overwrite-policy',choices=('allow','warn','error'),default=settings.overwrite_policy,help='existing output handling (built-in default: warn)')
+    cs.add_argument('--run',action='store_true',help='attach the generated CRT directly with VICE -cartcrt')
+    cd=sub.add_parser('cart-demos',help='build shipped EasyFlash demo CRT(s) into examples/cart_demos/')
+    _add_toolchain_args(cd,settings)
+    cd.add_argument('--output',help='output basename (default: c643d-demo)')
+    cd.add_argument('--output-dir',help='final demo output directory (default: examples/cart_demos/; intermediates stay in build/)')
+    cd.add_argument('--overwrite-policy',choices=('allow','warn','error'),default=settings.overwrite_policy,help='existing output handling (built-in default: warn)')
+    cd.add_argument('--menu-style',choices=('default','decorative','demoscene'),default='default',help='initial cartridge menu presentation; F1 cycles all styles at runtime (default: default)')
+    cd.add_argument('--run',action='store_true',help='attach the generated demo CRT directly with VICE -cartcrt')
+    cda=sub.add_parser('cartridge-demo',help=argparse.SUPPRESS)
+    _add_toolchain_args(cda,settings)
+    cda.add_argument('--output',help='output basename (default: c643d-demo)')
+    cda.add_argument('--output-dir',help='final demo output directory (default: examples/cart_demos/; intermediates stay in build/)')
+    cda.add_argument('--overwrite-policy',choices=('allow','warn','error'),default=settings.overwrite_policy,help='existing output handling (built-in default: warn)')
+    cda.add_argument('--menu-style',choices=('default','decorative','demoscene'),default='default',help='initial cartridge menu presentation; F1 cycles all styles at runtime (default: default)')
+    cda.add_argument('--run',action='store_true',help='attach the generated demo CRT directly with VICE -cartcrt')
+    doc=sub.add_parser('doctor',help='check local 64tass/VICE and optional Blender/cartconv availability')
     _add_toolchain_args(doc,settings)
     sub.add_parser('list-shapes',help='list procedural/built-in shapes')
     sub.add_parser('list-objects',help='list imported OBJ/SVG presets in objects/')
@@ -1022,6 +1271,8 @@ def main(argv=None):
         argv=['build']
     elif argv[0]=='--generate-examples':
         argv=['generate-examples']+argv[1:]
+    elif argv[0]=='--generate-cart-demos':
+        argv=['cart-demos']+argv[1:]
     elif argv[0].startswith('-') and argv[0] not in ('-h','--help','--version'):
         argv=['build']+argv
     a=p.parse_args(argv)
@@ -1041,6 +1292,8 @@ def main(argv=None):
     if a.command=='generate-examples': return cmd_generate_examples(a)
     if a.command=='test-examples': return cmd_test_examples(a)
     if a.command=='doctor': return cmd_doctor(a)
+    if a.command=='cartridge-smoke': return cmd_cartridge_smoke(a)
+    if a.command in ('cart-demos','cartridge-demo'): return cmd_cart_demos(a)
     if a.command=='list-objects': return cmd_list_objects()
     if a.command=='import-obj': return cmd_import_obj(a)
     if a.command=='import-svg': return cmd_import_svg(a)
