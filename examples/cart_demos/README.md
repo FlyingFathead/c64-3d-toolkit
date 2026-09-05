@@ -1,14 +1,11 @@
-# c64-3d-toolkit 0.6.4 comparison cartridges
+# c64-3d-toolkit 0.6.5 demo cartridge
 
-Both cartridges contain the same twelve demos, using one renderer throughout:
-
-- `c643d-demo-v0.6.4-yunroll-cart-v4-all.crt`: current default, all V4.
-- `c643d-demo-v0.6.4-yunroll-cart-v3-all.crt`: comparison baseline, all V3.
+The current cart is `c643d-demo-v0.6.5-yunroll-cart-v4-all.crt`.
+All twelve demos use V4, including the horse head and sunflower HiFi models.
 
 ```bash
-x64sc -cartcrt examples/cart_demos/c643d-demo-v0.6.4-yunroll-cart-v4-all.crt
-./build.sh cart-demos
-./build.sh cart-demos --stream-renderer yunroll-cart-v3
+x64sc -cartcrt examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all.crt
+./build.sh cart-demos --run
 ```
 
 Cursor keys select; RETURN launches. Ten visible rows scroll between fixed
@@ -16,16 +13,21 @@ horizontal borders. A `+` at a border means more entries in that direction.
 F1 cycles default/decorative/demoscene. During demos, F1 or RUN/STOP returns to
 the menu; SPACE launches the next demo and wraps after the last entry.
 
-The ten canonical PRGs retain their original samples through exact vector-table
-extraction. Each HiFi model uses 128 orientations. Both carts use the same frame
-bytes and ROM allocation. All entries passed pixel/colour comparisons in PAL
-VICE over more than two complete rotations. The JSON reports record per-demo
-FPS, scrolling, controls and boundary checks. Physical C64 testing remains open.
+0.6.5 fixes the CPU jam when launching from the animated-colour demoscene menu.
+The loader disables the menu IRQ and restores the cartridge ROM mapping before
+copying the animation. Renderer code, culling, colours and samples are unchanged.
 
-See [the V4 guide](../../docs/CARTRIDGE_STREAM_V4.md) for measurements, layout and
-verification commands. Standalone 192-frame HiFi carts remain in `../hifi_showcase/`.
+`menu-launch-v4-validation.json` records the CRT hash and 84 VICE launch checks:
+every demo from every style across two cycles, plus next-demo and wrap checks.
+It verifies complete loaded payloads, the control shim and three rendered frames
+per launch. `scroll-menu-validation.json` covers 75 navigation states. Physical
+hardware has not been tested here.
 
-Superseded mixed-method carts are in `../old/cart_demos/`. After applying the
-changed-files ZIP, run `python tools/archive_old_carts.py` from the repo to move
-old copies out of this folder. `--dry-run` previews the moves. Modified local
-files get a content-hash suffix; custom cart names are untouched.
+Older menu carts and their historical reports are in `../old/cart_demos/`.
+After applying the changed-files ZIP, run `python tools/archive_old_carts.py`
+to move obsolete copies out of this folder. The command is repeatable and
+preserves local edits. Explicit V2/V3 builds default to the archive folder;
+`--output-dir` can override that for deliberate comparisons.
+
+See [the V4 guide](../../docs/CARTRIDGE_STREAM_V4.md) and
+[upgrade instructions](../../docs/UPGRADING_0.6.5.md).

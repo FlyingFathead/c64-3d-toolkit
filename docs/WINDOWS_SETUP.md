@@ -1,6 +1,6 @@
 # Windows setup
 
-`c64-3d-toolkit` v0.6.3 includes a Windows 11 setup helper with optional Blender support. Cartridge `.crt` builds also use the `cartconv` utility supplied with VICE; its path can be set in `config/c643d.ini` or with `--cartconv` when automatic discovery is not sufficient.
+`c64-3d-toolkit` v0.6.5 includes a Windows 11 setup helper with optional Blender support. Cartridge `.crt` builds also use the `cartconv` utility supplied with VICE; its path can be set in `config/c643d.ini` or with `--cartconv` when automatic discovery is not sufficient.
 
 ## First-time bootstrap on Windows 11
 

@@ -1,0 +1,25 @@
+{
+  "version": "0.6.5",
+  "version_text_all_styles": true,
+  "cartridge": "c643d-demo-v0.6.5-yunroll-cart-v4-all.crt",
+  "sha256": "73f7405a5c68ed008170d0af73d478dd93d23436399393361b6b83102555cf53",
+  "renderer": "yunroll-cart-v4",
+  "styles": [
+    "default",
+    "decorative",
+    "demoscene"
+  ],
+  "style_cycles": 2,
+  "demos_per_style": 12,
+  "menu_launches": 72,
+  "next_launches": 12,
+  "frames_checked": 252,
+  "exact_payloads": true,
+  "exact_control_shim": true,
+  "pixel_and_color_match": true,
+  "flashing_irq_exercised": true,
+  "loader_mapping_verified": true,
+  "menu_irq_disabled_at_handoff": true,
+  "menu_return_and_wrap": true,
+  "method": "Real menu/control handlers entered through the VICE monitor; host key injection not used."
+}

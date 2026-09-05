@@ -39,28 +39,23 @@ Next:
 
 ## Cartridge / streaming backend
 
-Version v0.6.3 adds a separate EasyFlash path without changing
-the production PRG renderers. Completed groundwork includes native cartridge
-boot/bank switching, `cartconv` integration and diagnostics, generated bank maps
-and manifests, and a menu-driven multi-animation demo cartridge under
-`examples/cart_demos/`. Every demo CRT carries `default`, `decorative`, and
-`demoscene` menu runtimes; the build flag chooses the startup style and F1 cycles
-them live while all styles share the same loader and in-animation controls. The
-demo intentionally launches existing PRGs so that cartridge
-packaging, cart-only demo controls, and copying can be validated independently
-of the new renderer stream format.
+The current v0.6.5 demo cart streams all twelve entries through V4 with a
+fixed RAM working set. Earlier 0.6.3 groundwork provided native cartridge boot,
+bank switching, cartconv integration and menu controls; 0.6.4 added the streaming
+variants and HiFi assets. Version 0.6.5 fixes launching from the animated menu.
+
+Completed streaming work includes the frame-block format, bank-contained ROM
+storage, bounded staging and metadata caches, ROM copy profiling, and matched
+V3/V4 measurements. The active cart is in `examples/cart_demos/`; released older
+carts are preserved in `examples/old/cart_demos/`.
 
 Next milestones:
 
-- define a deliberately simple frame/table segment format;
-- give `yunroll-cart` a fixed/bounded RAM working set;
-- stream successive generated segments from EasyFlash without requiring all
-  authored frame tables to fit in C64 RAM at once;
-- measure ROM read/copy cost, bank-switch overhead, bytes per frame, renderer
-  cycles, and worst-case frame budget before adding compression;
-- compare copy-to-RAM, direct-ROM, and hybrid/cache strategies;
-- only after measurement, explore topology sharing, frame deltas, cheap
-  compression, long-form 10/30/60-second targets, and SID/demo headroom.
+- compare copy-to-RAM, direct-ROM and hybrid/cache strategies;
+- explore topology sharing, frame deltas and cheap compression using measured
+  cycle, ROM and RAM budgets;
+- investigate longer authored sequences and SID/demo headroom;
+- verify the current cartridge and controls on physical hardware.
 
 The detailed cartridge-specific plan lives in
 [`CARTRIDGE_ROADMAP.md`](CARTRIDGE_ROADMAP.md).

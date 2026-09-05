@@ -88,12 +88,18 @@ def prepare(root,renderer,tass,tass_args=()):
     return entries,image,info,arenas[:slot+1],first_free_roml
 
 
+def default_output_dir(root, renderer):
+    """Keep retired comparison methods out of the active demo folder."""
+    folder = 'examples/old/cart_demos' if renderer in ('yunroll-cart-v2','yunroll-cart-v3') else 'examples/cart_demos'
+    return Path(root) / folder
+
+
 def build(a):
     from . import cli,__version__
     tass=cli.resolve_executable(a.tass,'tass');cartconv=cli.require_cartconv(a.cartconv,verbose=True)
     if not tass or not cartconv:raise ValueError('64tass and cartconv are required')
     renderer=a.stream_renderer;variant=renderer.rsplit('-',1)[1]
-    root=cli.ROOT;out=Path(a.output_dir).resolve() if a.output_dir else cli.CART_DEMOS;out.mkdir(parents=True,exist_ok=True)
+    root=cli.ROOT;out=Path(a.output_dir).resolve() if a.output_dir else default_output_dir(root,renderer);out.mkdir(parents=True,exist_ok=True)
     stem=a.output or f'c643d-demo-v{__version__}-{renderer}-all'
     paths=[out/f'{stem}{s}' for s in ('.crt','-cart-manifest.json','-cart-map.txt')]
     if not cli._check_overwrite(paths,a.overwrite_policy):return 2

@@ -173,9 +173,9 @@ For cartridge builds, `cartconv.exe` is part of the VICE tool set. If it is not
 on `PATH`, configure its exact path (or the containing VICE directory) in the
 `[windows]` section, or pass `--cartconv` to the cartridge command.
 
-## Render/build defaults (v0.6.3)
+## Render/build defaults (v0.6.5)
 
-These PRG defaults were introduced in v0.6.2 and remain current in v0.6.3. Optional output defaults live in a separate `[render_defaults]` section:
+These PRG defaults were introduced in v0.6.2 and remain current in v0.6.5. Optional output defaults live in a separate `[render_defaults]` section:
 
 ```ini
 [render_defaults]

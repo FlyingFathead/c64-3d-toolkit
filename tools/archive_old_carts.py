@@ -13,12 +13,17 @@ from pathlib import Path
 OLD_FILES = tuple(
     stem + suffix
     for stem in ('c643d-demo', 'c643d-demo-v0.6.4',
-                 'c643d-demo-v0.6.4-yunroll-cart-v3')
+                 'c643d-demo-v0.6.4-yunroll-cart-v3',
+                 'c643d-demo-v0.6.4-yunroll-cart-v3-all',
+                 'c643d-demo-v0.6.4-yunroll-cart-v4-all')
     for suffix in ('.crt', '-cart-manifest.json', '-cart-map.txt')
 ) + (
     'horse-hifi-stream-validation.json', 'sunflower-hifi-stream-validation.json',
     'horse-hifi-v3-stream-validation.json', 'sunflower-hifi-v3-stream-validation.json',
     'menu-validation.json', 'menu-v3-validation.json',
+    'uniform-v3-validation.json', 'menu-launch-v3-validation.json',
+    'uniform-v4-validation.json', 'uniform-menu-controls-validation.json',
+    'v4-boundary-validation.json',
 )
 
 

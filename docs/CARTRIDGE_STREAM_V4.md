@@ -1,13 +1,15 @@
 # Uniform comparison cartridges and yunroll-cart-v4
 
-Toolkit version remains **0.6.4**; the renderer suffix identifies the algorithm.
-`cart-demos` defaults to **V4 for every entry**. Select V3 explicitly to produce
-the matched baseline. Each filename and menu title identifies its renderer.
+Toolkit version is **0.6.5**; the renderer remains **yunroll-cart-v4**.
+`cart-demos` builds the current V4-only demo cart in `examples/cart_demos/`.
+Earlier comparison bundles are preserved under `examples/old/cart_demos/`.
+Explicit V2/V3 builds default to that archive folder; `--output-dir` overrides it.
+Each filename and menu title identifies its version and renderer.
 
 ```bash
 ./build.sh cart-demos --stream-renderer yunroll-cart-v3
 ./build.sh cart-demos --stream-renderer yunroll-cart-v4
-x64sc -cartcrt examples/cart_demos/c643d-demo-v0.6.4-yunroll-cart-v4-all.crt
+x64sc -cartcrt examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all.crt
 ```
 
 ## What changed
@@ -28,11 +30,12 @@ visibility and sample counts are retained. Both HiFi meshes are compiled with
 
 All twelve entries run the selected stream renderer. There is no silent fallback
 to another method and no automatic reduction of samples to make the cart fit.
-The V3 and V4 manifests have identical frame bytes, hashes and ROM locations.
+The archived 0.6.4 V3 and V4 manifests have identical frame bytes, hashes and
+ROM locations; the current V4 animation data is unchanged.
 Standalone `cart-stream --renderer yunroll-cart-v4` is also supported; the
 standalone command retains its existing V2 default.
 
-## Matched PAL VICE measurements
+## Matched PAL VICE measurements (0.6.4 reference)
 
 Each entry was checked over two complete cycles plus three frames, against the
 host bitmap and colour oracle in all three screen buffers. FPS uses emulator
@@ -56,7 +59,7 @@ presentation. Physical hardware has not been tested here.
 | HORSE HEAD HIFI | 128 | 7.998 | 8.078 | 1.00% |
 | SUNFLOWER TORUS HIFI | 128 | 5.525 | 5.599 | 1.34% |
 
-Reports: `examples/cart_demos/uniform-v3-validation.json` and
+Historical 0.6.4 reports: `examples/old/cart_demos/uniform-v3-validation.json` and
 `uniform-v4-validation.json`. The older V3 standalone measurements used 192
 orientations and a different cartridge control path; use the table above for
 this matched comparison.
@@ -115,12 +118,13 @@ require Pillow and `--vice-data` pointing to the VICE ROM directory.
 
 ```bash
 python -m unittest discover -s tests -v
-python tools/verify_uniform_cart.py examples/cart_demos/c643d-demo-v0.6.4-yunroll-cart-v3-all.crt --report build/verify-v3.json
-python tools/verify_uniform_cart.py examples/cart_demos/c643d-demo-v0.6.4-yunroll-cart-v4-all.crt --report build/verify-v4.json
-python tools/verify_cart_menu.py examples/cart_demos/c643d-demo-v0.6.4-yunroll-cart-v4-all.crt --vice-data /path/to/vice-data
+python tools/verify_uniform_cart.py examples/old/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v3-all.crt --report build/verify-v3.json
+python tools/verify_uniform_cart.py examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all.crt --report build/verify-v4.json
+python tools/verify_cart_menu.py examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all.crt --vice-data /path/to/vice-data
 python tools/verify_cart_stream_edges.py --renderer yunroll-cart-v4 --report build/verify-v4-boundaries.json
 ```
 
+The historical report is in `examples/old/cart_demos/v4-boundary-validation.json`.
 The V4 boundary check covers empty frames; 1, 255, 256, 257 and 512 runs;
 255 clear spans; the 1,024-byte metadata boundary; and a 255-frame directory,
 with slot reuse and wrapping. Both colour and monochrome paths are checked.
@@ -132,7 +136,7 @@ unzip cannot remove obsolete paths, run the cleanup command afterwards:
 
 ```bash
 cd ~/NeuralNetwork/c64-3d-toolkit
-unzip -o ../c64-3d-toolkit-v0.6.4-cart-v4-changed-files.zip
+unzip -o ../c64-3d-toolkit-v0.6.5-corrected-changed-files.zip
 python tools/archive_old_carts.py
 ```
 
@@ -141,3 +145,38 @@ under `examples/old/cart_demos/`. It preserves differing local copies using a
 content-hash suffix, skips already archived files, and leaves custom filenames
 alone. Use `--dry-run` to inspect the moves. Git can recognize the unchanged
 archived files as renames. The full-repo ZIP already uses the cleaned layout.
+
+## Animated-menu launch hotfix
+
+The initial v0.6.4 release could JAM at $0008 after choosing the animated
+`demoscene` style with F1 and then launching an animation. This was a loader
+memory-mapping error, not a rendering-data or RAM-capacity overflow.
+
+The animated menu uses `$01=$35` for its private RAM IRQ vector. The loader
+previously enabled cartridge ROM without first restoring LORAM/HIRAM, so it
+copied RAM contents in place of the ROM payload, then attempted to execute them.
+It now disables and acknowledges the menu VIC IRQ and sets `$01=$37` before
+any cartridge payload copy. The selected entry in X is preserved. The same
+entry preparation is used by the retained legacy menu loader.
+
+The active V4 cart has been rebuilt for 0.6.5. Renderer payloads and frame
+blocks remain byte-identical to the initial v0.6.4 release. Older released
+comparison carts are preserved unchanged in the archive for reference. The new regression
+covers 72 menu launches and 12 SPACE launches on the current V4 cart, across all three styles
+and two style cycles, with the animated IRQ actually running before launch.
+It compares full loaded payloads and the control shim, checks the memory map,
+and verifies bitmap/colour output across all three buffers. The earlier tests
+cycled styles but launched only from default; that coverage gap is now closed.
+The monitor enters the real F1/RETURN/control handler paths; it does not inject
+host keyboard events.
+
+After rebuilding the current cart, reproduce the check with:
+
+```bash
+python tools/verify_cart_menu_launch.py examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all.crt --report build/menu-launch-v4.json
+```
+
+Use `--vice` and `--vice-data` for explicit emulator and ROM paths. The shipped
+`examples/cart_demos/menu-launch-v4-validation.json` includes the SHA-256 of
+the exact tested 0.6.5 CRT and confirms version text in all three menu styles.
+The original 0.6.4 tag and archived binaries are preserved.

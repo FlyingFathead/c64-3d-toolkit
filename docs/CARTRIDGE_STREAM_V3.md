@@ -2,8 +2,9 @@
 
 > Historical mixed-method menu carts mentioned below now live in `examples/old/cart_demos/`. For uniform comparisons and scrolling menus, see [the V4 guide](CARTRIDGE_STREAM_V4.md).
 
-V3 is an opt-in derivative of V2. The toolkit version remains 0.6.4; the renderer
-suffix identifies the experiment. Existing V2 sources, assets, cartridges and
+V3 is an opt-in derivative of V2, introduced in toolkit 0.6.4; the renderer
+suffix identifies the experiment. The current toolkit release is 0.6.5,
+with V4 as its default cart renderer. Existing V2 sources, assets, cartridges and
 normal PRG renderers are retained. `cart-stream` still defaults to V2.
 
 ## Results

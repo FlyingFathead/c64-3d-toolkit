@@ -50,13 +50,17 @@ class UniformCartTests(unittest.TestCase):
             (source / 'c643d-demo-v0.6.4.crt').write_bytes(b'identical')
             (target / 'c643d-demo-v0.6.4.crt').write_bytes(b'identical')
             (source / 'my-cart.crt').write_bytes(b'custom')
-            self.assertEqual(archive(root, dry_run=True), 2)
+            (source / 'c643d-demo-v0.6.4-yunroll-cart-v4-all.crt').write_bytes(b'old V4')
+            (source / 'c643d-demo-v0.6.5-yunroll-cart-v4-all.crt').write_bytes(b'current V4')
+            self.assertEqual(archive(root, dry_run=True), 3)
             self.assertTrue((source / 'c643d-demo.crt').exists())
-            self.assertEqual(archive(root), 2)
+            self.assertEqual(archive(root), 3)
             self.assertEqual(archive(root), 0)
             self.assertEqual((target / 'c643d-demo.crt').read_bytes(), b'archive from ZIP')
             self.assertEqual(next(target.glob('*-local-*')).read_bytes(), b'local edit')
             self.assertEqual((source / 'my-cart.crt').read_bytes(), b'custom')
+            self.assertEqual((source / 'c643d-demo-v0.6.5-yunroll-cart-v4-all.crt').read_bytes(), b'current V4')
+            self.assertEqual((target / 'c643d-demo-v0.6.4-yunroll-cart-v4-all.crt').read_bytes(), b'old V4')
 
 
 if __name__ == '__main__':

@@ -857,6 +857,18 @@ wait_menu_key_release_loop:
 ; hidden beneath cartridge ROM and handles destination $8000-$9FFF cleanly.
 ; -----------------------------------------------------------------------------
 load_entry_x:
+    ; The demoscene menu runs with $01=$35 for its private RAM IRQ vector.
+    ; ROML reads require LORAM/HIRAM enabled: stop the menu IRQ and restore
+    ; the loader map BEFORE enabling the cartridge or copying any payload.
+    ; Preserve X, which holds the selected demo index.
+    sei
+    lda #0
+    sta $d01a
+    lda #$0f
+    sta $d019
+    lda #$37
+    sta $01
+
     lda demo_bank,x
     sta ZP_BANK
     lda #$00
@@ -1059,10 +1071,10 @@ gradient_palette:
     .byte $06,$0e,$03,$0d,$07,$0a,$02,$04,$0a,$07,$0d,$03,$0e,$06,$0b,$0c
 
 title_default:
-    .text "C64 3D TOOLKIT 0.6.4 CARTRIDGE DEMO"
+    .text "C64 3D TOOLKIT 0.6.5 CARTRIDGE DEMO"
     .byte 0
 title_fancy:
-    .text "C64-3D-TOOLKIT 0.6.4"
+    .text "C64-3D-TOOLKIT 0.6.5"
     .byte 0
 subtitle_fancy:
     .text "EASYFLASH ANIMATION DEMO"

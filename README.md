@@ -16,8 +16,8 @@ See [the HiFi showcase](examples/hifi_showcase/README.md) and [the V2 streaming 
 
 **One renderer per comparison cart.** The default `cart-demos` build now uses
 `yunroll-cart-v4` for **all twelve demos**, including the original Blender and SVG
-examples. A matching `yunroll-cart-v3` cart is included for A/B comparisons with
-identical frame data. The menu scrolls ten entries between fixed horizontal
+examples. V4 is the only active demo cart. Earlier V3/V4 comparison bundles
+and measurements are preserved in `examples/old/cart_demos/`. The menu scrolls ten entries between fixed horizontal
 borders in all three styles, with buffered updates on navigation.
 
 V4 is a small further improvement over V3: the matched menu carts reach about
@@ -25,6 +25,10 @@ V4 is a small further improvement over V3: the matched menu carts reach about
 in PAL VICE. Both use 128 HiFi orientations; standalone HiFi carts retain 192.
 See [the uniform cart and V4 guide](docs/CARTRIDGE_STREAM_V4.md) for all twelve
 measurements, memory layout, rebuilding and verification.
+
+**v0.6.5 fixes launching from the animated-colour menu**, including the reported
+`JAM at $0008`. See [upgrading to 0.6.5](docs/UPGRADING_0.6.5.md) for the update
+and archive command.
 
 ## Try it first
 
@@ -42,10 +46,10 @@ x64sc -cartcrt examples/hifi_showcase/sunflower_torus_hifi-yunroll-cart-v2.crt
 For the twelve-animation menu, launch the shipped demo cartridge:
 
 ```bash
-x64sc -cartcrt examples/cart_demos/c643d-demo-v0.6.4-yunroll-cart-v4-all.crt
+x64sc -cartcrt examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all.crt
 ```
 
-That boots the **c64-3d-toolkit v0.6.4 demo cart** directly. Use the cursor keys
+That boots the **c64-3d-toolkit v0.6.5 demo cart** directly. Use the cursor keys
 to choose an animation and RETURN to launch it. In the menu, F1 cycles the live
 presentation through `default`, `decorative`, and `demoscene`. While a demo is
 running, F1 or RUN/STOP returns to the menu and SPACE launches the next demo.
@@ -65,11 +69,11 @@ So there are two easy ways in:
 1. **Just run the included demos** in VICE and see the C64 output immediately.
 2. **Build your own** procedural, OBJ/MTL, SVG, or Blender-authored scene with the toolkit.
 
-### Cartridge output in v0.6.4
+### Cartridge output in v0.6.5
 
 c64-3d-toolkit can build bank-switched C64 cartridge images in **`.crt` format**
 in addition to traditional `.prg` files. The repository includes the ready-made
-[`examples/cart_demos/c643d-demo-v0.6.4-yunroll-cart-v4-all.crt`](examples/cart_demos/c643d-demo-v0.6.4-yunroll-cart-v4-all.crt), plus
+[`examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all.crt`](examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all.crt), plus
 its bank map and manifest, so the cartridge path can be tried without rebuilding
 it first.
 
@@ -96,8 +100,9 @@ sample counts. Both HiFi models use 128 orientations. Frame data occupies
 580,017 bytes spread across available ROMH and ROML chips in one 1 MiB EasyFlash.
 
 ```bash
-./build.sh cart-demos --stream-renderer yunroll-cart-v3
 ./build.sh cart-demos --stream-renderer yunroll-cart-v4
+# Optional historical renderer build, output goes to examples/old/cart_demos/:
+./build.sh cart-demos --stream-renderer yunroll-cart-v3
 # After overlaying an update ZIP, archive obsolete bundled cart names:
 python tools/archive_old_carts.py
 ```
@@ -449,9 +454,9 @@ The bundled horse is deliberately compiled with `--visibility surface`. Its OBJ 
 The emitter can spill whole per-orientation line blocks into otherwise-unused RAM below bitmap #2, so the full horse surface mode still fits 36 sampled orientations without reducing the mesh.
 
 
-## Current render/build controls (v0.6.4)
+## Current render/build controls (v0.6.5)
 
-These controls were introduced in v0.6.2 and remain the current v0.6.4 PRG behaviour. They expand the default drawable area while keeping alternate/debug paths out of the production renderer:
+These controls were introduced in v0.6.2 and remain the current v0.6.5 PRG behaviour. They expand the default drawable area while keeping alternate/debug paths out of the production renderer:
 
 ```bash
 # production HUD/FPS path: automatic 256x192 drawable viewport
@@ -487,7 +492,7 @@ The no-overlay and raster-profiler implementations are separate ASM derivatives.
 ./build.sh test-examples --variants normal --reference-set legacy-v0.6.0-v0.6.1 --reproduce-reference
 ```
 
-Each generated PRG is reported as `MATCHING`, `CHANGED`, or `ABSENT`, followed by totals. Reference SHA-256 values and byte sizes live in `tests/data/golden_prg_checksums.json`. The historical v0.6.0/v0.6.1 set is retained alongside the preserved v0.6.2 PRG compatibility baseline instead of being overwritten. The v0.6.3 cartridge work does not replace that golden PRG set.
+Each generated PRG is reported as `MATCHING`, `CHANGED`, or `ABSENT`, followed by totals. Reference SHA-256 values and byte sizes live in `tests/data/golden_prg_checksums.json`. The historical v0.6.0/v0.6.1 set is retained alongside the preserved v0.6.2 PRG compatibility baseline instead of being overwritten. Cartridge work does not replace that golden PRG set.
 
 To install all deterministic reference PRGs into their per-example directories (normal, `_legacy144`, `_no_overlay`, and `_rastertime_profiler`):
 
@@ -530,17 +535,17 @@ the bitmap and can therefore run slower depending on scene complexity. All
 variants remain native hires, hidden-line clipped, triple-buffered, and do not
 use pre-rendered bitmap animation frames.
 
-As of **v0.6.4**, the toolkit is a reusable multi-source compiler/runtime rather
+As of **v0.6.5**, the toolkit is a reusable multi-source compiler/runtime rather
 than only a rotating-mesh benchmark. It accepts procedural geometry, OBJ/MTL,
 SVG, versioned `.c643dscene` interchange data, and animated Blender `.blend`
 scenes. Blender-authored builds can preserve arbitrary object motion, stable-
 topology deformation, rigid-body simulation, materials, and active-camera
 animation while the stock C64 still rasterizes the resulting vectors itself.
 
-Version 0.6.4 extends EasyFlash support with real per-frame streaming in the
-independent `yunroll-cart-v2` renderer. The menu cartridge combines ten original
-PRGs and two streamed HiFi models, with bank maps and VICE-verified copying,
-drawing and menu controls. The original `yunroll-cart` scaffold is retained.
+Version 0.6.4 introduced the independent cartridge streaming variants. Version
+0.6.5 fixes the animated-menu loader handoff and keeps one current V4 cart with
+all twelve entries streamed using the same renderer. The original `yunroll-cart`
+scaffold and earlier renderer variants are retained.
 
 The project grew out of the rotating-torus benchmark, a.k.a. **THE WORLD'S MOST
 DANGEROUS ROTATING DONUT**.
@@ -931,7 +936,7 @@ previewer is planned, but the command-line path will remain first-class.
 
 ## Status
 
-**Version 0.6.4 is the current release.** The production PRG pipeline
+**Version 0.6.5 is the current release.** The production PRG pipeline
 remains compatible with the verified v0.6.2 baseline, while cartridge work is
 kept in a separate EasyFlash backend. Current cartridge milestones include:
 
@@ -945,8 +950,7 @@ kept in a separate EasyFlash backend. Current cartridge milestones include:
 - C64-side VICE/debug-cart validation of banked payload copying; and
 - the independent `yunroll-cart-v2` streamer, 16-bit run counts and HiFi demos.
 
-The demo cartridge now combines original PRG entries and two frame-streamed
-HiFi entries. Their animation tables consume cartridge ROM while a fixed frame
+The current demo cartridge streams all twelve entries through V4. Their animation tables consume cartridge ROM while a fixed frame
 buffer and per-bitmap metadata caches are reused in RAM. The current V2 limits
 include 255 orientations, an 8 KiB frame block, and OBJ/SVG/procedural inputs;
 Blender scene streaming remains a future extension.

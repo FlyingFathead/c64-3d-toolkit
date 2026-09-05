@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.5: Animated-menu launch fix and V4-only active cart
+
+- Fixed `JAM at $0008` when launching from the demoscene (animated colour) menu. The loader now disables and acknowledges the menu raster IRQ and restores `$01=$37` before reading cartridge ROM. The animated menu had left `$01=$35`, causing payload and control-shim copies to read RAM instead.
+- Rebuilt the current V4 demo cart as `c643d-demo-v0.6.5-yunroll-cart-v4-all.crt`; renderer code, vector data and frame allocation are unchanged. Added a VICE regression that launches all twelve demos from all three styles across two style cycles, including menu returns and next-demo wrapping.
+
+- Moved both 0.6.4 comparison bundles and their historical reports under `examples/old/cart_demos/`. The cleanup command handles ZIP overlays and preserves local edits. Explicit V2/V3 builds now default to the archive folder; V4 remains the normal build/run choice.
+- Bumped CLI, package, Windows setup labels, current documentation and all generated menu styles to 0.6.5.
+- Corrected ZIP update timestamps so Python invalidates cached bytecode after same-length source edits.
+
 ## 0.6.4: HiFi assets and cartridge streaming variants
 
 - Added separate `yunroll-cart-v4` with inline line dispatch and direct kernel continuation; modest further gains over V3 with identical vector data.

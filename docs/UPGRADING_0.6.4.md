@@ -1,5 +1,8 @@
 # 0.6.4 package notes
 
+Historical notes for the original 0.6.4 package. For the current release, see
+[upgrading to 0.6.5](UPGRADING_0.6.5.md).
+
 The changed-files ZIP contains paths relative to the repository root. Extract
 it into your existing `c64-3d-toolkit/` checkout. The full ZIP contains one
 `c64-3d-toolkit/` directory. Neither archive contains the external tool bundle,

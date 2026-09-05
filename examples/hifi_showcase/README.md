@@ -41,9 +41,9 @@ x64sc -cartcrt examples/hifi_showcase/horse_head_hifi-yunroll-cart-v2.crt
 x64sc -cartcrt examples/hifi_showcase/sunflower_torus_hifi-yunroll-cart-v2.crt
 ```
 
-Each CRT starts its own animation directly. The 0.6.4 combined menu cartridge
+Each CRT starts its own animation directly. The current 0.6.5 menu cartridge
 also includes both new demos at 128 orientations, alongside all ten originals.
-Run `x64sc -cartcrt examples/cart_demos/c643d-demo-v0.6.4-yunroll-cart-v4-all.crt`.
+Run `x64sc -cartcrt examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all.crt`.
 
 ## Rebuild
 

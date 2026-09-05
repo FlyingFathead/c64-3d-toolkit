@@ -816,10 +816,27 @@ class TestRc062RenderAndChecksumControls(unittest.TestCase):
         self.assertEqual(merged[merged.index('--sample-step')+1],'3')
         self.assertEqual(merged[merged.index('--renderer')+1],'yunroll')
 
-    def test_development_version_is_064(self):
+    def test_development_version_is_065(self):
         from tools.c643d import __version__
-        self.assertEqual(__version__,'0.6.4')
-        self.assertEqual((ROOT/'VERSION').read_text(encoding='utf-8').strip(),'0.6.4')
+        self.assertEqual(__version__,'0.6.5')
+        self.assertEqual((ROOT/'VERSION').read_text(encoding='utf-8').strip(),'0.6.5')
+        import hashlib, json, re
+        for name in ('setup-windows.cmd', 'setup-windows.ps1'):
+            self.assertIn('Target toolkit release: v'+__version__, (ROOT/name).read_text())
+        self.assertIn("$TargetRelease = '"+__version__+"'", (ROOT/'setup-windows.ps1').read_text())
+        for name in ('easyflash-demo-runtime.asm', 'easyflash-demo-scroll-runtime.asm'):
+            shown=re.findall(r'TOOLKIT (\d+\.\d+\.\d+)', (ROOT/'c64/cart'/name).read_text())
+            self.assertEqual(set(shown), {__version__}, name)
+        stem='c643d-demo-v'+__version__+'-yunroll-cart-v4-all'
+        folder=ROOT/'examples/cart_demos'
+        manifest=json.loads((folder/(stem+'-cart-manifest.json')).read_text())
+        report=json.loads((folder/'menu-launch-v4-validation.json').read_text())
+        self.assertEqual(manifest['version'], __version__)
+        self.assertEqual(report['version'], __version__)
+        self.assertEqual(report['cartridge'], stem+'.crt')
+        self.assertEqual(report['sha256'], hashlib.sha256((folder/(stem+'.crt')).read_bytes()).hexdigest())
+        self.assertTrue(report['version_text_all_styles'])
+
 
     def test_blender_only_selector_uses_blender_manifest(self):
         from argparse import Namespace
