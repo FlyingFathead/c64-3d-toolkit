@@ -97,6 +97,7 @@ def export_blend_scene(
     root: str | Path | None=None,
     blender_is_verified: bool=False,
     viewport_height: int=144,
+    max_frames: int=255,
 ) -> Path:
     source=Path(blend_path).expanduser().resolve()
     if not source.is_file():
@@ -115,7 +116,7 @@ def export_blend_scene(
         executable,'--background','--disable-autoexec',str(source),
         '--python-exit-code','1','--python',str(script),'--',
         '--output',str(output),'--sample-step',str(sample_step),
-        '--viewport-height',str(viewport_height),
+        '--viewport-height',str(viewport_height),'--max-frames',str(max_frames),
     ]
     if frame_start is not None:
         cmd.extend(['--frame-start',str(frame_start)])

@@ -1,0 +1,24 @@
+{
+  "cartridge": "dont_lose_your_marbles-yunroll-cart-v4-scene.crt",
+  "menu_entry": null,
+  "verified_frames": 200,
+  "orientations": 200,
+  "bitmap_bytes_checked": 1536000,
+  "color_bytes_checked": 192000,
+  "slots": {
+    "1": 67,
+    "2": 67,
+    "0": 66
+  },
+  "average_fps": 5.519231968316945,
+  "min_frame_cycles": 28922,
+  "max_frame_cycles": 330914,
+  "pixel_match": true,
+  "color_match": true,
+  "loop_seconds": null,
+  "target_fps": 7.142857142857143,
+  "hud_match": true,
+  "text_overlay": true,
+  "frame_index_bits": 16,
+  "cartridge_sha256": "a76bd2d48100658b95b7dd123974532cc4d88855ee5d5560a7b321e0b1249803"
+}

@@ -1,0 +1,614 @@
+{
+  "source": "falling_cubes_c64.blend",
+  "fps": 25,
+  "frames": 1500,
+  "duration_seconds": 60.0,
+  "camera_orbit_degrees": 360,
+  "objects": 86,
+  "pours": [
+    {
+      "object": "Cube_01",
+      "kind": "cube",
+      "release_frame": 6,
+      "release_seconds": 0.2,
+      "color": 7
+    },
+    {
+      "object": "Cube_02",
+      "kind": "cube",
+      "release_frame": 17,
+      "release_seconds": 0.64,
+      "color": 3
+    },
+    {
+      "object": "Cube_03",
+      "kind": "cube",
+      "release_frame": 29,
+      "release_seconds": 1.12,
+      "color": 10
+    },
+    {
+      "object": "Cube_04",
+      "kind": "cube",
+      "release_frame": 41,
+      "release_seconds": 1.6,
+      "color": 14
+    },
+    {
+      "object": "Cube_05",
+      "kind": "cube",
+      "release_frame": 52,
+      "release_seconds": 2.04,
+      "color": 7
+    },
+    {
+      "object": "Cube_06",
+      "kind": "cube",
+      "release_frame": 64,
+      "release_seconds": 2.52,
+      "color": 3
+    },
+    {
+      "object": "Marble_07",
+      "kind": "marble",
+      "release_frame": 126,
+      "release_seconds": 5.0,
+      "color": 3
+    },
+    {
+      "object": "Marble_08",
+      "kind": "marble",
+      "release_frame": 133,
+      "release_seconds": 5.28,
+      "color": 10
+    },
+    {
+      "object": "Marble_09",
+      "kind": "marble",
+      "release_frame": 139,
+      "release_seconds": 5.52,
+      "color": 14
+    },
+    {
+      "object": "Marble_10",
+      "kind": "marble",
+      "release_frame": 145,
+      "release_seconds": 5.76,
+      "color": 7
+    },
+    {
+      "object": "Marble_11",
+      "kind": "marble",
+      "release_frame": 152,
+      "release_seconds": 6.04,
+      "color": 3
+    },
+    {
+      "object": "Marble_12",
+      "kind": "marble",
+      "release_frame": 159,
+      "release_seconds": 6.32,
+      "color": 10
+    },
+    {
+      "object": "Marble_13",
+      "kind": "marble",
+      "release_frame": 165,
+      "release_seconds": 6.56,
+      "color": 14
+    },
+    {
+      "object": "Marble_14",
+      "kind": "marble",
+      "release_frame": 171,
+      "release_seconds": 6.8,
+      "color": 7
+    },
+    {
+      "object": "Marble_15",
+      "kind": "marble",
+      "release_frame": 178,
+      "release_seconds": 7.08,
+      "color": 3
+    },
+    {
+      "object": "Marble_16",
+      "kind": "marble",
+      "release_frame": 185,
+      "release_seconds": 7.36,
+      "color": 10
+    },
+    {
+      "object": "Marble_17",
+      "kind": "marble",
+      "release_frame": 191,
+      "release_seconds": 7.6,
+      "color": 14
+    },
+    {
+      "object": "Marble_18",
+      "kind": "marble",
+      "release_frame": 197,
+      "release_seconds": 7.84,
+      "color": 7
+    },
+    {
+      "object": "Cube_19",
+      "kind": "cube",
+      "release_frame": 289,
+      "release_seconds": 11.52,
+      "color": 10
+    },
+    {
+      "object": "Cube_20",
+      "kind": "cube",
+      "release_frame": 301,
+      "release_seconds": 12.0,
+      "color": 14
+    },
+    {
+      "object": "Cube_21",
+      "kind": "cube",
+      "release_frame": 313,
+      "release_seconds": 12.48,
+      "color": 7
+    },
+    {
+      "object": "Cube_22",
+      "kind": "cube",
+      "release_frame": 325,
+      "release_seconds": 12.96,
+      "color": 3
+    },
+    {
+      "object": "Cube_23",
+      "kind": "cube",
+      "release_frame": 337,
+      "release_seconds": 13.44,
+      "color": 10
+    },
+    {
+      "object": "Cube_24",
+      "kind": "cube",
+      "release_frame": 349,
+      "release_seconds": 13.92,
+      "color": 14
+    },
+    {
+      "object": "Marble_25",
+      "kind": "marble",
+      "release_frame": 426,
+      "release_seconds": 17.0,
+      "color": 14
+    },
+    {
+      "object": "Marble_26",
+      "kind": "marble",
+      "release_frame": 433,
+      "release_seconds": 17.28,
+      "color": 7
+    },
+    {
+      "object": "Marble_27",
+      "kind": "marble",
+      "release_frame": 440,
+      "release_seconds": 17.56,
+      "color": 3
+    },
+    {
+      "object": "Marble_28",
+      "kind": "marble",
+      "release_frame": 448,
+      "release_seconds": 17.88,
+      "color": 10
+    },
+    {
+      "object": "Marble_29",
+      "kind": "marble",
+      "release_frame": 455,
+      "release_seconds": 18.16,
+      "color": 14
+    },
+    {
+      "object": "Marble_30",
+      "kind": "marble",
+      "release_frame": 462,
+      "release_seconds": 18.44,
+      "color": 7
+    },
+    {
+      "object": "Marble_31",
+      "kind": "marble",
+      "release_frame": 469,
+      "release_seconds": 18.72,
+      "color": 3
+    },
+    {
+      "object": "Marble_32",
+      "kind": "marble",
+      "release_frame": 477,
+      "release_seconds": 19.04,
+      "color": 10
+    },
+    {
+      "object": "Marble_33",
+      "kind": "marble",
+      "release_frame": 484,
+      "release_seconds": 19.32,
+      "color": 14
+    },
+    {
+      "object": "Marble_34",
+      "kind": "marble",
+      "release_frame": 491,
+      "release_seconds": 19.6,
+      "color": 7
+    },
+    {
+      "object": "Marble_35",
+      "kind": "marble",
+      "release_frame": 498,
+      "release_seconds": 19.88,
+      "color": 3
+    },
+    {
+      "object": "Marble_36",
+      "kind": "marble",
+      "release_frame": 506,
+      "release_seconds": 20.2,
+      "color": 10
+    },
+    {
+      "object": "Cube_37",
+      "kind": "cube",
+      "release_frame": 593,
+      "release_seconds": 23.68,
+      "color": 7
+    },
+    {
+      "object": "Cube_38",
+      "kind": "cube",
+      "release_frame": 606,
+      "release_seconds": 24.2,
+      "color": 3
+    },
+    {
+      "object": "Cube_39",
+      "kind": "cube",
+      "release_frame": 619,
+      "release_seconds": 24.72,
+      "color": 10
+    },
+    {
+      "object": "Cube_40",
+      "kind": "cube",
+      "release_frame": 631,
+      "release_seconds": 25.2,
+      "color": 14
+    },
+    {
+      "object": "Marble_41",
+      "kind": "marble",
+      "release_frame": 739,
+      "release_seconds": 29.52,
+      "color": 3
+    },
+    {
+      "object": "Marble_42",
+      "kind": "marble",
+      "release_frame": 747,
+      "release_seconds": 29.84,
+      "color": 10
+    },
+    {
+      "object": "Marble_43",
+      "kind": "marble",
+      "release_frame": 755,
+      "release_seconds": 30.16,
+      "color": 14
+    },
+    {
+      "object": "Marble_44",
+      "kind": "marble",
+      "release_frame": 763,
+      "release_seconds": 30.48,
+      "color": 7
+    },
+    {
+      "object": "Marble_45",
+      "kind": "marble",
+      "release_frame": 771,
+      "release_seconds": 30.8,
+      "color": 3
+    },
+    {
+      "object": "Marble_46",
+      "kind": "marble",
+      "release_frame": 780,
+      "release_seconds": 31.16,
+      "color": 10
+    },
+    {
+      "object": "Marble_47",
+      "kind": "marble",
+      "release_frame": 788,
+      "release_seconds": 31.48,
+      "color": 14
+    },
+    {
+      "object": "Marble_48",
+      "kind": "marble",
+      "release_frame": 796,
+      "release_seconds": 31.8,
+      "color": 7
+    },
+    {
+      "object": "Marble_49",
+      "kind": "marble",
+      "release_frame": 805,
+      "release_seconds": 32.16,
+      "color": 3
+    },
+    {
+      "object": "Marble_50",
+      "kind": "marble",
+      "release_frame": 813,
+      "release_seconds": 32.48,
+      "color": 10
+    },
+    {
+      "object": "Cube_51",
+      "kind": "cube",
+      "release_frame": 876,
+      "release_seconds": 35.0,
+      "color": 10
+    },
+    {
+      "object": "Cube_52",
+      "kind": "cube",
+      "release_frame": 889,
+      "release_seconds": 35.52,
+      "color": 14
+    },
+    {
+      "object": "Cube_53",
+      "kind": "cube",
+      "release_frame": 901,
+      "release_seconds": 36.0,
+      "color": 7
+    },
+    {
+      "object": "Cube_54",
+      "kind": "cube",
+      "release_frame": 913,
+      "release_seconds": 36.48,
+      "color": 3
+    },
+    {
+      "object": "Cube_55",
+      "kind": "cube",
+      "release_frame": 926,
+      "release_seconds": 37.0,
+      "color": 10
+    },
+    {
+      "object": "Cube_56",
+      "kind": "cube",
+      "release_frame": 939,
+      "release_seconds": 37.52,
+      "color": 14
+    },
+    {
+      "object": "Marble_57",
+      "kind": "marble",
+      "release_frame": 1026,
+      "release_seconds": 41.0,
+      "color": 14
+    },
+    {
+      "object": "Marble_58",
+      "kind": "marble",
+      "release_frame": 1033,
+      "release_seconds": 41.28,
+      "color": 7
+    },
+    {
+      "object": "Marble_59",
+      "kind": "marble",
+      "release_frame": 1041,
+      "release_seconds": 41.6,
+      "color": 3
+    },
+    {
+      "object": "Marble_60",
+      "kind": "marble",
+      "release_frame": 1049,
+      "release_seconds": 41.92,
+      "color": 10
+    },
+    {
+      "object": "Marble_61",
+      "kind": "marble",
+      "release_frame": 1056,
+      "release_seconds": 42.2,
+      "color": 14
+    },
+    {
+      "object": "Marble_62",
+      "kind": "marble",
+      "release_frame": 1063,
+      "release_seconds": 42.48,
+      "color": 7
+    },
+    {
+      "object": "Marble_63",
+      "kind": "marble",
+      "release_frame": 1071,
+      "release_seconds": 42.8,
+      "color": 3
+    },
+    {
+      "object": "Marble_64",
+      "kind": "marble",
+      "release_frame": 1079,
+      "release_seconds": 43.12,
+      "color": 10
+    },
+    {
+      "object": "Marble_65",
+      "kind": "marble",
+      "release_frame": 1086,
+      "release_seconds": 43.4,
+      "color": 14
+    },
+    {
+      "object": "Marble_66",
+      "kind": "marble",
+      "release_frame": 1093,
+      "release_seconds": 43.68,
+      "color": 7
+    },
+    {
+      "object": "Marble_67",
+      "kind": "marble",
+      "release_frame": 1101,
+      "release_seconds": 44.0,
+      "color": 3
+    },
+    {
+      "object": "Marble_68",
+      "kind": "marble",
+      "release_frame": 1109,
+      "release_seconds": 44.32,
+      "color": 10
+    },
+    {
+      "object": "Cube_69",
+      "kind": "cube",
+      "release_frame": 1176,
+      "release_seconds": 47.0,
+      "color": 7
+    },
+    {
+      "object": "Cube_70",
+      "kind": "cube",
+      "release_frame": 1188,
+      "release_seconds": 47.48,
+      "color": 3
+    },
+    {
+      "object": "Cube_71",
+      "kind": "cube",
+      "release_frame": 1200,
+      "release_seconds": 47.96,
+      "color": 10
+    },
+    {
+      "object": "Cube_72",
+      "kind": "cube",
+      "release_frame": 1212,
+      "release_seconds": 48.44,
+      "color": 14
+    },
+    {
+      "object": "Cube_73",
+      "kind": "cube",
+      "release_frame": 1224,
+      "release_seconds": 48.92,
+      "color": 7
+    },
+    {
+      "object": "Cube_74",
+      "kind": "cube",
+      "release_frame": 1236,
+      "release_seconds": 49.4,
+      "color": 3
+    },
+    {
+      "object": "Marble_75",
+      "kind": "marble",
+      "release_frame": 1326,
+      "release_seconds": 53.0,
+      "color": 3
+    },
+    {
+      "object": "Marble_76",
+      "kind": "marble",
+      "release_frame": 1333,
+      "release_seconds": 53.28,
+      "color": 10
+    },
+    {
+      "object": "Marble_77",
+      "kind": "marble",
+      "release_frame": 1341,
+      "release_seconds": 53.6,
+      "color": 14
+    },
+    {
+      "object": "Marble_78",
+      "kind": "marble",
+      "release_frame": 1349,
+      "release_seconds": 53.92,
+      "color": 7
+    },
+    {
+      "object": "Marble_79",
+      "kind": "marble",
+      "release_frame": 1356,
+      "release_seconds": 54.2,
+      "color": 3
+    },
+    {
+      "object": "Marble_80",
+      "kind": "marble",
+      "release_frame": 1363,
+      "release_seconds": 54.48,
+      "color": 10
+    },
+    {
+      "object": "Marble_81",
+      "kind": "marble",
+      "release_frame": 1371,
+      "release_seconds": 54.8,
+      "color": 14
+    },
+    {
+      "object": "Marble_82",
+      "kind": "marble",
+      "release_frame": 1379,
+      "release_seconds": 55.12,
+      "color": 7
+    },
+    {
+      "object": "Marble_83",
+      "kind": "marble",
+      "release_frame": 1386,
+      "release_seconds": 55.4,
+      "color": 3
+    },
+    {
+      "object": "Marble_84",
+      "kind": "marble",
+      "release_frame": 1393,
+      "release_seconds": 55.68,
+      "color": 10
+    },
+    {
+      "object": "Marble_85",
+      "kind": "marble",
+      "release_frame": 1401,
+      "release_seconds": 56.0,
+      "color": 14
+    },
+    {
+      "object": "Marble_86",
+      "kind": "marble",
+      "release_frame": 1409,
+      "release_seconds": 56.32,
+      "color": 7
+    }
+  ],
+  "fallen_below_table": 85,
+  "baked_transform_animation": true
+}

@@ -1,6 +1,33 @@
 # Examples
 
-Generated/reference PRGs are grouped by logical demo so the examples tree does not become a flat pile of binaries.
+Ready-to-run cartridges, Blender scenes, and generated/reference PRGs are grouped by demo.
+
+## Cartridge demos
+
+| Example | Contents | Renderer |
+|---|---|---|
+| [Twelve-demo menu cartridge](cart_demos/README.md) | Preserved v0.6.5 menu cart, scrolling menus and three menu styles; includes the HiFi horse and sunflower | `yunroll-cart-v4` throughout |
+| [Don't Lose Your Marbles](cart_marbles/README.md) | v0.6.6 early beta: intro, collisions, fracture/star field, credits and BASIC epilogue; HUD and clean CRTs | Separate `yunroll-cart-v4-scene` extension |
+| [HiFi showcase cartridges](hifi_showcase/README.md) | Separate 192-orientation horse and sunflower CRTs, captures and reports | `yunroll-cart-v2` |
+
+Launch the current menu cart from the project root:
+
+```bash
+x64sc -cartcrt examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all.crt
+```
+
+Or launch the new standalone scene:
+
+```bash
+x64sc -cartcrt examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene.crt
+```
+
+Use the `-clean.crt` variant in the same folder for the intro and scene without
+the title/FPS HUD. Older comparison carts and reports are preserved under
+`old/cart_demos/`. Cartridge builds are separate from the standard PRG
+`test-examples` matrix below.
+
+## Example folders
 
 ```text
 examples/
@@ -13,6 +40,11 @@ examples/
   space_horse_spin/
   space_horse_crawl/
   blender_falling_cubes/
+  blender_marbles/
+  cart_demos/
+  cart_marbles/
+  hifi_showcase/
+  old/cart_demos/
   examples.json
   README.md
 ```
@@ -77,6 +109,19 @@ Assembler labels/listings remain transient under `build/`.
 
 The old duplicate `space_horse_spin.prg` and `space_horse_crawl.prg` aliases are retained in the historical checksum database but are no longer shipped as duplicate files; the explicit `_color` / `_legacy144` names identify the maintained outputs.
 
+## Orbiting cubes-and-marbles Blender example
+
+[`blender_marbles/`](blender_marbles/README.md) contains a separate 40-second
+source scene: 45 falling objects across six alternating pours, a full camera
+orbit, and a 32-piece tabletop fracture that drifts into a constellation.
+The live rigid-body source, baked animation and deterministic generator ship together.
+
+The standalone early-beta cartridge plays once, including its native intro,
+typing joke, credits and staged BASIC reboot. See the
+[V4 scene-streaming guide](../docs/CARTRIDGE_SCENES.md) for measured duration,
+build commands, HUD/clean options, memory limits and validation.
+The original falling-cubes assets and twelve-demo menu cartridge are unchanged.
+
 ## Upgrading an older checkout
 
 An overlay ZIP cannot delete the old flat files by itself. Preview and apply the safe migration once:
@@ -91,3 +136,8 @@ Existing destination files are never overwritten when their contents differ.
 ## Streamed HiFi cartridges
 
 [`hifi_showcase/`](hifi_showcase/README.md) contains separate horse and sunflower EasyFlash CRTs, each with 192 orientations. These use the independent `yunroll-cart-v2` frame streamer, with matching OBJ/MTL assets, VICE captures and validation reports.
+
+## Archived Marbles concept
+
+The [early concept tryout](old/cart_marbles/early-test-v0.6.5/README.md) preserves
+the earlier looping carts and baked Blender scene under the existing `old/` tree.

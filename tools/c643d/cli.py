@@ -618,6 +618,9 @@ def print_stats(mesh:Mesh,label:str,renderer:str,scale:float,stats:dict,hud:str,
 
 
 def cmd_build(a):
+    if a.renderer == "yunroll-cart-v4-scene":
+        from .cartscene import cmd_build_cart_scene
+        return cmd_build_cart_scene(a)
     if a.renderer in ("yunroll-cart-v2", "yunroll-cart-v3", "yunroll-cart-v4"):
         from .cartstream import cmd_build_cart_v2
         return cmd_build_cart_v2(a)
@@ -1183,8 +1186,12 @@ def make_parser(settings):
         q.add_argument('--z-tolerance',type=float,help='reciprocal-depth tolerance for visible wire edges; object presets may provide a default')
         q.add_argument('--feature-angle',type=float,help='surface_creases threshold in degrees; sharp manifold edges at/above this angle are preserved')
     b=sub.add_parser('build',help='generate tables, assemble PRG, optionally run VICE'); common(b)
-    b.add_argument('--renderer',choices=(*RENDERERS, 'yunroll-cart-v2', 'yunroll-cart-v3', 'yunroll-cart-v4'),default='yunroll',help='step/bytechunk/yunroll=PRG; yunroll-cart-v2/v3=streamed EasyFlash CRT')
+    b.add_argument('--renderer',choices=(*RENDERERS, 'yunroll-cart-v2', 'yunroll-cart-v3', 'yunroll-cart-v4', 'yunroll-cart-v4-scene'),default='yunroll',help='step/bytechunk/yunroll=PRG; yunroll-cart-v2/v3=streamed EasyFlash CRT')
     b.add_argument('--frames',type=int,help='precomputed legacy animation frames/orientations (default 48; not used by --blend)')
+    b.add_argument('--ending',action='store_true',help='finite scene, credits and ghost-in-BASIC epilogue; requires --intro')
+    b.add_argument('--intro',action='store_true',help='play the native Marbles intro before a v4-scene stream')
+    b.add_argument('--hud-text',help='custom static HUD, up to 31 characters (v4-scene)')
+    b.add_argument('--frame-ticks',type=int,default=4,help='PAL display ticks per scene sample; 4 = 12.5 FPS (v4-scene)')
     b.add_argument('--strict-frames',action='store_true',help='fail instead of reducing orientation count when table RAM overflows')
     b.add_argument('--camera',type=float,default=110.0)
     b.add_argument('--focal',type=float,default=180.0)

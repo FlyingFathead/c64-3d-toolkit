@@ -2,6 +2,7 @@ from __future__ import annotations
 # Compact 5x7 uppercase font. Each string row is 5 pixels; output is left-aligned
 # in an 8-bit hires cell with one blank column on each side-ish.
 FONT = {
+"'":["00100","00100","01000","00000","00000","00000","00000"],
 ' ': ["00000"]*7,
 'A':["01110","10001","10001","11111","10001","10001","10001"],
 'B':["11110","10001","10001","11110","10001","10001","11110"],

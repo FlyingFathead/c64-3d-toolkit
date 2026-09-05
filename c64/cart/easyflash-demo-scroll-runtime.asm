@@ -1032,11 +1032,11 @@ gradient_palette:
     .byte $06,$0e,$03,$0d,$07,$0a,$02,$04,$0a,$07,$0d,$03,$0e,$06,$0b,$0c
 
 title_default:
-    .text "C64 3D TOOLKIT 0.6.5  ALL V"
+    .text "C64 3D TOOLKIT 0.6.6  ALL V"
     .byte $30+RENDERER_VERSION
     .byte 0
 title_fancy:
-    .text "C64-3D-TOOLKIT 0.6.5"
+    .text "C64-3D-TOOLKIT 0.6.6"
     .byte 0
 subtitle_fancy:
     .text "ALL DEMOS: CART V"

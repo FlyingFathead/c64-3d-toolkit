@@ -1,0 +1,787 @@
+{
+  "source": "falling_cubes_c64.blend",
+  "fps": 25,
+  "frames": 1000,
+  "duration_seconds": 40.0,
+  "camera_orbit_degrees": 360,
+  "objects": 45,
+  "pours": [
+    {
+      "object": "Cube_01",
+      "kind": "cube",
+      "release_frame": 6,
+      "release_seconds": 0.2,
+      "color": 7,
+      "release_xy": [
+        -1.7831375446685243,
+        -1.1113019126049632
+      ]
+    },
+    {
+      "object": "Cube_02",
+      "kind": "cube",
+      "release_frame": 17,
+      "release_seconds": 0.64,
+      "color": 3,
+      "release_xy": [
+        1.6899792873666128,
+        1.1708929869466647
+      ]
+    },
+    {
+      "object": "Cube_03",
+      "kind": "cube",
+      "release_frame": 29,
+      "release_seconds": 1.12,
+      "color": 10,
+      "release_xy": [
+        -1.8033591022795254,
+        1.0789840052278286
+      ]
+    },
+    {
+      "object": "Cube_04",
+      "kind": "cube",
+      "release_frame": 40,
+      "release_seconds": 1.56,
+      "color": 14,
+      "release_xy": [
+        1.6715442637817208,
+        -1.0739410930719
+      ]
+    },
+    {
+      "object": "Cube_05",
+      "kind": "cube",
+      "release_frame": 51,
+      "release_seconds": 2.0,
+      "color": 7,
+      "release_xy": [
+        0.02547718105759944,
+        0.11289562524176688
+      ]
+    },
+    {
+      "object": "Cube_06",
+      "kind": "cube",
+      "release_frame": 62,
+      "release_seconds": 2.44,
+      "color": 3,
+      "release_xy": [
+        0.046695379455241826,
+        0.026614794031321887
+      ]
+    },
+    {
+      "object": "Marble_07",
+      "kind": "marble",
+      "release_frame": 101,
+      "release_seconds": 4.0,
+      "color": 3,
+      "release_xy": [
+        1.45139051344973,
+        0.18594208383478994
+      ]
+    },
+    {
+      "object": "Marble_08",
+      "kind": "marble",
+      "release_frame": 108,
+      "release_seconds": 4.28,
+      "color": 10,
+      "release_xy": [
+        -1.4634131861393966,
+        -0.09244898879522578
+      ]
+    },
+    {
+      "object": "Marble_09",
+      "kind": "marble",
+      "release_frame": 115,
+      "release_seconds": 4.56,
+      "color": 14,
+      "release_xy": [
+        -0.22670223415556245,
+        1.0561967545801778
+      ]
+    },
+    {
+      "object": "Marble_10",
+      "kind": "marble",
+      "release_frame": 122,
+      "release_seconds": 4.84,
+      "color": 7,
+      "release_xy": [
+        0.08643799063817685,
+        -1.0028253831165919
+      ]
+    },
+    {
+      "object": "Marble_11",
+      "kind": "marble",
+      "release_frame": 129,
+      "release_seconds": 5.12,
+      "color": 3,
+      "release_xy": [
+        1.4010438188169592,
+        0.22859716081395712
+      ]
+    },
+    {
+      "object": "Marble_12",
+      "kind": "marble",
+      "release_frame": 136,
+      "release_seconds": 5.4,
+      "color": 10,
+      "release_xy": [
+        -1.4736533094280713,
+        -0.13406108097016484
+      ]
+    },
+    {
+      "object": "Marble_13",
+      "kind": "marble",
+      "release_frame": 143,
+      "release_seconds": 5.68,
+      "color": 14,
+      "release_xy": [
+        -0.27892986672859776,
+        1.1877455142894404
+      ]
+    },
+    {
+      "object": "Marble_14",
+      "kind": "marble",
+      "release_frame": 150,
+      "release_seconds": 5.96,
+      "color": 7,
+      "release_xy": [
+        0.1482370561599477,
+        -1.1804186371844265
+      ]
+    },
+    {
+      "object": "Marble_15",
+      "kind": "marble",
+      "release_frame": 157,
+      "release_seconds": 6.24,
+      "color": 3,
+      "release_xy": [
+        1.4244542127619448,
+        0.14497441350779838
+      ]
+    },
+    {
+      "object": "Marble_16",
+      "kind": "marble",
+      "release_frame": 164,
+      "release_seconds": 6.52,
+      "color": 10,
+      "release_xy": [
+        -1.3749791721652609,
+        -0.1609039252258605
+      ]
+    },
+    {
+      "object": "Cube_17",
+      "kind": "cube",
+      "release_frame": 263,
+      "release_seconds": 10.48,
+      "color": 10,
+      "release_xy": [
+        -1.7809234500707252,
+        -1.1637195387803634
+      ]
+    },
+    {
+      "object": "Cube_18",
+      "kind": "cube",
+      "release_frame": 272,
+      "release_seconds": 10.84,
+      "color": 14,
+      "release_xy": [
+        1.6846847894444494,
+        1.2197210862676415
+      ]
+    },
+    {
+      "object": "Cube_19",
+      "kind": "cube",
+      "release_frame": 281,
+      "release_seconds": 11.2,
+      "color": 7,
+      "release_xy": [
+        -1.7769259066558842,
+        1.167261432673342
+      ]
+    },
+    {
+      "object": "Cube_20",
+      "kind": "cube",
+      "release_frame": 289,
+      "release_seconds": 11.52,
+      "color": 3,
+      "release_xy": [
+        1.5865808542803983,
+        -1.1529653123825925
+      ]
+    },
+    {
+      "object": "Cube_21",
+      "kind": "cube",
+      "release_frame": 297,
+      "release_seconds": 11.84,
+      "color": 10,
+      "release_xy": [
+        -0.006075460679225847,
+        0.05709268436788148
+      ]
+    },
+    {
+      "object": "Marble_22",
+      "kind": "marble",
+      "release_frame": 351,
+      "release_seconds": 14.0,
+      "color": 14,
+      "release_xy": [
+        1.384723812140275,
+        0.3155409665181561
+      ]
+    },
+    {
+      "object": "Marble_23",
+      "kind": "marble",
+      "release_frame": 358,
+      "release_seconds": 14.28,
+      "color": 7,
+      "release_xy": [
+        -1.402340686273121,
+        -0.4004718180378744
+      ]
+    },
+    {
+      "object": "Marble_24",
+      "kind": "marble",
+      "release_frame": 365,
+      "release_seconds": 14.56,
+      "color": 3,
+      "release_xy": [
+        -0.5819095653903862,
+        1.0454770475422792
+      ]
+    },
+    {
+      "object": "Marble_25",
+      "kind": "marble",
+      "release_frame": 372,
+      "release_seconds": 14.84,
+      "color": 10,
+      "release_xy": [
+        0.5215614662814992,
+        -1.1395027999669831
+      ]
+    },
+    {
+      "object": "Marble_26",
+      "kind": "marble",
+      "release_frame": 379,
+      "release_seconds": 15.12,
+      "color": 14,
+      "release_xy": [
+        1.2412944613810173,
+        0.35818820996330025
+      ]
+    },
+    {
+      "object": "Marble_27",
+      "kind": "marble",
+      "release_frame": 386,
+      "release_seconds": 15.4,
+      "color": 7,
+      "release_xy": [
+        -1.2094103311865465,
+        -0.45638684880488944
+      ]
+    },
+    {
+      "object": "Marble_28",
+      "kind": "marble",
+      "release_frame": 393,
+      "release_seconds": 15.68,
+      "color": 3,
+      "release_xy": [
+        -0.3910284272821217,
+        1.1305992846589552
+      ]
+    },
+    {
+      "object": "Marble_29",
+      "kind": "marble",
+      "release_frame": 400,
+      "release_seconds": 15.96,
+      "color": 10,
+      "release_xy": [
+        0.5413746933652324,
+        -1.148556958232728
+      ]
+    },
+    {
+      "object": "Marble_30",
+      "kind": "marble",
+      "release_frame": 407,
+      "release_seconds": 16.24,
+      "color": 14,
+      "release_xy": [
+        1.2970562691113134,
+        0.2757619084249382
+      ]
+    },
+    {
+      "object": "Marble_31",
+      "kind": "marble",
+      "release_frame": 414,
+      "release_seconds": 16.52,
+      "color": 7,
+      "release_xy": [
+        -1.266838802753148,
+        -0.3775814412929549
+      ]
+    },
+    {
+      "object": "Cube_32",
+      "kind": "cube",
+      "release_frame": 551,
+      "release_seconds": 22.0,
+      "color": 7,
+      "release_xy": [
+        -1.6130015678370415,
+        -0.9835061481605732
+      ]
+    },
+    {
+      "object": "Cube_33",
+      "kind": "cube",
+      "release_frame": 559,
+      "release_seconds": 22.32,
+      "color": 3,
+      "release_xy": [
+        1.6270538976990463,
+        1.0151137055843218
+      ]
+    },
+    {
+      "object": "Cube_34",
+      "kind": "cube",
+      "release_frame": 568,
+      "release_seconds": 22.68,
+      "color": 10,
+      "release_xy": [
+        -1.583418652834218,
+        1.1927215877726356
+      ]
+    },
+    {
+      "object": "Cube_35",
+      "kind": "cube",
+      "release_frame": 577,
+      "release_seconds": 23.04,
+      "color": 14,
+      "release_xy": [
+        1.808467252361577,
+        -1.050644530413236
+      ]
+    },
+    {
+      "object": "Marble_36",
+      "kind": "marble",
+      "release_frame": 651,
+      "release_seconds": 26.0,
+      "color": 3,
+      "release_xy": [
+        1.1505332017671184,
+        0.6519889475044903
+      ]
+    },
+    {
+      "object": "Marble_37",
+      "kind": "marble",
+      "release_frame": 658,
+      "release_seconds": 26.28,
+      "color": 10,
+      "release_xy": [
+        -1.085532275664323,
+        -0.6173102586940717
+      ]
+    },
+    {
+      "object": "Marble_38",
+      "kind": "marble",
+      "release_frame": 665,
+      "release_seconds": 26.56,
+      "color": 14,
+      "release_xy": [
+        -0.7280969905836896,
+        0.946728199087675
+      ]
+    },
+    {
+      "object": "Marble_39",
+      "kind": "marble",
+      "release_frame": 672,
+      "release_seconds": 26.84,
+      "color": 7,
+      "release_xy": [
+        0.9005751941904239,
+        -0.8538898034068781
+      ]
+    },
+    {
+      "object": "Marble_40",
+      "kind": "marble",
+      "release_frame": 679,
+      "release_seconds": 27.12,
+      "color": 3,
+      "release_xy": [
+        1.2155970055587262,
+        0.6281447436370697
+      ]
+    },
+    {
+      "object": "Marble_41",
+      "kind": "marble",
+      "release_frame": 686,
+      "release_seconds": 27.4,
+      "color": 10,
+      "release_xy": [
+        -1.1472302094215956,
+        -0.6198469812375069
+      ]
+    },
+    {
+      "object": "Marble_42",
+      "kind": "marble",
+      "release_frame": 693,
+      "release_seconds": 27.68,
+      "color": 14,
+      "release_xy": [
+        -0.8207153699833251,
+        0.9469658309234059
+      ]
+    },
+    {
+      "object": "Marble_43",
+      "kind": "marble",
+      "release_frame": 700,
+      "release_seconds": 27.96,
+      "color": 7,
+      "release_xy": [
+        0.7519657549529806,
+        -0.8144111286955044
+      ]
+    },
+    {
+      "object": "Marble_44",
+      "kind": "marble",
+      "release_frame": 707,
+      "release_seconds": 28.24,
+      "color": 3,
+      "release_xy": [
+        1.0463169725978163,
+        0.5682450229846595
+      ]
+    },
+    {
+      "object": "Marble_45",
+      "kind": "marble",
+      "release_frame": 714,
+      "release_seconds": 28.52,
+      "color": 10,
+      "release_xy": [
+        -1.1967217184317422,
+        -0.572623251235545
+      ]
+    }
+  ],
+  "fallen_below_table": 42,
+  "baked_transform_animation": true,
+  "table_pile_entries": 45,
+  "impact_checks": [
+    {
+      "object": "Cube_01",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 39,
+      "rebounds": 1
+    },
+    {
+      "object": "Cube_02",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 50,
+      "rebounds": 1
+    },
+    {
+      "object": "Cube_03",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 62,
+      "rebounds": 1
+    },
+    {
+      "object": "Cube_04",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 73,
+      "rebounds": 0
+    },
+    {
+      "object": "Cube_05",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 84,
+      "rebounds": 0
+    },
+    {
+      "object": "Cube_06",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 96,
+      "rebounds": 0
+    },
+    {
+      "object": "Marble_07",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 134,
+      "rebounds": 0
+    },
+    {
+      "object": "Marble_08",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 141,
+      "rebounds": 1
+    },
+    {
+      "object": "Marble_09",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 148,
+      "rebounds": 2
+    },
+    {
+      "object": "Marble_10",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 155,
+      "rebounds": 1
+    },
+    {
+      "object": "Marble_11",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 162,
+      "rebounds": 1
+    },
+    {
+      "object": "Marble_12",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 169,
+      "rebounds": 2
+    },
+    {
+      "object": "Marble_13",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 176,
+      "rebounds": 0
+    },
+    {
+      "object": "Marble_14",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 183,
+      "rebounds": 1
+    },
+    {
+      "object": "Marble_15",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 190,
+      "rebounds": 0
+    },
+    {
+      "object": "Marble_16",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 199,
+      "rebounds": 1
+    },
+    {
+      "object": "Cube_17",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 296,
+      "rebounds": 1
+    },
+    {
+      "object": "Cube_18",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 305,
+      "rebounds": 1
+    },
+    {
+      "object": "Cube_19",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 314,
+      "rebounds": 1
+    },
+    {
+      "object": "Cube_20",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 321,
+      "rebounds": 1
+    },
+    {
+      "object": "Cube_21",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 331,
+      "rebounds": 2
+    },
+    {
+      "object": "Marble_22",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 383,
+      "rebounds": 1
+    },
+    {
+      "object": "Marble_23",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 390,
+      "rebounds": 1
+    },
+    {
+      "object": "Marble_24",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 398,
+      "rebounds": 1
+    },
+    {
+      "object": "Marble_25",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 405,
+      "rebounds": 1
+    },
+    {
+      "object": "Marble_26",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 412,
+      "rebounds": 1
+    },
+    {
+      "object": "Marble_27",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 419,
+      "rebounds": 2
+    },
+    {
+      "object": "Marble_28",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 426,
+      "rebounds": 1
+    },
+    {
+      "object": "Marble_29",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 433,
+      "rebounds": 2
+    },
+    {
+      "object": "Marble_30",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 440,
+      "rebounds": 1
+    },
+    {
+      "object": "Marble_31",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 447,
+      "rebounds": 1
+    },
+    {
+      "object": "Cube_32",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 585,
+      "rebounds": 2
+    },
+    {
+      "object": "Cube_33",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 592,
+      "rebounds": 0
+    },
+    {
+      "object": "Cube_34",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 601,
+      "rebounds": 0
+    },
+    {
+      "object": "Cube_35",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 610,
+      "rebounds": 0
+    },
+    {
+      "object": "Marble_36",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 684,
+      "rebounds": 3
+    },
+    {
+      "object": "Marble_37",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 691,
+      "rebounds": 1
+    },
+    {
+      "object": "Marble_38",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 698,
+      "rebounds": 1
+    },
+    {
+      "object": "Marble_39",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 705,
+      "rebounds": 0
+    },
+    {
+      "object": "Marble_40",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 713,
+      "rebounds": 0
+    },
+    {
+      "object": "Marble_41",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 719,
+      "rebounds": 1
+    },
+    {
+      "object": "Marble_42",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 726,
+      "rebounds": 1
+    },
+    {
+      "object": "Marble_43",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 734,
+      "rebounds": 1
+    },
+    {
+      "object": "Marble_44",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 740,
+      "rebounds": 0
+    },
+    {
+      "object": "Marble_45",
+      "entered_table_pile_volume": true,
+      "first_table_volume_frame": 747,
+      "rebounds": 2
+    }
+  ],
+  "finale": {
+    "frame": 851,
+    "seconds": 34.0,
+    "table_shards": 32,
+    "scattered_objects": 6,
+    "method": "authored drifting fracture to constellation after rigid-body simulation"
+  }
+}

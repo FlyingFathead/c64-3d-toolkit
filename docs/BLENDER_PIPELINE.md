@@ -1,5 +1,7 @@
 # Blender animated-scene pipeline
 
+For long standalone EasyFlash scenes, see [V4 scene streaming and Don't Lose Your Marbles](CARTRIDGE_SCENES.md). The 255-frame and table-RAM limits below describe the original PRG path.
+
 Blender is an optional authoring front end. The classic procedural, OBJ, MTL,
 and SVG commands do not import `bpy`, launch Blender, or require Blender to be
 installed.

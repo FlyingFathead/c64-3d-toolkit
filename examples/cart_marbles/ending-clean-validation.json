@@ -1,0 +1,23 @@
+{
+  "cartridge": "dont_lose_your_marbles-yunroll-cart-v4-scene-clean.crt",
+  "finite_ending": true,
+  "greeting_correction_verified": true,
+  "basic_banner_verified": true,
+  "ghost_message_verified": true,
+  "idle_cursor_verified": true,
+  "seconds_from_reset": {
+    "0-intro_start": 0.47856072785735165,
+    "1-frame_begin": 9.605402903634415,
+    "2-outro_start": 45.94168980804833,
+    "3-greeting_oops": 48.53515866056059,
+    "4-greeting_done": 49.97158380428075,
+    "5-outro_credits_visible": 51.65166232258274,
+    "6-fake_basic_ready": 53.836505123583095,
+    "7-ghost_message_done": 58.11130598590405,
+    "8-ghost_idle": 58.11131207574134,
+    "9-ghost_idle": 59.10881321251096
+  },
+  "scene_seconds": 36.33628690441392,
+  "total_to_ghost_seconds": 58.11130598590405,
+  "cartridge_sha256": "7ae73a7d069e25f0bbffc87460324429ff67f55446f1e40347aa6a92adfa0125"
+}

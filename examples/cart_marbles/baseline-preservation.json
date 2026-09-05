@@ -1,0 +1,26 @@
+{
+  "baseline": "uploaded released v0.6.5 ZIP",
+  "byte_identical_files": [
+    "c64/cart/easyflash-stream-v4-helper.asm",
+    "c64/renderer-yunroll-cart-v4.asm",
+    "examples/blender_falling_cubes/examples.json",
+    "examples/blender_falling_cubes/falling_cubes_c64-yunroll.prg",
+    "examples/blender_falling_cubes/falling_cubes_c64-yunroll_no_overlay.prg",
+    "examples/blender_falling_cubes/falling_cubes_c64-yunroll_rastertime_profiler.prg",
+    "examples/blender_falling_cubes/falling_cubes_c64.blend",
+    "examples/blender_falling_cubes/falling_cubes_c64.py",
+    "examples/blender_falling_cubes/falling_cubes_c64_color-yunroll.prg",
+    "examples/blender_falling_cubes/falling_cubes_c64_color-yunroll_legacy144.prg",
+    "examples/blender_falling_cubes/falling_cubes_c64_color-yunroll_no_overlay.prg",
+    "examples/blender_falling_cubes/falling_cubes_c64_color-yunroll_rastertime_profiler.prg",
+    "examples/blender_falling_cubes/falling_cubes_full.blend",
+    "examples/blender_falling_cubes/falling_cubes_full.py",
+    "examples/cart_demos/README.md",
+    "examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all-cart-manifest.json",
+    "examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all-cart-map.txt",
+    "examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all.crt",
+    "examples/cart_demos/menu-launch-v4-validation.json",
+    "examples/cart_demos/scroll-menu-preview.png",
+    "examples/cart_demos/scroll-menu-validation.json"
+  ]
+}

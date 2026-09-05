@@ -30,6 +30,7 @@ def _args():
     p.add_argument('--frame-end',type=int)
     p.add_argument('--sample-step',type=int,default=1)
     p.add_argument('--viewport-height',type=int,default=144)
+    p.add_argument('--max-frames',type=int,default=255,help='explicit host export limit; legacy PRG default 255')
     return p.parse_args(argv)
 
 
@@ -101,8 +102,8 @@ def main():
         start,end,args.sample_step,scene_start=scene.frame_start,
         simulation_start=simulation_start,
     )
-    if len(source_frames)>255:
-        raise RuntimeError(f'{len(source_frames)} sampled frames exceed the C64 table limit of 255')
+    if not 1<=len(source_frames)<=args.max_frames:
+        raise RuntimeError(f'{len(source_frames)} sampled frames exceed the requested limit of {args.max_frames}')
     capture_frames=set(source_frames)
     print(
         f'c643d: evaluating Blender frames {evaluation_frames.start}..{end} sequentially; '
@@ -130,8 +131,13 @@ def main():
             for original,obj,mesh in parts:
                 offset=len(vertices); counts.append((original.name,len(mesh.vertices),len(mesh.polygons)))
                 for vertex in mesh.vertices:
-                    p=camera_inverse @ obj.matrix_world @ vertex.co
-                    vertices.append([float(p.x),float(p.y),float(-p.z)])
+                    if not int(original.get('c643d_visible_start',start)) <= source_frame <= int(original.get('c643d_visible_end',end)):
+                        # Preserve topology while parking scheduled emitters safely
+                        # outside the viewport and in front of the projection plane.
+                        vertices.append([float(vertex.co.x),-10000.0+float(vertex.co.y),100.0+float(vertex.co.z)])
+                    else:
+                        p=camera_inverse @ obj.matrix_world @ vertex.co
+                        vertices.append([float(p.x),float(p.y),float(-p.z)])
                 for polygon in mesh.polygons:
                     faces.append([offset+i for i in polygon.vertices])
                     material=(obj.material_slots[polygon.material_index].material

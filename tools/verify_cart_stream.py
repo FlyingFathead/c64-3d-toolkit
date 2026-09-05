@@ -52,7 +52,7 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None):
             work=root/f'build/menu-stream-{variant}'/name
         sym=labels(work/'runtime.lbl')
         menu=labels(root/'build'/f'{crt.stem}-cartridge-demo'/f'{crt.stem}-runtime-default.lbl')
-    frames=json.loads((work/'oracle.json').read_text());n=len(frames);count=n*cycles+3
+    frames=json.loads((work/'oracle.json').read_text());n=len(frames);finite=manifest.get('ending',False);count=n if finite else n*cycles+3
     # publish_wait can revisit the publication entry on very cheap frames.
     # Stop at the once-per-frame call site, before the handoff wait instead.
     completed=sym.get('frame_draw_complete',sym['frame_begin']+(15 if manifest.get('colors',True) else 12))
@@ -73,6 +73,7 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None):
         slot_counts={};images=[]
         for i in range(count):
             ram=(td/f'frame-{i:04d}.ram').read_bytes();fi=ram[sym['frame_index']];slot=ram[sym['render_slot']]
+            if manifest.get('frame_index_bits')==16:fi+=ram[sym['frame_index_hi']]<<8
             assert fi==i%n,(i,fi)
             slot_counts[slot]=slot_counts.get(slot,0)+1
             bm,sc=expected_frame(frames[fi],screen)
@@ -81,15 +82,25 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None):
                 if want!=actual:
                     mismatch=[j for j,(a,b) in enumerate(zip(want,actual)) if a!=b]
                     raise AssertionError(f'{crt.stem} frame {i} slot {slot}: {what} mismatch ({len(mismatch)} bytes), first {mismatch[:12]}')
-            if capture and n<=i<2*n:images.append(render_ram(ram,slot))
+            if manifest.get('hud_text') and manifest.get('text_overlay',True):
+                from c643d.font import bitmap_text
+                hud=bitmap_text(manifest['hud_text'])
+                assert ram[baddr+7680:baddr+7680+len(hud)]==hud, ('HUD mismatch',i,slot)
+            if not manifest.get('text_overlay',True):
+                assert not any(ram[baddr+7680:baddr+8000]), ('clean HUD row is not blank',i,slot)
+            if capture and ((finite and i<n) or (not finite and n<=i<2*n)):images.append(render_ram(ram,slot))
         assert set(slot_counts)=={0,1,2},slot_counts
         delta=[b-a for a,b in zip(ticks,ticks[1:])];clock=985248
         result=dict(cartridge=crt.name,menu_entry=menu_entry,verified_frames=count,orientations=n,bitmap_bytes_checked=count*7680,color_bytes_checked=count*960,slots=slot_counts,average_fps=clock*(count-1)/(ticks[-1]-ticks[0]),min_frame_cycles=min(delta),max_frame_cycles=max(delta),pixel_match=True,color_match=True)
+        if manifest.get('frame_index_bits')==16:
+            result.update(loop_seconds=(ticks[2*n]-ticks[n])/clock if cycles>=2 and not finite else None, target_fps=manifest['target_fps'], hud_match=True, text_overlay=manifest.get('text_overlay',True), frame_index_bits=16)
         if capture and images:
             capture=Path(capture);capture.mkdir(parents=True,exist_ok=True)
             from PIL import Image
             images[0].resize((960,600),Image.Resampling.NEAREST).save(capture/f'{crt.stem}-vice.png')
-            durations=[max(10,round(delta[n+i]/clock*1000)) for i in range(n)]
+            capture_delta=delta[:n-1]+[round(manifest['frame_ticks']*clock/50)] if finite else delta[n:2*n]
+            durations=[max(10,round(d/clock*100)*10) for d in capture_delta]
+            (capture/f'{crt.stem}-timing.json').write_text(json.dumps({'seconds_per_frame':[d/clock for d in capture_delta],'measured_loop_seconds':sum(capture_delta)/clock},indent=2)+'\n')
             images[0].resize((640,400),Image.Resampling.NEAREST).save(capture/f'{crt.stem}-vice.gif',save_all=True,append_images=[im.resize((640,400),Image.Resampling.NEAREST) for im in images[1:]],duration=durations,loop=0)
         return result
 if __name__=='__main__':

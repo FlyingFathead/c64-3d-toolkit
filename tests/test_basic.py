@@ -816,10 +816,10 @@ class TestRc062RenderAndChecksumControls(unittest.TestCase):
         self.assertEqual(merged[merged.index('--sample-step')+1],'3')
         self.assertEqual(merged[merged.index('--renderer')+1],'yunroll')
 
-    def test_development_version_is_065(self):
+    def test_development_version_is_066(self):
         from tools.c643d import __version__
-        self.assertEqual(__version__,'0.6.5')
-        self.assertEqual((ROOT/'VERSION').read_text(encoding='utf-8').strip(),'0.6.5')
+        self.assertEqual(__version__,'0.6.6')
+        self.assertEqual((ROOT/'VERSION').read_text(encoding='utf-8').strip(),__version__)
         import hashlib, json, re
         for name in ('setup-windows.cmd', 'setup-windows.ps1'):
             self.assertIn('Target toolkit release: v'+__version__, (ROOT/name).read_text())
@@ -827,15 +827,23 @@ class TestRc062RenderAndChecksumControls(unittest.TestCase):
         for name in ('easyflash-demo-runtime.asm', 'easyflash-demo-scroll-runtime.asm'):
             shown=re.findall(r'TOOLKIT (\d+\.\d+\.\d+)', (ROOT/'c64/cart'/name).read_text())
             self.assertEqual(set(shown), {__version__}, name)
-        stem='c643d-demo-v'+__version__+'-yunroll-cart-v4-all'
+        # v0.6.6 adds a separate finite demo and deliberately retains the
+        # released twelve-demo cart unchanged, including its displayed version.
+        bundle_version='0.6.5'
+        stem='c643d-demo-v'+bundle_version+'-yunroll-cart-v4-all'
         folder=ROOT/'examples/cart_demos'
         manifest=json.loads((folder/(stem+'-cart-manifest.json')).read_text())
         report=json.loads((folder/'menu-launch-v4-validation.json').read_text())
-        self.assertEqual(manifest['version'], __version__)
-        self.assertEqual(report['version'], __version__)
+        self.assertEqual(manifest['version'], bundle_version)
+        self.assertEqual(report['version'], bundle_version)
         self.assertEqual(report['cartridge'], stem+'.crt')
         self.assertEqual(report['sha256'], hashlib.sha256((folder/(stem+'.crt')).read_bytes()).hexdigest())
         self.assertTrue(report['version_text_all_styles'])
+        marbles=ROOT/'examples/cart_marbles'
+        for suffix in ('','-clean'):
+            scene=json.loads((marbles/('dont_lose_your_marbles-yunroll-cart-v4-scene'+suffix+'-manifest.json')).read_text())
+            self.assertEqual(scene['toolkit_version'], __version__)
+            self.assertTrue(scene['ending'])
 
 
     def test_blender_only_selector_uses_blender_manifest(self):

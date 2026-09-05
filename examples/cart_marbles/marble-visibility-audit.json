@@ -1,0 +1,5 @@
+{
+  "unobscured_table_marble_samples_checked": 514,
+  "empty_projected_regions": [],
+  "method": "Blender centre-ray visibility plus compiled bitmap within projected marble bounds; excludes the authored finale"
+}

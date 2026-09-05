@@ -1,0 +1,121 @@
+{
+  "label": "Early concept tryout",
+  "source_package": "c64-3d-toolkit-marbles-full.zip (prior v0.6.5-based beta)",
+  "files": [
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/README.md",
+      "archived": "README-original.md",
+      "sha256": "97d0fbf785fd5e49ac2b1302f8c72d4eaf997a045d4d3531bd32267ba3ffd73e"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene-clean-manifest.json",
+      "archived": "dont_lose_your_marbles-yunroll-cart-v4-scene-clean-manifest.json",
+      "sha256": "1b56062bf34f4d53f4dc15ca38d08231cf16886e2f155e8ee8c0a0529ef6b4a2"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene-clean.crt",
+      "archived": "dont_lose_your_marbles-yunroll-cart-v4-scene-clean.crt",
+      "sha256": "03cd69eaed0d8e158db4a90080afba6f9e9eea3a7d6aa92372c44f4a95a2584f"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene-clean.lbl",
+      "archived": "dont_lose_your_marbles-yunroll-cart-v4-scene-clean.lbl",
+      "sha256": "f7ee2f3f99be7f337126a0b7c0f93ed838a8743c3b53f1d633a01ffcb612d98e"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene-manifest.json",
+      "archived": "dont_lose_your_marbles-yunroll-cart-v4-scene-manifest.json",
+      "sha256": "5e8b9aecf47d525f96a13ae022af84ff2a9aea2108863be7a413319bf5978c45"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene.crt",
+      "archived": "dont_lose_your_marbles-yunroll-cart-v4-scene.crt",
+      "sha256": "6bba6159702fcb223af118466d2ff2aac4b949412259244d08c3d508f57bde6e"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene.lbl",
+      "archived": "dont_lose_your_marbles-yunroll-cart-v4-scene.lbl",
+      "sha256": "d9d2ef3aaa8575e618c0cdc8a5033282c74106bb1150a9ded413e519aa1f4a8f"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/intro/intro-brand.png",
+      "archived": "intro/intro-brand.png",
+      "sha256": "ca7aae77cb5784f52cdadf99693a6b629e1aa47888389d4c15a6945d0e7faffa"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/intro/intro-dont.png",
+      "archived": "intro/intro-dont.png",
+      "sha256": "642ed72a23f1c2f34233e281625c0fb1c5c4b6f292e91833423041b989e4de20"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/intro/intro-lose.png",
+      "archived": "intro/intro-lose.png",
+      "sha256": "2215f6471b02306603fcf7b7bd1699df16988cdd329d0936a0ce7ee7bddcc79f"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/intro/intro-marbles.png",
+      "archived": "intro/intro-marbles.png",
+      "sha256": "b121eabd6e24cd6fd855936b64126d56e91fa0d2188e801e9a37d56b7a6fee0c"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/intro/intro-presents.png",
+      "archived": "intro/intro-presents.png",
+      "sha256": "1c74a82ca49ecc7d071ac18a73549da9ccd0a3b501aeea2745885442aa3cb9d2"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/intro/intro-storyboard.png",
+      "archived": "intro/intro-storyboard.png",
+      "sha256": "ecf10cd68d725bf2ca85fc8a0b6993f2c1a20dec668e3e95a2d60abca4d89724"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/intro/intro-subtitle.png",
+      "archived": "intro/intro-subtitle.png",
+      "sha256": "1f06bea2e23c4c5b237e95c931a48dc96440ed3fa848a48803ac5058feced7be"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/intro/intro-white.png",
+      "archived": "intro/intro-white.png",
+      "sha256": "09ab4eebdffa1d6b3b3afb341a945004d9def81297415446e2610277183e5573"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/intro/intro-your.png",
+      "archived": "intro/intro-your.png",
+      "sha256": "0d35ae2397ed8cf619cb926047b467c19c2eb2d5571c4050162bc31d6660f02a"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/intro-validation.json",
+      "archived": "intro-validation.json",
+      "sha256": "81db37f1e514cdb563277265530194e1a13b7320adc1bc3ef50b6814b8970815"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/preview.png",
+      "archived": "preview.png",
+      "sha256": "bcdd6819b0fce0030a5f01b47047863ea8d253084b812386d36a255e94725b70"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/validation-clean.json",
+      "archived": "validation-clean.json",
+      "sha256": "7dd66924592a99c98587717b93f787ed48e90fd42f9c9ca9925fe254902abc5f"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/validation.json",
+      "archived": "validation.json",
+      "sha256": "7147d599ffdbc0948e7c2c03ab69bacd18472ea8ce5f48e9d757fe923dd70e41"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/cart_marbles/package-notes.json",
+      "archived": "package-notes.json",
+      "sha256": "608432c0067611b32f1dfa127c5aea09cd9898da9e1f3ac8f2cfcff455bbd8f6"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/blender_marbles/dont_lose_your_marbles.blend",
+      "archived": "blender/dont_lose_your_marbles.blend",
+      "sha256": "80ff5da3f48007d24b00767d6a916df17c99c2fcec36eb85afdc6a30a511cfff"
+    },
+    {
+      "source": "c64-3d-toolkit/examples/blender_marbles/dont_lose_your_marbles.json",
+      "archived": "blender/dont_lose_your_marbles.json",
+      "sha256": "a2f332fc4a460c11c02146b0a951ca9d8e12295b43e22c8e2c509c6dc37a1faf"
+    }
+  ]
+}

@@ -445,7 +445,8 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
 
 def build_scene_frames(scene, *, visibility_mode:str='surface', z_tolerance:float=Z_TOL,
                        feature_angle:float=40.0, enable_source_colors:bool=False,
-                       fallback_color:int=1, width:int=W, height:int=H) -> tuple[list[FrameBuild],int]:
+                       fallback_color:int=1, width:int=W, height:int=H,
+                       max_frames:int=255, max_visible_runs:int=255) -> tuple[list[FrameBuild],int]:
     """Render camera-space frames loaded from a ``.c643dscene`` source.
 
     Each authored frame is fed through the same hidden-line/DDA implementation
@@ -454,8 +455,8 @@ def build_scene_frames(scene, *, visibility_mode:str='surface', z_tolerance:floa
     Blender supplies evaluated vertices and projection, while the C64 tables
     remain exactly the format the existing runtime already consumes.
     """
-    if not 1<=len(scene.frames)<=255:
-        raise ValueError('scene frames must be 1..255')
+    if not 1<=len(scene.frames)<=max_frames:
+        raise ValueError(f'scene frames must be 1..{max_frames}')
     all_frames=[]; candidate_edges=None
     for scene_index,frame in enumerate(scene.frames):
         current=Mesh(
@@ -472,6 +473,7 @@ def build_scene_frames(scene, *, visibility_mode:str='surface', z_tolerance:floa
                 visibility_mode=visibility_mode,z_tolerance=z_tolerance,
                 feature_angle=feature_angle,enable_source_colors=enable_source_colors,
                 fallback_color=fallback_color,clip_viewport=True,width=width,height=height,
+                max_visible_runs=max_visible_runs,
             )
         except RuntimeError as e:
             raise RuntimeError(

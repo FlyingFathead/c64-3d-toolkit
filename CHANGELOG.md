@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.6: Don't Lose Your Marbles early beta
+
+- Added separate Blender and EasyFlash examples: targeted alternating cube/marble pours, a continuous orbit and a 32-piece tabletop fracture that drifts into a constellation. Isolated waiting emitters from active collisions; all 45 released bodies enter the table/pile volume.
+- Added the opt-in `yunroll-cart-v4-scene` extension: unchanged V4 drawing kernels, 16-bit scene indices, paged ROM directories, dual-chip frame packing, PAL pacing and custom/clean HUD variants.
+- Added a native title introduction and finite `--ending`: backspacing demoscene greeting, animated thank-you credits and a staged BASIC boot with the self-typing ghost message. The complete HUD build ends at 58.151 seconds; the vector scene takes 36.370 seconds.
+- Verified all 200 scene frames in both carts, the intro and ending, and 514 unobscured tabletop-marble regions. All 105 source tests pass. The stream uses 405,972 vector bytes. Music/digi playback remains unimplemented.
+- Documented cartridge examples in `examples/README.md`, added the scene guide and corrected GIF timing. Kept the original V4 files, falling-cubes example and v0.6.5 twelve-demo menu cart byte-identical.
+- Bumped toolkit and Windows setup metadata to 0.6.6. This package prepares the next patch version; it does not publish a GitHub release.
+
 ## 0.6.5: Animated-menu launch fix and V4-only active cart
 
 - Fixed `JAM at $0008` when launching from the demoscene (animated colour) menu. The loader now disables and acknowledges the menu raster IRQ and restores `$01=$37` before reading cartridge ROM. The animated menu had left `$01=$35`, causing payload and control-shim copies to read RAM instead.

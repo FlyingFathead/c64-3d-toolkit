@@ -10,13 +10,17 @@ Host-assisted low-poly wireframe 3D compiler/runtime for a **stock Commodore 64*
 
 Animate objects, cameras, modifiers, armatures, or rigid-body scenes in Blender; import coloured OBJ/MTL meshes or SVG paths; or use the classic procedural meshes and animation transforms. The toolkit preprocesses the result on the host, performs projection and hidden-line visibility, then generates 6510/6502 assembly data and runnable C64 demos whose vectors are drawn live by the C64.
 
-**More animation than one RAM load can hold.** Build standalone `.prg` demos, package animations into menu-driven `.crt` cartridges, or use the new experimental **`yunroll-cart-v2`** streamer. V2 keeps frame tables in EasyFlash ROM and reuses a small C64 RAM working set, making room for longer, more detailed rotations without squeezing the entire sequence into RAM. The new purple/blue **horse head HiFi** and **sunflower torus HiFi** demos each ship with **192 streamed orientations**, coloured wireframes, and surface-based hidden-line culling.
-
-See [the HiFi showcase](examples/hifi_showcase/README.md) and [the V2 streaming guide](docs/CARTRIDGE_STREAM_V2.md). V2 currently streams OBJ/SVG/procedural animations; the existing Blender-to-PRG pipeline and twelve-demo menu cartridge remain available.
+**More animation than one RAM load can hold.** Build standalone `.prg` demos,
+menu-driven `.crt` cartridges, or standalone EasyFlash vector streams. The current
+`yunroll-cart-v4` menu uses a fixed RAM working set for all twelve demos. The
+separate `yunroll-cart-v4-scene` extension supports long authored Blender scenes
+and powers [Don't Lose Your Marbles](examples/cart_marbles/README.md).
+The [HiFi showcase](examples/hifi_showcase/README.md) retains the standalone
+192-orientation horse and sunflower V2 examples for comparison.
 
 **One renderer per comparison cart.** The default `cart-demos` build now uses
 `yunroll-cart-v4` for **all twelve demos**, including the original Blender and SVG
-examples. V4 is the only active demo cart. Earlier V3/V4 comparison bundles
+examples. V4 remains the active twelve-demo menu renderer. Earlier V3/V4 comparison bundles
 and measurements are preserved in `examples/old/cart_demos/`. The menu scrolls ten entries between fixed horizontal
 borders in all three styles, with buffered updates on navigation.
 
@@ -29,6 +33,8 @@ measurements, memory layout, rebuilding and verification.
 **v0.6.5 fixes launching from the animated-colour menu**, including the reported
 `JAM at $0008`. See [upgrading to 0.6.5](docs/UPGRADING_0.6.5.md) for the update
 and archive command.
+
+**v0.6.6 adds [Don't Lose Your Marbles](examples/cart_marbles/README.md), an early-beta standalone cartridge demo:** coloured cubes and marbles hit a table during an orbiting shot, the tabletop fractures into a star field, and a native intro/credits/BASIC epilogue frames the scene. HUD and clean builds are included. The existing twelve-demo V4 cart is preserved. Audio remains future work.
 
 ## Try it first
 
@@ -69,7 +75,7 @@ So there are two easy ways in:
 1. **Just run the included demos** in VICE and see the C64 output immediately.
 2. **Build your own** procedural, OBJ/MTL, SVG, or Blender-authored scene with the toolkit.
 
-### Cartridge output in v0.6.5
+### Cartridge output in v0.6.6
 
 c64-3d-toolkit can build bank-switched C64 cartridge images in **`.crt` format**
 in addition to traditional `.prg` files. The repository includes the ready-made
@@ -454,9 +460,9 @@ The bundled horse is deliberately compiled with `--visibility surface`. Its OBJ 
 The emitter can spill whole per-orientation line blocks into otherwise-unused RAM below bitmap #2, so the full horse surface mode still fits 36 sampled orientations without reducing the mesh.
 
 
-## Current render/build controls (v0.6.5)
+## Current render/build controls (v0.6.6)
 
-These controls were introduced in v0.6.2 and remain the current v0.6.5 PRG behaviour. They expand the default drawable area while keeping alternate/debug paths out of the production renderer:
+These controls were introduced in v0.6.2 and remain the current v0.6.6 PRG behaviour. They expand the default drawable area while keeping alternate/debug paths out of the production renderer:
 
 ```bash
 # production HUD/FPS path: automatic 256x192 drawable viewport
@@ -535,7 +541,7 @@ the bitmap and can therefore run slower depending on scene complexity. All
 variants remain native hires, hidden-line clipped, triple-buffered, and do not
 use pre-rendered bitmap animation frames.
 
-As of **v0.6.5**, the toolkit is a reusable multi-source compiler/runtime rather
+As of **v0.6.6**, the toolkit is a reusable multi-source compiler/runtime rather
 than only a rotating-mesh benchmark. It accepts procedural geometry, OBJ/MTL,
 SVG, versioned `.c643dscene` interchange data, and animated Blender `.blend`
 scenes. Blender-authored builds can preserve arbitrary object motion, stable-
@@ -936,7 +942,7 @@ previewer is planned, but the command-line path will remain first-class.
 
 ## Status
 
-**Version 0.6.5 is the current release.** The production PRG pipeline
+**Version 0.6.6 includes the Marbles early beta.** The production PRG pipeline
 remains compatible with the verified v0.6.2 baseline, while cartridge work is
 kept in a separate EasyFlash backend. Current cartridge milestones include:
 
@@ -953,7 +959,7 @@ kept in a separate EasyFlash backend. Current cartridge milestones include:
 The current demo cartridge streams all twelve entries through V4. Their animation tables consume cartridge ROM while a fixed frame
 buffer and per-bitmap metadata caches are reused in RAM. The current V2 limits
 include 255 orientations, an 8 KiB frame block, and OBJ/SVG/procedural inputs;
-Blender scene streaming remains a future extension.
+Long Blender scenes use the separate `yunroll-cart-v4-scene` extension; see [the scene guide](docs/CARTRIDGE_SCENES.md).
 
 The animated Blender scene pipeline introduced in v0.6.0 remains first-class.
 `.blend` builds run Blender headlessly with its own bundled `bpy`, evaluate
