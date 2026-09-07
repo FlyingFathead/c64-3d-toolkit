@@ -1,0 +1,28 @@
+{
+  "cartridge": "horse_and_sunflower-yunroll-cart-v7-scene.crt",
+  "menu_entry": null,
+  "verified_frames": 171,
+  "orientations": 84,
+  "bitmap_bytes_checked": 1313280,
+  "color_bytes_checked": 164160,
+  "slots": {
+    "1": 49,
+    "2": 58,
+    "0": 64
+  },
+  "average_fps": 4.307463715570438,
+  "min_frame_cycles": 2902,
+  "max_frame_cycles": 397953,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 52,
+  "loop_seconds": 19.710856555912827,
+  "target_fps": 8.333333333333334,
+  "hud_match": true,
+  "text_overlay": false,
+  "frame_index_bits": 16,
+  "cartridge_sha256": "708ec0b55fdcef26c8ac4332dd1c5bcbe26d95b6a15c5f78ca495662af93c474",
+  "rc5_validated_sha256": "963668b568625f1f2fcb28f9bb2c2a75ca33e2103c2e768522fd90a691dcd563",
+  "sha256": "963668b568625f1f2fcb28f9bb2c2a75ca33e2103c2e768522fd90a691dcd563",
+  "final_release_note": "0.6.7: CRT title header corrected; all CHIP payloads are byte-identical to the validated rc5 cart. Retained timing and pixel comparisons apply to the identical executable/vector data."
+}

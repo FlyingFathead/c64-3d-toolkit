@@ -107,6 +107,24 @@ requires:
 - geometry in front of the camera. Projected edges may cross the viewport and
   are clipped to the C64 frame; near-plane crossings are not yet supported.
 
+For a matching camera frame, set Blender's output aspect to the target viewport
+and use square pixels: for a 256×192 cartridge scene, 768×576 is a convenient
+preview size. C64 export evaluates that perspective camera at 256×192. Source
+lighting, antialiasing and arbitrary material shaders are not part of the
+wireframe renderer; the C64 preview additionally resolves native 8×8-cell colours.
+
+In **0.6.7**, the exporter preserves outward face orientation when converting
+Blender's negative-forward camera Z to the toolkit's positive-forward Z. It
+also accounts for reflected object transforms and matches Blender's treatment
+of camera object scale. This fixes front-face feature
+culling and material choice for newly exported scenes. Use
+`tools/verify_blender_camera.py` through Blender to check projection, normals and
+material IDs against the actual evaluated Blender scene. Existing `.c643dscene`
+files retain their stored polygon order; re-export the `.blend` to apply the fix.
+
+The [horse-and-sunflower close-up](../examples/blender_horse_and_sunflower/README.md)
+includes its Blender scene, C64 cartridge and a preview made from C64 output.
+
 Stable topology still permits rigid-body motion, parenting, constraints,
 armatures, shape keys, and deforming modifiers that do not add/remove vertices
 or polygons. Animated booleans, remeshing, fracture systems that create new

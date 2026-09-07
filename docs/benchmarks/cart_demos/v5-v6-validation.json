@@ -1,0 +1,1197 @@
+{
+  "toolkit_version": "0.6.7-rc3",
+  "emulator": "VICE 3.10 x64sc",
+  "video_standard": "PAL",
+  "assembler": "64tass 1.59.3120",
+  "clock_hz": 985248,
+  "physical_hardware_tested": false,
+  "cartridges": {
+    "v5": {
+      "cartridge": "c643d-demo-v0.6.7-rc2-yunroll-cart-v5-all.crt",
+      "sha256": "0fbaecaaa4a6beff1841bf281787385dd985f7d7b22bacab0f33b26d0d3a7efd",
+      "crt_bytes": 927568,
+      "vector_bytes": 538330
+    },
+    "v6": {
+      "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+      "sha256": "3d668a3d06b2b830e084116a28126e8d03eeb110e045f7f87d2b66bd231dc8a8",
+      "crt_bytes": 927568,
+      "vector_bytes": 538330
+    }
+  },
+  "method": "Two loops plus three completed frames per entry, frozen pre-optimization V5 build oracles; matching original samples recovered from released V4. FPS and min/max cycles are intervals between frame_draw_complete checkpoints, excluding startup, including runtime IRQ and queue costs. They are not display-jitter measurements or isolated render-stage cycles.",
+  "entries": [
+    {
+      "entry": 0,
+      "name": "TORUS",
+      "v5": {
+        "cartridge": "c643d-demo-v0.6.7-rc2-yunroll-cart-v5-all.crt",
+        "menu_entry": 0,
+        "verified_frames": 67,
+        "orientations": 32,
+        "bitmap_bytes_checked": 514560,
+        "color_bytes_checked": 64320,
+        "slots": {
+          "1": 23,
+          "2": 22,
+          "0": 22
+        },
+        "average_fps": 12.370498774105082,
+        "min_frame_cycles": 55576,
+        "max_frame_cycles": 92856,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 0,
+        "verified_frames": 67,
+        "orientations": 32,
+        "bitmap_bytes_checked": 514560,
+        "color_bytes_checked": 64320,
+        "slots": {
+          "1": 23,
+          "2": 22,
+          "0": 22
+        },
+        "average_fps": 12.770844319170712,
+        "min_frame_cycles": 53860,
+        "max_frame_cycles": 90183,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "gain_percent": 3.236292669974361,
+      "baseline_oracle_sha256": "35a1b4d4cac8e5c61d616b070596726df802ab1c1b421a094d7ce8f4677de153",
+      "baseline_oracle_matches_recovered_v4_samples": true
+    },
+    {
+      "entry": 1,
+      "name": "TORUS DENSE",
+      "v5": {
+        "cartridge": "c643d-demo-v0.6.7-rc2-yunroll-cart-v5-all.crt",
+        "menu_entry": 1,
+        "verified_frames": 67,
+        "orientations": 32,
+        "bitmap_bytes_checked": 514560,
+        "color_bytes_checked": 64320,
+        "slots": {
+          "1": 23,
+          "2": 22,
+          "0": 22
+        },
+        "average_fps": 10.949802882436027,
+        "min_frame_cycles": 55365,
+        "max_frame_cycles": 105734,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 1,
+        "verified_frames": 67,
+        "orientations": 32,
+        "bitmap_bytes_checked": 514560,
+        "color_bytes_checked": 64320,
+        "slots": {
+          "1": 23,
+          "2": 22,
+          "0": 22
+        },
+        "average_fps": 11.298132550499114,
+        "min_frame_cycles": 54043,
+        "max_frame_cycles": 102422,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "gain_percent": 3.1811501248284912,
+      "baseline_oracle_sha256": "f47fccec5a2e2871cbf74f886ee3139d74ad5f29f6e135d461ab8c162004e865",
+      "baseline_oracle_matches_recovered_v4_samples": true
+    },
+    {
+      "entry": 2,
+      "name": "CUBE",
+      "v5": {
+        "cartridge": "c643d-demo-v0.6.7-rc2-yunroll-cart-v5-all.crt",
+        "menu_entry": 2,
+        "verified_frames": 75,
+        "orientations": 36,
+        "bitmap_bytes_checked": 576000,
+        "color_bytes_checked": 72000,
+        "slots": {
+          "1": 25,
+          "2": 25,
+          "0": 25
+        },
+        "average_fps": 25.809453886373532,
+        "min_frame_cycles": 23475,
+        "max_frame_cycles": 42644,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 2,
+        "verified_frames": 75,
+        "orientations": 36,
+        "bitmap_bytes_checked": 576000,
+        "color_bytes_checked": 72000,
+        "slots": {
+          "1": 25,
+          "2": 25,
+          "0": 25
+        },
+        "average_fps": 27.091713337851818,
+        "min_frame_cycles": 21484,
+        "max_frame_cycles": 40908,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "gain_percent": 4.968177386175809,
+      "baseline_oracle_sha256": "fe864017ea6e98f5ca9fadedc51ce38eb466894ff6249c7b566eb4f04fee92ca",
+      "baseline_oracle_matches_recovered_v4_samples": true
+    },
+    {
+      "entry": 3,
+      "name": "SPHERE",
+      "v5": {
+        "cartridge": "c643d-demo-v0.6.7-rc2-yunroll-cart-v5-all.crt",
+        "menu_entry": 3,
+        "verified_frames": 51,
+        "orientations": 24,
+        "bitmap_bytes_checked": 391680,
+        "color_bytes_checked": 48960,
+        "slots": {
+          "1": 17,
+          "2": 17,
+          "0": 17
+        },
+        "average_fps": 13.727313487194735,
+        "min_frame_cycles": 52339,
+        "max_frame_cycles": 77278,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 3,
+        "verified_frames": 51,
+        "orientations": 24,
+        "bitmap_bytes_checked": 391680,
+        "color_bytes_checked": 48960,
+        "slots": {
+          "1": 17,
+          "2": 17,
+          "0": 17
+        },
+        "average_fps": 14.42303216156054,
+        "min_frame_cycles": 47811,
+        "max_frame_cycles": 75046,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "gain_percent": 5.068134234821642,
+      "baseline_oracle_sha256": "e084ca73496715992acea108b8bad6c15fd491051a22ec9a3b0c906e2361f36e",
+      "baseline_oracle_matches_recovered_v4_samples": true
+    },
+    {
+      "entry": 4,
+      "name": "HORSE HEAD",
+      "v5": {
+        "cartridge": "c643d-demo-v0.6.7-rc2-yunroll-cart-v5-all.crt",
+        "menu_entry": 4,
+        "verified_frames": 67,
+        "orientations": 32,
+        "bitmap_bytes_checked": 514560,
+        "color_bytes_checked": 64320,
+        "slots": {
+          "1": 23,
+          "2": 22,
+          "0": 22
+        },
+        "average_fps": 12.50115934879606,
+        "min_frame_cycles": 57228,
+        "max_frame_cycles": 93133,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 4,
+        "verified_frames": 67,
+        "orientations": 32,
+        "bitmap_bytes_checked": 514560,
+        "color_bytes_checked": 64320,
+        "slots": {
+          "1": 23,
+          "2": 22,
+          "0": 22
+        },
+        "average_fps": 12.948517657404066,
+        "min_frame_cycles": 56883,
+        "max_frame_cycles": 89986,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "gain_percent": 3.5785345672846747,
+      "baseline_oracle_sha256": "150f86d78b3266daa928523dc7412f84572599392324af231318cd1591044e0a",
+      "baseline_oracle_matches_recovered_v4_samples": true
+    },
+    {
+      "entry": 5,
+      "name": "SUNFLOWER TORUS",
+      "v5": {
+        "cartridge": "c643d-demo-v0.6.7-rc2-yunroll-cart-v5-all.crt",
+        "menu_entry": 5,
+        "verified_frames": 59,
+        "orientations": 28,
+        "bitmap_bytes_checked": 453120,
+        "color_bytes_checked": 56640,
+        "slots": {
+          "1": 20,
+          "2": 20,
+          "0": 19
+        },
+        "average_fps": 11.00686691823473,
+        "min_frame_cycles": 55552,
+        "max_frame_cycles": 100730,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 5,
+        "verified_frames": 59,
+        "orientations": 28,
+        "bitmap_bytes_checked": 453120,
+        "color_bytes_checked": 56640,
+        "slots": {
+          "1": 20,
+          "2": 20,
+          "0": 19
+        },
+        "average_fps": 11.143694067637462,
+        "min_frame_cycles": 54493,
+        "max_frame_cycles": 99380,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "gain_percent": 1.2431071477393418,
+      "baseline_oracle_sha256": "7c537488e5f6e08f2302963e0d767d9402b1f2425382a45ef70561780c5b6b8b",
+      "baseline_oracle_matches_recovered_v4_samples": true
+    },
+    {
+      "entry": 6,
+      "name": "SUNFLOWER COLOR",
+      "v5": {
+        "cartridge": "c643d-demo-v0.6.7-rc2-yunroll-cart-v5-all.crt",
+        "menu_entry": 6,
+        "verified_frames": 43,
+        "orientations": 20,
+        "bitmap_bytes_checked": 330240,
+        "color_bytes_checked": 41280,
+        "slots": {
+          "1": 15,
+          "2": 14,
+          "0": 14
+        },
+        "average_fps": 9.43430230410796,
+        "min_frame_cycles": 68963,
+        "max_frame_cycles": 117087,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 6,
+        "verified_frames": 43,
+        "orientations": 20,
+        "bitmap_bytes_checked": 330240,
+        "color_bytes_checked": 41280,
+        "slots": {
+          "1": 15,
+          "2": 14,
+          "0": 14
+        },
+        "average_fps": 9.785755129665864,
+        "min_frame_cycles": 67513,
+        "max_frame_cycles": 113706,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "gain_percent": 3.7252656765606407,
+      "baseline_oracle_sha256": "ecd558a2c68404569392738fb7fabe3a4e38fd3b25e30a1480e26388b74a83c9",
+      "baseline_oracle_matches_recovered_v4_samples": true
+    },
+    {
+      "entry": 7,
+      "name": "SPACE HORSE SPIN",
+      "v5": {
+        "cartridge": "c643d-demo-v0.6.7-rc2-yunroll-cart-v5-all.crt",
+        "menu_entry": 7,
+        "verified_frames": 51,
+        "orientations": 24,
+        "bitmap_bytes_checked": 391680,
+        "color_bytes_checked": 48960,
+        "slots": {
+          "1": 17,
+          "2": 17,
+          "0": 17
+        },
+        "average_fps": 10.195518412507218,
+        "min_frame_cycles": 29213,
+        "max_frame_cycles": 110349,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 7,
+        "verified_frames": 51,
+        "orientations": 24,
+        "bitmap_bytes_checked": 391680,
+        "color_bytes_checked": 48960,
+        "slots": {
+          "1": 17,
+          "2": 17,
+          "0": 17
+        },
+        "average_fps": 10.572800681296455,
+        "min_frame_cycles": 28012,
+        "max_frame_cycles": 106362,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "gain_percent": 3.700471653568993,
+      "baseline_oracle_sha256": "5cea181558dc9d34b377aa6b69052b83863be9ad50153cadf2bf807fa6d3d55b",
+      "baseline_oracle_matches_recovered_v4_samples": true
+    },
+    {
+      "entry": 8,
+      "name": "SPACE HORSE CRAWL",
+      "v5": {
+        "cartridge": "c643d-demo-v0.6.7-rc2-yunroll-cart-v5-all.crt",
+        "menu_entry": 8,
+        "verified_frames": 67,
+        "orientations": 32,
+        "bitmap_bytes_checked": 514560,
+        "color_bytes_checked": 64320,
+        "slots": {
+          "1": 23,
+          "2": 22,
+          "0": 22
+        },
+        "average_fps": 14.829078201474188,
+        "min_frame_cycles": 50951,
+        "max_frame_cycles": 86453,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 8,
+        "verified_frames": 67,
+        "orientations": 32,
+        "bitmap_bytes_checked": 514560,
+        "color_bytes_checked": 64320,
+        "slots": {
+          "1": 23,
+          "2": 22,
+          "0": 22
+        },
+        "average_fps": 15.534286512867924,
+        "min_frame_cycles": 48065,
+        "max_frame_cycles": 84502,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "gain_percent": 4.755577533630051,
+      "baseline_oracle_sha256": "84623ef327bee3d4e85dbd4197c8fd8bd10cea4417400bf3d0eee956ccd92a27",
+      "baseline_oracle_matches_recovered_v4_samples": true
+    },
+    {
+      "entry": 9,
+      "name": "FALLING CUBES",
+      "v5": {
+        "cartridge": "c643d-demo-v0.6.7-rc2-yunroll-cart-v5-all.crt",
+        "menu_entry": 9,
+        "verified_frames": 39,
+        "orientations": 18,
+        "bitmap_bytes_checked": 299520,
+        "color_bytes_checked": 37440,
+        "slots": {
+          "1": 13,
+          "2": 13,
+          "0": 13
+        },
+        "average_fps": 13.343810857124934,
+        "min_frame_cycles": 35651,
+        "max_frame_cycles": 95706,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 9,
+        "verified_frames": 39,
+        "orientations": 18,
+        "bitmap_bytes_checked": 299520,
+        "color_bytes_checked": 37440,
+        "slots": {
+          "1": 13,
+          "2": 13,
+          "0": 13
+        },
+        "average_fps": 14.062663954253571,
+        "min_frame_cycles": 33838,
+        "max_frame_cycles": 89529,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "gain_percent": 5.387164917320497,
+      "baseline_oracle_sha256": "955d7b30870ee7b383e4b67873b12c95cc3a1e2682af7cb5b9dc9fbfb70fab3b",
+      "baseline_oracle_matches_recovered_v4_samples": true
+    },
+    {
+      "entry": 10,
+      "name": "HORSE HEAD HIFI",
+      "v5": {
+        "cartridge": "c643d-demo-v0.6.7-rc2-yunroll-cart-v5-all.crt",
+        "menu_entry": 10,
+        "verified_frames": 259,
+        "orientations": 128,
+        "bitmap_bytes_checked": 1989120,
+        "color_bytes_checked": 248640,
+        "slots": {
+          "1": 87,
+          "2": 86,
+          "0": 86
+        },
+        "average_fps": 8.447698750192878,
+        "min_frame_cycles": 87100,
+        "max_frame_cycles": 130775,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 10,
+        "verified_frames": 259,
+        "orientations": 128,
+        "bitmap_bytes_checked": 1989120,
+        "color_bytes_checked": 248640,
+        "slots": {
+          "1": 87,
+          "2": 86,
+          "0": 86
+        },
+        "average_fps": 8.741572805733343,
+        "min_frame_cycles": 82441,
+        "max_frame_cycles": 127186,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "gain_percent": 3.4787468662250243,
+      "baseline_oracle_sha256": "dafb0e5bffc4431313e6f9ee0e3be95e8a04d2d9e7dc9d8a9d301c0c85d1f8d0",
+      "baseline_oracle_matches_recovered_v4_samples": true
+    },
+    {
+      "entry": 11,
+      "name": "SUNFLOWER TORUS HIFI",
+      "v5": {
+        "cartridge": "c643d-demo-v0.6.7-rc2-yunroll-cart-v5-all.crt",
+        "menu_entry": 11,
+        "verified_frames": 259,
+        "orientations": 128,
+        "bitmap_bytes_checked": 1989120,
+        "color_bytes_checked": 248640,
+        "slots": {
+          "1": 87,
+          "2": 86,
+          "0": 86
+        },
+        "average_fps": 5.946777421895875,
+        "min_frame_cycles": 85953,
+        "max_frame_cycles": 216697,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 11,
+        "verified_frames": 259,
+        "orientations": 128,
+        "bitmap_bytes_checked": 1989120,
+        "color_bytes_checked": 248640,
+        "slots": {
+          "1": 87,
+          "2": 86,
+          "0": 86
+        },
+        "average_fps": 6.138687238920005,
+        "min_frame_cycles": 83514,
+        "max_frame_cycles": 211811,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "gain_percent": 3.2271229173219673,
+      "baseline_oracle_sha256": "f83eb913dc2acce3a3d2707f5d269673994039f355c882236c8073a863d92522",
+      "baseline_oracle_matches_recovered_v4_samples": true
+    }
+  ],
+  "footprint_regular_horse": {
+    "v5": {
+      "main_and_hud_bytes": 3455,
+      "copy_helper_bytes": 394,
+      "bitmap_allocated_bytes": 24576,
+      "screen_allocated_bytes": 3072,
+      "line_staging_allocated_bytes": 8192,
+      "metadata_cache_allocated_bytes": 3072
+    },
+    "v6": {
+      "main_and_hud_bytes": 3570,
+      "copy_helper_bytes": 369,
+      "bitmap_allocated_bytes": 24576,
+      "screen_allocated_bytes": 3072,
+      "line_staging_allocated_bytes": 8192,
+      "metadata_cache_allocated_bytes": 3072
+    }
+  },
+  "net_resident_code_data_change_bytes": 90,
+  "lookup_tables_and_buffer_allocations_changed": false,
+  "build_provenance": {
+    "toolkit_version": "0.6.7-rc3",
+    "renderer": "yunroll-cart-v6",
+    "references": {
+      "examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all.crt": "73f7405a5c68ed008170d0af73d478dd93d23436399393361b6b83102555cf53",
+      "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene-clean.crt": "7ae73a7d069e25f0bbffc87460324429ff67f55446f1e40347aa6a92adfa0125"
+    },
+    "note": "Rebuilt exact released vector samples; no Blender re-export or physics rebake."
+  },
+  "kernel_and_reuse_validation": {
+    "kernel_cases": 1152,
+    "validation": {
+      "cartridge": "v6-x-kernels.crt",
+      "menu_entry": null,
+      "verified_frames": 2307,
+      "orientations": 1152,
+      "bitmap_bytes_checked": 17717760,
+      "color_bytes_checked": 2214720,
+      "slots": {
+        "1": 769,
+        "2": 769,
+        "0": 769
+      },
+      "average_fps": 50.14479840901999,
+      "min_frame_cycles": 1406,
+      "max_frame_cycles": 42361,
+      "pixel_match": true,
+      "color_match": true,
+      "reused_samples": 0,
+      "loop_seconds": 22.98275358082432,
+      "target_fps": 50.0,
+      "hud_match": true,
+      "text_overlay": false,
+      "frame_index_bits": 16
+    },
+    "reuse": {
+      "cartridge": "v6-reuse.crt",
+      "menu_entry": null,
+      "verified_frames": 270,
+      "orientations": 270,
+      "bitmap_bytes_checked": 2073600,
+      "color_bytes_checked": 259200,
+      "slots": {
+        "1": 144,
+        "2": 54,
+        "0": 72
+      },
+      "average_fps": 16.76971925723715,
+      "min_frame_cycles": 258,
+      "max_frame_cycles": 117770,
+      "pixel_match": true,
+      "color_match": true,
+      "reused_samples": 231,
+      "loop_seconds": null,
+      "target_fps": 16.666666666666668,
+      "hud_match": true,
+      "text_overlay": false,
+      "frame_index_bits": 16
+    },
+    "hold_seconds": 16.186470817499757,
+    "ideal_hold_seconds": 16.1597486115171
+  },
+  "stream_boundary_validation": {
+    "renderer": "yunroll-cart-v6",
+    "run_counts": [
+      0,
+      1,
+      255,
+      256,
+      512,
+      257,
+      256
+    ],
+    "max_clear_spans": 255,
+    "max_metadata_bytes": 1024,
+    "max_directory_frames": 255,
+    "reports": [
+      {
+        "cartridge": "v6-boundaries-color.crt",
+        "menu_entry": null,
+        "verified_frames": 17,
+        "orientations": 7,
+        "bitmap_bytes_checked": 130560,
+        "color_bytes_checked": 16320,
+        "slots": {
+          "1": 6,
+          "2": 6,
+          "0": 5
+        },
+        "average_fps": 13.685853292633377,
+        "min_frame_cycles": 1423,
+        "max_frame_cycles": 145619,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      {
+        "cartridge": "v6-boundaries-mono.crt",
+        "menu_entry": null,
+        "verified_frames": 17,
+        "orientations": 7,
+        "bitmap_bytes_checked": 130560,
+        "color_bytes_checked": 16320,
+        "slots": {
+          "1": 6,
+          "2": 6,
+          "0": 5
+        },
+        "average_fps": 14.48959374089458,
+        "min_frame_cycles": 1125,
+        "max_frame_cycles": 136722,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      {
+        "cartridge": "v6-directory-255.crt",
+        "menu_entry": null,
+        "verified_frames": 513,
+        "orientations": 255,
+        "bitmap_bytes_checked": 3939840,
+        "color_bytes_checked": 492480,
+        "slots": {
+          "1": 171,
+          "2": 171,
+          "0": 171
+        },
+        "average_fps": 50.272995212152416,
+        "min_frame_cycles": 1126,
+        "max_frame_cycles": 20719,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      }
+    ]
+  },
+  "menu_validation": {
+    "all_styles": true,
+    "up_down_wrap": true,
+    "stable_header_footer": true,
+    "no_clear_screen_on_navigation": true,
+    "checks": [
+      {
+        "style": "default",
+        "action": "default-start",
+        "selected": 0,
+        "top": 0
+      },
+      {
+        "style": "default",
+        "action": "default-down-0",
+        "selected": 1,
+        "top": 0
+      },
+      {
+        "style": "default",
+        "action": "default-down-1",
+        "selected": 2,
+        "top": 0
+      },
+      {
+        "style": "default",
+        "action": "default-down-2",
+        "selected": 3,
+        "top": 0
+      },
+      {
+        "style": "default",
+        "action": "default-down-3",
+        "selected": 4,
+        "top": 0
+      },
+      {
+        "style": "default",
+        "action": "default-down-4",
+        "selected": 5,
+        "top": 0
+      },
+      {
+        "style": "default",
+        "action": "default-down-5",
+        "selected": 6,
+        "top": 0
+      },
+      {
+        "style": "default",
+        "action": "default-down-6",
+        "selected": 7,
+        "top": 0
+      },
+      {
+        "style": "default",
+        "action": "default-down-7",
+        "selected": 8,
+        "top": 0
+      },
+      {
+        "style": "default",
+        "action": "default-down-8",
+        "selected": 9,
+        "top": 0
+      },
+      {
+        "style": "default",
+        "action": "default-down-9",
+        "selected": 10,
+        "top": 1
+      },
+      {
+        "style": "default",
+        "action": "default-down-10",
+        "selected": 11,
+        "top": 2
+      },
+      {
+        "style": "default",
+        "action": "default-down-11",
+        "selected": 0,
+        "top": 0
+      },
+      {
+        "style": "default",
+        "action": "default-up-0",
+        "selected": 11,
+        "top": 2
+      },
+      {
+        "style": "default",
+        "action": "default-up-1",
+        "selected": 10,
+        "top": 2
+      },
+      {
+        "style": "default",
+        "action": "default-up-2",
+        "selected": 9,
+        "top": 2
+      },
+      {
+        "style": "default",
+        "action": "default-up-3",
+        "selected": 8,
+        "top": 2
+      },
+      {
+        "style": "default",
+        "action": "default-up-4",
+        "selected": 7,
+        "top": 2
+      },
+      {
+        "style": "default",
+        "action": "default-up-5",
+        "selected": 6,
+        "top": 2
+      },
+      {
+        "style": "default",
+        "action": "default-up-6",
+        "selected": 5,
+        "top": 2
+      },
+      {
+        "style": "default",
+        "action": "default-up-7",
+        "selected": 4,
+        "top": 2
+      },
+      {
+        "style": "default",
+        "action": "default-up-8",
+        "selected": 3,
+        "top": 2
+      },
+      {
+        "style": "default",
+        "action": "default-up-9",
+        "selected": 2,
+        "top": 2
+      },
+      {
+        "style": "default",
+        "action": "default-up-10",
+        "selected": 1,
+        "top": 1
+      },
+      {
+        "style": "default",
+        "action": "default-up-11",
+        "selected": 0,
+        "top": 0
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-start",
+        "selected": 0,
+        "top": 0
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-down-0",
+        "selected": 1,
+        "top": 0
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-down-1",
+        "selected": 2,
+        "top": 0
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-down-2",
+        "selected": 3,
+        "top": 0
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-down-3",
+        "selected": 4,
+        "top": 0
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-down-4",
+        "selected": 5,
+        "top": 0
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-down-5",
+        "selected": 6,
+        "top": 0
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-down-6",
+        "selected": 7,
+        "top": 0
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-down-7",
+        "selected": 8,
+        "top": 0
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-down-8",
+        "selected": 9,
+        "top": 0
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-down-9",
+        "selected": 10,
+        "top": 1
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-down-10",
+        "selected": 11,
+        "top": 2
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-down-11",
+        "selected": 0,
+        "top": 0
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-up-0",
+        "selected": 11,
+        "top": 2
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-up-1",
+        "selected": 10,
+        "top": 2
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-up-2",
+        "selected": 9,
+        "top": 2
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-up-3",
+        "selected": 8,
+        "top": 2
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-up-4",
+        "selected": 7,
+        "top": 2
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-up-5",
+        "selected": 6,
+        "top": 2
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-up-6",
+        "selected": 5,
+        "top": 2
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-up-7",
+        "selected": 4,
+        "top": 2
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-up-8",
+        "selected": 3,
+        "top": 2
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-up-9",
+        "selected": 2,
+        "top": 2
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-up-10",
+        "selected": 1,
+        "top": 1
+      },
+      {
+        "style": "decorative",
+        "action": "decorative-up-11",
+        "selected": 0,
+        "top": 0
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-start",
+        "selected": 0,
+        "top": 0
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-down-0",
+        "selected": 1,
+        "top": 0
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-down-1",
+        "selected": 2,
+        "top": 0
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-down-2",
+        "selected": 3,
+        "top": 0
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-down-3",
+        "selected": 4,
+        "top": 0
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-down-4",
+        "selected": 5,
+        "top": 0
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-down-5",
+        "selected": 6,
+        "top": 0
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-down-6",
+        "selected": 7,
+        "top": 0
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-down-7",
+        "selected": 8,
+        "top": 0
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-down-8",
+        "selected": 9,
+        "top": 0
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-down-9",
+        "selected": 10,
+        "top": 1
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-down-10",
+        "selected": 11,
+        "top": 2
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-down-11",
+        "selected": 0,
+        "top": 0
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-up-0",
+        "selected": 11,
+        "top": 2
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-up-1",
+        "selected": 10,
+        "top": 2
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-up-2",
+        "selected": 9,
+        "top": 2
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-up-3",
+        "selected": 8,
+        "top": 2
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-up-4",
+        "selected": 7,
+        "top": 2
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-up-5",
+        "selected": 6,
+        "top": 2
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-up-6",
+        "selected": 5,
+        "top": 2
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-up-7",
+        "selected": 4,
+        "top": 2
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-up-8",
+        "selected": 3,
+        "top": 2
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-up-9",
+        "selected": 2,
+        "top": 2
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-up-10",
+        "selected": 1,
+        "top": 1
+      },
+      {
+        "style": "demoscene",
+        "action": "demoscene-up-11",
+        "selected": 0,
+        "top": 0
+      }
+    ]
+  },
+  "build_screen_validation": {
+    "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+    "tests": {
+      "timeout": {
+        "seconds": 2.9887591753548346,
+        "following_screen_reached": true
+      },
+      "space_scan": {
+        "seconds": 1.1164701679171132e-05,
+        "following_screen_reached": true
+      }
+    },
+    "skip_input": "CIA column driven low in monitor; host keyboard event injection not exercised"
+  },
+  "python_unit_tests": {
+    "passed": 111,
+    "command": "python -m unittest discover -s tests"
+  }
+}

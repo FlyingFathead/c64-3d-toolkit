@@ -3,11 +3,12 @@
 import argparse,json
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+from c643d.cartpaths import menu_manifest_path
 from verify_cart_stream import verify
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('crt',type=Path);p.add_argument('--vice',default='x64sc');p.add_argument('--vice-data');p.add_argument('--workers',type=int,default=2);p.add_argument('--report',type=Path);a=p.parse_args()
-    m=json.loads(a.crt.with_name(a.crt.stem+'-cart-manifest.json').read_text())
+    m=json.loads(menu_manifest_path(a.crt).read_text())
     if not m.get('uniform_renderer'):p.error('requires a uniform-renderer cart')
     def check(i):
         r=verify(a.crt,a.vice,a.vice_data,menu_entry=i);r['name']=m['entries'][i]['name'];print(r['name'],round(r['average_fps'],3),'FPS, pixel/colour match',flush=True);return r

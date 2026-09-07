@@ -32,12 +32,15 @@ def frame_block(frame,colors=True):
     if len(block)>FRAME_CAP:raise ValueError(f'frame block {len(block)} exceeds {FRAME_CAP}-byte staging buffer')
     return bytes(block),len(meta)
 
-def pack_frames(frames,colors=True,*,chip="roml",first_bank=FIRST_DATA_BANK):
+def pack_frames(frames,colors=True,*,chip="roml",first_bank=FIRST_DATA_BANK,aliases=None):
     if not 1<=len(frames)<=MAX_FRAMES:raise ValueError('V2 currently supports 1..255 frames per cartridge')
     image=new_easyflash_image();bank=first_bank;offset=0;directory=[]
     if chip not in ("roml","romh") or not 0<=first_bank<64:raise ValueError("invalid cartridge data placement")
     base=0x8000 if chip=="roml" else 0xa000
     for i,frame in enumerate(frames):
+        if aliases is not None and aliases[i] != i:
+            directory.append(dict(directory[aliases[i]], frame=i, reference_frame=aliases[i]))
+            continue
         block,meta=frame_block(frame,colors)
         if offset+len(block)>FRAME_CAP:bank+=1;offset=0
         if bank>=64:raise ValueError('EasyFlash ROML capacity exceeded; reduce frame count or detail')
@@ -64,36 +67,57 @@ def emit_directory(path,directory):
     lines += ['.if * > $5000','.error "directory overlaps metadata cache"','.endif']
     path.write_text('\n'.join(lines)+'\n')
 
-def assemble_cartridge(root,frames,mesh,*,tass,cartconv,outdir,stem,tass_args=(),color_index=1,colors=True,renderer="yunroll-cart-v2"):
-    if renderer not in ('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4'):raise ValueError('unsupported stream renderer')
+def assemble_cartridge(root,frames,mesh,*,tass,cartconv,outdir,stem,tass_args=(),color_index=1,colors=True,renderer="yunroll-cart-v2",optimize=True,prefer="fps"):
+    if renderer not in ('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7'):raise ValueError('unsupported stream renderer')
     variant=renderer.rsplit('-',1)[1]
     root=Path(root);outdir=Path(outdir);outdir.mkdir(parents=True,exist_ok=True)
     work=root/'build'/f'{stem}-stream-{variant}';gen=work/'generated';gen.mkdir(parents=True,exist_ok=True)
-    image,directory=pack_frames(frames,colors)
+    original_frames = frames
+    optimization = None
+    if variant in ("v5", "v6", "v7") and optimize:
+        from .optimize import optimize_frames
+        frames, optimization = optimize_frames(frames, color_index<<4)
+    joining = None
+    if variant == "v7" and optimize:
+        from .runjoin import join_frames
+        frames, joining = join_frames(frames)
+    clearing = None
+    if variant == "v7" and optimize:
+        from .clearplan import selective_clear_frames
+        frames, clearing = selective_clear_frames(frames)
+    image,directory=pack_frames(frames,colors,aliases=optimization["picture_references"] if optimization else None)
     emit_directory(gen/'tables.inc',directory)
     emit_hud(gen/'hud.inc',mesh.name,len(mesh.vertices),len(mesh.edges))
     shutil.copyfile(root/f'c64/cart/easyflash-stream-{variant}-helper.asm',gen/f'cart-{variant}-helper.inc')
     src=(root/f'c64/renderer-{renderer}.asm').read_text()
     src=src.replace('FRAME_COUNT = 48',f'FRAME_COUNT = {len(frames)}',1).replace('COLORS_ENABLED = 0',f'COLORS_ENABLED = {int(colors)}',1).replace('SCREEN_COLOR = $10',f'SCREEN_COLOR = ${color_index:X}0',1)
     src=src.replace('        .include "generated/hud.inc"','        .include "generated/hud.inc"\n.if * > $1700\n.error "renderer and HUD overlap LUT"\n.endif')
+    if optimization:
+        src=src.replace('V5_REUSE_ENABLED = 0', f'V5_REUSE_ENABLED = {int(optimization["duplicate_pictures"] > 0)}')
+    from .preferences import apply_preference
+    src=apply_preference(src,renderer,prefer)
     asm=work/'main.asm';asm.write_text(src)
     ram=work/'runtime.prg';labels=outdir/f'{stem}.lbl'
     subprocess.run([tass,*tass_args,'--cbm-prg','--vice-labels','-l',str(labels),'-o',str(ram),str(asm)],check=True,cwd=root)
     blob=ram.read_bytes();load=int.from_bytes(blob[:2],'little');end=load+len(blob)-2
-    if load!=0x0801 or end>0x5000:raise ValueError('runtime outside bootstrap RAM destination')
-    padded=bytearray(0x4800);padded[load-0x0800:end-0x0800]=blob[2:]
+    if load!=0x0801 or end>(0x6000 if variant in ("v5", "v6", "v7") else 0x5000):raise ValueError('runtime outside bootstrap RAM destination')
+    padded=bytearray(0x5800 if variant in ("v5", "v6", "v7") else 0x4800);padded[load-0x0800:end-0x0800]=blob[2:]
     for bank in range(3):put_easyflash_chip(image,bank,'roml',bytes(padded[bank*8192:(bank+1)*8192]).ljust(8192,b'\0'))
     boot=work/'boot.bin'
-    subprocess.run([tass,*tass_args,'--nostart','-o',str(boot),str(root/'c64/cart/easyflash-stream-v2-boot.asm')],check=True,cwd=root)
+    subprocess.run([tass,*tass_args,'--nostart','-o',str(boot),str(root/(f'c64/cart/easyflash-stream-{variant}-boot.asm' if variant in ('v5', 'v6', 'v7') else 'c64/cart/easyflash-stream-v2-boot.asm'))],check=True,cwd=root)
     put_easyflash_chip(image,0,'romh',boot.read_bytes())
     raw=work/f'{stem}.bin';raw.write_bytes(image)
     crt=outdir/f'{stem}.crt';convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name=f'C643D STREAM {variant.upper()}',cwd=root)
     check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=root)
-    manifest=dict(format='c643d-easyflash-stream-v2',version=1,renderer=renderer,name=mesh.name,frames=len(frames),vertices=len(mesh.vertices),edges=len(mesh.edges),faces=len(mesh.faces),colors=colors,screen_color=color_index<<4,directory_ram_bytes=len(frames)*7,frame_buffer_bytes=FRAME_CAP,metadata_cache_bytes=3*META_CAP,rom_frame_bytes=sum(d['bytes'] for d in directory),highest_bank=max(d['bank'] for d in directory),run_count_bits=16,frame_data=directory)
+    manifest=dict(format='c643d-easyflash-stream-v2',version=1,renderer=renderer,name=mesh.name,frames=len(frames),vertices=len(mesh.vertices),edges=len(mesh.edges),faces=len(mesh.faces),colors=colors,screen_color=color_index<<4,directory_ram_bytes=len(frames)*7,frame_buffer_bytes=FRAME_CAP,metadata_cache_bytes=3*META_CAP,rom_frame_bytes=sum(d['bytes'] for d in directory if 'reference_frame' not in d),highest_bank=max(d['bank'] for d in directory),run_count_bits=16,frame_data=directory)
+    if optimization: manifest['optimization']=optimization
+    if clearing: manifest['clearing']=clearing
+    if joining: manifest['joining']=joining
+    if variant == 'v7': manifest['preference']=prefer
     (outdir/f'{stem}-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     # Retain a reproducible host oracle for emulator comparison, outside final outputs.
     from dataclasses import asdict
-    (work/'oracle.json').write_text(json.dumps([asdict(f) for f in frames]))
+    (work/'oracle.json').write_text(json.dumps([asdict(f) for f in (original_frames if variant == 'v7' else frames)]))
     print(f'built {crt}\nframes: {len(frames)}; visible runs {min(d["runs"] for d in directory)}..{max(d["runs"] for d in directory)}\nROM frame data: {manifest["rom_frame_bytes"]} bytes; directory RAM: {len(frames)*7} bytes; fixed frame/cache RAM: 11264 bytes\nROML data banks: {FIRST_DATA_BANK}..{manifest["highest_bank"]}',flush=True)
     return crt,manifest
 
@@ -119,9 +143,9 @@ def cmd_build_cart_v2(a):
     print(f'compiling {label}: {n} streamed frames, fit {scale:.4f}',flush=True)
     frames,_=build_frames(mesh,n,cam,spin_axis=axis,visibility_mode=vis,z_tolerance=ztol,feature_angle=angle,animation=anim,animation_tilt=tilt,animation_travel=travel,animation_rise=rise,enable_source_colors=percell,fallback_color=c64_color_index(color),height=height,max_visible_runs=65535)
     outdir=Path(a.output_dir).resolve() if a.output_dir else cli.BUILD
-    stem=a.output or label.lower().replace(' ','_')+'-'+a.renderer
+    stem=a.output or label.lower().replace(' ','_')+'-'+a.renderer+('-ram' if getattr(a,'prefer','fps') == 'ram' else '')
     if not cli._check_overwrite([outdir/f'{stem}.crt',outdir/f'{stem}.lbl',outdir/f'{stem}-manifest.json'],a.overwrite_policy):return 2
-    crt,_=assemble_cartridge(cli.ROOT,frames,mesh,tass=tass,cartconv=cartconv,outdir=outdir,stem=stem,tass_args=a.tass_args,color_index=c64_color_index(color),colors=percell,renderer=a.renderer)
+    crt,_=assemble_cartridge(cli.ROOT,frames,mesh,tass=tass,cartconv=cartconv,outdir=outdir,stem=stem,tass_args=a.tass_args,color_index=c64_color_index(color),colors=percell,renderer=a.renderer,prefer=getattr(a,"prefer","fps"))
     if a.run:
         vice=cli.resolve_executable(a.vice,'vice')
         if not vice:raise ValueError('VICE not found')
@@ -142,7 +166,7 @@ def prepare_menu_streams(root,*,tass,cartconv,tass_args=(),renderer="yunroll-car
     from .pipeline import Camera,fit_scale,build_frames
     from .mesh import transform_mesh
     from .colors import c64_color_index
-    if renderer not in ('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4'):raise ValueError('unsupported stream renderer')
+    if renderer not in ('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7'):raise ValueError('unsupported stream renderer')
     variant=renderer.rsplit('-',1)[1]
     root=Path(root);out=root/f'build/menu-stream-{variant}';out.mkdir(parents=True,exist_ok=True)
     image=new_easyflash_image();entries=[];info=[];bank=2
@@ -172,6 +196,6 @@ def prepare_menu_streams(root,*,tass,cartconv,tass_args=(),renderer="yunroll-car
         entries.append((label,prg))
         from dataclasses import asdict
         (work/'oracle.json').write_text(json.dumps([asdict(f) for f in frames]))
-        info.append(dict(name=label,frames=128,chip='romh',first_bank=bank,last_bank=last,rom_frame_bytes=sum(d['bytes'] for d in directory),frame_data=directory,screen_color=c64_color_index(color)<<4))
+        info.append(dict(name=label,frames=128,chip='romh',first_bank=bank,last_bank=last,rom_frame_bytes=sum(d['bytes'] for d in directory if 'reference_frame' not in d),frame_data=directory,screen_color=c64_color_index(color)<<4))
         bank=last+1
     return entries,image,info

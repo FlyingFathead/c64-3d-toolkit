@@ -1,0 +1,55 @@
+{
+  "cartridge": "c643d-demo-v0.6.7-rc5-yunroll-cart-v7-all.crt",
+  "sha256": "f2ad9b1f123e2adca6e7e5a3f61f4b22d4f6559e72acc5b4a5a416be0471a87e",
+  "tests": [
+    {
+      "style": "default",
+      "action": "timeout",
+      "seconds": 9.957462486602358,
+      "correct_screen": true,
+      "style_preserved": true,
+      "following_demo_or_menu_reached": true
+    },
+    {
+      "style": "default",
+      "action": "F1",
+      "seconds": 1.319464743902043e-05,
+      "correct_screen": true,
+      "style_preserved": true,
+      "following_demo_or_menu_reached": true
+    },
+    {
+      "style": "decorative",
+      "action": "timeout",
+      "seconds": 9.971787813829614,
+      "correct_screen": true,
+      "style_preserved": true,
+      "following_demo_or_menu_reached": true
+    },
+    {
+      "style": "decorative",
+      "action": "F1",
+      "seconds": 1.319464743902043e-05,
+      "correct_screen": true,
+      "style_preserved": true,
+      "following_demo_or_menu_reached": true
+    },
+    {
+      "style": "demoscene",
+      "action": "timeout",
+      "seconds": 9.969268651141642,
+      "correct_screen": true,
+      "style_preserved": true,
+      "following_demo_or_menu_reached": true
+    },
+    {
+      "style": "demoscene",
+      "action": "F1",
+      "seconds": 1.319464743902043e-05,
+      "correct_screen": true,
+      "style_preserved": true,
+      "following_demo_or_menu_reached": true
+    }
+  ],
+  "input": "Native CIA F1 column driven low through VICE monitor; not host keyboard injection."
+}

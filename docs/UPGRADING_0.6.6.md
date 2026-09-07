@@ -1,5 +1,8 @@
 # Updating to v0.6.6
 
+> Historical menu cartridges and the former `examples/old/` paths are now in the
+> separate oldies ZIP. See [v0.6.7 cleanup and archive access](UPGRADING_0.6.7.md).
+
 This package adds the early beta of Don't Lose Your Marbles as separate Blender
 and cartridge examples. The existing v0.6.5 twelve-demo menu cart stays intact.
 The full ZIP contains the complete source tree; the incremental ZIP contains

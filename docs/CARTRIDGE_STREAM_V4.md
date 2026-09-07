@@ -1,5 +1,8 @@
 # Uniform comparison cartridges and yunroll-cart-v4
 
+> Historical menu cartridges and the former `examples/old/` paths are now in the
+> separate oldies ZIP. See [v0.6.7 cleanup and archive access](UPGRADING_0.6.7.md).
+
 Toolkit version is **0.6.5**; the renderer remains **yunroll-cart-v4**.
 `cart-demos` builds the current V4-only demo cart in `examples/cart_demos/`.
 Earlier comparison bundles are preserved under `examples/old/cart_demos/`.

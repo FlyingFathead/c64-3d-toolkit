@@ -1,5 +1,6 @@
 from __future__ import annotations
 import math
+from functools import lru_cache
 from dataclasses import dataclass, field
 from .mesh import Mesh, face_center, face_normal, rotate_xyz, dot
 from .colors import hires_screen_byte
@@ -64,6 +65,7 @@ def target_minor_steps(major:int,minor:int):
     return out
 
 
+@lru_cache(maxsize=32768)
 def choose_dda(major:int,minor:int):
     if major==0 or minor==0:return 0,0,0
     target=target_minor_steps(major,minor)

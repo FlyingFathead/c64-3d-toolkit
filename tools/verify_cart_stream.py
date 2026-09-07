@@ -6,6 +6,7 @@ Uses console mode and a scripted monitor; no X server needed. The matching
 Snapshots are temporary. Pillow is optional, only needed with --capture.
 """
 from pathlib import Path
+from c643d.cartpaths import menu_manifest_path
 import argparse,json,re,subprocess,sys,tempfile
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 from c643d.pipeline import decode_record_points
@@ -31,14 +32,14 @@ def render_ram(ram,slot):
             pix[x,y]=pal[color>>4 if bit else color&15]
     return im
 
-def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None):
+def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None,oracle_path=None):
     root=Path(__file__).resolve().parents[1];crt=Path(crt).resolve()
     if menu_entry is None:
         sym=labels(crt.with_suffix('.lbl'))
         manifest=json.loads(crt.with_name(crt.stem+'-manifest.json').read_text());screen=manifest['screen_color'];menu=None
         variant=manifest['renderer'].rsplit('-',1)[1];work=root/'build'/f'{crt.stem}-stream-{variant}'
     else:
-        manifest=json.loads(crt.with_name(crt.stem+'-cart-manifest.json').read_text())
+        manifest=json.loads(menu_manifest_path(crt).read_text())
         if manifest.get('uniform_renderer'):
             if not 0<=menu_entry<len(manifest['streamed_entries']):raise ValueError('menu entry out of range')
             entry=manifest['streamed_entries'][menu_entry]
@@ -52,7 +53,8 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None):
             work=root/f'build/menu-stream-{variant}'/name
         sym=labels(work/'runtime.lbl')
         menu=labels(root/'build'/f'{crt.stem}-cartridge-demo'/f'{crt.stem}-runtime-default.lbl')
-    frames=json.loads((work/'oracle.json').read_text());n=len(frames);finite=manifest.get('ending',False);count=n if finite else n*cycles+3
+    oracle_file=Path(oracle_path) if oracle_path else work/'oracle.json'
+    frames=json.loads(oracle_file.read_text());n=len(frames);finite=manifest.get('ending',False);count=n if finite else n*cycles+3
     # publish_wait can revisit the publication entry on very cheap frames.
     # Stop at the once-per-frame call site, before the handoff wait instead.
     completed=sym.get('frame_draw_complete',sym['frame_begin']+(15 if manifest.get('colors',True) else 12))
@@ -65,17 +67,18 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None):
             mon += [f'break ${completed:04x}'];first_go='g'
         for i in range(count):mon += [first_go if i==0 else 'g','bank ram',f'bsave "{td/f"frame-{i:04d}.ram"}" 0 $0000 $ffff','stopwatch']
         mon += ['quit'];(td/'run.mon').write_text('\n'.join(mon)+'\n')
-        cmd=[vice,'-console','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(td/'run.mon'),'-monlog','-monlogname',str(td/'monitor.log'),'-limitcycles',str(count*1000000+2000000)]
+        cmd=[vice,'-console','-pal','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(td/'run.mon'),'-monlog','-monlogname',str(td/'monitor.log'),'-limitcycles',str(count*1000000+2000000)]
         if vice_data:cmd+=['-directory',str(vice_data)]
         with (td/'vice.log').open('w') as log:subprocess.run(cmd,stdout=log,stderr=subprocess.STDOUT,timeout=180,check=True)
         ticks=[int(x) for x in re.findall(r'Stopwatch:\s*(\d+)',(td/'monitor.log').read_text())]
         if len(ticks)!=count:raise AssertionError('Emulator did not reach every completed frame: '+(td/'monitor.log').read_text()[-1800:])
-        slot_counts={};images=[]
+        slot_counts={};images=[];reused=0
         for i in range(count):
             ram=(td/f'frame-{i:04d}.ram').read_bytes();fi=ram[sym['frame_index']];slot=ram[sym['render_slot']]
             if manifest.get('frame_index_bits')==16:fi+=ram[sym['frame_index_hi']]<<8
             assert fi==i%n,(i,fi)
             slot_counts[slot]=slot_counts.get(slot,0)+1
+            reused += int('v5_reused' in sym and ram[sym['v5_reused']] != 0)
             bm,sc=expected_frame(frames[fi],screen)
             baddr=[0x2000,0x6000,0xe000][slot];saddr=[0x400,0x4400,0xc800][slot]
             for what,want,actual in [('bitmap',bm,ram[baddr:baddr+7680]),('colour',sc,ram[saddr:saddr+960])]:
@@ -89,9 +92,9 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None):
             if not manifest.get('text_overlay',True):
                 assert not any(ram[baddr+7680:baddr+8000]), ('clean HUD row is not blank',i,slot)
             if capture and ((finite and i<n) or (not finite and n<=i<2*n)):images.append(render_ram(ram,slot))
-        assert set(slot_counts)=={0,1,2},slot_counts
+        assert set(slot_counts)=={0,1,2} or reused>0,slot_counts
         delta=[b-a for a,b in zip(ticks,ticks[1:])];clock=985248
-        result=dict(cartridge=crt.name,menu_entry=menu_entry,verified_frames=count,orientations=n,bitmap_bytes_checked=count*7680,color_bytes_checked=count*960,slots=slot_counts,average_fps=clock*(count-1)/(ticks[-1]-ticks[0]),min_frame_cycles=min(delta),max_frame_cycles=max(delta),pixel_match=True,color_match=True)
+        result=dict(cartridge=crt.name,menu_entry=menu_entry,verified_frames=count,orientations=n,bitmap_bytes_checked=count*7680,color_bytes_checked=count*960,slots=slot_counts,average_fps=clock*(count-1)/(ticks[-1]-ticks[0]),min_frame_cycles=min(delta),max_frame_cycles=max(delta),pixel_match=True,color_match=True,reused_samples=reused)
         if manifest.get('frame_index_bits')==16:
             result.update(loop_seconds=(ticks[2*n]-ticks[n])/clock if cycles>=2 and not finite else None, target_fps=manifest['target_fps'], hud_match=True, text_overlay=manifest.get('text_overlay',True), frame_index_bits=16)
         if capture and images:
@@ -104,7 +107,7 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None):
             images[0].resize((640,400),Image.Resampling.NEAREST).save(capture/f'{crt.stem}-vice.gif',save_all=True,append_images=[im.resize((640,400),Image.Resampling.NEAREST) for im in images[1:]],duration=durations,loop=0)
         return result
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('crt',type=Path);p.add_argument('--vice',default='x64sc');p.add_argument('--vice-data');p.add_argument('--cycles',type=int,default=2);p.add_argument('--capture',type=Path);p.add_argument('--report',type=Path);p.add_argument('--menu-entry',type=int);a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('crt',type=Path);p.add_argument('--vice',default='x64sc');p.add_argument('--vice-data');p.add_argument('--cycles',type=int,default=2);p.add_argument('--capture',type=Path);p.add_argument('--report',type=Path);p.add_argument('--menu-entry',type=int);p.add_argument('--oracle',type=Path);a=p.parse_args()
     if a.cycles<2 and a.capture:p.error('--capture requires at least two cycles')
-    r=verify(a.crt,a.vice,a.vice_data,a.cycles,a.capture,a.menu_entry);text=json.dumps(r,indent=2);print(text)
+    r=verify(a.crt,a.vice,a.vice_data,a.cycles,a.capture,a.menu_entry,a.oracle);text=json.dumps(r,indent=2);print(text)
     if a.report:a.report.write_text(text+'\n')

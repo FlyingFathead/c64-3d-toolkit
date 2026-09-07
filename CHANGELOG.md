@@ -1,5 +1,53 @@
 # Changelog
 
+## 0.6.7: V7 rendering, PLAY ALL and repository cleanup
+
+- Finalize the tested V5/V6/V7 work from the release candidates. V7 joins exact drawing runs and selects cell/byte clearing; matched PAL VICE tests measured up to 14.6% higher throughput than V6 with the same geometry, colours and samples. The twelve-demo CRT is 804,448 bytes versus V6's 927,568 bytes.
+- Keep `--prefer fps` as the preference default, with optional smaller Y kernels via `--prefer ram`. Rebuild FPS/RAM V7 menu and Marbles carts with final `0.6.7` build-screen text.
+- Retain all twelve menu entries, the `+` scroll indicators, all three F1 menu styles, configurable PLAY ALL duration and its ten-second THANK YOU FOR WATCHING screen. Horse and Sunflower remains a separate editable Blender scene and V7 scene cart; its measured playback is about 4.3 samples/s.
+- Include the Blender camera-coordinate/winding correction from rc5, including mirrored objects and camera scale handling. Original meshes/materials and released comparison vectors are retained.
+- Remove `examples/old/`, older V4/V5/V6 and V7 candidate menu bundles and the generated MP4 from the source package. Preserve these bytes in a separate oldies ZIP. Keep only final FPS/RAM menu CRTs in the active folder, metadata/reports in subfolders, and historical benchmark evidence in `docs/benchmarks/cart_demos/`. A 399,186-byte frozen vector reference replaces the old V4 menu CRT as the default rebuild input. Add `tools/clean_release.py` so overlays archive local copies outside the checkout before removal; repeated cleanup is harmless.
+- Ignore historical downloads, generated videos, Blender backups, emulator logs and Python caches. Update README, example guides, Windows release labels and the upgrade/publish instructions. Existing Git history is unchanged.
+
+## 0.6.7-rc5: Horse and sunflower scene, camera export and PLAY ALL closing screen
+
+- Preparing v0.6.7; this remains a release candidate, not a published final release.
+- Added `horse_and_sunflower`: original coloured HiFi meshes, a fixed close side-view camera, a stationary flower angled toward the camera, and a looping horse approach/two-sniff/withdraw animation. Delivered as an editable Blender scene and a separate V7 C64 test cartridge; multi-demo integration follows review.
+- Correct Blender camera-space polygon orientation in the shared exporter. Positive-forward Z conversion reverses handedness; polygon order now accounts for the combined object/camera transform, including mirrored objects. Materials stay attached to their original polygons. Existing prebuilt reference vectors are preserved.
+- PLAY ALL now shows THANK YOU FOR WATCHING, the build version, DEMO CART, project URL and F1 TO RETURN TO MENU after its last entry. Hold for 500 PAL ticks (about ten seconds), then launch the first demo; F1 returns to the same menu style. Manual next-demo wrapping remains immediate.
+- Verified the closing-screen timeout, text/colours, F1 scanner, style preservation, restart and subsequent launch in default, decorative and flashing party menus. Verified the full timed PLAY ALL round, SPACE skipping and manual-return path in PAL VICE.
+- Reopened the Blender scene and checked its original topology/materials, fixed camera/flower and loop seam. Shared export projection matches Blender within 0.00002 pixels, including mirrored transforms. Scene cartridge: all 84 samples match the original compiler oracle across 171 checks and three buffers; about 4.3 samples/s and 19.71 seconds per loop in PAL VICE. This close-up exceeds its requested six-tick cadence and remains a separate test for review.
+- All 118 source tests pass. Menu launch regression passes 84 launches and 252 picture comparisons across all styles. New scene CRT headers use the actual scene title; Blender exports honour `c643d_title`.
+- Updated README introduction, example guides and Windows setup version metadata. FPS remains the default preference. Ship a flat changed-files ZIP for overlaying the project root and a separate full ZIP.
+
+## 0.6.7-rc4: V7 run joining, selective clearing and PLAY ALL
+
+- Added opt-in V7 ordinary/scene renderers, preserving released V4/V5/V6 carts and assembly. `--prefer fps` is the default; optional `--prefer ram` uses compact Y loops and saves 1,052 resident code bytes in the regular horse comparison.
+- Join connected compatible runs using their exact packed step paths, with decoded-pixel and resolved-colour equality checks. Choose tagged byte-clear spans where cheaper without increasing metadata size. Reuse and sample timing are preserved.
+- Final PAL VICE menu throughput improves 0.2–14.6% over V6. Menu CRT: 804,448 bytes versus 927,568; Marbles: 353,008 versus 418,672. Clean Marbles: 30.45 seconds versus 31.43, with all 200 samples retained.
+- Added fixed PLAY ALL above the scrolling list, selected at startup. Infinite cycle, ten seconds per demo by default, `--play-all-seconds` 1..255, SPACE skip, RUN/STOP/F1 return. Start timing after the first visible picture. F1 still cycles all menu styles; held SPACE is latched across a handoff.
+- Supplied FPS/RAM twelve-demo carts and clean/HUD Marbles with rc4 build screens, plus `tools/build_v7_examples.py` for rebuilding from the released vectors without Blender.
+- Validation: 118 Python tests; both preferences matched all menu and Marbles samples to frozen V6 oracles; 1,744 kernel/clear cases per preference; holds and directory boundaries; 81 menu states; 84 launch/handoff checks including flashing party mode; timed PLAY ALL/wrap/skip/return at ten seconds and a separate two-second party build; build screens and finite endings.
+- Package as flat changed-files overlay against rc3 plus a full ZIP. Reports live in the example folders and the V7 guide; no extra root release-note or validation directory.
+
+## 0.6.7-rc3: V6 partial-byte drawing and direct metadata loading
+
+- Added opt-in `yunroll-cart-v6` and `yunroll-cart-v6-scene`, preserving the released V4/V5 cartridges and their renderer sources. V4 remains the default menu build; V5 retains its existing lossless stream optimizations.
+- Accumulate partial X-major head/tail bits before writing each bitmap byte. Keep the existing aligned eight-pixel chunk path and both line directions.
+- Recycle the old bitmap/colour slot before fetching; copy incoming metadata directly into that slot's cache and stage line records separately. Removed the second metadata copy, retaining bounded cartridge-copy bursts and interrupt-safe mapping restoration.
+- Matched PAL VICE checks against frozen V5 oracles measured 1.2–5.4% higher completed-frame throughput across all twelve menu demos. Clean Marbles' mean render cost fell 3.63%; its unchanged 200 samples / seven-raster-tick cadence took 31.43 seconds versus 32.07, with 93 rather than 107 frames above the render budget. No geometry, colours, samples or playback deadlines were reduced.
+- Net resident code/data change is +90 bytes in the regular horse comparison (+115 main/HUD, -25 copy helper); lookup tables and buffer allocations are unchanged. V6 vector payloads and shipped CRT sizes equal V5's.
+- Built the V6 twelve-demo menu and both Marbles variants with the `0.6.7-rc3` / `yunroll-v6` build screen. Added `tools/build_v6_examples.py` to reproduce these from the released vector samples without a Blender rebake.
+- Profiling follows explicit labels in the new recycle/fetch order and omits the removed cache stage. The bitmap verifier explicitly selects PAL. Verified all twelve menu demos, all 200 frames of both Marbles builds, 1,152 X-kernel cases, 270 reuse/hold samples including colour-only changes, stream boundaries, 75 menu states, build-screen timeout/SPACE scan and the finite ending. All 111 Python tests pass. Reports and limits are linked from `docs/CARTRIDGE_STREAM_V6.md`.
+- Added the main README variant and cartridge-size tables. Planned compact, balanced and speed-focused profiles independently of demo/game use; these are not new runtime modes in rc3.
+
+## 0.6.7-rc2: Clean merge of the V5 release candidate
+
+- Merged rc1 into the latest local source snapshot, preserving the removed `0.6.4-local` cartridge and the original executable permissions. Kept release information in this changelog; omitted the extra root release-notes file, monitor log and validation directory.
+- Retained rc1's opt-in `yunroll-cart-v5` and `yunroll-cart-v5-scene`: redundant-run removal after colour resolution, exact-picture ROM sharing and resident-buffer reuse, four-section page copies, eight-pixel Y-major blocks, cached host DDA selection and explicit profiling stages.
+- Rebuilt the twelve-demo V5 cartridge and both V5 Don't Lose Your Marbles cartridges with `0.6.7-rc2` version text. Their black-and-white build screens wait about three seconds or accept SPACE. V5 rendering and sample data are unchanged from rc1; V4 remains the default renderer.
+- Playback follow-up: the user reported smooth V5 playback on Windows 11 after seeing twitches with NVIDIA on Linux/Wayland. Host presentation is suspected; no renderer or driver defect is established. The regular horse head and both regular sunflower variants have no duplicate pictures and disable whole-frame reuse; redundant-line removal remains active.
+
 ## 0.6.6: Don't Lose Your Marbles early beta
 
 - Added separate Blender and EasyFlash examples: targeted alternating cube/marble pours, a continuous orbit and a 32-piece tabletop fracture that drifts into a constellation. Isolated waiting emitters from active collisions; all 45 released bodies enter the table/pile volume.

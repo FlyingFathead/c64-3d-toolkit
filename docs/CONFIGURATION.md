@@ -207,3 +207,17 @@ yunroll source is not conditionally instrumented and therefore pays no code-size
 or cycle cost when profiling is disabled.
 
 Command-line options always override `[render_defaults]` for that invocation.
+
+## V7 build preferences and PLAY ALL
+
+| CLI option | Default | Scope |
+| --- | --- | --- |
+| `--prefer fps|ram` | `fps` | V7 ordinary and scene renderers; RAM selects smaller Y kernels |
+| `--play-all-seconds N` | `10` | V7 multi-demo menu; integer 1..255, 50 PAL ticks per second |
+
+Both are build-time CLI settings. `tools/build_v7_examples.py` accepts both;
+`cart-demos` / `cartridge-demo` accept both, while individual `build` and
+`cart-stream` paths accept `--prefer`. RAM preference requires a V7 renderer.
+The standard V7 output filename uses FPS; RAM-generated names gain `-ram`
+unless explicitly named with `--output`. PLAY ALL timing starts with the first
+visible picture. Geometry, colours and sequence sample pacing are unchanged.

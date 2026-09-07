@@ -183,12 +183,17 @@ init_screen_colours:
 
 main_loop:
 frame_begin:
+profile_fetch:
         jsr cart_fetch_frame
+profile_recycle:
         jsr prepare_render_buffer
+profile_cache:
         jsr cart_cache_metadata
 .if COLORS_ENABLED
+profile_colors:
         jsr apply_current_frame_colors
 .endif
+profile_draw:
         jsr draw_current_lines
 
         ; Remember which angular frame now occupies this physical bitmap.
@@ -197,7 +202,9 @@ frame_begin:
         sta slot_frame,x
 
         ; Queue the completed buffer and immediately take the free third buffer.
+profile_publish:
         jsr publish_completed_frame
+profile_published:
 
         inc frame_counter
         inc frame_index
@@ -223,6 +230,7 @@ publish_wait:
         cmp #$ff
         beq publish_wait
 
+profile_publish_ready:
         sei
         ldx render_slot
         stx ready_slot

@@ -618,10 +618,12 @@ def print_stats(mesh:Mesh,label:str,renderer:str,scale:float,stats:dict,hud:str,
 
 
 def cmd_build(a):
-    if a.renderer == "yunroll-cart-v4-scene":
+    if getattr(a, 'prefer', 'fps') == 'ram' and a.renderer not in ('yunroll-cart-v7', 'yunroll-cart-v7-scene'):
+        raise ValueError('--prefer ram requires a V7 cartridge renderer')
+    if a.renderer in ("yunroll-cart-v4-scene", "yunroll-cart-v5-scene", "yunroll-cart-v6-scene", "yunroll-cart-v7-scene"):
         from .cartscene import cmd_build_cart_scene
         return cmd_build_cart_scene(a)
-    if a.renderer in ("yunroll-cart-v2", "yunroll-cart-v3", "yunroll-cart-v4"):
+    if a.renderer in ("yunroll-cart-v2", "yunroll-cart-v3", "yunroll-cart-v4", "yunroll-cart-v5", "yunroll-cart-v6", "yunroll-cart-v7"):
         from .cartstream import cmd_build_cart_v2
         return cmd_build_cart_v2(a)
     if getattr(a,'blend',None) or getattr(a,'scene',None):
@@ -1186,7 +1188,8 @@ def make_parser(settings):
         q.add_argument('--z-tolerance',type=float,help='reciprocal-depth tolerance for visible wire edges; object presets may provide a default')
         q.add_argument('--feature-angle',type=float,help='surface_creases threshold in degrees; sharp manifold edges at/above this angle are preserved')
     b=sub.add_parser('build',help='generate tables, assemble PRG, optionally run VICE'); common(b)
-    b.add_argument('--renderer',choices=(*RENDERERS, 'yunroll-cart-v2', 'yunroll-cart-v3', 'yunroll-cart-v4', 'yunroll-cart-v4-scene'),default='yunroll',help='step/bytechunk/yunroll=PRG; yunroll-cart-v2/v3=streamed EasyFlash CRT')
+    b.add_argument('--renderer',choices=(*RENDERERS, 'yunroll-cart-v2', 'yunroll-cart-v3', 'yunroll-cart-v4', 'yunroll-cart-v4-scene', 'yunroll-cart-v5', 'yunroll-cart-v5-scene', 'yunroll-cart-v6', 'yunroll-cart-v6-scene', 'yunroll-cart-v7', 'yunroll-cart-v7-scene'),default='yunroll',help='step/bytechunk/yunroll=PRG; yunroll-cart-v2 through v7=streamed EasyFlash CRT')
+    b.add_argument('--prefer',choices=('fps','ram'),default='fps',help='V7: prioritize FPS (default) or smaller Y drawing kernels; geometry and pacing stay the same')
     b.add_argument('--frames',type=int,help='precomputed legacy animation frames/orientations (default 48; not used by --blend)')
     b.add_argument('--ending',action='store_true',help='finite scene, credits and ghost-in-BASIC epilogue; requires --intro')
     b.add_argument('--intro',action='store_true',help='play the native Marbles intro before a v4-scene stream')
@@ -1271,19 +1274,23 @@ def make_parser(settings):
     cd=sub.add_parser('cart-demos',help='build shipped EasyFlash demo CRT(s) into examples/cart_demos/')
     _add_toolchain_args(cd,settings)
     cd.add_argument('--output',help='output basename (default: version and renderer-labelled cart name)')
-    cd.add_argument('--output-dir',help='final demo output directory (default: examples/cart_demos/ for V4, examples/old/cart_demos/ for V2/V3; intermediates stay in build/)')
+    cd.add_argument('--output-dir',help='final demo output directory (default: examples/cart_demos/ for V4/V5/V6/V7, examples/old/cart_demos/ for V2/V3; intermediates stay in build/)')
     cd.add_argument('--overwrite-policy',choices=('allow','warn','error'),default=settings.overwrite_policy,help='existing output handling (built-in default: warn)')
     cd.add_argument('--menu-style',choices=('default','decorative','demoscene'),default='default',help='initial cartridge menu presentation; F1 cycles all styles at runtime (default: default)')
     cd.add_argument('--run',action='store_true',help='attach the generated demo CRT directly with VICE -cartcrt')
-    cd.add_argument('--stream-renderer',choices=('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4'),default='yunroll-cart-v4',help='one renderer for every demo; writes a separate version-labelled comparison cart')
+    cd.add_argument('--prefer',choices=('fps','ram'),default='fps',help='V7: prioritize FPS (default) or smaller Y drawing kernels')
+    cd.add_argument('--play-all-seconds',type=int,default=10,help='V7 PLAY ALL duration per animation, 1..255 seconds (default 10; PAL)')
+    cd.add_argument('--stream-renderer',choices=('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7'),default='yunroll-cart-v4',help='one renderer for every demo; writes a separate version-labelled comparison cart')
     cda=sub.add_parser('cartridge-demo',help=argparse.SUPPRESS)
     _add_toolchain_args(cda,settings)
     cda.add_argument('--output',help='output basename (default: version and renderer-labelled cart name)')
-    cda.add_argument('--output-dir',help='final demo output directory (default: examples/cart_demos/ for V4, examples/old/cart_demos/ for V2/V3; intermediates stay in build/)')
+    cda.add_argument('--output-dir',help='final demo output directory (default: examples/cart_demos/ for V4/V5/V6/V7, examples/old/cart_demos/ for V2/V3; intermediates stay in build/)')
     cda.add_argument('--overwrite-policy',choices=('allow','warn','error'),default=settings.overwrite_policy,help='existing output handling (built-in default: warn)')
     cda.add_argument('--menu-style',choices=('default','decorative','demoscene'),default='default',help='initial cartridge menu presentation; F1 cycles all styles at runtime (default: default)')
     cda.add_argument('--run',action='store_true',help='attach the generated demo CRT directly with VICE -cartcrt')
-    cda.add_argument('--stream-renderer',choices=('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4'),default='yunroll-cart-v4',help='one renderer for every demo; writes a separate version-labelled comparison cart')
+    cda.add_argument('--prefer',choices=('fps','ram'),default='fps',help='V7: prioritize FPS (default) or smaller Y drawing kernels')
+    cda.add_argument('--play-all-seconds',type=int,default=10,help='V7 PLAY ALL duration per animation, 1..255 seconds (default 10; PAL)')
+    cda.add_argument('--stream-renderer',choices=('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7'),default='yunroll-cart-v4',help='one renderer for every demo; writes a separate version-labelled comparison cart')
     sub.add_parser('cart-stream',help='build an experimental yunroll-cart-v2 streamed EasyFlash CRT (same source flags as build)')
     doc=sub.add_parser('doctor',help='check local 64tass/VICE and optional Blender/cartconv availability')
     _add_toolchain_args(doc,settings)

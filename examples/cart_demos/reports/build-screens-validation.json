@@ -1,0 +1,92 @@
+[
+  {
+    "cartridge": "c643d-demo-v0.6.7-yunroll-cart-v7-all.crt",
+    "tests": {
+      "timeout": {
+        "seconds": 2.989060622300172,
+        "following_screen_reached": true
+      },
+      "space_scan": {
+        "seconds": 1.2179674559095781e-05,
+        "following_screen_reached": true
+      }
+    },
+    "skip_input": "CIA column driven low in monitor; host keyboard event injection not exercised",
+    "sha256": "59ce32352d753e1c2ebdac6ed73e7d2fa94a70e8dfb461d85689ff4cd164c470"
+  },
+  {
+    "cartridge": "c643d-demo-v0.6.7-yunroll-cart-v7-all-ram.crt",
+    "tests": {
+      "timeout": {
+        "seconds": 2.988985514307058,
+        "following_screen_reached": true
+      },
+      "space_scan": {
+        "seconds": 1.2179674559095781e-05,
+        "following_screen_reached": true
+      }
+    },
+    "skip_input": "CIA column driven low in monitor; host keyboard event injection not exercised",
+    "sha256": "b343974395c96b09efb9dd050d10559227f8953b1cb68a3abe63a0cdc426b067"
+  },
+  {
+    "cartridge": "dont_lose_your_marbles-yunroll-cart-v7-scene-clean-ram.crt",
+    "tests": {
+      "timeout": {
+        "seconds": 2.9862917762837378,
+        "following_screen_reached": true
+      },
+      "space_scan": {
+        "seconds": 1.1164701679171132e-05,
+        "following_screen_reached": true
+      }
+    },
+    "skip_input": "CIA column driven low in monitor; host keyboard event injection not exercised",
+    "sha256": "b51dc56116be51c6187d5f7d7e9652e9812e309232a5e66cca653907a39457f6"
+  },
+  {
+    "cartridge": "dont_lose_your_marbles-yunroll-cart-v7-scene-clean.crt",
+    "tests": {
+      "timeout": {
+        "seconds": 2.986378048978531,
+        "following_screen_reached": true
+      },
+      "space_scan": {
+        "seconds": 1.1164701679171132e-05,
+        "following_screen_reached": true
+      }
+    },
+    "skip_input": "CIA column driven low in monitor; host keyboard event injection not exercised",
+    "sha256": "e4686e508210d780b5b7e3d931c1042ada987fbb4dad353d909fd85f6bd1dcc2"
+  },
+  {
+    "cartridge": "dont_lose_your_marbles-yunroll-cart-v7-scene-ram.crt",
+    "tests": {
+      "timeout": {
+        "seconds": 2.9862917762837378,
+        "following_screen_reached": true
+      },
+      "space_scan": {
+        "seconds": 1.1164701679171132e-05,
+        "following_screen_reached": true
+      }
+    },
+    "skip_input": "CIA column driven low in monitor; host keyboard event injection not exercised",
+    "sha256": "fe2a2f419d9e8fbd9e7ce74877aeb6dfa5a2258c4bd5043fbab64dc5c7326612"
+  },
+  {
+    "cartridge": "dont_lose_your_marbles-yunroll-cart-v7-scene.crt",
+    "tests": {
+      "timeout": {
+        "seconds": 2.986378048978531,
+        "following_screen_reached": true
+      },
+      "space_scan": {
+        "seconds": 1.1164701679171132e-05,
+        "following_screen_reached": true
+      }
+    },
+    "skip_input": "CIA column driven low in monitor; host keyboard event injection not exercised",
+    "sha256": "3e50053ce5ffc71af7f1f503412daaf839b9323375333b96cab51b581e425227"
+  }
+]

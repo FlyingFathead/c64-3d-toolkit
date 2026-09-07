@@ -14,3 +14,21 @@ config/c643d.ini
 # Generated build output
 build/*
 !build/.gitkeep
+
+# Historical downloads are kept outside the source tree by clean_release.py.
+examples/old/
+examples/cart_demos/c643d-demo-v0.6.7-rc[1-5]-yunroll-cart-v7-all*
+examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all*
+examples/cart_demos/c643d-demo-v0.6.7-rc2-yunroll-cart-v5-all*
+examples/cart_demos/c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all*
+
+# Generated videos, Blender recovery copies, emulator logs and Python caches.
+*.mp4
+*.m4v
+*.mov
+*.webm
+*.mkv
+*.avi
+*.blend[0-9]*
+*.log
+.pytest_cache/

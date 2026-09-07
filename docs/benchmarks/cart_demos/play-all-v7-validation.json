@@ -1,0 +1,143 @@
+{
+  "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all.crt",
+  "sha256": "ce555606a80799d2b9ec6772d62dc7607094fdf3177da22cbb1121d85877efd9",
+  "seconds_per_demo": 10,
+  "ticks_per_demo": 500,
+  "all_entries": true,
+  "last_to_first_wrap": true,
+  "first_picture_before_timer": true,
+  "space_skips": true,
+  "held_space_latched": true,
+  "runstop_returns": true,
+  "manual_launch_disables_timer": true,
+  "samples": [
+    {
+      "entry": 0,
+      "count_interval_cycles": 9808367
+    },
+    {
+      "entry": 1,
+      "count_interval_cycles": 9808368
+    },
+    {
+      "entry": 2,
+      "count_interval_cycles": 9808369
+    },
+    {
+      "entry": 3,
+      "count_interval_cycles": 9808372
+    },
+    {
+      "entry": 4,
+      "count_interval_cycles": 9808372
+    },
+    {
+      "entry": 5,
+      "count_interval_cycles": 9808367
+    },
+    {
+      "entry": 6,
+      "count_interval_cycles": 9808371
+    },
+    {
+      "entry": 7,
+      "count_interval_cycles": 9808370
+    },
+    {
+      "entry": 8,
+      "count_interval_cycles": 9808371
+    },
+    {
+      "entry": 9,
+      "count_interval_cycles": 9809588
+    },
+    {
+      "entry": 10,
+      "count_interval_cycles": 9811210
+    },
+    {
+      "entry": 11,
+      "count_interval_cycles": 9808370
+    },
+    {
+      "entry": 0,
+      "count_interval_cycles": 9808367
+    }
+  ],
+  "method": "PAL VICE; production handlers via monitor, no host key injection.",
+  "menu_style": "default",
+  "configured_party_menu_check": {
+    "cartridge": "v7-play-all-two-seconds.crt",
+    "sha256": "af84108acf19e6c770ebc14ddd173629b8183ca9482efe991274305e19cfa738",
+    "menu_style": "demoscene",
+    "seconds_per_demo": 2,
+    "ticks_per_demo": 100,
+    "all_entries": true,
+    "last_to_first_wrap": true,
+    "first_picture_before_timer": true,
+    "space_skips": true,
+    "held_space_latched": true,
+    "runstop_returns": true,
+    "manual_launch_disables_timer": true,
+    "samples": [
+      {
+        "entry": 0,
+        "count_interval_cycles": 1945970
+      },
+      {
+        "entry": 1,
+        "count_interval_cycles": 1945968
+      },
+      {
+        "entry": 2,
+        "count_interval_cycles": 1945970
+      },
+      {
+        "entry": 3,
+        "count_interval_cycles": 1945968
+      },
+      {
+        "entry": 4,
+        "count_interval_cycles": 1945970
+      },
+      {
+        "entry": 5,
+        "count_interval_cycles": 1945966
+      },
+      {
+        "entry": 6,
+        "count_interval_cycles": 1945971
+      },
+      {
+        "entry": 7,
+        "count_interval_cycles": 1945968
+      },
+      {
+        "entry": 8,
+        "count_interval_cycles": 1945971
+      },
+      {
+        "entry": 9,
+        "count_interval_cycles": 1944219
+      },
+      {
+        "entry": 10,
+        "count_interval_cycles": 1948074
+      },
+      {
+        "entry": 11,
+        "count_interval_cycles": 1945970
+      },
+      {
+        "entry": 0,
+        "count_interval_cycles": 1945971
+      }
+    ],
+    "method": "PAL VICE; production handlers via monitor, no host key injection.",
+    "invalid_durations_rejected": [
+      0,
+      256,
+      -1
+    ]
+  }
+}

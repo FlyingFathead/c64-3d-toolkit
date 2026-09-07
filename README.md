@@ -8,27 +8,42 @@
 
 Host-assisted low-poly wireframe 3D compiler/runtime for a **stock Commodore 64**, with first-class support for animated **Blender `.blend` scenes**, **Wavefront OBJ + MTL**, **SVG artwork**, built-in procedural geometry, and **EasyFlash `.crt` cartridge output**.
 
+🚀 **NEW! c64-3d-toolkit's yunroll-v7 renderer runs up to 14.6% faster than V6**
+in matched PAL VICE tests, with the same geometry, colours and animation samples.
+It also reduces the twelve-demo cartridge from 927,568 to 804,448 bytes.
+**v0.6.7** includes PLAY ALL, a ten-second closing screen and a separate
+[horse-and-sunflower Blender/C64 test scene](examples/blender_horse_and_sunflower/README.md).
+[Try the cartridge](examples/cart_demos/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt)
+or see the [measurements and FPS/RAM options](docs/CARTRIDGE_STREAM_V7.md).
+Updating an existing checkout? Apply the overlay and run the
+[release cleanup](docs/UPGRADING_0.6.7.md) to archive obsolete files outside the project.
+
 Animate objects, cameras, modifiers, armatures, or rigid-body scenes in Blender; import coloured OBJ/MTL meshes or SVG paths; or use the classic procedural meshes and animation transforms. The toolkit preprocesses the result on the host, performs projection and hidden-line visibility, then generates 6510/6502 assembly data and runnable C64 demos whose vectors are drawn live by the C64.
 
 **More animation than one RAM load can hold.** Build standalone `.prg` demos,
-menu-driven `.crt` cartridges, or standalone EasyFlash vector streams. The current
-`yunroll-cart-v4` menu uses a fixed RAM working set for all twelve demos. The
-separate `yunroll-cart-v4-scene` extension supports long authored Blender scenes
-and powers [Don't Lose Your Marbles](examples/cart_marbles/README.md).
+menu-driven `.crt` cartridges, or standalone EasyFlash vector streams. The new
+`yunroll-cart-v7` menu uses a fixed RAM working set for all twelve demos. Its
+`yunroll-cart-v7-scene` counterpart supports authored Blender scenes, including
+[Don't Lose Your Marbles](examples/cart_marbles/README.md) and the new
+[horse-and-sunflower close-up](examples/blender_horse_and_sunflower/README.md).
 The [HiFi showcase](examples/hifi_showcase/README.md) retains the standalone
 192-orientation horse and sunflower V2 examples for comparison.
 
-**One renderer per comparison cart.** The default `cart-demos` build now uses
-`yunroll-cart-v4` for **all twelve demos**, including the original Blender and SVG
-examples. V4 remains the active twelve-demo menu renderer. Earlier V3/V4 comparison bundles
-and measurements are preserved in `examples/old/cart_demos/`. The menu scrolls ten entries between fixed horizontal
-borders in all three styles, with buffered updates on navigation.
+**One renderer per comparison cart.** The V7 menu uses V7 for **all twelve demos**,
+including the original Blender and SVG examples. The plain `cart-demos` command
+still defaults to V4; select `--stream-renderer yunroll-cart-v7` for the new path.
+The menu scrolls ten entries between fixed borders in all three styles, with
+PLAY ALL above the list. A `+` on a border indicates more entries in that direction.
+Historical files from `examples/old/` are supplied in a separate legacy archive.
+The editable Horse and Sunflower scene stays separate from the twelve-demo menu.
 
 V4 is a small further improvement over V3: the matched menu carts reach about
 **8.08 vs 8.00 FPS** for the HiFi horse and **5.60 vs 5.53 FPS** for the sunflower
 in PAL VICE. Both use 128 HiFi orientations; standalone HiFi carts retain 192.
 See [the uniform cart and V4 guide](docs/CARTRIDGE_STREAM_V4.md) for all twelve
 measurements, memory layout, rebuilding and verification.
+The [renderer comparison table](#renderers) covers every variant, including
+V5's lossless stream reduction, V6 runtime changes and V7 run joining/RAM preference.
 
 **v0.6.5 fixes launching from the animated-colour menu**, including the reported
 `JAM at $0008`. See [upgrading to 0.6.5](docs/UPGRADING_0.6.5.md) for the update
@@ -37,6 +52,40 @@ and archive command.
 **v0.6.6 adds [Don't Lose Your Marbles](examples/cart_marbles/README.md), an early-beta standalone cartridge demo:** coloured cubes and marbles hit a table during an orbiting shot, the tabletop fractures into a star field, and a native intro/credits/BASIC epilogue frames the scene. HUD and clean builds are included. The existing twelve-demo V4 cart is preserved. Audio remains future work.
 
 ## Try it first
+
+**v0.6.7 / yunroll-v7, FPS preferred by default:** try the
+[twelve-demo V7 cart](examples/cart_demos/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt)
+or Marbles [clean](examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v7-scene-clean.crt)
+and [HUD](examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v7-scene.crt).
+V7 joins compatible drawing runs and clears fewer bitmap bytes. Matched PAL
+VICE throughput improves **0.2–14.6% over V6**, preserving every original pixel,
+colour and sample. The menu CRT shrinks from **927,568 to 804,448 bytes**.
+
+**PLAY ALL** sits above the scrolling demo list: RETURN starts an endless cycle,
+10 seconds per animation by default; SPACE skips, RUN/STOP or F1 returns to the
+menu. F1 in the menu still cycles default/decorative/flashing demoscene styles.
+After the last demo, a white-on-black **THANK YOU FOR WATCHING** screen displays
+the toolkit version and project URL for ten seconds, then the cycle restarts.
+F1 on that screen returns to the same menu style.
+Use `--play-all-seconds N` to change the duration at build time. Optional
+`--prefer ram` builds smaller Y kernels; supplied comparison carts end in `-ram`.
+See [V7 measurements, memory tradeoffs and rebuilding](docs/CARTRIDGE_STREAM_V7.md).
+The older V4/V5/V6 menu cartridges are in the separate oldies ZIP; their
+[benchmark evidence](docs/benchmarks/cart_demos/) remains in the source tree.
+The V4 reference vectors are now a 399,186-byte compressed host asset, so
+`tools/build_v5_examples.py`, `tools/build_v6_examples.py` and
+`tools/build_v7_examples.py` rebuild without restoring an old menu cartridge.
+The general `cart-demos` command retains its V4 default; select V7 explicitly.
+
+Playback note: V5 twitching was reported with NVIDIA on Linux/Wayland; the same
+cartridges played smoothly on the user's Windows 11 machine. Host presentation
+is suspected; this is not a confirmed renderer or driver defect.
+
+```bash
+x64sc -cartcrt examples/cart_demos/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt
+# Rebuild all three FPS carts from the shipped vector samples:
+python tools/build_v7_examples.py
+```
 
 You do not need to author a scene or rebuild the toolkit just to see what it does.
 The repository ships **ready-to-run C64 examples**, including ordinary `.prg`
@@ -52,10 +101,10 @@ x64sc -cartcrt examples/hifi_showcase/sunflower_torus_hifi-yunroll-cart-v2.crt
 For the twelve-animation menu, launch the shipped demo cartridge:
 
 ```bash
-x64sc -cartcrt examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all.crt
+x64sc -cartcrt examples/cart_demos/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt
 ```
 
-That boots the **c64-3d-toolkit v0.6.5 demo cart** directly. Use the cursor keys
+That boots the **c64-3d-toolkit v0.6.7 V7 demo cart** directly. Use the cursor keys
 to choose an animation and RETURN to launch it. In the menu, F1 cycles the live
 presentation through `default`, `decorative`, and `demoscene`. While a demo is
 running, F1 or RUN/STOP returns to the menu and SPACE launches the next demo.
@@ -75,12 +124,12 @@ So there are two easy ways in:
 1. **Just run the included demos** in VICE and see the C64 output immediately.
 2. **Build your own** procedural, OBJ/MTL, SVG, or Blender-authored scene with the toolkit.
 
-### Cartridge output in v0.6.6
+### Cartridge output in v0.6.7
 
 c64-3d-toolkit can build bank-switched C64 cartridge images in **`.crt` format**
 in addition to traditional `.prg` files. The repository includes the ready-made
-[`examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all.crt`](examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all.crt), plus
-its bank map and manifest, so the cartridge path can be tried without rebuilding
+[the final V7 menu cartridge](examples/cart_demos/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt), plus
+its bank map and manifest under `examples/cart_demos/metadata/`, so it can be tried without rebuilding
 it first.
 
 To rebuild and immediately run the demo cartridge yourself:
@@ -109,13 +158,16 @@ sample counts. Both HiFi models use 128 orientations. Frame data occupies
 ./build.sh cart-demos --stream-renderer yunroll-cart-v4
 # Optional historical renderer build, output goes to examples/old/cart_demos/:
 ./build.sh cart-demos --stream-renderer yunroll-cart-v3
-# After overlaying an update ZIP, archive obsolete bundled cart names:
-python tools/archive_old_carts.py
+# After overlaying the v0.6.7 update, archive obsolete files outside the project:
+python tools/clean_release.py
 ```
 
-The cleanup command moves only known superseded cart files into
-`examples/old/cart_demos/`, preserving any locally modified copies. It is safe
-to run repeatedly. See [the cart guide](docs/CARTRIDGE_STREAM_V4.md).
+The cleanup command verifies a backup ZIP outside the project before removing
+`examples/old/`, older menu carts, generated videos and Blender backup files.
+Local edits are preserved in that ZIP. The active menu folder contains the
+final FPS/RAM carts, with supporting files in `metadata/` and `reports/`.
+Editable `.blend` scenes and current runnable examples stay in the project.
+See [upgrading and repository cleanup](docs/UPGRADING_0.6.7.md).
 
 ## Requirements
 
@@ -812,6 +864,24 @@ The historical spinner is now one animation mode. Named presets may select anoth
 
 ## Renderers
 
+Toolkit releases such as **0.6.7** and renderer generations such as **V7**
+are separate version numbers. All these paths draw vectors on the C64;
+projection and hidden-line visibility are computed on the host.
+
+| Variant | Data / output | Main change or purpose |
+| --- | --- | --- |
+| `step` | Resident tables / PRG | Packed steps, pixel-by-pixel drawing; regression baseline. |
+| `bytechunk` | Resident tables / PRG | Combine full aligned eight-pixel X-major chunks into bitmap-byte masks. |
+| `yunroll` | Resident tables / PRG | Add unrolled Y-major scanline phases; default PRG renderer. |
+| `yunroll-cart` | Resident tables / cartridge scaffold | Initial cartridge reference, before the banked frame-streaming backend. |
+| `yunroll-cart-v2` | EasyFlash frame stream | Fixed RAM staging, three bitmap buffers, cached clear/colour metadata and 16-bit run counts; default `cart-stream` renderer. |
+| `yunroll-cart-v3` | EasyFlash frame stream | Faster dispatch/header decoding, batched run counting, Y-major fall-through and copy-path improvements. |
+| `yunroll-cart-v4` | EasyFlash frame stream | Remove the per-line dispatch call/return pair; default twelve-demo menu renderer. |
+| `yunroll-cart-v4-scene` | Authored EasyFlash sequence | V4 drawing with paged directories, 16-bit frame indexing, pacing and a finite intro/ending. |
+| `yunroll-cart-v5` / `-v5-scene` | EasyFlash stream / sequence | Lossless redundant-run removal, identical-picture sharing/reuse, full-block Y drawing and four-section page copies. |
+| `yunroll-cart-v6` / `-v6-scene` | EasyFlash stream / sequence | V5 data savings plus partial X-major byte accumulation and direct loading into the recycled slot's metadata cache. Preserved rc3 comparison. |
+| `yunroll-cart-v7` / `-v7-scene` | EasyFlash stream / sequence | Join compatible runs without changing pixels, choose cell/byte clearing, optional smaller Y kernels. FPS preferred by default; menu adds PLAY ALL. |
+
 ### `step`
 
 The v0.7-style packed-step renderer. The host precomputes minor-axis decisions and the 6510 rasterizes the lines pixel-by-pixel. Kept as a regression/benchmark reference.
@@ -822,7 +892,94 @@ The v0.8 renderer. Full aligned X-major chunks are combined into VIC-II bitmap-b
 
 ### `yunroll`
 
-Current fastest production renderer. Keeps byte-chunk X-major rendering and additionally unrolls Y-major scanline phases. The historical 256x144 default 10x5 torus measured around **15-18 FPS** in the development setup; wider 192/200-line viewport builds perform more drawing/clearing work and may run slower.
+Default PRG renderer. Keeps byte-chunk X-major rendering and additionally unrolls Y-major scanline phases. The historical 256x144 default 10x5 torus measured around **15-18 FPS** in the development setup; wider 192/200-line viewport builds perform more drawing/clearing work and may run slower. Those historical PRG figures are not a matched comparison with the cartridge builds below.
+
+### What V5 optimizes
+
+V5 removes whole line records whose pixels are already supplied by retained
+records, including exact duplicates. It resolves cell colours first and keeps
+the original colour spans, so bitmap and colour attributes remain identical.
+It also stores identical complete pictures once in ROM. Each logical animation
+sample still exists: an already resident picture can be reused without drawing;
+a ROM reference whose picture has left the three buffers must be drawn again.
+This preserves sample order and holds, including colour-only changes.
+
+The C64 path also processes complete eight-pixel Y-major blocks with one count
+update, and copies full pages as four 64-byte sections with one shared index.
+Memoizing host DDA selection reduces compilation work; that part does not raise
+C64 FPS. These changes preserve hires geometry, colours and animation samples.
+
+Measured sizes of the shipped carts:
+
+| Cartridge | V4 CRT bytes | V5 CRT bytes | Bytes saved | Reduction |
+| --- | ---: | ---: | ---: | ---: |
+| Twelve-demo menu | 968,608 | 927,568 | 41,040 | 4.24% |
+| Marbles, clean | 525,376 | 418,672 | 106,704 | 20.31% |
+| Marbles, HUD | 525,376 | 418,672 | 106,704 | 20.31% |
+
+The vector payload falls from 580,017 to 538,330 bytes in the menu cart
+(7.19%), and from 405,972 to 323,159 bytes in Marbles (20.40%). Marbles has
+200 distinct pictures: its savings come from redundant line removal, not
+dropping or holding animation samples. CRT sizes also include stored chip
+headers, runtime code and bank padding; the EasyFlash target remains 1 MiB.
+
+### What V6 adds
+
+Partial X-major heads and tails now accumulate bits before writing each affected
+bitmap byte. After clearing the old buffer, the streamer places incoming
+clear/colour metadata directly in that buffer's cache and stages only the line
+records. This removes the extra staging-to-cache copy. ROM mapping is still
+restored between bounded copy bursts.
+
+V6 keeps V5's vector payload and the same shipped CRT sizes. In the matched
+regular horse build, resident code/data grows by **90 bytes net**; the lookup
+tables and allocated buffers do not grow. Clean Marbles' mean render cost drops
+3.63%, and its paced 200-sample scene takes 31.43 seconds versus V5's 32.07.
+The [V6 guide](docs/CARTRIDGE_STREAM_V6.md) records all twelve FPS comparisons,
+worst-frame costs, RAM accounting and verification limits.
+
+```bash
+./build.sh cart-demos --stream-renderer yunroll-cart-v6
+python tools/build_v6_examples.py
+```
+
+### What V7 adds
+
+V7 joins connected, compatible paths under fewer line headers, using their exact
+packed step decisions. It also chooses trimmed byte clearing where cheaper,
+without increasing metadata size. Original resolved colours and sample timing
+are preserved. `--prefer fps` is the default; `--prefer ram` saves **1,052
+resident code bytes** in the matched regular horse build, at a measured speed
+cost. Tables and bitmap/staging allocations stay the same.
+
+The HiFi horse reaches **10.018 FPS versus V6's 8.742**, and the HiFi sunflower
+**6.989 versus 6.139**. Clean Marbles takes **30.45 seconds versus 31.43**, with
+all 200 samples and seven PAL ticks per sample retained. Full comparisons,
+worst-frame costs and the menu's F1/party launch regression check are in the
+[V7 guide](docs/CARTRIDGE_STREAM_V7.md).
+
+| Cartridge | V6 CRT bytes | V7 CRT bytes | Saved |
+| --- | ---: | ---: | ---: |
+| Twelve-demo menu | 927,568 | 804,448 | 123,120 (13.27%) |
+| Marbles, clean | 418,672 | 353,008 | 65,664 (15.68%) |
+| Marbles, HUD | 418,672 | 353,008 | 65,664 (15.68%) |
+
+PLAY ALL is a fixed item above the V7 menu list. It loops all twelve animations,
+10 seconds each by default, with SPACE to skip and RUN/STOP/F1 to return.
+`--play-all-seconds` accepts 1..255, measured as 50 PAL ticks per second.
+F1 in the menu continues to cycle all three styles, including the flashing party
+menu. The `-ram` comparison cartridges are supplied alongside the FPS defaults.
+
+```bash
+python tools/build_v7_examples.py
+python tools/build_v7_examples.py --prefer ram
+./build.sh cart-demos --stream-renderer yunroll-cart-v7 --play-all-seconds 20
+```
+
+A broader compact/balanced renderer with adjustable buffer and table allocations
+remains [planned](docs/ROADMAP.md#memory-and-cpu-profiles-independent-of-the-application).
+The current preference changes Y kernels. Either preference can serve a demo
+or a game; input/sequence handling and memory budgets belong above shared drawing.
 
 ## HUD
 
@@ -956,7 +1113,7 @@ kept in a separate EasyFlash backend. Current cartridge milestones include:
 - C64-side VICE/debug-cart validation of banked payload copying; and
 - the independent `yunroll-cart-v2` streamer, 16-bit run counts and HiFi demos.
 
-The current demo cartridge streams all twelve entries through V4. Their animation tables consume cartridge ROM while a fixed frame
+The final demo cartridge streams all twelve entries through V7. Their animation tables consume cartridge ROM while a fixed frame
 buffer and per-bitmap metadata caches are reused in RAM. The current V2 limits
 include 255 orientations, an 8 KiB frame block, and OBJ/SVG/procedural inputs;
 Long Blender scenes use the separate `yunroll-cart-v4-scene` extension; see [the scene guide](docs/CARTRIDGE_SCENES.md).

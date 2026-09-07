@@ -1,33 +1,44 @@
-# c64-3d-toolkit 0.6.5 demo cartridge
+# c64-3d-toolkit demo cartridges
 
-The current cart is `c643d-demo-v0.6.5-yunroll-cart-v4-all.crt`.
-All twelve demos use V4, including the horse head and sunflower HiFi models.
+**v0.6.7 / yunroll-v7, FPS preferred by default:**
+
+- [Play the FPS cartridge](c643d-demo-v0.6.7-yunroll-cart-v7-all.crt)
+- [Optional RAM comparison](c643d-demo-v0.6.7-yunroll-cart-v7-all-ram.crt)
+
+Both contain the same twelve animations, colours and samples. Horse and
+Sunflower stays a [separate scene cartridge](../cart_horse_and_sunflower/README.md).
 
 ```bash
-x64sc -cartcrt examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all.crt
-./build.sh cart-demos --run
+x64sc -pal -cartcrt examples/cart_demos/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt
+python tools/build_v7_examples.py
+python tools/build_v7_examples.py --prefer ram
 ```
 
-Cursor keys select; RETURN launches. Ten visible rows scroll between fixed
-horizontal borders. A `+` at a border means more entries in that direction.
-F1 cycles default/decorative/demoscene. During demos, F1 or RUN/STOP returns to
-the menu; SPACE launches the next demo and wraps after the last entry.
+PLAY ALL is selected above the list at startup. RETURN starts an endless cycle,
+10 seconds per animation after its first picture appears. SPACE skips; F1 or
+RUN/STOP returns to the menu. Change duration with `--play-all-seconds N` (1..255).
+The last demo is followed by a ten-second THANK YOU FOR WATCHING screen, then
+the cycle restarts. F1 on that screen returns to the same menu style.
 
-0.6.5 fixes the CPU jam when launching from the animated-colour demoscene menu.
-The loader disables the menu IRQ and restores the cartridge ROM mapping before
-copying the animation. Renderer code, culling, colours and samples are unchanged.
+F1 in the menu cycles default, decorative and flashing demoscene/party styles.
+Ten entries are visible at once. A `+` on the top or bottom border means more
+entries in that direction. Individual demos keep looping until you leave them;
+selecting one does not enable a timer. VICE may map Escape to native RUN/STOP.
 
-`menu-launch-v4-validation.json` records the CRT hash and 84 VICE launch checks:
-every demo from every style across two cycles, plus next-demo and wrap checks.
-It verifies complete loaded payloads, the control shim and three rendered frames
-per launch. `scroll-menu-validation.json` covers 75 navigation states. Physical
-hardware has not been tested here.
+## Files and measurements
 
-Older menu carts and their historical reports are in `../old/cart_demos/`.
-After applying the changed-files ZIP, run `python tools/archive_old_carts.py`
-to move obsolete copies out of this folder. The command is repeatable and
-preserves local edits. Explicit V2/V3 builds default to the archive folder;
-`--output-dir` can override that for deliberate comparisons.
+Only the final FPS/RAM cartridges are kept at this level. Their manifests and
+maps are in [metadata/](metadata/); final menu checks are in [reports/](reports/).
+Historical benchmark evidence is in [docs/benchmarks/cart_demos/](../../docs/benchmarks/cart_demos/).
+Old menu cartridges are in the separate oldies ZIP. Use
+[the cleanup command](../../docs/UPGRADING_0.6.7.md) after applying an overlay.
 
-See [the V4 guide](../../docs/CARTRIDGE_STREAM_V4.md) and
-[upgrade instructions](../../docs/UPGRADING_0.6.5.md).
+Matched PAL VICE tests measured **0.2–14.6% higher throughput than V6**, preserving
+pixels, colours and samples. CRT size is **804,448 bytes**, versus V6's 927,568.
+`--prefer ram` saves 1,052 resident code bytes in the regular horse comparison,
+with a measured FPS cost. See [the V7 guide](../../docs/CARTRIDGE_STREAM_V7.md).
+
+The builder reads checksum-verified original V4 vector records from
+`assets/v4-menu-vector-reference.json.gz`. It needs 64tass and cartconv, but no
+Blender rebake or archived menu cartridge. `--reference-multi` still accepts an
+archived V4 CRT and its matching manifest for explicit comparisons.

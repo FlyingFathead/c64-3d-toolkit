@@ -6,26 +6,27 @@ Ready-to-run cartridges, Blender scenes, and generated/reference PRGs are groupe
 
 | Example | Contents | Renderer |
 |---|---|---|
-| [Twelve-demo menu cartridge](cart_demos/README.md) | Preserved v0.6.5 menu cart, scrolling menus and three menu styles; includes the HiFi horse and sunflower | `yunroll-cart-v4` throughout |
+| [V7 twelve-demo menu](cart_demos/README.md) | v0.6.7: FPS preference, PLAY ALL and ten-second closing screen; all three menu styles | `yunroll-cart-v7` throughout |
+| [Horse and sunflower](cart_horse_and_sunflower/README.md) | Separate close-up scene test: coloured HiFi horse sniffs a stationary flower; editable Blender scene and previews | `yunroll-cart-v7-scene` |
 | [Don't Lose Your Marbles](cart_marbles/README.md) | v0.6.6 early beta: intro, collisions, fracture/star field, credits and BASIC epilogue; HUD and clean CRTs | Separate `yunroll-cart-v4-scene` extension |
 | [HiFi showcase cartridges](hifi_showcase/README.md) | Separate 192-orientation horse and sunflower CRTs, captures and reports | `yunroll-cart-v2` |
 
 Launch the current menu cart from the project root:
 
 ```bash
-x64sc -cartcrt examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all.crt
+x64sc -cartcrt examples/cart_demos/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt
 ```
 
 Or launch the new standalone scene:
 
 ```bash
-x64sc -cartcrt examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene.crt
+x64sc -cartcrt examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v7-scene.crt
 ```
 
-Use the `-clean.crt` variant in the same folder for the intro and scene without
-the title/FPS HUD. Older comparison carts and reports are preserved under
-`old/cart_demos/`. Cartridge builds are separate from the standard PRG
-`test-examples` matrix below.
+Marbles also provides a `-clean.crt` variant without its title/FPS HUD. Older menu
+cartridges and the former `old/` tree are in the separate oldies ZIP. Current menu
+metadata/reports live in subfolders; benchmark evidence is in `docs/benchmarks/`.
+Cartridge builds are separate from the PRG `test-examples` matrix below.
 
 ## Example folders
 
@@ -41,10 +42,11 @@ examples/
   space_horse_crawl/
   blender_falling_cubes/
   blender_marbles/
+  blender_horse_and_sunflower/
   cart_demos/
   cart_marbles/
+  cart_horse_and_sunflower/
   hifi_showcase/
-  old/cart_demos/
   examples.json
   README.md
 ```
@@ -139,5 +141,5 @@ Existing destination files are never overwritten when their contents differ.
 
 ## Archived Marbles concept
 
-The [early concept tryout](old/cart_marbles/early-test-v0.6.5/README.md) preserves
-the earlier looping carts and baked Blender scene under the existing `old/` tree.
+The [early concept tryout](../docs/UPGRADING_0.6.7.md#what-cleanup-does) preserves
+the earlier looping carts and baked Blender scene in the separate oldies ZIP.

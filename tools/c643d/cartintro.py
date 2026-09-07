@@ -45,11 +45,13 @@ def scaled_text(text,scale):
     return out
 
 
-def emit_intro(path, *, ending=False):
+def emit_intro(path, *, ending=False, build_identity=None):
     definitions=[('brand','FlyingFathead',2,7,9),('presents','presents',2,12,13),('dont',"DON'T",3,5,9),('lose','LOSE',3,23,9),('your','YOUR',3,2,14),('marbles','MARBLES',3,17,14),('machine','A COMMODORE 64',2,6,10),('format','CARTRIDGE DEMO',2,6,13)]
     if ending:definitions += [('thanks','THANK YOU',2,11,9),('watching','FOR WATCHING',2,8,12),('url','github.com/FlyingFathead',1,8,17)]
     descriptors=[];compact=False
     lines=['* = $8000','intro_start:','        lda #$0b','        sta $d011','        lda #0','        sta intro_stage','        sta $d020','        sta $d021','        jsr intro_clear','        lda #$00','        jsr intro_all_colors']
+    if build_identity:
+        lines.insert(2, '        jsr build_screen_start')
     def wait(n):lines.extend([f'        ldx #{n}','        jsr intro_wait'])
     def stage(n):lines.extend([f'intro_stage_{n}:',f'        lda #{n}','        sta intro_stage'])
     def setup(name,row=None):
@@ -291,5 +293,8 @@ intro_stage: .byte 0
             lines += [label+':']+bytes_lines(screen(text,width))
         lines += ['GREETING_LEN = '+str(len('GREETINGS TO ALL OLD DEMOSCENE WANKE'))]
         lines += ['GHOST_LEN = '+str(len("HEY... DON'T LOSE YOUR MARBLES. :-)"))]
+    if build_identity:
+        from .buildscreen import build_screen_lines
+        lines += build_screen_lines(*build_identity)
     lines+=['intro_end:','.if * > $9a00','.error "intro exceeds bank-zero bootstrap allocation"','.endif']
     path.write_text('\n'.join(lines)+'\n')

@@ -1,0 +1,27 @@
+{
+  "blender": "4.0.2",
+  "vertices": 378,
+  "faces": 416,
+  "original_topology_and_materials": true,
+  "animated_objects": [
+    "Horse_motion"
+  ],
+  "stationary_camera": true,
+  "stationary_sunflower": true,
+  "loop_endpoint_matches": true,
+  "mesh_intersections": [],
+  "intersection_checked_frames": [
+    1,
+    40,
+    65,
+    83,
+    103,
+    115,
+    135,
+    150,
+    178,
+    200,
+    231,
+    250
+  ]
+}

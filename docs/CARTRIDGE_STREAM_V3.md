@@ -1,5 +1,8 @@
 # yunroll-cart-v3: measured vector-rendering improvements
 
+> Historical menu cartridges and the former `examples/old/` paths are now in the
+> separate oldies ZIP. See [v0.6.7 cleanup and archive access](UPGRADING_0.6.7.md).
+
 > Historical mixed-method menu carts mentioned below now live in `examples/old/cart_demos/`. For uniform comparisons and scrolling menus, see [the V4 guide](CARTRIDGE_STREAM_V4.md).
 
 V3 is an opt-in derivative of V2, introduced in toolkit 0.6.4; the renderer

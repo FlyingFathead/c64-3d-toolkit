@@ -127,9 +127,17 @@ def main():
         try:
             vertices=[]; faces=[]; face_colors=[]; counts=[]
             evaluated_camera=camera.evaluated_get(depsgraph)
-            camera_inverse=evaluated_camera.matrix_world.inverted()
+            # Blender's camera projection ignores camera object scale (as does
+            # world_to_camera_view). Match it for scaled camera parents too.
+            camera_inverse=evaluated_camera.matrix_world.normalized().inverted()
             for original,obj,mesh in parts:
                 offset=len(vertices); counts.append((original.name,len(mesh.vertices),len(mesh.polygons)))
+                # Camera-space export negates Z to make forward positive. That
+                # reflection reverses handedness. Preserve outward normals by
+                # reversing polygon order, accounting for mirrored objects too.
+                # Surface-only Z buffering hid this in earlier scene exports;
+                # front-face feature culling and material selection need it.
+                reverse_winding=(camera_inverse @ obj.matrix_world).to_3x3().determinant() > 0
                 for vertex in mesh.vertices:
                     if not int(original.get('c643d_visible_start',start)) <= source_frame <= int(original.get('c643d_visible_end',end)):
                         # Preserve topology while parking scheduled emitters safely
@@ -139,7 +147,10 @@ def main():
                         p=camera_inverse @ obj.matrix_world @ vertex.co
                         vertices.append([float(p.x),float(p.y),float(-p.z)])
                 for polygon in mesh.polygons:
-                    faces.append([offset+i for i in polygon.vertices])
+                    indices=list(polygon.vertices)
+                    if reverse_winding:
+                        indices.reverse()
+                    faces.append([offset+i for i in indices])
                     material=(obj.material_slots[polygon.material_index].material
                               if polygon.material_index<len(obj.material_slots) else None)
                     face_colors.append(_property_color(original,material))
@@ -186,7 +197,7 @@ def main():
 
     payload={
         'format':'c643dscene','version':1,
-        'name':Path(bpy.data.filepath).stem.upper() or 'BLENDER SCENE',
+        'name':str(scene.get('c643d_title') or Path(bpy.data.filepath).stem.upper() or 'BLENDER SCENE'),
         'source':{
             'kind':'blender','file':str(Path(bpy.data.filepath).resolve()),
             'fps':float(scene.render.fps)/float(scene.render.fps_base),

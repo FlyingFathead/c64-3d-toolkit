@@ -9,6 +9,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+from c643d.cartpaths import menu_manifest_path
 import subprocess
 import tempfile
 
@@ -19,7 +20,7 @@ from verify_cart_stream import expected_frame, labels
 def verify(crt, vice='x64sc', vice_data=None):
     root = Path(__file__).resolve().parents[1]
     crt = Path(crt).resolve()
-    manifest = json.loads(crt.with_name(crt.stem + '-cart-manifest.json').read_text())
+    manifest = json.loads(menu_manifest_path(crt).read_text())
     if not manifest.get('uniform_renderer') or manifest['menu_style'] != 'default':
         raise ValueError('requires a uniform cart with default startup style')
     entries = manifest['streamed_entries']
@@ -97,7 +98,8 @@ def verify(crt, vice='x64sc', vice_data=None):
                 menu = menus[style]
                 ram = (out / (tag + '-idle.ram')).read_bytes()
                 assert ram[0x02fc] == style_index, (tag, 'style')
-                assert manifest['version'].encode() in ram[0x0400:0x07e8], (tag, 'version text')
+                version_screen = bytes(ord(c)-(96 if style == 'default' else 32) if 'a' <= c <= 'z' else ord(c) for c in manifest['version'])
+                assert version_screen in ram[0x0400:0x07e8], (tag, 'version text')
                 port = (out / (tag + '-idle-port.bin')).read_bytes()[1] & 7
                 assert port == (5 if style == 'demoscene' else 7), (tag, 'menu mapping', port)
                 if style == 'demoscene':

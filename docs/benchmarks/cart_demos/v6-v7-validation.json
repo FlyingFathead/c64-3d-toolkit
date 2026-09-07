@@ -1,0 +1,1007 @@
+{
+  "toolkit_version": "0.6.7-rc4",
+  "renderer": "yunroll-cart-v7",
+  "default_preference": "fps",
+  "tools": {
+    "assembler": "64tass 1.59.3120",
+    "emulator": "VICE 3.10 x64sc",
+    "machine": "PAL",
+    "clock_hz": 985248
+  },
+  "method": "Completed-frame throughput: two full loops plus three frames, startup excluded; frozen V6 pre-optimization oracles; all three bitmap slots. Host display smoothness is not measured.",
+  "cartridges": {
+    "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt": {
+      "bytes": 927568,
+      "sha256": "3d668a3d06b2b830e084116a28126e8d03eeb110e045f7f87d2b66bd231dc8a8"
+    },
+    "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all.crt": {
+      "bytes": 804448,
+      "sha256": "ce555606a80799d2b9ec6772d62dc7607094fdf3177da22cbb1121d85877efd9"
+    },
+    "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all-ram.crt": {
+      "bytes": 804448,
+      "sha256": "fda23a7bb78c2f77850af86b76baa4d7ef1fb42c4ae8a36f1fc1e7b9f6746757"
+    }
+  },
+  "entries": [
+    {
+      "entry": 0,
+      "name": "TORUS",
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 0,
+        "verified_frames": 67,
+        "orientations": 32,
+        "bitmap_bytes_checked": 514560,
+        "color_bytes_checked": 64320,
+        "slots": {
+          "1": 23,
+          "2": 22,
+          "0": 22
+        },
+        "average_fps": 12.770844319170712,
+        "min_frame_cycles": 53860,
+        "max_frame_cycles": 90183,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_fps": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all.crt",
+        "menu_entry": 0,
+        "verified_frames": 67,
+        "orientations": 32,
+        "bitmap_bytes_checked": 514560,
+        "color_bytes_checked": 64320,
+        "slots": {
+          "1": 23,
+          "2": 22,
+          "0": 22
+        },
+        "average_fps": 13.504715803622199,
+        "min_frame_cycles": 52014,
+        "max_frame_cycles": 84472,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_ram": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all-ram.crt",
+        "menu_entry": 0,
+        "verified_frames": 67,
+        "orientations": 32,
+        "bitmap_bytes_checked": 514560,
+        "color_bytes_checked": 64320,
+        "slots": {
+          "1": 23,
+          "2": 22,
+          "0": 22
+        },
+        "average_fps": 12.897752773776688,
+        "min_frame_cycles": 53950,
+        "max_frame_cycles": 89683,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "fps_gain_percent": 5.7464601878346455,
+      "ram_vs_fps_percent": -4.494452446623964,
+      "baseline_oracle_sha256": "35a1b4d4cac8e5c61d616b070596726df802ab1c1b421a094d7ce8f4677de153"
+    },
+    {
+      "entry": 1,
+      "name": "TORUS DENSE",
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 1,
+        "verified_frames": 67,
+        "orientations": 32,
+        "bitmap_bytes_checked": 514560,
+        "color_bytes_checked": 64320,
+        "slots": {
+          "1": 23,
+          "2": 22,
+          "0": 22
+        },
+        "average_fps": 11.298132550499114,
+        "min_frame_cycles": 54043,
+        "max_frame_cycles": 102422,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_fps": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all.crt",
+        "menu_entry": 1,
+        "verified_frames": 67,
+        "orientations": 32,
+        "bitmap_bytes_checked": 514560,
+        "color_bytes_checked": 64320,
+        "slots": {
+          "1": 23,
+          "2": 22,
+          "0": 22
+        },
+        "average_fps": 12.104696299977942,
+        "min_frame_cycles": 52119,
+        "max_frame_cycles": 96425,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_ram": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all-ram.crt",
+        "menu_entry": 1,
+        "verified_frames": 67,
+        "orientations": 32,
+        "bitmap_bytes_checked": 514560,
+        "color_bytes_checked": 64320,
+        "slots": {
+          "1": 23,
+          "2": 22,
+          "0": 22
+        },
+        "average_fps": 11.581464560929689,
+        "min_frame_cycles": 53483,
+        "max_frame_cycles": 100942,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "fps_gain_percent": 7.138912080149007,
+      "ram_vs_fps_percent": -4.322551562480803,
+      "baseline_oracle_sha256": "f47fccec5a2e2871cbf74f886ee3139d74ad5f29f6e135d461ab8c162004e865"
+    },
+    {
+      "entry": 2,
+      "name": "CUBE",
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 2,
+        "verified_frames": 75,
+        "orientations": 36,
+        "bitmap_bytes_checked": 576000,
+        "color_bytes_checked": 72000,
+        "slots": {
+          "1": 25,
+          "2": 25,
+          "0": 25
+        },
+        "average_fps": 27.091713337851818,
+        "min_frame_cycles": 21484,
+        "max_frame_cycles": 40908,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_fps": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all.crt",
+        "menu_entry": 2,
+        "verified_frames": 75,
+        "orientations": 36,
+        "bitmap_bytes_checked": 576000,
+        "color_bytes_checked": 72000,
+        "slots": {
+          "1": 25,
+          "2": 25,
+          "0": 25
+        },
+        "average_fps": 27.135716635824572,
+        "min_frame_cycles": 21374,
+        "max_frame_cycles": 40546,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_ram": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all-ram.crt",
+        "menu_entry": 2,
+        "verified_frames": 75,
+        "orientations": 36,
+        "bitmap_bytes_checked": 576000,
+        "color_bytes_checked": 72000,
+        "slots": {
+          "1": 25,
+          "2": 25,
+          "0": 25
+        },
+        "average_fps": 24.8471858417937,
+        "min_frame_cycles": 24073,
+        "max_frame_cycles": 45596,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "fps_gain_percent": 0.1624234592474849,
+      "ram_vs_fps_percent": -8.433647891979955,
+      "baseline_oracle_sha256": "fe864017ea6e98f5ca9fadedc51ce38eb466894ff6249c7b566eb4f04fee92ca"
+    },
+    {
+      "entry": 3,
+      "name": "SPHERE",
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 3,
+        "verified_frames": 51,
+        "orientations": 24,
+        "bitmap_bytes_checked": 391680,
+        "color_bytes_checked": 48960,
+        "slots": {
+          "1": 17,
+          "2": 17,
+          "0": 17
+        },
+        "average_fps": 14.42303216156054,
+        "min_frame_cycles": 47811,
+        "max_frame_cycles": 75046,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_fps": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all.crt",
+        "menu_entry": 3,
+        "verified_frames": 51,
+        "orientations": 24,
+        "bitmap_bytes_checked": 391680,
+        "color_bytes_checked": 48960,
+        "slots": {
+          "1": 17,
+          "2": 17,
+          "0": 17
+        },
+        "average_fps": 14.786985925132148,
+        "min_frame_cycles": 47198,
+        "max_frame_cycles": 70687,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_ram": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all-ram.crt",
+        "menu_entry": 3,
+        "verified_frames": 51,
+        "orientations": 24,
+        "bitmap_bytes_checked": 391680,
+        "color_bytes_checked": 48960,
+        "slots": {
+          "1": 17,
+          "2": 17,
+          "0": 17
+        },
+        "average_fps": 13.542235366109114,
+        "min_frame_cycles": 53392,
+        "max_frame_cycles": 78362,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "fps_gain_percent": 2.52342059211097,
+      "ram_vs_fps_percent": -8.417878838360426,
+      "baseline_oracle_sha256": "e084ca73496715992acea108b8bad6c15fd491051a22ec9a3b0c906e2361f36e"
+    },
+    {
+      "entry": 4,
+      "name": "HORSE HEAD",
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 4,
+        "verified_frames": 67,
+        "orientations": 32,
+        "bitmap_bytes_checked": 514560,
+        "color_bytes_checked": 64320,
+        "slots": {
+          "1": 23,
+          "2": 22,
+          "0": 22
+        },
+        "average_fps": 12.948517657404066,
+        "min_frame_cycles": 56883,
+        "max_frame_cycles": 89986,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_fps": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all.crt",
+        "menu_entry": 4,
+        "verified_frames": 67,
+        "orientations": 32,
+        "bitmap_bytes_checked": 514560,
+        "color_bytes_checked": 64320,
+        "slots": {
+          "1": 23,
+          "2": 22,
+          "0": 22
+        },
+        "average_fps": 13.873718428220245,
+        "min_frame_cycles": 54280,
+        "max_frame_cycles": 83556,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_ram": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all-ram.crt",
+        "menu_entry": 4,
+        "verified_frames": 67,
+        "orientations": 32,
+        "bitmap_bytes_checked": 514560,
+        "color_bytes_checked": 64320,
+        "slots": {
+          "1": 23,
+          "2": 22,
+          "0": 22
+        },
+        "average_fps": 12.77854891796806,
+        "min_frame_cycles": 58022,
+        "max_frame_cycles": 90516,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "fps_gain_percent": 7.14522538637572,
+      "ram_vs_fps_percent": -7.89384270639747,
+      "baseline_oracle_sha256": "150f86d78b3266daa928523dc7412f84572599392324af231318cd1591044e0a"
+    },
+    {
+      "entry": 5,
+      "name": "SUNFLOWER TORUS",
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 5,
+        "verified_frames": 59,
+        "orientations": 28,
+        "bitmap_bytes_checked": 453120,
+        "color_bytes_checked": 56640,
+        "slots": {
+          "1": 20,
+          "2": 20,
+          "0": 19
+        },
+        "average_fps": 11.143694067637462,
+        "min_frame_cycles": 54493,
+        "max_frame_cycles": 99380,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_fps": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all.crt",
+        "menu_entry": 5,
+        "verified_frames": 59,
+        "orientations": 28,
+        "bitmap_bytes_checked": 453120,
+        "color_bytes_checked": 56640,
+        "slots": {
+          "1": 20,
+          "2": 20,
+          "0": 19
+        },
+        "average_fps": 12.122247539196467,
+        "min_frame_cycles": 50877,
+        "max_frame_cycles": 92282,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_ram": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all-ram.crt",
+        "menu_entry": 5,
+        "verified_frames": 59,
+        "orientations": 28,
+        "bitmap_bytes_checked": 453120,
+        "color_bytes_checked": 56640,
+        "slots": {
+          "1": 20,
+          "2": 20,
+          "0": 19
+        },
+        "average_fps": 11.138300808507653,
+        "min_frame_cycles": 55940,
+        "max_frame_cycles": 99019,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "fps_gain_percent": 8.781230583140598,
+      "ram_vs_fps_percent": -8.116867169287612,
+      "baseline_oracle_sha256": "7c537488e5f6e08f2302963e0d767d9402b1f2425382a45ef70561780c5b6b8b"
+    },
+    {
+      "entry": 6,
+      "name": "SUNFLOWER COLOR",
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 6,
+        "verified_frames": 43,
+        "orientations": 20,
+        "bitmap_bytes_checked": 330240,
+        "color_bytes_checked": 41280,
+        "slots": {
+          "1": 15,
+          "2": 14,
+          "0": 14
+        },
+        "average_fps": 9.785755129665864,
+        "min_frame_cycles": 67513,
+        "max_frame_cycles": 113706,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_fps": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all.crt",
+        "menu_entry": 6,
+        "verified_frames": 43,
+        "orientations": 20,
+        "bitmap_bytes_checked": 330240,
+        "color_bytes_checked": 41280,
+        "slots": {
+          "1": 15,
+          "2": 14,
+          "0": 14
+        },
+        "average_fps": 10.522497524517071,
+        "min_frame_cycles": 63711,
+        "max_frame_cycles": 105972,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_ram": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all-ram.crt",
+        "menu_entry": 6,
+        "verified_frames": 43,
+        "orientations": 20,
+        "bitmap_bytes_checked": 330240,
+        "color_bytes_checked": 41280,
+        "slots": {
+          "1": 15,
+          "2": 14,
+          "0": 14
+        },
+        "average_fps": 9.743797221797724,
+        "min_frame_cycles": 68849,
+        "max_frame_cycles": 113183,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "fps_gain_percent": 7.528722976295876,
+      "ram_vs_fps_percent": -7.400337238426536,
+      "baseline_oracle_sha256": "ecd558a2c68404569392738fb7fabe3a4e38fd3b25e30a1480e26388b74a83c9"
+    },
+    {
+      "entry": 7,
+      "name": "SPACE HORSE SPIN",
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 7,
+        "verified_frames": 51,
+        "orientations": 24,
+        "bitmap_bytes_checked": 391680,
+        "color_bytes_checked": 48960,
+        "slots": {
+          "1": 17,
+          "2": 17,
+          "0": 17
+        },
+        "average_fps": 10.572800681296455,
+        "min_frame_cycles": 28012,
+        "max_frame_cycles": 106362,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_fps": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all.crt",
+        "menu_entry": 7,
+        "verified_frames": 51,
+        "orientations": 24,
+        "bitmap_bytes_checked": 391680,
+        "color_bytes_checked": 48960,
+        "slots": {
+          "1": 17,
+          "2": 17,
+          "0": 17
+        },
+        "average_fps": 10.668912096865364,
+        "min_frame_cycles": 27875,
+        "max_frame_cycles": 106088,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_ram": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all-ram.crt",
+        "menu_entry": 7,
+        "verified_frames": 51,
+        "orientations": 24,
+        "bitmap_bytes_checked": 391680,
+        "color_bytes_checked": 48960,
+        "slots": {
+          "1": 17,
+          "2": 17,
+          "0": 17
+        },
+        "average_fps": 10.03063000730779,
+        "min_frame_cycles": 29304,
+        "max_frame_cycles": 112625,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "fps_gain_percent": 0.9090440505412412,
+      "ram_vs_fps_percent": -5.982635190565566,
+      "baseline_oracle_sha256": "5cea181558dc9d34b377aa6b69052b83863be9ad50153cadf2bf807fa6d3d55b"
+    },
+    {
+      "entry": 8,
+      "name": "SPACE HORSE CRAWL",
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 8,
+        "verified_frames": 67,
+        "orientations": 32,
+        "bitmap_bytes_checked": 514560,
+        "color_bytes_checked": 64320,
+        "slots": {
+          "1": 23,
+          "2": 22,
+          "0": 22
+        },
+        "average_fps": 15.534286512867924,
+        "min_frame_cycles": 48065,
+        "max_frame_cycles": 84502,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_fps": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all.crt",
+        "menu_entry": 8,
+        "verified_frames": 67,
+        "orientations": 32,
+        "bitmap_bytes_checked": 514560,
+        "color_bytes_checked": 64320,
+        "slots": {
+          "1": 23,
+          "2": 22,
+          "0": 22
+        },
+        "average_fps": 16.623042823278467,
+        "min_frame_cycles": 43128,
+        "max_frame_cycles": 80743,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_ram": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all-ram.crt",
+        "menu_entry": 8,
+        "verified_frames": 67,
+        "orientations": 32,
+        "bitmap_bytes_checked": 514560,
+        "color_bytes_checked": 64320,
+        "slots": {
+          "1": 23,
+          "2": 22,
+          "0": 22
+        },
+        "average_fps": 16.29465223395546,
+        "min_frame_cycles": 43910,
+        "max_frame_cycles": 82694,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "fps_gain_percent": 7.0087307164617085,
+      "ram_vs_fps_percent": -1.9755143075438464,
+      "baseline_oracle_sha256": "84623ef327bee3d4e85dbd4197c8fd8bd10cea4417400bf3d0eee956ccd92a27"
+    },
+    {
+      "entry": 9,
+      "name": "FALLING CUBES",
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 9,
+        "verified_frames": 39,
+        "orientations": 18,
+        "bitmap_bytes_checked": 299520,
+        "color_bytes_checked": 37440,
+        "slots": {
+          "1": 13,
+          "2": 13,
+          "0": 13
+        },
+        "average_fps": 14.062663954253571,
+        "min_frame_cycles": 33838,
+        "max_frame_cycles": 89529,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_fps": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all.crt",
+        "menu_entry": 9,
+        "verified_frames": 39,
+        "orientations": 18,
+        "bitmap_bytes_checked": 299520,
+        "color_bytes_checked": 37440,
+        "slots": {
+          "1": 13,
+          "2": 13,
+          "0": 13
+        },
+        "average_fps": 14.274753581325406,
+        "min_frame_cycles": 33159,
+        "max_frame_cycles": 88436,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_ram": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all-ram.crt",
+        "menu_entry": 9,
+        "verified_frames": 39,
+        "orientations": 18,
+        "bitmap_bytes_checked": 299520,
+        "color_bytes_checked": 37440,
+        "slots": {
+          "1": 13,
+          "2": 13,
+          "0": 13
+        },
+        "average_fps": 13.759865339417072,
+        "min_frame_cycles": 34798,
+        "max_frame_cycles": 91457,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "fps_gain_percent": 1.5081753198524117,
+      "ram_vs_fps_percent": -3.606985150216002,
+      "baseline_oracle_sha256": "955d7b30870ee7b383e4b67873b12c95cc3a1e2682af7cb5b9dc9fbfb70fab3b"
+    },
+    {
+      "entry": 10,
+      "name": "HORSE HEAD HIFI",
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 10,
+        "verified_frames": 259,
+        "orientations": 128,
+        "bitmap_bytes_checked": 1989120,
+        "color_bytes_checked": 248640,
+        "slots": {
+          "1": 87,
+          "2": 86,
+          "0": 86
+        },
+        "average_fps": 8.741572805733343,
+        "min_frame_cycles": 82441,
+        "max_frame_cycles": 127186,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_fps": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all.crt",
+        "menu_entry": 10,
+        "verified_frames": 259,
+        "orientations": 128,
+        "bitmap_bytes_checked": 1989120,
+        "color_bytes_checked": 248640,
+        "slots": {
+          "1": 87,
+          "2": 86,
+          "0": 86
+        },
+        "average_fps": 10.01844406885995,
+        "min_frame_cycles": 74319,
+        "max_frame_cycles": 110350,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_ram": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all-ram.crt",
+        "menu_entry": 10,
+        "verified_frames": 259,
+        "orientations": 128,
+        "bitmap_bytes_checked": 1989120,
+        "color_bytes_checked": 248640,
+        "slots": {
+          "1": 87,
+          "2": 86,
+          "0": 86
+        },
+        "average_fps": 9.268216313620819,
+        "min_frame_cycles": 81728,
+        "max_frame_cycles": 119549,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "fps_gain_percent": 14.606882439841296,
+      "ram_vs_fps_percent": -7.488465774551189,
+      "baseline_oracle_sha256": "dafb0e5bffc4431313e6f9ee0e3be95e8a04d2d9e7dc9d8a9d301c0c85d1f8d0"
+    },
+    {
+      "entry": 11,
+      "name": "SUNFLOWER TORUS HIFI",
+      "v6": {
+        "cartridge": "c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt",
+        "menu_entry": 11,
+        "verified_frames": 259,
+        "orientations": 128,
+        "bitmap_bytes_checked": 1989120,
+        "color_bytes_checked": 248640,
+        "slots": {
+          "1": 87,
+          "2": 86,
+          "0": 86
+        },
+        "average_fps": 6.138687238920005,
+        "min_frame_cycles": 83514,
+        "max_frame_cycles": 211811,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_fps": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all.crt",
+        "menu_entry": 11,
+        "verified_frames": 259,
+        "orientations": 128,
+        "bitmap_bytes_checked": 1989120,
+        "color_bytes_checked": 248640,
+        "slots": {
+          "1": 87,
+          "2": 86,
+          "0": 86
+        },
+        "average_fps": 6.989304982956223,
+        "min_frame_cycles": 72942,
+        "max_frame_cycles": 185186,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "v7_ram": {
+        "cartridge": "c643d-demo-v0.6.7-rc4-yunroll-cart-v7-all-ram.crt",
+        "menu_entry": 11,
+        "verified_frames": 259,
+        "orientations": 128,
+        "bitmap_bytes_checked": 1989120,
+        "color_bytes_checked": 248640,
+        "slots": {
+          "1": 87,
+          "2": 86,
+          "0": 86
+        },
+        "average_fps": 6.559934640652753,
+        "min_frame_cycles": 79272,
+        "max_frame_cycles": 196090,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      "fps_gain_percent": 13.8566718083176,
+      "ram_vs_fps_percent": -6.143248053283001,
+      "baseline_oracle_sha256": "f83eb913dc2acce3a3d2707f5d269673994039f355c882236c8073a863d92522"
+    }
+  ],
+  "regular_horse_memory": {
+    "v6": {
+      "main_and_hud_bytes": 3570,
+      "negative_y_block_bytes": 272,
+      "bitmap_allocation_bytes": 24576,
+      "screen_allocation_bytes": 3072,
+      "line_staging_bytes": 8192,
+      "metadata_cache_bytes": 3072
+    },
+    "v7": {
+      "main_and_hud_bytes": 3608,
+      "negative_y_block_bytes": 272,
+      "bitmap_allocation_bytes": 24576,
+      "screen_allocation_bytes": 3072,
+      "line_staging_bytes": 8192,
+      "metadata_cache_bytes": 3072
+    },
+    "v7-ram": {
+      "main_and_hud_bytes": 2828,
+      "negative_y_block_bytes": 0,
+      "bitmap_allocation_bytes": 24576,
+      "screen_allocation_bytes": 3072,
+      "line_staging_bytes": 8192,
+      "metadata_cache_bytes": 3072
+    }
+  },
+  "kernel_validation": {
+    "fps": {
+      "preference": "fps",
+      "kernel_cases": 1744,
+      "validation": {
+        "cartridge": "v7-x-kernels.crt",
+        "menu_entry": null,
+        "verified_frames": 3491,
+        "orientations": 1744,
+        "bitmap_bytes_checked": 26810880,
+        "color_bytes_checked": 3351360,
+        "slots": {
+          "1": 1164,
+          "2": 1164,
+          "0": 1163
+        },
+        "average_fps": 49.73844681700257,
+        "min_frame_cycles": 1406,
+        "max_frame_cycles": 72693,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "loop_seconds": 35.07263957907045,
+        "target_fps": 50.0,
+        "hud_match": true,
+        "text_overlay": false,
+        "frame_index_bits": 16
+      },
+      "reuse": {
+        "cartridge": "v7-reuse.crt",
+        "menu_entry": null,
+        "verified_frames": 270,
+        "orientations": 270,
+        "bitmap_bytes_checked": 2073600,
+        "color_bytes_checked": 259200,
+        "slots": {
+          "1": 144,
+          "2": 54,
+          "0": 72
+        },
+        "average_fps": 16.76971925723715,
+        "min_frame_cycles": 258,
+        "max_frame_cycles": 117761,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 231,
+        "loop_seconds": null,
+        "target_fps": 16.666666666666668,
+        "hud_match": true,
+        "text_overlay": false,
+        "frame_index_bits": 16
+      },
+      "hold_seconds": 16.186471832472638,
+      "ideal_hold_seconds": 16.1597486115171
+    },
+    "ram": {
+      "preference": "ram",
+      "kernel_cases": 1744,
+      "validation": {
+        "cartridge": "v7-x-kernels.crt",
+        "menu_entry": null,
+        "verified_frames": 3491,
+        "orientations": 1744,
+        "bitmap_bytes_checked": 26810880,
+        "color_bytes_checked": 3351360,
+        "slots": {
+          "1": 1164,
+          "2": 1164,
+          "0": 1163
+        },
+        "average_fps": 49.73844681700257,
+        "min_frame_cycles": 1406,
+        "max_frame_cycles": 72691,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "loop_seconds": 35.07263957907045,
+        "target_fps": 50.0,
+        "hud_match": true,
+        "text_overlay": false,
+        "frame_index_bits": 16
+      },
+      "reuse": {
+        "cartridge": "v7-reuse.crt",
+        "menu_entry": null,
+        "verified_frames": 270,
+        "orientations": 270,
+        "bitmap_bytes_checked": 2073600,
+        "color_bytes_checked": 259200,
+        "slots": {
+          "1": 144,
+          "2": 54,
+          "0": 72
+        },
+        "average_fps": 16.76971925723715,
+        "min_frame_cycles": 258,
+        "max_frame_cycles": 117770,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 231,
+        "loop_seconds": null,
+        "target_fps": 16.666666666666668,
+        "hud_match": true,
+        "text_overlay": false,
+        "frame_index_bits": 16
+      },
+      "hold_seconds": 16.186471832472638,
+      "ideal_hold_seconds": 16.1597486115171
+    }
+  },
+  "unit_tests_passed": 118,
+  "edge_validation": {
+    "renderer": "yunroll-cart-v7",
+    "run_counts": [
+      0,
+      1,
+      255,
+      256,
+      512,
+      257,
+      256
+    ],
+    "max_clear_spans": 255,
+    "max_metadata_bytes": 1024,
+    "max_directory_frames": 255,
+    "reports": [
+      {
+        "cartridge": "v7-boundaries-color.crt",
+        "menu_entry": null,
+        "verified_frames": 17,
+        "orientations": 7,
+        "bitmap_bytes_checked": 130560,
+        "color_bytes_checked": 16320,
+        "slots": {
+          "1": 6,
+          "2": 6,
+          "0": 5
+        },
+        "average_fps": 13.654320816558453,
+        "min_frame_cycles": 1466,
+        "max_frame_cycles": 145750,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      {
+        "cartridge": "v7-boundaries-mono.crt",
+        "menu_entry": null,
+        "verified_frames": 17,
+        "orientations": 7,
+        "bitmap_bytes_checked": 130560,
+        "color_bytes_checked": 16320,
+        "slots": {
+          "1": 6,
+          "2": 6,
+          "0": 5
+        },
+        "average_fps": 14.313053742157495,
+        "min_frame_cycles": 1039,
+        "max_frame_cycles": 136722,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      },
+      {
+        "cartridge": "v7-directory-255.crt",
+        "menu_entry": null,
+        "verified_frames": 513,
+        "orientations": 255,
+        "bitmap_bytes_checked": 3939840,
+        "color_bytes_checked": 492480,
+        "slots": {
+          "1": 171,
+          "2": 171,
+          "0": 171
+        },
+        "average_fps": 50.22033323922046,
+        "min_frame_cycles": 1040,
+        "max_frame_cycles": 20701,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0
+      }
+    ]
+  }
+}

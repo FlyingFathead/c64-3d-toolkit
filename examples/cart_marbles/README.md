@@ -1,5 +1,49 @@
 # DON'T LOSE YOUR MARBLES
 
+**0.6.7 / V7, FPS preferred by default:**
+[clean presentation](dont_lose_your_marbles-yunroll-cart-v7-scene-clean.crt) and
+[HUD build](dont_lose_your_marbles-yunroll-cart-v7-scene.crt).
+Optional RAM comparisons: [clean](dont_lose_your_marbles-yunroll-cart-v7-scene-clean-ram.crt)
+and [HUD](dont_lose_your_marbles-yunroll-cart-v7-scene-ram.crt).
+
+V7 preserves all 200 original samples, colours, seven-tick pacing, intro and
+ending. Clean scene duration falls to **30.45 seconds from V6's 31.43**, while
+each CRT shrinks to **353,008 bytes from 418,672**. Every frame matches the
+frozen V6 oracle. The build screen shows `0.6.7` / `yunroll-v7` for about
+three seconds or SPACE to skip. RAM builds identify `yunroll-v7 (ram)`.
+See the [V7 guide](../../docs/CARTRIDGE_STREAM_V7.md) for timings and validation.
+
+```bash
+x64sc -cartcrt examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v7-scene-clean.crt
+python tools/build_v7_examples.py
+```
+
+PLAY ALL belongs to the separate multi-demo menu; Marbles retains its finite story.
+
+## Preserved V6 comparison
+
+**0.6.7-rc3 / V6 candidate:**
+[clean presentation](dont_lose_your_marbles-yunroll-cart-v6-scene-clean.crt) and
+[HUD build](dont_lose_your_marbles-yunroll-cart-v6-scene.crt).
+The white-on-black build screen shows `0.6.7-rc3` and `yunroll-v6` for about
+three seconds, or SPACE skips immediately into the original native intro.
+
+V6 uses the same 200 samples and seven-raster-tick cadence as V5. In matched
+PAL VICE profiling, the clean vector scene takes **31.43 seconds versus V5's
+32.07**, with exact bitmap/colour matches on every frame. Both CRTs occupy
+418,672 bytes, the same as V5. The V4 and V5 releases are preserved below and
+alongside these files. See [the V6 guide](../../docs/CARTRIDGE_STREAM_V6.md)
+for the changes, comparisons and validation.
+
+From the repository root:
+
+```bash
+x64sc -cartcrt examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v6-scene-clean.crt
+python tools/build_v6_examples.py
+```
+
+## Original V4 release
+
 **Early beta, included with toolkit v0.6.6.** A silent standalone EasyFlash demo.
 Music and digi playback remain future experiments.
 
@@ -56,4 +100,4 @@ unchanged. This standalone example ships alongside that menu cartridge.
 See [the scene guide](../../docs/CARTRIDGE_SCENES.md) for rebuild commands and the
 specific assembly changes.
 
-The earlier looping build is preserved as an [early concept tryout](../old/cart_marbles/early-test-v0.6.5/README.md).
+The earlier looping build is preserved in the separate oldies ZIP as an [early concept tryout](../../docs/UPGRADING_0.6.7.md#what-cleanup-does).

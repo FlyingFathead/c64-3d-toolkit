@@ -1,5 +1,8 @@
 # Upgrading to 0.6.5
 
+> Historical menu cartridges and the former `examples/old/` paths are now in the
+> separate oldies ZIP. See [v0.6.7 cleanup and archive access](UPGRADING_0.6.7.md).
+
 This fixes `JAM at $0008` when launching an animation from the flashing
 `demoscene` menu. It also makes V4 the only active demo cartridge and moves
 older bundles and reports under `examples/old/cart_demos/`.

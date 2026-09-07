@@ -25,6 +25,10 @@ CONTROL_CURRENT   = $02fa
 CONTROL_LATCH     = $02fb
 CONTROL_STYLE     = $02fc
 CONTROL_CYCLE     = $0203
+CONTROL_AUTO      = $02fd       ; 0=manual, 1=wait for first picture, 2=timing
+CONTROL_TICKS     = $02fe
+CONTROL_SECONDS   = $02ff
+CONTROL_AUTO_NEXT = $0206
 CONTROL_ROM       = $8800
 RUNTIME_MENU      = $c803
 RUNTIME_NEXT      = $c806
@@ -36,11 +40,16 @@ MENU_FONT_ROM         = $9000
 MENU_FONT_RAM         = $2000
 
 MENU_VISIBLE_ROWS = 10
+.if RENDERER_VERSION >= 7
+MENU_EXTRA_ROW = 1
+.else
+MENU_EXTRA_ROW = 0
+.endif
 .if MENU_STYLE == MENU_STYLE_DEFAULT
-MENU_LIST_ROW = 2
+MENU_LIST_ROW = 2 + MENU_EXTRA_ROW
 MENU_LIST_COL = 0
 .else
-MENU_LIST_ROW = 5
+MENU_LIST_ROW = 5 + MENU_EXTRA_ROW
 MENU_LIST_COL = 3
 .endif
 MENU_HELP_ROW = MENU_LIST_ROW + MENU_VISIBLE_ROWS + 2
@@ -99,6 +108,9 @@ runtime_cold:
     sta CONTROL_STYLE
     lda #0
     sta CONTROL_CURRENT
+.if RENDERER_VERSION >= 7
+    sta CONTROL_AUTO
+.endif
 
 .if VICE_DEBUGCART
     ; Automated validation mode: load every packed PRG through the exact same
@@ -107,8 +119,16 @@ runtime_cold:
     jmp debug_validate_all
 .endif
 
+.if RENDERER_VERSION >= 5
+    jsr load_menu_shared
+    jsr build_screen_start
+.endif
     jsr init_menu_screen
+.if RENDERER_VERSION >= 7
+    lda #$ff                   ; fixed PLAY ALL item
+.else
     lda #0
+.endif
     sta selected_entry
 .if AUTO_LAUNCH < DEMO_ENTRY_COUNT
     lda #AUTO_LAUNCH
@@ -119,8 +139,16 @@ runtime_cold:
 
 runtime_return_menu:
     jsr runtime_common
+.if RENDERER_VERSION >= 7
+    lda #0
+    sta CONTROL_AUTO
+.endif
     jsr init_menu_screen
     lda CONTROL_CURRENT
+.if RENDERER_VERSION >= 7
+    cmp #$ff
+    beq runtime_menu_index_ok
+.endif
     cmp #DEMO_ENTRY_COUNT
     bcc runtime_menu_index_ok
     lda #0
@@ -135,6 +163,15 @@ runtime_next_demo:
     adc #1
     cmp #DEMO_ENTRY_COUNT
     bcc runtime_next_index_ok
+.if RENDERER_VERSION >= 7
+    lda CONTROL_AUTO
+    beq runtime_next_wrap
+    jsr load_menu_shared
+    jsr play_all_thanks_start
+    bcc runtime_next_wrap
+    jmp runtime_return_menu
+runtime_next_wrap:
+.endif
     lda #0
 runtime_next_index_ok:
     sta selected_entry
@@ -248,14 +285,14 @@ menu_full_redraw:
     lda #$0c                    ; gray byline
     sta text_color
 .if MENU_STYLE == MENU_STYLE_DEFAULT
-    lda #<($0400+17*40+9)
+    lda #<($0400+(17+MENU_EXTRA_ROW)*40+9)
     sta ZP_SCREEN_LO
-    lda #>($0400+17*40+9)
+    lda #>($0400+(17+MENU_EXTRA_ROW)*40+9)
     sta ZP_SCREEN_HI
 .else
-    lda #<($0400+20*40+9)
+    lda #<($0400+(20+MENU_EXTRA_ROW)*40+9)
     sta ZP_SCREEN_LO
-    lda #>($0400+20*40+9)
+    lda #>($0400+(20+MENU_EXTRA_ROW)*40+9)
     sta ZP_SCREEN_HI
 .endif
     lda #<byline_text
@@ -267,14 +304,14 @@ menu_full_redraw:
     lda #$0e                    ; light blue repository line
     sta text_color
 .if MENU_STYLE == MENU_STYLE_DEFAULT
-    lda #<($0400+19*40+2)
+    lda #<($0400+(19+MENU_EXTRA_ROW)*40+2)
     sta ZP_SCREEN_LO
-    lda #>($0400+19*40+2)
+    lda #>($0400+(19+MENU_EXTRA_ROW)*40+2)
     sta ZP_SCREEN_HI
 .else
-    lda #<($0400+22*40+2)
+    lda #<($0400+(22+MENU_EXTRA_ROW)*40+2)
     sta ZP_SCREEN_LO
-    lda #>($0400+22*40+2)
+    lda #>($0400+(22+MENU_EXTRA_ROW)*40+2)
     sta ZP_SCREEN_HI
 .endif
     lda #<repo_text
@@ -308,14 +345,25 @@ menu_down:
     bcs menu_down_wrap
     jmp menu_redraw
 menu_down_wrap:
+.if RENDERER_VERSION >= 7
+    lda #$ff
+.else
     lda #0
+.endif
     sta selected_entry
     jmp menu_redraw
 
 menu_up:
     jsr wait_menu_key_release
     lda selected_entry
+.if RENDERER_VERSION >= 7
+    cmp #$ff
+    beq menu_up_wrap
+    jmp menu_up_dec
+menu_up_wrap:
+.else
     bne menu_up_dec
+.endif
     lda #DEMO_ENTRY_COUNT-1
     sta selected_entry
     jmp menu_redraw
@@ -329,8 +377,15 @@ menu_cycle_style:
 
 menu_launch:
     jsr wait_menu_key_release
+.if RENDERER_VERSION >= 7
+    lda #0
+    sta CONTROL_AUTO
+.endif
 menu_launch_nowait:
     sei
+.if RENDERER_VERSION >= 7
+    jsr setup_play_all
+.endif
     ldx selected_entry
     jsr load_entry_x
     jsr install_control_shim
@@ -350,7 +405,11 @@ menu_launch_nowait:
     sta CONTROL_ORIG_HI
     txa
     sta CONTROL_CURRENT
+.if RENDERER_VERSION >= 7
+    lda #1                     ; held SPACE must not skip several animations
+.else
     lda #0
+.endif
     sta CONTROL_LATCH
 
     ; Current production yunroll PRGs enter ML at $080D. The address is carried
@@ -557,7 +616,7 @@ paint_repo_loop:
     and #$0f
     tay
     lda gradient_palette,y
-    sta $db72,x                ; row 22, column 2
+    sta $d800+(22+MENU_EXTRA_ROW)*40+2,x
     inx
     cpx #36
     bne paint_repo_loop
@@ -1032,11 +1091,11 @@ gradient_palette:
     .byte $06,$0e,$03,$0d,$07,$0a,$02,$04,$0a,$07,$0d,$03,$0e,$06,$0b,$0c
 
 title_default:
-    .text "C64 3D TOOLKIT 0.6.6  ALL V"
+    .text "C64 3D TOOLKIT 0.6.7  ALL V"
     .byte $30+RENDERER_VERSION
     .byte 0
 title_fancy:
-    .text "C64-3D-TOOLKIT 0.6.6"
+    .text "C64-3D-TOOLKIT 0.6.7"
     .byte 0
 subtitle_fancy:
     .text "ALL DEMOS: CART V"
@@ -1082,6 +1141,16 @@ menu_redraw:
     jmp menu_wait_key
 
 draw_menu_window:
+.if RENDERER_VERSION >= 7
+    jsr draw_play_all
+    lda selected_entry
+    cmp #$ff
+    bne menu_adjust_top
+    lda #0
+    sta top_entry
+    jmp menu_top_ready
+menu_adjust_top:
+.endif
     lda selected_entry
     cmp top_entry
     bcs menu_check_bottom
@@ -1278,6 +1347,106 @@ draw_list_borders:
     sta ZP_SCREEN_HI
     jmp print_z_line
 
+; V7 keeps PLAY ALL outside the scrolling list. $ff is a menu-only selection;
+; actual demo indices stay 0..11, including the last-to-first wrap.
+.if RENDERER_VERSION >= 7
+setup_play_all:
+    lda selected_entry
+    cmp #$ff
+    bne play_all_existing
+    lda #0
+    sta selected_entry
+    lda #1
+    sta CONTROL_AUTO
+play_all_existing:
+    lda CONTROL_AUTO
+    beq play_all_setup_done
+    lda #1
+    sta CONTROL_AUTO
+    lda #PLAY_ALL_SECONDS
+    sta CONTROL_SECONDS
+    lda #50
+    sta CONTROL_TICKS
+play_all_setup_done:
+    rts
+
+draw_play_all:
+    lda #$d4
+    sta color_page_delta
+    lda #1
+    ldx selected_entry
+    cpx #$ff
+    bne play_all_color_ready
+    lda #7
+play_all_color_ready:
+    sta text_color
+    lda #<($0400+(MENU_LIST_ROW-2)*40+MENU_LIST_COL)
+    sta ZP_SCREEN_LO
+    lda #>($0400+(MENU_LIST_ROW-2)*40+MENU_LIST_COL)
+    sta ZP_SCREEN_HI
+    lda #<play_all_text
+    sta ZP_STR_LO
+    lda #>play_all_text
+    sta ZP_STR_HI
+    jsr print_z_line
+    lda #$20
+    ldx selected_entry
+    cpx #$ff
+    bne play_all_marker_ready
+    lda #$3e
+play_all_marker_ready:
+    sta $0400+(MENU_LIST_ROW-2)*40+MENU_LIST_COL
+    rts
+play_all_text:
+    .text "  PLAY ALL ("
+.if PLAY_ALL_SECONDS >= 100
+    .byte $30 + PLAY_ALL_SECONDS / 100
+.endif
+.if PLAY_ALL_SECONDS >= 10
+    .byte $30 + (PLAY_ALL_SECONDS / 10) % 10
+.endif
+    .byte $30 + PLAY_ALL_SECONDS % 10
+    .text " SECONDS EACH)"
+    .byte 0
+.endif
+
+.if RENDERER_VERSION >= 5
+.include "build-screen.inc"
+.endif
+.if RENDERER_VERSION >= 7
+.include "play-all-thanks.inc"
+.endif
+; This small menu-owned IRQ helper survives animation loading at $c700.
+; It never borrows renderer zero page, and the control shim preserves A/X/Y.
+; Start counting only once slot 1 is first displayed (VIC bank differs from 0),
+; so initialization/loading time is not charged to the visible demo duration.
+.if RENDERER_VERSION >= 7
+.if * > $c700
+.error "menu helpers overlap the fixed PLAY ALL timer at $c700"
+.endif
+.fill $c700-*, $ff
+play_all_tick:
+    lda CONTROL_AUTO
+    beq play_all_tick_done
+    cmp #1
+    bne play_all_count
+    lda $dd00
+    and #3
+    cmp #3
+    beq play_all_tick_done
+    inc CONTROL_AUTO
+    rts
+play_all_count:
+    dec CONTROL_TICKS
+    bne play_all_tick_done
+    lda #50
+    sta CONTROL_TICKS
+    dec CONTROL_SECONDS
+    bne play_all_tick_done
+    jmp CONTROL_AUTO_NEXT
+play_all_tick_done:
+    rts
+.endif
 .if * > $c800
 .error "menu directory/scroll helpers exceed $c000-$c7ff"
 .endif

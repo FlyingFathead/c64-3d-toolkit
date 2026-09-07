@@ -4,9 +4,33 @@
 
 - Cycle-profile `yunroll` hot paths in the VICE monitor.
 - Explore self-modified absolute bitmap accesses where they beat `(zp),Y`.
-- Improve dirty-byte clearing using generator-side cycle-cost estimates.
+- V7 implements generator-selected cell/byte clearing; explore finer plans when decoding cost justifies them.
 - Add a renderer benchmark/report mode that records estimated and measured costs.
 - Keep `step` and `bytechunk` as regression baselines while optimizing `yunroll`.
+
+### Memory and CPU profiles, independent of the application
+
+Proposed future profiles are **compact**, **balanced** and **speed-focused**.
+Each could serve demos or games: a demo may also need RAM and CPU time for SID
+music, sprites, text, transitions and other effects. Measure code bytes, lookup
+tables, buffer allocations and worst-frame cycles before choosing how much to
+unroll; a smaller kernel's speed cost must be benchmarked rather than assumed.
+
+Keep shared line drawing separate from the frame producer and presentation
+policy. A sequence player supplies authored frames; an interactive application
+could select precomputed views/poses, or eventually supply dynamically projected
+vectors. Free camera/object motion would require C64-side transformation and
+visibility work beyond the current host-precomputed pipeline. Input latency,
+audio/logic budgets, buffering and memory ownership belong in that integration
+layer. V7 now implements `--prefer fps|ram` for the Y kernels, with FPS as the
+default. Broader allocation profiles and interactive 3D remain future work.
+
+V6 implements faster partial X-major byte drawing and direct metadata
+loading on the existing demo pipeline; see the [measured results](CARTRIDGE_STREAM_V6.md).
+V7 adds lossless run joining, selective byte clearing and smaller Y kernels;
+see its [measured tradeoffs](CARTRIDGE_STREAM_V7.md). Retaining unchanged bitmap
+regions remains a follow-up experiment. Region comparisons
+must use the actual picture in the recycled buffer, including resolved colours.
 
 ## Mesh / asset pipeline
 
@@ -46,15 +70,18 @@ variants and HiFi assets. Version 0.6.5 fixes launching from the animated menu.
 
 Completed streaming work includes the frame-block format, bank-contained ROM
 storage, bounded staging and metadata caches, ROM copy profiling, and matched
-V3/V4 measurements. The active cart is in `examples/cart_demos/`; released older
-carts are preserved in `examples/old/cart_demos/`.
+V3/V4 measurements. Opt-in V5 adds lossless stream reduction and picture reuse;
+V6 adds partial-byte drawing and direct metadata loading with matched V5/V6
+measurements. The authored scene path supports long, paced finite sequences.
+The current carts are in `examples/cart_demos/` and `examples/cart_marbles/`;
+released older carts are preserved in `examples/old/`.
 
 Next milestones:
 
 - compare copy-to-RAM, direct-ROM and hybrid/cache strategies;
 - explore topology sharing, frame deltas and cheap compression using measured
   cycle, ROM and RAM budgets;
-- investigate longer authored sequences and SID/demo headroom;
+- investigate SID/demo headroom and integration of authored sequences;
 - verify the current cartridge and controls on physical hardware.
 
 The detailed cartridge-specific plan lives in
