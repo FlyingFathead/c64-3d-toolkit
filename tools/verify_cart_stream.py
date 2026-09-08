@@ -12,6 +12,17 @@ sys.path.insert(0,str(Path(__file__).resolve().parent))
 from c643d.pipeline import decode_record_points
 from c643d.colors import C64_PALETTE
 
+def startup_monitor(manifest, sym):
+    """Acknowledge an indefinite build screen before measuring scene frames.
+
+    Run its setup normally, then use its normal SPACE exit. No cartridge bytes
+    are changed; rendering, authored intro and ending still execute normally.
+    """
+    if not manifest.get('build_screen', {}).get('wait_for_space'):
+        return [], 'g'
+    return [f'break ${sym["build_screen_visible"]:04x}', 'g', 'delete'], f'g ${sym["build_screen_done"]:04x}'
+
+
 def labels(path):
     return {s[2].lstrip('.'):int(s[1],16) for line in path.read_text().splitlines() if len(s:=line.split())==3 and s[0]=='al'}
 def expected_frame(f,screen):
@@ -64,7 +75,8 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None,oracle_
             mon += [f'break ${menu["menu_wait_key"]:04x}','g','delete',f'> ${menu["selected_entry"]:04x} ${menu_entry:02x}',f'break ${completed:04x}']
             first_go=f'g ${menu["menu_launch_nowait"]:04x}'
         else:
-            mon += [f'break ${completed:04x}'];first_go='g'
+            startup,first_go=startup_monitor(manifest,sym)
+            mon += startup+[f'break ${completed:04x}']
         for i in range(count):mon += [first_go if i==0 else 'g','bank ram',f'bsave "{td/f"frame-{i:04d}.ram"}" 0 $0000 $ffff','stopwatch']
         mon += ['quit'];(td/'run.mon').write_text('\n'.join(mon)+'\n')
         cmd=[vice,'-console', '+easyflashcrtwrite','-pal','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(td/'run.mon'),'-monlog','-monlogname',str(td/'monitor.log'),'-limitcycles',str(count*1000000+2000000)]

@@ -2,6 +2,8 @@
 
 ## 0.7.0: hors-render-v1 byte-first rendering and performance tools
 
+- Repair comparison reproduction after example cleanup: bundle the original V4 Marbles/V7 Horse & Sunflower vectors as a frozen, hash-checked reference asset. Remove the broken external-history dependency, acknowledge the V10 SPACE startup screen in automated scene verification/profiling, and clarify how to regenerate a stale chart.
+
 - Add optional authored Marbles clean/HUD, FPS/RAM policy benchmarking with mandatory pixel checks and optional ending validation.
 - Integrate repeatable candidate runs, recoverable summaries, ignored logs, result bundles and terminal viewers.
 - Add independent hors-render-v1/hors-render-v1-scene targets and make hors-render-v1 the default. Prefer byte spans that fit an 8 KiB arena; preserve V9 explicitly.

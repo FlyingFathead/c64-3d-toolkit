@@ -236,13 +236,36 @@ def paced_worker(method,pref,loops):
     (REPORT/(name+'-play-all.json')).write_text(json.dumps(result,indent=2)+'\n')
 
 
+def load_scene_references(root):
+    """Frozen vectors recovered from the original V4/V7 CRTs, not rebuilt scenes."""
+    import gzip
+    from types import SimpleNamespace
+    from c643d.pipeline import FrameBuild
+    path=Path(root)/'assets/comparison-scene-vector-reference.json.gz'
+    blob=path.read_bytes()
+    if hashlib.sha256(blob).hexdigest()!='a3fd2a7f93992e475c8bb181533538519b3363a44caee0f2dd4d2202026ffa3c':
+        raise ValueError('Scene comparison reference differs from the frozen baseline')
+    data=json.loads(gzip.decompress(blob))
+    if data['format']!='c643d-scene-vector-reference-v1':
+        raise ValueError('Unsupported scene reference format')
+    result={}
+    for name,row in data['scenes'].items():
+        ref=row['manifest']
+        frames=[FrameBuild(**f) for f in row['frames']]
+        if len(frames)!=ref['frames']:raise ValueError('Scene reference frame count mismatch')
+        scene=SimpleNamespace(name=ref['name'],
+            mesh=SimpleNamespace(**{k:[None]*ref[k] for k in ('vertices','edges','faces')}),
+            source_fps=ref['source_fps'],sample_step=ref['sample_step'],
+            frames=[SimpleNamespace(source_frame=f) for f in ref['source_frames']])
+        result[name]=(frames,scene,ref)
+    return result
+
+
 def scene_worker(version):
-    from c643d.cartframes import load_scene_source
-    from c643d.v7reference import load_scene
     from c643d.cartscene import assemble_scene
     from profile_cart_stream import profile
-    marbles=load_scene_source(ROOT/'../c64-3d-toolkit-history/examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v4-scene-clean.crt')
-    horse=load_scene(ROOT/'../c64-3d-toolkit-history/examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v7-scene.crt')
+    refs=load_scene_references(ROOT)
+    marbles=refs['marbles'];horse=refs['horse-sunflower']
     out=BASE/'scenes';out.mkdir(exist_ok=True)
     for name,data,overlay in [('marbles-clean',marbles,False),('marbles-hud',marbles,True),('horse-sunflower',horse,False)]:
         fs,scene,ref=data;stem=f'{name}-v{version}';crt=out/(stem+'.crt');dst=REPORT/(stem+'-scene.json')
@@ -318,7 +341,7 @@ def chart(a,provenance):
     lines+=['','Resident table bytes count pointer, clear/colour and line records, excluding renderer code/LUTs. ROM bytes count unique encoded frame blocks, excluding menu/runtime/CHIP headers and unused bank space. These figures explain capacity tradeoffs; they do not pretend to be a free-RAM measurement.']
     lines+=['','¹ N/A means the complete dataset does not fit that preserved resident implementation. In the shipped dataset, 128 HiFi orientations exceed the 64-entry pointer arena, and HiFi sunflower also exceeds the 8-bit run-count limit. Exact per-method rejection reasons are in the external `*-unsupported.json` files. No frames, geometry or colours were removed to force a result. `yunroll-cart` is the initial resident scaffold, not V2 streaming.','',
         '## Authored scenes: separate paced diagnostics','',
-        'These are **not PLAY ALL A/B FPS results** and must not be mixed into the menu tables or used to rank renderer throughput. The unchanged authored sequence runs with its original pacing and intro/ending behavior. Samples/s includes waits; mean active render cycles shows rendering cost. Clean/HUD Marbles and Horse & Sunflower use matching full source samples across V4–V9. Earlier generations do not provide the authored scene backend.','',
+        'These are **not PLAY ALL A/B FPS results** and must not be mixed into the menu tables or used to rank renderer throughput. The unchanged authored sequence runs with its original pacing and intro/ending behavior. Samples/s includes waits; mean active render cycles shows rendering cost. Clean/HUD Marbles and Horse & Sunflower use matching full source samples across V4–V10, frozen in `assets/comparison-scene-vector-reference.json.gz` from the original V4/V7 cartridges. No external history directory is required. For V10, the monitor acknowledges the indefinite SPACE build screen through its normal exit before running the authored intro; no cartridge bytes or measured renderer instructions are changed. Earlier generations do not provide the authored scene backend.','',
         '| Scene | Method | Samples/s (paced) | Mean render cycles | Worst render cycles | Over-budget samples |','| --- | --- | ---: | ---: | ---: | ---: |']
     for name in ('marbles-clean','marbles-hud','horse-sunflower'):
         for v in range(4,11):
@@ -364,7 +387,7 @@ def main():
     a=p.parse_args()
     if a.check:
         _,sha=fingerprints(repo);path=repo/'docs/PERFORMANCE_COMPARISON.md'
-        if not path.exists() or f'comparison-input-sha256: {sha}' not in path.read_text():p.error('comparison chart missing or stale; rerun the external comparison before release')
+        if not path.exists() or f'comparison-input-sha256: {sha}' not in path.read_text():p.error('comparison chart missing or stale; --check only validates, it does not regenerate. Run the full comparison with --vice-data PATH in a fresh --workspace, then copy its PERFORMANCE_COMPARISON.md into docs/. See docs/PERFORMANCE_COMPARISON.md for commands.')
         reference=re.search(r'comparison-reference-sha256: ([0-9a-f]{64})',path.read_text())
         if reference and (not a.reference_json or hashlib.sha256(a.reference_json.read_bytes()).hexdigest()!=reference[1]):p.error('custom chart requires the matching --reference-json file for verification')
         print('Comparison chart matches current source inputs.');return

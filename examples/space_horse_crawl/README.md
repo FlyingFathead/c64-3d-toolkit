@@ -1,4 +1,4 @@
-⚠️🐴 Attention! For best quality, please enjoy the `hors-renderer` version of each animation.
+⚠️🐴 Attention! For best quality, please enjoy each animation with `hors-render-v1` or a newer variant.
 
 Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
 

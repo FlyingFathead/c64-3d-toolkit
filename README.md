@@ -1,7 +1,3 @@
-⚠️🐴 Attention! For best quality, please enjoy the `hors-renderer` version of each animation.
-
-Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
-
 <p align="center">
   <img src="assets/c64-3d-toolkit_banner.png" alt="c64-3d-toolkit" width="100%">
 </p>
@@ -14,12 +10,14 @@ Build runnable EasyFlash cartridges or standalone PRG demos.
 
 ## Try these first
 
+⚠️🐴 Attention! For best quality, please enjoy each animation with `hors-render-v1` or a newer variant.
+
+Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
+
 1. **[Multi-demo cart #1](examples/cart_demos/README.md)** — twelve animations,
    all using hors-render-v1, with a menu and PLAY ALL.
 2. **[DON’T LOSE YOUR MARBLES](examples/cart_marbles/README.md)** — the accepted
-   hors-render-v1 16 FPS force-bytes presentation: native intro, animated Blender
-   scene and ending. Waits for SPACE before starting, so you can begin recording.
-
+   hors-render-v1 16 FPS force-bytes presentation: native intro, animated Blender scene and ending. Waits for SPACE before starting
 3. **[HiFi horse head](examples/hifi_showcase/README.md)** — standalone hors-render-v1 cartridge, 192 orientations.
 
 ```bash
@@ -55,14 +53,16 @@ Older implementations are available for explicit comparisons.
 ```
 
 Use normal PLAY ALL for renderer comparisons; F5 exhibition mode uses a different
-schedule. Compare matching preference and PAL settings. The existing comparison
-chart's provenance gate remains stale after reference-file relocation and needs
-validation before publishing 0.7.0.
+schedule. Compare matching preference and PAL settings. The comparison chart
+covers the preserved implementations through hors-render-v1 and carries a
+source fingerprint. Run `python tools/compare_renderers.py --check` before
+publishing; regeneration instructions are in [Renderers](#renderers).
 
 Historical generated outputs are outside the checkout, in the optional sibling
 `../c64-3d-toolkit-history/` archive. Run `python perf/prune_old_examples.py` to
 remove old outputs installed by earlier patches. Historical reproduction tools
-use that external archive; ordinary source and encoder tests do not require it.
+may use that external archive; ordinary source/encoder tests and the performance
+comparison use the bundled frozen references and do not require it.
 
 ## Requirements
 
@@ -766,23 +766,48 @@ uses hors-render-v1-scene; use `--renderer yunroll` explicitly for resident PRG 
 
 [See comparison chart for details on performance differences](docs/PERFORMANCE_COMPARISON.md).
 
-The chart covers each named demo, ties/best methods, size and fixed RAM allocations.
-Reproduce it with `python tools/compare_renderers.py --vice-data /usr/local/share/vice`;
-generated files stay in ignored `comparison-tests/` (or an external `--workspace`).
-**Run `python tools/compare_renderers.py --check` before publishing.**
+The chart covers the frozen named-demo workload, ties/best methods, size and
+fixed RAM allocations, including hors-render-v1 in FPS and RAM preferences.
+It uses the same input pictures across renderer generations. The separate scene
+diagnostics retain the historical 200-frame Marbles reference; the shipped
+**640-frame, 16 FPS hors-render-v1 Marbles** was rebuilt from the Blender scene
+and is documented in [its own guide](examples/cart_marbles/README.md).
+
+**`--check` validates the saved chart; it does not regenerate it.** After source
+changes, run the complete uncapped comparison in a fresh workspace, then install
+the resulting chart:
+
+```bash
+python tools/compare_renderers.py \
+  --workspace ../c64-renderer-comparison-070 \
+  --vice-data /usr/local/share/vice
+cp ../c64-renderer-comparison-070/PERFORMANCE_COMPARISON.md docs/PERFORMANCE_COMPARISON.md
+python tools/compare_renderers.py --check
+```
+
+Adjust the VICE data path for your installation. The workspace must be empty;
+`--resume` continues an interrupted run only with identical inputs and options.
+Without `--workspace`, generated files stay in ignored `comparison-tests/`.
+Frozen menu and scene vectors are bundled under `assets/`; no external history
+archive is required. Automated scene checks acknowledge the hors-render-v1
+SPACE startup screen before running the authored intro and measuring frames.
 Optional `--max-fps 10` and `--lock-to-min-fps` create paced comparison reels;
 both default off and never replace the uncapped performance chart.
 
-Toolkit releases such as **0.6.9** and renderer generations such as **V9**
-are separate version numbers. The original paths draw vectors on the C64;
-V8 adds adaptive precomputed byte-span pictures. Projection and hidden-line
-visibility are computed on the host for all methods.
+Toolkit release **0.7.0** and renderer **hors-render-v1** have separate version
+numbers. `hors-render-v1` resolves to `yunroll-cart-v10`, and
+`hors-render-v1-scene` resolves to `yunroll-cart-v10-scene`; both internal names
+remain accepted. Original paths draw vectors on the C64; V8 adds adaptive
+precomputed byte-span pictures, V9 draws those spans directly from ROM, and
+hors-render-v1 prefers byte spans whenever the encoded frame fits the 8 KiB
+arena. Projection and hidden-line visibility are computed on the host for all
+methods.
 
 | Variant | Data / output | Main change or purpose |
 | --- | --- | --- |
 | `step` | Resident tables / PRG | Packed steps, pixel-by-pixel drawing; regression baseline. |
 | `bytechunk` | Resident tables / PRG | Combine full aligned eight-pixel X-major chunks into bitmap-byte masks. |
-| `yunroll` | Resident tables / PRG | Add unrolled Y-major scanline phases; default PRG renderer. |
+| `yunroll` | Resident tables / PRG | Add unrolled Y-major scanline phases; explicit resident PRG option. |
 | `yunroll-cart` | Resident tables / cartridge scaffold | Initial cartridge reference, before the banked frame-streaming backend. |
 | `yunroll-cart-v2` | EasyFlash frame stream | Fixed RAM staging, three bitmap buffers, cached clear/colour metadata and 16-bit run counts; preserved early `cart-stream` renderer. |
 | `yunroll-cart-v3` | EasyFlash frame stream | Faster dispatch/header decoding, batched run counting, Y-major fall-through and copy-path improvements. |
@@ -793,6 +818,7 @@ visibility are computed on the host for all methods.
 | `yunroll-cart-v7` / `-v7-scene` | EasyFlash stream / sequence | Join compatible runs without changing pixels, choose cell/byte clearing, optional smaller Y kernels. FPS preferred by default; menu adds PLAY ALL. |
 | `yunroll-cart-v8` / `-v8-scene` | Hybrid EasyFlash stream / sequence | V7 vector fallback plus smaller precomputed bitmap-byte spans. No extra fixed buffers; same samples and colours. |
 | `yunroll-cart-v9` / `-v9-scene` | Direct-ROM hybrid stream / sequence | V8 picture payloads with direct ROM-to-bitmap byte drawing and a leaner page copier. Normal PLAY ALL is the A/B reference. |
+| `hors-render-v1` / `hors-render-v1-scene` | Byte-first direct-ROM stream / sequence | Current defaults; internal aliases `yunroll-cart-v10` / `yunroll-cart-v10-scene`. Prefer byte spans that fit one 8 KiB frame arena, with vector fallback when needed. FPS/RAM preferences; optional authored-scene fractional PAL pacing. |
 
 ### `step`
 
@@ -804,7 +830,26 @@ The v0.8 renderer. Full aligned X-major chunks are combined into VIC-II bitmap-b
 
 ### `yunroll`
 
-Default PRG renderer. Keeps byte-chunk X-major rendering and additionally unrolls Y-major scanline phases. The historical 256x144 default 10x5 torus measured around **15-18 FPS** in the development setup; wider 192/200-line viewport builds perform more drawing/clearing work and may run slower. Those historical PRG figures are not a matched comparison with the cartridge builds below.
+Explicit resident PRG renderer (`--renderer yunroll`). Keeps byte-chunk X-major rendering and additionally unrolls Y-major scanline phases. The historical 256x144 default 10x5 torus measured around **15-18 FPS** in the development setup; wider 192/200-line viewport builds perform more drawing/clearing work and may run slower. Those historical PRG figures are not a matched comparison with the cartridge builds below.
+
+### What hors-render-v1 adds
+
+The current default chooses precomputed bitmap-byte spans whenever the encoded
+frame fits the 8 KiB frame arena, even when vectors would occupy fewer ROM
+bytes. It copies those spans directly from cartridge ROM to the recycled bitmap.
+The preserved vector path is the fallback for byte-span frames that exceed the
+arena; a frame that fits neither encoding is rejected. This trades ROM capacity
+for less C64 drawing work without adding fixed bitmap or staging buffers.
+
+Use `--prefer fps` (default) or `--prefer ram` for the kernel-size tradeoff.
+Authored builds can use fractional PAL refresh holds for requested rates such
+as the accepted 16 FPS Marbles presentation. A requested playback rate does not
+guarantee that every scene can render within its frame budget.
+
+The V5–V7 measurements below describe their historical releases and workloads,
+including the older 200-frame Marbles scene. Use the regenerated comparison
+chart for matched renderer results and the current example guides for shipped
+hors-render-v1 cartridges.
 
 ### What V5 optimizes
 
@@ -1062,4 +1107,4 @@ For local candidate experiments, resumable runs and shareable result logs, see
 
 ## 0.7.0 current example selection
 
-See [Marbles](examples/cart_marbles/README.md) for the accepted 16 FPS force-bytes presentation. Current menu and Horse/Sunflower cartridges use hors-render-v1. Superseded outputs are under each cartridge example’s `history/` directory after `python perf/cleanup_070_examples.py`.
+See [Marbles](examples/cart_marbles/README.md) for the accepted 16 FPS force-bytes presentation. Current menu and Horse/Sunflower cartridges use hors-render-v1. Superseded outputs belong in the optional sibling `../c64-3d-toolkit-history/` archive; `python perf/prune_old_examples.py` moves older installed outputs out of the checkout.

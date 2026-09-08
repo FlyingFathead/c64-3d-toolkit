@@ -337,7 +337,7 @@ Resident table bytes count pointer, clear/colour and line records, excluding ren
 
 ## Authored scenes: separate paced diagnostics
 
-These are **not PLAY ALL A/B FPS results** and must not be mixed into the menu tables or used to rank renderer throughput. The unchanged authored sequence runs with its original pacing and intro/ending behavior. Samples/s includes waits; mean active render cycles shows rendering cost. Clean/HUD Marbles and Horse & Sunflower use matching full source samples across V4–V9. Earlier generations do not provide the authored scene backend.
+These are **not PLAY ALL A/B FPS results** and must not be mixed into the menu tables or used to rank renderer throughput. The unchanged authored sequence runs with its original pacing and intro/ending behavior. Samples/s includes waits; mean active render cycles shows rendering cost. Clean/HUD Marbles and Horse & Sunflower use matching full source samples across V4–V10, frozen in `assets/comparison-scene-vector-reference.json.gz` from the original V4/V7 cartridges. No external history directory is required. For V10, the monitor acknowledges the indefinite SPACE build screen through its normal exit before running the authored intro; no cartridge bytes or measured renderer instructions are changed. Earlier generations do not provide the authored scene backend.
 
 | Scene | Method | Samples/s (paced) | Mean render cycles | Worst render cycles | Over-budget samples |
 | --- | --- | ---: | ---: | ---: | ---: |
@@ -395,5 +395,5 @@ Use `--resume` only with the same source/tool fingerprint and options. Logs and 
 
 **Release gate:** run `--check` before publishing. If renderer code, builders, input assets, examples, version or this tester changes, rerun the complete uncapped matrix and replace this chart before tagging. Preserve old method rows; add new generations to the tester and regenerate. Never silently copy old numbers into a changed workload. Capped runs are separate experiments and must not replace this uncapped baseline.
 
-<!-- comparison-input-sha256: 9024d23aae6bb273eab63cc472be457a13a0bad07fd3b27ceafd5414df04630b -->
+<!-- comparison-input-sha256: 55dd49d2cb7e4cffc285358db85f1db16b9416f24bf3460ceb394013782a9f01 -->
 <!-- comparison-source-version: 0.7.0 -->

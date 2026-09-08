@@ -7,7 +7,7 @@ is separate from rendering. Rebuild the cart for matching stage labels.
 from pathlib import Path
 from c643d.cartpaths import menu_manifest_path
 import argparse, hashlib, json, re, statistics, subprocess, tempfile
-from verify_cart_stream import labels
+from verify_cart_stream import labels, startup_monitor
 
 CLOCK = 985248
 
@@ -50,6 +50,9 @@ def profile(crt, vice, vice_data=None, menu_entry=None):
         td = Path(td)
         mon = ['delete']
         first_go = 'g'
+        if menu is None:
+            startup,first_go = startup_monitor(manifest,sym)
+            mon += startup
         if menu is not None:
             mon += [f'break ${menu["menu_wait_key"]:04x}', 'g', 'delete',
                     f'> ${menu["selected_entry"]:04x} ${menu_entry:02x}']
