@@ -32,3 +32,6 @@ examples/cart_demos/c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all*
 *.blend[0-9]*
 *.log
 .pytest_cache/
+
+# Reproducible multi-method comparison workspaces and generated test carts.
+/comparison-tests/

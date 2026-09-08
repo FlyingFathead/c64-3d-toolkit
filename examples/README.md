@@ -1,5 +1,7 @@
 # Examples
 
+**0.6.9:** V9 adds eight separate FPS/RAM cartridges with direct ROM byte drawing. Earlier examples remain intact. [V9 guide](../docs/CARTRIDGE_STREAM_V9.md).
+
 **0.6.8:** V8 adds separate FPS/RAM carts while retaining every existing example. See [the V8 guide](../docs/CARTRIDGE_STREAM_V8.md).
 
 Ready-to-run cartridges, Blender scenes, and generated/reference PRGs are grouped by demo.
@@ -145,3 +147,5 @@ Existing destination files are never overwritten when their contents differ.
 
 The [early concept tryout](../docs/UPGRADING_0.6.7.md#what-cleanup-does) preserves
 the earlier looping carts and baked Blender scene in the separate oldies ZIP.
+
+[See comparison chart for details on performance differences](../docs/PERFORMANCE_COMPARISON.md).

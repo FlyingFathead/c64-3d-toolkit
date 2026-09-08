@@ -23,7 +23,7 @@ RENDERER = 'yunroll-cart-v4-scene'
 DIRECTORY_FIELDS = ('bank','source_lo','source_hi','length_lo','length_hi','meta_lo','meta_hi')
 
 
-def pack_scene_frames(frames, colors=True, *, aliases=None, encoder=frame_block):
+def pack_scene_frames(frames, colors=True, *, aliases=None, encoder=frame_block, direct_bytes=False):
     if not 1 <= len(frames) <= MAX_SCENE_FRAMES:
         raise ValueError(f'scene stream requires 1..{MAX_SCENE_FRAMES} frames')
     image=new_easyflash_image()
@@ -51,7 +51,7 @@ def pack_scene_frames(frames, colors=True, *, aliases=None, encoder=frame_block)
         values=[
             [d['bank'] for d in records], [d['address']&255 for d in records],
             [d['address']>>8 for d in records], [d['bytes']&255 for d in records],
-            [d['bytes']>>8 for d in records], [d['metadata_bytes']&255 for d in records],
+            [(d['bytes']>>8) | (0x80 if direct_bytes and d.get('encoding') == 'byte-spans' else 0) for d in records], [d['metadata_bytes']&255 for d in records],
             [d['metadata_bytes']>>8 for d in records],
         ]
         blob=b''.join(bytes(a).ljust(256,b'\0') for a in values)
@@ -71,7 +71,7 @@ def validate_hud(text):
 
 
 def assemble_scene(root,frames,scene,*,tass,cartconv,outdir,stem,hud_text,frame_ticks=4,tass_args=(),colors=True,color_index=1,intro=False,text_overlay=True,ending=False,renderer=RENDERER,optimize=True,prefer="fps"):
-    if renderer not in (RENDERER, "yunroll-cart-v5-scene", "yunroll-cart-v6-scene", "yunroll-cart-v7-scene", "yunroll-cart-v8-scene"):
+    if renderer not in (RENDERER, "yunroll-cart-v5-scene", "yunroll-cart-v6-scene", "yunroll-cart-v7-scene", "yunroll-cart-v8-scene", "yunroll-cart-v9-scene"):
         raise ValueError("unsupported scene renderer")
     variant = renderer.split("-")[-2]
     if not 1<=frame_ticks<=255:
@@ -83,21 +83,21 @@ def assemble_scene(root,frames,scene,*,tass,cartconv,outdir,stem,hud_text,frame_
     # Keep the expensive compilation checkpoint even if ROM packing fails.
     (work/'oracle.json').write_text(json.dumps([asdict(f) for f in frames]))
     optimization = None
-    if variant in ("v5", "v6", "v7", "v8") and optimize:
+    if variant in ("v5", "v6", "v7", "v8", "v9") and optimize:
         from .optimize import optimize_frames
         frames, optimization = optimize_frames(frames, color_index<<4)
     joining = None
-    if variant in ("v7", "v8") and optimize:
+    if variant in ("v7", "v8", "v9") and optimize:
         from .runjoin import join_frames
         frames, joining = join_frames(frames)
     clearing = None
-    if variant in ("v7", "v8") and optimize:
+    if variant in ("v7", "v8", "v9") and optimize:
         from .clearplan import selective_clear_frames
         frames, clearing = selective_clear_frames(frames)
     encoder = frame_block
-    if variant == "v8":
+    if variant in ("v8", "v9"):
         from .bytespan import frame_block as encoder
-    image,directory=pack_scene_frames(frames,colors,aliases=optimization["picture_references"] if optimization else None,encoder=encoder)
+    image,directory=pack_scene_frames(frames,colors,aliases=optimization["picture_references"] if optimization else None,encoder=encoder,direct_bytes=variant == "v9")
     # Reuse the established LUT emitter with a full-size RAM directory page.
     dummy=[dict(bank=0,address=0,bytes=0,metadata_bytes=0)]*256
     emit_directory(gen/'tables.inc',dummy)
@@ -110,7 +110,7 @@ def assemble_scene(root,frames,scene,*,tass,cartconv,outdir,stem,hud_text,frame_
         src=src.replace('        jsr init_static_hud','').replace('        jsr init_fps_label','').replace('        jsr maybe_update_fps','')
     if intro:
         from .cartintro import emit_intro
-        emit_intro(gen/'intro.inc',ending=ending,build_identity=(__version__, f'yunroll-{variant}'+(' (ram)' if prefer == 'ram' else '')) if variant in ('v5', 'v6', 'v7', 'v8') else None)
+        emit_intro(gen/'intro.inc',ending=ending,build_identity=(__version__, f'yunroll-{variant}'+(' (ram)' if prefer == 'ram' else '')) if variant in ('v5', 'v6', 'v7', 'v8', 'v9') else None)
         src=src.replace('        ; Per-build foreground/background colour', '        jsr intro_start\n\n        ; Per-build foreground/background colour',1)
         src=src.replace('        lda #0\n        sta frame_index', '        lda #$3b\n        sta $d011\n        lda #0\n        sta frame_index',1)
         if ending:
@@ -138,14 +138,14 @@ scene_continue:
         src=src.replace('V5_REUSE_ENABLED = 0', f'V5_REUSE_ENABLED = {int(optimization["duplicate_pictures"] > 0)}')
     from .preferences import apply_preference
     src=apply_preference(src,renderer,prefer)
-    if variant == "v8":
+    if variant in ("v8", "v9"):
         from .bytespan import configure_source
-        src = configure_source(src, directory)
+        src = configure_source(src.replace('V9_BYTE_SPANS', 'V8_BYTE_SPANS'), directory).replace('V8_BYTE_SPANS', 'V9_BYTE_SPANS') if variant == 'v9' else configure_source(src, directory)
     asm=work/'main.asm';asm.write_text(src)
     ram=work/'runtime.prg';labels=outdir/f'{stem}.lbl'
     subprocess.run([tass,*tass_args,'--cbm-prg','--vice-labels','-l',str(labels),'-o',str(ram),str(asm)],check=True,cwd=root)
     blob=ram.read_bytes();load=int.from_bytes(blob[:2],'little');end=load+len(blob)-2
-    if load!=0x0801 or end>(0x9c00 if variant in ("v5", "v6", "v7", "v8") else 0x9a00 if intro else 0x6000):
+    if load!=0x0801 or end>(0x9c00 if variant in ("v5", "v6", "v7", "v8", "v9") else 0x9a00 if intro else 0x6000):
         raise ValueError('scene runtime outside bootstrap RAM destination')
     padded=bytearray(0x5800);runtime_end=min(end,0x6000)
     padded[load-0x0800:runtime_end-0x0800]=blob[2:2+runtime_end-load]
@@ -154,7 +154,7 @@ scene_continue:
     boot=work/'boot.bin'
     subprocess.run([tass,*tass_args,'--nostart','-o',str(boot),str(root/f'c64/cart/easyflash-stream-{variant}-scene-boot.asm')],check=True,cwd=root)
     boot_blob=bytearray(boot.read_bytes())
-    if intro or variant in ("v5", "v6", "v7", "v8"):
+    if intro or variant in ("v5", "v6", "v7", "v8", "v9"):
         intro_bytes=blob[2+0x8000-load:2+end-load]
         boot_blob[0x400:0x400+len(intro_bytes)]=intro_bytes
     put_easyflash_chip(image,0,'romh',bytes(boot_blob))
@@ -167,9 +167,9 @@ scene_continue:
         if intro: manifest['build_screen']=dict(version=__version__,renderer=f'yunroll-{variant}'+(' (ram)' if prefer == 'ram' else ''),ticks=150,skip_key='SPACE')
     if clearing: manifest['clearing']=clearing
     if joining: manifest['joining']=joining
-    if variant in ('v7', 'v8'): manifest['preference']=prefer
-    if variant == "v8":
-        manifest["wire_format"] = "v8-adaptive-vectors-byte-spans"
+    if variant in ('v7', 'v8', 'v9'): manifest['preference']=prefer
+    if variant in ("v8", "v9"):
+        manifest["wire_format"] = ("v9-direct-byte-spans-v8-payload" if variant == "v9" else "v8-adaptive-vectors-byte-spans")
         manifest["byte_span_frames"] = sum(d.get("encoding") == "byte-spans" for d in directory)
     (outdir/f'{stem}-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     print(f'built {crt}\n{len(frames)} frames; {manifest["rom_frame_bytes"]} vector bytes; target {manifest["target_duration_seconds"]:.2f}s at {manifest["target_fps"]:g} FPS',flush=True)

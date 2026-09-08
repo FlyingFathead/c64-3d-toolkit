@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.6.9: V9 direct ROM byte spans
+
+- Add independent `yunroll-cart-v9` and `yunroll-cart-v9-scene` renderers. Selected V8 byte pictures draw directly from cartridge ROM into the recycled bitmap, eliminating intermediate staging. Keep V8's encoder, payloads, geometry, colours and animation cadence unchanged.
+- Optimize the shared page copier for aligned destinations and backwards four-lane traversal. Preserve vector drawing, FPS/RAM preferences, buffer allocations, previous renderer implementations.
+- Measure native-release-cartridge A/B throughput ONLY through normal PLAY ALL, with 10 seconds per demo and three loops. FPS preference displays 5,181 → 5,274 frames (+1.8% overall); HiFi sunflower +16.9%, Crawl +2.6%, smaller gains elsewhere. Six entries have identical counts; no entry loses a displayed frame. RAM preference gains 1.8% overall. These are scene-dependent results, not a universal 17% gain.
+- Keep F5 internal demo mode for exhibitions only, including the 15-second HiFi holds. It MUST NOT be used for benchmarking. Add a reusable normal PLAY ALL benchmark that traces actual display flips, records source-oracle hashes and ignores host wall time.
+- Keep all eight cartridge sizes and frame payloads unchanged from V8. Guard the direct copier's helper regions so the existing Marbles ending remains intact. No additional fixed buffers or reclaimed staging RAM are claimed.
+- Validate all examples and both preferences in PAL VICE, 337 mixed/boundary cases plus 257 ROML/ROMH-directory cases per preference, menu handoffs, normal controls, F5 and native endings. All 139 Python tests pass; 118 historical source/executable hashes match. Pristine rebuilds reproduce 108 older runtimes and nine frame images exactly.
+- Update README, version identity, detailed measurements, build/verification tools and additive 0.6.8-to-0.6.9 upgrade instructions. Previous release files remain in place; no V8 cleanup is required.
+
+- Add `tools/compare_renderers.py` and the linked per-animation performance lookup chart: high/average/low displayed FPS, best-method ties, size and RAM components. Generated test carts, traces and raw data stay in ignored `comparison-tests/` or an external workspace. A source fingerprint detects a stale chart before release.
+- Make V9 the default for build/cart-stream/cart-demos and V9-scene for authored inputs. Old renderers remain explicitly selectable and byte-exact; default selection is an intentional CLI change.
+- Add opt-in `--max-fps` and two-pass `--lock-to-min-fps` to the comparison builder for paced test reels. Both default off, announce their state on the console, and leave shipped cartridge timing and integer HUD displays unchanged.
+
 ## 0.6.8: Independent V8 adaptive vector/byte-span renderer
 
 - Finalize the V8 release candidate as 0.6.8; rebuild V8 title/closing screens with the final version. Renderer algorithms, source pictures and scene sample cadence are unchanged from rc1.

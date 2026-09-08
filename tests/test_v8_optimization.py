@@ -85,8 +85,8 @@ class V8Tests(unittest.TestCase):
 
     def test_cli_keeps_old_defaults_and_accepts_v8(self):
         parser = make_parser(load_toolchain_settings(Path('/missing/c643d.ini')))
-        self.assertEqual(parser.parse_args(['build']).renderer, 'yunroll')
-        self.assertEqual(parser.parse_args(['cart-demos']).stream_renderer, 'yunroll-cart-v4')
+        self.assertEqual(parser.parse_args(['build']).renderer, 'yunroll-cart-v9')
+        self.assertEqual(parser.parse_args(['cart-demos']).stream_renderer, 'yunroll-cart-v9')
         for renderer in ('yunroll-cart-v8', 'yunroll-cart-v8-scene'):
             self.assertEqual(parser.parse_args(['build', '--renderer', renderer]).renderer, renderer)
 

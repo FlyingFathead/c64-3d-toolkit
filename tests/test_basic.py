@@ -816,9 +816,9 @@ class TestRc062RenderAndChecksumControls(unittest.TestCase):
         self.assertEqual(merged[merged.index('--sample-step')+1],'3')
         self.assertEqual(merged[merged.index('--renderer')+1],'yunroll')
 
-    def test_release_version_is_068_and_067_is_preserved(self):
+    def test_release_version_is_069_and_older_menus_are_preserved(self):
         from tools.c643d import __version__
-        self.assertEqual(__version__,'0.6.8')
+        self.assertEqual(__version__,'0.6.9')
         self.assertEqual((ROOT/'VERSION').read_text(encoding='utf-8').strip(),__version__)
         import hashlib, json, re
         for name in ('setup-windows.cmd', 'setup-windows.ps1'):
@@ -827,7 +827,8 @@ class TestRc062RenderAndChecksumControls(unittest.TestCase):
         for name in ('easyflash-demo-runtime.asm', 'easyflash-demo-scroll-runtime.asm'):
             shown=re.findall(r'TOOLKIT (\d+\.\d+\.\d+(?:-rc\d+)?)', (ROOT/'c64/cart'/name).read_text())
             self.assertEqual(set(shown), {'0.6.7'}, name)
-        self.assertIn(__version__, (ROOT/'c64/cart/easyflash-demo-scroll-runtime-v8.asm').read_text())
+        self.assertIn(__version__, (ROOT/'c64/cart/easyflash-demo-scroll-runtime-v9.asm').read_text())
+        self.assertIn('0.6.8', (ROOT/'c64/cart/easyflash-demo-scroll-runtime-v8.asm').read_text())
         from tools.c643d.cartframes import load_menu_reference
         reference=load_menu_reference(ROOT)
         self.assertEqual(len(reference), 12)

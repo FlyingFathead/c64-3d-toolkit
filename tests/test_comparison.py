@@ -1,0 +1,57 @@
+"""Release gates for the isolated comparison builder and intentional V9 defaults."""
+import contextlib
+import io
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+import unittest
+from unittest.mock import patch
+
+ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT/'tools'))
+import compare_renderers as comparison
+from c643d import cli
+from c643d.toolchain import load_toolchain_settings
+
+class ComparisonTests(unittest.TestCase):
+    def test_workspace_cannot_overwrite_project(self):
+        run=subprocess.run([sys.executable,str(ROOT/'tools/compare_renderers.py'),
+                            '--workspace',str(ROOT/'examples'),'--vice-data','/tmp'],capture_output=True,text=True)
+        self.assertEqual(run.returncode,2)
+        self.assertIn('workspace must be external',run.stderr)
+
+    def test_pacing_options_are_exclusive(self):
+        run=subprocess.run([sys.executable,str(ROOT/'tools/compare_renderers.py'),
+                            '--max-fps','10','--lock-to-min-fps'],capture_output=True,text=True)
+        self.assertEqual(run.returncode,2)
+        self.assertIn('not allowed with argument',run.stderr)
+
+    def test_fingerprint_tracks_inputs_not_local_config_or_docs(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            for folder in ('tools','c64','assets','config','examples'): (root/folder).mkdir()
+            (root/'VERSION').write_text('0.6.9\n');(root/'.gitignore').write_text('/comparison-tests/\n')
+            (root/'assets/input.json').write_text('original')
+            before=comparison.fingerprints(root)[1]
+            (root/'config/c643d.ini').write_text('local tool paths')
+            (root/'examples/README.md').write_text('documentation')
+            self.assertEqual(before,comparison.fingerprints(root)[1])
+            (root/'assets/input.json').write_text('changed pictures')
+            self.assertNotEqual(before,comparison.fingerprints(root)[1])
+
+    def test_cart_stream_default_and_explicit_old_method(self):
+        with patch.object(cli,'cmd_build',return_value=0) as build,contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(cli.main(['cart-stream','--no-config']),0)
+            self.assertEqual(build.call_args.args[0].renderer,'yunroll-cart-v9')
+            self.assertEqual(cli.main(['cart-stream','--no-config','--renderer','yunroll-cart-v2']),0)
+            self.assertEqual(build.call_args.args[0].renderer,'yunroll-cart-v2')
+
+    def test_default_authored_input_selects_v9_scene(self):
+        parser=cli.make_parser(load_toolchain_settings(Path('/missing/config.ini')))
+        args=parser.parse_args(['build','--scene','example.c643dscene'])
+        with patch('c643d.cartscene.cmd_build_cart_scene',return_value=0) as build,contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(cli.cmd_build(args),0)
+            self.assertEqual(build.call_args.args[0].renderer,'yunroll-cart-v9-scene')
+
+if __name__=='__main__':unittest.main()

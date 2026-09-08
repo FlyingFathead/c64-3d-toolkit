@@ -8,39 +8,45 @@
 
 Host-assisted low-poly wireframe 3D compiler/runtime for a **stock Commodore 64**, with first-class support for animated **Blender `.blend` scenes**, **Wavefront OBJ + MTL**, **SVG artwork**, built-in procedural geometry, and **EasyFlash `.crt` cartridge output**.
 
-**0.6.8: opt-in V8 adaptive rendering.** The HiFi sunflower reaches
-**12.47 FPS versus V7's 6.99 FPS (+78.4%)** in matched PAL VICE checks;
-Space Horse Crawl gains **37.1%**. V8 combines the preserved V7 vector path
-with host-rasterized sparse bitmap-byte spans where they use less cartridge
-space. Pixels, colours and animation samples match the original references.
-The menu cartridge shrinks from **804,448 to 771,616 bytes**.
-Gains are scene-dependent: nine of the twelve menu demos remain essentially unchanged.
+**0.6.9: V9 direct cartridge rendering, now the default.** In the shared-controller comparison suite
+(three normal PLAY ALL loops), V9 displays **5,271 frames versus V8's 5,181
+(+1.7% overall)** with FPS preference. HiFi sunflower gains **16.1%**, Space Horse Crawl **2.6%**; several
+other demos gain a little and six have unchanged frame counts. V9 removes an
+intermediate ROM-to-RAM copy for byte pictures and tightens the page-copy loop.
+All pictures, colours, samples and older renderer implementations are preserved.
+V9 is now the default build and cartridge-menu renderer; select older methods explicitly.
+The comparison also identifies five demos where resident `yunroll` beats V9 streaming.
+Use the per-animation chart when choosing a method; newest does not mean fastest on every input.
 
-[Try the V8 FPS cartridge](examples/cart_demos/c643d-demo-v0.6.8-yunroll-cart-v8-all.crt)
-• [V8 details, measurements and limits](docs/CARTRIDGE_STREAM_V8.md)
-• [Apply the 0.6.8 overlay](docs/UPGRADING_0.6.8.md)
+[Try V9 FPS](examples/cart_demos/c643d-demo-v0.6.9-yunroll-cart-v9-all.crt)
+• [V9 RAM](examples/cart_demos/c643d-demo-v0.6.9-yunroll-cart-v9-all-ram.crt)
+• [Compare every method per animation](docs/PERFORMANCE_COMPARISON.md)
+• [V9 measurements and limits](docs/CARTRIDGE_STREAM_V9.md)
+• [Apply the 0.6.9 overlay](docs/UPGRADING_0.6.9.md)
 
-**All previous rendering methods and shipped cartridges remain intact.**
-V8 is an additional choice, and existing build defaults are unchanged.
-The [V7 cartridge](examples/cart_demos/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt)
-and [V7 results](docs/CARTRIDGE_STREAM_V7.md) remain available for comparison.
-V8 is the headline addition in the 0.6.8 release. Its gains depend on the scene;
-the vector fallback and all earlier rendering methods remain available.
+**ONLY use normal PLAY ALL for A/B comparisons between rendering methods and
+versions. F5 is an internal demo mode for exhibitions and MUST NOT be used for
+benchmarking.** Normal PLAY ALL keeps 10 seconds per demo; F5 retains the two
+15-second HiFi holds. Compare matching FPS/RAM preferences and PAL settings.
+
+The [V8 cartridge](examples/cart_demos/c643d-demo-v0.6.8-yunroll-cart-v8-all.crt)
+and [V8 implementation/results](docs/CARTRIDGE_STREAM_V8.md) remain available,
+along with every older rendering method. V9 is an additional choice.
 
 Animate objects, cameras, modifiers, armatures, or rigid-body scenes in Blender; import coloured OBJ/MTL meshes or SVG paths; or use the classic procedural meshes and animation transforms. The toolkit preprocesses the result on the host, performs projection and hidden-line visibility, then generates 6510/6502 assembly data and runnable C64 demos. The original renderers draw vectors live on the C64; V8 optionally copies precomputed bitmap-byte spans for qualifying pictures.
 
 **More animation than one RAM load can hold.** Build standalone `.prg` demos,
 menu-driven `.crt` cartridges, or standalone EasyFlash vector streams. The
-`yunroll-cart-v8` menu uses a fixed RAM working set for all twelve demos. Its
-`yunroll-cart-v8-scene` counterpart supports authored Blender scenes, including
+`yunroll-cart-v9` menu uses a fixed RAM working set for all twelve demos. Its
+`yunroll-cart-v9-scene` counterpart supports authored Blender scenes, including
 [Don't Lose Your Marbles](examples/cart_marbles/README.md) and the new
 [horse-and-sunflower close-up](examples/blender_horse_and_sunflower/README.md).
 The [HiFi showcase](examples/hifi_showcase/README.md) retains the standalone
 192-orientation horse and sunflower V2 examples for comparison.
 
-**One renderer per comparison cart.** The V8 menu uses V8 for **all twelve demos**,
+**One renderer per comparison cart.** The V9 menu uses V9 for **all twelve demos**,
 including the original Blender and SVG examples. The plain `cart-demos` command
-still defaults to V4; select `--stream-renderer yunroll-cart-v8` for the new path.
+now defaults to V9; select older methods with `--stream-renderer`.
 The menu scrolls ten entries between fixed borders in all three styles, with
 PLAY ALL above the list. A `+` on a border indicates more entries in that direction.
 Historical files from `examples/old/` are supplied in a separate legacy archive.
@@ -53,7 +59,7 @@ See [the uniform cart and V4 guide](docs/CARTRIDGE_STREAM_V4.md) for all twelve
 measurements, memory layout, rebuilding and verification.
 The [renderer comparison table](#renderers) covers every variant, including
 V5's lossless stream reduction, V6 runtime changes, V7 run joining/RAM preference
-and V8 adaptive vector/byte-span selection.
+V8 adaptive vector/byte-span selection, and V9 direct ROM byte drawing.
 
 **v0.6.5 fixes launching from the animated-colour menu**, including the reported
 `JAM at $0008`. See [upgrading to 0.6.5](docs/UPGRADING_0.6.5.md) for the update
@@ -106,7 +112,7 @@ The older V4/V5/V6 menu cartridges are in the separate oldies ZIP; their
 The V4 reference vectors are now a 399,186-byte compressed host asset, so
 `tools/build_v5_examples.py`, `tools/build_v6_examples.py` and
 `tools/build_v7_examples.py` rebuild without restoring an old menu cartridge.
-The general `cart-demos` command retains its V4 default; select V7 explicitly.
+The general `cart-demos` command now defaults to V9; select V7 explicitly for historical comparisons.
 
 Playback note: V5 twitching was reported with NVIDIA on Linux/Wayland; the same
 cartridges played smoothly on the user's Windows 11 machine. Host presentation
@@ -897,7 +903,19 @@ The historical spinner is now one animation mode. Named presets may select anoth
 
 ## Renderers
 
-Toolkit releases such as **0.6.8** and renderer generations such as **V8**
+`build`, `cart-stream` and `cart-demos` default to V9. `build --scene` / `--blend`
+uses V9-scene; use `--renderer yunroll` explicitly for resident PRG output.
+
+[See comparison chart for details on performance differences](docs/PERFORMANCE_COMPARISON.md).
+
+The chart covers each named demo, ties/best methods, size and fixed RAM allocations.
+Reproduce it with `python tools/compare_renderers.py --vice-data /usr/local/share/vice`;
+generated files stay in ignored `comparison-tests/` (or an external `--workspace`).
+**Run `python tools/compare_renderers.py --check` before publishing.**
+Optional `--max-fps 10` and `--lock-to-min-fps` create paced comparison reels;
+both default off and never replace the uncapped performance chart.
+
+Toolkit releases such as **0.6.9** and renderer generations such as **V9**
 are separate version numbers. The original paths draw vectors on the C64;
 V8 adds adaptive precomputed byte-span pictures. Projection and hidden-line
 visibility are computed on the host for all methods.
@@ -908,14 +926,15 @@ visibility are computed on the host for all methods.
 | `bytechunk` | Resident tables / PRG | Combine full aligned eight-pixel X-major chunks into bitmap-byte masks. |
 | `yunroll` | Resident tables / PRG | Add unrolled Y-major scanline phases; default PRG renderer. |
 | `yunroll-cart` | Resident tables / cartridge scaffold | Initial cartridge reference, before the banked frame-streaming backend. |
-| `yunroll-cart-v2` | EasyFlash frame stream | Fixed RAM staging, three bitmap buffers, cached clear/colour metadata and 16-bit run counts; default `cart-stream` renderer. |
+| `yunroll-cart-v2` | EasyFlash frame stream | Fixed RAM staging, three bitmap buffers, cached clear/colour metadata and 16-bit run counts; preserved early `cart-stream` renderer. |
 | `yunroll-cart-v3` | EasyFlash frame stream | Faster dispatch/header decoding, batched run counting, Y-major fall-through and copy-path improvements. |
-| `yunroll-cart-v4` | EasyFlash frame stream | Remove the per-line dispatch call/return pair; default twelve-demo menu renderer. |
+| `yunroll-cart-v4` | EasyFlash frame stream | Remove the per-line dispatch call/return pair; preserved early twelve-demo menu renderer. |
 | `yunroll-cart-v4-scene` | Authored EasyFlash sequence | V4 drawing with paged directories, 16-bit frame indexing, pacing and a finite intro/ending. |
 | `yunroll-cart-v5` / `-v5-scene` | EasyFlash stream / sequence | Lossless redundant-run removal, identical-picture sharing/reuse, full-block Y drawing and four-section page copies. |
 | `yunroll-cart-v6` / `-v6-scene` | EasyFlash stream / sequence | V5 data savings plus partial X-major byte accumulation and direct loading into the recycled slot's metadata cache. Preserved rc3 comparison. |
 | `yunroll-cart-v7` / `-v7-scene` | EasyFlash stream / sequence | Join compatible runs without changing pixels, choose cell/byte clearing, optional smaller Y kernels. FPS preferred by default; menu adds PLAY ALL. |
 | `yunroll-cart-v8` / `-v8-scene` | Hybrid EasyFlash stream / sequence | V7 vector fallback plus smaller precomputed bitmap-byte spans. No extra fixed buffers; same samples and colours. |
+| `yunroll-cart-v9` / `-v9-scene` | Direct-ROM hybrid stream / sequence | V8 picture payloads with direct ROM-to-bitmap byte drawing and a leaner page copier. Normal PLAY ALL is the A/B reference. |
 
 ### `step`
 

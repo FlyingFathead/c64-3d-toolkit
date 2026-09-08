@@ -1,5 +1,7 @@
 # c64-3d-toolkit demo cartridges
 
+**0.6.9 / V9:** [FPS menu](c643d-demo-v0.6.9-yunroll-cart-v9-all.crt), [RAM menu](c643d-demo-v0.6.9-yunroll-cart-v9-all-ram.crt). ONLY normal PLAY ALL is used for A/B comparisons between methods and versions. F5 is internal exhibition mode, NOT benchmarking. [Measured results](../../docs/CARTRIDGE_STREAM_V9.md).
+
 Normal V8 PLAY ALL keeps **10 seconds per demo**, matching earlier releases.
 Press **F5 from the menu** for exhibition playback: the two HiFi entries run
 for 15 seconds each, with the others at 10. F1/RUN-STOP returns to the menu;
@@ -53,3 +55,6 @@ archived V4 CRT and its matching manifest for explicit comparisons.
 **ONLY use normal PLAY ALL for A/B comparisons between rendering methods and
 versions. F5 is an internal demo mode for exhibitions and MUST NOT be used for
 benchmarking.**
+
+[See comparison chart for details on performance differences](../../docs/PERFORMANCE_COMPARISON.md).
+V9 is the default menu build; all earlier methods remain explicitly selectable.

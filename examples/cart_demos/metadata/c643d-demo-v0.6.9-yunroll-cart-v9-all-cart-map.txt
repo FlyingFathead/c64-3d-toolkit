@@ -1,0 +1,15 @@
+Uniform yunroll-cart-v9 cartridge
+Bank 0: boot/control/font; ROMH 1: menus; ROMH 2: menu directory/helpers
+TORUS: 32 frames, 16505 stream bytes
+TORUS DENSE: 32 frames, 18302 stream bytes
+CUBE: 36 frames, 2539 stream bytes
+SPHERE: 24 frames, 5824 stream bytes
+HORSE HEAD: 32 frames, 18245 stream bytes
+SUNFLOWER TORUS: 28 frames, 17168 stream bytes
+SUNFLOWER COLOR: 20 frames, 16028 stream bytes
+SPACE HORSE SPIN: 24 frames, 20119 stream bytes
+SPACE HORSE CRAWL: 32 frames, 17765 stream bytes
+FALLING CUBES: 18 frames, 12007 stream bytes
+HORSE HEAD HIFI: 128 frames, 105759 stream bytes
+SUNFLOWER TORUS HIFI: 128 frames, 160415 stream bytes
+Frame chips: 3:romh, 4:romh, 5:romh, 6:romh, 7:romh, 8:romh, 9:romh, 10:romh, 11:romh, 12:romh, 13:romh, 14:romh, 15:romh, 16:romh, 17:romh, 18:romh, 19:romh, 20:romh, 21:romh, 22:romh, 23:romh, 24:romh, 25:romh, 26:romh, 27:romh, 28:romh, 29:romh, 30:romh, 31:romh, 32:romh, 33:romh, 34:romh, 35:romh, 36:romh, 37:romh, 38:romh, 39:romh, 40:romh, 41:romh, 42:romh, 43:romh, 44:romh, 45:romh, 46:romh, 47:romh, 48:romh, 49:romh, 50:romh, 51:romh, 52:romh, 53:romh, 54:romh, 55:romh, 56:romh

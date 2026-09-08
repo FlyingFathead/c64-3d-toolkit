@@ -1,0 +1,97 @@
+{
+  "cartridge": "c643d-demo-v0.6.9-yunroll-cart-v9-all-ram.crt",
+  "sha256": "2afd8e6f98a33af178cd3734f86878cdb7571064b228838ed786c9983363d961",
+  "mode": "normal-play-all",
+  "menu_style": "default",
+  "entry_seconds": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+  ],
+  "seconds_per_demo": 10,
+  "ticks_per_demo": 500,
+  "all_entries": true,
+  "last_to_first_wrap": true,
+  "first_picture_before_timer": true,
+  "space_skips": true,
+  "held_space_latched": true,
+  "runstop_returns": true,
+  "manual_launch_disables_timer": true,
+  "samples": [
+    {
+      "entry": 0,
+      "seconds": 10,
+      "count_interval_cycles": 9808370
+    },
+    {
+      "entry": 1,
+      "seconds": 10,
+      "count_interval_cycles": 9808369
+    },
+    {
+      "entry": 2,
+      "seconds": 10,
+      "count_interval_cycles": 9808374
+    },
+    {
+      "entry": 3,
+      "seconds": 10,
+      "count_interval_cycles": 9808369
+    },
+    {
+      "entry": 4,
+      "seconds": 10,
+      "count_interval_cycles": 9808368
+    },
+    {
+      "entry": 5,
+      "seconds": 10,
+      "count_interval_cycles": 9808371
+    },
+    {
+      "entry": 6,
+      "seconds": 10,
+      "count_interval_cycles": 9808368
+    },
+    {
+      "entry": 7,
+      "seconds": 10,
+      "count_interval_cycles": 9810004
+    },
+    {
+      "entry": 8,
+      "seconds": 10,
+      "count_interval_cycles": 9808368
+    },
+    {
+      "entry": 9,
+      "seconds": 10,
+      "count_interval_cycles": 9808369
+    },
+    {
+      "entry": 10,
+      "seconds": 10,
+      "count_interval_cycles": 9808371
+    },
+    {
+      "entry": 11,
+      "seconds": 10,
+      "count_interval_cycles": 9808345
+    },
+    {
+      "entry": 0,
+      "seconds": 10,
+      "count_interval_cycles": 9808367
+    }
+  ],
+  "method": "PAL VICE; production handlers via monitor, no host key injection."
+}
