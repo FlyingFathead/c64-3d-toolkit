@@ -39,7 +39,7 @@ def main():
         '--cartconv', a.cartconv, '--overwrite-policy', 'allow'])
     with patch("c643d.__version__", "0.6.7"):
         cartuniform.build(args, sources=load_menu_reference(root))
-    baseline = root/'examples/cart_demos/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt'
+    baseline = root/'../c64-3d-toolkit-history/examples/cart_demos/history/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt'
     rebuilt = root/'build/v7-baseline'/baseline.name
     # cartconv versions can differ in the cosmetic 32-byte CRT title field.
     shipped, fresh = baseline.read_bytes(), rebuilt.read_bytes()

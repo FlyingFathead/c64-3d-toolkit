@@ -1,0 +1,9 @@
+{
+  "scope": "V10 preserved-sample examples, PAL VICE; fresh Blender export and music tests pending",
+  "pixel_reports": 34,
+  "verified_pictures": 4150,
+  "pixel_and_color_checks_passed": true,
+  "includes_max_speed_diagnostics": true,
+  "preserved_asm_crt_prg_files": 134,
+  "historical_files_changed": 0
+}

@@ -17,7 +17,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--tass',default='64tass');p.add_argument('--cartconv',default='cartconv')
     p.add_argument('--reference-multi',type=Path,help='optional original V4 CRT; defaults to the compact shipped vector reference')
-    p.add_argument('--reference-marbles',type=Path,default=root/'examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene-clean.crt')
+    p.add_argument('--reference-marbles',type=Path,default=root/'../c64-3d-toolkit-history/examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v4-scene-clean.crt')
     a=p.parse_args()
     tass=cli.resolve_executable(a.tass,'tass');conv=cli.require_cartconv(a.cartconv,verbose=True)
     if not tass or not conv:raise ValueError('64tass and cartconv are required')

@@ -399,13 +399,15 @@ class TestSvgPipeline(unittest.TestCase):
         self.assertIn('space_horse_crawl_color',names)
 
     def test_renderer_colour_is_patched_for_svg_demo(self):
-        from tools.c643d.cli import prepare_asm
+        from tools.c643d.cli import prepare_asm, BUILD
+        BUILD.mkdir(parents=True, exist_ok=True)
         asm=prepare_asm('yunroll',8,7,True).read_text()
         self.assertIn('SCREEN_COLOR = $70',asm)
         self.assertIn('COLORS_ENABLED = 1',asm)
 
     def test_colored_renderers_restore_recycled_screen_cells(self):
-        from tools.c643d.cli import prepare_asm
+        from tools.c643d.cli import prepare_asm, BUILD
+        BUILD.mkdir(parents=True, exist_ok=True)
         for renderer in ('step','bytechunk','yunroll'):
             asm=prepare_asm(renderer,8,1,True).read_text()
             self.assertIn('jsr reset_old_frame_colors',asm,renderer)
@@ -816,9 +818,9 @@ class TestRc062RenderAndChecksumControls(unittest.TestCase):
         self.assertEqual(merged[merged.index('--sample-step')+1],'3')
         self.assertEqual(merged[merged.index('--renderer')+1],'yunroll')
 
-    def test_release_version_is_069_and_older_menus_are_preserved(self):
+    def test_release_version_is_070_and_older_menus_are_preserved(self):
         from tools.c643d import __version__
-        self.assertEqual(__version__,'0.6.9')
+        self.assertEqual(__version__,'0.7.0')
         self.assertEqual((ROOT/'VERSION').read_text(encoding='utf-8').strip(),__version__)
         import hashlib, json, re
         for name in ('setup-windows.cmd', 'setup-windows.ps1'):
@@ -827,13 +829,17 @@ class TestRc062RenderAndChecksumControls(unittest.TestCase):
         for name in ('easyflash-demo-runtime.asm', 'easyflash-demo-scroll-runtime.asm'):
             shown=re.findall(r'TOOLKIT (\d+\.\d+\.\d+(?:-rc\d+)?)', (ROOT/'c64/cart'/name).read_text())
             self.assertEqual(set(shown), {'0.6.7'}, name)
-        self.assertIn(__version__, (ROOT/'c64/cart/easyflash-demo-scroll-runtime-v9.asm').read_text())
+        self.assertIn('0.6.9', (ROOT/'c64/cart/easyflash-demo-scroll-runtime-v9.asm').read_text())
         self.assertIn('0.6.8', (ROOT/'c64/cart/easyflash-demo-scroll-runtime-v8.asm').read_text())
         from tools.c643d.cartframes import load_menu_reference
         reference=load_menu_reference(ROOT)
         self.assertEqual(len(reference), 12)
         self.assertEqual([len(d.frames) for d in reference[-2:]], [128, 128])
-        marbles=ROOT/'examples/cart_marbles'
+    def test_external_historical_marbles_metadata(self):
+        import json
+        marbles=ROOT/'../c64-3d-toolkit-history/examples/cart_marbles/history'
+        if not marbles.exists():
+            self.skipTest('Optional historical archive not installed')
         for suffix in ('','-clean'):
             scene=json.loads((marbles/('dont_lose_your_marbles-yunroll-cart-v4-scene'+suffix+'-manifest.json')).read_text())
             self.assertEqual(scene['toolkit_version'], '0.6.6')

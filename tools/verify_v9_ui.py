@@ -35,7 +35,7 @@ def main():
         results=dict(pool.map(run,tasks))
     # verify_v9_examples.py builds the V8 symbols first.
     for version in ('v8','v9'):
-        crt=root/'examples/cart_demos/c643d-demo-v0.6.8-yunroll-cart-v8-all.crt' if version=='v8' else menu
+        crt=root/'../c64-3d-toolkit-history/examples/cart_demos/history/c643d-demo-v0.6.8-yunroll-cart-v8-all.crt' if version=='v8' else menu
         results['sunflower-profile-'+version]=profile(crt,a.vice,a.vice_data,11)
     output=root/'docs/benchmarks/v9/ui-and-stages.json'
     output.parent.mkdir(parents=True,exist_ok=True)

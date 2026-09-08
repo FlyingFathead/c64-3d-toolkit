@@ -105,7 +105,7 @@ Fetch by itself is slightly more expensive because the destinations are split;
 fetch plus metadata caching is cheaper overall. Drawing is also cheaper. More
 publish waiting is expected when rendering finishes earlier. The full per-frame
 stage reports and both HUD/clean output checks are in
-[the Marbles report](../examples/cart_marbles/v5-v6-validation.json).
+[the Marbles report](../examples/cart_marbles/history/v5-v6-validation.json).
 
 ## RAM and cartridge size
 
@@ -147,8 +147,8 @@ From the repository root:
 
 ```bash
 x64sc -cartcrt examples/cart_demos/c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt
-x64sc -cartcrt examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v6-scene-clean.crt
-x64sc -cartcrt examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v6-scene.crt
+x64sc -cartcrt examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v6-scene-clean.crt
+x64sc -cartcrt examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v6-scene.crt
 
 # All three shipped V6 examples, from exact released vector samples:
 python tools/build_v6_examples.py --tass 64tass --cartconv cartconv
@@ -172,8 +172,8 @@ installed VICE data directory as needed:
 ```bash
 python -m unittest discover -s tests
 python tools/verify_cart_stream.py   examples/cart_demos/c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt --menu-entry 4
-python tools/verify_cart_stream.py   examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v6-scene-clean.crt
-python tools/profile_cart_stream.py   examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v6-scene-clean.crt   --report build/v6-marbles-profile.json
+python tools/verify_cart_stream.py   examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v6-scene-clean.crt
+python tools/profile_cart_stream.py   examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v6-scene-clean.crt   --report build/v6-marbles-profile.json
 python tools/verify_cart_stream_edges.py --renderer yunroll-cart-v6
 python tools/verify_v6_kernels.py --vice-data /path/to/vice-data
 ```

@@ -98,6 +98,7 @@ def export_blend_scene(
     blender_is_verified: bool=False,
     viewport_height: int=144,
     max_frames: int=255,
+    output_fps: int | None=None,
 ) -> Path:
     source=Path(blend_path).expanduser().resolve()
     if not source.is_file():
@@ -118,6 +119,10 @@ def export_blend_scene(
         '--output',str(output),'--sample-step',str(sample_step),
         '--viewport-height',str(viewport_height),'--max-frames',str(max_frames),
     ]
+    if output_fps is not None:
+        if not 1 <= output_fps <= 50:
+            raise ValueError('--blender-output-fps must be 1..50')
+        cmd.extend(['--output-fps',str(output_fps)])
     if frame_start is not None:
         cmd.extend(['--frame-start',str(frame_start)])
     if frame_end is not None:
@@ -133,3 +138,13 @@ def export_blend_scene(
 
 def load_blend_scene(blend_path: str | Path, output_path: str | Path, **kwargs) -> SceneAnimation:
     return load_scene(export_blend_scene(blend_path,output_path,**kwargs))
+
+
+def output_frame_plan(start, end, source_fps, output_fps, evaluation_start):
+    """Sample source time without changing playback speed (baked animation)."""
+    import math
+    if source_fps <= 0 or not 1 <= output_fps <= 50 or end < start:
+        raise ValueError('invalid output sampling rate or frame range')
+    count=math.ceil((end-start+1)*output_fps/source_fps-1e-9)
+    captures=tuple(min(end,math.floor(start+i*source_fps/output_fps+0.5)) for i in range(count))
+    return sorted(set(range(evaluation_start,end+1))|set(captures)),captures

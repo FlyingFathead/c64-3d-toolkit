@@ -42,7 +42,7 @@ For direct comparison, the old cart stays at:
 
 ```bash
 x64sc -pal +easyflashcrtwrite -cartcrt \
-  ~/NeuralNetwork/c64-3d-toolkit/examples/cart_demos/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt
+  ~/NeuralNetwork/c64-3d-toolkit/examples/cart_demos/history/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt
 ```
 
 No automatic Git commit, tag, push or release publication is included. The

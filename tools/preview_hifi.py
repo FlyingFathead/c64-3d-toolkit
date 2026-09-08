@@ -28,7 +28,7 @@ def preview(name,frames=24):
     m,meta=load(name);cam=Camera(cy=96)
     m=transform_mesh(m,scale=fit_scale(m,frames,cam,max_scale=1.4,height=192))
     ff,_=build_frames(m,frames,cam,visibility_mode=meta['visibility'],z_tolerance=meta['z_tolerance'],enable_source_colors=True,height=192,max_visible_runs=65535)
-    out=ROOT/'examples'/'hifi_showcase';out.mkdir(exist_ok=True,parents=True)
+    out=ROOT.parent/'c64-3d-toolkit-history'/'examples'/'hifi_showcase';out.mkdir(exist_ok=True,parents=True)
     ims=[frame_image(f) for f in ff]
     ims[0].resize((768,576),Image.Resampling.NEAREST).save(out/f'{name}_preview.png')
     ims[0].resize((512,384),Image.Resampling.NEAREST).save(out/f'{name}_turntable.gif',save_all=True,append_images=[im.resize((512,384),Image.Resampling.NEAREST) for im in ims[1:]],duration=130,loop=0)

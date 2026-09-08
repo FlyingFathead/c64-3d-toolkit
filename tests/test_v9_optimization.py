@@ -19,7 +19,18 @@ class V9Tests(unittest.TestCase):
         root=Path(__file__).resolve().parents[1]
         frozen=json.loads((root/'tests/data/preserved-v0.6.8.json').read_text())
         for name,digest in frozen['files'].items():
+            if name.startswith('../'): continue  # Checked separately when the external archive is available.
             self.assertEqual(hashlib.sha256((root/name).read_bytes()).hexdigest(),digest,name)
+
+    def test_external_historical_binaries(self):
+        import hashlib, json
+        root=Path(__file__).resolve().parents[1]
+        frozen=json.loads((root/'tests/data/preserved-v0.6.8.json').read_text())
+        external={k:v for k,v in frozen['files'].items() if k.startswith('../')}
+        if not (root.parent/'c64-3d-toolkit-history').exists():
+            self.skipTest('Optional historical archive is outside the checkout and not installed')
+        for name, expected in external.items():
+            self.assertEqual(hashlib.sha256((root/name).read_bytes()).hexdigest(),expected,name)
 
     def test_directory_flag_does_not_change_payloads_or_aliases(self):
         from tools.c643d.pipeline import encode_run,oriented_dda
@@ -53,8 +64,8 @@ class V9Tests(unittest.TestCase):
 
     def test_v9_is_opt_in_and_exhibition_remains_separate(self):
         p=make_parser(load_toolchain_settings(Path('/missing/config.ini')))
-        self.assertEqual(p.parse_args(['cart-demos']).stream_renderer,'yunroll-cart-v9')
-        self.assertEqual(p.parse_args(['build']).renderer,'yunroll-cart-v9')
+        self.assertEqual(p.parse_args(['cart-demos']).stream_renderer,'hors-render-v1')
+        self.assertEqual(p.parse_args(['build']).renderer,'hors-render-v1')
         for variant in ('yunroll-cart-v9','yunroll-cart-v9-scene'):
             self.assertEqual(p.parse_args(['build','--renderer',variant]).renderer,variant)
         self.assertEqual(p.parse_args(['cart-demos','--stream-renderer','yunroll-cart-v9']).play_all_seconds,10)

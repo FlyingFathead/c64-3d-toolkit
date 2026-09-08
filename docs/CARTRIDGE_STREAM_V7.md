@@ -171,8 +171,8 @@ Marbles remains a separate finite presentation.
 From the project root:
 
 ```bash
-x64sc -cartcrt examples/cart_demos/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt
-x64sc -cartcrt examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v7-scene-clean.crt
+x64sc -cartcrt examples/cart_demos/history/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt
+x64sc -cartcrt examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v7-scene-clean.crt
 
 # FPS is already the default; original samples, no Blender rebake:
 python tools/build_v7_examples.py
@@ -229,7 +229,7 @@ Historical rc4/rc5 evidence remains in
   scanners are exercised through VICE's monitor, not the host Escape key mapping.
 
 Reports: [V6/V7 menu comparison](benchmarks/cart_demos/v6-v7-validation.json),
-[Marbles comparison](../examples/cart_marbles/v6-v7-validation.json),
+[Marbles comparison](../examples/cart_marbles/history/v6-v7-validation.json),
 [menu navigation](benchmarks/cart_demos/menu-v7-validation.json),
 [menu launch regression](benchmarks/cart_demos/menu-launch-v7-validation.json),
 [PLAY ALL](benchmarks/cart_demos/play-all-v7-validation.json).
@@ -238,8 +238,8 @@ Reports: [V6/V7 menu comparison](benchmarks/cart_demos/v6-v7-validation.json),
 python -m unittest discover -s tests
 python tools/verify_v7_kernels.py --vice-data /path/to/vice-data
 python tools/verify_v7_kernels.py --prefer ram --vice-data /path/to/vice-data
-python tools/verify_cart_menu_launch.py examples/cart_demos/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt --vice-data /path/to/vice-data
-python tools/verify_v7_play_all.py examples/cart_demos/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt --vice-data /path/to/vice-data
+python tools/verify_cart_menu_launch.py examples/cart_demos/history/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt --vice-data /path/to/vice-data
+python tools/verify_v7_play_all.py examples/cart_demos/history/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt --vice-data /path/to/vice-data
 ```
 
 ## Update an existing checkout

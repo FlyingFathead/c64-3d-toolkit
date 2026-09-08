@@ -47,7 +47,7 @@ PAL VICE: 200 exported samples, 405,972 vector bytes, approximately 5.5 scene FP
 The HUD build takes 36.370 seconds for the vector scene and 58.151 seconds from
 reset through the final typed message, including the intro, constellation hold,
 greetings and credits. The clean build has almost identical timing; its exact
-result is in `examples/cart_marbles/ending-clean-validation.json`.
+result is in `examples/cart_marbles/history/ending-clean-validation.json`.
 
 The 7-raster-tick setting targets 7.14 FPS. Busy collisions and the fracture miss
 that deadline, extending playback. There is no runtime sample dropping; changing
@@ -121,14 +121,14 @@ scheduled appearance; these are used for waiting emitters and the table swap.
 ```bash
 python3 -m unittest discover -s tests
 python3 tools/verify_cart_stream.py \
-  examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene.crt \
+  examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v4-scene.crt \
   --vice x64sc --report build/marbles-validation.json \
   --capture build/marbles-captures
 python3 tools/verify_cart_ending.py \
-  examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene.crt \
+  examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v4-scene.crt \
   --vice x64sc --vice-data /path/to/vice-data --output build/marbles-ending
 python3 tools/capture_cart_story.py \
-  examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene-clean.crt \
+  examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v4-scene-clean.crt \
   --vice x64sc --vice-data /path/to/vice-data --output build/marbles-story
 ```
 

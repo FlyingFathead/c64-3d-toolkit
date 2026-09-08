@@ -13,7 +13,7 @@ cd ~/NeuralNetwork/c64-3d-toolkit
 unzip -o ../c64-3d-toolkit-v0.6.7-overlay.zip
 python tools/clean_release.py
 python c643d.py --version
-x64sc -pal -cartcrt examples/cart_demos/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt
+x64sc -pal -cartcrt examples/cart_demos/history/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt
 ```
 
 The overlay is flat: paths start at `README.md`, `tools/`, `examples/`, etc.

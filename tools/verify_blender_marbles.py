@@ -29,5 +29,5 @@ for i,f in enumerate(fs):
   checks+=1
   if not any(x0<=x<=x1 and y0<=y<=y1 for x,y in pixels):missing.append(dict(object=o.name,frame=frame,pixel=[px,py]))
 r=dict(unobscured_table_marble_samples_checked=checks,empty_projected_regions=missing,method='Blender centre-ray visibility plus compiled bitmap within projected marble bounds; excludes the authored finale')
-Path('examples/cart_marbles/marble-visibility-audit.json').write_text(json.dumps(r,indent=2)+'\n');print(r)
+Path('../c64-3d-toolkit-history/examples/cart_marbles/history/marble-visibility-audit.json').write_text(json.dumps(r,indent=2)+'\n');print(r)
 assert not missing

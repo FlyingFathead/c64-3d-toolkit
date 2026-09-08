@@ -32,7 +32,7 @@ git status --short
 )
 
 x64sc -pal +easyflashcrtwrite -cartcrt \
-  ~/NeuralNetwork/c64-3d-toolkit/examples/cart_demos/c643d-demo-v0.6.9-yunroll-cart-v9-all.crt
+  ~/NeuralNetwork/c64-3d-toolkit/examples/cart_demos/history/c643d-demo-v0.6.9-yunroll-cart-v9-all.crt
 ```
 
 **ONLY use normal PLAY ALL for A/B comparisons between rendering methods and
@@ -45,7 +45,7 @@ The old comparison cartridge stays at:
 
 ```bash
 x64sc -pal +easyflashcrtwrite -cartcrt \
-  ~/NeuralNetwork/c64-3d-toolkit/examples/cart_demos/c643d-demo-v0.6.8-yunroll-cart-v8-all.crt
+  ~/NeuralNetwork/c64-3d-toolkit/examples/cart_demos/history/c643d-demo-v0.6.8-yunroll-cart-v8-all.crt
 ```
 
 The [V9 guide](CARTRIDGE_STREAM_V9.md) includes measurements, limits and
@@ -94,8 +94,8 @@ gh release create v0.6.9 --repo FlyingFathead/c64-3d-toolkit \
   --verify-tag --title "v0.6.9 — V9 direct ROM byte spans" \
   --notes-file "$c64_release_notes" \
   ../c64-3d-toolkit-v0.6.9.zip ../c64-3d-toolkit-v0.6.9.zip.sha256 \
-  examples/cart_demos/c643d-demo-v0.6.9-yunroll-cart-v9-all.crt \
-  examples/cart_demos/c643d-demo-v0.6.9-yunroll-cart-v9-all-ram.crt
+  examples/cart_demos/history/c643d-demo-v0.6.9-yunroll-cart-v9-all.crt \
+  examples/cart_demos/history/c643d-demo-v0.6.9-yunroll-cart-v9-all-ram.crt
 git status --short
 gh release view v0.6.9 --repo FlyingFathead/c64-3d-toolkit
 )

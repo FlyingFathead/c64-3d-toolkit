@@ -16,7 +16,7 @@ cd ~/NeuralNetwork
 unzip -o c64-3d-toolkit-v0.6.6-changed.zip
 cd c64-3d-toolkit
 python3 c643d.py --version
-x64sc -cartcrt examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene-clean.crt
+x64sc -cartcrt examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v4-scene-clean.crt
 ```
 
 For a full source copy, substitute `c64-3d-toolkit-v0.6.6-full.zip` in the unzip
@@ -26,7 +26,7 @@ ZIP contains the ready-to-run HUD and clean CRTs, reports and screenshots.
 The `*-v4-scene` assembly files are updated extension files. The baseline V4
 renderer and original menu cartridge are unchanged; see the exact explanation
 in [CARTRIDGE_SCENES.md](CARTRIDGE_SCENES.md). The changed-file list and validation
-summary are in `examples/cart_marbles/package-notes.json`.
+summary are in `examples/cart_marbles/history/package-notes.json`.
 
 The demo is finite: roughly 58 seconds through the final typed ghost message,
 then an idle cursor. The BASIC screen is staged. Audio has not been added yet.

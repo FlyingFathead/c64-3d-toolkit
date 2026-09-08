@@ -23,42 +23,42 @@
   },
   "payload_preservation": [
     {
-      "manifest": "examples/cart_demos/metadata/c643d-demo-v0.6.9-yunroll-cart-v9-all-cart-manifest.json",
+      "manifest": "examples/cart_demos/history/metadata/c643d-demo-v0.6.9-yunroll-cart-v9-all-cart-manifest.json",
       "frames": 534,
       "all_payloads_identical": true
     },
     {
-      "manifest": "examples/cart_demos/metadata/c643d-demo-v0.6.9-yunroll-cart-v9-all-ram-cart-manifest.json",
+      "manifest": "examples/cart_demos/history/metadata/c643d-demo-v0.6.9-yunroll-cart-v9-all-ram-cart-manifest.json",
       "frames": 534,
       "all_payloads_identical": true
     },
     {
-      "manifest": "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v9-scene-manifest.json",
+      "manifest": "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v9-scene-manifest.json",
       "frames": 84,
       "all_payloads_identical": true
     },
     {
-      "manifest": "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v9-scene-ram-manifest.json",
+      "manifest": "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v9-scene-ram-manifest.json",
       "frames": 84,
       "all_payloads_identical": true
     },
     {
-      "manifest": "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v9-scene-clean-manifest.json",
+      "manifest": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v9-scene-clean-manifest.json",
       "frames": 200,
       "all_payloads_identical": true
     },
     {
-      "manifest": "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v9-scene-clean-ram-manifest.json",
+      "manifest": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v9-scene-clean-ram-manifest.json",
       "frames": 200,
       "all_payloads_identical": true
     },
     {
-      "manifest": "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v9-scene-manifest.json",
+      "manifest": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v9-scene-manifest.json",
       "frames": 200,
       "all_payloads_identical": true
     },
     {
-      "manifest": "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v9-scene-ram-manifest.json",
+      "manifest": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v9-scene-ram-manifest.json",
       "frames": 200,
       "all_payloads_identical": true
     }
@@ -70,14 +70,14 @@
   "final_helpers_guarded": true,
   "hardware_testing": "PAL VICE 3.10; not tested on physical C64 or NTSC",
   "cartridges": {
-    "examples/cart_demos/c643d-demo-v0.6.9-yunroll-cart-v9-all-ram.crt": "2afd8e6f98a33af178cd3734f86878cdb7571064b228838ed786c9983363d961",
-    "examples/cart_demos/c643d-demo-v0.6.9-yunroll-cart-v9-all.crt": "5e608c7a5507fcb90235c6e3b3422cb04ff9ed7a861cee7864d847033c23f45a",
-    "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v9-scene-ram.crt": "d9ddcf7db3f851aeeec36ad6ef4f7f07b50ddbdc93c134355622417fa4c1e0b1",
-    "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v9-scene.crt": "1012864b28f650cd1626b0f136d475fa064ded684b4cc47cf410abe1fee61acd",
-    "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v9-scene-clean-ram.crt": "e0b93e8496475e4f128a2555fe3647105e1d4b91e2b8730573a1a347d8b426b6",
-    "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v9-scene-clean.crt": "60327ed2bb02c62da440d96774ec108ccff7db6ffe4a6a63338bb278789785c1",
-    "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v9-scene-ram.crt": "2f33a1c5e2978bdba7671fb1d962f71ad35657ac2d42877f85381f00ec6a4fad",
-    "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v9-scene.crt": "cf43a4bbead605cd6becbb3d226045f8a00bcbebb8c358a98b8465f9fc66201f"
+    "examples/cart_demos/history/c643d-demo-v0.6.9-yunroll-cart-v9-all-ram.crt": "2afd8e6f98a33af178cd3734f86878cdb7571064b228838ed786c9983363d961",
+    "examples/cart_demos/history/c643d-demo-v0.6.9-yunroll-cart-v9-all.crt": "5e608c7a5507fcb90235c6e3b3422cb04ff9ed7a861cee7864d847033c23f45a",
+    "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v9-scene-ram.crt": "d9ddcf7db3f851aeeec36ad6ef4f7f07b50ddbdc93c134355622417fa4c1e0b1",
+    "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v9-scene.crt": "1012864b28f650cd1626b0f136d475fa064ded684b4cc47cf410abe1fee61acd",
+    "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v9-scene-clean-ram.crt": "e0b93e8496475e4f128a2555fe3647105e1d4b91e2b8730573a1a347d8b426b6",
+    "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v9-scene-clean.crt": "60327ed2bb02c62da440d96774ec108ccff7db6ffe4a6a63338bb278789785c1",
+    "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v9-scene-ram.crt": "2f33a1c5e2978bdba7671fb1d962f71ad35657ac2d42877f85381f00ec6a4fad",
+    "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v9-scene.crt": "cf43a4bbead605cd6becbb3d226045f8a00bcbebb8c358a98b8465f9fc66201f"
   },
   "comparison": {
     "menu_combinations": 172,

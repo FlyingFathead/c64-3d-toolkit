@@ -618,15 +618,22 @@ def print_stats(mesh:Mesh,label:str,renderer:str,scale:float,stats:dict,hud:str,
 
 
 def cmd_build(a):
+    from .renderer_names import implementation, public_name
+    a.public_renderer = public_name(a.renderer)
+    a.renderer = implementation(a.renderer)
     print('fps locking: not set')
+    if getattr(a,'blender_output_fps',None) is not None and (not a.blend or a.renderer not in ('yunroll-cart-v10','yunroll-cart-v10-scene')):
+        raise ValueError('--blender-output-fps requires --blend with V10')
+    if a.renderer == 'yunroll-cart-v10' and (getattr(a,'scene',None) or getattr(a,'blend',None)):
+        a.renderer = 'yunroll-cart-v10-scene'
     if a.renderer == 'yunroll-cart-v9' and (getattr(a,'scene',None) or getattr(a,'blend',None)):
         a.renderer = 'yunroll-cart-v9-scene'
-    if getattr(a, 'prefer', 'fps') == 'ram' and a.renderer not in ('yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v7-scene', 'yunroll-cart-v8-scene', 'yunroll-cart-v9-scene'):
+    if getattr(a, 'prefer', 'fps') == 'ram' and a.renderer not in ('yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10', 'yunroll-cart-v7-scene', 'yunroll-cart-v8-scene', 'yunroll-cart-v9-scene', 'yunroll-cart-v10-scene'):
         raise ValueError('--prefer ram requires a V7, V8 or V9 cartridge renderer')
-    if a.renderer in ("yunroll-cart-v4-scene", "yunroll-cart-v5-scene", "yunroll-cart-v6-scene", "yunroll-cart-v7-scene", "yunroll-cart-v8-scene", "yunroll-cart-v9-scene"):
+    if a.renderer in ("yunroll-cart-v4-scene", "yunroll-cart-v5-scene", "yunroll-cart-v6-scene", "yunroll-cart-v7-scene", "yunroll-cart-v8-scene", "yunroll-cart-v9-scene", "yunroll-cart-v10-scene"):
         from .cartscene import cmd_build_cart_scene
         return cmd_build_cart_scene(a)
-    if a.renderer in ("yunroll-cart-v2", "yunroll-cart-v3", "yunroll-cart-v4", "yunroll-cart-v5", "yunroll-cart-v6", "yunroll-cart-v7", "yunroll-cart-v8", "yunroll-cart-v9"):
+    if a.renderer in ("yunroll-cart-v2", "yunroll-cart-v3", "yunroll-cart-v4", "yunroll-cart-v5", "yunroll-cart-v6", "yunroll-cart-v7", "yunroll-cart-v8", "yunroll-cart-v9", "yunroll-cart-v10"):
         from .cartstream import cmd_build_cart_v2
         return cmd_build_cart_v2(a)
     if getattr(a,'blend',None) or getattr(a,'scene',None):
@@ -1191,7 +1198,7 @@ def make_parser(settings):
         q.add_argument('--z-tolerance',type=float,help='reciprocal-depth tolerance for visible wire edges; object presets may provide a default')
         q.add_argument('--feature-angle',type=float,help='surface_creases threshold in degrees; sharp manifold edges at/above this angle are preserved')
     b=sub.add_parser('build',help='generate tables, assemble PRG, optionally run VICE'); common(b)
-    b.add_argument('--renderer',choices=(*RENDERERS, 'yunroll-cart-v2', 'yunroll-cart-v3', 'yunroll-cart-v4', 'yunroll-cart-v4-scene', 'yunroll-cart-v5', 'yunroll-cart-v5-scene', 'yunroll-cart-v6', 'yunroll-cart-v6-scene', 'yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v7-scene', 'yunroll-cart-v8-scene', 'yunroll-cart-v9-scene'),default='yunroll-cart-v9',help='default V9 CRT; step/bytechunk/yunroll=PRG; yunroll-cart-v2 through v9=streamed EasyFlash CRT')
+    b.add_argument('--renderer',choices=('hors-render-v1', 'hors-render-v1-scene', *RENDERERS, 'yunroll-cart-v2', 'yunroll-cart-v3', 'yunroll-cart-v4', 'yunroll-cart-v4-scene', 'yunroll-cart-v5', 'yunroll-cart-v5-scene', 'yunroll-cart-v6', 'yunroll-cart-v6-scene', 'yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10', 'yunroll-cart-v7-scene', 'yunroll-cart-v8-scene', 'yunroll-cart-v9-scene', 'yunroll-cart-v10-scene'),default='hors-render-v1',help='default hors-render-v1 CRT; step/bytechunk/yunroll=PRG; yunroll-cart-v2 through v10=streamed EasyFlash CRT')
     b.add_argument('--prefer',choices=('fps','ram'),default='fps',help='V7/V8: prioritize FPS (default) or smaller Y drawing kernels; geometry and pacing stay the same')
     b.add_argument('--frames',type=int,help='precomputed legacy animation frames/orientations (default 48; not used by --blend)')
     b.add_argument('--ending',action='store_true',help='finite scene, credits and ghost-in-BASIC epilogue; requires --intro')
@@ -1208,6 +1215,7 @@ def make_parser(settings):
     b.add_argument('--scene',help='compile an already exported .c643dscene file without launching Blender')
     b.add_argument('--frame-start',type=int,help='first Blender source frame (default: scene start)')
     b.add_argument('--frame-end',type=int,help='last Blender source frame, inclusive (default: scene end)')
+    b.add_argument('--blender-output-fps',type=int,help='V10 scene only: resample baked Blender animation at 1..50 FPS and set PAL playback target')
     b.add_argument('--sample-step',type=int,default=1,help='sample every Nth Blender frame (default 1)')
     b.add_argument('--output',help='output basename')
     b.add_argument('--output-dir',help='directory for PRG/LBL/LST outputs (default: build/)')
@@ -1283,7 +1291,7 @@ def make_parser(settings):
     cd.add_argument('--run',action='store_true',help='attach the generated demo CRT directly with VICE -cartcrt')
     cd.add_argument('--prefer',choices=('fps','ram'),default='fps',help='V7/V8: prioritize FPS (default) or smaller Y drawing kernels')
     cd.add_argument('--play-all-seconds',type=int,default=10,help='V7/V8 PLAY ALL duration per animation, 1..255 seconds (default 10; PAL)')
-    cd.add_argument('--stream-renderer',choices=('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9'),default='yunroll-cart-v9',help='one renderer for every demo; writes a separate version-labelled comparison cart')
+    cd.add_argument('--stream-renderer',choices=('hors-render-v1', 'yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'),default='hors-render-v1',help='one renderer for every demo; writes a separate version-labelled comparison cart')
     cda=sub.add_parser('cartridge-demo',help=argparse.SUPPRESS)
     _add_toolchain_args(cda,settings)
     cda.add_argument('--output',help='output basename (default: version and renderer-labelled cart name)')
@@ -1293,8 +1301,8 @@ def make_parser(settings):
     cda.add_argument('--run',action='store_true',help='attach the generated demo CRT directly with VICE -cartcrt')
     cda.add_argument('--prefer',choices=('fps','ram'),default='fps',help='V7/V8: prioritize FPS (default) or smaller Y drawing kernels')
     cda.add_argument('--play-all-seconds',type=int,default=10,help='V7/V8 PLAY ALL duration per animation, 1..255 seconds (default 10; PAL)')
-    cda.add_argument('--stream-renderer',choices=('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9'),default='yunroll-cart-v9',help='one renderer for every demo; writes a separate version-labelled comparison cart')
-    sub.add_parser('cart-stream',help='build a yunroll-cart-v9 streamed EasyFlash CRT by default (same source flags as build)')
+    cda.add_argument('--stream-renderer',choices=('hors-render-v1', 'yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'),default='hors-render-v1',help='one renderer for every demo; writes a separate version-labelled comparison cart')
+    sub.add_parser('cart-stream',help='build a hors-render-v1 streamed EasyFlash CRT by default (same source flags as build)')
     doc=sub.add_parser('doctor',help='check local 64tass/VICE and optional Blender/cartconv availability')
     _add_toolchain_args(doc,settings)
     sub.add_parser('list-shapes',help='list procedural/built-in shapes')

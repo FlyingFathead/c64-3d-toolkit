@@ -70,8 +70,10 @@ def validate_hud(text):
     return text
 
 
-def assemble_scene(root,frames,scene,*,tass,cartconv,outdir,stem,hud_text,frame_ticks=4,tass_args=(),colors=True,color_index=1,intro=False,text_overlay=True,ending=False,renderer=RENDERER,optimize=True,prefer="fps"):
-    if renderer not in (RENDERER, "yunroll-cart-v5-scene", "yunroll-cart-v6-scene", "yunroll-cart-v7-scene", "yunroll-cart-v8-scene", "yunroll-cart-v9-scene"):
+def assemble_scene(root,frames,scene,*,tass,cartconv,outdir,stem,hud_text,frame_ticks=4,tass_args=(),colors=True,color_index=1,intro=False,text_overlay=True,ending=False,renderer=RENDERER,optimize=True,prefer="fps",output_fps=None):
+    from .renderer_names import implementation
+    renderer=implementation(renderer)
+    if renderer not in (RENDERER, "yunroll-cart-v5-scene", "yunroll-cart-v6-scene", "yunroll-cart-v7-scene", "yunroll-cart-v8-scene", "yunroll-cart-v9-scene", "yunroll-cart-v10-scene"):
         raise ValueError("unsupported scene renderer")
     variant = renderer.split("-")[-2]
     if not 1<=frame_ticks<=255:
@@ -83,21 +85,23 @@ def assemble_scene(root,frames,scene,*,tass,cartconv,outdir,stem,hud_text,frame_
     # Keep the expensive compilation checkpoint even if ROM packing fails.
     (work/'oracle.json').write_text(json.dumps([asdict(f) for f in frames]))
     optimization = None
-    if variant in ("v5", "v6", "v7", "v8", "v9") and optimize:
+    if variant in ("v5", "v6", "v7", "v8", "v9", "v10") and optimize:
         from .optimize import optimize_frames
         frames, optimization = optimize_frames(frames, color_index<<4)
     joining = None
-    if variant in ("v7", "v8", "v9") and optimize:
+    if variant in ("v7", "v8", "v9", "v10") and optimize:
         from .runjoin import join_frames
         frames, joining = join_frames(frames)
     clearing = None
-    if variant in ("v7", "v8", "v9") and optimize:
+    if variant in ("v7", "v8", "v9", "v10") and optimize:
         from .clearplan import selective_clear_frames
         frames, clearing = selective_clear_frames(frames)
     encoder = frame_block
-    if variant in ("v8", "v9"):
+    if variant in ("v8", "v9", "v10"):
         from .bytespan import frame_block as encoder
-    image,directory=pack_scene_frames(frames,colors,aliases=optimization["picture_references"] if optimization else None,encoder=encoder,direct_bytes=variant == "v9")
+        if variant == 'v10':
+            from .bytespan_v10 import frame_block as encoder
+    image,directory=pack_scene_frames(frames,colors,aliases=optimization["picture_references"] if optimization else None,encoder=encoder,direct_bytes=variant in ("v9", "v10"))
     # Reuse the established LUT emitter with a full-size RAM directory page.
     dummy=[dict(bank=0,address=0,bytes=0,metadata_bytes=0)]*256
     emit_directory(gen/'tables.inc',dummy)
@@ -110,7 +114,7 @@ def assemble_scene(root,frames,scene,*,tass,cartconv,outdir,stem,hud_text,frame_
         src=src.replace('        jsr init_static_hud','').replace('        jsr init_fps_label','').replace('        jsr maybe_update_fps','')
     if intro:
         from .cartintro import emit_intro
-        emit_intro(gen/'intro.inc',ending=ending,build_identity=(__version__, f'yunroll-{variant}'+(' (ram)' if prefer == 'ram' else '')) if variant in ('v5', 'v6', 'v7', 'v8', 'v9') else None)
+        emit_intro(gen/'intro.inc',ending=ending,build_identity=(__version__, ('hors-render-v1' if variant == 'v10' else f'yunroll-{variant}')+(' (ram)' if prefer == 'ram' else '')) if variant in ('v5', 'v6', 'v7', 'v8', 'v9', 'v10') else None)
         src=src.replace('        ; Per-build foreground/background colour', '        jsr intro_start\n\n        ; Per-build foreground/background colour',1)
         src=src.replace('        lda #0\n        sta frame_index', '        lda #$3b\n        sta $d011\n        lda #0\n        sta frame_index',1)
         if ending:
@@ -138,14 +142,22 @@ scene_continue:
         src=src.replace('V5_REUSE_ENABLED = 0', f'V5_REUSE_ENABLED = {int(optimization["duplicate_pictures"] > 0)}')
     from .preferences import apply_preference
     src=apply_preference(src,renderer,prefer)
-    if variant in ("v8", "v9"):
+    if variant in ("v8", "v9", "v10"):
         from .bytespan import configure_source
-        src = configure_source(src.replace('V9_BYTE_SPANS', 'V8_BYTE_SPANS'), directory).replace('V8_BYTE_SPANS', 'V9_BYTE_SPANS') if variant == 'v9' else configure_source(src, directory)
+        src = configure_source(src.replace('V9_BYTE_SPANS', 'V8_BYTE_SPANS'), directory).replace('V8_BYTE_SPANS', 'V9_BYTE_SPANS') if variant in ('v9', 'v10') else configure_source(src, directory)
+    if output_fps is not None:
+        if variant != 'v10' or not 1 <= output_fps <= 50:
+            raise ValueError('output FPS requires V10 and a rate from 1..50')
+        base,rem=divmod(50,output_fps)
+        if rem:
+            src=src.replace('        lda #FRAME_TICKS','        jsr v10_next_hold')
+            src=src.replace('        sta scene_hold', '        sta scene_hold\n        sta v10_hold_phase',1)
+            src+=f"\nv10_next_hold:\n        lda v10_hold_phase\n        clc\n        adc #{rem}\n        cmp #{output_fps}\n        bcc v10_short_hold\n        sbc #{output_fps}\n        sta v10_hold_phase\n        lda #{base+1}\n        rts\nv10_short_hold:\n        sta v10_hold_phase\n        lda #{base}\n        rts\nv10_hold_phase: .byte 0\n"
     asm=work/'main.asm';asm.write_text(src)
     ram=work/'runtime.prg';labels=outdir/f'{stem}.lbl'
     subprocess.run([tass,*tass_args,'--cbm-prg','--vice-labels','-l',str(labels),'-o',str(ram),str(asm)],check=True,cwd=root)
     blob=ram.read_bytes();load=int.from_bytes(blob[:2],'little');end=load+len(blob)-2
-    if load!=0x0801 or end>(0x9c00 if variant in ("v5", "v6", "v7", "v8", "v9") else 0x9a00 if intro else 0x6000):
+    if load!=0x0801 or end>(0x9c00 if variant in ("v5", "v6", "v7", "v8", "v9", "v10") else 0x9a00 if intro else 0x6000):
         raise ValueError('scene runtime outside bootstrap RAM destination')
     padded=bytearray(0x5800);runtime_end=min(end,0x6000)
     padded[load-0x0800:runtime_end-0x0800]=blob[2:2+runtime_end-load]
@@ -154,7 +166,7 @@ scene_continue:
     boot=work/'boot.bin'
     subprocess.run([tass,*tass_args,'--nostart','-o',str(boot),str(root/f'c64/cart/easyflash-stream-{variant}-scene-boot.asm')],check=True,cwd=root)
     boot_blob=bytearray(boot.read_bytes())
-    if intro or variant in ("v5", "v6", "v7", "v8", "v9"):
+    if intro or variant in ("v5", "v6", "v7", "v8", "v9", "v10"):
         intro_bytes=blob[2+0x8000-load:2+end-load]
         boot_blob[0x400:0x400+len(intro_bytes)]=intro_bytes
     put_easyflash_chip(image,0,'romh',bytes(boot_blob))
@@ -164,15 +176,17 @@ scene_continue:
     manifest=dict(format='c643d-easyflash-stream-scene',version=1,toolkit_version=__version__,renderer=renderer,name=scene.name,frames=len(frames),vertices=len(scene.mesh.vertices),edges=len(scene.mesh.edges),faces=len(scene.mesh.faces),colors=colors,screen_color=color_index<<4,hud_text=hud_text,text_overlay=text_overlay,intro=intro,ending=ending,frame_index_bits=16,frame_ticks=frame_ticks,target_fps=50/frame_ticks,target_duration_seconds=len(frames)*frame_ticks/50,source_fps=scene.source_fps,sample_step=scene.sample_step,source_frames=[f.source_frame for f in scene.frames],directory_ram_bytes=1792,directory_rom_bytes=((len(frames)+255)//256)*1792,frame_buffer_bytes=8192,metadata_cache_bytes=3072,rom_frame_bytes=sum(d['bytes'] for d in directory if 'reference_frame' not in d),data_bank_capacity_bytes=122*8192,run_count_bits=16,frame_data=directory)
     if optimization:
         manifest['optimization']=optimization
-        if intro: manifest['build_screen']=dict(version=__version__,renderer=f'yunroll-{variant}'+(' (ram)' if prefer == 'ram' else ''),ticks=150,skip_key='SPACE')
+        if intro: manifest['build_screen']=dict(version=__version__,renderer=('hors-render-v1' if variant == 'v10' else f'yunroll-{variant}')+(' (ram)' if prefer == 'ram' else ''),ticks=None if variant == 'v10' else 150,skip_key='SPACE',wait_for_space=variant == 'v10')
     if clearing: manifest['clearing']=clearing
     if joining: manifest['joining']=joining
-    if variant in ('v7', 'v8', 'v9'): manifest['preference']=prefer
-    if variant in ("v8", "v9"):
-        manifest["wire_format"] = ("v9-direct-byte-spans-v8-payload" if variant == "v9" else "v8-adaptive-vectors-byte-spans")
+    if output_fps is not None:
+        manifest.update(target_fps=output_fps,target_duration_seconds=len(frames)/output_fps,output_fps=output_fps,hold_pattern='fractional PAL refresh accumulator' if 50%output_fps else 'fixed PAL refresh interval')
+    if variant in ('v7', 'v8', 'v9', 'v10'): manifest['preference']=prefer
+    if variant in ("v8", "v9", "v10"):
+        manifest["wire_format"] = ("v10-byte-first-direct-spans" if variant == "v10" else "v9-direct-byte-spans-v8-payload" if variant == "v9" else "v8-adaptive-vectors-byte-spans")
         manifest["byte_span_frames"] = sum(d.get("encoding") == "byte-spans" for d in directory)
     (outdir/f'{stem}-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
-    print(f'built {crt}\n{len(frames)} frames; {manifest["rom_frame_bytes"]} vector bytes; target {manifest["target_duration_seconds"]:.2f}s at {manifest["target_fps"]:g} FPS',flush=True)
+    print(f'built {crt}\n{len(frames)} frames; {manifest["rom_frame_bytes"]} encoded payload bytes; target {manifest["target_duration_seconds"]:.2f}s at {manifest["target_fps"]:g} FPS',flush=True)
     return crt,manifest
 
 
@@ -182,6 +196,12 @@ def cmd_build_cart_scene(a):
     from .sceneio import load_scene
     from .pipeline import build_scene_frames
     from .colors import c64_color_index
+    rate=getattr(a,'blender_output_fps',None)
+    if rate is not None:
+        if not a.blend or a.renderer != 'yunroll-cart-v10-scene' or not 1<=rate<=50 or a.sample_step!=1:
+            raise ValueError('--blender-output-fps requires V10, baked --blend, rate 1..50 and --sample-step 1')
+        a.frame_ticks=50//rate
+        print(f'Blender output FPS: {rate}; V10 PAL playback target: {rate} FPS (measured FPS may be lower)',flush=True)
     if a.ending and not a.intro:raise ValueError('--ending requires --intro')
     if sum(bool(x) for x in (a.blend,a.scene,a.obj,a.svg,a.object))!=1 or not (a.blend or a.scene):
         raise ValueError('v4-scene requires exactly one --blend or --scene input')
@@ -195,17 +215,18 @@ def cmd_build_cart_scene(a):
     tass=cli.resolve_executable(a.tass,'tass');cartconv=cli.require_cartconv(a.cartconv,verbose=True)
     if not tass or not cartconv:return 2
     outdir=Path(a.output_dir).resolve() if a.output_dir else cli.BUILD
-    stem=a.output or Path(a.blend or a.scene).stem+'-'+a.renderer+('-ram' if getattr(a,'prefer','fps') == 'ram' else '')
+    stem=a.output or Path(a.blend or a.scene).stem+'-'+getattr(a,'public_renderer',a.renderer)+('-ram' if getattr(a,'prefer','fps') == 'ram' else '')
     if not cli._check_overwrite([outdir/f'{stem}{suffix}' for suffix in ('.crt','.lbl','-manifest.json')],a.overwrite_policy):return 2
+    if getattr(a,'public_renderer',None)=='hors-render-v1':a.public_renderer='hors-render-v1-scene'
     if a.blend:
         export=cli.BUILD/f'{stem}.c643dscene'
-        export_blend_scene(a.blend,export,blender=a.blender,frame_start=a.frame_start,frame_end=a.frame_end,sample_step=a.sample_step,root=cli.ROOT,viewport_height=192,max_frames=MAX_SCENE_FRAMES)
+        export_blend_scene(a.blend,export,blender=a.blender,frame_start=a.frame_start,frame_end=a.frame_end,sample_step=a.sample_step,root=cli.ROOT,viewport_height=192,max_frames=MAX_SCENE_FRAMES,output_fps=rate)
     else:export=Path(a.scene)
     scene=load_scene(export)
     color,_,percell=cli._scene_color_policy(scene.mesh,a)
     print(f'compiling {len(scene.frames)} authored scene samples with {a.renderer} kernels...',flush=True)
     frames,_=build_scene_frames(scene,visibility_mode='surface' if a.visibility=='auto' else a.visibility,z_tolerance=0.0008 if a.z_tolerance is None else a.z_tolerance,feature_angle=40 if a.feature_angle is None else a.feature_angle,enable_source_colors=percell,fallback_color=c64_color_index(color),height=192,max_frames=MAX_SCENE_FRAMES,max_visible_runs=65535)
-    crt,_=assemble_scene(cli.ROOT,frames,scene,tass=tass,cartconv=cartconv,outdir=outdir,stem=stem,hud_text=a.hud_text or scene.name[:31],frame_ticks=a.frame_ticks,tass_args=a.tass_args or (),colors=percell,color_index=c64_color_index(color),intro=a.intro,text_overlay=a.text_overlay,ending=a.ending,renderer=a.renderer,prefer=getattr(a,"prefer","fps"))
+    crt,_=assemble_scene(cli.ROOT,frames,scene,tass=tass,cartconv=cartconv,outdir=outdir,stem=stem,hud_text=a.hud_text or scene.name[:31],frame_ticks=a.frame_ticks,tass_args=a.tass_args or (),colors=percell,color_index=c64_color_index(color),intro=a.intro,text_overlay=a.text_overlay,ending=a.ending,renderer=a.renderer,prefer=getattr(a,"prefer","fps"),output_fps=rate)
     if a.run:
         vice=cli.resolve_executable(a.vice,'vice')
         if not vice:raise ValueError('VICE not found')

@@ -1,0 +1,554 @@
+{
+  "examples/cart_demos/c643d-demo-v0.6.7-yunroll-cart-v7-all-ram.crt": {
+    "destination": "examples/cart_demos/history/c643d-demo-v0.6.7-yunroll-cart-v7-all-ram.crt",
+    "sha256": "b343974395c96b09efb9dd050d10559227f8953b1cb68a3abe63a0cdc426b067"
+  },
+  "examples/cart_demos/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt": {
+    "destination": "examples/cart_demos/history/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt",
+    "sha256": "59ce32352d753e1c2ebdac6ed73e7d2fa94a70e8dfb461d85689ff4cd164c470"
+  },
+  "examples/cart_demos/c643d-demo-v0.6.8-yunroll-cart-v8-all-ram.crt": {
+    "destination": "examples/cart_demos/history/c643d-demo-v0.6.8-yunroll-cart-v8-all-ram.crt",
+    "sha256": "27d664fa16515e69ac34475d6e9cacfcf7fbdfd4f1e21603e49f1d424baec710"
+  },
+  "examples/cart_demos/c643d-demo-v0.6.8-yunroll-cart-v8-all.crt": {
+    "destination": "examples/cart_demos/history/c643d-demo-v0.6.8-yunroll-cart-v8-all.crt",
+    "sha256": "42592e1306e155a53507e3dbb16907842b0e7b596ce616a63b44a51a267a9fbd"
+  },
+  "examples/cart_demos/c643d-demo-v0.6.9-yunroll-cart-v9-all-ram.crt": {
+    "destination": "examples/cart_demos/history/c643d-demo-v0.6.9-yunroll-cart-v9-all-ram.crt",
+    "sha256": "2afd8e6f98a33af178cd3734f86878cdb7571064b228838ed786c9983363d961"
+  },
+  "examples/cart_demos/c643d-demo-v0.6.9-yunroll-cart-v9-all.crt": {
+    "destination": "examples/cart_demos/history/c643d-demo-v0.6.9-yunroll-cart-v9-all.crt",
+    "sha256": "5e608c7a5507fcb90235c6e3b3422cb04ff9ed7a861cee7864d847033c23f45a"
+  },
+  "examples/cart_demos/metadata/c643d-demo-v0.6.7-yunroll-cart-v7-all-cart-manifest.json": {
+    "destination": "examples/cart_demos/history/metadata/c643d-demo-v0.6.7-yunroll-cart-v7-all-cart-manifest.json",
+    "sha256": "8e1b330bf4a9de62bbef9facae240a3376a7baa425649174db5c0ba1560f9514"
+  },
+  "examples/cart_demos/metadata/c643d-demo-v0.6.7-yunroll-cart-v7-all-cart-map.txt": {
+    "destination": "examples/cart_demos/history/metadata/c643d-demo-v0.6.7-yunroll-cart-v7-all-cart-map.txt",
+    "sha256": "83fbe6d77b2a589034da82a6e280f5695cafb7640bc0bc6bf3510896cc838f73"
+  },
+  "examples/cart_demos/metadata/c643d-demo-v0.6.7-yunroll-cart-v7-all-ram-cart-manifest.json": {
+    "destination": "examples/cart_demos/history/metadata/c643d-demo-v0.6.7-yunroll-cart-v7-all-ram-cart-manifest.json",
+    "sha256": "bfa2bea7d3e2ad4df48c48245db2e4a6d9a9507ca8567d7f5427adb2fb9027e5"
+  },
+  "examples/cart_demos/metadata/c643d-demo-v0.6.7-yunroll-cart-v7-all-ram-cart-map.txt": {
+    "destination": "examples/cart_demos/history/metadata/c643d-demo-v0.6.7-yunroll-cart-v7-all-ram-cart-map.txt",
+    "sha256": "83fbe6d77b2a589034da82a6e280f5695cafb7640bc0bc6bf3510896cc838f73"
+  },
+  "examples/cart_demos/metadata/c643d-demo-v0.6.8-yunroll-cart-v8-all-cart-manifest.json": {
+    "destination": "examples/cart_demos/history/metadata/c643d-demo-v0.6.8-yunroll-cart-v8-all-cart-manifest.json",
+    "sha256": "32e2d988ad6e168191637cc40be73d5e6c2126f6a1137db2c4a0af835d9ce71e"
+  },
+  "examples/cart_demos/metadata/c643d-demo-v0.6.8-yunroll-cart-v8-all-cart-map.txt": {
+    "destination": "examples/cart_demos/history/metadata/c643d-demo-v0.6.8-yunroll-cart-v8-all-cart-map.txt",
+    "sha256": "612bf5e80b82b2d9b7468d2c0f2295e962354de80425df22629b5efd7bbeabab"
+  },
+  "examples/cart_demos/metadata/c643d-demo-v0.6.8-yunroll-cart-v8-all-ram-cart-manifest.json": {
+    "destination": "examples/cart_demos/history/metadata/c643d-demo-v0.6.8-yunroll-cart-v8-all-ram-cart-manifest.json",
+    "sha256": "2388d2d7fab34a74b5b258bec2ec0579a2717b0339c3596cdee1a16b9b4ebc9c"
+  },
+  "examples/cart_demos/metadata/c643d-demo-v0.6.8-yunroll-cart-v8-all-ram-cart-map.txt": {
+    "destination": "examples/cart_demos/history/metadata/c643d-demo-v0.6.8-yunroll-cart-v8-all-ram-cart-map.txt",
+    "sha256": "612bf5e80b82b2d9b7468d2c0f2295e962354de80425df22629b5efd7bbeabab"
+  },
+  "examples/cart_demos/metadata/c643d-demo-v0.6.9-yunroll-cart-v9-all-cart-manifest.json": {
+    "destination": "examples/cart_demos/history/metadata/c643d-demo-v0.6.9-yunroll-cart-v9-all-cart-manifest.json",
+    "sha256": "4c6170909540c43cc076efdf72ef74517b26365dcf2404f28324960a8b6a6f07"
+  },
+  "examples/cart_demos/metadata/c643d-demo-v0.6.9-yunroll-cart-v9-all-cart-map.txt": {
+    "destination": "examples/cart_demos/history/metadata/c643d-demo-v0.6.9-yunroll-cart-v9-all-cart-map.txt",
+    "sha256": "788de5d6b55b0bbb7a12487c7d1b573afaa1366009fb92da28b00a57f0b6a532"
+  },
+  "examples/cart_demos/metadata/c643d-demo-v0.6.9-yunroll-cart-v9-all-ram-cart-manifest.json": {
+    "destination": "examples/cart_demos/history/metadata/c643d-demo-v0.6.9-yunroll-cart-v9-all-ram-cart-manifest.json",
+    "sha256": "505a88a7fa73233c7acde2cfbd707ffd0f937eb11890f18e99090826e7569139"
+  },
+  "examples/cart_demos/metadata/c643d-demo-v0.6.9-yunroll-cart-v9-all-ram-cart-map.txt": {
+    "destination": "examples/cart_demos/history/metadata/c643d-demo-v0.6.9-yunroll-cart-v9-all-ram-cart-map.txt",
+    "sha256": "788de5d6b55b0bbb7a12487c7d1b573afaa1366009fb92da28b00a57f0b6a532"
+  },
+  "examples/cart_demos/reports/build-screens-validation.json": {
+    "destination": "examples/cart_demos/history/reports/build-screens-validation.json",
+    "sha256": "e68108c7d396c784615fff91f7a14fb1a7b249126637f6c5fdd34f9c711151bc"
+  },
+  "examples/cart_demos/reports/menu-launch-validation.json": {
+    "destination": "examples/cart_demos/history/reports/menu-launch-validation.json",
+    "sha256": "14355acd7f12da4ff321644a8a024a597214006f7748f4fc2e7051a04a304b74"
+  },
+  "examples/cart_demos/reports/play-all-thank-you.png": {
+    "destination": "examples/cart_demos/history/reports/play-all-thank-you.png",
+    "sha256": "559f73dab59c3674514a0ce91e3ccff31d71454dc257548499b3a3422a43a510"
+  },
+  "examples/cart_demos/reports/play-all-thanks-validation.json": {
+    "destination": "examples/cart_demos/history/reports/play-all-thanks-validation.json",
+    "sha256": "e6c6dbfdacfcc5b80f98d9cdf1e274c9a6ac6b1e83a28382be2c8bd349fefcf8"
+  },
+  "examples/cart_demos/reports/play-all-validation.json": {
+    "destination": "examples/cart_demos/history/reports/play-all-validation.json",
+    "sha256": "01c1480e239ebb9f309a562b563b4bf7b02943cbb639c9910cd13dc69d09a098"
+  },
+  "examples/cart_marbles/baseline-preservation.json": {
+    "destination": "examples/cart_marbles/history/baseline-preservation.json",
+    "sha256": "5dd1ddd68d39a61a3304abaea56cd9cc98aea619f9f635281bd6edd03b89707b"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-hors-render-v1-scene-clean-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-hors-render-v1-scene-clean-manifest.json",
+    "sha256": "799cbc816ef1749b1e1f35de5a032813707cf49d9b10597d43b5f0e560e7ceca"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-hors-render-v1-scene-clean-ram-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-hors-render-v1-scene-clean-ram-manifest.json",
+    "sha256": "8c6f9c61b3c297f25905f901f923ea1abff802adc22a59295b9f366bfaa6915f"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-hors-render-v1-scene-clean-ram.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-hors-render-v1-scene-clean-ram.crt",
+    "sha256": "79fb8bd813e6e07de976296390755384b4db7e4912144f67fb32f74c08a31745"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-hors-render-v1-scene-clean-ram.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-hors-render-v1-scene-clean-ram.lbl",
+    "sha256": "76c314ac646e1690361e0c82eb1b73dcaa6c61951804584e719f4c9d7967cd97"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-hors-render-v1-scene-clean.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-hors-render-v1-scene-clean.crt",
+    "sha256": "7882eac73ea31ad899c61034553a99ee994ec9c96efa6e4bf0258fc012647136"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-hors-render-v1-scene-clean.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-hors-render-v1-scene-clean.lbl",
+    "sha256": "58b5deebc0deab93d83a1ac62887b8d003ebecf1603cf1f27c7eb31ff368a4ea"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-hors-render-v1-scene-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-hors-render-v1-scene-manifest.json",
+    "sha256": "5d8d9927d226512e92866f368f2ede485d18dede2a33a2341862ee1338026bd6"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-hors-render-v1-scene-ram-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-hors-render-v1-scene-ram-manifest.json",
+    "sha256": "0d8d829221b168abca7dcda837dbaa17097c0599984078b371949e5d835feae8"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-hors-render-v1-scene-ram.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-hors-render-v1-scene-ram.crt",
+    "sha256": "cbac1568bc279b95a880714815730f9cf4e9d8acd594ba36906b73cbd64a1e36"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-hors-render-v1-scene-ram.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-hors-render-v1-scene-ram.lbl",
+    "sha256": "ce5f115775eb38311cb7a790e7f51e670e5cc96bb168208b40f5dff8ce94a5eb"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-hors-render-v1-scene.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-hors-render-v1-scene.crt",
+    "sha256": "5b0669dded7a9206ae72a8d0088d320990802cbd8916826f907912acc43ebbbe"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-hors-render-v1-scene.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-hors-render-v1-scene.lbl",
+    "sha256": "844b51bb782323bd364ec81e01a3831ed9c928b0159211c439381c3e3270bdab"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene-clean-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v4-scene-clean-manifest.json",
+    "sha256": "fb9f6efc65bd08aec510632e8b8f4f20dc228d0465476a6fbdadb37eeb45d60c"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene-clean.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v4-scene-clean.crt",
+    "sha256": "7ae73a7d069e25f0bbffc87460324429ff67f55446f1e40347aa6a92adfa0125"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene-clean.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v4-scene-clean.lbl",
+    "sha256": "3a57e84a4585cbbd36002ea8d1cb5322702fd33f289f3abdc823a18f503e7e86"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v4-scene-manifest.json",
+    "sha256": "3b908665dd8715fdb588f862975a8f7cabe58d7e73fa2f8810587b92163a3ca6"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v4-scene.crt",
+    "sha256": "a76bd2d48100658b95b7dd123974532cc4d88855ee5d5560a7b321e0b1249803"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v4-scene.lbl",
+    "sha256": "0885df95ec6dc72cdd7e8c9db1ab01e8845e3c0dca4fb7c5ee07381ce9b3c93c"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v5-scene-clean-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v5-scene-clean-manifest.json",
+    "sha256": "3395e729027a0b7cdf7018168885d12aff0e7dbc9155c7120f1ca94e0b0051c2"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v5-scene-clean.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v5-scene-clean.crt",
+    "sha256": "4621f2cbd83d1a552e8ce8cb83d3a8e9bc9ce3ce51a267126700a3cf4a3540fb"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v5-scene-clean.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v5-scene-clean.lbl",
+    "sha256": "d5ec35a563e68ef85177c63788743f416daceee3d12955b52e589ad55bfc9fae"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v5-scene-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v5-scene-manifest.json",
+    "sha256": "f799b6d03c571c13ffdd3d0bfd0a5cd8f49d70a485a51270085059a83cd40460"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v5-scene.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v5-scene.crt",
+    "sha256": "43f1e19f9aa785788e4a75a007218e0aca2940606f18565abc2ec5934cb96ddd"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v5-scene.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v5-scene.lbl",
+    "sha256": "4e662e534311dbba47091814c5a1eb7c28b846c689d206ff0d3ef5a8e7320535"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v6-scene-clean-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v6-scene-clean-manifest.json",
+    "sha256": "d64c7856eaac563d75b3b956dff91d92a42f21c2371bab0cfc432b029b11cd16"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v6-scene-clean.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v6-scene-clean.crt",
+    "sha256": "56c98ba8933fe91aa3c167ae402539265fc528570a2b77ac2cd164cd59ca9e6b"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v6-scene-clean.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v6-scene-clean.lbl",
+    "sha256": "e8f540f88738cdd94f312f83e971334c08beaa81fcc5e675af2bec1aa8121aec"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v6-scene-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v6-scene-manifest.json",
+    "sha256": "1b2d4276bfc6f48a0ef480a34e29194795b5a90394a9ef634b9b54f323fec042"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v6-scene.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v6-scene.crt",
+    "sha256": "4e8f3c9bde76ad160ab65c6a05edf514a61b4c07e0383269cffa335c44189495"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v6-scene.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v6-scene.lbl",
+    "sha256": "7fdf7a3b30f345f1b9722ab5a23139475206ec6054959726208438beff686ada"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v7-scene-clean-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v7-scene-clean-manifest.json",
+    "sha256": "7c605dbf7665b2e5f0d6fc1967228d5e53482e1ae5bc2a7d7a70e7baa2c465db"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v7-scene-clean-ram-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v7-scene-clean-ram-manifest.json",
+    "sha256": "5a98fc436b4b7fc72199896e2e002cf3d3dd9c2f85df07478a0e58e3ab7b2f46"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v7-scene-clean-ram.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v7-scene-clean-ram.crt",
+    "sha256": "b51dc56116be51c6187d5f7d7e9652e9812e309232a5e66cca653907a39457f6"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v7-scene-clean-ram.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v7-scene-clean-ram.lbl",
+    "sha256": "e629102dd04d5f0254520b06b9881dd89a9c5d6cea3ada483389d86af27a667a"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v7-scene-clean.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v7-scene-clean.crt",
+    "sha256": "e4686e508210d780b5b7e3d931c1042ada987fbb4dad353d909fd85f6bd1dcc2"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v7-scene-clean.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v7-scene-clean.lbl",
+    "sha256": "6ce0abf2dcc8a7ce1ea86aa8f902b8c019faea76e45f93dd5ee130303d9c7237"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v7-scene-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v7-scene-manifest.json",
+    "sha256": "df563f157f0df676fe65b86bb733568f7259371508f0e31908bab2205592fead"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v7-scene-ram-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v7-scene-ram-manifest.json",
+    "sha256": "bf257f0ee459eb8d832b7d3b88d2ae1143ac7426bd5c373692718d0658a1587f"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v7-scene-ram.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v7-scene-ram.crt",
+    "sha256": "fe2a2f419d9e8fbd9e7ce74877aeb6dfa5a2258c4bd5043fbab64dc5c7326612"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v7-scene-ram.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v7-scene-ram.lbl",
+    "sha256": "772109a718619723b42c2b1c340af561480e78bdfb01ed4b914ff7339895a51e"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v7-scene.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v7-scene.crt",
+    "sha256": "3e50053ce5ffc71af7f1f503412daaf839b9323375333b96cab51b581e425227"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v7-scene.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v7-scene.lbl",
+    "sha256": "bc5903f24d15a69a3ff11b41df573aedbe2524815e9e06bf8573312cdc369b79"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v8-scene-clean-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v8-scene-clean-manifest.json",
+    "sha256": "98dbd2b0c5c2b16d183f7ed3541585ca116a4c707cc1f42188d9f4b97ca9a825"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v8-scene-clean-ram-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v8-scene-clean-ram-manifest.json",
+    "sha256": "5b198905b5c746be1306580d4618c6f975f4883e4c4ece663aa62fbf0ef18d92"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v8-scene-clean-ram.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v8-scene-clean-ram.crt",
+    "sha256": "b0370d4ca66cc12dfdfec6afb0be19d8bc97118859c611bb3feb36aa7ab17d5e"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v8-scene-clean-ram.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v8-scene-clean-ram.lbl",
+    "sha256": "da57f480a65b194639efdf39213e0e5e76a8561541143e2d0e981b2e8370fd6c"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v8-scene-clean.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v8-scene-clean.crt",
+    "sha256": "27a68710345369ed2cbf9104ca7dc3e080ba1c699a4ab7c63ff062df41933ed9"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v8-scene-clean.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v8-scene-clean.lbl",
+    "sha256": "b8f912797327a5cbb9f8061421211c8babcc433377458adac8f542fe2af35d96"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v8-scene-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v8-scene-manifest.json",
+    "sha256": "df5e2d8c9b690132fb7ceead6ade7ee377049435074522b9edde33aca8248850"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v8-scene-ram-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v8-scene-ram-manifest.json",
+    "sha256": "e2824af9792c7ffe6dd866b27d91868c3f3e0f2e1429b049fe816a309669c029"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v8-scene-ram.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v8-scene-ram.crt",
+    "sha256": "65a91a5d476b97cf6be5cff400605a3f743276faee8e58301c92af7770808542"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v8-scene-ram.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v8-scene-ram.lbl",
+    "sha256": "f3a3388def49ae1e3d1acc14bd649cb187e049ce91a91044792915cf14d77918"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v8-scene.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v8-scene.crt",
+    "sha256": "fe0ea50a013990274dd12b6acb96ccbf1bfe3574991fdc1fde56b52a7bc0688b"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v8-scene.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v8-scene.lbl",
+    "sha256": "d4a0019ea17b78e44c49217d8ff222ec1f1b7e3b490b64f507e0330ca9bea14b"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v9-scene-clean-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v9-scene-clean-manifest.json",
+    "sha256": "3a1efa6543131f39cab5a78e660734624025fb4439706c1248c22bad4ea07988"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v9-scene-clean-ram-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v9-scene-clean-ram-manifest.json",
+    "sha256": "d4fc64c28a184de5c9ffb948c36b942debf8bfa060d2712cf8ace51561017211"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v9-scene-clean-ram.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v9-scene-clean-ram.crt",
+    "sha256": "e0b93e8496475e4f128a2555fe3647105e1d4b91e2b8730573a1a347d8b426b6"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v9-scene-clean-ram.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v9-scene-clean-ram.lbl",
+    "sha256": "19ea06d52b07e079b03080e2c06f9fdf39620a447beec30679aae7f824c2b3a4"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v9-scene-clean.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v9-scene-clean.crt",
+    "sha256": "60327ed2bb02c62da440d96774ec108ccff7db6ffe4a6a63338bb278789785c1"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v9-scene-clean.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v9-scene-clean.lbl",
+    "sha256": "22424dc551759866a3ed9ff9beb91fc3965362d53435403239c73f2560e8f989"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v9-scene-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v9-scene-manifest.json",
+    "sha256": "b29815e33cc20a276faa693353f61df9a15f02cfdb49af23ca1c8511ca322fca"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v9-scene-ram-manifest.json": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v9-scene-ram-manifest.json",
+    "sha256": "084bc81a28a543ec5b40b12c70561a9d727152c6f4765f3f207ea73e27b2d9a2"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v9-scene-ram.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v9-scene-ram.crt",
+    "sha256": "2f33a1c5e2978bdba7671fb1d962f71ad35657ac2d42877f85381f00ec6a4fad"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v9-scene-ram.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v9-scene-ram.lbl",
+    "sha256": "8a244010ab5539853dcb3b618966f96df14b1d81878e21f3d8186885f674eccf"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v9-scene.crt": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v9-scene.crt",
+    "sha256": "cf43a4bbead605cd6becbb3d226045f8a00bcbebb8c358a98b8465f9fc66201f"
+  },
+  "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v9-scene.lbl": {
+    "destination": "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v9-scene.lbl",
+    "sha256": "cdb8dcefa3fe285163975b68c90a60d5c2b0c31e42c32782bd1286d71db58355"
+  },
+  "examples/cart_marbles/ending/02-outro_start.png": {
+    "destination": "examples/cart_marbles/history/ending/02-outro_start.png",
+    "sha256": "f631d8680f3d0d69b08396d4ef9a466f15792f384edc99673e1a07b98de303d6"
+  },
+  "examples/cart_marbles/ending/03-greeting_oops.png": {
+    "destination": "examples/cart_marbles/history/ending/03-greeting_oops.png",
+    "sha256": "56535e468445abe4221ac613d3f8621f9a7a0dfb3e7e8227aefee7821a26a6ea"
+  },
+  "examples/cart_marbles/ending/04-greeting_done.png": {
+    "destination": "examples/cart_marbles/history/ending/04-greeting_done.png",
+    "sha256": "4c9a20924074dc724723bea828e4f2d120594c82b5e10797994af5258c450c12"
+  },
+  "examples/cart_marbles/ending/05-outro_credits_visible.png": {
+    "destination": "examples/cart_marbles/history/ending/05-outro_credits_visible.png",
+    "sha256": "f90315194804db429bce7850ce2b7dad9f46ca903b02ef57400f83ace1dfad85"
+  },
+  "examples/cart_marbles/ending/06-fake_basic_ready.png": {
+    "destination": "examples/cart_marbles/history/ending/06-fake_basic_ready.png",
+    "sha256": "157fbfa6a37342b4e6d19311f874c35c2b7061fbedc60cc14a402005a8def22e"
+  },
+  "examples/cart_marbles/ending/07-ghost_message_done.png": {
+    "destination": "examples/cart_marbles/history/ending/07-ghost_message_done.png",
+    "sha256": "1119631300c656a5117805d1a8696051c54c16a3da70f4abd5865c62990c21e1"
+  },
+  "examples/cart_marbles/ending/08-ghost_idle.png": {
+    "destination": "examples/cart_marbles/history/ending/08-ghost_idle.png",
+    "sha256": "9b6245206a8483ba3f4934a107d72878f0e0ce0dfb6d514f197cdb070493d0d0"
+  },
+  "examples/cart_marbles/ending/09-ghost_idle.png": {
+    "destination": "examples/cart_marbles/history/ending/09-ghost_idle.png",
+    "sha256": "9b6245206a8483ba3f4934a107d72878f0e0ce0dfb6d514f197cdb070493d0d0"
+  },
+  "examples/cart_marbles/ending/ending-storyboard.png": {
+    "destination": "examples/cart_marbles/history/ending/ending-storyboard.png",
+    "sha256": "caafe062324feeb47ad528a2affac861fdddebadc148e0d093a1241e7feee7d1"
+  },
+  "examples/cart_marbles/ending-clean-validation.json": {
+    "destination": "examples/cart_marbles/history/ending-clean-validation.json",
+    "sha256": "c307cd3abfc02efa0dcb2b095f2993cd8562844bcdcf56a75fa0a0d7902c1f02"
+  },
+  "examples/cart_marbles/ending-validation.json": {
+    "destination": "examples/cart_marbles/history/ending-validation.json",
+    "sha256": "a084eb22e9eda2a1e969a4c1f2d535be3296534950bc43858236b35ac4d125d7"
+  },
+  "examples/cart_marbles/intro/intro-brand.png": {
+    "destination": "examples/cart_marbles/history/intro/intro-brand.png",
+    "sha256": "ca7aae77cb5784f52cdadf99693a6b629e1aa47888389d4c15a6945d0e7faffa"
+  },
+  "examples/cart_marbles/intro/intro-dont.png": {
+    "destination": "examples/cart_marbles/history/intro/intro-dont.png",
+    "sha256": "642ed72a23f1c2f34233e281625c0fb1c5c4b6f292e91833423041b989e4de20"
+  },
+  "examples/cart_marbles/intro/intro-lose.png": {
+    "destination": "examples/cart_marbles/history/intro/intro-lose.png",
+    "sha256": "2215f6471b02306603fcf7b7bd1699df16988cdd329d0936a0ce7ee7bddcc79f"
+  },
+  "examples/cart_marbles/intro/intro-marbles.png": {
+    "destination": "examples/cart_marbles/history/intro/intro-marbles.png",
+    "sha256": "b121eabd6e24cd6fd855936b64126d56e91fa0d2188e801e9a37d56b7a6fee0c"
+  },
+  "examples/cart_marbles/intro/intro-presents.png": {
+    "destination": "examples/cart_marbles/history/intro/intro-presents.png",
+    "sha256": "1c74a82ca49ecc7d071ac18a73549da9ccd0a3b501aeea2745885442aa3cb9d2"
+  },
+  "examples/cart_marbles/intro/intro-storyboard.png": {
+    "destination": "examples/cart_marbles/history/intro/intro-storyboard.png",
+    "sha256": "ecf10cd68d725bf2ca85fc8a0b6993f2c1a20dec668e3e95a2d60abca4d89724"
+  },
+  "examples/cart_marbles/intro/intro-subtitle.png": {
+    "destination": "examples/cart_marbles/history/intro/intro-subtitle.png",
+    "sha256": "1f06bea2e23c4c5b237e95c931a48dc96440ed3fa848a48803ac5058feced7be"
+  },
+  "examples/cart_marbles/intro/intro-white.png": {
+    "destination": "examples/cart_marbles/history/intro/intro-white.png",
+    "sha256": "09ab4eebdffa1d6b3b3afb341a945004d9def81297415446e2610277183e5573"
+  },
+  "examples/cart_marbles/intro/intro-your.png": {
+    "destination": "examples/cart_marbles/history/intro/intro-your.png",
+    "sha256": "0d35ae2397ed8cf619cb926047b467c19c2eb2d5571c4050162bc31d6660f02a"
+  },
+  "examples/cart_marbles/intro-validation.json": {
+    "destination": "examples/cart_marbles/history/intro-validation.json",
+    "sha256": "81db37f1e514cdb563277265530194e1a13b7320adc1bc3ef50b6814b8970815"
+  },
+  "examples/cart_marbles/marble-visibility-audit.json": {
+    "destination": "examples/cart_marbles/history/marble-visibility-audit.json",
+    "sha256": "8f5f530fbc34ef4c9569136004e3e4786aa8166c76351a2ad058ed05a14c803d"
+  },
+  "examples/cart_marbles/package-notes.json": {
+    "destination": "examples/cart_marbles/history/package-notes.json",
+    "sha256": "234b2980cdda5acb44a3f34381acea77b1fbe6e89e0487560afac4d450ee9c6d"
+  },
+  "examples/cart_marbles/preview.png": {
+    "destination": "examples/cart_marbles/history/preview.png",
+    "sha256": "c25fca07f3044d16967021b0e9772b33b7030767109e69a08179f163a8bbf72a"
+  },
+  "examples/cart_marbles/story-capture.json": {
+    "destination": "examples/cart_marbles/history/story-capture.json",
+    "sha256": "cb9128c177d50135b297765afce6d946695785defc62dc0c743b1c3ff518b3de"
+  },
+  "examples/cart_marbles/v5-v6-validation.json": {
+    "destination": "examples/cart_marbles/history/v5-v6-validation.json",
+    "sha256": "c165490e6a85f1ed49bc7d5b54fb806fc25b06bdbce1341c95c2851697a7dbfc"
+  },
+  "examples/cart_marbles/v6-v7-validation.json": {
+    "destination": "examples/cart_marbles/history/v6-v7-validation.json",
+    "sha256": "73e03822abb7a3bccd7f3d8e57a9a0e917fc4cab0ed46882bea32d0e02eebcec"
+  },
+  "examples/cart_marbles/validation-clean.json": {
+    "destination": "examples/cart_marbles/history/validation-clean.json",
+    "sha256": "63d92cf659710530652c2ac483653d1ffdb0f731608db4af275d41eca5cdde34"
+  },
+  "examples/cart_marbles/validation.json": {
+    "destination": "examples/cart_marbles/history/validation.json",
+    "sha256": "27f3010ddeb3cdf5c3c762979a0679ed8528a41ba8150f238338a0a389c6e637"
+  },
+  "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v7-scene-manifest.json": {
+    "destination": "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v7-scene-manifest.json",
+    "sha256": "dd725d59bd5bba84b1bd3dfc9c1d085d2ea0139700f330ee89d1c192bbd65f53"
+  },
+  "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v7-scene-timing.json": {
+    "destination": "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v7-scene-timing.json",
+    "sha256": "92906ecfd2b74330af59a662a38bafb95422c1bb3f211a93eba28e2c5bbdc4be"
+  },
+  "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v7-scene-vice.gif": {
+    "destination": "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v7-scene-vice.gif",
+    "sha256": "3d0f424b13c48284a2893edbefc8298a790e0573b8b61dc67abdab0ade0df294"
+  },
+  "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v7-scene-vice.png": {
+    "destination": "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v7-scene-vice.png",
+    "sha256": "9cc359e89eeb878ae3bec6bda441f8cb1f131eab67a3f451beacb9c52a657357"
+  },
+  "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v7-scene.crt": {
+    "destination": "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v7-scene.crt",
+    "sha256": "963668b568625f1f2fcb28f9bb2c2a75ca33e2103c2e768522fd90a691dcd563"
+  },
+  "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v7-scene.lbl": {
+    "destination": "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v7-scene.lbl",
+    "sha256": "b464eb45a6734761dd1f7ca1cb49fa60bb5eaa381a1a660973026e4a5250dd7e"
+  },
+  "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v8-scene-manifest.json": {
+    "destination": "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v8-scene-manifest.json",
+    "sha256": "fd426bfab2fc72d3a18e58418c8a1be10d3ab720724df4cedab03aaaed773192"
+  },
+  "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v8-scene-ram-manifest.json": {
+    "destination": "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v8-scene-ram-manifest.json",
+    "sha256": "734b4374c89a8bb43286cc4704441c2f6edfacddde101c71070b0e1a12986eeb"
+  },
+  "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v8-scene-ram.crt": {
+    "destination": "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v8-scene-ram.crt",
+    "sha256": "f9f193a30ef8b216b0a6716e02a4fb192402b1f857c0ba2b249d4bcc5fb7bbf4"
+  },
+  "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v8-scene-ram.lbl": {
+    "destination": "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v8-scene-ram.lbl",
+    "sha256": "dfc3b25d6183f661655acb3bc07c58c2f0a10136256fb7c1a096484eccce8d0d"
+  },
+  "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v8-scene.crt": {
+    "destination": "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v8-scene.crt",
+    "sha256": "963668b568625f1f2fcb28f9bb2c2a75ca33e2103c2e768522fd90a691dcd563"
+  },
+  "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v8-scene.lbl": {
+    "destination": "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v8-scene.lbl",
+    "sha256": "09b04b0d4db018fc1d691483222ba616ed80271af3c0936861c154ef3b4cf2d1"
+  },
+  "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v9-scene-manifest.json": {
+    "destination": "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v9-scene-manifest.json",
+    "sha256": "72073226668e965c6f93c6fb9bb14bd9d897361fcaff9cc033b18513264cd482"
+  },
+  "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v9-scene-ram-manifest.json": {
+    "destination": "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v9-scene-ram-manifest.json",
+    "sha256": "fde5d419c3a19c615f3eca84de21ef9bf9127e9eac0753f20c6b8db809412b00"
+  },
+  "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v9-scene-ram.crt": {
+    "destination": "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v9-scene-ram.crt",
+    "sha256": "d9ddcf7db3f851aeeec36ad6ef4f7f07b50ddbdc93c134355622417fa4c1e0b1"
+  },
+  "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v9-scene-ram.lbl": {
+    "destination": "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v9-scene-ram.lbl",
+    "sha256": "27258087abbf84e2e9c595ec05a136fdf5ae27fe36e414cfa39a58e13aebc6fe"
+  },
+  "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v9-scene.crt": {
+    "destination": "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v9-scene.crt",
+    "sha256": "1012864b28f650cd1626b0f136d475fa064ded684b4cc47cf410abe1fee61acd"
+  },
+  "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v9-scene.lbl": {
+    "destination": "examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v9-scene.lbl",
+    "sha256": "3aa2f7d9cd16864619641a3b2fe6bd5c30a2a3453d58f51bd34bedecf2125c1e"
+  },
+  "examples/cart_horse_and_sunflower/validation.json": {
+    "destination": "examples/cart_horse_and_sunflower/history/validation.json",
+    "sha256": "2a9702f1896fa3b6f2d82d28d7f8857bbc649c5fa96361afa8e82e6981f316f2"
+  }
+}

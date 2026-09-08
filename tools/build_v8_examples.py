@@ -17,7 +17,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--tass',default='64tass');p.add_argument('--cartconv',default='cartconv')
     p.add_argument('--reference-multi',type=Path,help='optional original V4 CRT; defaults to the compact shipped vector reference')
-    p.add_argument('--reference-marbles',type=Path,default=root/'examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene-clean.crt')
+    p.add_argument('--reference-marbles',type=Path,default=root/'../c64-3d-toolkit-history/examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v4-scene-clean.crt')
     p.add_argument('--prefer',choices=('fps','ram'),default='fps')
     p.add_argument('--play-all-seconds',type=int,default=10)
     a=p.parse_args()
@@ -37,7 +37,7 @@ def main():
             frame_ticks=reference['frame_ticks'],colors=reference['colors'],color_index=reference['screen_color']>>4,
             intro=True,ending=True,text_overlay=hud,renderer='yunroll-cart-v8-scene',prefer=a.prefer)
     from c643d.v7reference import load_scene
-    horse_reference = root/'examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v7-scene.crt'
+    horse_reference = root/'../c64-3d-toolkit-history/examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v7-scene.crt'
     frames, scene, ref = load_scene(horse_reference)
     cartscene.assemble_scene(root,frames,scene,tass=tass,cartconv=conv,
         outdir=root/'examples/cart_horse_and_sunflower',

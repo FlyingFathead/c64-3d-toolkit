@@ -33,7 +33,7 @@ class UniformCartTests(unittest.TestCase):
     def test_default_and_explicit_comparison_renderer(self):
         parser = make_parser(load_toolchain_settings(Path("/definitely/missing/c643d.ini")))
         self.assertEqual(parser.parse_args(['cart-demos']).stream_renderer,
-                         'yunroll-cart-v9')
+                         'hors-render-v1')
         self.assertEqual(parser.parse_args(['cart-demos', '--stream-renderer',
                                           'yunroll-cart-v3']).stream_renderer,
                          'yunroll-cart-v3')

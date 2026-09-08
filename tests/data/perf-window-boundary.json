@@ -1,0 +1,210 @@
+{
+  "step": {
+    "cartridge": "step.crt",
+    "sha256": "d34750893bf6ba108954b85a90a5ed09cea55c1ece507bbd964de45d53d4ee51",
+    "renderer": "step",
+    "preference": "fps",
+    "mode": "normal PLAY ALL ONLY",
+    "exhibition": false,
+    "loops": 3,
+    "seconds_setting": 10,
+    "ticks_per_second": 50,
+    "pal_clock_hz": 985248,
+    "vice_defaults": true,
+    "seed": 1,
+    "entries": [
+      {
+        "name": "SPHERE",
+        "entry": 3,
+        "frame_count": 24,
+        "oracle_sha256": "e084ca73496715992acea108b8bad6c15fd491051a22ec9a3b0c906e2361f36e",
+        "display_flips": 407,
+        "published_samples": 407,
+        "observation_seconds": 29.86568762382669,
+        "display_fps": 13.627678864333179,
+        "high_fps": 25.05080091533181,
+        "low_fps": 12.528585961342827,
+        "published_samples_per_second": 13.627678864333179,
+        "mean_render_cycles": 72223.67574257425,
+        "worst_render_cycles": 80892
+      }
+    ],
+    "samples": [
+      {
+        "loop": 0,
+        "entry": 3,
+        "window_cycles": 9808372,
+        "display_flips": 131
+      },
+      {
+        "loop": 1,
+        "entry": 3,
+        "window_cycles": 9808370,
+        "display_flips": 138
+      },
+      {
+        "loop": 2,
+        "entry": 3,
+        "window_cycles": 9808367,
+        "display_flips": 138
+      }
+    ],
+    "harness": "common V9 normal PLAY ALL; external comparison build"
+  },
+  "yunroll": {
+    "cartridge": "yunroll.crt",
+    "sha256": "e1bf3d714577fca62891bdd6a5b510f25f892dddef398e34a5098d83b817a985",
+    "renderer": "yunroll",
+    "preference": "fps",
+    "mode": "normal PLAY ALL ONLY",
+    "exhibition": false,
+    "loops": 3,
+    "seconds_setting": 10,
+    "ticks_per_second": 50,
+    "pal_clock_hz": 985248,
+    "vice_defaults": true,
+    "seed": 1,
+    "entries": [
+      {
+        "name": "SPHERE",
+        "entry": 3,
+        "frame_count": 24,
+        "oracle_sha256": "e084ca73496715992acea108b8bad6c15fd491051a22ec9a3b0c906e2361f36e",
+        "display_flips": 463,
+        "published_samples": 463,
+        "observation_seconds": 29.865685593880933,
+        "display_fps": 15.502741383404315,
+        "high_fps": 25.063546171457645,
+        "low_fps": 12.530338679113305,
+        "published_samples_per_second": 15.502741383404315,
+        "mean_render_cycles": 63513.745652173915,
+        "worst_render_cycles": 72207
+      }
+    ],
+    "samples": [
+      {
+        "loop": 0,
+        "entry": 3,
+        "window_cycles": 9808369,
+        "display_flips": 149
+      },
+      {
+        "loop": 1,
+        "entry": 3,
+        "window_cycles": 9808369,
+        "display_flips": 157
+      },
+      {
+        "loop": 2,
+        "entry": 3,
+        "window_cycles": 9808369,
+        "display_flips": 157
+      }
+    ],
+    "harness": "common V9 normal PLAY ALL; external comparison build"
+  },
+  "yunroll-cart-v9": {
+    "cartridge": "yunroll-cart-v9.crt",
+    "sha256": "3646846d82db22c9af014250317770fbadbf7852928e3e1ca877e40722e16d93",
+    "renderer": "yunroll-cart-v9",
+    "preference": "fps",
+    "mode": "normal PLAY ALL ONLY",
+    "exhibition": false,
+    "loops": 3,
+    "seconds_setting": 10,
+    "ticks_per_second": 50,
+    "pal_clock_hz": 985248,
+    "vice_defaults": true,
+    "seed": 1,
+    "entries": [
+      {
+        "name": "SPHERE",
+        "entry": 3,
+        "frame_count": 24,
+        "oracle_sha256": "e084ca73496715992acea108b8bad6c15fd491051a22ec9a3b0c906e2361f36e",
+        "display_flips": 438,
+        "published_samples": 438,
+        "observation_seconds": 29.854912671733413,
+        "display_fps": 14.670952309121901,
+        "high_fps": 18.00559220745993,
+        "low_fps": 11.889079280801255,
+        "published_samples_per_second": 14.670952309121901,
+        "mean_render_cycles": 66918.57241379311,
+        "worst_render_cycles": 70558
+      }
+    ],
+    "samples": [
+      {
+        "loop": 0,
+        "entry": 3,
+        "window_cycles": 9804831,
+        "display_flips": 146
+      },
+      {
+        "loop": 1,
+        "entry": 3,
+        "window_cycles": 9804831,
+        "display_flips": 146
+      },
+      {
+        "loop": 2,
+        "entry": 3,
+        "window_cycles": 9804831,
+        "display_flips": 146
+      }
+    ],
+    "harness": "common V9 normal PLAY ALL; external comparison build"
+  },
+  "yunroll-cart-v9-ram": {
+    "cartridge": "yunroll-cart-v9-ram.crt",
+    "sha256": "6aff6d2ec6bff65da08f0da3327e7f2b5535dc6734062b92f1a2ffa5faee95f7",
+    "renderer": "yunroll-cart-v9",
+    "preference": "ram",
+    "mode": "normal PLAY ALL ONLY",
+    "exhibition": false,
+    "loops": 3,
+    "seconds_setting": 10,
+    "ticks_per_second": 50,
+    "pal_clock_hz": 985248,
+    "vice_defaults": true,
+    "seed": 1,
+    "entries": [
+      {
+        "name": "SPHERE",
+        "entry": 3,
+        "frame_count": 24,
+        "oracle_sha256": "e084ca73496715992acea108b8bad6c15fd491051a22ec9a3b0c906e2361f36e",
+        "display_flips": 402,
+        "published_samples": 402,
+        "observation_seconds": 29.86569472863685,
+        "display_fps": 13.4602594599797,
+        "high_fps": 18.017775501993345,
+        "low_fps": 11.927364292286088,
+        "published_samples_per_second": 13.4602594599797,
+        "mean_render_cycles": 72912.99248120301,
+        "worst_render_cycles": 77185
+      }
+    ],
+    "samples": [
+      {
+        "loop": 0,
+        "entry": 3,
+        "window_cycles": 9808372,
+        "display_flips": 134
+      },
+      {
+        "loop": 1,
+        "entry": 3,
+        "window_cycles": 9808372,
+        "display_flips": 134
+      },
+      {
+        "loop": 2,
+        "entry": 3,
+        "window_cycles": 9808372,
+        "display_flips": 134
+      }
+    ],
+    "harness": "common V9 normal PLAY ALL; external comparison build"
+  }
+}

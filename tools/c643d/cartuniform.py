@@ -47,7 +47,9 @@ def demos(root):
 
 
 def prepare(root,renderer,tass,tass_args=(),sources=None,prefer="fps"):
-    if renderer not in ('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9'):raise ValueError('unsupported uniform renderer')
+    from .renderer_names import implementation
+    renderer=implementation(renderer)
+    if renderer not in ('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'):raise ValueError('unsupported uniform renderer')
     root=Path(root);variant=renderer.rsplit('-',1)[1];out=root/f'build/uniform-{variant}{"-ram" if prefer == "ram" else ""}';out.mkdir(parents=True,exist_ok=True)
     sources=demos(root) if sources is None else sources
     # Each RAM bootstrap fits in three ROML banks. ROMH 0=boot, 1=menus,
@@ -59,26 +61,28 @@ def prepare(root,renderer,tass,tass_args=(),sources=None,prefer="fps"):
     for index,demo in enumerate(sources):
         optimization = None
         original_frames = demo.frames
-        if variant in ("v5", "v6", "v7", "v8", "v9"):
+        if variant in ("v5", "v6", "v7", "v8", "v9", "v10"):
             from .optimize import optimize_frames
             from dataclasses import replace
             frames, optimization = optimize_frames(demo.frames, demo.screen)
             demo = replace(demo, frames=frames)
         joining = None
-        if variant in ("v7", "v8", "v9"):
+        if variant in ("v7", "v8", "v9", "v10"):
             from .runjoin import join_frames
             from dataclasses import replace
             frames, joining = join_frames(demo.frames)
             demo = replace(demo, frames=frames)
         clearing = None
-        if variant in ("v7", "v8", "v9"):
+        if variant in ("v7", "v8", "v9", "v10"):
             from .clearplan import selective_clear_frames
             from dataclasses import replace
             frames, clearing = selective_clear_frames(demo.frames)
             demo = replace(demo, frames=frames)
         encoder = frame_block
-        if variant in ("v8", "v9"):
+        if variant in ("v8", "v9", "v10"):
             from .bytespan import frame_block as encoder
+            if variant == 'v10':
+                from .bytespan_v10 import frame_block as encoder
         directory=[]
         for fi,f in enumerate(demo.frames):
             alias=optimization["picture_references"][fi] if optimization else fi
@@ -95,7 +99,7 @@ def prepare(root,renderer,tass,tass_args=(),sources=None,prefer="fps"):
                 directory[-1]["encoding"] = "byte-spans" if block[meta+1] & 128 else "vectors"
             offset+=len(block)
         work=out/f'{index:02d}';gen=work/'generated';gen.mkdir(parents=True,exist_ok=True)
-        emit_directory(gen/'tables.inc',directory,direct_bytes=variant == 'v9')
+        emit_directory(gen/'tables.inc',directory,direct_bytes=variant in ('v9', 'v10'))
         (gen/'hud.inc').write_text(f'HUD_STATIC_LEN = {len(demo.hud)}\nhud_static_bitmap:\n'+'\n'.join(bytes_lines(demo.hud))+'\nhud_static_bitmap_end:\n')
         helper=(root/f'c64/cart/easyflash-stream-{variant}-helper.asm').read_text()
         needle='        lda cart_source_hi,x\n        sta STREAM_HI'
@@ -109,13 +113,13 @@ def prepare(root,renderer,tass,tass_args=(),sources=None,prefer="fps"):
             src=src.replace('V5_REUSE_ENABLED = 0', f'V5_REUSE_ENABLED = {int(optimization["duplicate_pictures"] > 0)}')
         from .preferences import apply_preference
         src=apply_preference(src,renderer,prefer)
-        if variant in ("v8", "v9"):
+        if variant in ("v8", "v9", "v10"):
             from .bytespan import configure_source
-            src = configure_source(src.replace('V9_BYTE_SPANS', 'V8_BYTE_SPANS'), directory).replace('V8_BYTE_SPANS', 'V9_BYTE_SPANS') if variant == 'v9' else configure_source(src, directory)
+            src = configure_source(src.replace('V9_BYTE_SPANS', 'V8_BYTE_SPANS'), directory).replace('V8_BYTE_SPANS', 'V9_BYTE_SPANS') if variant in ('v9', 'v10') else configure_source(src, directory)
         asm=work/'main.asm';asm.write_text(src);prg=work/'runtime.prg'
         subprocess.run([tass,*tass_args,'--cbm-prg','--vice-labels','-l',str(work/'runtime.lbl'),'-o',str(prg),str(asm)],check=True,cwd=root,stdout=subprocess.DEVNULL)
         blob=prg.read_bytes();load=int.from_bytes(blob[:2],'little')
-        if load!=0x0801 or len(blob)-2>3*8192 or load+len(blob)-2>(0x6000 if variant in ("v5", "v6", "v7", "v8", "v9") else 0x5000):raise ValueError('uniform runtime exceeds three-bank RAM layout')
+        if load!=0x0801 or len(blob)-2>3*8192 or load+len(blob)-2>(0x6000 if variant in ("v5", "v6", "v7", "v8", "v9", "v10") else 0x5000):raise ValueError('uniform runtime exceeds three-bank RAM layout')
         # Fixed three-bank reservation gives every version identical frame addresses.
         entries.append((demo.name,prg))
         (work/'oracle.json').write_text(json.dumps([asdict(f) for f in original_frames]))
@@ -123,9 +127,9 @@ def prepare(root,renderer,tass,tass_args=(),sources=None,prefer="fps"):
         if optimization: info[-1]["optimization"]=optimization
         if clearing: info[-1]["clearing"]=clearing
         if joining: info[-1]["joining"]=joining
-        if variant in ("v7", "v8", "v9"): info[-1]["preference"]=prefer
-        if variant in ("v8", "v9"):
-            info[-1]["wire_format"] = ("v9-direct-byte-spans-v8-payload" if variant == "v9" else "v8-adaptive-vectors-byte-spans")
+        if variant in ("v7", "v8", "v9", "v10"): info[-1]["preference"]=prefer
+        if variant in ("v8", "v9", "v10"):
+            info[-1]["wire_format"] = ("v10-byte-first-direct-spans" if variant == "v10" else "v9-direct-byte-spans-v8-payload" if variant == "v9" else "v8-adaptive-vectors-byte-spans")
             info[-1]["byte_span_frames"] = sum(d.get("encoding") == "byte-spans" for d in directory)
     return entries,image,info,arenas[:slot+1],first_free_roml
 
@@ -143,7 +147,7 @@ def default_output_dir(root, renderer):
 # F5 must never be used as the benchmark reference.
 def play_all_durations(entries, seconds, renderer):
     """V8 F5 exhibition holds; normal PLAY ALL uses the uniform duration."""
-    return [15 if renderer in ('yunroll-cart-v8', 'yunroll-cart-v9') and seconds == 10 and
+    return [15 if renderer in ('yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10') and seconds == 10 and
             entry['name'] in ('HORSE HEAD HIFI', 'SUNFLOWER TORUS HIFI') else seconds
             for entry in entries]
 
@@ -153,14 +157,16 @@ def build(a, *, sources=None):
     from . import cli,__version__
     tass=cli.resolve_executable(a.tass,'tass');cartconv=cli.require_cartconv(a.cartconv,verbose=True)
     if not tass or not cartconv:raise ValueError('64tass and cartconv are required')
-    renderer=a.stream_renderer;variant=renderer.rsplit('-',1)[1]
+    from .renderer_names import implementation, public_name
+    public_renderer=public_name(a.stream_renderer)
+    renderer=implementation(a.stream_renderer);variant=renderer.rsplit('-',1)[1]
     prefer=getattr(a,'prefer','fps')
     seconds=getattr(a,'play_all_seconds',10)
     if not 1 <= seconds <= 255: raise ValueError('--play-all-seconds must be 1..255')
-    if variant not in ('v7', 'v8', 'v9') and seconds != 10: raise ValueError('--play-all-seconds requires V7, V8 or V9')
-    if prefer == 'ram' and variant not in ('v7', 'v8', 'v9'): raise ValueError('--prefer ram requires V7, V8 or V9')
+    if variant not in ('v7', 'v8', 'v9', 'v10') and seconds != 10: raise ValueError('--play-all-seconds requires V7, V8 or V9')
+    if prefer == 'ram' and variant not in ('v7', 'v8', 'v9', 'v10'): raise ValueError('--prefer ram requires V7, V8 or V9')
     root=cli.ROOT;out=Path(a.output_dir).resolve() if a.output_dir else default_output_dir(root,renderer);out.mkdir(parents=True,exist_ok=True)
-    stem=a.output or f'c643d-demo-v{__version__}-{renderer}-all'+('-ram' if prefer == 'ram' else '')
+    stem=a.output or f'c643d-demo-v{__version__}-{public_renderer}-all'+('-ram' if prefer == 'ram' else '')
     metadata=out/'metadata';metadata.mkdir(parents=True,exist_ok=True)
     paths=[out/f'{stem}.crt',metadata/f'{stem}-cart-manifest.json',metadata/f'{stem}-cart-map.txt']
     if not cli._check_overwrite(paths,a.overwrite_policy):return 2
@@ -171,35 +177,35 @@ def build(a, *, sources=None):
         pos=easyflash_offset(b,chip);image[pos:pos+8192]=frame_image[pos:pos+8192]
     work=root/'build'/f'{stem}-cartridge-demo';gen=work/'generated';gen.mkdir(parents=True,exist_ok=True)
     write_demo_include(gen/'cart-demo-data.inc',plans)
-    if variant in ('v5', 'v6', 'v7', 'v8', 'v9'):
+    if variant in ('v5', 'v6', 'v7', 'v8', 'v9', 'v10'):
         from .buildscreen import build_screen_lines
-        (gen/'build-screen.inc').write_text('\n'.join(build_screen_lines(__version__, f'yunroll-{variant}'+(' (ram)' if prefer == 'ram' else '')))+'\n')
-    if variant in ('v7', 'v8', 'v9'):
+        (gen/'build-screen.inc').write_text('\n'.join(build_screen_lines(__version__, ('hors-render-v1' if variant == 'v10' else f'yunroll-{variant}')+(' (ram)' if prefer == 'ram' else '')))+'\n')
+    if variant in ('v7', 'v8', 'v9', 'v10'):
         from .buildscreen import play_all_thanks_lines
         (gen/'play-all-thanks.inc').write_text('\n'.join(play_all_thanks_lines(__version__))+'\n')
-    if variant in ('v8', 'v9'):
+    if variant in ('v8', 'v9', 'v10'):
         durations = play_all_durations(stream_info, seconds, renderer)
         (gen/'play-all-durations.inc').write_text('play_all_durations:\n'+ '\n'.join(bytes_lines(durations))+'\n')
     runtimes={};shared={}
     for i,style in enumerate(cli.DEMO_MENU_STYLE_ORDER):
         binpath=work/f'{stem}-runtime-{style}.bin';whole=work/f'{stem}-menu-{style}-whole.bin'
-        subprocess.run([tass,*(a.tass_args or ()),'-I',str(gen),'-D','VICE_DEBUGCART=0','-D','AUTO_LAUNCH=255','-D',f'MENU_STYLE={i}','-D',f'RENDERER_VERSION={int(variant[1:])}','-D',f'PLAY_ALL_SECONDS={seconds}','-b','--vice-labels','-l',str(work/f'{stem}-runtime-{style}.lbl'),'-L',str(work/f'{stem}-runtime-{style}.lst'),'-o',str(whole),str(root/(f'c64/cart/easyflash-demo-scroll-runtime-{variant}.asm' if variant in ('v8', 'v9') else 'c64/cart/easyflash-demo-scroll-runtime.asm'))],check=True,cwd=root,stdout=subprocess.DEVNULL)
+        subprocess.run([tass,*(a.tass_args or ()),'-I',str(gen),'-D','VICE_DEBUGCART=0','-D','AUTO_LAUNCH=255','-D',f'MENU_STYLE={i}','-D',f'RENDERER_VERSION={int(variant[1:])}','-D',f'PLAY_ALL_SECONDS={seconds}','-b','--vice-labels','-l',str(work/f'{stem}-runtime-{style}.lbl'),'-L',str(work/f'{stem}-runtime-{style}.lst'),'-o',str(whole),str(root/(f'c64/cart/easyflash-demo-scroll-runtime-{variant}.asm' if variant in ('v8', 'v9', 'v10') else 'c64/cart/easyflash-demo-scroll-runtime.asm'))],check=True,cwd=root,stdout=subprocess.DEVNULL)
         data=whole.read_bytes()
         if len(data)!=4096:raise ValueError('scroll menu must occupy $c000-$cfff')
         shared[style]=data[:2048];binpath.write_bytes(data[2048:]);runtimes[style]=binpath
 
     control=work/f'{stem}-control.bin';boot=work/f'{stem}-romh0.bin';font=work/f'{stem}-menu-font.bin';font.write_bytes(build_menu_charset())
-    assemble_demo_control(tass=tass,tass_args=a.tass_args or (),source=cli.CART/(f'easyflash-demo-control-{variant}.asm' if variant in ('v8', 'v9') else 'easyflash-demo-control-v7.asm' if variant == 'v7' else 'easyflash-demo-control.asm'),output=control,labels=work/f'{stem}-control.lbl',listing=work/f'{stem}-control.lst',cwd=root)
+    assemble_demo_control(tass=tass,tass_args=a.tass_args or (),source=cli.CART/(f'easyflash-demo-control-{variant}.asm' if variant in ('v8', 'v9', 'v10') else 'easyflash-demo-control-v7.asm' if variant == 'v7' else 'easyflash-demo-control.asm'),output=control,labels=work/f'{stem}-control.lbl',listing=work/f'{stem}-control.lst',cwd=root)
     assemble_demo_boot(tass=tass,tass_args=a.tass_args or (),source=cli.CART/'easyflash-demo-boot.asm',output=boot,labels=work/f'{stem}-boot.lbl',listing=work/f'{stem}-boot.lst',cwd=root)
     install_demo_boot(image,boot.read_bytes(),runtimes[a.menu_style].read_bytes(),control=control.read_bytes(),style_runtimes=[runtimes[s].read_bytes() for s in cli.DEMO_MENU_STYLE_ORDER],menu_font=font.read_bytes())
     for i,style in enumerate(cli.DEMO_MENU_STYLE_ORDER):
         pos=easyflash_offset(2,'romh',i*2048);image[pos:pos+2048]=shared[style]
-    manifest.update(version=__version__,stream_renderer=renderer,uniform_renderer=True,streamed_entries=stream_info,menu_style=a.menu_style,menu_styles=list(cli.DEMO_MENU_STYLE_ORDER),menu_visible_rows=10,frame_chips_used=[dict(bank=b,chip=c) for b,c in used],note='Every entry uses the selected stream renderer. Canonical PRG vector tables preserve original sampling; HiFi uses 128 orientations.')
-    if variant in ('v5', 'v6', 'v7', 'v8', 'v9'): manifest['build_screen']=dict(version=__version__,renderer=f'yunroll-{variant}'+(' (ram)' if prefer == 'ram' else ''),ticks=150,skip_key='SPACE')
-    if variant in ('v7', 'v8', 'v9'):
+    manifest.update(version=__version__,public_renderer=public_renderer,stream_renderer=renderer,uniform_renderer=True,streamed_entries=stream_info,menu_style=a.menu_style,menu_styles=list(cli.DEMO_MENU_STYLE_ORDER),menu_visible_rows=10,frame_chips_used=[dict(bank=b,chip=c) for b,c in used],note='Every entry uses the selected stream renderer. Canonical PRG vector tables preserve original sampling; HiFi uses 128 orientations.')
+    if variant in ('v5', 'v6', 'v7', 'v8', 'v9', 'v10'): manifest['build_screen']=dict(version=__version__,renderer=('hors-render-v1' if variant == 'v10' else f'yunroll-{variant}')+(' (ram)' if prefer == 'ram' else ''),ticks=150,skip_key='SPACE')
+    if variant in ('v7', 'v8', 'v9', 'v10'):
         manifest['preference']=prefer
         manifest['play_all']=dict(seconds=seconds,ticks_per_second=50,default_selection=True,position='above-list',skip_key='SPACE',exit_keys=['RUN/STOP','F1'],loop=True,start='first-visible-picture')
-        if variant in ('v8', 'v9'):
+        if variant in ('v8', 'v9', 'v10'):
             manifest['exhibition'] = dict(key='F5', entry_seconds=durations, loop=True, start='first-visible-picture', normal_play_all_unchanged=True)
         manifest['play_all']['thank_you']=dict(seconds=10,ticks=500,exit_key='F1',version=__version__,position='after-last-demo',next='first-demo')
     manifest.update(runtime_data_banks_used=first_free-1,highest_runtime_bank_used=first_free-1,

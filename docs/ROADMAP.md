@@ -120,3 +120,24 @@ The CLI remains first-class even if a GUI is added.
 - Display existing OBJ/MTL material groups and SVG contour colours in the future host preview.
 - Explore optional dither/style policies for mixed-colour hires cells while preserving the current deterministic dominant-colour mode.
 - SVG clipping/mask/text-layout support where it can be made deterministic and C64-budget aware.
+
+## Larger cartridge targets and measured encoding selection
+
+- Preserve EasyFlash as the existing 1 MiB target; this is not a universal C64 capacity limit.
+- Prototype independent GMod3 and GMod4 backends. GMod3 is documented by VICE and can serve as an emulator-first experiment; GMod4 is the successor hardware target, subject to confirming the exact emulator/hardware revision available for validation.
+- Keep cartridge hardware selection separate from renderer/encoding policy. Proposed hardware options are not implemented CLI switches yet.
+- Add explicit ROM budgets and reports for useful payload, bank allocation, padding, reserved space and runtime RAM.
+- Use the byte-policy measurements toward `hors-optimizer-v1`: choose verified speed/space tradeoffs without changing source pictures or historical renderers.
+- Require boot, bank-boundary, pixel, IRQ/return and normal PLAY ALL tests before declaring a backend supported. Validate physical hardware separately from emulator results.
+
+See [capacity limits](CARTRIDGE_CAPACITY.md) and the [larger-backend implementation plan](GMOD_BACKENDS.md).
+
+### GMod validation order
+
+- [ ] GMod3: minimal boot and exhaustive bank-read probe using the supplied VICE toolchain, then an independent streaming backend.
+- [ ] GMod4: audit and build the manufacturer VICE patch for the 2026 register layout, test ordinary banking first, then an independent streaming backend.
+- [ ] Preserve the existing EasyFlash benchmark environment and all historical implementations; record emulator-only versus physical-hardware validation separately.
+
+## hors-render-v1 status
+
+hors-render-v1 byte-first EasyFlash builds are integrated in 0.7.0. Next: measure dense Blender 25/20 FPS exports, optimize cartridge capacity and worst-frame costs, then test music coexistence. Automatic mixed-renderer selection remains planned. GMod3/GMod4 remain separate backend work; see [GMod details](GMOD_BACKENDS.md).

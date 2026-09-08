@@ -32,7 +32,18 @@ class V8Tests(unittest.TestCase):
         root = Path(__file__).resolve().parents[1]
         frozen = json.loads((root/'tests/data/preserved-v0.6.7.json').read_text())
         for name, expected in frozen['files'].items():
+            if name.startswith('../'): continue  # Checked separately when the external archive is available.
             self.assertEqual(hashlib.sha256((root/name).read_bytes()).hexdigest(), expected, name)
+
+    def test_external_historical_binaries(self):
+        import hashlib, json
+        root=Path(__file__).resolve().parents[1]
+        frozen=json.loads((root/'tests/data/preserved-v0.6.7.json').read_text())
+        external={k:v for k,v in frozen['files'].items() if k.startswith('../')}
+        if not (root.parent/'c64-3d-toolkit-history').exists():
+            self.skipTest('Optional historical archive is outside the checkout and not installed')
+        for name, expected in external.items():
+            self.assertEqual(hashlib.sha256((root/name).read_bytes()).hexdigest(),expected,name)
 
     def assert_wire_picture(self, frame):
         original, meta = v7_block(frame)
@@ -85,8 +96,8 @@ class V8Tests(unittest.TestCase):
 
     def test_cli_keeps_old_defaults_and_accepts_v8(self):
         parser = make_parser(load_toolchain_settings(Path('/missing/c643d.ini')))
-        self.assertEqual(parser.parse_args(['build']).renderer, 'yunroll-cart-v9')
-        self.assertEqual(parser.parse_args(['cart-demos']).stream_renderer, 'yunroll-cart-v9')
+        self.assertEqual(parser.parse_args(['build']).renderer, 'hors-render-v1')
+        self.assertEqual(parser.parse_args(['cart-demos']).stream_renderer, 'hors-render-v1')
         for renderer in ('yunroll-cart-v8', 'yunroll-cart-v8-scene'):
             self.assertEqual(parser.parse_args(['build', '--renderer', renderer]).renderer, renderer)
 

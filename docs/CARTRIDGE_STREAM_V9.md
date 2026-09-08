@@ -155,8 +155,8 @@ python tools/verify_v9_examples.py --vice-data /path/to/vice-data
 python tools/verify_v9_ui.py --vice-data /path/to/vice-data
 python tools/verify_v9_preservation.py --tass /absolute/path/to/64tass
 
-python tools/benchmark_play_all.py   examples/cart_demos/c643d-demo-v0.6.8-yunroll-cart-v8-all.crt   --vice-data /path/to/vice-data --report build/benchmark-v8.json
-python tools/benchmark_play_all.py   examples/cart_demos/c643d-demo-v0.6.9-yunroll-cart-v9-all.crt   --vice-data /path/to/vice-data --report build/benchmark-v9.json
+python tools/benchmark_play_all.py   examples/cart_demos/history/c643d-demo-v0.6.8-yunroll-cart-v8-all.crt   --vice-data /path/to/vice-data --report build/benchmark-v8.json
+python tools/benchmark_play_all.py   examples/cart_demos/history/c643d-demo-v0.6.9-yunroll-cart-v9-all.crt   --vice-data /path/to/vice-data --report build/benchmark-v9.json
 ```
 
 The example verifier rebuilds matching V8 FPS and RAM symbols outside `examples`
@@ -188,3 +188,7 @@ Tests use PAL VICE, not physical C64 hardware; NTSC timing has not been validate
 See [applying the release overlay](UPGRADING_0.6.9.md).
 
 [See comparison chart for details on performance differences](PERFORMANCE_COMPARISON.md).
+
+## Cartridge capacity
+
+EasyFlash has 1 MiB of flash shared by code and data. See [cartridge capacity and optimization budgets](CARTRIDGE_CAPACITY.md) for file-size accounting and larger hardware targets.

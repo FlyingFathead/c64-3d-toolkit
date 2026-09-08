@@ -1,151 +1,19 @@
-# Examples
+# Current examples — 0.7.0
 
-**0.6.9:** V9 adds eight separate FPS/RAM cartridges with direct ROM byte drawing. Earlier examples remain intact. [V9 guide](../docs/CARTRIDGE_STREAM_V9.md).
+## Top picks
 
-**0.6.8:** V8 adds separate FPS/RAM carts while retaining every existing example. See [the V8 guide](../docs/CARTRIDGE_STREAM_V8.md).
+1. **[Multi-demo cart #1](cart_demos/README.md)** — twelve animations rendered with hors-render-v1.
+2. **[DON’T LOSE YOUR MARBLES](cart_marbles/README.md)** — accepted 16 FPS force-bytes presentation; SPACE to start.
 
-Ready-to-run cartridges, Blender scenes, and generated/reference PRGs are grouped by demo.
+## Other current material
 
-## Cartridge demos
+- [Demo menu](cart_demos/README.md): hors-render-v1, FPS and RAM variants.
+- [Marbles](cart_marbles/README.md): accepted 16 FPS force-bytes presentation, SPACE to start.
+- [Horse and Sunflower](cart_horse_and_sunflower/README.md): current hors-render-v1 scene.
+- Blender source projects: `blender_marbles/`, `blender_horse_and_sunflower/`, `blender_falling_cubes/`.
+- Standalone PRG examples remain for the supported non-cartridge renderers.
 
-| Example | Contents | Renderer |
-|---|---|---|
-| [V7 twelve-demo menu](cart_demos/README.md) | v0.6.7: FPS preference, PLAY ALL and ten-second closing screen; all three menu styles | `yunroll-cart-v7` throughout |
-| [Horse and sunflower](cart_horse_and_sunflower/README.md) | Separate close-up scene test: coloured HiFi horse sniffs a stationary flower; editable Blender scene and previews | `yunroll-cart-v7-scene` |
-| [Don't Lose Your Marbles](cart_marbles/README.md) | v0.6.6 early beta: intro, collisions, fracture/star field, credits and BASIC epilogue; HUD and clean CRTs | Separate `yunroll-cart-v4-scene` extension |
-| [HiFi showcase cartridges](hifi_showcase/README.md) | Separate 192-orientation horse and sunflower CRTs, captures and reports | `yunroll-cart-v2` |
-
-Launch the current menu cart from the project root:
-
-```bash
-x64sc -cartcrt examples/cart_demos/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt
-```
-
-Or launch the new standalone scene:
-
-```bash
-x64sc -cartcrt examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v7-scene.crt
-```
-
-Marbles also provides a `-clean.crt` variant without its title/FPS HUD. Older menu
-cartridges and the former `old/` tree are in the separate oldies ZIP. Current menu
-metadata/reports live in subfolders; benchmark evidence is in `docs/benchmarks/`.
-Cartridge builds are separate from the PRG `test-examples` matrix below.
-
-## Example folders
-
-```text
-examples/
-  cube/
-  torus/
-  torus_dense/
-  sphere/
-  horse_head/
-  sunflower_torus/
-  space_horse_spin/
-  space_horse_crawl/
-  blender_falling_cubes/
-  blender_marbles/
-  blender_horse_and_sunflower/
-  cart_demos/
-  cart_marbles/
-  cart_horse_and_sunflower/
-  hifi_showcase/
-  examples.json
-  README.md
-```
-
-For normal non-Blender examples, the standard regression lanes are:
-
-- `name.prg` - current 256x192 overlay/HUD build.
-- `name_legacy144.prg` - 256x144 performance/reference build. Historical files are retained byte-for-byte where available.
-- `name_no_overlay.prg` - separate no-overlay ASM using the full 256x200 bitmap height.
-- `name_rastertime_profiler.prg` - separate yunroll debug ASM, 256x192.
-
-Run the complete standard matrix:
-
-```bash
-./build.sh test-examples
-```
-
-Build only one viewport lane when comparing performance:
-
-```bash
-./build.sh test-examples --variants normal
-./build.sh test-examples --variants legacy144
-```
-
-Regenerate checked-in standard example PRGs deliberately with:
-
-```bash
-./build.sh generate-examples
-```
-
-## Blender falling-cubes example
-
-Blender sources and generated PRGs live together under `examples/blender_falling_cubes/`.
-
-- `falling_cubes_c64.py` generates the smaller six-cube rigid-body scene intended for C64 compilation.
-- `falling_cubes_full.py` / `.blend` are the 40-cube authoring/stress scene and can exceed C64 frame/table limits.
-- `falling_cubes_c64_color-yunroll_legacy144.prg` preserves the original 256x144, sample-step-3, 24-sample colour build.
-- Current 192/200-line falling-cubes builds use sample-step 4 (18 stored samples) to stay inside C64 table RAM.
-
-Generate the scene:
-
-```bash
-blender --background --python examples/blender_falling_cubes/falling_cubes_c64.py
-```
-
-Compile it directly:
-
-```bash
-./build.sh --blend examples/blender_falling_cubes/falling_cubes_c64.blend \
-  --frame-start 1 --frame-end 72 --sample-step 4 --run
-```
-
-Blender regression builds are intentionally separate because Blender is optional:
-
-```bash
-./build.sh test-examples --blender-only
-```
-
-The Blender-only matrix contains the authored-colour and forced-monochrome current 192/200/debug variants, plus the historical colour `_legacy144` build. Use `generate-examples --blender-only` only when intentionally refreshing those PRGs.
-
-Assembler labels/listings remain transient under `build/`.
-
-The old duplicate `space_horse_spin.prg` and `space_horse_crawl.prg` aliases are retained in the historical checksum database but are no longer shipped as duplicate files; the explicit `_color` / `_legacy144` names identify the maintained outputs.
-
-## Orbiting cubes-and-marbles Blender example
-
-[`blender_marbles/`](blender_marbles/README.md) contains a separate 40-second
-source scene: 45 falling objects across six alternating pours, a full camera
-orbit, and a 32-piece tabletop fracture that drifts into a constellation.
-The live rigid-body source, baked animation and deterministic generator ship together.
-
-The standalone early-beta cartridge plays once, including its native intro,
-typing joke, credits and staged BASIC reboot. See the
-[V4 scene-streaming guide](../docs/CARTRIDGE_SCENES.md) for measured duration,
-build commands, HUD/clean options, memory limits and validation.
-The original falling-cubes assets and twelve-demo menu cartridge are unchanged.
-
-## Upgrading an older checkout
-
-An overlay ZIP cannot delete the old flat files by itself. Preview and apply the safe migration once:
-
-```bash
-python tools/migrate_examples_layout.py
-python tools/migrate_examples_layout.py --apply
-```
-
-Existing destination files are never overwritten when their contents differ.
-
-## Streamed HiFi cartridges
-
-[`hifi_showcase/`](hifi_showcase/README.md) contains separate horse and sunflower EasyFlash CRTs, each with 192 orientations. These use the independent `yunroll-cart-v2` frame streamer, with matching OBJ/MTL assets, VICE captures and validation reports.
-
-## Archived Marbles concept
-
-The [early concept tryout](../docs/UPGRADING_0.6.7.md#what-cleanup-does) preserves
-the earlier looping carts and baked Blender scene in the separate oldies ZIP.
-
-[See comparison chart for details on performance differences](../docs/PERFORMANCE_COMPARISON.md).
+Old cartridge generations, HiFi V2/V3 demonstration outputs and historical
+captures are not shipped. Their underlying meshes and renderer implementations
+remain available. `python perf/prune_old_examples.py` moves older installed
+outputs to `../c64-3d-toolkit-history/`, outside the checkout.

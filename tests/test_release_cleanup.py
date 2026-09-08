@@ -21,8 +21,8 @@ class ReleaseCleanupTests(unittest.TestCase):
                 'examples/blender_horse_and_sunflower/scene.blend1': b'backup',
             }
             kept = {
-                'examples/cart_demos/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt': b'final',
-                'examples/cart_demos/metadata/c643d-demo-v0.6.7-yunroll-cart-v7-all-cart-manifest.json': b'metadata',
+                '../c64-3d-toolkit-history/examples/cart_demos/history/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt': b'final',
+                '../c64-3d-toolkit-history/examples/cart_demos/history/metadata/c643d-demo-v0.6.7-yunroll-cart-v7-all-cart-manifest.json': b'metadata',
                 'examples/blender_horse_and_sunflower/scene.blend': b'editable scene',
                 'examples/blender_horse_and_sunflower/preview.png': b'documented still',
             }
@@ -80,8 +80,8 @@ class V068CleanupTests(unittest.TestCase):
             old = 'examples/cart_demos/c643d-demo-v0.6.8-rc1-yunroll-cart-v8-all'
             removed = {old+'.crt': b'local rc1 edits', old+'-ram.crt': b'ram',
                 'examples/cart_demos/metadata/c643d-demo-v0.6.8-rc1-yunroll-cart-v8-all-cart-manifest.json': b'meta'}
-            kept = {'examples/cart_demos/c643d-demo-v0.6.8-yunroll-cart-v8-all.crt': b'final',
-                'examples/cart_demos/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt': b'v7',
+            kept = {'../c64-3d-toolkit-history/examples/cart_demos/history/c643d-demo-v0.6.8-yunroll-cart-v8-all.crt': b'final',
+                '../c64-3d-toolkit-history/examples/cart_demos/history/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt': b'v7',
                 'examples/cart_demos/c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all.crt': b'v6',
                 'examples/old/local.crt': b'older', 'examples/custom.mp4': b'video'}
             for name, data in (removed|kept).items():

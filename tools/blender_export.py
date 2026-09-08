@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -18,7 +19,7 @@ import bpy
 TOOLKIT_ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(TOOLKIT_ROOT))
 from tools.c643d.colors import nearest_c64_color_index
-from tools.c643d.blender import blender_frame_plan
+from tools.c643d.blender import blender_frame_plan, output_frame_plan
 
 
 WIDTH=256
@@ -28,6 +29,7 @@ def _args():
     p.add_argument('--output',required=True)
     p.add_argument('--frame-start',type=int)
     p.add_argument('--frame-end',type=int)
+    p.add_argument('--output-fps',type=int)
     p.add_argument('--sample-step',type=int,default=1)
     p.add_argument('--viewport-height',type=int,default=144)
     p.add_argument('--max-frames',type=int,default=255,help='explicit host export limit; legacy PRG default 255')
@@ -102,17 +104,30 @@ def main():
         start,end,args.sample_step,scene_start=scene.frame_start,
         simulation_start=simulation_start,
     )
+    if args.output_fps is not None:
+        if args.sample_step != 1:
+            raise RuntimeError('--output-fps and --sample-step other than 1 conflict')
+        if rigidbody_world is not None and any(o.rigid_body is not None for o in objects):
+            raise RuntimeError('--output-fps requires baked transforms; use the baked .blend, not live rigid-body physics')
+        evaluation_frames,source_frames=output_frame_plan(start,end,float(scene.render.fps)/scene.render.fps_base,args.output_fps,evaluation_frames.start)
+        print(f'Blender output FPS: {args.output_fps}; source FPS: {scene.render.fps/scene.render.fps_base:g}; source timing preserved')
+        source_rate=float(scene.render.fps)/scene.render.fps_base
+        rounded=sum(abs((start+i*source_rate/args.output_fps)-f)>1e-8 for i,f in enumerate(source_frames))
+        repeated=len(source_frames)-len(set(source_frames))
+        if rounded or repeated:
+            print(f'WARNING: {rounded} requested sample times rounded/clamped to nearest integer Blender frame; {repeated} repeated samples retained. No fractional geometry evaluation; requested playback duration retained.',flush=True)
+
     if not 1<=len(source_frames)<=args.max_frames:
         raise RuntimeError(f'{len(source_frames)} sampled frames exceed the requested limit of {args.max_frames}')
     capture_frames=set(source_frames)
     print(
-        f'c643d: evaluating Blender frames {evaluation_frames.start}..{end} sequentially; '
+        f'c643d: evaluating Blender frames {evaluation_frames[0]}..{end} sequentially; '
         f'capturing {len(source_frames)} samples'
     )
 
     topology=None; expected=[]; out_frames=[]
     for evaluation_frame in evaluation_frames:
-        scene.frame_set(evaluation_frame)
+        scene.frame_set(int(evaluation_frame), subframe=float(evaluation_frame)%1)
         depsgraph=bpy.context.evaluated_depsgraph_get()
         if evaluation_frame not in capture_frames:
             # Physics caches are stateful. Touch evaluated rigid-body matrices
@@ -172,13 +187,17 @@ def main():
             cx=WIDTH/2.0*(1.0-float(matrix[0][2]))
             cy=height/2.0*(1.0+float(matrix[1][2]))
             out_frames.append({
-                'source_frame':source_frame,
+                'source_frame':int(source_frame),
+                'source_frame_time':source_frame,
                 'projection':{'fx':fx,'fy':fy,'cx':cx,'cy':cy},
                 'vertices':vertices,
             })
         finally:
             _release(parts)
 
+    if args.output_fps is not None:
+        captured={f['source_frame']:f for f in out_frames}
+        out_frames=[captured[f] for f in source_frames]
     changed_transitions=sum(
         previous['vertices']!=current['vertices'] or previous['projection']!=current['projection']
         for previous,current in zip(out_frames,out_frames[1:])
@@ -199,6 +218,8 @@ def main():
         'format':'c643dscene','version':1,
         'name':str(scene.get('c643d_title') or Path(bpy.data.filepath).stem.upper() or 'BLENDER SCENE'),
         'source':{
+            'output_fps':args.output_fps,
+            'resampling':'nearest-integer-source-frame' if args.output_fps is not None else 'sample-step',
             'kind':'blender','file':str(Path(bpy.data.filepath).resolve()),
             'fps':float(scene.render.fps)/float(scene.render.fps_base),
             'frame_start':start,'frame_end':end,'sample_step':args.sample_step,

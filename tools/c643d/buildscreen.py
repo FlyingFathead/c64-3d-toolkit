@@ -36,6 +36,13 @@ def build_screen_lines(version, renderer):
               '        dex', '        bne build_screen_leave', 'build_screen_done:',
               '        lda #$0b', '        sta $d011', '        lda #$ff', '        sta $dc00',
               '        lda #$18', '        sta $d018', '        rts']
+    if renderer.startswith(('hors-render-v1', 'yunroll-v10')):
+        # Keep instruction lengths and labels; branch unconditionally back
+        # to keyboard polling. SPACE is the only exit.
+        for i in range(len(lines)-1):
+            if lines[i] == '        dex' and lines[i+1] == '        bne build_screen_leave':
+                lines[i] = '        clc'
+                lines[i+1] = '        bcc build_screen_leave'
     for name, text, _ in texts:
         lines += [f'build_screen_text_{name}:']+bytes_lines(screen_codes(text))
     return lines

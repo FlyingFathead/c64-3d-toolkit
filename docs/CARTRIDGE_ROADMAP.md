@@ -242,3 +242,11 @@ EasyFlash is the initial target because it is documented, emulated by VICE, and
 provides a practical 1 MiB banked ROM for stock-C64 development.  Supporting a
 future cartridge type should be an additive backend decision, not a rewrite of
 `yunroll-cart` geometry generation.
+
+## Larger flash backends
+
+GMod3/GMod4 support is planned, not implemented. Preserve all existing EasyFlash runtimes byte-for-byte. Start with isolated boot and bank-read probes, then integrate streaming and validate rendering. See [backend milestones](GMOD_BACKENDS.md) and [capacity accounting](CARTRIDGE_CAPACITY.md).
+
+## hors-render-v1 status
+
+hors-render-v1 byte-first EasyFlash builds are integrated in 0.7.0. Next: measure dense Blender 25/20 FPS exports, optimize cartridge capacity and worst-frame costs, then test music coexistence. Automatic mixed-renderer selection remains planned. GMod3/GMod4 remain separate backend work; see [GMod details](GMOD_BACKENDS.md).

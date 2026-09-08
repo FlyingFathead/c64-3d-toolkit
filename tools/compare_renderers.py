@@ -20,7 +20,7 @@ class UnsupportedResident(Exception):
     pass
 
 RESIDENT=('step','bytechunk','yunroll','yunroll-cart')
-METHODS=[(m,'fps') for m in RESIDENT]+[(f'yunroll-cart-v{i}','fps') for i in range(2,10)]+[(f'yunroll-cart-v{i}','ram') for i in (7,8,9)]
+METHODS=[(m,'fps') for m in RESIDENT]+[(f'yunroll-cart-v{i}','fps') for i in range(2,11)]+[(f'yunroll-cart-v{i}','ram') for i in (7,8,9,10)]
 
 def fingerprints(root):
     files={}
@@ -32,7 +32,7 @@ def fingerprints(root):
             if folder=='examples':
                 if '/old/' in rel:continue
                 if p.suffix!='.prg' and not any(key in rel for key in ('dont_lose_your_marbles-yunroll-cart-v4-scene-clean.', 'dont_lose_your_marbles-yunroll-cart-v4-scene-clean-manifest.', 'horse_and_sunflower-yunroll-cart-v7-scene.', 'horse_and_sunflower-yunroll-cart-v7-scene-manifest.')):continue
-            files[rel]=hashlib.sha256(p.read_bytes()).hexdigest()
+            files[rel.replace('/history/', '/')]=hashlib.sha256(p.read_bytes()).hexdigest()
     files['.gitignore']=hashlib.sha256((root/'.gitignore').read_bytes()).hexdigest()
     files['VERSION']=hashlib.sha256((root/'VERSION').read_bytes()).hexdigest()
     return files,hashlib.sha256(json.dumps(files,sort_keys=True).encode()).hexdigest()
@@ -241,8 +241,8 @@ def scene_worker(version):
     from c643d.v7reference import load_scene
     from c643d.cartscene import assemble_scene
     from profile_cart_stream import profile
-    marbles=load_scene_source(ROOT/'examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene-clean.crt')
-    horse=load_scene(ROOT/'examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v7-scene.crt')
+    marbles=load_scene_source(ROOT/'../c64-3d-toolkit-history/examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v4-scene-clean.crt')
+    horse=load_scene(ROOT/'../c64-3d-toolkit-history/examples/cart_horse_and_sunflower/history/horse_and_sunflower-yunroll-cart-v7-scene.crt')
     out=BASE/'scenes';out.mkdir(exist_ok=True)
     for name,data,overlay in [('marbles-clean',marbles,False),('marbles-hud',marbles,True),('horse-sunflower',horse,False)]:
         fs,scene,ref=data;stem=f'{name}-v{version}';crt=out/(stem+'.crt');dst=REPORT/(stem+'-scene.json')
@@ -267,7 +267,7 @@ def chart(a,provenance):
             assert oracles.setdefault(e['name'],value)==value,'Different source pictures'
             p=json.loads((a.workspace/'results'/(key+f'-pixels-{i:02d}.json')).read_text())
             assert p['pixel_match'] and p['color_match'];checks+=p['verified_frames']
-    def short(k):return k.replace('yunroll-cart-v','V').replace('yunroll-cart','cart scaffold')
+    def short(k):return k.replace('yunroll-cart-v10','hors-render-v1').replace('yunroll-cart-v','V').replace('yunroll-cart','cart scaffold')
     def winners(name,keys):
         valid=[k for k in keys if name in results[k]];best=max(results[k][name]['display_flips'] for k in valid)
         return [k for k in valid if results[k][name]['display_flips']==best]
@@ -321,7 +321,7 @@ def chart(a,provenance):
         'These are **not PLAY ALL A/B FPS results** and must not be mixed into the menu tables or used to rank renderer throughput. The unchanged authored sequence runs with its original pacing and intro/ending behavior. Samples/s includes waits; mean active render cycles shows rendering cost. Clean/HUD Marbles and Horse & Sunflower use matching full source samples across V4–V9. Earlier generations do not provide the authored scene backend.','',
         '| Scene | Method | Samples/s (paced) | Mean render cycles | Worst render cycles | Over-budget samples |','| --- | --- | ---: | ---: | ---: | ---: |']
     for name in ('marbles-clean','marbles-hud','horse-sunflower'):
-        for v in range(4,10):
+        for v in range(4,11):
             r=json.loads((a.workspace/'results'/f'{name}-v{v}-scene.json').read_text());p=r['profile'];q=r['verification'];assert q['pixel_match'] and q['color_match'];checks+=q['verified_frames']
             lines.append(f"| {name} | V{v}-scene | {p['frames_per_second']:.3f} | {p['mean_render_cycles']:,.0f} | {p['worst_render_cycles']:,} | {p.get('frames_exceeding_render_budget','—')} / {p['frames']} |")
     lines+=['','## Workload and interpretation','',
@@ -399,7 +399,7 @@ def main():
     else:
         if a.workspace.exists() and any(a.workspace.iterdir()):p.error('workspace must be empty (or use --resume)')
         a.workspace.mkdir(parents=True,exist_ok=True)
-        shutil.copytree(repo,a.workspace/'source',ignore=shutil.ignore_patterns('.git','build','comparison-tests','__pycache__'))
+        shutil.copytree(repo,a.workspace/'source',ignore=shutil.ignore_patterns('.git','build','comparison-tests','logs','__pycache__'))
         adapt_snapshot(a.workspace/'source')
         if a.reference_json:
             import gzip
@@ -414,7 +414,7 @@ def main():
                 row=asdict(demo);row['hud']=demo.hud.hex();rows.append(row)
             (a.workspace/'menu-input.json').write_text(json.dumps(dict(format='c643d-vector-reference-v1',demos=rows)))
         stamp.write_text(json.dumps(provenance,indent=2)+'\n')
-    jobs=['menu:'+m+':'+pref for m,pref in METHODS]+['scene:'+str(v) for v in range(4,10)]
+    jobs=['menu:'+m+':'+pref for m,pref in METHODS]+['scene:'+str(v) for v in range(4,11)]
     if a.methods:jobs=[j for j in jobs if j.startswith('menu:') and j.split(':')[1] in a.methods]
     if MAX_FPS or LOCK_MIN:jobs=[j for j in jobs if j.startswith('menu:')]
     if not jobs:p.error('no matching methods')

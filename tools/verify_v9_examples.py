@@ -45,7 +45,7 @@ def main():
         fresh=(root/'build/v8-baseline'/f'{stem}.crt').read_bytes()
         # cartconv versions may differ only in the 32-byte cosmetic title.
         assert original[:32]+original[64:] == fresh[:32]+fresh[64:], 'V8 payload changed'
-    baseline = root/'examples/cart_demos/c643d-demo-v0.6.8-yunroll-cart-v8-all.crt'
+    baseline = root/'../c64-3d-toolkit-history/examples/cart_demos/history/c643d-demo-v0.6.8-yunroll-cart-v8-all.crt'
     shipped = baseline.read_bytes()
     report = dict(toolkit_version=__version__, machine='PAL', clock_hz=985248,
                   method='Picture/colour regression and isolated diagnostic profiles only. A/B throughput is measured exclusively by benchmark_play_all.py using normal PLAY ALL, never F5. PAL VICE, not physical hardware.', menu=[], scenes={}, v8_rebuild_payload_identical=True, v8_ram_rebuild_payload_identical=True,

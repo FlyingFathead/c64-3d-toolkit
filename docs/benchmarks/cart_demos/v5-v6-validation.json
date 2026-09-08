@@ -587,7 +587,7 @@
     "renderer": "yunroll-cart-v6",
     "references": {
       "examples/cart_demos/c643d-demo-v0.6.5-yunroll-cart-v4-all.crt": "73f7405a5c68ed008170d0af73d478dd93d23436399393361b6b83102555cf53",
-      "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v4-scene-clean.crt": "7ae73a7d069e25f0bbffc87460324429ff67f55446f1e40347aa6a92adfa0125"
+      "examples/cart_marbles/history/dont_lose_your_marbles-yunroll-cart-v4-scene-clean.crt": "7ae73a7d069e25f0bbffc87460324429ff67f55446f1e40347aa6a92adfa0125"
     },
     "note": "Rebuilt exact released vector samples; no Blender re-export or physics rebake."
   },
