@@ -82,7 +82,7 @@ def verify(crt, vice='x64sc', vice_data=None):
                     dump(item + '-returned.ram')
         commands.append('quit')
         (out / 'run.mon').write_text('\n'.join(commands) + '\n')
-        cmd = [vice, '-console', '+sound', '-warp', '-seed', '1', '-jamaction', '2',
+        cmd = [vice, '-console', '+easyflashcrtwrite', '+sound', '-warp', '-seed', '1', '-jamaction', '2',
                '-cartcrt', str(crt), '-initbreak', 'reset', '-moncommands',
                str(out / 'run.mon'), '-limitcycles', '180000000']
         if vice_data:
@@ -111,11 +111,14 @@ def verify(crt, vice='x64sc', vice_data=None):
                     assert returned[0x02fc] == style_index
                     assert returned[menu['selected_entry']] == expected
                     assert returned[menu['top_entry']] <= expected < returned[menu['top_entry']] + 10
-        shim = (work / f'{crt.stem}-control.bin').read_bytes()[:0xf8]
+        shim_size = 0xf7 if 'exhibition' in manifest else 0xf8
+        shim = (work / f'{crt.stem}-control.bin').read_bytes()[:shim_size]
         for index, tag in checks:
             ram = (out / (tag + '-loaded.ram')).read_bytes()
             assert ram[0x0801:0x0801 + len(payloads[index])] == payloads[index], (tag, 'payload')
-            assert ram[0x0200:0x02f8] == shim, (tag, 'control shim')
+            assert ram[0x0200:0x0200+shim_size] == shim, (tag, 'control shim')
+            if 'exhibition' in manifest:
+                assert ram[0x02f7] == 0, (tag, 'manual launch inherited exhibition mode')
             assert ram[0x02fa] == index, (tag, 'current entry')
             assert (out / (tag + '-port.bin')).read_bytes()[1] & 7 == 7, (tag, 'loader mapping')
             assert (out / (tag + '-vic.bin')).read_bytes()[1] & 15 == 0, (tag, 'menu IRQ still enabled')

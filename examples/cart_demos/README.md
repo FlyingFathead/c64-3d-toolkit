@@ -1,5 +1,12 @@
 # c64-3d-toolkit demo cartridges
 
+Normal V8 PLAY ALL keeps **10 seconds per demo**, matching earlier releases.
+Press **F5 from the menu** for exhibition playback: the two HiFi entries run
+for 15 seconds each, with the others at 10. F1/RUN-STOP returns to the menu;
+SPACE skips forward. Use normal PLAY ALL for timing comparisons.
+
+**0.6.8 / V8:** [FPS cartridge](c643d-demo-v0.6.8-yunroll-cart-v8-all.crt) and [RAM cartridge](c643d-demo-v0.6.8-yunroll-cart-v8-all-ram.crt). All previous methods and files remain intact. [V8 measurements and hybrid rendering details](../../docs/CARTRIDGE_STREAM_V8.md). The V7 instructions below remain valid.
+
 **v0.6.7 / yunroll-v7, FPS preferred by default:**
 
 - [Play the FPS cartridge](c643d-demo-v0.6.7-yunroll-cart-v7-all.crt)
@@ -42,3 +49,7 @@ The builder reads checksum-verified original V4 vector records from
 `assets/v4-menu-vector-reference.json.gz`. It needs 64tass and cartconv, but no
 Blender rebake or archived menu cartridge. `--reference-multi` still accepts an
 archived V4 CRT and its matching manifest for explicit comparisons.
+
+**ONLY use normal PLAY ALL for A/B comparisons between rendering methods and
+versions. F5 is an internal demo mode for exhibitions and MUST NOT be used for
+benchmarking.**

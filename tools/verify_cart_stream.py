@@ -67,7 +67,7 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None,oracle_
             mon += [f'break ${completed:04x}'];first_go='g'
         for i in range(count):mon += [first_go if i==0 else 'g','bank ram',f'bsave "{td/f"frame-{i:04d}.ram"}" 0 $0000 $ffff','stopwatch']
         mon += ['quit'];(td/'run.mon').write_text('\n'.join(mon)+'\n')
-        cmd=[vice,'-console','-pal','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(td/'run.mon'),'-monlog','-monlogname',str(td/'monitor.log'),'-limitcycles',str(count*1000000+2000000)]
+        cmd=[vice,'-console', '+easyflashcrtwrite','-pal','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(td/'run.mon'),'-monlog','-monlogname',str(td/'monitor.log'),'-limitcycles',str(count*1000000+2000000)]
         if vice_data:cmd+=['-directory',str(vice_data)]
         with (td/'vice.log').open('w') as log:subprocess.run(cmd,stdout=log,stderr=subprocess.STDOUT,timeout=180,check=True)
         ticks=[int(x) for x in re.findall(r'Stopwatch:\s*(\d+)',(td/'monitor.log').read_text())]

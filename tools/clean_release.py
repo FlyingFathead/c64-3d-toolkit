@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Move obsolete examples and generated videos into a ZIP outside the project.
 
-Run after applying the 0.6.7 overlay. Every selected file is archived and
+The default 0.6.8 cleanup archives only superseded V8 rc1 menu artifacts.
+Use --scope legacy-0.6.7 only for the historical broader cleanup.
+Every selected file is archived and
 verified before removal. Local edits are preserved; Git's index is untouched.
 """
 import argparse
@@ -17,6 +19,9 @@ try:
 except ImportError:
     from archive_old_carts import OLD_FILES
 
+
+V8_RC1_MENU = re.compile(r'c643d-demo-v0\.6\.8-rc1-yunroll-cart-v8-all'
+                         r'(?:-ram)?(?:\.crt|\.lbl|-cart-manifest\.json|-cart-map\.txt)$')
 
 VIDEO_SUFFIXES = {'.mp4', '.m4v', '.mov', '.webm', '.mkv', '.avi'}
 RC_MENU = re.compile(r'c643d-demo-v0\.6\.7-rc[1-5]-yunroll-cart-v7-all'
@@ -38,7 +43,9 @@ OLD_REPORTS = {
 }
 
 
-def candidates(root):
+def candidates(root, scope="v0.6.8"):
+    if scope not in ("v0.6.8", "legacy-0.6.7"):
+        raise ValueError("Unknown cleanup scope")
     root = Path(root).resolve()
     found = set()
     examples = root / 'examples'
@@ -53,6 +60,13 @@ def candidates(root):
         for name in files:
             path = current / name
             relative = path.relative_to(root)
+            if scope == "v0.6.8":
+                selected = current in (examples/'cart_demos', examples/'cart_demos/metadata') and V8_RC1_MENU.fullmatch(name)
+                if selected:
+                    if path.is_symlink() or not path.is_file():
+                        raise ValueError(f'Refusing non-regular file: {path}')
+                    found.add(relative)
+                continue
             legacy = relative.parts[:2] == ('examples', 'old')
             obsolete_menu = current in (examples / 'cart_demos', examples / 'cart_demos/metadata') and (
                 name in OLD_FILES or name in COMPARISON_FILES or RC_MENU.fullmatch(name))
@@ -62,6 +76,8 @@ def candidates(root):
                 if path.is_symlink() or not path.is_file():
                     raise ValueError(f'Refusing non-regular file: {path}')
                 found.add(relative)
+    if scope == "v0.6.8":
+        return sorted(found)
     # Also catch accidentally copied generated videos/backups at the root.
     for path in root.iterdir():
         if path.suffix.lower() in VIDEO_SUFFIXES or re.search(r'\.blend\d+$', path.name):
@@ -71,14 +87,14 @@ def candidates(root):
     return sorted(found)
 
 
-def clean(root, archive_path=None, dry_run=False):
+def clean(root, archive_path=None, dry_run=False, scope="v0.6.8"):
     root = Path(root).resolve()
-    paths = candidates(root)
+    paths = candidates(root, scope)
     size = sum((root / p).stat().st_size for p in paths)
     if not paths:
         print('No obsolete files to archive.')
         return dict(files=0, bytes=0, archive=None)
-    target = Path(archive_path) if archive_path else root.parent / 'c64-3d-toolkit-legacy-pre-0.6.7.zip'
+    target = Path(archive_path) if archive_path else root.parent / ('c64-3d-toolkit-v0.6.8-rc1-oldies.zip' if scope == 'v0.6.8' else 'c64-3d-toolkit-legacy-pre-0.6.7.zip')
     target = target.absolute()
     if target.resolve().is_relative_to(root):
         raise ValueError('The archive must be outside the project directory')
@@ -139,7 +155,8 @@ def clean(root, archive_path=None, dry_run=False):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--scope', choices=('v0.6.8','legacy-0.6.7'), default='v0.6.8')
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--archive', type=Path, help='ZIP destination outside the project')
     args = parser.parse_args()
-    clean(Path(__file__).resolve().parents[1], args.archive, args.dry_run)
+    clean(Path(__file__).resolve().parents[1], args.archive, args.dry_run, args.scope)

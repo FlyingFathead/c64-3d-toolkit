@@ -1,5 +1,7 @@
 # DON'T LOSE YOUR MARBLES
 
+**0.6.8 / V8:** separate [clean FPS](dont_lose_your_marbles-yunroll-cart-v8-scene-clean.crt), [HUD FPS](dont_lose_your_marbles-yunroll-cart-v8-scene.crt), [clean RAM](dont_lose_your_marbles-yunroll-cart-v8-scene-clean-ram.crt) and [HUD RAM](dont_lose_your_marbles-yunroll-cart-v8-scene-ram.crt) carts. All 200 samples and older carts are preserved. [Measured changes](../../docs/CARTRIDGE_STREAM_V8.md).
+
 **0.6.7 / V7, FPS preferred by default:**
 [clean presentation](dont_lose_your_marbles-yunroll-cart-v7-scene-clean.crt) and
 [HUD build](dont_lose_your_marbles-yunroll-cart-v7-scene.crt).

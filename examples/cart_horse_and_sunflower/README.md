@@ -1,5 +1,7 @@
 # Horse and sunflower — C64 test cartridge
 
+**0.6.8:** additional [V8 FPS](horse_and_sunflower-yunroll-cart-v8-scene.crt) and [V8 RAM](horse_and_sunflower-yunroll-cart-v8-scene-ram.crt) comparisons. This scene selects the vector fallback throughout; FPS playback is unchanged at about 4.28 samples/s. The original V7 cart and Blender scene remain intact. Rebuild V8 with `python tools/build_v8_examples.py`; the V7 builder below is unchanged.
+
 **0.6.7, yunroll-cart-v7-scene, FPS preference.** This is a separate test
 of the [authored Blender close-up](../blender_horse_and_sunflower/README.md).
 The scene is kept separate from the twelve-demo menu.

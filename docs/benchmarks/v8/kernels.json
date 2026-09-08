@@ -1,0 +1,56 @@
+{
+  "fps": {
+    "cases": 337,
+    "validation": {
+      "cartridge": "v8-byte-check-fps.crt",
+      "menu_entry": null,
+      "verified_frames": 677,
+      "orientations": 337,
+      "bitmap_bytes_checked": 5199360,
+      "color_bytes_checked": 649920,
+      "slots": {
+        "1": 226,
+        "2": 226,
+        "0": 225
+      },
+      "average_fps": 47.66103846086139,
+      "min_frame_cycles": 281,
+      "max_frame_cycles": 82258,
+      "pixel_match": true,
+      "color_match": true,
+      "reused_samples": 236,
+      "loop_seconds": 7.082358959368606,
+      "target_fps": 50.0,
+      "hud_match": true,
+      "text_overlay": false,
+      "frame_index_bits": 16
+    }
+  },
+  "ram": {
+    "cases": 337,
+    "validation": {
+      "cartridge": "v8-byte-check-ram.crt",
+      "menu_entry": null,
+      "verified_frames": 677,
+      "orientations": 337,
+      "bitmap_bytes_checked": 5199360,
+      "color_bytes_checked": 649920,
+      "slots": {
+        "1": 226,
+        "2": 226,
+        "0": 225
+      },
+      "average_fps": 47.66103846086139,
+      "min_frame_cycles": 281,
+      "max_frame_cycles": 82258,
+      "pixel_match": true,
+      "color_match": true,
+      "reused_samples": 236,
+      "loop_seconds": 7.082358959368606,
+      "target_fps": 50.0,
+      "hud_match": true,
+      "text_overlay": false,
+      "frame_index_bits": 16
+    }
+  }
+}

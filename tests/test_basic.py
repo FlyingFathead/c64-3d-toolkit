@@ -816,9 +816,9 @@ class TestRc062RenderAndChecksumControls(unittest.TestCase):
         self.assertEqual(merged[merged.index('--sample-step')+1],'3')
         self.assertEqual(merged[merged.index('--renderer')+1],'yunroll')
 
-    def test_release_version_is_067(self):
+    def test_release_version_is_068_and_067_is_preserved(self):
         from tools.c643d import __version__
-        self.assertEqual(__version__,'0.6.7')
+        self.assertEqual(__version__,'0.6.8')
         self.assertEqual((ROOT/'VERSION').read_text(encoding='utf-8').strip(),__version__)
         import hashlib, json, re
         for name in ('setup-windows.cmd', 'setup-windows.ps1'):
@@ -826,7 +826,8 @@ class TestRc062RenderAndChecksumControls(unittest.TestCase):
         self.assertIn("$TargetRelease = '"+__version__+"'", (ROOT/'setup-windows.ps1').read_text())
         for name in ('easyflash-demo-runtime.asm', 'easyflash-demo-scroll-runtime.asm'):
             shown=re.findall(r'TOOLKIT (\d+\.\d+\.\d+(?:-rc\d+)?)', (ROOT/'c64/cart'/name).read_text())
-            self.assertEqual(set(shown), {__version__}, name)
+            self.assertEqual(set(shown), {'0.6.7'}, name)
+        self.assertIn(__version__, (ROOT/'c64/cart/easyflash-demo-scroll-runtime-v8.asm').read_text())
         from tools.c643d.cartframes import load_menu_reference
         reference=load_menu_reference(ROOT)
         self.assertEqual(len(reference), 12)
@@ -841,8 +842,8 @@ class TestRc062RenderAndChecksumControls(unittest.TestCase):
             v6=json.loads((marbles/('dont_lose_your_marbles-yunroll-cart-v6-scene'+suffix+'-manifest.json')).read_text())
             self.assertEqual(v6['toolkit_version'], '0.6.7-rc3')
             candidate=json.loads((marbles/('dont_lose_your_marbles-yunroll-cart-v7-scene'+suffix+'-manifest.json')).read_text())
-            self.assertEqual(candidate['toolkit_version'], __version__)
-            self.assertEqual(candidate['build_screen']['version'], __version__)
+            self.assertEqual(candidate['toolkit_version'], '0.6.7')
+            self.assertEqual(candidate['build_screen']['version'], '0.6.7')
             self.assertTrue(candidate['ending'])
 
 

@@ -61,7 +61,7 @@ def profile(crt, vice, vice_data=None, menu_entry=None):
         terminal = 'outro_start' if finite else 'frame_begin'
         mon += [f'break ${sym[terminal]:04x}', 'g', 'stopwatch', 'quit']
         (td/'run.mon').write_text('\n'.join(mon)+'\n')
-        cmd = [str(vice), '-console', '-pal', '+sound', '-warp', '-seed', '1',
+        cmd = [str(vice), '-console', '+easyflashcrtwrite', '-pal', '+sound', '-warp', '-seed', '1',
                '-cartcrt', str(crt), '-initbreak', 'reset', '-moncommands', str(td/'run.mon'),
                '-monlog', '-monlogname', str(td/'monitor.log'),
                '-limitcycles', str(count*1000000+40000000)]

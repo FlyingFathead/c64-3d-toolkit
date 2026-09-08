@@ -27,7 +27,7 @@ def verify(crt,vice,data,out):
         for i,name in enumerate(stages):
             mon += [f'break ${syms[name]:04x}','g','bank ram',f'bsave "{tmp/i.__str__()}.ram" 0 $0000 $ffff','bank cpu',f'bsave "{tmp/i.__str__()}.io" 0 $d000 $dbff','stopwatch','delete']
         mon += ['quit'];(tmp/'run.mon').write_text('\n'.join(mon)+'\n')
-        cmd=[vice,'-console','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(tmp/'run.mon'),'-monlog','-monlogname',str(tmp/'monitor.log'),'-limitcycles','160000000']
+        cmd=[vice,'-console', '+easyflashcrtwrite','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(tmp/'run.mon'),'-monlog','-monlogname',str(tmp/'monitor.log'),'-limitcycles','160000000']
         if data:cmd+=['-directory',str(data)]
         with (out/'vice-ending.log').open('w') as f:subprocess.run(cmd,stdout=f,stderr=subprocess.STDOUT,check=True,timeout=180)
         log=(tmp/'monitor.log').read_text();ticks=[int(t) for t in re.findall(r'Stopwatch:\s*(\d+)',log)]

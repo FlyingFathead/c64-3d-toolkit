@@ -34,7 +34,7 @@ def verify(crt, vice, vice_data, output):
             if skip: mon += ['> $dc03 $00']
             mon += [f'break ${sym[next_label]:04x}','g','stopwatch','quit']
             (tmp/'run.mon').write_text('\n'.join(mon)+'\n')
-            cmd=[str(vice),'-console','-pal','+sound','-warp','-seed','1','-cartcrt',str(crt),
+            cmd=[str(vice),'-console', '+easyflashcrtwrite','-pal','+sound','-warp','-seed','1','-cartcrt',str(crt),
                  '-initbreak','reset','-moncommands',str(tmp/'run.mon'),'-monlog',
                  '-monlogname',str(tmp/'monitor.log'),'-directory',str(vice_data),'-limitcycles','20000000']
             with (tmp/'vice.log').open('w') as log:

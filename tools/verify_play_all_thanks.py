@@ -65,7 +65,7 @@ def verify(crt, vice, vice_data, output):
                     dump('after')
                 commands.append('quit')
                 (td / 'run.mon').write_text('\n'.join(commands) + '\n')
-                cmd = [str(vice), '-console', '-pal', '+sound', '-warp', '-seed', '1',
+                cmd = [str(vice), '-console', '+easyflashcrtwrite', '-pal', '+sound', '-warp', '-seed', '1',
                        '-jamaction', '2', '-directory', str(vice_data), '-cartcrt', str(crt),
                        '-initbreak', 'reset', '-moncommands', str(td / 'run.mon'),
                        '-monlog', '-monlogname', str(td / 'monitor.log'), '-limitcycles', '35000000']

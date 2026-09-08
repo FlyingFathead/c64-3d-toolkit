@@ -32,7 +32,7 @@ def frame_block(frame,colors=True):
     if len(block)>FRAME_CAP:raise ValueError(f'frame block {len(block)} exceeds {FRAME_CAP}-byte staging buffer')
     return bytes(block),len(meta)
 
-def pack_frames(frames,colors=True,*,chip="roml",first_bank=FIRST_DATA_BANK,aliases=None):
+def pack_frames(frames,colors=True,*,chip="roml",first_bank=FIRST_DATA_BANK,aliases=None, encoder=frame_block):
     if not 1<=len(frames)<=MAX_FRAMES:raise ValueError('V2 currently supports 1..255 frames per cartridge')
     image=new_easyflash_image();bank=first_bank;offset=0;directory=[]
     if chip not in ("roml","romh") or not 0<=first_bank<64:raise ValueError("invalid cartridge data placement")
@@ -41,11 +41,13 @@ def pack_frames(frames,colors=True,*,chip="roml",first_bank=FIRST_DATA_BANK,alia
         if aliases is not None and aliases[i] != i:
             directory.append(dict(directory[aliases[i]], frame=i, reference_frame=aliases[i]))
             continue
-        block,meta=frame_block(frame,colors)
+        block,meta=encoder(frame,colors)
         if offset+len(block)>FRAME_CAP:bank+=1;offset=0
         if bank>=64:raise ValueError('EasyFlash ROML capacity exceeded; reduce frame count or detail')
         start=easyflash_offset(bank,chip,offset);image[start:start+len(block)]=block
         directory.append(dict(frame=i,bank=bank,address=base+offset,bytes=len(block),metadata_bytes=meta,runs=len(frame.records),sha256=hashlib.sha256(block).hexdigest()))
+        if encoder is not frame_block:
+            directory[-1]["encoding"] = "byte-spans" if block[meta+1] & 128 else "vectors"
         offset+=len(block)
     return image,directory
 
@@ -68,24 +70,27 @@ def emit_directory(path,directory):
     path.write_text('\n'.join(lines)+'\n')
 
 def assemble_cartridge(root,frames,mesh,*,tass,cartconv,outdir,stem,tass_args=(),color_index=1,colors=True,renderer="yunroll-cart-v2",optimize=True,prefer="fps"):
-    if renderer not in ('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7'):raise ValueError('unsupported stream renderer')
+    if renderer not in ('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8'):raise ValueError('unsupported stream renderer')
     variant=renderer.rsplit('-',1)[1]
     root=Path(root);outdir=Path(outdir);outdir.mkdir(parents=True,exist_ok=True)
     work=root/'build'/f'{stem}-stream-{variant}';gen=work/'generated';gen.mkdir(parents=True,exist_ok=True)
     original_frames = frames
     optimization = None
-    if variant in ("v5", "v6", "v7") and optimize:
+    if variant in ("v5", "v6", "v7", "v8") and optimize:
         from .optimize import optimize_frames
         frames, optimization = optimize_frames(frames, color_index<<4)
     joining = None
-    if variant == "v7" and optimize:
+    if variant in ("v7", "v8") and optimize:
         from .runjoin import join_frames
         frames, joining = join_frames(frames)
     clearing = None
-    if variant == "v7" and optimize:
+    if variant in ("v7", "v8") and optimize:
         from .clearplan import selective_clear_frames
         frames, clearing = selective_clear_frames(frames)
-    image,directory=pack_frames(frames,colors,aliases=optimization["picture_references"] if optimization else None)
+    encoder = frame_block
+    if variant == "v8":
+        from .bytespan import frame_block as encoder
+    image,directory=pack_frames(frames,colors,aliases=optimization["picture_references"] if optimization else None,encoder=encoder)
     emit_directory(gen/'tables.inc',directory)
     emit_hud(gen/'hud.inc',mesh.name,len(mesh.vertices),len(mesh.edges))
     shutil.copyfile(root/f'c64/cart/easyflash-stream-{variant}-helper.asm',gen/f'cart-{variant}-helper.inc')
@@ -96,15 +101,18 @@ def assemble_cartridge(root,frames,mesh,*,tass,cartconv,outdir,stem,tass_args=()
         src=src.replace('V5_REUSE_ENABLED = 0', f'V5_REUSE_ENABLED = {int(optimization["duplicate_pictures"] > 0)}')
     from .preferences import apply_preference
     src=apply_preference(src,renderer,prefer)
+    if variant == "v8":
+        from .bytespan import configure_source
+        src = configure_source(src, directory)
     asm=work/'main.asm';asm.write_text(src)
     ram=work/'runtime.prg';labels=outdir/f'{stem}.lbl'
     subprocess.run([tass,*tass_args,'--cbm-prg','--vice-labels','-l',str(labels),'-o',str(ram),str(asm)],check=True,cwd=root)
     blob=ram.read_bytes();load=int.from_bytes(blob[:2],'little');end=load+len(blob)-2
-    if load!=0x0801 or end>(0x6000 if variant in ("v5", "v6", "v7") else 0x5000):raise ValueError('runtime outside bootstrap RAM destination')
-    padded=bytearray(0x5800 if variant in ("v5", "v6", "v7") else 0x4800);padded[load-0x0800:end-0x0800]=blob[2:]
+    if load!=0x0801 or end>(0x6000 if variant in ("v5", "v6", "v7", "v8") else 0x5000):raise ValueError('runtime outside bootstrap RAM destination')
+    padded=bytearray(0x5800 if variant in ("v5", "v6", "v7", "v8") else 0x4800);padded[load-0x0800:end-0x0800]=blob[2:]
     for bank in range(3):put_easyflash_chip(image,bank,'roml',bytes(padded[bank*8192:(bank+1)*8192]).ljust(8192,b'\0'))
     boot=work/'boot.bin'
-    subprocess.run([tass,*tass_args,'--nostart','-o',str(boot),str(root/(f'c64/cart/easyflash-stream-{variant}-boot.asm' if variant in ('v5', 'v6', 'v7') else 'c64/cart/easyflash-stream-v2-boot.asm'))],check=True,cwd=root)
+    subprocess.run([tass,*tass_args,'--nostart','-o',str(boot),str(root/(f'c64/cart/easyflash-stream-{variant}-boot.asm' if variant in ('v5', 'v6', 'v7', 'v8') else 'c64/cart/easyflash-stream-v2-boot.asm'))],check=True,cwd=root)
     put_easyflash_chip(image,0,'romh',boot.read_bytes())
     raw=work/f'{stem}.bin';raw.write_bytes(image)
     crt=outdir/f'{stem}.crt';convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name=f'C643D STREAM {variant.upper()}',cwd=root)
@@ -113,11 +121,14 @@ def assemble_cartridge(root,frames,mesh,*,tass,cartconv,outdir,stem,tass_args=()
     if optimization: manifest['optimization']=optimization
     if clearing: manifest['clearing']=clearing
     if joining: manifest['joining']=joining
-    if variant == 'v7': manifest['preference']=prefer
+    if variant in ('v7', 'v8'): manifest['preference']=prefer
+    if variant == "v8":
+        manifest["wire_format"] = "v8-adaptive-vectors-byte-spans"
+        manifest["byte_span_frames"] = sum(d.get("encoding") == "byte-spans" for d in directory)
     (outdir/f'{stem}-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     # Retain a reproducible host oracle for emulator comparison, outside final outputs.
     from dataclasses import asdict
-    (work/'oracle.json').write_text(json.dumps([asdict(f) for f in (original_frames if variant == 'v7' else frames)]))
+    (work/'oracle.json').write_text(json.dumps([asdict(f) for f in (original_frames if variant in ('v7', 'v8') else frames)]))
     print(f'built {crt}\nframes: {len(frames)}; visible runs {min(d["runs"] for d in directory)}..{max(d["runs"] for d in directory)}\nROM frame data: {manifest["rom_frame_bytes"]} bytes; directory RAM: {len(frames)*7} bytes; fixed frame/cache RAM: 11264 bytes\nROML data banks: {FIRST_DATA_BANK}..{manifest["highest_bank"]}',flush=True)
     return crt,manifest
 
@@ -166,7 +177,7 @@ def prepare_menu_streams(root,*,tass,cartconv,tass_args=(),renderer="yunroll-car
     from .pipeline import Camera,fit_scale,build_frames
     from .mesh import transform_mesh
     from .colors import c64_color_index
-    if renderer not in ('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7'):raise ValueError('unsupported stream renderer')
+    if renderer not in ('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8'):raise ValueError('unsupported stream renderer')
     variant=renderer.rsplit('-',1)[1]
     root=Path(root);out=root/f'build/menu-stream-{variant}';out.mkdir(parents=True,exist_ok=True)
     image=new_easyflash_image();entries=[];info=[];bank=2

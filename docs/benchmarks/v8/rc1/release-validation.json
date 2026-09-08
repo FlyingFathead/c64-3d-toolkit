@@ -1,0 +1,22 @@
+{
+  "version": "0.6.8-rc1",
+  "base_commit": "718e6c3",
+  "python_tests": 127,
+  "python_tests_passed": true,
+  "historical_files_sha256_checked": 102,
+  "legacy_runtimes_compared": 72,
+  "legacy_frame_images_compared": 6,
+  "historical_assembly_and_crt_prg_unchanged": true,
+  "deleted_tracked_files": [],
+  "vice_easyflash_writeback_disabled": true,
+  "cartridges": {
+    "examples/cart_demos/c643d-demo-v0.6.8-rc1-yunroll-cart-v8-all.crt": "df27376f24177d4a87af0e9807103b424f8a3f9b3e0451b7f828427180f56935",
+    "examples/cart_demos/c643d-demo-v0.6.8-rc1-yunroll-cart-v8-all-ram.crt": "c9f4f4c9e8d40459169ad434ada319c2b09e3b3da01a17071b1b4a74bfca974d",
+    "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v8-scene-ram.crt": "861cec06e1802908010f37539e107cc8d61b73a9fe46fd477d3c724b73c39c3e",
+    "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v8-scene-clean.crt": "f1b468cafb666ffc5de08d4804c326ec9d5d52006a6bac4e4b830ebb71be89f5",
+    "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v8-scene.crt": "881100eedfb85d6bad80499996e329073142f3ce4d55e5fba2aba7f3cb95d9c1",
+    "examples/cart_marbles/dont_lose_your_marbles-yunroll-cart-v8-scene-clean-ram.crt": "38ac2a4469a575f08c41809b9b501d06d0e12000cc2b4a732bd104d74dc9cd8b",
+    "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v8-scene-ram.crt": "f9f193a30ef8b216b0a6716e02a4fb192402b1f857c0ba2b249d4bcc5fb7bbf4",
+    "examples/cart_horse_and_sunflower/horse_and_sunflower-yunroll-cart-v8-scene.crt": "963668b568625f1f2fcb28f9bb2c2a75ca33e2103c2e768522fd90a691dcd563"
+  }
+}

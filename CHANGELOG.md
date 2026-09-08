@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.6.8: Independent V8 adaptive vector/byte-span renderer
+
+- Finalize the V8 release candidate as 0.6.8; rebuild V8 title/closing screens with the final version. Renderer algorithms, source pictures and scene sample cadence are unchanged from rc1.
+- Normal PLAY ALL remains 10 seconds per demo for comparison with earlier releases. F5 in the V8 menu starts a separate exhibition loop with 15-second HiFi horse and sunflower entries; other entries remain 10 seconds. ONLY use normal PLAY ALL for A/B comparisons between methods and versions; F5 MUST NOT be used for benchmarking.
+- Update `tools/clean_release.py` for local pre-push use: default scope archives and verifies only 0.6.8-rc1 V8 menu carts/metadata before removing them from examples. Earlier methods and final cartridges are retained; the historical broader cleanup is explicit opt-in with `--scope legacy-0.6.7`.
+- Add opt-in `yunroll-cart-v8` and `yunroll-cart-v8-scene`. Preserve all existing renderer assembly, shipped CRT/PRG files, older builders and build defaults. Add frozen SHA-256 checks for 102 historical source/binary files.
+- Select host-rasterized sparse bitmap-byte spans only when strictly smaller than the unchanged V7 vector payload; otherwise retain vector drawing. This is a new hybrid method, not a claim that V7 vector kernels became 78% faster. No geometry, colour or animation samples are removed.
+- Fit the byte copier in unused space in the existing helper region. Keep triple buffering, metadata caches, bank-copy critical sections, duplicate-picture reuse and scene pacing. Compile out byte dispatch for animations that use only vectors. Retain separate FPS/RAM preferences.
+- Matched PAL VICE: HiFi sunflower 6.989 to 12.469 FPS (+78.4%), Space Horse Crawl 16.623 to 22.793 (+37.1%), HiFi horse +0.7%; other menu demos essentially unchanged (less than 0.01% timing differences). Clean Marbles mean render cost drops 33.4%, over-budget samples fall 47 to 8/200, scene duration 30.451 to 28.975 seconds. Worst Marbles frame and Horse & Sunflower remain essentially unchanged.
+- Menu CRT shrinks from 804,448 to 771,616 bytes; clean/HUD Marbles from 353,008 to 303,760. Supply eight separate V8 cartridges: FPS/RAM menu, Marbles clean/HUD, and Horse & Sunflower. Pre-V8 cartridges remain intact; rc1 menu artifacts are archived by the local cleanup.
+- Preserve the existing menu source; add a V8 menu source carrying the new version. Verify 84 launch/handoff paths with 252 picture comparisons across all three styles, timed PLAY ALL, native skip/return, six closing-screen cases, six build screens and both clean Marbles endings.
+- Disable VICE EasyFlash CRT writeback in verification/profiling tools; this prevents emulator exit from rewriting reference cartridge title headers. No historical CRT changes are shipped.
+- Verify both preferences against original bitmap/colour references, all 12 menu entries and all scene samples; add 337 synthetic cases per preference (677 completed pictures each), including byte/page/count boundaries, mixed formats, empty frames, colour changes, resident reuse and directory crossing. Rebuild V2–V7 for comparison with pristine 0.6.7.
+- All 130 Python tests pass; all 102 historical assembly/CRT/PRG checksums match.
+- Update README, renderer guide, Windows setup identity and additive upgrade instructions. Deliver a flat changes ZIP and a full source ZIP. The documented local cleanup removes only archived rc1 menu artifacts; Git publication remains a separate step.
+
 ## 0.6.7: V7 rendering, PLAY ALL and repository cleanup
 
 - Finalize the tested V5/V6/V7 work from the release candidates. V7 joins exact drawing runs and selects cell/byte clearing; matched PAL VICE tests measured up to 14.6% higher throughput than V6 with the same geometry, colours and samples. The twelve-demo CRT is 804,448 bytes versus V6's 927,568 bytes.

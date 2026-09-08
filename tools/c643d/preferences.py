@@ -4,9 +4,9 @@
 def apply_preference(source, renderer, prefer='fps'):
     if prefer not in ('fps', 'ram'):
         raise ValueError('--prefer must be fps or ram')
-    if prefer == 'ram' and renderer not in ('yunroll-cart-v7', 'yunroll-cart-v7-scene'):
-        raise ValueError('--prefer ram requires a V7 cartridge renderer')
-    if renderer in ('yunroll-cart-v7', 'yunroll-cart-v7-scene'):
+    if prefer == 'ram' and renderer not in ('yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v7-scene', 'yunroll-cart-v8-scene'):
+        raise ValueError('--prefer ram requires a V7 or V8 cartridge renderer')
+    if renderer in ('yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v7-scene', 'yunroll-cart-v8-scene'):
         marker = 'PREFER_RAM = 0'
         if marker not in source:
             raise ValueError('V7 source is missing its kernel preference marker')

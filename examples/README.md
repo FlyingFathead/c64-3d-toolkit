@@ -1,5 +1,7 @@
 # Examples
 
+**0.6.8:** V8 adds separate FPS/RAM carts while retaining every existing example. See [the V8 guide](../docs/CARTRIDGE_STREAM_V8.md).
+
 Ready-to-run cartridges, Blender scenes, and generated/reference PRGs are grouped by demo.
 
 ## Cartridge demos
