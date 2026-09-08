@@ -1,15 +1,20 @@
-# 0.7.0 main examples cleanup
+# Current examples and historical output cleanup — 0.7.0
 
-Run `python perf/cleanup_070_examples.py` after extracting cleanup-03.
-The accepted 16 FPS force-bytes Marbles is the main presentation. Its startup
-now waits indefinitely for SPACE before the intro; its animation is unchanged.
-Labels and manifest are retained from the accepted local run.
+The released snapshot already contains the accepted 640-sample, 16 FPS
+force-bytes Marbles presentation, with SPACE to start. Current menu,
+Horse/Sunflower and standalone cartridges use hors-render-v1; see the
+[example index](../examples/README.md) and [inventory](V10_CARTRIDGES.md).
 
-Superseded outputs are relocated under each example's history directory.
-Canonical historical reference bytes are included for regression tests.
-Modified local copies are preserved under history/local-modified/<sha256>/,
-without overwriting the reference copy. A second run does not repeat the moves.
+No promotion from `marbles-realtime-01` is required to use this package. Its
+accepted Marbles CRT, labels and manifest are already supplied. The earlier
+cleanup-02/03 instructions described development patches, not fresh-clone setup.
 
-The cleanup does not rerender, search FPS, delete renderer implementations or
-change the measured scene timing. Comparison chart provenance remains stale
-following the input relocation; final release validation is still outstanding.
+For leftovers from old overlays, run `python perf/prune_old_examples.py` from
+the repository root. `perf/cleanup_070_examples.py` is now a compatibility alias
+for that same cleanup; it does not install a cart from a local experiment run.
+See [repository cleanup](REPOSITORY_CLEANUP_070.md) for destinations and limits.
+
+The saved [performance comparison](PERFORMANCE_COMPARISON.md) is the v0.7.0
+source-fingerprinted chart. Validate it using
+`python tools/compare_renderers.py --check`; the pre-release statement that its
+provenance was still stale no longer describes the supplied release.

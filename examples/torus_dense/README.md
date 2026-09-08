@@ -4,7 +4,7 @@ Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
 
 # Torus Dense — hors-render-v1
 
-Start with the current 0.7.0 cartridge:
+Start with the supplied hors-render-v1 cartridge:
 
 ```bash
 x64sc +easyflashcrtwrite -cartcrt examples/torus_dense/torus_dense-hors-render-v1.crt

@@ -1,5 +1,13 @@
 # V9 direct cartridge byte spans — toolkit 0.6.9
 
+> Historical renderer guide. Release labels, defaults, measurements and
+> reproduction commands below refer to this generation, not the v0.7.0 defaults.
+> v0.7.0 uses hors-render-v1 / hors-render-v1-scene; see
+> [current builds](V10_TESTING.md) and the [matched comparison](PERFORMANCE_COMPARISON.md).
+> Superseded generated outputs live in the optional sibling
+> `../c64-3d-toolkit-history/` archive. Old paths in the historical examples
+> may require that archive or the corresponding release checkout.
+
 **ONLY use normal PLAY ALL for A/B comparisons between rendering methods and
 versions. F5 is an internal demo mode for exhibitions and MUST NOT be used for
 benchmarking.** Normal PLAY ALL remains 10 seconds per entry. F5 retains its

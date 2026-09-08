@@ -35,7 +35,11 @@ def verify(crt, vice, vice_data, *, exhibition=False):
                              'g' if start is None else f'g ${start:04x}'])
         def dump(name):
             commands.extend(['bank ram', f'bsave "{out / (name + ".ram")}" 0 $0000 $ffff'])
-        stop(menu['menu_wait_key'])
+        if meta.get('build_screen', {}).get('wait_for_space'):
+            stop(menu['build_screen_visible'])
+            stop(menu['menu_wait_key'], menu['build_screen_done'])
+        else:
+            stop(menu['menu_wait_key'])
         dump('cold')
         if exhibition:
             # Inject the F5 matrix sample after the CIA read, then execute the

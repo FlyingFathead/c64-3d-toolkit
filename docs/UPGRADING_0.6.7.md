@@ -1,5 +1,11 @@
 # Updating to v0.6.7
 
+> Historical upgrade instructions for the version named above. They are not
+> the v0.7.0 installation or release procedure. Use [Upgrading to 0.7.0](UPGRADING_0.7.0.md)
+> for the current package. Old generated paths below describe their original
+> release layout; superseded outputs are now outside the checkout in
+> `../c64-3d-toolkit-history/`, when that optional archive is available.
+
 The final V7 release keeps the twelve-demo menu, all three F1 styles, the `+`
 scroll indicators, PLAY ALL and its ten-second closing screen. Horse and
 Sunflower stays a separate scene cartridge. FPS is the default preference.

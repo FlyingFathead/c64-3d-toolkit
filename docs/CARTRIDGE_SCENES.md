@@ -1,4 +1,44 @@
-# Long Blender scenes on EasyFlash: V4 scene extension
+# Long Blender scenes on EasyFlash
+
+## Current scene path in 0.7.1
+
+Authored builds default to `hors-render-v1-scene` (internal alias
+`yunroll-cart-v10-scene`). It inherits paged directories and sequence playback,
+adding the byte-first direct-ROM rendering policy and optional fractional PAL
+pacing. The directory supports 1..2048 samples, subject to an 8 KiB encoded
+frame arena and the EasyFlash storage budget. Overflow is an error, not a
+request to silently remove authored samples.
+
+For the shipped presentations, use [Marbles](../examples/cart_marbles/README.md)
+and [Horse and Sunflower](../examples/cart_horse_and_sunflower/README.md).
+Marbles contains 640 samples of the 40-second source timeline and takes about
+41.82 seconds for the scene in the recorded PAL VICE run. Its requested 16 FPS
+is a documented compromise. It waits for SPACE before its intro; music remains
+untested. The 200-sample measurements below are historical V4 results.
+
+Build a new authored scene from the repository root:
+
+```bash
+python c643d.py build --no-config --renderer hors-render-v1-scene \
+  --blend examples/blender_horse_and_sunflower/horse_and_sunflower.blend \
+  --sample-step 3 --frame-ticks 6 --viewport-height 192 \
+  --visibility surface_features --z-tolerance 0.00008 --prefer fps \
+  --no-text-overlay --output horse-and-sunflower-local \
+  --output-dir build/horse-and-sunflower-local
+```
+
+This is a fresh Blender compilation, not a byte-exact replacement of the
+shipped cartridge. Add `--intro --ending` for a finite story with native screens;
+without them this example loops. Tool paths can be supplied through `--blender`,
+`--tass` and `--cartconv`. See [Blender targets](V10_TESTING.md) for
+`--blender-output-fps` and the accepted Marbles reproduction limitations.
+
+## Historical V4 extension and early Marbles release
+
+The remaining implementation details, addresses, commands and measurements
+record v0.6.6's V4 extension. Preserve them for historical reproduction; do not
+apply its exact memory map or playback numbers to hors-render-v1. Old cartridges
+and reports require the corresponding release or optional external history archive.
 
 Toolkit v0.6.6 includes **Don't Lose Your Marbles, early beta**, as a standalone
 cartridge example. It is silent; music and digi playback are future work.

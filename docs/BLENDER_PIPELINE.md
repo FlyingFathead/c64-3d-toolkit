@@ -1,6 +1,10 @@
 # Blender animated-scene pipeline
 
-For long standalone EasyFlash scenes, see [V4 scene streaming and Don't Lose Your Marbles](CARTRIDGE_SCENES.md). The 255-frame and table-RAM limits below describe the original PRG path.
+v0.7.1 Blender builds default to hors-render-v1-scene EasyFlash output. See
+[current scene streaming](CARTRIDGE_SCENES.md) and [build targets](V10_TESTING.md).
+Use `--renderer yunroll` explicitly for the preserved resident PRG path. Its
+255-sample/table-RAM limits differ from the streamed scene directory's 2048
+sample maximum; per-frame and total cartridge capacity can limit either earlier.
 
 Blender is an optional authoring front end. The classic procedural, OBJ, MTL,
 and SVG commands do not import `bpy`, launch Blender, or require Blender to be
@@ -14,12 +18,13 @@ scene.blend
     -> evaluated objects + active camera for each sampled frame
     -> temporary .c643dscene interchange data
     -> existing hidden-line / colour / DDA compiler
-    -> existing C64 vector-table runtime
+    -> hors-render-v1-scene byte-span/vector stream, or explicit resident PRG
 ```
 
-This is not a bitmap movie export. Blender supplies authored geometry, object
-motion, deformation, materials, and camera state; the stock C64 still draws the
-resulting visible vectors.
+Blender exports geometry, motion, deformation, materials and camera state.
+The host projects/clips that geometry, then hors-render-v1 prefers sparse
+bitmap-byte spans for direct ROM-to-bitmap copying, with a vector fallback.
+Explicit resident PRG renderers rasterize the encoded vectors on the C64.
 
 ## Install and verify Blender
 
@@ -31,7 +36,7 @@ with working bundled `bpy` as a supported older fallback:
 sudo apt install blender
 ```
 
-Blender 4.0.2 and current Blender 5.2 LTS provide the required camera API.
+Blender 4.0.2 and Blender 5.2 provide the required camera API.
 This does not make `.blend` files backward-compatible: use 5.2 for files saved
 by 5.2, or keep authoring/export on the same major version.
 
@@ -90,8 +95,10 @@ The scene needs an active perspective camera and at least one mesh object:
 ```
 
 `--frame-start` and `--frame-end` default to the Blender scene range. A sample
-step of 2 exports frames 1, 3, 5, and so on. At most 255 sampled frames are
-accepted, but the practical C64 table-RAM limit will normally be lower.
+step of 2 exports frames 1, 3, 5, and so on. The default scene cartridge path
+accepts up to 2048 samples, subject to encoded frame and cartridge capacity.
+Explicit resident PRG builds accept at most 255 samples and usually reach the
+table-RAM limit earlier.
 
 Blender scene builds always preserve authored frame selection. If the tables do
 not fit, the toolkit fails and suggests a larger `--sample-step`, a shorter
@@ -173,8 +180,9 @@ Rigid-body and other stateful simulations are evaluated sequentially from the
 scene/cache start through the last requested frame. Only frames selected by
 `--sample-step` are stored in the interchange and C64 tables. This preserves
 physics evolution while retaining the intended C64 frame budget. The canonical six-cube
-example uses a step of 4 because the expanded 192-line overlay viewport makes
-the older 24-sample/step-3 build exceed the fixed C64 table-RAM budget. A warning is
+reference uses a step of 4 because the expanded 192-line resident PRG viewport
+made the older 24-sample/step-3 build exceed its table-RAM budget. That PRG
+constraint is not the streamed cartridge's animation-capacity limit. A warning is
 printed if all captured frames are geometrically identical.
 
 The example uses separate stable-topology cubes. They fall, collide, tumble,
@@ -186,8 +194,10 @@ The same directory also contains `falling_cubes_full.py` and Harry's actual
 Blender-4.00 `falling_cubes_full.blend`: five clusters containing 40 small
 cubes, a passive floor, and deterministic rigid-body setup. That fuller scene
 is included as an authoring/stress reference. It can exceed the present C64
-limit of 255 visible runs in one frame and the available table RAM, so the
-six-cube variant is the canonical compile example.
+resident PRG limit of 255 visible runs in one frame and available table RAM.
+Streamed scene builds allow 16-bit run counts but still require each encoded
+frame to fit 8 KiB and the sequence to fit ROM. The six-cube variant remains
+the small compile example.
 
 The canonical six-cube scene also has a dedicated regression selector. It builds
 both the authored-colour scene and a forced monochrome version in the current

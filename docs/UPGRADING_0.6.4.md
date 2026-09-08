@@ -1,6 +1,12 @@
 # 0.6.4 package notes
 
-Historical notes for the original 0.6.4 package. For the current release, see
+> Historical upgrade instructions for the version named above. They are not
+> the v0.7.0 installation or release procedure. Use [Upgrading to 0.7.0](UPGRADING_0.7.0.md)
+> for the current package. Old generated paths below describe their original
+> release layout; superseded outputs are now outside the checkout in
+> `../c64-3d-toolkit-history/`, when that optional archive is available.
+
+Historical notes for the original 0.6.4 package. For the following historical release, see
 [upgrading to 0.6.5](UPGRADING_0.6.5.md).
 
 The changed-files ZIP contains paths relative to the repository root. Extract

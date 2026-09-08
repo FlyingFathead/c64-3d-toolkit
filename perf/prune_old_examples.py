@@ -7,7 +7,8 @@ FOLDERS=('cart_demos','cart_marbles','cart_horse_and_sunflower')
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
     root=ROOT.resolve();archive=root.parent/'c64-3d-toolkit-history'
-    if (root/'VERSION').read_text().strip()!='0.7.0':raise SystemExit('Expected VERSION 0.7.0')
+    if (root/'VERSION').read_text().strip()not in ('0.7.0','0.7.1'):raise SystemExit('Expected VERSION 0.7.0 or 0.7.1')
+    version=(root/'VERSION').read_text().strip()
     current=root/'examples/cart_marbles/marbles-hors-render-v1-16fps-force-bytes.crt'
     if not current.is_file():raise SystemExit('Main Marbles cart missing; apply examples-cleanup-03 first')
     paths=[]
@@ -18,7 +19,7 @@ def main():
         # Catch older versioned outputs left at top level by earlier upgrades.
         for p in folder.rglob('*'):
             if not p.is_file() or 'history' in p.relative_to(folder).parts:continue
-            if 'yunroll-cart-v' in p.name or (name=='cart_marbles' and p.name.startswith('dont_lose_your_marbles-hors-render-v1-')):
+            if (name=='cart_demos' and version=='0.7.1' and p.name.startswith('c643d-demo-v0.7.0-')) or 'yunroll-cart-v' in p.name or (name=='cart_marbles' and p.name.startswith('dont_lose_your_marbles-hors-render-v1-')):
                 paths.append(p)
     hifi=root/'examples/hifi_showcase'
     if hifi.exists():

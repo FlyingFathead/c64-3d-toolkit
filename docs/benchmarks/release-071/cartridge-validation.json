@@ -1,0 +1,501 @@
+[
+  {
+    "cartridge": "c643d-demo-v0.7.1-hors-render-v1-all.crt",
+    "sha256": "a404a5454afe2ed3c9715d5166b8f222376d307bd32bb4a4a55db66d80c9c4e1",
+    "separate": false,
+    "order": [
+      10,
+      11
+    ],
+    "cycles": {
+      "entry-10": 9807793,
+      "entry-11": 9808771,
+      "thanks": 9816248,
+      "title": 9814113
+    },
+    "loop": true,
+    "thanks": true,
+    "method": "PAL VICE production code; monitor acknowledges initial SPACE and injects F4 scanner samples"
+  },
+  {
+    "cartridge": "c643d-demo-v0.7.1-hors-render-v1-all.crt",
+    "sha256": "a404a5454afe2ed3c9715d5166b8f222376d307bd32bb4a4a55db66d80c9c4e1",
+    "mode": "normal-play-all",
+    "menu_style": "default",
+    "entry_seconds": [
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10
+    ],
+    "seconds_per_demo": 10,
+    "ticks_per_demo": 500,
+    "all_entries": true,
+    "last_to_first_wrap": true,
+    "first_picture_before_timer": true,
+    "space_skips": true,
+    "held_space_latched": true,
+    "runstop_returns": true,
+    "manual_launch_disables_timer": true,
+    "samples": [
+      {
+        "entry": 0,
+        "seconds": 10,
+        "count_interval_cycles": 9808343
+      },
+      {
+        "entry": 1,
+        "seconds": 10,
+        "count_interval_cycles": 9808610
+      },
+      {
+        "entry": 2,
+        "seconds": 10,
+        "count_interval_cycles": 9808389
+      },
+      {
+        "entry": 3,
+        "seconds": 10,
+        "count_interval_cycles": 9808517
+      },
+      {
+        "entry": 4,
+        "seconds": 10,
+        "count_interval_cycles": 9808370
+      },
+      {
+        "entry": 5,
+        "seconds": 10,
+        "count_interval_cycles": 9808632
+      },
+      {
+        "entry": 6,
+        "seconds": 10,
+        "count_interval_cycles": 9808369
+      },
+      {
+        "entry": 7,
+        "seconds": 10,
+        "count_interval_cycles": 9808607
+      },
+      {
+        "entry": 8,
+        "seconds": 10,
+        "count_interval_cycles": 9808270
+      },
+      {
+        "entry": 9,
+        "seconds": 10,
+        "count_interval_cycles": 9808368
+      },
+      {
+        "entry": 10,
+        "seconds": 10,
+        "count_interval_cycles": 9807857
+      },
+      {
+        "entry": 11,
+        "seconds": 10,
+        "count_interval_cycles": 9808538
+      },
+      {
+        "entry": 0,
+        "seconds": 10,
+        "count_interval_cycles": 9808198
+      }
+    ],
+    "method": "PAL VICE; production handlers via monitor, no host key injection."
+  },
+  {
+    "cartridge": "c643d-demo-v0.7.1-hors-render-v1-all.crt",
+    "sha256": "a404a5454afe2ed3c9715d5166b8f222376d307bd32bb4a4a55db66d80c9c4e1",
+    "mode": "internal-demo-F5",
+    "menu_style": "default",
+    "entry_seconds": [
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      15,
+      15
+    ],
+    "seconds_per_demo": 10,
+    "ticks_per_demo": 500,
+    "all_entries": true,
+    "last_to_first_wrap": true,
+    "first_picture_before_timer": true,
+    "space_skips": true,
+    "held_space_latched": true,
+    "runstop_returns": true,
+    "manual_launch_disables_timer": true,
+    "samples": [
+      {
+        "entry": 0,
+        "seconds": 10,
+        "count_interval_cycles": 9808283
+      },
+      {
+        "entry": 1,
+        "seconds": 10,
+        "count_interval_cycles": 9808562
+      },
+      {
+        "entry": 2,
+        "seconds": 10,
+        "count_interval_cycles": 9808389
+      },
+      {
+        "entry": 3,
+        "seconds": 10,
+        "count_interval_cycles": 9808480
+      },
+      {
+        "entry": 4,
+        "seconds": 10,
+        "count_interval_cycles": 9808372
+      },
+      {
+        "entry": 5,
+        "seconds": 10,
+        "count_interval_cycles": 9808623
+      },
+      {
+        "entry": 6,
+        "seconds": 10,
+        "count_interval_cycles": 9808369
+      },
+      {
+        "entry": 7,
+        "seconds": 10,
+        "count_interval_cycles": 9808259
+      },
+      {
+        "entry": 8,
+        "seconds": 10,
+        "count_interval_cycles": 9808156
+      },
+      {
+        "entry": 9,
+        "seconds": 10,
+        "count_interval_cycles": 9808368
+      },
+      {
+        "entry": 10,
+        "seconds": 15,
+        "count_interval_cycles": 14722417
+      },
+      {
+        "entry": 11,
+        "seconds": 15,
+        "count_interval_cycles": 14722622
+      },
+      {
+        "entry": 0,
+        "seconds": 10,
+        "count_interval_cycles": 9808176
+      }
+    ],
+    "method": "PAL VICE; injected F5 CIA row sample, real scanner/dispatch and production handlers; no host key injection."
+  },
+  {
+    "cartridge": "c643d-demo-v0.7.1-hors-render-v1-all-ram.crt",
+    "sha256": "135bc8001e46af6154c89812345d4cc5cf3adf74867bf21c1c577f49223a2e2f",
+    "separate": false,
+    "order": [
+      10,
+      11
+    ],
+    "cycles": {
+      "entry-10": 9807701,
+      "entry-11": 9808502,
+      "thanks": 9816299,
+      "title": 9814023
+    },
+    "loop": true,
+    "thanks": true,
+    "method": "PAL VICE production code; monitor acknowledges initial SPACE and injects F4 scanner samples"
+  },
+  {
+    "cartridge": "c643d-demo-v0.7.1-hors-render-v1-all-ram.crt",
+    "sha256": "135bc8001e46af6154c89812345d4cc5cf3adf74867bf21c1c577f49223a2e2f",
+    "mode": "normal-play-all",
+    "menu_style": "default",
+    "entry_seconds": [
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10
+    ],
+    "seconds_per_demo": 10,
+    "ticks_per_demo": 500,
+    "all_entries": true,
+    "last_to_first_wrap": true,
+    "first_picture_before_timer": true,
+    "space_skips": true,
+    "held_space_latched": true,
+    "runstop_returns": true,
+    "manual_launch_disables_timer": true,
+    "samples": [
+      {
+        "entry": 0,
+        "seconds": 10,
+        "count_interval_cycles": 9808333
+      },
+      {
+        "entry": 1,
+        "seconds": 10,
+        "count_interval_cycles": 9808418
+      },
+      {
+        "entry": 2,
+        "seconds": 10,
+        "count_interval_cycles": 9805956
+      },
+      {
+        "entry": 3,
+        "seconds": 10,
+        "count_interval_cycles": 9808248
+      },
+      {
+        "entry": 4,
+        "seconds": 10,
+        "count_interval_cycles": 9808262
+      },
+      {
+        "entry": 5,
+        "seconds": 10,
+        "count_interval_cycles": 9808198
+      },
+      {
+        "entry": 6,
+        "seconds": 10,
+        "count_interval_cycles": 9808293
+      },
+      {
+        "entry": 7,
+        "seconds": 10,
+        "count_interval_cycles": 9808681
+      },
+      {
+        "entry": 8,
+        "seconds": 10,
+        "count_interval_cycles": 9808410
+      },
+      {
+        "entry": 9,
+        "seconds": 10,
+        "count_interval_cycles": 9808514
+      },
+      {
+        "entry": 10,
+        "seconds": 10,
+        "count_interval_cycles": 9808356
+      },
+      {
+        "entry": 11,
+        "seconds": 10,
+        "count_interval_cycles": 9808306
+      },
+      {
+        "entry": 0,
+        "seconds": 10,
+        "count_interval_cycles": 9808369
+      }
+    ],
+    "method": "PAL VICE; production handlers via monitor, no host key injection."
+  },
+  {
+    "cartridge": "c643d-demo-v0.7.1-hors-render-v1-all-ram.crt",
+    "sha256": "135bc8001e46af6154c89812345d4cc5cf3adf74867bf21c1c577f49223a2e2f",
+    "mode": "internal-demo-F5",
+    "menu_style": "default",
+    "entry_seconds": [
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      15,
+      15
+    ],
+    "seconds_per_demo": 10,
+    "ticks_per_demo": 500,
+    "all_entries": true,
+    "last_to_first_wrap": true,
+    "first_picture_before_timer": true,
+    "space_skips": true,
+    "held_space_latched": true,
+    "runstop_returns": true,
+    "manual_launch_disables_timer": true,
+    "samples": [
+      {
+        "entry": 0,
+        "seconds": 10,
+        "count_interval_cycles": 9808230
+      },
+      {
+        "entry": 1,
+        "seconds": 10,
+        "count_interval_cycles": 9808405
+      },
+      {
+        "entry": 2,
+        "seconds": 10,
+        "count_interval_cycles": 9806128
+      },
+      {
+        "entry": 3,
+        "seconds": 10,
+        "count_interval_cycles": 9808248
+      },
+      {
+        "entry": 4,
+        "seconds": 10,
+        "count_interval_cycles": 9808239
+      },
+      {
+        "entry": 5,
+        "seconds": 10,
+        "count_interval_cycles": 9808183
+      },
+      {
+        "entry": 6,
+        "seconds": 10,
+        "count_interval_cycles": 9808293
+      },
+      {
+        "entry": 7,
+        "seconds": 10,
+        "count_interval_cycles": 9808664
+      },
+      {
+        "entry": 8,
+        "seconds": 10,
+        "count_interval_cycles": 9808358
+      },
+      {
+        "entry": 9,
+        "seconds": 10,
+        "count_interval_cycles": 9808515
+      },
+      {
+        "entry": 10,
+        "seconds": 15,
+        "count_interval_cycles": 14722194
+      },
+      {
+        "entry": 11,
+        "seconds": 15,
+        "count_interval_cycles": 14722365
+      },
+      {
+        "entry": 0,
+        "seconds": 10,
+        "count_interval_cycles": 9808369
+      }
+    ],
+    "method": "PAL VICE; injected F5 CIA row sample, real scanner/dispatch and production handlers; no host key injection."
+  },
+  {
+    "cartridge": "c643d-hifi-v0.7.1-hors-render-v1.crt",
+    "sha256": "c3a716499362bb282746f54f0b9f4d6c1d231ee55d5c03c1dbd976bfec288670",
+    "separate": true,
+    "order": [
+      1,
+      2
+    ],
+    "cycles": {
+      "complete-scene": 11418822,
+      "entry-1": 9808697,
+      "entry-2": 9808271,
+      "thanks": 9816656
+    },
+    "loop": true,
+    "thanks": true,
+    "method": "PAL VICE production code; monitor acknowledges initial SPACE and injects F4 scanner samples"
+  },
+  {
+    "cartridge": "c643d-hifi-v0.7.1-hors-render-v1.crt",
+    "menu_entry": 0,
+    "verified_frames": 84,
+    "orientations": 84,
+    "bitmap_bytes_checked": 645120,
+    "color_bytes_checked": 80640,
+    "slots": {
+      "1": 29,
+      "2": 20,
+      "0": 35
+    },
+    "average_fps": 7.372016000067792,
+    "min_frame_cycles": 6570,
+    "max_frame_cycles": 263434,
+    "pixel_match": true,
+    "color_match": true,
+    "reused_samples": 24
+  },
+  {
+    "cartridge": "c643d-hifi-v0.7.1-hors-render-v1.crt",
+    "menu_entry": 1,
+    "verified_frames": 259,
+    "orientations": 128,
+    "bitmap_bytes_checked": 1989120,
+    "color_bytes_checked": 248640,
+    "slots": {
+      "1": 87,
+      "2": 86,
+      "0": 86
+    },
+    "average_fps": 19.94484703423227,
+    "min_frame_cycles": 28408,
+    "max_frame_cycles": 61821,
+    "pixel_match": true,
+    "color_match": true,
+    "reused_samples": 0
+  },
+  {
+    "cartridge": "c643d-hifi-v0.7.1-hors-render-v1.crt",
+    "menu_entry": 2,
+    "verified_frames": 259,
+    "orientations": 128,
+    "bitmap_bytes_checked": 1989120,
+    "color_bytes_checked": 248640,
+    "slots": {
+      "1": 87,
+      "2": 86,
+      "0": 86
+    },
+    "average_fps": 20.523123050580118,
+    "min_frame_cycles": 33480,
+    "max_frame_cycles": 56136,
+    "pixel_match": true,
+    "color_match": true,
+    "reused_samples": 0
+  }
+]

@@ -1,5 +1,11 @@
 # Candidate experiments after V9
 
+v0.7.0 status: hors-render-v1 is the production default; this runner remains an
+independent comparison/experiment workflow. V9 IDs and the provenance notes
+below describe its initial baseline, not the current release version. The full
+profile follows the registered methods; production defaults and accepted
+presentations are documented in [current builds](V10_TESTING.md).
+
 This is an experimental host-side runner, not hors-render-v1 or an automatic production
 renderer selector. It uses the existing verified comparison builders and normal
 PLAY ALL harness. No previous renderer or shipped cartridge is modified.
@@ -105,7 +111,7 @@ recommendations. ONLY normal PLAY ALL supplies A/B throughput; F5 is excluded.
    baseline on the local toolchain. Host speed affects run duration; FPS is
    calculated from emulated C64 cycles, not host wall-clock speed. There is no
    assumed speed advantage for this hosted environment over your machine.
-2. Add separate hors-render-v1 candidates for direct-ROM vectors, execution-cost-based
+2. Add separate follow-up candidates beyond hors-render-v1 for direct-ROM vectors, execution-cost-based
    vector/byte selection and buffer-aware patches, one change at a time.
 3. Record average and worst-frame behavior, payload sizes, allocated address
    ranges and interrupt/banking constraints. Reserve resources for music before
@@ -114,7 +120,7 @@ recommendations. ONLY normal PLAY ALL supplies A/B throughput; F5 is excluded.
    after switching, placement and bank-boundary costs. Existing algorithms stay
    byte-exact; no default changes until the integrated candidate is verified.
 
-## Baseline provenance
+## Historical framework baseline provenance
 
 Adding this orchestration runner does not change benchmark kernels or workload.
 The only fingerprinted edits are ignoring `/logs/` and excluding it from source

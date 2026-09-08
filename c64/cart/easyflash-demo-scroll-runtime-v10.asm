@@ -19,7 +19,7 @@ EF_RAM         = $df00
 DEBUGCART_EXIT = $d7ff
 
 CONTROL_RAM       = $0200
-CONTROL_EXHIBITION = $02f7      ; persistent V9-only exhibition flag
+CONTROL_EXHIBITION = $02f7      ; 0=normal, 1=F5, 2=hidden HiFi reel
 CONTROL_ORIG_LO   = $02f8
 CONTROL_ORIG_HI   = $02f9
 CONTROL_CURRENT   = $02fa
@@ -161,6 +161,12 @@ runtime_menu_index_ok:
 
 runtime_next_demo:
     jsr runtime_common
+    lda CONTROL_EXHIBITION
+    cmp #2
+    bne runtime_next_normal
+    jsr load_menu_shared
+    jmp hifi_next
+runtime_next_normal:
     lda CONTROL_CURRENT
     clc
     adc #1
@@ -336,6 +342,10 @@ menu_wait_key:
     beq menu_up
     cmp #3
     beq menu_launch
+    cmp #6
+    bne menu_check_f5
+    jmp menu_hifi
+menu_check_f5:
     cmp #5
     beq menu_exhibition
     cmp #4
@@ -788,6 +798,14 @@ scan_menu_row_read:
     beq scan_key_style
 
     lda ZP_TMP
+    and #$20                    ; F3 plus either SHIFT = F4
+    bne scan_check_f5
+    jsr scan_shift_pressed
+    beq scan_check_f5
+    lda #6
+    rts
+scan_check_f5:
+    lda ZP_TMP
     and #$40                    ; F5, row 0 bit 6
     beq scan_key_exhibition
 
@@ -860,8 +878,8 @@ wait_menu_key_release:
     sta $dc00
 wait_menu_key_release_loop:
     lda $dc01
-    and #$96                    ; F1 / RETURN / CRSR RIGHT / CRSR DOWN
-    cmp #$96
+    and #$f6                    ; F1/F3/F5 / RETURN / CRSR RIGHT / CRSR DOWN
+    cmp #$f6
     bne wait_menu_key_release_loop
     lda #$ff
     sta $dc00
@@ -1118,10 +1136,7 @@ gradient_divider:
 gradient_palette:
     .byte $06,$0e,$03,$0d,$07,$0a,$02,$04,$0a,$07,$0d,$03,$0e,$06,$0b,$0c
 
-title_default:
-    .text "C64 3D TOOLKIT 0.6.9  ALL V"
-    .byte $30+RENDERER_VERSION
-    .byte 0
+.include "menu-title.inc"
 title_fancy:
     .text "C64-3D-TOOLKIT 0.6.9"
     .byte 0
@@ -1396,6 +1411,11 @@ play_all_existing:
     lda #PLAY_ALL_SECONDS
     ldx CONTROL_EXHIBITION
     beq play_all_duration_ready
+    cpx #2
+    bne play_all_f5_duration
+    lda #10
+    bne play_all_duration_ready
+play_all_f5_duration:
     ldx selected_entry
     lda play_all_durations,x
 play_all_duration_ready:
@@ -1404,6 +1424,41 @@ play_all_duration_ready:
     sta CONTROL_TICKS
 play_all_setup_done:
     rts
+
+ ; Hidden reel uses only the two named HiFi entries; no menu/help text.
+menu_hifi:
+.if HIFI_HORSE_INDEX < DEMO_ENTRY_COUNT && HIFI_FLOWER_INDEX < DEMO_ENTRY_COUNT
+    jsr wait_menu_key_release
+    lda #2
+    sta CONTROL_EXHIBITION
+hifi_restart:
+    lda #HIFI_HORSE_INDEX
+    jmp hifi_launch
+hifi_next:
+    lda CONTROL_CURRENT
+    cmp #HIFI_HORSE_INDEX
+    bne hifi_return_title
+    lda #HIFI_FLOWER_INDEX
+hifi_launch:
+    sta selected_entry
+    lda #1
+    sta CONTROL_AUTO
+    jmp menu_launch_nowait
+hifi_return_title:
+    lda #0
+    sta CONTROL_AUTO
+    jsr play_all_thanks_start
+    bcs hifi_exit
+    jsr build_screen_start
+    bcs hifi_exit
+    jmp hifi_restart
+hifi_exit:
+    jmp runtime_return_menu
+.else
+    jmp menu_wait_key
+hifi_next:
+    jmp runtime_return_menu
+.endif
 
 draw_play_all:
     lda #$d4

@@ -1,13 +1,19 @@
-# Marbles recording start
+# Marbles recording start — 0.7.0
 
-After examples-cleanup-02, run `python perf/marbles_wait_for_space.py`.
-The accepted main cart waits on its existing SPACE to start screen indefinitely.
-Start recording in VICE, focus the emulator, then press SPACE to begin the intro.
+The shipped `examples/cart_marbles/marbles-hors-render-v1-16fps-force-bytes.crt`
+already waits indefinitely for SPACE. Start recording in VICE, focus its window,
+then press SPACE to begin the native intro. The scene follows, then the ending.
+See [the presentation guide](../examples/cart_marbles/README.md).
 
-This changes only the startup timeout instruction (DEX/BNE to CLC/BCC). Animation data,
-addresses and labels are unchanged. The automatic-start cart is backed up under
-`examples/cart_marbles/history/startup-auto/`. Repeated application is harmless.
-New hors-render-v1 scene builds also wait for SPACE. Historical renderer build
-screens retain their previous behaviour. Automated end-to-end playback tests
-must press SPACE or bypass this startup screen. Apply this after cleanup; running
-the old promotion script again can restore the automatic-start copy.
+No cleanup or startup patch is required for this release. New hors-render-v1
+scene builds with the native intro also wait for SPACE. Historical renderer
+build screens retain their original behaviour. Automated playback verifiers
+must acknowledge the startup screen.
+
+## Historical startup patch
+
+`perf/marbles_wait_for_space.py` remains an idempotent compatibility utility for
+the earlier accepted cart with an automatic timeout. It changes the startup
+DEX/BNE sequence to CLC/BCC without changing animation addresses or payloads.
+It checks for the expected accepted cart, backs up an automatic-start copy in
+the external sibling archive, and leaves an already-patched cart alone.

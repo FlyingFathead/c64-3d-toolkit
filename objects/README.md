@@ -1,5 +1,9 @@
 # Objects
 
+Default builds in v0.7.1 produce hors-render-v1 EasyFlash cartridges. Use
+`--renderer yunroll` for resident PRG output. See the
+[renderer table](../README.md#renderers) for format and memory differences.
+
 This directory contains reusable low-poly OBJ assets, SVG vector assets, and optional JSON metadata presets.
 
 A named OBJ object normally consists of:

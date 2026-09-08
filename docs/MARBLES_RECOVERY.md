@@ -1,5 +1,20 @@
 # Dense Marbles recovery
 
+## Release outcome (0.7.0)
+
+The accepted presentation is the [640-sample, 16 FPS force-bytes Marbles
+cart](../examples/cart_marbles/README.md), with a recorded scene interval of
+41.8226 seconds rather than exactly 40 seconds. Acceptance is specific to that
+cart and does not establish a general timing guarantee. It already ships with
+SPACE-to-start behaviour. Historical generated outputs are in the optional
+external `../c64-3d-toolkit-history/` tree.
+
+The sections below record the experiments in development order. Statements
+such as “pending” refer to that stage, not a requirement to rerun the accepted
+presentation. The recovery commands require the named local compiled checkpoint;
+it is not part of a fresh clone. General automatic timing selection, music
+coexistence and larger cartridge backends remain unfinished.
+
 The supplied marbles-blender-01 logs show that the 25 FPS export and all 1,000 geometry samples compiled, then EasyFlash packing exhausted capacity at sample 750. The 20 FPS export succeeded but its fractional source sample 404.75 contained a vertex behind the camera; the compiler rejected it before packing. The log prints source_frame as integer 404.
 
 `python perf/recover_marbles.py --id marbles-recovery-01 --from-run marbles-blender-01 --vice-data /path/to/vice-data` reuses the saved 25 FPS .c643dscene and compiled oracle. It never launches Blender. At 20 FPS it selects 800 nearest integer-source samples over the same 40-second source interval. This avoids interpolated subframes; it is nearest-sample temporal resampling, not interpolation or a near-plane clipping implementation.

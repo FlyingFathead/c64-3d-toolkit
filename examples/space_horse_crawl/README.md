@@ -4,7 +4,7 @@ Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
 
 # Space Horse Crawl — hors-render-v1
 
-Start with the current 0.7.0 cartridge:
+Start with the supplied hors-render-v1 cartridge:
 
 ```bash
 x64sc +easyflashcrtwrite -cartcrt examples/space_horse_crawl/space_horse_crawl_color-hors-render-v1.crt

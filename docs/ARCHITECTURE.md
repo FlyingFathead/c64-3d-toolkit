@@ -14,7 +14,7 @@ procedural shape / OBJ / SVG preset, or Blender-authored scene frames
         -> perspective projection
         -> face visibility + host Z-buffer where surfaces exist
         -> hidden-line clipping
-        -> renderer-specific vector record encoding
+        -> renderer-specific vector records and/or sparse bitmap-byte spans
         -> dirty clear data + optional hires colour spans + HUD
 ```
 
@@ -32,18 +32,29 @@ OBJ data enters as polygon surfaces; `usemtl` assigns MTL `Kd` colours to faces.
 
 ## C64 side
 
-The C64 renderer receives sampled vector records, not complete bitmap frames. It:
+The default hors-render-v1 backend receives host-precomputed pictures encoded
+as sparse bitmap-byte spans whenever they fit the 8 KiB frame arena. It copies
+those spans directly from EasyFlash ROM to a recycled hires bitmap. Pictures
+whose byte encoding exceeds the arena use the vector fallback; a picture that
+fits neither encoding fails compilation. Projection and visibility remain host work.
 
-- clears/reuses hidden hires buffers;
-- rasterizes visible wireframe runs;
-- presents completed buffers through the VIC-II;
-- maintains the guest-side FPS display.
+The C64 clears/reuses hidden buffers, draws or copies the next picture, updates
+its screen colours, and presents completed buffers through the VIC-II. HUD/FPS
+updates apply where enabled. The streamed path reuses three bitmap/screen slots,
+8 KiB staging and three 1 KiB metadata caches; these are components, not a claim
+about total free RAM. See [capacity](CARTRIDGE_CAPACITY.md) and
+[the measured allocation table](PERFORMANCE_COMPARISON.md).
 
-Current renderer backends are kept independently selectable for benchmarking/regression:
+Selectable backends include:
 
-- `step`
-- `bytechunk`
-- `yunroll`
+- `hors-render-v1` / `hors-render-v1-scene`: current EasyFlash defaults;
+- `step`, `bytechunk`, `yunroll`: explicit resident PRG vector renderers;
+- preserved cartridge scaffold and V2–V9 stream/scene generations.
+
+`yunroll-cart-v10` and `yunroll-cart-v10-scene` remain compatibility aliases.
+See the [renderer table](../README.md#renderers) for each generation's format.
+
+### Preserved resident PRG colour implementation
 
 Coloured builds update the screen RAM paired with each render bitmap before drawing. When a triple-buffer slot is recycled, its old material cells are first restored to the global `SCREEN_COLOR`, preventing stale colour trails. That cold-path helper lives in the otherwise-unused `$4000-$43ff` gap between bitmap #0 and screen RAM #1. VIC-II hires mode only permits one foreground/background pair per 8x8 cell, so the host chooses the dominant visible wire colour for cells containing several source colours. Tables already contain native four-bit VIC-II codes as complete screen bytes; there is no runtime RGB parsing or palette lookup.
 
@@ -69,13 +80,18 @@ This lets 2-D vector artwork behave as geometry in perspective without adding a 
 
 ## Memory pressure
 
-Geometry detail affects both runtime cost and generated table RAM. The compiler therefore keeps requested geometry first and reduces sampled frame count when necessary. `--strict-frames` changes that policy to fail instead.
+For resident PRG builds, geometry detail affects both runtime cost and generated table RAM. The compiler therefore keeps requested geometry first and reduces sampled frame count when necessary. `--strict-frames` changes that policy to fail instead.
 
 Blender scene frames are always strict. Automatically reducing an authored
 frame sequence could remove semantically important animation states, so an
 oversized scene fails with sampling/range/detail suggestions instead.
 
-This is particularly relevant for arbitrary OBJ meshes and vector logos. The bundled 64-vertex horse head currently compiles at 36 sampled orientations; the bundled SPACE HORSE SVG presets are intentionally simplified to a C64-friendly wire count and auto-fit to the table budget.
+Those resident table limits are particularly relevant for arbitrary OBJ meshes and vector logos. The bundled 64-vertex horse head currently compiles at 36 sampled orientations; the bundled SPACE HORSE SVG presets are intentionally simplified to a C64-friendly wire count and auto-fit to the table budget.
+
+Streamed cartridges store animation blocks in ROM instead of resident frame
+tables. The authored scene directory accepts 1..2048 samples; per-frame and
+whole-cartridge limits can be reached earlier. Current scene builds reject
+overflow without silently reducing the requested sequence.
 
 ## Future simplifier / GUI
 

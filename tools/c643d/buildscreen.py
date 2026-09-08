@@ -7,7 +7,7 @@ def screen_codes(text):
     return [ord(c)-96 if 'a' <= c <= 'z' else ord(c) for c in text]
 
 
-def build_screen_lines(version, renderer):
+def build_screen_lines(version, renderer, *, hifi_reel=False):
     texts = [('toolkit', 'c64-3d-toolkit', 7), ('version', 'v. '+version, 10),
              ('renderer', renderer, 12),
              ('github', 'github.com/FlyingFathead/c64-3d-toolkit', 16),
@@ -43,6 +43,31 @@ def build_screen_lines(version, renderer):
             if lines[i] == '        dex' and lines[i+1] == '        bne build_screen_leave':
                 lines[i] = '        clc'
                 lines[i+1] = '        bcc build_screen_leave'
+    if hifi_reel:
+        # Only the menu opts in. Cold start still waits indefinitely; mode 2
+        # returns the same artwork for 500 PAL refreshes or an early SPACE.
+        i = lines.index('        ldx #150', lines.index('build_screen_visible:'))
+        lines[i:i+1] = ['        ldy #10', '        ldx #50']
+        i = lines.index('        clc', lines.index('build_screen_enter:'))
+        lines[i:i+2] = [
+            '        lda $02f7', '        cmp #2', '        bne build_screen_leave',
+            '        dex', '        bne build_screen_leave', '        ldx #50',
+            '        dey', '        bne build_screen_leave']
+        # Carry clear means timeout/SPACE; F1 exits the reel to the menu.
+        i = lines.index('build_screen_done:')
+        lines[i:i] = ['        jmp build_screen_done', 'build_screen_exit:',
+                     '        sec', '        bcs build_screen_cleanup']
+        i = lines.index('build_screen_done:') + 1
+        lines[i:i] = ['        clc', 'build_screen_cleanup:']
+        i = lines.index('build_screen_leave:') + 1
+        lines[i:i] = [
+            '        lda $02f7', '        cmp #2', '        bne build_screen_poll_space',
+            '        lda #$fe', '        sta $dc00', '        lda $dc01', '        and #$10',
+            '        bne build_screen_no_exit',
+            'build_screen_exit_release:', '        lda $dc01', '        and #$10',
+            '        beq build_screen_exit_release', '        jmp build_screen_exit',
+            'build_screen_no_exit:', '        lda #$7f', '        sta $dc00',
+            'build_screen_poll_space:']
     for name, text, _ in texts:
         lines += [f'build_screen_text_{name}:']+bytes_lines(screen_codes(text))
     return lines
@@ -93,3 +118,12 @@ def play_all_thanks_lines(version):
     for name, text, _ in texts:
         lines += [f'play_all_thanks_text_{name}:'] + bytes_lines(screen_codes(text))
     return lines
+
+
+def menu_title_lines(version, renderer):
+    """Default demo-menu heading; other presentation text is independent."""
+    display = 'HORS-V1' if renderer == 'hors-render-v1' else renderer.upper()
+    text = f'C64 3D TOOLKIT {version} {display}'
+    if len(text) > 40:
+        raise ValueError('menu title exceeds 40 columns')
+    return ['title_default:', *bytes_lines(screen_codes(text)), '    .byte 0']

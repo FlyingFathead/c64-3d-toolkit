@@ -1,0 +1,36 @@
+[
+  {
+    "cartridge": "c643d-demo-v0.7.1-hors-render-v1-all.crt",
+    "styles": [
+      {
+        "style": "default",
+        "version": "0.7.1",
+        "renderer": "hors-render-v1",
+        "headings": [
+          "C64 3D TOOLKIT 0.7.1 HORS-V1",
+          "> PLAY ALL (10 SECONDS EACH)",
+          "========================================",
+          "TORUS",
+          "TORUS DENSE"
+        ]
+      }
+    ]
+  },
+  {
+    "cartridge": "c643d-demo-v0.7.1-hors-render-v1-all-ram.crt",
+    "styles": [
+      {
+        "style": "default",
+        "version": "0.7.1",
+        "renderer": "hors-render-v1",
+        "headings": [
+          "C64 3D TOOLKIT 0.7.1 HORS-V1",
+          "> PLAY ALL (10 SECONDS EACH)",
+          "========================================",
+          "TORUS",
+          "TORUS DENSE"
+        ]
+      }
+    ]
+  }
+]

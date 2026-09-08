@@ -173,9 +173,12 @@ For cartridge builds, `cartconv.exe` is part of the VICE tool set. If it is not
 on `PATH`, configure its exact path (or the containing VICE directory) in the
 `[windows]` section, or pass `--cartconv` to the cartridge command.
 
-## Render/build defaults (v0.6.5)
+## Render/build defaults (v0.7.1)
 
-These PRG defaults were introduced in v0.6.2 and remain current in v0.6.5. Optional output defaults live in a separate `[render_defaults]` section:
+The default renderer is hors-render-v1 for `build`, `cart-stream` and
+`cart-demos`; authored inputs select hors-render-v1-scene. Explicit
+`--renderer step|bytechunk|yunroll` selects resident PRG output. The following
+settings originated with the PRG path and remain available in `[render_defaults]`:
 
 ```ini
 [render_defaults]
@@ -187,8 +190,9 @@ rastertime_profiler = false
 
 `text_overlay = true` uses the normal production renderer and an automatic
 256x192 drawable viewport, leaving the bottom 8 bitmap scanlines for the HUD/FPS
-row. `text_overlay = false` selects a separate no-overlay ASM derivative and
-automatically uses the full 256x200 drawable height.
+row. In resident PRG builds, `text_overlay = false` selects a separate
+no-overlay ASM derivative and uses the full 256x200 drawable height. The authored
+cartridge scene builder uses a 256x192 viewport even without text overlay.
 
 `viewport_height = auto` follows those defaults. An explicit value must be a
 multiple of 8 from 8 through 200. Command-line overrides are available as
@@ -200,7 +204,8 @@ multiple of 8 from 8 through 200. Command-line overrides are available as
 - `warn`: print the exact outputs that already exist, then overwrite them.
 - `error`: refuse the build with exit status 2.
 
-`rastertime_profiler = true` selects the derivative yunroll raster-time debug
+For resident PRG builds, select `--renderer yunroll` explicitly before using
+`rastertime_profiler = true`. This selects the derivative yunroll raster-time debug
 renderer. It changes the border while the main-loop clear/colour/raster work is
 running, making the CPU budget visible in VICE or on a real C64. The production
 yunroll source is not conditionally instrumented and therefore pays no code-size
@@ -208,16 +213,30 @@ or cycle cost when profiling is disabled.
 
 Command-line options always override `[render_defaults]` for that invocation.
 
-## V7 build preferences and PLAY ALL
+## Cartridge preferences and PLAY ALL
 
 | CLI option | Default | Scope |
 | --- | --- | --- |
-| `--prefer fps|ram` | `fps` | V7 ordinary and scene renderers; RAM selects smaller Y kernels |
-| `--play-all-seconds N` | `10` | V7 multi-demo menu; integer 1..255, 50 PAL ticks per second |
+| `--prefer fps|ram` | `fps` | V7–V10 stream/scene renderers, including hors-render-v1; RAM selects smaller Y kernels |
+| `--play-all-seconds N` | `10` | V7–V10 multi-demo menus; integer 1..255, 50 PAL ticks per second |
 
-Both are build-time CLI settings. `tools/build_v7_examples.py` accepts both;
-`cart-demos` / `cartridge-demo` accept both, while individual `build` and
-`cart-stream` paths accept `--prefer`. RAM preference requires a V7 renderer.
-The standard V7 output filename uses FPS; RAM-generated names gain `-ram`
-unless explicitly named with `--output`. PLAY ALL timing starts with the first
-visible picture. Geometry, colours and sequence sample pacing are unchanged.
+`cart-demos` / `cartridge-demo` accept both; individual `build` and
+`cart-stream` accept `--prefer`. The general CLI default is hors-render-v1,
+not V7. The generated menu's RAM name gains `-ram` unless `--output` is supplied.
+Fixed bitmap/staging allocations do not shrink with RAM preference.
+
+```bash
+./build.sh cart-demos --prefer ram --play-all-seconds 20
+```
+
+Normal PLAY ALL uses the configured duration for every entry. The menu records
+playback start as the first visible picture; the comparison harness measures
+from the first timer-count IRQ through automatic-next and excludes that first
+picture from its window. F5 is an exhibition schedule, not an A/B benchmark.
+See the [comparison protocol](PERFORMANCE_COMPARISON.md).
+
+For authored scenes, `--frame-ticks N` specifies integer PAL holds. The optional
+`--blender-output-fps N` on hors-render-v1 Blender builds selects integer source
+samples and fractional PAL holds. It requires the default sample step of 1;
+do not combine it with custom frame ticks. Requested pacing is not a guarantee
+of achieved throughput. See [current scene builds](V10_TESTING.md).

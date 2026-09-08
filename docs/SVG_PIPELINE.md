@@ -1,6 +1,8 @@
 # SVG pipeline
 
-`c64-3d-toolkit` can import SVG vector artwork and turn it into wire geometry that uses the same host compiler and C64 line renderers as OBJ/procedural meshes.
+`c64-3d-toolkit` can import SVG vector artwork and turn it into wire geometry that uses the same host compiler and selectable C64 backends as OBJ/procedural meshes.
+v0.7.1 defaults to hors-render-v1 EasyFlash output; `--renderer yunroll` selects
+the preserved resident PRG vector renderer.
 
 ## Basic use
 
@@ -45,7 +47,8 @@ Keeping SVG contours as explicit wire edges is deliberate. Letter holes and conc
 --svg-connector-stride N   connect every Nth front/back contour vertex
 ```
 
-A higher simplification tolerance means fewer vertices/edges and less generated table RAM. As with dense OBJ meshes, the C64 budget matters more than host-side parsing cost.
+A higher simplification tolerance means fewer vertices/edges and less geometry to encode. Resident PRGs store frame
+tables in RAM; streamed cartridges store their encoded pictures in ROM. As with dense OBJ meshes, the C64 budget matters more than host-side parsing cost.
 
 ## Animation transforms
 
@@ -62,7 +65,9 @@ The generated frame table is no longer limited to a 360-degree spin. Available h
   --animation-tilt 62 --animation-travel 105 --animation-rise 42 --run
 ```
 
-The animation is still a finite precomputed orientation/pose sequence; the C64 loops through the generated frames and rasterizes every vector line itself.
+The animation is a finite precomputed orientation/pose sequence. hors-render-v1
+loops through pictures using direct-ROM byte spans or the vector fallback.
+The explicit resident PRG renderers rasterize the encoded lines on the C64.
 
 ## SVG colours -> C64 hires colours
 

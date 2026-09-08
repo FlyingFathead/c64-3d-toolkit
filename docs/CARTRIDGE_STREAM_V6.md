@@ -1,5 +1,13 @@
 # yunroll-cart-v6: partial-byte drawing and direct metadata loading
 
+> Historical renderer guide. Release labels, defaults, measurements and
+> reproduction commands below refer to this generation, not the v0.7.0 defaults.
+> v0.7.0 uses hors-render-v1 / hors-render-v1-scene; see
+> [current builds](V10_TESTING.md) and the [matched comparison](PERFORMANCE_COMPARISON.md).
+> Superseded generated outputs live in the optional sibling
+> `../c64-3d-toolkit-history/` archive. Old paths in the historical examples
+> may require that archive or the corresponding release checkout.
+
 > Historical menu cartridges and the former `examples/old/` paths are now in the
 > separate oldies ZIP. See [v0.6.7 cleanup and archive access](UPGRADING_0.6.7.md).
 
@@ -105,7 +113,7 @@ Fetch by itself is slightly more expensive because the destinations are split;
 fetch plus metadata caching is cheaper overall. Drawing is also cheaper. More
 publish waiting is expected when rendering finishes earlier. The full per-frame
 stage reports and both HUD/clean output checks are in
-[the Marbles report](../examples/cart_marbles/history/v5-v6-validation.json).
+the Marbles report (historical report, external archive required; original path: `../examples/cart_marbles/history/v5-v6-validation.json`).
 
 ## RAM and cartridge size
 

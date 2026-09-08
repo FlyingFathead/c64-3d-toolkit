@@ -1,17 +1,56 @@
 # Upgrade to 0.7.0
 
-Apply the pre-release-v0.7.0-v1 overlay at the repository root. It is cumulative relative to published 0.6.9 (including the chart-format correction), and also applies over the supplied candidate-framework/fix-02 working tree. No file deletions are required. Back up uncommitted local edits first. Generated logs and test outputs are excluded.
+v0.7.0 uses hors-render-v1 / hors-render-v1-scene by default. Explicit V9 and
+older renderers remain available. The current package includes the accepted
+640-sample Marbles presentation and current menu, standalone and Horse/Sunflower
+cartridges. GMod backends and automatic renderer selection remain planned.
 
-VERSION is 0.7.0. hors-render-v1/hors-render-v1-scene become the build defaults. Explicit V9 and older choices remain available. New cartridges have separate hors-render-v1 names; historical cartridges keep their original labels and bytes. GMod backends and automatic renderer selection remain planned. See V10_TESTING.md for the new build/export commands.
+## Apply the documentation fix pack
+
+Save `c64-3d-toolkit-v0.7.0-docs-fix.zip` in `~/NeuralNetwork/`. It contains
+changed Markdown files beneath `c64-3d-toolkit/`, including the main README fix.
+Extract from the parent directory, not from inside the repository:
 
 ```bash
-python -m unittest discover -s tests
+(
+set -euo pipefail
+cd ~/NeuralNetwork
+unzip -oq c64-3d-toolkit-v0.7.0-docs-fix.zip
+cd c64-3d-toolkit
 python tools/compare_renderers.py --check
-git add -A
-git diff --cached --check
-git diff --cached --stat
+git diff --check
+git diff --stat
+)
 ```
 
-Use new experiment IDs after upgrading: source fingerprints change with version updates. Existing results remain valuable historical evidence. See [hors-render-v1 and Marbles testing](V10_TESTING.md) for commands, output locations and metric definitions. Run the optional Marbles benchmark independently of the menu sweep.
+This pack changes documentation only; VERSION stays 0.7.0. Renderer sources,
+cartridges, labels, manifests, samples and saved performance measurements are
+unchanged. It does not rebuild, commit, push or move any tag. Review local
+Markdown edits before overwriting them with the supplied versions.
 
-Before publishing, review the staged diff and preserve the historical source/binary checks. Packaging this overlay does not push, tag or create a GitHub release.
+## Fresh installation and older checkouts
+
+Use the complete v0.7.0 source package or release checkout for a fresh install;
+the documentation fix pack is not a complete toolkit. Old pre-release overlay
+names are historical and are no longer the installation instructions.
+
+If an older overlay left obsolete example cartridges behind, see
+[repository cleanup](REPOSITORY_CLEANUP_070.md). Current builds and their
+reproduction requirements are documented in [V10_TESTING.md](V10_TESTING.md).
+Historical upgrade guides apply only to their named releases.
+
+For code changes, run the source regression suite and required emulator checks.
+If fingerprinted comparison inputs change, regenerate the full uncapped matrix
+before publishing. A Markdown-only correction does not require new renderer
+measurements when `python tools/compare_renderers.py --check` passes. Use new
+experiment IDs when source/tool fingerprints change.
+
+## Next release: 0.7.1
+
+Apply and review this documentation correction first. The next planned toolkit
+version is 0.7.1, to include the upcoming changes; this pack does not perform
+that bump or alter the published v0.7.0 tag/release. Version changes affect the
+comparison fingerprint, so release packaging and the required validation will
+be handled together after the new changes are defined.
+
+For the completed menu update, see [upgrading to 0.7.1](UPGRADING_0.7.1.md).

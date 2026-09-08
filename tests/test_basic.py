@@ -818,9 +818,9 @@ class TestRc062RenderAndChecksumControls(unittest.TestCase):
         self.assertEqual(merged[merged.index('--sample-step')+1],'3')
         self.assertEqual(merged[merged.index('--renderer')+1],'yunroll')
 
-    def test_release_version_is_070_and_older_menus_are_preserved(self):
+    def test_release_version_is_071_and_older_menus_are_preserved(self):
         from tools.c643d import __version__
-        self.assertEqual(__version__,'0.7.0')
+        self.assertEqual(__version__,'0.7.1')
         self.assertEqual((ROOT/'VERSION').read_text(encoding='utf-8').strip(),__version__)
         import hashlib, json, re
         for name in ('setup-windows.cmd', 'setup-windows.ps1'):

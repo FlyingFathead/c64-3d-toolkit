@@ -1,5 +1,20 @@
 # Optimization findings and process
 
+## Release outcome (0.7.0)
+
+The accepted presentation is the [640-sample, 16 FPS force-bytes Marbles
+cart](../examples/cart_marbles/README.md), with a recorded scene interval of
+41.8226 seconds rather than exactly 40 seconds. Acceptance is specific to that
+cart and does not establish a general timing guarantee. It already ships with
+SPACE-to-start behaviour. Historical generated outputs are in the optional
+external `../c64-3d-toolkit-history/` tree.
+
+The sections below record the experiments in development order. Statements
+such as “pending” refer to that stage, not a requirement to rerun the accepted
+presentation. The recovery commands require the named local compiled checkpoint;
+it is not part of a fresh clone. General automatic timing selection, music
+coexistence and larger cartridge backends remain unfinished.
+
 Working name: **hors-optimizer-v1**. hors-render-v1 now promotes the tested byte-first policy into a separate build target. Automatic multi-renderer selection remains future work. Historical implementations and shipped cartridges remain intact.
 
 ## Controlled experiment
@@ -95,11 +110,11 @@ Only accepted carts are copied to the run's `selected/` directory and included a
 
 ## Accepted Marbles presentation and example cleanup
 
-The 16 FPS force-bytes candidate passed 640 bitmap/colour comparisons and was visually accepted. Scene duration is 41.8226 seconds versus the original 40 seconds; the first 35 source seconds occupy about 35.01 seconds and the final five about 6.82 seconds. Acceptance is specific to this cartridge. The shortest-hold admission rule was overly conservative; general timing selection remains unresolved. No additional FPS sweep is required for this release candidate. Historical generated outputs move to example history subdirectories with regression references retained.
+The 16 FPS force-bytes candidate passed 640 bitmap/colour comparisons and was visually accepted. Scene duration is 41.8226 seconds versus the original 40 seconds; the first 35 source seconds occupy about 35.01 seconds and the final five about 6.82 seconds. Acceptance is specific to this cartridge. The shortest-hold admission rule was overly conservative; general timing selection remains unresolved. No additional FPS sweep is required for this release candidate. The initial cleanup moved historical outputs into example history subdirectories; final cleanup moves them outside the checkout, as noted below.
 
 ### Startup and cleanup correction
 
-Marbles now waits for SPACE before the intro. Two startup instruction bytes change (DEX/BNE to CLC/BCC); animation payload and addresses stay unchanged. Canonical reference cartridges are preserved in history; modified local copies are archived separately by content hash. Cleanup tested twice against the latest submitted workspace; all 172 tests pass.
+Marbles now waits for SPACE before the intro. Two startup instruction bytes change (DEX/BNE to CLC/BCC); animation payload and addresses stay unchanged. Historical reference cartridges and modified local copies are preserved in the external sibling archive, with conflicting local copies separated by content hash. Cleanup tested twice against the latest submitted workspace; all 172 tests pass.
 
 ### Obsolete output removal
 

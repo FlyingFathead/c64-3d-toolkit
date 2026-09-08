@@ -1,25 +1,72 @@
 # hors-render-v1 builds and Blender targets
 
-hors-render-v1 is a production build target based on the V9 drawing engine and the tested byte-first policy. It is the 0.7.0 CLI default. Historical assembly, encoder and cartridge files remain unchanged. Capacity failures stop the build; samples are never silently removed. This is not yet `hors-optimizer-v1` automatic selection.
+The v0.7.1 menu cartridges are rebuilt for this release, alongside the new
+[HiFi exhibition reel](../examples/cart_hifi/README.md). Standalone object and
+authored-scene cartridges are retained byte-for-byte from v0.7.0; their embedded
+version labels and manifests remain their original build provenance.
+
+hors-render-v1 is a production build target based on the V9 drawing engine and the tested byte-first policy. It is the 0.7.1 CLI default. Historical assembly, encoder and cartridge files remain unchanged. Capacity failures stop the build; samples are never silently removed. This is not yet `hors-optimizer-v1` automatic selection.
 
 ## Ready-to-run cartridges
 
-- [Menu FPS](../examples/cart_demos/c643d-demo-v0.7.0-hors-render-v1-all.crt)
-- [Menu RAM](../examples/cart_demos/c643d-demo-v0.7.0-hors-render-v1-all-ram.crt)
-- [Marbles clean, original export pacing](../examples/cart_marbles/history/dont_lose_your_marbles-hors-render-v1-scene-clean.crt)
-- [Marbles HUD, original export pacing](../examples/cart_marbles/history/dont_lose_your_marbles-hors-render-v1-scene.crt)
-- [Horse and Sunflower](../examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v1-scene.crt)
+- [Menu FPS](../examples/cart_demos/c643d-demo-v0.7.1-hors-render-v1-all.crt)
+- [Menu RAM](../examples/cart_demos/c643d-demo-v0.7.1-hors-render-v1-all-ram.crt)
+- [Accepted 640-sample Marbles](../examples/cart_marbles/marbles-hors-render-v1-16fps-force-bytes.crt)
+- [Horse and Sunflower FPS](../examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v1-scene.crt)
+- [Horse and Sunflower RAM](../examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v1-scene-ram.crt)
+- [Standalone HiFi horse, 192 orientations](../examples/hifi_showcase/horse_head_hifi-hors-render-v1.crt)
 
-RAM variants of the scenes append `-ram` before `.crt`. Optional max-speed diagnostics go to ignored `comparison-tests/v10-max-diagnostic/`; they are not release examples or denser exports.
+See the [complete inventory](V10_CARTRIDGES.md). Marbles has no validated HUD or
+RAM counterpart for its accepted 640-sample presentation. Its startup waits for
+SPACE, followed by the native intro, scene and ending.
 
-Rebuild shipped examples:
+## Build current menu and standalone examples
+
+From the repository root, with 64tass and cartconv available:
 
 ```bash
-python tools/build_hors_examples.py
-python tools/build_hors_examples.py --prefer ram
-python perf/build_v10_max.py
+./build.sh cart-demos
+./build.sh cart-demos --prefer ram
+python tools/build_current_examples.py
+```
+
+The standalone builder uses bundled models and frozen falling-cubes vectors;
+it does not require Blender or the external history archive. The menu builder
+uses the current named-demo registry; the performance comparison deliberately
+uses frozen matched inputs. Rebuilt outputs should be verified before replacing
+release assets. For a fresh Horse/Sunflower export, use the
+[scene command](CARTRIDGE_SCENES.md#current-scene-path-in-071).
+
+## Accepted Marbles reproduction boundary
+
+The shipped cart is the accepted 16 FPS force-bytes candidate from the local
+recovery workflow: 640 samples, about 41.82 seconds of measured scene playback.
+Keep its supplied CRT, labels and manifest together. A generic
+`--blender-output-fps 16` build is not a byte-exact rebuild recipe: recovery
+used an existing 1,000-sample compiled checkpoint and experimental whole-frame
+packing. Those ignored local run artifacts are not bundled in a fresh clone.
+See [recovery prerequisites and results](MARBLES_RECOVERY.md).
+
+`tools/build_hors_examples.py` is a **historical preserved-sample builder**. It
+requires archived V4 Marbles and V7 Horse/Sunflower references from the optional
+`../c64-3d-toolkit-history/` tree and generates the old 200-sample Marbles
+variants. It is not the command to recreate the accepted 640-sample cart.
+`perf/build_v10_max.py` likewise builds historical max-speed diagnostics, not
+release presentations. These remain available for deliberate reproduction.
+
+## Verify the supplied release inputs
+
+```bash
+python tools/compare_renderers.py --check
+python -m unittest discover -s tests
 python perf/verify_hors_release.py --vice-data /path/to/vice-data
 ```
+
+The last command runs VICE pixel/profile/ending and menu-control checks and
+writes reports under `logs/hors-release/`; it needs a working emulator and ROM
+data. Automated scene verifiers acknowledge the SPACE startup screen. This
+documentation update does not claim a new emulator run. `--check` validates the
+saved chart's fingerprint; it does not benchmark or regenerate the chart.
 
 ## Fresh Blender export at 25 or 20 FPS
 
@@ -43,7 +90,7 @@ Do not combine this option with a non-default sample step. The output-FPS option
 
 ## Measurement interpretation
 
-[The generated chart](PERFORMANCE_COMPARISON.md) measures real menu display flips with the common PLAY ALL controller. The scene profiler reports stage intervals and includes the final hold; those numbers are not the same metric. [Findings](OPTIMIZATION_FINDINGS.md) distinguish authored-pacing tests, max-speed tests and the pending fresh Blender exports. No music coexistence or real-hardware claim is made.
+[The generated chart](PERFORMANCE_COMPARISON.md) measures real menu display flips with the common PLAY ALL controller. The scene profiler reports stage intervals and includes the final hold; those numbers are not the same metric. [Findings](OPTIMIZATION_FINDINGS.md) distinguish authored-pacing tests, max-speed tests and the dense Blender export/recovery results. No music coexistence or real-hardware claim is made.
 
 The previous policy experiments remain available via `perf/byte_candidates.py`, `perf/marbles_candidates.py` and their watchers. `perf/v10_test.py` remains an alias for the historical byte-policy sweep, not the production cartridge builder.
 
@@ -54,3 +101,15 @@ The canonical public names are `hors-render-v1` and `hors-render-v1-scene`. `yun
 ## Fractional export times
 
 `--blender-output-fps` now uses nearest integer source frames (half ties round upward), never fractional geometry evaluation. It warns on the console and in the test log with counts of rounded/clamped and repeated samples. Repeats are retained when upsampling so duration does not shrink. For 25-to-20 FPS conversion this selects 800 samples from the 1,000 source frames. No geometry blending or near-plane error suppression is performed. The original sample-step path is unchanged when the option is omitted.
+
+## v0.7.1 presentation validation
+
+Build the independent reel with `python tools/build_hifi_cart.py`. It uses bundled
+scene/menu vector references and needs no Blender installation or external archive.
+See [cart_hifi](../examples/cart_hifi/README.md) for playback and verification.
+
+The [release validation report](benchmarks/release-071/cartridge-validation.json)
+records PAL VICE execution of both menu variants and the separate reel, including
+normal PLAY ALL, F5, presentation transitions, looping, and pixel/color comparison
+of all 84 scene samples and both 128-orientation spinners. Exhibition timings are
+separate from the matched-method renderer comparison.

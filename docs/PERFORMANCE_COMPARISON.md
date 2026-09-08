@@ -395,5 +395,5 @@ Use `--resume` only with the same source/tool fingerprint and options. Logs and 
 
 **Release gate:** run `--check` before publishing. If renderer code, builders, input assets, examples, version or this tester changes, rerun the complete uncapped matrix and replace this chart before tagging. Preserve old method rows; add new generations to the tester and regenerate. Never silently copy old numbers into a changed workload. Capped runs are separate experiments and must not replace this uncapped baseline.
 
-<!-- comparison-input-sha256: 55dd49d2cb7e4cffc285358db85f1db16b9416f24bf3460ceb394013782a9f01 -->
-<!-- comparison-source-version: 0.7.0 -->
+<!-- comparison-input-sha256: 35d598ce28519fcc95da2d38b9386c85053dec3c013e9eb7055086f46696cf2d -->
+<!-- comparison-source-version: 0.7.1 -->

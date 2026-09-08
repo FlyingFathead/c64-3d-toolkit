@@ -1,5 +1,13 @@
 # V8 adaptive byte spans — toolkit 0.6.8
 
+> Historical renderer guide. Release labels, defaults, measurements and
+> reproduction commands below refer to this generation, not the v0.7.0 defaults.
+> v0.7.0 uses hors-render-v1 / hors-render-v1-scene; see
+> [current builds](V10_TESTING.md) and the [matched comparison](PERFORMANCE_COMPARISON.md).
+> Superseded generated outputs live in the optional sibling
+> `../c64-3d-toolkit-history/` archive. Old paths in the historical examples
+> may require that archive or the corresponding release checkout.
+
 V8 is a separate opt-in renderer. All prior renderer sources and shipped CRT/PRG
 files are retained byte-for-byte. The default PRG renderer remains `yunroll`;
 `cart-demos` still defaults to V4. Select `yunroll-cart-v8` or

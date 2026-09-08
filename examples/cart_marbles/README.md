@@ -17,9 +17,11 @@ No equivalent HUD or RAM variant has been validated for this new sampling.
 x64sc -cartcrt examples/cart_marbles/marbles-hors-render-v1-16fps-force-bytes.crt
 ```
 
-The adjacent `.lbl` and `-manifest.json` are copied unchanged from the accepted
-build. Run `python perf/cleanup_070_examples.py` after applying the cleanup patch
-to install them from the existing `marbles-realtime-01` run. No Blender run needed.
+The matching `.lbl` and `-manifest.json` are supplied alongside the accepted
+CRT. No local experiment run, cleanup script or Blender installation is needed
+to play it. The complete CRT is 902,944 bytes. For reproduction requirements,
+see [the build guide](../../docs/V10_TESTING.md#accepted-marbles-reproduction-boundary);
+a generic export is not a byte-exact replacement for this accepted candidate.
 
 Older presentation variants, reports and preview images are no longer in this repository.
 Historical renderer implementations remain available. General automatic timing

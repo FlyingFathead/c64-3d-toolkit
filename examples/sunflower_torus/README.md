@@ -4,7 +4,7 @@ Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
 
 # Sunflower Torus — hors-render-v1
 
-Start with the current 0.7.0 cartridge:
+Start with the supplied hors-render-v1 cartridge:
 
 ```bash
 x64sc +easyflashcrtwrite -cartcrt examples/sunflower_torus/sunflower_torus-hors-render-v1.crt

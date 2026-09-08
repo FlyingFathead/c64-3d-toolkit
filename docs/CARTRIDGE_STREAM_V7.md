@@ -1,5 +1,13 @@
 # yunroll-cart-v7: join runs, clear fewer bytes, choose FPS or RAM
 
+> Historical renderer guide. Release labels, defaults, measurements and
+> reproduction commands below refer to this generation, not the v0.7.0 defaults.
+> v0.7.0 uses hors-render-v1 / hors-render-v1-scene; see
+> [current builds](V10_TESTING.md) and the [matched comparison](PERFORMANCE_COMPARISON.md).
+> Superseded generated outputs live in the optional sibling
+> `../c64-3d-toolkit-history/` archive. Old paths in the historical examples
+> may require that archive or the corresponding release checkout.
+
 Toolkit **0.6.7** ships `yunroll-cart-v7` and `yunroll-cart-v7-scene`, with
 PLAY ALL and a ten-second closing screen between rounds. The renderer and
 the matched rc4 measurements below are unchanged by finalization.
@@ -198,7 +206,7 @@ on black, for about three seconds or SPACE to skip.
 
 The full renderer matrix below was measured on rc4. Final v0.6.7 rebuilds
 retain the same runtime, vector samples and menu logic with updated version
-text. Fresh final-menu checks are in [reports/](../examples/cart_demos/reports/):
+text. Fresh final-menu checks are in reports/ (historical report, external archive required; original path: `../examples/cart_demos/reports/`):
 121 Python tests, 84 launches/252 rendered-picture comparisons across all
 three menu styles, the timed PLAY ALL cycle, six closing-screen cases and
 timeout/SPACE checks for all six final build screens passed.
@@ -229,7 +237,7 @@ Historical rc4/rc5 evidence remains in
   scanners are exercised through VICE's monitor, not the host Escape key mapping.
 
 Reports: [V6/V7 menu comparison](benchmarks/cart_demos/v6-v7-validation.json),
-[Marbles comparison](../examples/cart_marbles/history/v6-v7-validation.json),
+Marbles comparison (historical report, external archive required; original path: `../examples/cart_marbles/history/v6-v7-validation.json`),
 [menu navigation](benchmarks/cart_demos/menu-v7-validation.json),
 [menu launch regression](benchmarks/cart_demos/menu-launch-v7-validation.json),
 [PLAY ALL](benchmarks/cart_demos/play-all-v7-validation.json).

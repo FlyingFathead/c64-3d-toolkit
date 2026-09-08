@@ -32,4 +32,10 @@ The byte-policy confirmation bundle passed its supplied SHA-256 check and report
 
 ## hors-render-v1 delivered examples
 
-The hors-render-v1 12-demo menu is 985,024 CRT bytes; standalone Marbles is 344,800 bytes and Horse/Sunflower is 279,136 bytes (same sizes for FPS/RAM variants). All fit EasyFlash. Fresh 1,000/800-sample Blender exports are separate tests and have no fit guarantee. The build stops on overflow; it never truncates samples. See [inventory](V10_CARTRIDGES.md) and [test runner](V10_TESTING.md).
+The hors-render-v1 twelve-demo menu is 985,024 CRT bytes in either preference.
+Horse/Sunflower is 279,136 bytes in either preference. The accepted 640-sample
+Marbles cart is **902,944 bytes**; no HUD/RAM counterpart is validated for that
+sampling. The earlier 344,800-byte Marbles figures describe the historical
+200-sample export. All current cartridges fit EasyFlash individually; this does
+not establish that they fit together. Fresh 1,000/800-sample exports have no fit
+guarantee. See [inventory](V10_CARTRIDGES.md) and [build targets](V10_TESTING.md).

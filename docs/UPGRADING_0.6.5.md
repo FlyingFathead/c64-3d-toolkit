@@ -1,5 +1,11 @@
 # Upgrading to 0.6.5
 
+> Historical upgrade instructions for the version named above. They are not
+> the v0.7.0 installation or release procedure. Use [Upgrading to 0.7.0](UPGRADING_0.7.0.md)
+> for the current package. Old generated paths below describe their original
+> release layout; superseded outputs are now outside the checkout in
+> `../c64-3d-toolkit-history/`, when that optional archive is available.
+
 > Historical menu cartridges and the former `examples/old/` paths are now in the
 > separate oldies ZIP. See [v0.6.7 cleanup and archive access](UPGRADING_0.6.7.md).
 

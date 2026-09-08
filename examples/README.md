@@ -2,7 +2,11 @@
 
 Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
 
-# Current examples — 0.7.0
+# Current examples — 0.7.1
+
+See the [complete cartridge inventory](../docs/V10_CARTRIDGES.md) for shipped
+filenames/sizes and [build instructions](../docs/V10_TESTING.md) for reproduction
+requirements. The main README and this index use current release selections.
 
 ## Top picks
 
@@ -10,6 +14,7 @@ Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
 2. **[DON’T LOSE YOUR MARBLES](cart_marbles/README.md)** — accepted 16 FPS force-bytes presentation; SPACE to start.
 
 3. **[HiFi horse head](hifi_showcase/README.md)** — standalone hors-render-v1 cartridge, 192 orientations.
+4. **[HiFi exhibition reel](cart_hifi/README.md)** — complete sniffing scene, two HiFi spinners and a timed closing screen; SPACE to start.
 
 ## Other current material
 

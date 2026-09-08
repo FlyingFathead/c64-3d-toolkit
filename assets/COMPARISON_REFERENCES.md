@@ -11,4 +11,4 @@ The comparison loader verifies the asset SHA-256 before use. These inputs retain
 
 Each scene stores `frames` (serialized `FrameBuild` records), the original `manifest`, `source_file`, and `source_sha256`. The outer format is `c643d-scene-vector-reference-v1`. Gzip uses a zero timestamp for reproducible bytes.
 
-Run the full comparison using the commands in `docs/PERFORMANCE_COMPARISON.md`. No historical example cartridges or sibling archive directory are needed.
+Run the full comparison using the commands in [the comparison guide](../docs/PERFORMANCE_COMPARISON.md). No historical example cartridges or sibling archive directory are needed.

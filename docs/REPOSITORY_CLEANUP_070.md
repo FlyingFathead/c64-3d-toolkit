@@ -1,27 +1,32 @@
-# Remove obsolete outputs from the checkout
+# Remove obsolete outputs from an older checkout
 
-Apply this patch after examples-cleanup-03, then run:
+The v0.7.0 snapshot already has the cleanup applied. If extracting it over an
+older working tree leaves superseded files behind, run from the repository root:
 
 ```bash
 python perf/prune_old_examples.py
-python -m unittest discover -s tests
+git status --short
 ```
 
-This removes all three cartridge history trees and the obsolete HiFi V2/V3
-showcase from the checkout. Files are moved to sibling directory
-`../c64-3d-toolkit-history/`; no copies remain in tracked source directories.
-Modified files are preserved there as well. Repeated runs are harmless.
-The script does not stage or commit changes: `git add -A` records the removals
-when preparing the release. Git's existing commit history is not rewritten.
+The script accepts VERSION 0.7.0 or 0.7.1 and the accepted main Marbles cartridge. It
+moves obsolete outputs from the menu, Marbles and Horse/Sunflower directories,
+their history subtrees, and the old HiFi showcase to the sibling
+`../c64-3d-toolkit-history/` tree. Current hors-render-v1 cartridges and source
+assets remain in place. Repeated runs do not duplicate identical archive files.
+Conflicting local bytes are kept under the archive's `local-modified/<sha256>/`
+path. The script does not stage, commit or rewrite Git history.
 
-Historical reproduction tools use the external sibling archive. Fresh clones
-without that archive explicitly skip three external-data checks; source and
-encoder regression checks still run. Restoring that archive enables those
-historical checks again. Current assets and renderer source are retained.
+Historical reproduction tools may need that external archive; it is optional
+and is not shipped in a fresh clone. Some archive-dependent tests then skip;
+source/encoder checks still run. The full renderer comparison uses bundled
+frozen references and does not require the archive.
 
-The large comparison-tests directory is a separate local experiment cache.
-This cleanup leaves it alone because it contains source samples needed for
-rebuilding the accepted Marbles cart without running Blender again.
+Ignored `comparison-tests/` and `logs/` are separate local experiment data and
+are left alone. The accepted Marbles reproduction workflow depends on its local
+compiled checkpoint; the shipped cart itself does not need it to run.
 
-The renderer-comparison provenance gate remains stale and requires separate
-validation before release. This patch does not claim fresh benchmark results.
+The release includes the regenerated v0.7.0 performance chart. Run
+`python tools/compare_renderers.py --check` to validate the current fingerprint.
+Cleanup instructions are not evidence of a new benchmark run.
+
+In v0.7.1 it also archives the superseded v0.7.0 menu carts and metadata.

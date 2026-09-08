@@ -1,11 +1,15 @@
 # OBJ pipeline
 
+v0.7.1 defaults to hors-render-v1 EasyFlash output. Add `--renderer yunroll`
+for resident PRG output; input parsing and visibility are shared. See
+[renderer formats](../README.md#renderers).
+
 ## Current pipeline
 
 ```text
 OBJ + optional MTL -> parse/material-map -> inspect -> coordinate conversion -> normalize -> winding repair
-    -> sampled rotations -> projection -> hidden-line clipping -> C64 vector records
-    -> 64tass -> PRG
+    -> sampled rotations -> projection -> hidden-line clipping -> byte spans / vectors
+    -> 64tass -> EasyFlash CRT (default), or explicit resident PRG
 ```
 
 The importer deliberately keeps the OBJ parser small and dependency-free.

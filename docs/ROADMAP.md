@@ -5,7 +5,7 @@
 - Cycle-profile `yunroll` hot paths in the VICE monitor.
 - Explore self-modified absolute bitmap accesses where they beat `(zp),Y`.
 - V7 implements generator-selected cell/byte clearing; explore finer plans when decoding cost justifies them.
-- Add a renderer benchmark/report mode that records estimated and measured costs.
+- Extend the existing comparison and stage-profile tools with better cost estimates.
 - Keep `step` and `bytechunk` as regression baselines while optimizing `yunroll`.
 
 ### Memory and CPU profiles, independent of the application
@@ -22,8 +22,8 @@ could select precomputed views/poses, or eventually supply dynamically projected
 vectors. Free camera/object motion would require C64-side transformation and
 visibility work beyond the current host-precomputed pipeline. Input latency,
 audio/logic budgets, buffering and memory ownership belong in that integration
-layer. V7 now implements `--prefer fps|ram` for the Y kernels, with FPS as the
-default. Broader allocation profiles and interactive 3D remain future work.
+layer. `--prefer fps|ram` selects Y kernels in V7 through hors-render-v1, with
+FPS as the default. Broader allocation profiles and interactive 3D remain future work.
 
 V6 implements faster partial X-major byte drawing and direct metadata
 loading on the existing demo pipeline; see the [measured results](CARTRIDGE_STREAM_V6.md).
@@ -63,22 +63,20 @@ Next:
 
 ## Cartridge / streaming backend
 
-The current v0.6.5 demo cart streams all twelve entries through V4 with a
-fixed RAM working set. Earlier 0.6.3 groundwork provided native cartridge boot,
-bank switching, cartconv integration and menu controls; 0.6.4 added the streaming
-variants and HiFi assets. Version 0.6.5 fixes launching from the animated menu.
+The current v0.7.1 menu streams all twelve entries through hors-render-v1,
+using fixed RAM buffers and metadata caches. V2–V7 established banking,
+staging, lossless vector optimizations and authored sequences. V8 added sparse
+byte-span pictures, V9 direct-ROM byte drawing, and hors-render-v1 prefers byte
+encoding whenever it fits the frame arena. The renderer comparison and stage
+profilers are implemented; see [the matched chart](PERFORMANCE_COMPARISON.md).
 
-Completed streaming work includes the frame-block format, bank-contained ROM
-storage, bounded staging and metadata caches, ROM copy profiling, and matched
-V3/V4 measurements. Opt-in V5 adds lossless stream reduction and picture reuse;
-V6 adds partial-byte drawing and direct metadata loading with matched V5/V6
-measurements. The authored scene path supports long, paced finite sequences.
-The current carts are in `examples/cart_demos/` and `examples/cart_marbles/`;
-released older carts are preserved in `examples/old/`.
+Current examples include the menu, standalone objects, Horse/Sunflower and the
+accepted 640-sample Marbles presentation. Superseded generated outputs belong
+in `../c64-3d-toolkit-history/`, outside the checkout. Renderer sources remain.
 
 Next milestones:
 
-- compare copy-to-RAM, direct-ROM and hybrid/cache strategies;
+- build on measured direct-ROM results to evaluate further hybrid/cache strategies;
 - explore topology sharing, frame deltas and cheap compression using measured
   cycle, ROM and RAM budgets;
 - investigate SID/demo headroom and integration of authored sequences;
@@ -140,4 +138,4 @@ See [capacity limits](CARTRIDGE_CAPACITY.md) and the [larger-backend implementat
 
 ## hors-render-v1 status
 
-hors-render-v1 byte-first EasyFlash builds are integrated in 0.7.0. Next: measure dense Blender 25/20 FPS exports, optimize cartridge capacity and worst-frame costs, then test music coexistence. Automatic mixed-renderer selection remains planned. GMod3/GMod4 remain separate backend work; see [GMod details](GMOD_BACKENDS.md).
+hors-render-v1 byte-first EasyFlash builds are integrated in 0.7.1. Dense 25/20 FPS exports and recovery runs exposed capacity/timing limits; the 640-sample, 16 FPS Marbles compromise is accepted. Next: improve packing and worst-frame cost, resolve general timing selection, then test music coexistence. Automatic mixed-renderer selection remains planned. GMod3/GMod4 remain separate backend work; see [GMod details](GMOD_BACKENDS.md).

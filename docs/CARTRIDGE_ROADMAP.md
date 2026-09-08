@@ -1,5 +1,18 @@
 # Cartridge / streaming roadmap
 
+## Delivered in 0.7.0 and remaining work
+
+EasyFlash boot, banked frame streaming, menu controls, authored sequences,
+comparison reports and direct-ROM byte-span rendering are implemented.
+hors-render-v1 is the default. Marbles ships as the accepted 640-sample,
+16 FPS force-bytes presentation, with its timing compromise documented.
+General automatic timing/encoding selection, music integration and GMod
+backends remain future work. See [current status](ROADMAP.md) and
+[matched measurements](PERFORMANCE_COMPARISON.md).
+
+The numbered phases below preserve the original design plan and success
+criteria; they are not a list of features all still awaiting implementation.
+
 This roadmap covers the cartridge-specific path beginning with the experimental
 `yunroll-cart` renderer.  The cartridge backend is intentionally separate from
 the stable PRG `yunroll` pipeline: cartridge work must not change the normal PRG
@@ -249,4 +262,4 @@ GMod3/GMod4 support is planned, not implemented. Preserve all existing EasyFlash
 
 ## hors-render-v1 status
 
-hors-render-v1 byte-first EasyFlash builds are integrated in 0.7.0. Next: measure dense Blender 25/20 FPS exports, optimize cartridge capacity and worst-frame costs, then test music coexistence. Automatic mixed-renderer selection remains planned. GMod3/GMod4 remain separate backend work; see [GMod details](GMOD_BACKENDS.md).
+hors-render-v1 byte-first EasyFlash builds are integrated in 0.7.0. Dense Blender exports and recovery have been measured; the 640-sample, 16 FPS Marbles compromise is accepted. Next: improve packing, worst-frame costs and general timing selection, then test music coexistence. Automatic mixed-renderer selection remains planned. GMod3/GMod4 remain separate backend work; see [GMod details](GMOD_BACKENDS.md).

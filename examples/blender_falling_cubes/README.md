@@ -4,7 +4,7 @@ Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
 
 # Blender Falling Cubes — hors-render-v1
 
-Start with the current 0.7.0 cartridge:
+Start with the supplied hors-render-v1 cartridge:
 
 ```bash
 x64sc +easyflashcrtwrite -cartcrt examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v1.crt

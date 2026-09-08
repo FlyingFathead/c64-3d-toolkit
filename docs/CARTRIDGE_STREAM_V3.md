@@ -1,5 +1,13 @@
 # yunroll-cart-v3: measured vector-rendering improvements
 
+> Historical renderer guide. Release labels, defaults, measurements and
+> reproduction commands below refer to this generation, not the v0.7.0 defaults.
+> v0.7.0 uses hors-render-v1 / hors-render-v1-scene; see
+> [current builds](V10_TESTING.md) and the [matched comparison](PERFORMANCE_COMPARISON.md).
+> Superseded generated outputs live in the optional sibling
+> `../c64-3d-toolkit-history/` archive. Old paths in the historical examples
+> may require that archive or the corresponding release checkout.
+
 > Historical menu cartridges and the former `examples/old/` paths are now in the
 > separate oldies ZIP. See [v0.6.7 cleanup and archive access](UPGRADING_0.6.7.md).
 

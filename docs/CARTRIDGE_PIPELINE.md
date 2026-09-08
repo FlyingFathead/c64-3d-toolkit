@@ -1,6 +1,32 @@
-# Cartridge pipeline (experimental)
+# Cartridge pipeline
 
-**New: independent [`yunroll-cart-v2` frame streaming](CARTRIDGE_STREAM_V2.md) is implemented alongside the earlier milestones below.** `cart-stream` builds real frame-streamed CRTs; `cart-demos` continues to package existing PRGs. The original `yunroll-cart` scaffold is preserved.
+## Current pipeline in 0.7.1
+
+`build`, `cart-stream` and `cart-demos` default to hors-render-v1 EasyFlash
+output. Authored `.blend` / `.c643dscene` builds use hors-render-v1-scene.
+The current twelve-entry menu streams precomputed pictures from ROM; it does
+not package the old resident PRGs. Use `--renderer yunroll` for resident PRG output.
+
+```bash
+./build.sh cart-demos --run
+./build.sh --object horse_head --run
+./build.sh --object horse_head --renderer yunroll --run
+```
+
+The default menu output is
+`examples/cart_demos/c643d-demo-v0.7.1-hors-render-v1-all.crt` (or `-all-ram.crt`
+with `--prefer ram`). See [current builds](V10_TESTING.md),
+[scene streaming](CARTRIDGE_SCENES.md), and [inventory](V10_CARTRIDGES.md).
+
+## Historical scaffold and loader design
+
+The rest of this page records the original smoke test and resident-PRG loader.
+Its memory map, filenames and build-stage descriptions belong to that scaffold;
+they do not describe the current streamed menu. Historical `cart-demos` recipes
+require the corresponding old release. The `cartridge-smoke` diagnostic remains
+available in the current CLI.
+
+**Historical milestone: independent [`yunroll-cart-v2` frame streaming](CARTRIDGE_STREAM_V2.md) is implemented alongside the earlier milestones below.** `cart-stream` builds real frame-streamed CRTs; `cart-demos` continues to package existing PRGs. The original `yunroll-cart` scaffold is preserved.
 
 `c64-3d-toolkit` is adding a cartridge-oriented rendering/data path alongside
 its existing `.prg` pipeline. The first target is **EasyFlash** and the first

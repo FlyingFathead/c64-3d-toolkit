@@ -6,7 +6,8 @@ Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
 
 # Horse and sunflower
 
-**0.6.7 — standalone scene test, kept separate from the multi-demo menu.**
+**v0.7.0 uses hors-render-v1-scene.** The Blender shot was introduced in v0.6.7
+and remains separate from the multi-demo menu.
 
 A very close side-view shot of the HiFi horse sniffing the HiFi sunflower.
 The original purple/blue/cyan horse and yellow/brown/green flower retain all
@@ -42,32 +43,30 @@ Blender's smooth wire render shows the composition. The C64 capture shows its
 timing. The C64 bitmap is 320×200, so this existing renderer also has an unused
 strip on the right and a blank bottom HUD row in the clean build.
 
-## Rebuilding
+## Rebuilding with hors-render-v1
 
-From the project root, with Blender, 64tass and VICE's cartconv available:
+For a fresh Blender compilation, use the [current scene build
+command](../../docs/CARTRIDGE_SCENES.md#current-scene-path-in-071). It exports
+every third source frame (84 samples), requests six PAL ticks per sample and
+writes to a separate `build/` directory. This avoids treating newly evaluated
+Blender geometry as a byte-exact copy of the supplied cart. Use `--prefer ram`
+for the smaller-kernel alternative.
 
-```bash
-python tools/build_horse_and_sunflower.py
-```
-
-This uses the saved `.blend`, exports 84 samples (every third source frame),
-and builds a looping `yunroll-cart-v7-scene` cartridge with `--prefer fps`.
-Use `--blender /path/to/blender`, `--tass /path/to/64tass` and
-`--cartconv /path/to/cartconv` when those tools are not on PATH.
-`--regenerate` recreates the scene from the original OBJ/MTL files; omit it to
-preserve your Blender edits. `--prefer ram` is available as a comparison build.
-
-To regenerate only the Blender scene:
+The preserved `tools/build_horse_and_sunflower.py` is a **V7 reproduction tool**;
+it still emits V7, not hors-render-v1. Its `--regenerate` option recreates the
+source scene, so omit it to preserve Blender edits. To deliberately regenerate
+only the Blender scene from its original OBJ/MTL inputs:
 
 ```bash
 blender --background --python-exit-code 1 --python examples/blender_horse_and_sunflower/horse_and_sunflower.py
 ```
 
-The standalone cart requests six PAL ticks per sample (8.33 FPS), but this large
-two-mesh close-up currently exceeds that budget. In PAL VICE the unchanged
-84-sample loop takes **19.71 seconds, about 4.3 samples per second**. Samples are
-retained in order. This first test establishes the shot and correct output;
-its playback speed remains an area for future work. It stays separate from the menu.
+## Historical V7 playback measurement
+
+The original V7 test requested six PAL ticks per sample (about 8.33 FPS). Its
+84-sample loop took 19.71 seconds, about 4.3 samples per second, in the recorded
+PAL VICE test. That number describes V7; it is not a measured speed for the
+current hors-render-v1 cartridge. Current FPS/RAM carts are linked above.
 
 ## Verification
 

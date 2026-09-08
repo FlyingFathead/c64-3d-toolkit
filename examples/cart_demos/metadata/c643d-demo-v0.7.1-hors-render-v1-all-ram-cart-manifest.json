@@ -179,7 +179,7 @@
     }
   ],
   "note": "Every entry uses the selected stream renderer. Canonical PRG vector tables preserve original sampling; HiFi uses 128 orientations.",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "public_renderer": "hors-render-v1",
   "stream_renderer": "yunroll-cart-v10",
   "uniform_renderer": true,
@@ -7502,10 +7502,11 @@
     }
   ],
   "build_screen": {
-    "version": "0.7.0",
+    "version": "0.7.1",
     "renderer": "hors-render-v1 (ram)",
-    "ticks": 150,
-    "skip_key": "SPACE"
+    "ticks": null,
+    "skip_key": "SPACE",
+    "wait_for_space": true
   },
   "preference": "ram",
   "play_all": {
@@ -7524,7 +7525,7 @@
       "seconds": 10,
       "ticks": 500,
       "exit_key": "F1",
-      "version": "0.7.0",
+      "version": "0.7.1",
       "position": "after-last-demo",
       "next": "first-demo"
     }
@@ -7548,6 +7549,20 @@
     "loop": true,
     "start": "first-visible-picture",
     "normal_play_all_unchanged": true
+  },
+  "hifi_reel": {
+    "key": "F4",
+    "entries": [
+      10,
+      11
+    ],
+    "entry_seconds": 10,
+    "thanks_seconds": 10,
+    "title_seconds": 10,
+    "title_skip_key": "SPACE",
+    "exit_key": "F1",
+    "loop": true,
+    "advertised": false
   },
   "runtime_data_banks_used": 36,
   "highest_runtime_bank_used": 36,

@@ -64,16 +64,28 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None,oracle_
             work=root/f'build/menu-stream-{variant}'/name
         sym=labels(work/'runtime.lbl')
         menu=labels(root/'build'/f'{crt.stem}-cartridge-demo'/f'{crt.stem}-runtime-default.lbl')
+    reel_hud = None
+    if manifest.get('reel'):
+        from c643d.cartframes import load_menu_reference
+        reel_hud = next((d.hud for d in load_menu_reference(root) if d.name == entry['name']), b'')
     oracle_file=Path(oracle_path) if oracle_path else work/'oracle.json'
-    frames=json.loads(oracle_file.read_text());n=len(frames);finite=manifest.get('ending',False);count=n if finite else n*cycles+3
+    frames=json.loads(oracle_file.read_text());n=len(frames);finite=manifest.get('ending',False) or (bool(manifest.get('reel')) and menu_entry == 0);count=n if finite else n*cycles+3
     # publish_wait can revisit the publication entry on very cheap frames.
     # Stop at the once-per-frame call site, before the handoff wait instead.
     completed=sym.get('frame_draw_complete',sym['frame_begin']+(15 if manifest.get('colors',True) else 12))
     with tempfile.TemporaryDirectory(prefix='c643d-vice-') as td:
         td=Path(td);mon=['delete']
         if menu is not None:
-            mon += [f'break ${menu["menu_wait_key"]:04x}','g','delete',f'> ${menu["selected_entry"]:04x} ${menu_entry:02x}',f'break ${completed:04x}']
+            startup,menu_go=startup_monitor(manifest,menu)
+            mon += startup
+            mon += [f'break ${menu["menu_launch_nowait" if manifest.get("reel") else "menu_wait_key"]:04x}',menu_go,'delete',f'> ${menu["selected_entry"]:04x} ${menu_entry:02x}',f'break ${completed:04x}']
             first_go=f'g ${menu["menu_launch_nowait"]:04x}'
+            if manifest.get('reel'):
+                # Pixel coverage is independent of the wall-clock reel test.
+                # Disable only the control timer after normal entry setup.
+                mon += ['delete', f'break ${sym["frame_begin"]:04x}', first_go,
+                        '> $02fd $00', 'delete', f'break ${completed:04x}']
+                first_go='g'
         else:
             startup,first_go=startup_monitor(manifest,sym)
             mon += startup+[f'break ${completed:04x}']
@@ -97,6 +109,9 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None,oracle_
                 if want!=actual:
                     mismatch=[j for j,(a,b) in enumerate(zip(want,actual)) if a!=b]
                     raise AssertionError(f'{crt.stem} frame {i} slot {slot}: {what} mismatch ({len(mismatch)} bytes), first {mismatch[:12]}')
+            if reel_hud is not None:
+                assert ram[baddr+7680:baddr+7680+len(reel_hud)] == reel_hud, ('reel caption mismatch',i,slot)
+                if not reel_hud:assert not any(ram[baddr+7680:baddr+8000]), ('scene HUD must be blank',i)
             if manifest.get('hud_text') and manifest.get('text_overlay',True):
                 from c643d.font import bitmap_text
                 hud=bitmap_text(manifest['hud_text'])

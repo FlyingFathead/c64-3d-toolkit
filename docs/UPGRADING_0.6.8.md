@@ -1,5 +1,11 @@
 # Apply 0.6.8 to an existing 0.6.7 or 0.6.8-rc1 checkout
 
+> Historical upgrade instructions for the version named above. They are not
+> the v0.7.0 installation or release procedure. Use [Upgrading to 0.7.0](UPGRADING_0.7.0.md)
+> for the current package. Old generated paths below describe their original
+> release layout; superseded outputs are now outside the checkout in
+> `../c64-3d-toolkit-history/`, when that optional archive is available.
+
 Download `c64-3d-toolkit-v0.6.8-changes.zip` and the checksum file into
 `~/NeuralNetwork/`. The changes ZIP has flat paths relative to the project root.
 It contains additions and updates. After extraction, run the updated cleanup

@@ -4,7 +4,7 @@
 
 # c64-3d-toolkit
 
-**0.7.0 — hors-render-v1** (V10): a host-assisted 3D compiler and C64 renderer
+**0.7.1 — hors-render-v1** (V10): a host-assisted 3D compiler and C64 renderer
 for Blender scenes, OBJ/MTL meshes, SVG artwork and procedural geometry.
 Build runnable EasyFlash cartridges or standalone PRG demos.
 
@@ -19,10 +19,11 @@ Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
 2. **[DON’T LOSE YOUR MARBLES](examples/cart_marbles/README.md)** — the accepted
    hors-render-v1 16 FPS force-bytes presentation: native intro, animated Blender scene and ending. Waits for SPACE before starting
 3. **[HiFi horse head](examples/hifi_showcase/README.md)** — standalone hors-render-v1 cartridge, 192 orientations.
+4. **[HiFi exhibition reel](examples/cart_hifi/README.md)** — complete sniffing scene, two HiFi spinners and a timed closing screen; SPACE to start.
 
 ```bash
 # #1: Multi-demo cartridge
-x64sc +easyflashcrtwrite -cartcrt examples/cart_demos/c643d-demo-v0.7.0-hors-render-v1-all.crt
+x64sc +easyflashcrtwrite -cartcrt examples/cart_demos/c643d-demo-v0.7.1-hors-render-v1-all.crt
 
 # #2: DON'T LOSE YOUR MARBLES
 x64sc +easyflashcrtwrite -cartcrt examples/cart_marbles/marbles-hors-render-v1-16fps-force-bytes.crt
@@ -39,7 +40,7 @@ current hors-render-v1 scene, available with FPS and RAM preferences. The old
 standalone HiFi V2/V3 showcase and older cartridge generations are no longer
 shipped examples. Their source meshes and renderer implementations remain.
 
-[Current examples](examples/README.md) · [Performance comparison](docs/PERFORMANCE_COMPARISON.md)
+[Documentation index](docs/README.md) · [Current examples](examples/README.md) · [Performance comparison](docs/PERFORMANCE_COMPARISON.md)
 · [Optimization findings](docs/OPTIMIZATION_FINDINGS.md) · [Roadmap](docs/ROADMAP.md)
 
 ## Build and compare
@@ -78,7 +79,7 @@ Required only for cartridge / `.crt` output:
 
 Recommended for the authored `.blend` scene path:
 
-* [Blender](https://www.blender.org/) — use the current Blender LTS for newly authored scenes. Blender 4.0.2 remains a supported older fallback on Ubuntu 24.04. Animate geometry, physics, modifiers, armatures, materials, and a virtual camera in Blender, then compile sampled scene frames into vectors drawn live on the C64. Blender supplies its own `bpy` Python environment; do **not** add `bpy` to `requirements.txt` or install it with `pip`.
+* [Blender](https://www.blender.org/) — use the current Blender LTS for newly authored scenes. Blender 4.0.2 remains a supported older fallback on Ubuntu 24.04. Animate geometry, physics, modifiers, armatures, materials, and a virtual camera in Blender, then compile sampled frames into byte spans or vectors for the selected C64 renderer. Blender supplies its own `bpy` Python environment; do **not** add `bpy` to `requirements.txt` or install it with `pip`.
 
 Blender is required for `.blend` scene builds. Classic procedural, OBJ/MTL,
 and SVG builds remain fully usable without it.
@@ -263,7 +264,9 @@ blender --background --python examples/blender_falling_cubes/falling_cubes_c64.p
 
 For stateful simulations such as rigid bodies, the exporter evaluates every
 intervening Blender frame sequentially and stores only the requested samples.
-Thus `--sample-step 4` keeps the 72-frame motion span while reducing the stored C64 table frames enough for the expanded 192-line default viewport, without skipping physics evaluation between samples.
+Thus `--sample-step 4` keeps the 72-frame motion span without skipping physics
+evaluation between samples. The 18-sample selection also fits the preserved
+192-line resident PRG reference; cartridge builds have separate ROM limits.
 The exporter warns explicitly if every sampled frame is geometrically identical.
 
 `falling_cubes_full.py` and the included Blender-4.00
@@ -312,7 +315,7 @@ The migration never overwrites a differing destination file; identical duplicate
 
 The Blender regression set is kept separate because Blender is optional. The historical colour `falling_cubes_c64_color-yunroll_legacy144.prg` is retained in `examples/blender_falling_cubes/`; current 192/200/debug PRGs are generated and checksum-verified with `test-examples --blender-only` / `generate-examples --blender-only`.
 
-Build + run the reference torus with the current fastest renderer:
+Build and run the reference torus with the default hors-render-v1 renderer:
 
 ```bash
 ./build.sh --shape torus --run
@@ -379,9 +382,9 @@ Animation modes are `spin`, `recede`, and `crawl`. `recede` keeps the artwork fr
 Renderer comparison:
 
 ```bash
-./build.sh --shape torus --renderer step --run       # v0.7-style reference
-./build.sh --shape torus --renderer bytechunk --run  # v0.8 stable path
-./build.sh --shape torus --renderer yunroll --run    # current fastest path
+./build.sh --shape torus --renderer step --run       # packed-step PRG reference
+./build.sh --shape torus --renderer bytechunk --run  # byte-chunk PRG reference
+./build.sh --shape torus --renderer yunroll --run    # unrolled resident PRG path
 ```
 
 Useful inspection commands:
@@ -404,25 +407,28 @@ The bundled horse is deliberately compiled with `--visibility surface`. Its OBJ 
 ./build.sh --object horse_head --visibility surface_creases --feature-angle 40 --run
 ```
 
-The emitter can spill whole per-orientation line blocks into otherwise-unused RAM below bitmap #2, so the full horse surface mode still fits 36 sampled orientations without reducing the mesh.
+For resident PRG builds, the emitter can spill whole per-orientation line blocks into otherwise-unused RAM below bitmap #2, so the full horse surface mode still fits 36 sampled orientations without reducing the mesh.
 
 
-## Current render/build controls (v0.6.6)
+## Resident PRG render/build controls (v0.7.1)
 
-These controls were introduced in v0.6.2 and remain the current v0.6.6 PRG behaviour. They expand the default drawable area while keeping alternate/debug paths out of the production renderer:
+These controls preserve the PRG behaviour introduced in v0.6.2. Select
+`--renderer yunroll` explicitly: the default build now produces a hors-render-v1
+EasyFlash cartridge. The examples below expand the drawable area while keeping
+alternate/debug paths out of the production PRG renderer:
 
 ```bash
 # production HUD/FPS path: automatic 256x192 drawable viewport
-./build.sh --shape torus --run
+./build.sh --renderer yunroll --shape torus --run
 
 # legacy/performance framing: same production renderer, 256x144 drawable viewport
-./build.sh --shape torus --viewport-height 144 --run
+./build.sh --renderer yunroll --shape torus --viewport-height 144 --run
 
 # separate no-overlay ASM: no HUD/FPS/text, automatic full 256x200 viewport
-./build.sh --shape torus --no-text-overlay --run
+./build.sh --renderer yunroll --shape torus --no-text-overlay --run
 
 # derivative yunroll debug ASM: border marks actual main-loop render CPU time
-./build.sh --shape torus --rastertime-profiler --run
+./build.sh --renderer yunroll --shape torus --rastertime-profiler --run
 ```
 
 `--viewport-height LINES` may override the automatic height (8..200, multiple of 8). `--overwrite-policy allow|warn|error` controls existing PRG/LBL/LST outputs; the built-in default is `warn`. These defaults may also be stored in `[render_defaults]` in `config/c643d.ini`; command-line options take precedence.
@@ -481,26 +487,22 @@ On Debian/Ubuntu, distro VICE packages can be DFSG-stripped and omit Commodore R
 
 ## Current state
 
-The historical 256x144 `yunroll` torus (`torus_legacy144.prg`) measured around
-**15-18 FPS** on stock PAL C64 timing in VICE during development. The current
-256x192 default and 256x200 no-overlay builds deliberately draw/clear more of
-the bitmap and can therefore run slower depending on scene complexity. The original
-vector variants remain native hires, hidden-line clipped and triple-buffered,
-without pre-rendered bitmap animation frames. V8 retains hires and triple
-buffering but adds precomputed sparse bitmap-byte pictures as an explicit
-alternative to runtime vector drawing.
+**v0.7.1 ships hors-render-v1 as the default renderer**, with a twelve-animation
+menu cartridge, standalone cartridges, and authored Blender scenes. Procedural
+geometry, OBJ/MTL, SVG and versioned `.c643dscene` data share the host compiler.
+Blender builds support object/camera motion, stable-topology deformation,
+rigid-body simulation and materials.
 
-As of **v0.6.6**, the toolkit is a reusable multi-source compiler/runtime rather
-than only a rotating-mesh benchmark. It accepts procedural geometry, OBJ/MTL,
-SVG, versioned `.c643dscene` interchange data, and animated Blender `.blend`
-scenes. Blender-authored builds can preserve arbitrary object motion, stable-
-topology deformation, rigid-body simulation, materials, and active-camera
-animation while the stock C64 still rasterizes the resulting vectors itself.
+The host computes projection and hidden-line visibility. hors-render-v1 prefers
+precomputed bitmap-byte spans copied directly from cartridge ROM, with runtime
+vector drawing as a fallback when the byte encoding exceeds the frame arena.
+The original `step`, `bytechunk` and `yunroll` resident PRG renderers remain
+available explicitly, alongside preserved cartridge generations for comparison.
 
-Version 0.6.4 introduced the independent cartridge streaming variants. Version
-0.6.5 fixes the animated-menu loader handoff and keeps one current V4 cart with
-all twelve entries streamed using the same renderer. The original `yunroll-cart`
-scaffold and earlier renderer variants are retained.
+Use the [performance comparison](docs/PERFORMANCE_COMPARISON.md) for matched
+normal PLAY ALL results through hors-render-v1, including FPS/RAM preferences
+and storage costs. Historical PRG timing figures and authored-scene playback
+rates describe different workloads and should not be compared directly.
 
 The project grew out of the rotating-torus benchmark, a.k.a. **THE WORLD'S MOST
 DANGEROUS ROTATING DONUT**.
@@ -527,16 +529,19 @@ for a ~1 MHz target:
   authored Blender frame selection
 - perspective projection and viewport clipping for authored scene sources
 - face visibility and host-side Z-buffer hidden-line clipping
-- C64-oriented line-step encoding
+- C64-oriented line-step encoding and, for hybrid renderers, precomputed
+  bitmap-byte spans
 - dirty-area and hires screen-colour span generation
 
 Blender scenes use strict authored-frame semantics: if the selected samples do
 not fit the C64 table budget, the build fails with sampling/range/detail
 suggestions rather than silently discarding authored frames.
 
-The C64 still rasterizes the visible wireframe itself into VIC-II hires bitmap
-RAM. `step`, `bytechunk`, and `yunroll` are vector/line renderers, not
-bitmap-frame players.
+On the C64, `step`, `bytechunk` and `yunroll` rasterize the encoded lines into
+VIC-II hires bitmap RAM. hors-render-v1 instead prefers direct ROM-to-bitmap
+byte-span drawing, retaining the vector fallback. Both paths use the
+host-computed pictures; the C64 handles drawing/copying, buffer reuse, colour
+updates and display scheduling. See [Renderers](#renderers) for the progression.
 
 ## Shapes and topology
 
@@ -578,7 +583,7 @@ For the torus, `major_segments * minor_segments` equals both the vertex count an
 14 x 7  ->  98 verts, 196 edges, 98 faces
 ```
 
-Higher detail consumes both CPU time and generated table RAM. If a requested mesh no longer fits with 48 orientations, the compiler preserves mesh detail and automatically reduces the orientation-table count unless `--strict-frames` is used.
+In resident PRG builds, higher detail consumes both CPU time and generated table RAM. If a requested mesh no longer fits with 48 orientations, the compiler preserves mesh detail and automatically reduces the orientation-table count unless `--strict-frames` is used.
 
 ## OBJ pipeline
 
@@ -731,7 +736,7 @@ Its metadata declares the source as Z-up and the toolkit converts it to internal
 ./build.sh --object horse_head --renderer yunroll --run
 ```
 
-On the host-side compiler, the full horse currently exceeds the line-table budget at 48 and 40 orientations, so the compiler automatically selects **36 orientations** while preserving all 64 vertices / 65 faces.
+When compiling resident PRG output, the full horse exceeds the line-table budget at 48 and 40 orientations, so the compiler automatically selects **36 orientations** while preserving all 64 vertices / 65 faces.
 
 Table-RAM messages during auto-fit are informational: the compiler retries with fewer precomputed rotation orientations while keeping the mesh itself intact. It now explicitly prints that vertices/edges/faces are preserved. Use `--strict-frames` if you would rather fail than auto-reduce the orientation count.
 
@@ -794,7 +799,7 @@ SPACE startup screen before running the authored intro and measuring frames.
 Optional `--max-fps 10` and `--lock-to-min-fps` create paced comparison reels;
 both default off and never replace the uncapped performance chart.
 
-Toolkit release **0.7.0** and renderer **hors-render-v1** have separate version
+Toolkit release **0.7.1** and renderer **hors-render-v1** have separate version
 numbers. `hors-render-v1` resolves to `yunroll-cart-v10`, and
 `hors-render-v1-scene` resolves to `yunroll-cart-v10-scene`; both internal names
 remain accepted. Original paths draw vectors on the C64; V8 adds adaptive
@@ -822,11 +827,11 @@ methods.
 
 ### `step`
 
-The v0.7-style packed-step renderer. The host precomputes minor-axis decisions and the 6510 rasterizes the lines pixel-by-pixel. Kept as a regression/benchmark reference.
+The original packed-step renderer (a historical renderer generation, not toolkit v0.7.1). The host precomputes minor-axis decisions and the 6510 rasterizes the lines pixel-by-pixel. Kept as a regression/benchmark reference.
 
 ### `bytechunk`
 
-The v0.8 renderer. Full aligned X-major chunks are combined into VIC-II bitmap-byte masks, reducing repeated bitmap read/modify/write operations. Stable reference path.
+The historical byte-chunk renderer. Full aligned X-major chunks are combined into VIC-II bitmap-byte masks, reducing repeated bitmap read/modify/write operations. Stable reference path.
 
 ### `yunroll`
 
@@ -866,7 +871,7 @@ update, and copies full pages as four 64-byte sections with one shared index.
 Memoizing host DDA selection reduces compilation work; that part does not raise
 C64 FPS. These changes preserve hires geometry, colours and animation samples.
 
-Measured sizes of the shipped carts:
+Historical V4/V5 cartridge sizes:
 
 | Cartridge | V4 CRT bytes | V5 CRT bytes | Bytes saved | Reduction |
 | --- | ---: | ---: | ---: | ---: |
@@ -925,7 +930,8 @@ PLAY ALL is a fixed item above the V7 menu list. It loops all twelve animations,
 10 seconds each by default, with SPACE to skip and RUN/STOP/F1 to return.
 `--play-all-seconds` accepts 1..255, measured as 50 PAL ticks per second.
 F1 in the menu continues to cycle all three styles, including the flashing party
-menu. The `-ram` comparison cartridges are supplied alongside the FPS defaults.
+menu. V7 comparison builds support both FPS and RAM preferences; historical outputs
+are kept outside the checkout. The shipped menu cartridges use hors-render-v1.
 
 ```bash
 python tools/build_v7_examples.py
@@ -987,13 +993,19 @@ c64-3d-toolkit/
 │       ├── svgio.py
 │       └── toolchain.py
 ├── examples/
-│   ├── blender/
+│   ├── blender_falling_cubes/
 │   │   ├── falling_cubes_c64.py
 │   │   ├── falling_cubes_c64.blend
 │   │   ├── falling_cubes_full.py
 │   │   └── falling_cubes_full.blend
-│   ├── examples.json
-│   └── *.prg
+│   ├── blender_marbles/
+│   ├── blender_horse_and_sunflower/
+│   ├── cart_demos/
+│   ├── cart_marbles/
+│   ├── cart_horse_and_sunflower/
+│   ├── hifi_showcase/
+│   ├── torus/                   # per-example PRG and CRT outputs
+│   └── examples.json
 ├── objects/
 │   ├── README.md
 │   ├── horse_head.obj
@@ -1056,24 +1068,39 @@ previewer is planned, but the command-line path will remain first-class.
 
 ## Status
 
-**Version 0.6.6 includes the Marbles early beta.** The production PRG pipeline
-remains compatible with the verified v0.6.2 baseline, while cartridge work is
-kept in a separate EasyFlash backend. Current cartridge milestones include:
+**Version 0.7.1: hors-render-v1.** The current twelve-demo menu and standalone
+object cartridges use hors-render-v1; authored scenes use
+hors-render-v1-scene. Internal `yunroll-cart-v10` names remain accepted aliases.
+The resident PRG pipeline remains available through explicit `step`,
+`bytechunk` and `yunroll` renderer selection, with its preserved v0.6.2
+checksum baseline.
 
-- native EasyFlash boot and deterministic bank switching;
-- `.crt` creation through optional VICE `cartconv` tooling;
-- explicit `cartconv` discovery, configuration, `doctor` reporting, and useful
-  failure messages;
-- a menu-driven multi-animation demo cartridge built with `cart-demos` or
-  `--generate-cart-demos`, with live F1 menu-style cycling, F1/RUN-STOP menu return, and SPACE next-demo controls;
-- cartridge bank maps and JSON manifests;
-- C64-side VICE/debug-cart validation of banked payload copying; and
-- the independent `yunroll-cart-v2` streamer, 16-bit run counts and HiFi demos.
+Current cartridge features include:
 
-The final demo cartridge streams all twelve entries through V7. Their animation tables consume cartridge ROM while a fixed frame
-buffer and per-bitmap metadata caches are reused in RAM. The current V2 limits
-include 255 orientations, an 8 KiB frame block, and OBJ/SVG/procedural inputs;
-Long Blender scenes use the separate `yunroll-cart-v4-scene` extension; see [the scene guide](docs/CARTRIDGE_SCENES.md).
+- native EasyFlash boot, bank switching, bank maps and JSON manifests;
+- `.crt` creation through optional VICE `cartconv`, with tool discovery and
+  `doctor` reporting;
+- twelve-demo menu playback, PLAY ALL, menu-style cycling and skip/return controls;
+- direct ROM-to-bitmap byte spans with vector fallback, FPS/RAM preferences,
+  three bitmap buffers and reused staging/metadata storage;
+- authored sequences with intro/ending screens and fractional PAL pacing;
+- the accepted 640-sample Marbles presentation, targeting 16 FPS with SPACE
+  to start, plus the current Horse and Sunflower scene; and
+- a source-fingerprinted renderer comparison through hors-render-v1, measured
+  using normal PLAY ALL in PAL VICE 3.10. Physical C64 and NTSC performance
+  are not measured by that chart.
+
+Animation payloads reside in cartridge ROM while fixed buffers and metadata
+caches are reused in RAM. The encoded frame arena is 8 KiB; exceeding both
+supported frame encodings fails the build. Authored scenes use the separate
+sequence path rather than resident PRG frame tables; see
+[the scene guide](docs/CARTRIDGE_SCENES.md) and the current
+[Marbles](examples/cart_marbles/README.md) and
+[Horse and Sunflower](examples/cart_horse_and_sunflower/README.md) guides.
+
+Historical renderer sources remain available for reproduction and comparison.
+Superseded generated cartridges belong in the optional sibling
+`../c64-3d-toolkit-history/` archive, not among the current shipped examples.
 
 The animated Blender scene pipeline introduced in v0.6.0 remains first-class.
 `.blend` builds run Blender headlessly with its own bundled `bpy`, evaluate
@@ -1105,6 +1132,11 @@ benchmarking.**
 For local candidate experiments, resumable runs and shareable result logs, see
 [the candidate pipeline guide](docs/CANDIDATE_PIPELINE.md).
 
-## 0.7.0 current example selection
+## 0.7.1 current example selection
 
 See [Marbles](examples/cart_marbles/README.md) for the accepted 16 FPS force-bytes presentation. Current menu and Horse/Sunflower cartridges use hors-render-v1. Superseded outputs belong in the optional sibling `../c64-3d-toolkit-history/` archive; `python perf/prune_old_examples.py` moves older installed outputs out of the checkout.
+
+The v0.7.1 menu cartridges are rebuilt for the current release, alongside the
+new [HiFi exhibition reel](examples/cart_hifi/README.md). Existing
+standalone object and authored-scene cartridges, including accepted Marbles,
+retain their v0.7.0 bytes and original embedded build labels.

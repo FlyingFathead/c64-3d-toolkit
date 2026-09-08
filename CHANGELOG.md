@@ -1,18 +1,42 @@
 # Changelog
 
+## 0.7.1: HiFi exhibition cartridge and presentation update
+
+- Correct the default demo-menu header to use the release version and HORS-V1 label.
+
+- Add a separate `examples/cart_hifi/` reel: complete horse-sniffing animation, captioned HiFi sunflower and horse spinners, and a ten-second closing screen. SPACE starts the repeating presentation.
+- Update menu exhibition playback with native closing and opening screens, timed repetition and keyboard controls.
+- Preserve normal PLAY ALL and F5 schedules and the hors-render-v1 drawing algorithm.
+- Rebuild FPS/RAM menu cartridges with v0.7.1 identity; keep existing standalone and authored-scene cartridge bytes and original build provenance.
+- Include the documentation consistency corrections prepared after v0.7.0; refresh current menu links and release instructions.
+- Advance VERSION, Python package and Windows setup release labels together.
+- Verify optional historical binaries that are available and explicitly skip missing reference coverage when the external archive is partial.
+
+
 ## 0.7.0: hors-render-v1 byte-first rendering and performance tools
+
+### Documentation correction
+
+- Update current architecture, build/configuration, scene and example guides for hors-render-v1.
+- Distinguish current 640-sample Marbles from historical 200-sample builds and record actual shipped cartridge sizes.
+- Correct cleanup/reproduction prerequisites and broken historical report links; label older renderer and upgrade guides as historical.
+- Add a documentation index and cumulative documentation fix-pack instructions.
+- Documentation only: no version, renderer, cartridge, sample, manifest or performance-measurement changes.
+
+
+### Release changes
 
 - Repair comparison reproduction after example cleanup: bundle the original V4 Marbles/V7 Horse & Sunflower vectors as a frozen, hash-checked reference asset. Remove the broken external-history dependency, acknowledge the V10 SPACE startup screen in automated scene verification/profiling, and clarify how to regenerate a stale chart.
 
 - Add optional authored Marbles clean/HUD, FPS/RAM policy benchmarking with mandatory pixel checks and optional ending validation.
 - Integrate repeatable candidate runs, recoverable summaries, ignored logs, result bundles and terminal viewers.
 - Add independent hors-render-v1/hors-render-v1-scene targets and make hors-render-v1 the default. Prefer byte spans that fit an 8 KiB arena; preserve V9 explicitly.
-- Ship hors-render-v1 menu, authored Marbles and Horse/Sunflower cartridges in FPS/RAM variants.
+- Ship hors-render-v1 menu and Horse/Sunflower cartridges in FPS/RAM variants, plus current standalone object cartridges. The accepted Marbles presentation uses 640 samples targeting 16 FPS, with SPACE to start; its recorded scene duration is 41.82 seconds. Historical 200-sample HUD/RAM Marbles variants are not the current shipped presentation.
 - Add opt-in `--blender-output-fps` for baked Blender exports with hors-render-v1 playback targets and explicit console reporting; 20 FPS uses alternating PAL holds.
 - Fresh Blender 25/20 FPS builds remain local test candidates, not guaranteed sustained rates. Music testing remains pending.
 - Record confirmed three-loop byte-policy speed/size comparisons and EasyFlash capacity accounting.
 - Document GMod3/GMod4 backend plans, source links and emulator limitations; neither backend is implemented yet.
-- Retain all historical renderer assembly and shipped PRG/CRT files byte-for-byte. Existing demo version labels remain historical.
+- Retain historical renderer assembly and resident PRG references byte-for-byte. Superseded generated cartridges move to the optional external sibling archive; their original version labels and bytes remain historical.
 - Use new run IDs after upgrade; older experimental results remain preserved.
 
 ## 0.6.9: V9 direct ROM byte spans

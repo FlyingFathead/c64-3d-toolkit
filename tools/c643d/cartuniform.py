@@ -18,6 +18,9 @@ class Demo:
     hud:bytes
     source:str
     source_sha256:str
+    frame_ticks:int=1
+    finite:bool=False
+    show_hud:bool=True
 
 
 def demos(root):
@@ -46,11 +49,11 @@ def demos(root):
     return out
 
 
-def prepare(root,renderer,tass,tass_args=(),sources=None,prefer="fps"):
+def prepare(root,renderer,tass,tass_args=(),sources=None,prefer="fps",work_prefix="uniform"):
     from .renderer_names import implementation
     renderer=implementation(renderer)
     if renderer not in ('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'):raise ValueError('unsupported uniform renderer')
-    root=Path(root);variant=renderer.rsplit('-',1)[1];out=root/f'build/uniform-{variant}{"-ram" if prefer == "ram" else ""}';out.mkdir(parents=True,exist_ok=True)
+    root=Path(root);variant=renderer.rsplit('-',1)[1];out=root/f'build/{work_prefix}-{variant}{"-ram" if prefer == "ram" else ""}';out.mkdir(parents=True,exist_ok=True)
     sources=demos(root) if sources is None else sources
     # Each RAM bootstrap fits in three ROML banks. ROMH 0=boot, 1=menus,
     # 2=menu directory/helpers. Remaining chips form a common frame-data pool.
@@ -116,6 +119,9 @@ def prepare(root,renderer,tass,tass_args=(),sources=None,prefer="fps"):
         if variant in ("v8", "v9", "v10"):
             from .bytespan import configure_source
             src = configure_source(src.replace('V9_BYTE_SPANS', 'V8_BYTE_SPANS'), directory).replace('V8_BYTE_SPANS', 'V9_BYTE_SPANS') if variant in ('v9', 'v10') else configure_source(src, directory)
+        if demo.frame_ticks != 1 or demo.finite or not demo.show_hud:
+            from .hifireel import configure_scene_runtime
+            src = configure_scene_runtime(src, demo)
         asm=work/'main.asm';asm.write_text(src);prg=work/'runtime.prg'
         subprocess.run([tass,*tass_args,'--cbm-prg','--vice-labels','-l',str(work/'runtime.lbl'),'-o',str(prg),str(asm)],check=True,cwd=root,stdout=subprocess.DEVNULL)
         blob=prg.read_bytes();load=int.from_bytes(blob[:2],'little')
@@ -152,7 +158,7 @@ def play_all_durations(entries, seconds, renderer):
             for entry in entries]
 
 
-def build(a, *, sources=None):
+def build(a, *, sources=None, reel=False):
     print('fps locking: not set')
     from . import cli,__version__
     tass=cli.resolve_executable(a.tass,'tass');cartconv=cli.require_cartconv(a.cartconv,verbose=True)
@@ -170,26 +176,33 @@ def build(a, *, sources=None):
     metadata=out/'metadata';metadata.mkdir(parents=True,exist_ok=True)
     paths=[out/f'{stem}.crt',metadata/f'{stem}-cart-manifest.json',metadata/f'{stem}-cart-map.txt']
     if not cli._check_overwrite(paths,a.overwrite_policy):return 2
-    entries,frame_image,stream_info,used,first_free=prepare(root,renderer,tass,a.tass_args or (),sources=sources,prefer=prefer)
+    entries,frame_image,stream_info,used,first_free=prepare(root,renderer,tass,a.tass_args or (),sources=sources,prefer=prefer,**({"work_prefix":"hifi"} if reel else {}))
     image,plans,manifest=pack_demo_prgs(entries,source_root=root)
     if any(p.banks!=3 for p in plans) or manifest['highest_bank_used']!=first_free-1:raise ValueError('runtime bank reservation differs from planned frame pool')
     for b,chip in used:
         pos=easyflash_offset(b,chip);image[pos:pos+8192]=frame_image[pos:pos+8192]
     work=root/'build'/f'{stem}-cartridge-demo';gen=work/'generated';gen.mkdir(parents=True,exist_ok=True)
     write_demo_include(gen/'cart-demo-data.inc',plans)
+    from .buildscreen import menu_title_lines
+    (gen/'menu-title.inc').write_text('\n'.join(menu_title_lines(__version__, public_renderer))+'\n')
     if variant in ('v5', 'v6', 'v7', 'v8', 'v9', 'v10'):
         from .buildscreen import build_screen_lines
-        (gen/'build-screen.inc').write_text('\n'.join(build_screen_lines(__version__, ('hors-render-v1' if variant == 'v10' else f'yunroll-{variant}')+(' (ram)' if prefer == 'ram' else '')))+'\n')
+        (gen/'build-screen.inc').write_text('\n'.join(build_screen_lines(__version__, ('hors-render-v1' if variant == 'v10' else f'yunroll-{variant}')+(' (ram)' if prefer == 'ram' else ''),hifi_reel=variant == 'v10' and not reel))+'\n')
     if variant in ('v7', 'v8', 'v9', 'v10'):
         from .buildscreen import play_all_thanks_lines
         (gen/'play-all-thanks.inc').write_text('\n'.join(play_all_thanks_lines(__version__))+'\n')
     if variant in ('v8', 'v9', 'v10'):
         durations = play_all_durations(stream_info, seconds, renderer)
         (gen/'play-all-durations.inc').write_text('play_all_durations:\n'+ '\n'.join(bytes_lines(durations))+'\n')
+    hifi_indices = [next((i for i,e in enumerate(stream_info) if e['name'] == name), 255)
+                    for name in ('HORSE HEAD HIFI', 'SUNFLOWER TORUS HIFI')]
+    if variant == 'v10':
+        with (gen/'play-all-durations.inc').open('a') as f:
+            f.write(f'HIFI_HORSE_INDEX = {hifi_indices[0]}\nHIFI_FLOWER_INDEX = {hifi_indices[1]}\n')
     runtimes={};shared={}
     for i,style in enumerate(cli.DEMO_MENU_STYLE_ORDER):
         binpath=work/f'{stem}-runtime-{style}.bin';whole=work/f'{stem}-menu-{style}-whole.bin'
-        subprocess.run([tass,*(a.tass_args or ()),'-I',str(gen),'-D','VICE_DEBUGCART=0','-D','AUTO_LAUNCH=255','-D',f'MENU_STYLE={i}','-D',f'RENDERER_VERSION={int(variant[1:])}','-D',f'PLAY_ALL_SECONDS={seconds}','-b','--vice-labels','-l',str(work/f'{stem}-runtime-{style}.lbl'),'-L',str(work/f'{stem}-runtime-{style}.lst'),'-o',str(whole),str(root/(f'c64/cart/easyflash-demo-scroll-runtime-{variant}.asm' if variant in ('v8', 'v9', 'v10') else 'c64/cart/easyflash-demo-scroll-runtime.asm'))],check=True,cwd=root,stdout=subprocess.DEVNULL)
+        subprocess.run([tass,*(a.tass_args or ()),'-I',str(gen),'-D','VICE_DEBUGCART=0','-D','AUTO_LAUNCH=255','-D',f'MENU_STYLE={i}','-D',f'RENDERER_VERSION={int(variant[1:])}','-D',f'PLAY_ALL_SECONDS={seconds}','-b','--vice-labels','-l',str(work/f'{stem}-runtime-{style}.lbl'),'-L',str(work/f'{stem}-runtime-{style}.lst'),'-o',str(whole),str(root/('c64/cart/easyflash-hifi-reel-runtime.asm' if reel else f'c64/cart/easyflash-demo-scroll-runtime-{variant}.asm' if variant in ('v8', 'v9', 'v10') else 'c64/cart/easyflash-demo-scroll-runtime.asm'))],check=True,cwd=root,stdout=subprocess.DEVNULL)
         data=whole.read_bytes()
         if len(data)!=4096:raise ValueError('scroll menu must occupy $c000-$cfff')
         shared[style]=data[:2048];binpath.write_bytes(data[2048:]);runtimes[style]=binpath
@@ -208,6 +221,22 @@ def build(a, *, sources=None):
         if variant in ('v8', 'v9', 'v10'):
             manifest['exhibition'] = dict(key='F5', entry_seconds=durations, loop=True, start='first-visible-picture', normal_play_all_unchanged=True)
         manifest['play_all']['thank_you']=dict(seconds=10,ticks=500,exit_key='F1',version=__version__,position='after-last-demo',next='first-demo')
+    if variant == 'v10':
+        manifest['build_screen'].update(ticks=None, wait_for_space=True)
+    if reel:
+        manifest['reel'] = dict(order=[e['name'] for e in stream_info],
+            scene_complete=True, scene_frames=len(sources[0].frames),
+            scene_frame_ticks=sources[0].frame_ticks, spinner_seconds=10,
+            thanks_seconds=10, loop=True, startup='SPACE',
+            source_scene='examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v1-scene.crt')
+        manifest.pop('exhibition', None)
+        manifest['play_all']['position'] = 'automatic-reel'
+    if variant == 'v10':
+        manifest['build_screen'].update(ticks=None, wait_for_space=True)
+        if not reel and 255 not in hifi_indices:
+            manifest['hifi_reel'] = dict(key='F4', entries=hifi_indices,
+                entry_seconds=10, thanks_seconds=10, title_seconds=10, title_skip_key='SPACE',
+                exit_key='F1', loop=True, advertised=False)
     manifest.update(runtime_data_banks_used=first_free-1,highest_runtime_bank_used=first_free-1,
         highest_bank_used=max([first_free-1]+[bank for bank,chip in used]),
         data_banks_used=len(set(range(1,first_free))|{bank for bank,chip in used}),

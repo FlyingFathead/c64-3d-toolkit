@@ -6,9 +6,12 @@ Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
 
 # Don't Lose Your Marbles: Blender example
 
-A separate early-beta example derived from the original falling-cubes scene.
-The original asset is unchanged. The source timeline is 1,000 frames at 25 FPS
-(40 seconds); the cartridge's complete story runs for about 58 seconds.
+The authored source behind the v0.7.0 Marbles presentation, derived from the
+original falling-cubes scene. The source timeline is 1,000 frames at 25 FPS
+(40 seconds). The accepted cartridge uses 640 integer-source samples targeting
+16 FPS; its recorded scene playback is about 41.82 seconds, with native intro
+and ending in addition. The older approximately 58-second story figure referred
+to the early beta, not the current presentation.
 
 - `dont_lose_your_marbles.blend`: baked transforms, including the orbit and finale;
   ready to scrub or export without a physics cache.
@@ -33,8 +36,9 @@ body simulation. Fixed mesh topology is preserved throughout.
 
 The original yellow/cyan/light-red/light-blue/gray palette is retained. Marbles
 use 8-segment, 4-ring meshes. The camera completes one continuous 360-degree orbit.
-Sampling every five source frames produces 200 cartridge samples; PAL playback
-pacing and renderer load determine the actual running time.
+The historical step-5 export produced 200 samples. The current accepted cart
+uses the denser 640-sample recovery export; PAL holds and renderer load determine
+actual playback time. See [current build/reproduction notes](../../docs/V10_TESTING.md).
 
 The exporter recognises optional integer object properties `c643d_visible_start`
 and `c643d_visible_end` (inclusive source frames). Outside that window, it keeps
