@@ -69,7 +69,7 @@ def emit_directory(path,directory,*,direct_bytes=False):
     lines += ['.if * > $5000','.error "directory overlaps metadata cache"','.endif']
     path.write_text('\n'.join(lines)+'\n')
 
-def assemble_cartridge(root,frames,mesh,*,tass,cartconv,outdir,stem,tass_args=(),color_index=1,colors=True,renderer="yunroll-cart-v2",optimize=True,prefer="fps"):
+def assemble_cartridge(root,frames,mesh,*,tass,cartconv,outdir,stem,tass_args=(),color_index=1,colors=True,renderer="yunroll-cart-v2",optimize=True,prefer="fps",hud=None):
     from .renderer_names import implementation
     renderer=implementation(renderer)
     if renderer not in ('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'):raise ValueError('unsupported stream renderer')
@@ -96,7 +96,11 @@ def assemble_cartridge(root,frames,mesh,*,tass,cartconv,outdir,stem,tass_args=()
             from .bytespan_v10 import frame_block as encoder
     image,directory=pack_frames(frames,colors,aliases=optimization["picture_references"] if optimization else None,encoder=encoder)
     emit_directory(gen/'tables.inc',directory,direct_bytes=variant in ('v9', 'v10'))
-    emit_hud(gen/'hud.inc',mesh.name,len(mesh.vertices),len(mesh.edges))
+    if hud is None:
+        emit_hud(gen/'hud.inc',mesh.name,len(mesh.vertices),len(mesh.edges))
+    else:
+        from .emit import bytes_lines
+        (gen/'hud.inc').write_text('\n'.join([f'HUD_STATIC_LEN = {len(hud)}', 'hud_static_bitmap:'] + bytes_lines(hud) + ['hud_static_bitmap_end:', '']))
     shutil.copyfile(root/f'c64/cart/easyflash-stream-{variant}-helper.asm',gen/f'cart-{variant}-helper.inc')
     src=(root/f'c64/renderer-{renderer}.asm').read_text()
     src=src.replace('FRAME_COUNT = 48',f'FRAME_COUNT = {len(frames)}',1).replace('COLORS_ENABLED = 0',f'COLORS_ENABLED = {int(colors)}',1).replace('SCREEN_COLOR = $10',f'SCREEN_COLOR = ${color_index:X}0',1)

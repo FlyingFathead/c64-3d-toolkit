@@ -1,3 +1,9 @@
+⚠️🐴 Attention! For best quality, please enjoy the `hors-renderer` version of each animation.
+
+Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
+
+**Current hors-render-v1 cartridge:** [play the example](../cart_horse_and_sunflower/README.md).
+
 # Horse and sunflower
 
 **0.6.7 — standalone scene test, kept separate from the multi-demo menu.**

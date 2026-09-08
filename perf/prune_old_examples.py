@@ -21,7 +21,10 @@ def main():
             if 'yunroll-cart-v' in p.name or (name=='cart_marbles' and p.name.startswith('dont_lose_your_marbles-hors-render-v1-')):
                 paths.append(p)
     hifi=root/'examples/hifi_showcase'
-    if hifi.exists():paths.extend(p for p in hifi.rglob('*') if p.is_file())
+    if hifi.exists():
+        paths.extend(p for p in hifi.rglob('*') if p.is_file()
+                     and p.name != 'README.md'
+                     and not p.name.startswith('horse_head_hifi-hors-render-v1'))
     planned=[]
     for p in sorted(set(paths)):
         if p.is_symlink():raise SystemExit(f'Unexpected symlink: {p}')

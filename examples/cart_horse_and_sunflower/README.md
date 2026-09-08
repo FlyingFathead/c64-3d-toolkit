@@ -1,3 +1,7 @@
+⚠️🐴 Attention! For best quality, please enjoy the `hors-renderer` version of each animation.
+
+Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
+
 # 0.7.0 Horse and Sunflower
 
 Current hors-render-v1 cartridges: [FPS preferred](horse_and_sunflower-hors-render-v1-scene.crt) and [RAM preferred](horse_and_sunflower-hors-render-v1-scene-ram.crt).

@@ -1,3 +1,9 @@
+⚠️🐴 Attention! For best quality, please enjoy the `hors-renderer` version of each animation.
+
+Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
+
+**Current hors-render-v1 cartridge:** [play the example](../cart_marbles/README.md).
+
 # Don't Lose Your Marbles: Blender example
 
 A separate early-beta example derived from the original falling-cubes scene.

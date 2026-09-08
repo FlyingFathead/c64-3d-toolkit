@@ -1,0 +1,252 @@
+{
+  "format": "c643d-easyflash-stream-v2",
+  "version": 1,
+  "renderer": "yunroll-cart-v10",
+  "name": "FALLING CUBES",
+  "frames": 18,
+  "vertices": null,
+  "edges": null,
+  "faces": null,
+  "colors": false,
+  "screen_color": 48,
+  "directory_ram_bytes": 126,
+  "frame_buffer_bytes": 8192,
+  "metadata_cache_bytes": 3072,
+  "rom_frame_bytes": 16388,
+  "highest_bank": 5,
+  "run_count_bits": 16,
+  "frame_data": [
+    {
+      "frame": 0,
+      "bank": 3,
+      "address": 32768,
+      "bytes": 624,
+      "metadata_bytes": 73,
+      "runs": 26,
+      "sha256": "41184d00ddc6f7af884a992d7cfce1267ff8a71a404c839ce6d35a201876d9a3",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 1,
+      "bank": 3,
+      "address": 33392,
+      "bytes": 626,
+      "metadata_bytes": 73,
+      "runs": 25,
+      "sha256": "90f6c9cca0c0e1dcf4b111de1c294ee6fdb3f97f0ba6741c1c80a1f382855703",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 2,
+      "bank": 3,
+      "address": 34018,
+      "bytes": 666,
+      "metadata_bytes": 82,
+      "runs": 26,
+      "sha256": "a6099d90f86afc10c54d2c506f1584f61ee820e3120020c86dec2dbbf0996a28",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 3,
+      "bank": 3,
+      "address": 34684,
+      "bytes": 722,
+      "metadata_bytes": 85,
+      "runs": 31,
+      "sha256": "fd1e697ac7a2984ed15ff411fcb2e04378033e430ca4a3b07d1652bfbddca0d2",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 4,
+      "bank": 3,
+      "address": 35406,
+      "bytes": 790,
+      "metadata_bytes": 94,
+      "runs": 40,
+      "sha256": "f7c27dfd9443aa5f4f172289c9a8efcde9c5e6dcb8ce9857d66f1fe3c5a37788",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 5,
+      "bank": 3,
+      "address": 36196,
+      "bytes": 864,
+      "metadata_bytes": 103,
+      "runs": 43,
+      "sha256": "ed3ffee9dcfcec94f20496e0bac39a0d9df568ed095b4fd477357f4f977435f2",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 6,
+      "bank": 3,
+      "address": 37060,
+      "bytes": 966,
+      "metadata_bytes": 112,
+      "runs": 51,
+      "sha256": "f8ed1c8025d0257027a5ae576de3db679f85002d9c44a79899202cf047d3a8c5",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 7,
+      "bank": 3,
+      "address": 38026,
+      "bytes": 1021,
+      "metadata_bytes": 127,
+      "runs": 53,
+      "sha256": "5a8544b1418280087adc462fccc04b208c55b3c105b5f2a1a06ef4da51c8a7bb",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 8,
+      "bank": 3,
+      "address": 39047,
+      "bytes": 1137,
+      "metadata_bytes": 139,
+      "runs": 65,
+      "sha256": "3c7a0a347520b1ad8cc485619fb6f33695d91cd8e0ce1f3bcce316671d61e647",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 9,
+      "bank": 4,
+      "address": 32768,
+      "bytes": 1172,
+      "metadata_bytes": 136,
+      "runs": 70,
+      "sha256": "58d8e46c1ee62b86ee829427aac01f0d84fcf0de2bcb629f4bc5393d19db7cc3",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 10,
+      "bank": 4,
+      "address": 33940,
+      "bytes": 1034,
+      "metadata_bytes": 103,
+      "runs": 70,
+      "sha256": "2f21899036c15acb589aa0f2d345af7d4691dbf890d79aef5039ededb5ae8260",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 11,
+      "bank": 4,
+      "address": 34974,
+      "bytes": 961,
+      "metadata_bytes": 82,
+      "runs": 69,
+      "sha256": "581b2528e5df2cbe56b7dbde294ade78a613b4b27771aecab23ddd40ea0e8050",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 12,
+      "bank": 4,
+      "address": 35935,
+      "bytes": 964,
+      "metadata_bytes": 82,
+      "runs": 69,
+      "sha256": "d78fe2d9f74ddfeb105175e9404f7580053c1538e072825394d388610b54b83f",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 13,
+      "bank": 4,
+      "address": 36899,
+      "bytes": 974,
+      "metadata_bytes": 91,
+      "runs": 73,
+      "sha256": "263a585d255f0660de53f12a0e44d0ef611925cbe957e021ebdfb58128c2edf0",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 14,
+      "bank": 4,
+      "address": 37873,
+      "bytes": 976,
+      "metadata_bytes": 88,
+      "runs": 71,
+      "sha256": "b0b41ffd9520b550b15a3c6dc1ae891925ec54ba3e40fd212227820f56d99ded",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 15,
+      "bank": 4,
+      "address": 38849,
+      "bytes": 962,
+      "metadata_bytes": 91,
+      "runs": 68,
+      "sha256": "d88b0312b397a27abc64b7b13c85d6ddfc614d587ce9231e56b0a6863e0c4cc5",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 16,
+      "bank": 4,
+      "address": 39811,
+      "bytes": 960,
+      "metadata_bytes": 88,
+      "runs": 68,
+      "sha256": "46ede77f25d6e69a1c545102e314208cb26d102dd19b4e2a30277a03921084b4",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 17,
+      "bank": 5,
+      "address": 32768,
+      "bytes": 969,
+      "metadata_bytes": 88,
+      "runs": 68,
+      "sha256": "242d3c4cb3b4f1b9b1653006f855733ad5f85adc044a0e954fabda989e4fb7b9",
+      "encoding": "byte-spans"
+    }
+  ],
+  "optimization": {
+    "original_runs": 1132,
+    "retained_runs": 1093,
+    "removed_runs": 39,
+    "original_record_bytes": 7847,
+    "retained_record_bytes": 7639,
+    "saved_record_bytes": 208,
+    "unique_pictures": 18,
+    "duplicate_pictures": 0,
+    "consecutive_holds": 0,
+    "picture_references": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ],
+    "bitmap_and_colors_preserved": true
+  },
+  "clearing": {
+    "format": "v7-mixed-cell-byte-spans",
+    "cell_spans": 424,
+    "byte_spans": 149,
+    "original_clear_bytes": 18080,
+    "selected_clear_bytes": 16878,
+    "metadata_bytes_added": 0
+  },
+  "joining": {
+    "bitmap_and_colors_preserved": true,
+    "original_runs": 1093,
+    "retained_runs": 986,
+    "merged_runs": 107,
+    "saved_record_bytes": 535
+  },
+  "preference": "fps",
+  "wire_format": "v10-byte-first-direct-spans",
+  "byte_span_frames": 18,
+  "source": "assets/v4-menu-vector-reference.json.gz",
+  "source_note": "Preserved 18 vector samples, rendered by hors-render-v1; no Blender rebake."
+}

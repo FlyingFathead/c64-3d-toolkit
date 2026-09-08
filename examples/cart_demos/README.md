@@ -1,3 +1,7 @@
+⚠️🐴 Attention! For best quality, please enjoy the `hors-renderer` version of each animation.
+
+Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
+
 # 0.7.0 demo menu
 
 Current hors-render-v1 cartridges: [FPS preferred](c643d-demo-v0.7.0-hors-render-v1-all.crt) and [RAM preferred](c643d-demo-v0.7.0-hors-render-v1-all-ram.crt).

@@ -1,3 +1,7 @@
+⚠️🐴 Attention! For best quality, please enjoy the `hors-renderer` version of each animation.
+
+Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
+
 <p align="center">
   <img src="assets/c64-3d-toolkit_banner.png" alt="c64-3d-toolkit" width="100%">
 </p>
@@ -15,6 +19,8 @@ Build runnable EasyFlash cartridges or standalone PRG demos.
 2. **[DON’T LOSE YOUR MARBLES](examples/cart_marbles/README.md)** — the accepted
    hors-render-v1 16 FPS force-bytes presentation: native intro, animated Blender
    scene and ending. Waits for SPACE before starting, so you can begin recording.
+
+3. **[HiFi horse head](examples/hifi_showcase/README.md)** — standalone hors-render-v1 cartridge, 192 orientations.
 
 ```bash
 # #1: Multi-demo cartridge

@@ -1,3 +1,7 @@
+⚠️🐴 Attention! For best quality, please enjoy the `hors-renderer` version of each animation.
+
+Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
+
 # DON’T LOSE YOUR MARBLES — 0.7.0
 
 Current accepted presentation: [hors-render-v1, 16 FPS, force-bytes](marbles-hors-render-v1-16fps-force-bytes.crt).

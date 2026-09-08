@@ -41,6 +41,5 @@ examples/cart_demos/c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all*
 
 # Obsolete generated outputs belong outside the checkout, never in new commits.
 /examples/*/history/
-/examples/hifi_showcase/
 /examples/**/*yunroll-cart-v[2-9]*
 /examples/cart_marbles/dont_lose_your_marbles-hors-render-v1-*
