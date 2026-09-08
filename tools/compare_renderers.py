@@ -289,7 +289,7 @@ def chart(a,provenance):
     lines+=['','## Per-animation lookup','',
         'High/low are 985,248 divided by the shortest/longest **actual display-flip interval within a normal PLAY ALL window**, including VIC and IRQ stalls. Average is total displayed frames / measured time, not an arithmetic average of instantaneous FPS. Window edges are excluded from interval extrema. High FPS can include a brief queued-frame burst; it does not describe sustained throughput. Bold average marks the best frame-count result across FPS-preferred methods. RAM variants are listed separately. All values are FPS unless the header says bytes.','']
     for name in names:
-        lines += [f'### {name}','', '| Method | High | Average | Low | Resident frame-table RAM (B) | Frame data ROM (B) | Runtime PRG (B) |', '| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |']
+        lines += [f'### {name}','', '| Method | High | Average | Low | Resident frame-table RAM (B) | Frame data ROM (B) | Runtime PRG (B) |', '| --- | ---: | ---: | ---: | ---: | ---: | ---: |']
         win=winners(name,fpskeys)
         for key in results:
             e=results[key].get(name)

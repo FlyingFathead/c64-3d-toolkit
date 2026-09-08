@@ -30,7 +30,7 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 ### TORUS
 
 | Method | High | Average | Low | Resident frame-table RAM (B) | Frame data ROM (B) | Runtime PRG (B) |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | step | 25.06 | 12.29 | 10.02 | 18,760 | 0 | 43,546 |
 | bytechunk | 25.07 | 13.86 | 10.02 | 18,760 | 0 | 43,546 |
 | yunroll | 25.07 | **14.10** | 10.02 | 18,760 | 0 | 43,546 |
@@ -50,7 +50,7 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 ### TORUS DENSE
 
 | Method | High | Average | Low | Resident frame-table RAM (B) | Frame data ROM (B) | Runtime PRG (B) |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | step | 25.07 | 10.95 | 8.35 | 22,081 | 0 | 47,017 |
 | bytechunk | 25.06 | 12.19 | 8.35 | 22,081 | 0 | 47,017 |
 | yunroll | 25.06 | **12.42** | 10.02 | 22,081 | 0 | 47,017 |
@@ -70,7 +70,7 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 ### CUBE
 
 | Method | High | Average | Low | Resident frame-table RAM (B) | Frame data ROM (B) | Runtime PRG (B) |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | step | 50.14 | 26.45 | 16.71 | 10,264 | 0 | 35,381 |
 | bytechunk | 50.17 | 29.40 | 25.05 | 10,264 | 0 | 35,381 |
 | yunroll | 50.16 | **30.27** | 25.05 | 10,264 | 0 | 35,381 |
@@ -90,7 +90,7 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 ### SPHERE
 
 | Method | High | Average | Low | Resident frame-table RAM (B) | Frame data ROM (B) | Runtime PRG (B) |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | step | 25.05 | 13.63 | 12.53 | 12,710 | 0 | 37,749 |
 | bytechunk | 25.06 | 15.00 | 12.53 | 12,710 | 0 | 37,749 |
 | yunroll | 25.06 | **15.50** | 12.53 | 12,710 | 0 | 37,749 |
@@ -110,7 +110,7 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 ### HORSE HEAD
 
 | Method | High | Average | Low | Resident frame-table RAM (B) | Frame data ROM (B) | Runtime PRG (B) |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | step | 16.71 | 12.15 | 10.02 | 22,658 | 0 | 49,076 |
 | bytechunk | 25.06 | 12.92 | 10.02 | 22,658 | 0 | 49,076 |
 | yunroll | 25.06 | 13.23 | 10.02 | 22,658 | 0 | 49,076 |
@@ -130,7 +130,7 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 ### SUNFLOWER TORUS
 
 | Method | High | Average | Low | Resident frame-table RAM (B) | Frame data ROM (B) | Runtime PRG (B) |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | step | 16.71 | 11.02 | 8.35 | 21,752 | 0 | 48,971 |
 | bytechunk | 16.71 | 11.35 | 10.02 | 21,752 | 0 | 48,971 |
 | yunroll | 16.71 | 11.55 | 10.02 | 21,752 | 0 | 48,971 |
@@ -150,7 +150,7 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 ### SUNFLOWER COLOR
 
 | Method | High | Average | Low | Resident frame-table RAM (B) | Frame data ROM (B) | Runtime PRG (B) |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | step | 16.71 | 9.68 | 8.35 | 19,385 | 0 | 44,450 |
 | bytechunk | 16.71 | 9.98 | 8.35 | 19,385 | 0 | 44,450 |
 | yunroll | 16.71 | 10.18 | 8.35 | 19,385 | 0 | 44,450 |
@@ -170,7 +170,7 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 ### SPACE HORSE SPIN
 
 | Method | High | Average | Low | Resident frame-table RAM (B) | Frame data ROM (B) | Runtime PRG (B) |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | step | 12.53 | 9.98 | 8.35 | 21,930 | 0 | 48,828 |
 | bytechunk | 12.53 | 10.55 | 8.35 | 21,930 | 0 | 48,828 |
 | yunroll | 12.53 | 10.65 | 8.35 | 21,930 | 0 | 48,828 |
@@ -190,7 +190,7 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 ### SPACE HORSE CRAWL
 
 | Method | High | Average | Low | Resident frame-table RAM (B) | Frame data ROM (B) | Runtime PRG (B) |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | step | 25.07 | 15.13 | 10.02 | 23,680 | 0 | 49,153 |
 | bytechunk | 25.07 | 16.61 | 12.53 | 23,680 | 0 | 49,153 |
 | yunroll | 25.07 | 16.61 | 12.53 | 23,680 | 0 | 49,153 |
@@ -210,7 +210,7 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 ### FALLING CUBES
 
 | Method | High | Average | Low | Resident frame-table RAM (B) | Frame data ROM (B) | Runtime PRG (B) |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | step | 25.07 | 13.56 | 10.02 | 12,804 | 0 | 38,586 |
 | bytechunk | 50.12 | 14.80 | 10.02 | 12,804 | 0 | 38,586 |
 | yunroll | 50.13 | **14.90** | 10.02 | 12,804 | 0 | 38,586 |
@@ -230,7 +230,7 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 ### HORSE HEAD HIFI
 
 | Method | High | Average | Low | Resident frame-table RAM (B) | Frame data ROM (B) | Runtime PRG (B) |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | step | N/A¹ | N/A¹ | N/A¹ | N/A | N/A | N/A |
 | bytechunk | N/A¹ | N/A¹ | N/A¹ | N/A | N/A | N/A |
 | yunroll | N/A¹ | N/A¹ | N/A¹ | N/A | N/A | N/A |
@@ -250,7 +250,7 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 ### SUNFLOWER TORUS HIFI
 
 | Method | High | Average | Low | Resident frame-table RAM (B) | Frame data ROM (B) | Runtime PRG (B) |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | step | N/A¹ | N/A¹ | N/A¹ | N/A | N/A | N/A |
 | bytechunk | N/A¹ | N/A¹ | N/A¹ | N/A | N/A | N/A |
 | yunroll | N/A¹ | N/A¹ | N/A¹ | N/A | N/A | N/A |
@@ -366,7 +366,7 @@ Use `--resume` only with the same source/tool fingerprint and options. Logs and 
 
 **Release gate:** run `--check` before publishing. If renderer code, builders, input assets, examples, version or this tester changes, rerun the complete uncapped matrix and replace this chart before tagging. Preserve old method rows; add new generations to the tester and regenerate. Never silently copy old numbers into a changed workload. Capped runs are separate experiments and must not replace this uncapped baseline.
 
-<!-- comparison-input-sha256: e982b637a0f5ffb68811ca838044a1ee4d386651c207736f5e284a66b9c58916 -->
+<!-- comparison-input-sha256: 4cdbcc368454cee20573c17f8ab0fe9c4d4e790771110a355d3425e726be8f08 -->
 <!-- comparison-source-version: 0.6.9 -->
 
 ## Timing convention and earlier reports
@@ -415,3 +415,10 @@ runtime has been implemented or measured, and it excludes selection/loading
 costs and a music budget. Keep V9 as this release's default. Explore the next
 renderer after publishing this baseline, using data characteristics and explicit
 resource budgets rather than hard-coded demo names.
+
+## Table formatting correction
+
+Corrected seven-column table separators after v0.6.9 publication. All measurement
+values remain unchanged. Only the generator formatting literal changed among
+fingerprinted inputs; no renderer, dataset or measurement logic changed.
+Original measured source fingerprint: `e982b637a0f5ffb68811ca838044a1ee4d386651c207736f5e284a66b9c58916`.
