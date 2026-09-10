@@ -19,7 +19,7 @@
       "load_address": "$0801",
       "entry_address": "$080d",
       "payload_bytes": 21775,
-      "checksum16": "$5b7b",
+      "checksum16": "$6fa2",
       "original_irq": "$091f",
       "cart_irq": "$0200"
     },
@@ -33,7 +33,7 @@
       "load_address": "$0801",
       "entry_address": "$080d",
       "payload_bytes": 21775,
-      "checksum16": "$373e",
+      "checksum16": "$4b65",
       "original_irq": "$091f",
       "cart_irq": "$0200"
     },
@@ -47,7 +47,7 @@
       "load_address": "$0801",
       "entry_address": "$080d",
       "payload_bytes": 21775,
-      "checksum16": "$80e7",
+      "checksum16": "$950e",
       "original_irq": "$091f",
       "cart_irq": "$0200"
     },
@@ -61,7 +61,7 @@
       "load_address": "$0801",
       "entry_address": "$080d",
       "payload_bytes": 21775,
-      "checksum16": "$8495",
+      "checksum16": "$98bc",
       "original_irq": "$091f",
       "cart_irq": "$0200"
     },
@@ -75,7 +75,7 @@
       "load_address": "$0801",
       "entry_address": "$080d",
       "payload_bytes": 21775,
-      "checksum16": "$9748",
+      "checksum16": "$ab6f",
       "original_irq": "$091f",
       "cart_irq": "$0200"
     },
@@ -89,7 +89,7 @@
       "load_address": "$0801",
       "entry_address": "$080d",
       "payload_bytes": 21775,
-      "checksum16": "$93a4",
+      "checksum16": "$a7cb",
       "original_irq": "$091f",
       "cart_irq": "$0200"
     },
@@ -103,13 +103,13 @@
       "load_address": "$0801",
       "entry_address": "$080d",
       "payload_bytes": 21775,
-      "checksum16": "$b0e0",
+      "checksum16": "$e872",
       "original_irq": "$091c",
       "cart_irq": "$0200"
     }
   ],
   "note": "Demo Cart 2.0 preview: six new scenes plus selected complete water loops; separate from the frozen release comparison dataset.",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "public_renderer": "hors-render-v2",
   "stream_renderer": "hors-render-v2",
   "uniform_renderer": true,
@@ -120,6 +120,7 @@
       "frames": 24,
       "colors": true,
       "screen_color": 16,
+      "border_color": 0,
       "source": "examples/autotune/colour-cube.c643dscene",
       "source_sha256": "db69b043fe923c01476ce52a1e33ed283105d2c7c77a14040e5e8c92e74d365e",
       "work": "build/demo-cart-v2-hors-render-v2-fps/00",
@@ -390,6 +391,17 @@
           "encoding": "byte-spans"
         }
       ],
+      "color_controls": {
+        "foreground_key": null,
+        "background_key": null,
+        "border_key": "F7",
+        "reset_key": "F8 / SHIFT+F7",
+        "border_follows_background": false,
+        "reset_on_entry": true,
+        "source_palette_preserved": true,
+        "idle_extra_cpu_cycles": 0,
+        "handler_range": "$4300-$43ff (unused direct-only vector table)"
+      },
       "optimization": {
         "original_runs": 208,
         "retained_runs": 204,
@@ -457,6 +469,7 @@
       "frames": 18,
       "colors": true,
       "screen_color": 16,
+      "border_color": 0,
       "source": "examples/autotune/colour-torus.c643dscene",
       "source_sha256": "93485c5728d43920babb28bbddc658b73b6694bca40f23f8f7f248271f808d1a",
       "work": "build/demo-cart-v2-hors-render-v2-fps/01",
@@ -661,6 +674,17 @@
           "encoding": "byte-spans"
         }
       ],
+      "color_controls": {
+        "foreground_key": null,
+        "background_key": null,
+        "border_key": "F7",
+        "reset_key": "F8 / SHIFT+F7",
+        "border_follows_background": false,
+        "reset_on_entry": true,
+        "source_palette_preserved": true,
+        "idle_extra_cpu_cycles": 0,
+        "handler_range": "$4300-$43ff (unused direct-only vector table)"
+      },
       "optimization": {
         "original_runs": 1330,
         "retained_runs": 1272,
@@ -722,6 +746,7 @@
       "frames": 48,
       "colors": true,
       "screen_color": 16,
+      "border_color": 0,
       "source": "examples/cart_demos_v2/scenes/twist-tunnel.c643dscene",
       "source_sha256": "955b5a2695d8a62d916878d8987b6636294ceadf8cc07b24efe7b8ddfa47c9f5",
       "work": "build/demo-cart-v2-hors-render-v2-fps/02",
@@ -1256,6 +1281,17 @@
           "encoding": "byte-spans"
         }
       ],
+      "color_controls": {
+        "foreground_key": null,
+        "background_key": null,
+        "border_key": "F7",
+        "reset_key": "F8 / SHIFT+F7",
+        "border_follows_background": false,
+        "reset_on_entry": true,
+        "source_palette_preserved": true,
+        "idle_extra_cpu_cycles": 0,
+        "handler_range": "$4300-$43ff (unused direct-only vector table)"
+      },
       "optimization": {
         "original_runs": 3840,
         "retained_runs": 3785,
@@ -1347,6 +1383,7 @@
       "frames": 48,
       "colors": true,
       "screen_color": 16,
+      "border_color": 0,
       "source": "examples/cart_demos_v2/scenes/ribbon-dance.c643dscene",
       "source_sha256": "26a2cd1c61e2d25f6575240b6370a035f15d2b88d6db2126600f4a14628be1f3",
       "work": "build/demo-cart-v2-hors-render-v2-fps/03",
@@ -1881,6 +1918,17 @@
           "encoding": "byte-spans"
         }
       ],
+      "color_controls": {
+        "foreground_key": null,
+        "background_key": null,
+        "border_key": "F7",
+        "reset_key": "F8 / SHIFT+F7",
+        "border_follows_background": false,
+        "reset_on_entry": true,
+        "source_palette_preserved": true,
+        "idle_extra_cpu_cycles": 0,
+        "handler_range": "$4300-$43ff (unused direct-only vector table)"
+      },
       "optimization": {
         "original_runs": 3299,
         "retained_runs": 3249,
@@ -1972,6 +2020,7 @@
       "frames": 48,
       "colors": true,
       "screen_color": 16,
+      "border_color": 0,
       "source": "examples/cart_demos_v2/scenes/orbital-cubes.c643dscene",
       "source_sha256": "d54e47a358b50529c368fb2e9fa7df9cdfa440aad37f5e1ad0a56f7e3bf9b18e",
       "work": "build/demo-cart-v2-hors-render-v2-fps/04",
@@ -2506,6 +2555,17 @@
           "encoding": "byte-spans"
         }
       ],
+      "color_controls": {
+        "foreground_key": null,
+        "background_key": null,
+        "border_key": "F7",
+        "reset_key": "F8 / SHIFT+F7",
+        "border_follows_background": false,
+        "reset_on_entry": true,
+        "source_palette_preserved": true,
+        "idle_extra_cpu_cycles": 0,
+        "handler_range": "$4300-$43ff (unused direct-only vector table)"
+      },
       "optimization": {
         "original_runs": 1252,
         "retained_runs": 1188,
@@ -2597,6 +2657,7 @@
       "frames": 48,
       "colors": true,
       "screen_color": 16,
+      "border_color": 0,
       "source": "examples/cart_demos_v2/scenes/wave-lattice.c643dscene",
       "source_sha256": "3e89c4457afba15ca2ff7b47032e728228fa4492f904b902acb8038111d44a33",
       "work": "build/demo-cart-v2-hors-render-v2-fps/05",
@@ -3131,6 +3192,17 @@
           "encoding": "byte-spans"
         }
       ],
+      "color_controls": {
+        "foreground_key": null,
+        "background_key": null,
+        "border_key": "F7",
+        "reset_key": "F8 / SHIFT+F7",
+        "border_follows_background": false,
+        "reset_on_entry": true,
+        "source_palette_preserved": true,
+        "idle_extra_cpu_cycles": 0,
+        "handler_range": "$4300-$43ff (unused direct-only vector table)"
+      },
       "optimization": {
         "original_runs": 7520,
         "retained_runs": 6795,
@@ -3222,6 +3294,7 @@
       "frames": 100,
       "colors": false,
       "screen_color": 16,
+      "border_color": 0,
       "source": "examples/cart_demos_v2/scenes/ripples_lite.c643dscene",
       "source_sha256": "1bccfbe40c1fd19787df9ca6a06f2d48c7f1c016f74b17dbc719ed4376e6d772",
       "work": "build/demo-cart-v2-hors-render-v2-fps/06",
@@ -4328,6 +4401,17 @@
           "encoding": "byte-spans"
         }
       ],
+      "color_controls": {
+        "foreground_key": "F3",
+        "background_key": "F4 / SHIFT+F3",
+        "border_key": "F7",
+        "reset_key": "F8 / SHIFT+F7",
+        "border_follows_background": false,
+        "reset_on_entry": true,
+        "source_palette_preserved": true,
+        "idle_extra_cpu_cycles": 0,
+        "handler_range": "$4300-$43ff (unused direct-only vector table)"
+      },
       "optimization": {
         "original_runs": 12136,
         "retained_runs": 10823,
@@ -4752,7 +4836,7 @@
     }
   ],
   "build_screen": {
-    "version": "0.7.2",
+    "version": "0.7.3",
     "renderer": "hors-render-v2",
     "ticks": null,
     "skip_key": "SPACE",
@@ -4775,7 +4859,7 @@
       "seconds": 10,
       "ticks": 500,
       "exit_key": "F1",
-      "version": "0.7.2",
+      "version": "0.7.3",
       "position": "after-last-demo",
       "next": "first-demo"
     }

@@ -1,7 +1,11 @@
-# Documentation — 0.7.2
+# Documentation — 0.7.3
+
+- [0.7.3 release notes, installation and rebuilds](RELEASE_0.7.3.md).
+- [Output colours and COLOR COMBO TEST](OUTPUT_COLORS.md).
+- [0.7.3 colour-control regression and timing results](COLORS_0.7.3_VALIDATION.md).
 
 - [Stable hors-render-v2](HORS_RENDER_V2.md) — default renderer and supported builds.
-- [Release compilation and migration](RELEASE_0.7.2.md).
+- [Historical 0.7.2 release compilation and migration](RELEASE_0.7.2.md).
 - [Full historical performance comparison](PERFORMANCE_COMPARISON.md).
 - [Demo Cart 2.0 results](HORS_RENDER_V2_RESULTS.md).
 - [Current examples](../examples/README.md).

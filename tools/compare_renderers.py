@@ -115,7 +115,7 @@ def adapt_snapshot(root):
         raise RuntimeError('Comparison requires the interval-aware PLAY ALL benchmark')
     p.write_text(s)
     p=root/'tools/verify_cart_stream.py';s=p.read_text()
-    s=once(s,'        for i in range(count):mon +=',"        mon += [f'trace exec ${sym.get(\"comparison_flip\",sym[\"irq_no_flip\"]-5):04x}']\n        for i in range(count):mon +=")
+    s=once(s,'        for i in range(count):\n            mon +=',"        mon += [f'trace exec ${sym.get(\"comparison_flip\",sym[\"irq_no_flip\"]-5):04x}']\n        for i in range(count):\n            mon +=")
     s=once(s,'        if len(ticks)!=count:',"        events=[(int(x,16),int(t)) for x,t in re.findall(r'^\\.C:([0-9a-fA-F]{4})\\s.*?\\s(\\d+)\\s*$',(td/'monitor.log').read_text(),re.M)]\n        flips=[t for x,t in events if x==sym.get('comparison_flip',sym['irq_no_flip']-5)]\n        if len(ticks)!=count:")
     s=once(s,"        if manifest.get('frame_index_bits')==16:\n            result.update","        result['display_interval_cycles']=[b-a for a,b in zip(flips,flips[1:])]\n        if manifest.get('frame_index_bits')==16:\n            result.update")
     p.write_text(s)

@@ -10,18 +10,41 @@ Each cell is actual display flips / elapsed emulated time across 3 normal PLAY A
 
 | Animation | Source samples | Best method(s), FPS preference | Display FPS | V9 vs V8 displayed frames | HORS v2 vs v1 displayed frames |
 | --- | ---: | --- | ---: | ---: | ---: |
-| TORUS | 32 | hors-render-v2-beta1, hors-render-v2 | 17.68 | +0.00% | +10.00% |
-| TORUS DENSE | 32 | hors-render-v2-beta1, hors-render-v2 | 17.18 | +0.00% | +8.92% |
+| TORUS | 32 | hors-render-v2 | 17.68 | +0.00% | +10.00% |
+| TORUS DENSE | 32 | hors-render-v2 | 17.18 | +0.00% | +8.92% |
 | CUBE | 36 | yunroll, cart scaffold | 30.27 | +0.00% | +9.52% |
-| SPHERE | 24 | hors-render-v2-beta1, hors-render-v2 | 17.38 | +0.00% | +9.49% |
-| HORSE HEAD | 32 | hors-render-v2-beta1, hors-render-v2 | 29.34 | +0.73% | +6.96% |
-| SUNFLOWER TORUS | 28 | hors-render-v2-beta1, hors-render-v2 | 28.73 | +0.00% | +5.93% |
-| SUNFLOWER COLOR | 20 | hors-render-v2-beta1, hors-render-v2 | 20.89 | +0.96% | +4.52% |
-| SPACE HORSE SPIN | 24 | hors-render-v2-beta1, hors-render-v2 | 19.08 | +0.94% | +8.57% |
-| SPACE HORSE CRAWL | 32 | hors-render-v2-beta1, hors-render-v2 | 38.27 | +2.63% | +7.63% |
-| FALLING CUBES | 18 | hors-render-v2-beta1, hors-render-v2 | 20.89 | +0.00% | +6.12% |
-| HORSE HEAD HIFI | 128 | hors-render-v2-beta1, hors-render-v2 | 21.50 | +0.99% | +3.88% |
-| SUNFLOWER TORUS HIFI | 128 | hors-render-v2-beta1, hors-render-v2 | 20.39 | +16.13% | +2.53% |
+| SPHERE | 24 | hors-render-v2 | 17.38 | +0.00% | +9.49% |
+| HORSE HEAD | 32 | hors-render-v2 | 29.34 | +0.73% | +6.96% |
+| SUNFLOWER TORUS | 28 | hors-render-v2 | 28.73 | +0.00% | +5.93% |
+| SUNFLOWER COLOR | 20 | hors-render-v2 | 20.89 | +0.96% | +4.52% |
+| SPACE HORSE SPIN | 24 | hors-render-v2 | 19.08 | +0.94% | +8.57% |
+| SPACE HORSE CRAWL | 32 | hors-render-v2 | 38.27 | +2.63% | +7.63% |
+| FALLING CUBES | 18 | hors-render-v2 | 20.89 | +0.00% | +6.12% |
+| HORSE HEAD HIFI | 128 | hors-render-v2 | 21.50 | +0.99% | +3.88% |
+| SUNFLOWER TORUS HIFI | 128 | hors-render-v2 | 20.39 | +16.13% | +2.53% |
+
+## Demo Cart 2.0
+
+The seven-scene showcase has its own **hors-render-v1 vs hors-render-v2** comparison. Both methods use identical complete source pictures, colours and sample order. PAL VICE, FPS preference, normal PLAY ALL, three ten-second visits per entry. F5 is excluded.
+
+These are the measured shipped showcase cartridges, with their per-scene encoding policy. This is a separate workload from the original twelve-animation matrix; the COLOUR CUBE 24 here is not its CUBE or FALLING CUBES entry. Gains rank displayed-frame counts rather than tiny timer-phase differences.
+
+| Scene | Samples | v1 FPS | v2 FPS | Gain | v1 worst display ms | v2 worst display ms |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| COLOUR CUBE 24 | 24 | 32.45 | 35.56 | +9.60% | 43.91 | 42.79 |
+| COLOUR TORUS 18 | 18 | 18.38 | 19.99 | +8.74% | 79.80 | 62.59 |
+| TWIST TUNNEL | 48 | 9.14 | 9.94 | +8.79% | 119.72 | 119.70 |
+| RIBBON DANCE | 48 | 31.64 | 33.45 | +5.71% | 44.34 | 44.42 |
+| ORBITAL CUBES | 48 | 28.73 | 31.45 | +9.44% | 44.07 | 44.09 |
+| WAVE LATTICE | 48 | 22.00 | 24.81 | +12.79% | 64.27 | 63.07 |
+| RIPPLES LITE | 100 | 12.46 | 16.88 | +35.48% | 99.75 | 79.80 |
+
+All seven entries passed bitmap and colour checks for both methods. Worst intervals describe the observed window; a higher average FPS does not guarantee a lower worst interval.
+
+[Demo Cart 2.0 and source scenes](../examples/cart_demos_v2/README.md) · [v1 raw results](benchmarks/hors-v2/showcase/v1/play-all.json) · [v2 raw results](benchmarks/hors-v2/showcase/v2/play-all.json) · [Release and HiFi results](HORS_RENDER_V2_RESULTS.md)
+
+The chart fingerprint includes both reports and the shipped v2 CRT; generation verifies their cartridge hash and matching picture oracles. The release/check runner refreshes the showcase evidence before generating this page.
+
 
 ## Per-animation lookup
 
@@ -48,8 +71,6 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V8-ram | 27.01 | 12.86 | 9.74 | 0 | 16,505 | 18,433 |
 | V9-ram | 26.80 | 12.86 | 9.72 | 0 | 16,505 | 18,433 |
 | hors-render-v1-ram | 27.04 | 16.07 | 12.04 | 0 | 46,217 | 18,433 |
-| hors-render-v2-beta1 | 27.18 | **17.68** | 12.09 | 0 | 46,217 | 21,777 |
-| hors-render-v2-beta1-ram | 27.20 | 17.68 | 12.00 | 0 | 46,217 | 18,203 |
 | hors-render-v2 | 27.18 | **17.68** | 12.09 | 0 | 46,217 | 21,777 |
 | hors-render-v2-ram | 27.20 | 17.68 | 12.00 | 0 | 46,217 | 18,203 |
 
@@ -74,8 +95,6 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V8-ram | 26.82 | 11.55 | 8.35 | 0 | 18,302 | 18,433 |
 | V9-ram | 26.73 | 11.55 | 8.35 | 0 | 18,302 | 18,433 |
 | hors-render-v1-ram | 26.78 | 15.77 | 12.04 | 0 | 48,568 | 18,433 |
-| hors-render-v2-beta1 | 27.12 | **17.18** | 12.53 | 0 | 48,568 | 21,777 |
-| hors-render-v2-beta1-ram | 25.54 | 17.18 | 12.53 | 0 | 48,568 | 18,203 |
 | hors-render-v2 | 27.12 | **17.18** | 12.53 | 0 | 48,568 | 21,777 |
 | hors-render-v2-ram | 25.54 | 17.18 | 12.53 | 0 | 48,568 | 18,203 |
 
@@ -100,8 +119,6 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V8-ram | 53.31 | 24.61 | 16.05 | 0 | 2,539 | 21,647 |
 | V9-ram | 53.40 | 24.61 | 16.18 | 0 | 2,539 | 21,647 |
 | hors-render-v1-ram | 50.85 | 27.42 | 16.68 | 0 | 7,824 | 21,647 |
-| hors-render-v2-beta1 | 55.93 | 30.03 | 23.16 | 0 | 7,824 | 21,919 |
-| hors-render-v2-beta1-ram | 55.54 | 30.04 | 23.13 | 0 | 7,824 | 21,647 |
 | hors-render-v2 | 55.93 | 30.03 | 23.16 | 0 | 7,824 | 21,919 |
 | hors-render-v2-ram | 55.54 | 30.04 | 23.13 | 0 | 7,824 | 21,647 |
 
@@ -126,8 +143,6 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V8-ram | 17.90 | 13.46 | 11.91 | 0 | 5,824 | 21,647 |
 | V9-ram | 18.02 | 13.46 | 11.93 | 0 | 5,824 | 21,647 |
 | hors-render-v1-ram | 25.16 | 15.87 | 11.87 | 0 | 18,108 | 21,647 |
-| hors-render-v2-beta1 | 28.08 | **17.38** | 15.53 | 0 | 18,108 | 21,919 |
-| hors-render-v2-beta1-ram | 28.17 | 17.38 | 15.56 | 0 | 18,108 | 21,647 |
 | hors-render-v2 | 28.08 | **17.38** | 15.53 | 0 | 18,108 | 21,919 |
 | hors-render-v2-ram | 28.17 | 17.38 | 15.56 | 0 | 18,108 | 21,647 |
 
@@ -152,8 +167,6 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V8-ram | 25.06 | 12.76 | 9.75 | 0 | 18,245 | 18,433 |
 | V9-ram | 17.51 | 12.76 | 9.62 | 0 | 18,245 | 18,433 |
 | hors-render-v1-ram | 52.58 | 27.42 | 16.60 | 0 | 30,840 | 18,433 |
-| hors-render-v2-beta1 | 54.55 | **29.34** | 23.89 | 0 | 30,840 | 21,777 |
-| hors-render-v2-beta1-ram | 54.76 | 29.33 | 23.66 | 0 | 30,840 | 18,203 |
 | hors-render-v2 | 54.55 | **29.34** | 23.89 | 0 | 30,840 | 21,777 |
 | hors-render-v2-ram | 54.76 | 29.33 | 23.66 | 0 | 30,840 | 18,203 |
 
@@ -178,8 +191,6 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V8-ram | 16.89 | 11.15 | 8.31 | 0 | 17,168 | 18,433 |
 | V9-ram | 25.06 | 11.15 | 9.71 | 0 | 17,168 | 18,433 |
 | hors-render-v1-ram | 53.28 | 27.12 | 16.35 | 0 | 29,308 | 18,433 |
-| hors-render-v2-beta1 | 54.33 | **28.73** | 16.30 | 0 | 29,308 | 21,777 |
-| hors-render-v2-beta1-ram | 54.78 | 28.73 | 16.28 | 0 | 29,308 | 18,203 |
 | hors-render-v2 | 54.33 | **28.73** | 16.30 | 0 | 29,308 | 21,777 |
 | hors-render-v2-ram | 54.78 | 28.73 | 16.28 | 0 | 29,308 | 18,203 |
 
@@ -204,8 +215,6 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V8-ram | 17.64 | 9.74 | 8.14 | 0 | 16,028 | 18,433 |
 | V9-ram | 16.71 | 9.74 | 8.18 | 0 | 16,028 | 18,433 |
 | hors-render-v1-ram | 52.91 | 19.99 | 12.53 | 0 | 24,790 | 18,433 |
-| hors-render-v2-beta1 | 60.16 | **20.89** | 15.83 | 0 | 24,790 | 21,777 |
-| hors-render-v2-beta1-ram | 51.25 | 20.89 | 16.15 | 0 | 24,790 | 18,203 |
 | hors-render-v2 | 60.16 | **20.89** | 15.83 | 0 | 24,790 | 21,777 |
 | hors-render-v2-ram | 51.25 | 20.89 | 16.15 | 0 | 24,790 | 18,203 |
 
@@ -230,8 +239,6 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V8-ram | 50.12 | 9.94 | 8.35 | 0 | 20,119 | 18,433 |
 | V9-ram | 50.48 | 10.04 | 8.21 | 0 | 20,119 | 18,433 |
 | hors-render-v1-ram | 50.13 | 17.58 | 12.52 | 0 | 34,107 | 18,433 |
-| hors-render-v2-beta1 | 50.13 | **19.08** | 12.53 | 0 | 34,107 | 21,777 |
-| hors-render-v2-beta1-ram | 51.64 | 19.09 | 12.21 | 0 | 34,107 | 18,203 |
 | hors-render-v2 | 50.13 | **19.08** | 12.53 | 0 | 34,107 | 21,777 |
 | hors-render-v2-ram | 51.64 | 19.09 | 12.21 | 0 | 34,107 | 18,203 |
 
@@ -256,8 +263,6 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V8-ram | 58.38 | 22.70 | 12.12 | 0 | 17,765 | 18,433 |
 | V9-ram | 53.29 | 23.30 | 12.13 | 0 | 17,765 | 18,433 |
 | hors-render-v1-ram | 54.09 | 35.66 | 16.60 | 0 | 20,292 | 18,433 |
-| hors-render-v2-beta1 | 54.67 | **38.27** | 24.07 | 0 | 20,292 | 21,777 |
-| hors-render-v2-beta1-ram | 54.67 | 38.27 | 24.07 | 0 | 20,292 | 18,203 |
 | hors-render-v2 | 54.67 | **38.27** | 24.07 | 0 | 20,292 | 21,777 |
 | hors-render-v2-ram | 54.67 | 38.27 | 24.07 | 0 | 20,292 | 18,203 |
 
@@ -282,8 +287,6 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V8-ram | 26.68 | 13.46 | 9.76 | 0 | 12,007 | 18,433 |
 | V9-ram | 27.26 | 13.56 | 9.78 | 0 | 12,007 | 18,433 |
 | hors-render-v1-ram | 27.46 | 19.59 | 12.13 | 0 | 19,518 | 18,433 |
-| hors-render-v2-beta1 | 50.13 | **20.89** | 15.98 | 0 | 19,518 | 21,777 |
-| hors-render-v2-beta1-ram | 50.13 | 20.89 | 15.98 | 0 | 19,518 | 18,203 |
 | hors-render-v2 | 50.13 | **20.89** | 15.98 | 0 | 19,518 | 21,777 |
 | hors-render-v2-ram | 50.13 | 20.89 | 15.98 | 0 | 19,518 | 18,203 |
 
@@ -308,8 +311,6 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V8-ram | 27.19 | 9.44 | 8.07 | 0 | 105,759 | 18,433 |
 | V9-ram | 50.13 | 9.54 | 8.10 | 0 | 105,759 | 18,433 |
 | hors-render-v1-ram | 51.33 | 20.79 | 15.72 | 0 | 158,181 | 18,433 |
-| hors-render-v2-beta1 | 50.16 | **21.50** | 15.64 | 0 | 158,181 | 21,777 |
-| hors-render-v2-beta1-ram | 56.72 | 21.60 | 15.56 | 0 | 158,181 | 18,203 |
 | hors-render-v2 | 50.16 | **21.50** | 15.64 | 0 | 158,181 | 21,777 |
 | hors-render-v2-ram | 56.72 | 21.60 | 15.56 | 0 | 158,181 | 18,203 |
 
@@ -334,8 +335,6 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V8-ram | 60.30 | 12.05 | 6.27 | 0 | 160,415 | 18,433 |
 | V9-ram | 56.71 | 14.06 | 6.19 | 0 | 160,415 | 18,433 |
 | hors-render-v1-ram | 60.62 | 19.89 | 12.53 | 0 | 163,780 | 18,433 |
-| hors-render-v2-beta1 | 58.80 | **20.39** | 15.98 | 0 | 163,780 | 21,777 |
-| hors-render-v2-beta1-ram | 60.00 | 20.39 | 15.98 | 0 | 163,780 | 18,203 |
 | hors-render-v2 | 58.80 | **20.39** | 15.98 | 0 | 163,780 | 21,777 |
 | hors-render-v2-ram | 60.00 | 20.39 | 15.98 | 0 | 163,780 | 18,203 |
 
@@ -361,8 +360,6 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V8-ram | 771,616 | 12 | 18,433–21,647 | 27,000 B | 11,264 B |
 | V9-ram | 771,616 | 12 | 18,433–21,647 | 27,000 B | 11,264 B |
 | hors-render-v1-ram | 985,024 | 12 | 18,433–21,647 | 27,000 B | 11,264 B |
-| hors-render-v2-beta1 | 985,024 | 12 | 21,777–21,919 | 27,000 B | 11,264 B |
-| hors-render-v2-beta1-ram | 985,024 | 12 | 18,203–21,647 | 27,000 B | 11,264 B |
 | hors-render-v2 | 985,024 | 12 | 21,777–21,919 | 27,000 B | 11,264 B |
 | hors-render-v2-ram | 985,024 | 12 | 18,203–21,647 | 27,000 B | 11,264 B |
 
@@ -418,12 +415,12 @@ These are **not PLAY ALL A/B FPS results** and must not be mixed into the menu t
 ## Workload and interpretation
 
 - All menu builds use the exact released V4 vector reference (`assets/v4-menu-vector-reference.json.gz`), including colours, HUD and animation sample order. Native method-specific lossless encoding is retained.
-- hors-render-v2 and its preserved beta1 use gap 3 / batch budget 2048 in this canonical twelve-entry cart, retaining the v1 byte-span payload sizes to fit the same cartridge budget. Its independent pictures and guarded vector-page reuse are built in a private assembly tree. The seven-entry Demo Cart 2.0 uses separate measured encoding choices and has its own results report.
-- The authored-scene diagnostic rows preserve V4–V10. Beta 1 does not support the authored intro/ending path and is not substituted for those unchanged productions.
+- hors-render-v2 uses gap 3 / batch budget 2048 in this canonical twelve-entry cart, retaining the v1 byte-span payload sizes to fit the same cartridge budget. Its independent pictures and guarded vector-page reuse are built in a private assembly tree. The seven-entry Demo Cart 2.0 uses separate measured encoding choices and is reported in its own section above.
+- The public matrix compares released renderer generations. The authored-scene diagnostic rows preserve the unchanged V4–V10 productions.
 - This table compares preserved renderer implementations under one **external comparison PLAY ALL wrapper**, not the exact historical release cartridges. The V9 normal PLAY ALL controller is used for every method. Its identical timer instructions live at `$0334` instead of `$c700`, because resident data occupies `$c700`; launch metadata is cached before loading and shared menu data restored between entries. Renderer code is unchanged apart from the existing cartridge IRQ-vector redirection. All these wrapper adaptations are generated outside the repo.
 - Resident and streamed methods have different memory/ROM costs. A faster resident method does not imply it can hold the larger HiFi datasets. Compare the same named animation and sample count.
 - A frame count tie is reported as a tie; a few extra samples over roughly 30 seconds are a small gain. Compare individual animations before quoting a suite total.
-- Full bitmap and colour verification covered **25,109 completed pictures**. Raw traces, cartridge hashes, per-entry oracle hashes, unsupported-build reasons and individual results remain in the external workspace.
+- Full bitmap and colour verification covered **22,901 completed pictures**. Raw traces, cartridge hashes, per-entry oracle hashes, unsupported-build reasons and individual results remain in the external workspace.
 - These measurements do not establish a universal performance floor or guarantee behavior for untested inputs.
 
 ## Reproduce and keep this chart current
@@ -449,5 +446,5 @@ Use `--resume` only with the same source/tool fingerprint and options. Logs and 
 
 **Release gate:** run `--check` before publishing. If renderer code, builders, input assets, examples, version or this tester changes, rerun the complete uncapped matrix and replace this chart before tagging. Preserve old method rows; add new generations to the tester and regenerate. Never silently copy old numbers into a changed workload. Capped runs are separate experiments and must not replace this uncapped baseline.
 
-<!-- comparison-input-sha256: 6f47d3a13993cbc36d00252f9dc7371ab485f4674a9c220fb25859bbd973df72 -->
-<!-- comparison-source-version: 0.7.2 -->
+<!-- comparison-input-sha256: ef1264d6da610b251f183ea433618d520269010dc557e422ee05dc35b3f71a95 -->
+<!-- comparison-source-version: 0.7.3 -->

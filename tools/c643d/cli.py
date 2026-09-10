@@ -9,7 +9,7 @@ from .shapes import (
 )
 from .objio import load_obj
 from .svgio import load_svg
-from .colors import c64_color_index, c64_color_name
+from .colors import c64_color_index, c64_color_name, configure_asm_colors
 from .assets import load_object_preset, list_object_presets, import_obj_asset, import_svg_asset
 from .pipeline import Camera, fit_scale, build_frames, build_scene_frames, classify_feature_edges
 from .sceneio import load_scene
@@ -475,11 +475,12 @@ def build_mesh(a):
     anim_tilt=getattr(a,'animation_tilt',None); anim_tilt=preset_anim_tilt if anim_tilt is None else anim_tilt
     anim_travel=getattr(a,'animation_travel',None); anim_travel=preset_anim_travel if anim_travel is None else anim_travel
     anim_rise=getattr(a,'animation_rise',None); anim_rise=preset_anim_rise if anim_rise is None else anim_rise
+    print_output_colors(a,color_name,per_cell_colors)
     return mesh,label,(a.spin_axis or spin_axis),visibility,float(ztol),float(feature_angle),color_name,use_source_colors,per_cell_colors,animation,float(anim_tilt),float(anim_travel),float(anim_rise)
 
 
 def prepare_asm(renderer:str,frames:int,color_index:int=1,colors_enabled:bool=False, *,
-                text_overlay:bool=True,rastertime_profiler:bool=False) -> Path:
+                text_overlay:bool=True,rastertime_profiler:bool=False,background_color:int=0,border_color:int=0) -> Path:
     if rastertime_profiler:
         if renderer not in RASTERTIME_RENDERERS:
             raise ValueError(
@@ -493,7 +494,7 @@ def prepare_asm(renderer:str,frames:int,color_index:int=1,colors_enabled:bool=Fa
         source=RENDERERS[renderer]
     src=(C64/source).read_text()
     src=src.replace('FRAME_COUNT = 48',f'FRAME_COUNT = {frames}',1)
-    src=src.replace('SCREEN_COLOR = $10',f'SCREEN_COLOR = ${color_index:X}0',1)
+    src=configure_asm_colors(src,color_index,background_color,border_color)
     src=src.replace('COLORS_ENABLED = 0',f'COLORS_ENABLED = {int(colors_enabled)}',1)
     src=src.replace('.include "generated/hud.inc"', '.include "../generated/hud.inc"')
     src=src.replace('.include "generated/tables.inc"', '.include "../generated/tables.inc"')
@@ -663,7 +664,7 @@ def cmd_build(a):
             if n<requested_frames and n not in frame_candidates: frame_candidates.append(n)
     last_error=None
     for actual_frames in frame_candidates:
-        frames,candidate_edges=build_frames(mesh,actual_frames,cam,spin_axis=spin_axis,visibility_mode=visibility,z_tolerance=z_tolerance,feature_angle=feature_angle,animation=animation,animation_tilt=anim_tilt,animation_travel=anim_travel,animation_rise=anim_rise,enable_source_colors=per_cell_colors,fallback_color=c64_color_index(color_name),height=viewport_height)
+        frames,candidate_edges=build_frames(mesh,actual_frames,cam,spin_axis=spin_axis,visibility_mode=visibility,z_tolerance=z_tolerance,feature_angle=feature_angle,animation=animation,animation_tilt=anim_tilt,animation_travel=anim_travel,animation_rise=anim_rise,enable_source_colors=per_cell_colors,fallback_color=c64_color_index(color_name),background_color=c64_color_index(getattr(a,"background_color",0)),height=viewport_height)
         try:
             stats=emit_tables(GENERATED/'tables.inc',frames,a.renderer,candidate_edges)
             break
@@ -680,6 +681,7 @@ def cmd_build(a):
     asm=prepare_asm(
         a.renderer,actual_frames,c64_color_index(color_name),stats['colors_enabled'],
         text_overlay=a.text_overlay,rastertime_profiler=a.rastertime_profiler,
+        background_color=c64_color_index(getattr(a,"background_color",0)),border_color=c64_color_index(getattr(a,"border_color",0)),
     )
     subprocess.run([sys.executable,str(ROOT/'tools'/'asm_sanity.py'),str(asm)],cwd=ROOT,check=True)
     print_stats(mesh,label,a.renderer,fitted,stats,hud,spin_axis,visibility,z_tolerance,feature_angle,color_name,use_source_colors,animation)
@@ -720,6 +722,7 @@ def _scene_color_policy(mesh:Mesh,a):
         palette=mesh.source_colors
         color_name=c64_color_name(palette[0])
     per_cell_colors=use_source_colors and len(mesh.source_colors)>1
+    print_output_colors(a,color_name,per_cell_colors)
     return color_name,use_source_colors,per_cell_colors
 
 
@@ -789,7 +792,7 @@ def cmd_build_scene(a):
         frames,candidate_edges=build_scene_frames(
             scene,visibility_mode=visibility,z_tolerance=z_tolerance,
             feature_angle=feature_angle,enable_source_colors=per_cell_colors,
-            fallback_color=c64_color_index(color_name),height=viewport_height,
+            fallback_color=c64_color_index(color_name),background_color=c64_color_index(getattr(a,"background_color",0)),height=viewport_height,
         )
         stats=emit_tables(GENERATED/'tables.inc',frames,a.renderer,candidate_edges)
     except RuntimeError as e:
@@ -834,6 +837,7 @@ def cmd_build_scene(a):
     asm=prepare_asm(
         a.renderer,len(frames),c64_color_index(color_name),stats['colors_enabled'],
         text_overlay=a.text_overlay,rastertime_profiler=a.rastertime_profiler,
+        background_color=c64_color_index(getattr(a,"background_color",0)),border_color=c64_color_index(getattr(a,"border_color",0)),
     )
     subprocess.run([sys.executable,str(ROOT/'tools'/'asm_sanity.py'),str(asm)],cwd=ROOT,check=True)
     print_stats(
@@ -1132,6 +1136,21 @@ def cmd_cart_demos_legacy(a):
         subprocess.run(cmd,cwd=ROOT,check=False)
     return 0
 
+def _color_arg(value):
+    try:
+        return c64_color_name(c64_color_index(value))
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError(str(exc)) from exc
+
+
+def print_output_colors(a, foreground, per_cell):
+    # Show the actual palette result, especially useful for RGB approximations.
+    background=c64_color_index(getattr(a,'background_color',0))
+    border=c64_color_index(getattr(a,'border_color',0))
+    fg='source colours' if per_cell else f'{foreground} ({c64_color_index(foreground)})'
+    print(f'output colours: foreground {fg}; background {c64_color_name(background)} ({background}); border {c64_color_name(border)} ({border})',flush=True)
+
+
 def _viewport_height_arg(value):
     height=int(value)
     if height<8 or height>200 or height%8:
@@ -1186,8 +1205,10 @@ def make_parser(settings):
         q.add_argument('--animation-tilt',type=float,help='crawl-plane X tilt in degrees')
         q.add_argument('--animation-travel',type=float,help='recede/crawl Z travel over the precomputed sequence')
         q.add_argument('--animation-rise',type=float,help='crawl Y travel over the precomputed sequence')
-        q.add_argument('--color',help='force one C64 foreground colour name/index 0..15 instead of source colours')
-        q.add_argument('--no-color','--no-colors','--ignore-colors',dest='ignore_colors',action='store_true',help='ignore OBJ/MTL or SVG source colours and render classic white-on-black wireframe')
+        q.add_argument('--color','--foreground-color','--foreground-colour','--fg-color',dest='color',type=_color_arg,default=settings.foreground_color,help='force monochrome foreground: C64 name, index 0..15, 0x/$ index, #RGB/#RRGGBB or rgb(r,g,b)')
+        q.add_argument('--background-color','--background-colour','--bg-color',type=_color_arg,default=settings.background_color,help='bitmap background colour; same formats as --color (default black)')
+        q.add_argument('--border-color','--border-colour',type=_color_arg,default=settings.border_color,help='VIC-II border colour; same formats as --color (default black; profiler still uses timing colours)')
+        q.add_argument('--no-color','--no-colors','--ignore-colors',dest='ignore_colors',action='store_true',help='ignore source colours; monochrome foreground defaults to white or the explicit --color value')
         q.add_argument('--keep-winding',action='store_true',help='do not best-effort reorient mesh face winding')
         q.add_argument('--visibility',choices=('auto','surface_features','surface_creases','surface','frontface'),default='auto',help='hidden-line surface mode; auto uses robust surface Z-buffer for OBJ and front-face mode for procedural closed meshes')
         q.add_argument('--z-tolerance',type=float,help='reciprocal-depth tolerance for visible wire edges; object presets may provide a default')
@@ -1249,7 +1270,7 @@ def make_parser(settings):
     isvg.add_argument('--spin-axis',choices=('x','y','z'),default='y')
     isvg.add_argument('--rotate-x',type=float,default=0.0); isvg.add_argument('--rotate-y',type=float,default=0.0); isvg.add_argument('--rotate-z',type=float,default=0.0)
     isvg.add_argument('--scale',type=float,default=1.0)
-    isvg.add_argument('--color',default='auto',help='C64 colour name/index, or auto to map from SVG stroke/fill')
+    isvg.add_argument('--color','--foreground-color','--foreground-colour','--fg-color',default='auto',type=lambda v: 'auto' if v.strip().lower()=='auto' else _color_arg(v),help='foreground name, palette index, RGB hex/rgb(), or auto to use SVG colours')
     isvg.add_argument('--animation',choices=('spin','recede','crawl'),default='spin')
     isvg.add_argument('--animation-tilt',type=float,default=62.0)
     isvg.add_argument('--animation-travel',type=float,default=120.0)
@@ -1286,6 +1307,7 @@ def make_parser(settings):
     cd.add_argument('--overwrite-policy',choices=('allow','warn','error'),default=settings.overwrite_policy,help='existing output handling (built-in default: warn)')
     cd.add_argument('--menu-style',choices=('default','decorative','demoscene'),default='default',help='initial cartridge menu presentation; F1 cycles all styles at runtime (default: default)')
     cd.add_argument('--run',action='store_true',help='attach the generated demo CRT directly with VICE -cartcrt')
+    cd.add_argument('--color-controls',action=argparse.BooleanOptionalAction,default=True,help='stable v2: F3/F4 monochrome colours, F7 independent border, F8 reset; no extra idle scan cycles')
     cd.add_argument('--prefer',choices=('fps','ram'),default='fps',help='V7/V8: prioritize FPS (default) or smaller Y drawing kernels')
     cd.add_argument('--play-all-seconds',type=int,default=10,help='V7/V8 PLAY ALL duration per animation, 1..255 seconds (default 10; PAL)')
     cd.add_argument('--stream-renderer',choices=('hors-render-v2', 'hors-render-v1', 'yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'),default='hors-render-v2',help='one renderer for every demo; writes a separate version-labelled comparison cart')
@@ -1296,9 +1318,18 @@ def make_parser(settings):
     cda.add_argument('--overwrite-policy',choices=('allow','warn','error'),default=settings.overwrite_policy,help='existing output handling (built-in default: warn)')
     cda.add_argument('--menu-style',choices=('default','decorative','demoscene'),default='default',help='initial cartridge menu presentation; F1 cycles all styles at runtime (default: default)')
     cda.add_argument('--run',action='store_true',help='attach the generated demo CRT directly with VICE -cartcrt')
+    cda.add_argument('--color-controls',action=argparse.BooleanOptionalAction,default=True,help='stable v2 playback colour controls')
     cda.add_argument('--prefer',choices=('fps','ram'),default='fps',help='V7/V8: prioritize FPS (default) or smaller Y drawing kernels')
     cda.add_argument('--play-all-seconds',type=int,default=10,help='V7/V8 PLAY ALL duration per animation, 1..255 seconds (default 10; PAL)')
     cda.add_argument('--stream-renderer',choices=('hors-render-v2', 'hors-render-v1', 'yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'),default='hors-render-v2',help='one renderer for every demo; writes a separate version-labelled comparison cart')
+    combo=sub.add_parser('color-combo-test',help='build COLOR COMBO TEST: four monochrome colour pairs with F3/F4 cycling, automatic 10-second looping playback')
+    _add_toolchain_args(combo,settings)
+    combo.add_argument('--output',help='output basename (default color-combo-test)')
+    combo.add_argument('--output-dir',help='output directory (default examples/color_combo_test/)')
+    combo.add_argument('--play-all-seconds',type=int,default=10,help='seconds per colour pair, 1..255 (default 10, PAL)')
+    combo.add_argument('--prefer',choices=('fps','ram'),default='fps')
+    combo.add_argument('--overwrite-policy',choices=('allow','warn','error'),default=settings.overwrite_policy)
+    combo.add_argument('--run',action='store_true',help='launch the generated cartridge in VICE')
     sub.add_parser('cart-stream',help='build a hors-render-v2 streamed EasyFlash CRT by default (same source flags as build)')
     doc=sub.add_parser('doctor',help='check local 64tass/VICE and optional Blender/cartconv availability')
     _add_toolchain_args(doc,settings)
@@ -1345,6 +1376,9 @@ def main(argv=None):
     if a.command=='doctor': return cmd_doctor(a)
     if a.command=='cartridge-smoke': return cmd_cartridge_smoke(a)
     if a.command in ('cart-demos','cartridge-demo'): return cmd_cart_demos(a)
+    if a.command=='color-combo-test':
+        from .colorcombos import cmd_color_combo_test
+        return cmd_color_combo_test(a)
     if a.command=='list-objects': return cmd_list_objects()
     if a.command=='import-obj': return cmd_import_obj(a)
     if a.command=='import-svg': return cmd_import_svg(a)

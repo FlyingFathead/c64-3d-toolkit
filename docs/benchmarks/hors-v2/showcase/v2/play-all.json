@@ -1,6 +1,6 @@
 {
   "cartridge": "demo-cart-2-preview-hors-v2.crt",
-  "sha256": "0f6e6cc97133ee93c83509783d8b960d57a3acf5b118a3bbc7cd73611fe090b3",
+  "sha256": "35cac536294e32cc912eadff7efd496584a63dbf0192d6c1ce003c17f83c13fa",
   "renderer": "hors-render-v2",
   "preference": "fps",
   "mode": "normal PLAY ALL ONLY",
@@ -10619,7 +10619,9 @@
       "max_frame_cycles": 31070,
       "pixel_match": true,
       "color_match": true,
-      "reused_samples": 0
+      "reused_samples": 0,
+      "border_match": true,
+      "border_color": 0
     },
     {
       "cartridge": "demo-cart-2-preview-hors-v2.crt",
@@ -10638,7 +10640,9 @@
       "max_frame_cycles": 55558,
       "pixel_match": true,
       "color_match": true,
-      "reused_samples": 0
+      "reused_samples": 0,
+      "border_match": true,
+      "border_color": 0
     },
     {
       "cartridge": "demo-cart-2-preview-hors-v2.crt",
@@ -10657,7 +10661,9 @@
       "max_frame_cycles": 101832,
       "pixel_match": true,
       "color_match": true,
-      "reused_samples": 0
+      "reused_samples": 0,
+      "border_match": true,
+      "border_color": 0
     },
     {
       "cartridge": "demo-cart-2-preview-hors-v2.crt",
@@ -10676,7 +10682,9 @@
       "max_frame_cycles": 31104,
       "pixel_match": true,
       "color_match": true,
-      "reused_samples": 0
+      "reused_samples": 0,
+      "border_match": true,
+      "border_color": 0
     },
     {
       "cartridge": "demo-cart-2-preview-hors-v2.crt",
@@ -10695,7 +10703,9 @@
       "max_frame_cycles": 35214,
       "pixel_match": true,
       "color_match": true,
-      "reused_samples": 0
+      "reused_samples": 0,
+      "border_match": true,
+      "border_color": 0
     },
     {
       "cartridge": "demo-cart-2-preview-hors-v2.crt",
@@ -10714,7 +10724,9 @@
       "max_frame_cycles": 49071,
       "pixel_match": true,
       "color_match": true,
-      "reused_samples": 0
+      "reused_samples": 0,
+      "border_match": true,
+      "border_color": 0
     },
     {
       "cartridge": "demo-cart-2-preview-hors-v2.crt",
@@ -10733,8 +10745,9 @@
       "max_frame_cycles": 63767,
       "pixel_match": true,
       "color_match": true,
-      "reused_samples": 0
+      "reused_samples": 0,
+      "border_match": true,
+      "border_color": 0
     }
-  ],
-  "scope": "New Demo Cart 2.0 material; not the frozen canonical 12-animation release comparison."
+  ]
 }

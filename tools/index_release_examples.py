@@ -3,6 +3,8 @@
 import hashlib,json
 from pathlib import Path
 
+from c643d.released_examples import is_current_v2_example
+
 ROOT=Path(__file__).resolve().parents[1]
 
 
@@ -10,7 +12,7 @@ def main():
     paths=[]
     for p in (ROOT/'examples').rglob('*'):
         if not p.is_file() or p.suffix not in ('.crt','.lbl','.json','.txt'):continue
-        if ('hors-render-v2' in p.name or 'hors-v2' in p.name) and 'beta' not in p.name:
+        if is_current_v2_example(p,(ROOT/'VERSION').read_text().strip()) or 'color_combo_test' in p.parts:
             paths.append(p)
     carts=[p for p in paths if p.suffix=='.crt']
     if len(carts)<19:raise ValueError('Expected every stable v2 example to be built')

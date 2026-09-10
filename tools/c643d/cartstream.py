@@ -7,6 +7,7 @@ uses $a000-$bfff; three <=1KiB clear/colour caches use $5000-$5bff.
 """
 from __future__ import annotations
 import hashlib,json,shutil,subprocess
+from .colors import hires_screen_byte, configure_asm_colors
 from pathlib import Path
 from .cartridge import new_easyflash_image, easyflash_offset, put_easyflash_chip, convert_easyflash, check_easyflash_crt
 from .emit import bytes_lines,emit_hud
@@ -69,7 +70,7 @@ def emit_directory(path,directory,*,direct_bytes=False):
     lines += ['.if * > $5000','.error "directory overlaps metadata cache"','.endif']
     path.write_text('\n'.join(lines)+'\n')
 
-def assemble_cartridge(root,frames,mesh,*,tass,cartconv,outdir,stem,tass_args=(),color_index=1,colors=True,renderer="yunroll-cart-v2",optimize=True,prefer="fps",hud=None):
+def assemble_cartridge(root,frames,mesh,*,tass,cartconv,outdir,stem,tass_args=(),color_index=1,background_color=0,border_color=0,colors=True,renderer="yunroll-cart-v2",optimize=True,prefer="fps",hud=None):
     from .renderer_names import implementation
     renderer=implementation(renderer)
     if renderer not in ('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'):raise ValueError('unsupported stream renderer')
@@ -80,7 +81,7 @@ def assemble_cartridge(root,frames,mesh,*,tass,cartconv,outdir,stem,tass_args=()
     optimization = None
     if variant in ("v5", "v6", "v7", "v8", "v9", "v10") and optimize:
         from .optimize import optimize_frames
-        frames, optimization = optimize_frames(frames, color_index<<4)
+        frames, optimization = optimize_frames(frames, hires_screen_byte(color_index,background_color))
     joining = None
     if variant in ("v7", "v8", "v9", "v10") and optimize:
         from .runjoin import join_frames
@@ -103,7 +104,8 @@ def assemble_cartridge(root,frames,mesh,*,tass,cartconv,outdir,stem,tass_args=()
         (gen/'hud.inc').write_text('\n'.join([f'HUD_STATIC_LEN = {len(hud)}', 'hud_static_bitmap:'] + bytes_lines(hud) + ['hud_static_bitmap_end:', '']))
     shutil.copyfile(root/f'c64/cart/easyflash-stream-{variant}-helper.asm',gen/f'cart-{variant}-helper.inc')
     src=(root/f'c64/renderer-{renderer}.asm').read_text()
-    src=src.replace('FRAME_COUNT = 48',f'FRAME_COUNT = {len(frames)}',1).replace('COLORS_ENABLED = 0',f'COLORS_ENABLED = {int(colors)}',1).replace('SCREEN_COLOR = $10',f'SCREEN_COLOR = ${color_index:X}0',1)
+    src=src.replace('FRAME_COUNT = 48',f'FRAME_COUNT = {len(frames)}',1).replace('COLORS_ENABLED = 0',f'COLORS_ENABLED = {int(colors)}',1)
+    src=configure_asm_colors(src,color_index,background_color,border_color)
     src=src.replace('        .include "generated/hud.inc"','        .include "generated/hud.inc"\n.if * > $1700\n.error "renderer and HUD overlap LUT"\n.endif')
     if optimization:
         src=src.replace('V5_REUSE_ENABLED = 0', f'V5_REUSE_ENABLED = {int(optimization["duplicate_pictures"] > 0)}')
@@ -125,7 +127,7 @@ def assemble_cartridge(root,frames,mesh,*,tass,cartconv,outdir,stem,tass_args=()
     raw=work/f'{stem}.bin';raw.write_bytes(image)
     crt=outdir/f'{stem}.crt';convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name=f'C643D STREAM {variant.upper()}',cwd=root)
     check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=root)
-    manifest=dict(format='c643d-easyflash-stream-v2',version=1,renderer=renderer,name=mesh.name,frames=len(frames),vertices=len(mesh.vertices),edges=len(mesh.edges),faces=len(mesh.faces),colors=colors,screen_color=color_index<<4,directory_ram_bytes=len(frames)*7,frame_buffer_bytes=FRAME_CAP,metadata_cache_bytes=3*META_CAP,rom_frame_bytes=sum(d['bytes'] for d in directory if 'reference_frame' not in d),highest_bank=max(d['bank'] for d in directory),run_count_bits=16,frame_data=directory)
+    manifest=dict(format='c643d-easyflash-stream-v2',version=1,renderer=renderer,name=mesh.name,frames=len(frames),vertices=len(mesh.vertices),edges=len(mesh.edges),faces=len(mesh.faces),colors=colors,screen_color=hires_screen_byte(color_index,background_color),foreground_color=color_index,background_color=background_color,border_color=border_color,directory_ram_bytes=len(frames)*7,frame_buffer_bytes=FRAME_CAP,metadata_cache_bytes=3*META_CAP,rom_frame_bytes=sum(d['bytes'] for d in directory if 'reference_frame' not in d),highest_bank=max(d['bank'] for d in directory),run_count_bits=16,frame_data=directory)
     if optimization: manifest['optimization']=optimization
     if clearing: manifest['clearing']=clearing
     if joining: manifest['joining']=joining
@@ -160,11 +162,11 @@ def cmd_build_cart_v2(a):
     scale=fit_scale(mesh,n,cam,margin=a.margin,max_scale=a.max_fit_scale,spin_axis=axis,animation=anim,animation_tilt=tilt,animation_travel=travel,animation_rise=rise,height=height) if not a.no_auto_fit else 1
     mesh=transform_mesh(mesh,scale=scale)
     print(f'compiling {label}: {n} streamed frames, fit {scale:.4f}',flush=True)
-    frames,_=build_frames(mesh,n,cam,spin_axis=axis,visibility_mode=vis,z_tolerance=ztol,feature_angle=angle,animation=anim,animation_tilt=tilt,animation_travel=travel,animation_rise=rise,enable_source_colors=percell,fallback_color=c64_color_index(color),height=height,max_visible_runs=65535)
+    frames,_=build_frames(mesh,n,cam,spin_axis=axis,visibility_mode=vis,z_tolerance=ztol,feature_angle=angle,animation=anim,animation_tilt=tilt,animation_travel=travel,animation_rise=rise,enable_source_colors=percell,fallback_color=c64_color_index(color),background_color=c64_color_index(getattr(a,"background_color",0)),height=height,max_visible_runs=65535)
     outdir=Path(a.output_dir).resolve() if a.output_dir else cli.BUILD
     stem=a.output or label.lower().replace(' ','_')+'-'+getattr(a,'public_renderer',a.renderer)+('-ram' if getattr(a,'prefer','fps') == 'ram' else '')
     if not cli._check_overwrite([outdir/f'{stem}.crt',outdir/f'{stem}.lbl',outdir/f'{stem}-manifest.json'],a.overwrite_policy):return 2
-    crt,_=assemble_cartridge(cli.ROOT,frames,mesh,tass=tass,cartconv=cartconv,outdir=outdir,stem=stem,tass_args=a.tass_args,color_index=c64_color_index(color),colors=percell,renderer=a.renderer,prefer=getattr(a,"prefer","fps"))
+    crt,_=assemble_cartridge(cli.ROOT,frames,mesh,tass=tass,cartconv=cartconv,outdir=outdir,stem=stem,tass_args=a.tass_args,color_index=c64_color_index(color),background_color=c64_color_index(getattr(a,"background_color",0)),border_color=c64_color_index(getattr(a,"border_color",0)),colors=percell,renderer=a.renderer,prefer=getattr(a,"prefer","fps"))
     if a.run:
         vice=cli.resolve_executable(a.vice,'vice')
         if not vice:raise ValueError('VICE not found')

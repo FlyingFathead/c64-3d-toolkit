@@ -1,0 +1,7 @@
+Uniform yunroll-cart-v10 cartridge
+Bank 0: boot/control/font; ROMH 1: menus; ROMH 2: menu directory/helpers
+TORUS BLACK ON WHITE: 32 frames, 46217 stream bytes
+DENSE TORUS CYAN ON BLUE: 32 frames, 48568 stream bytes
+SPHERE LIGHT GREEN ON BLACK: 24 frames, 18108 stream bytes
+CUBE WHITE ON PURPLE: 36 frames, 7824 stream bytes
+Frame chips: 3:romh, 4:romh, 5:romh, 6:romh, 7:romh, 8:romh, 9:romh, 10:romh, 11:romh, 12:romh, 13:romh, 14:romh, 15:romh, 16:romh, 17:romh, 18:romh

@@ -1,6 +1,7 @@
 """Release gates for the isolated comparison builder and intentional V9 defaults."""
 import contextlib
 import io
+import shutil
 from pathlib import Path
 import subprocess
 import sys
@@ -15,6 +16,22 @@ from c643d import cli
 from c643d.toolchain import load_toolchain_settings
 
 class ComparisonTests(unittest.TestCase):
+    def test_snapshot_adapter_accepts_current_verifier_and_keeps_border_checks(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            for rel in ('tools/c643d/cartuniform.py',
+                        'c64/cart/easyflash-demo-scroll-runtime-v9.asm',
+                        'c64/cart/easyflash-demo-control-v9.asm',
+                        'tools/verify_cart_stream.py', 'tools/profile_cart_stream.py',
+                        'tools/benchmark_play_all.py'):
+                dest=root/rel;dest.parent.mkdir(parents=True,exist_ok=True)
+                shutil.copyfile(ROOT/rel,dest)
+            comparison.adapt_snapshot(root)
+            adapted=(root/'tools/verify_cart_stream.py').read_text()
+            compile(adapted,'adapted_verifier','exec')
+            self.assertIn('border colour mismatch',adapted)
+            self.assertIn("result['display_interval_cycles']",adapted)
+
     def test_workspace_cannot_overwrite_project(self):
         run=subprocess.run([sys.executable,str(ROOT/'tools/compare_renderers.py'),
                             '--workspace',str(ROOT/'examples'),'--vice-data','/tmp'],capture_output=True,text=True)

@@ -1,6 +1,6 @@
 # Cart Demos V2 — hors-render-v2
 
-**Toolkit 0.7.2 · stable hors-render-v2 prebuilt examples.**
+**Toolkit 0.7.3 · stable hors-render-v2 prebuilt examples.**
 
 | Cartridge | Samples | Colours |
 | --- | ---: | --- |
@@ -13,6 +13,12 @@ x64sc +easyflashcrtwrite -cartcrt examples/cart_demos_v2/demo-cart-2-preview-hor
 Press SPACE when an identification screen is shown. Companion labels and manifests identify the exact build.
 
 Seven complete scenes: Colour Cube 24, Colour Torus 18, Twist Tunnel, Ribbon Dance, Orbital Cubes, Wave Lattice and Ripples Lite. These are distinct from the canonical twelve-animation comparison inputs. The measured Ripples Lite gain is 35.48% over v1.
+
+During playback, **F3/F4** cycle Ripples Lite's foreground/background. **F7**
+changes the independent border in every scene; **F8** restores the preset.
+Multicolour source palettes remain intact. F1/RUN-STOP and SPACE keep their
+existing navigation functions. See [colour controls](../../docs/OUTPUT_COLORS.md)
+and [0.7.3 regression results](../../docs/COLORS_0.7.3_VALIDATION.md).
 
 Cross Swell and Liquid Floor are optional source loops under `scenes/`; rebuild with `--water` to select them. Capacity failures never reduce the sample count.
 

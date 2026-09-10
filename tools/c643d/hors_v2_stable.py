@@ -5,6 +5,7 @@ Host integration swaps are serialized; use processes for parallel compilation.
 """
 from contextlib import contextmanager
 from copy import copy
+from dataclasses import replace
 from pathlib import Path
 from threading import RLock
 import json
@@ -176,6 +177,8 @@ def build_menu(a, *, sources=None, reel=False, frame_encoders=None):
     from . import cli,cartuniform,__version__
     root=cli.ROOT
     if sources is None: sources=cartuniform.demos(root)
+    if not reel and not getattr(a,'color_combo_test',False) and getattr(a,'color_controls',True):
+        sources=[replace(d,color_controls=True) for d in sources]
     options=copy(a)
     options.stream_renderer='hors-render-v1'
     options.output=options.output or f'c643d-demo-v{__version__}-{NAME}-all'+('-ram' if a.prefer=='ram' else '')

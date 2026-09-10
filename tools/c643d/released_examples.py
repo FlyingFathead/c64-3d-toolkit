@@ -57,3 +57,13 @@ def decode(row):
         sample_step=settings.get('sample_step',1),
         frames=[SimpleNamespace(source_frame=i) for i in settings.get('source_frames',range(len(frames)))])
     return frames,mesh,scene
+
+
+def is_current_v2_example(path, version):
+    """Select stable examples without treating an old versioned menu as current."""
+    import re
+    name=path.name
+    if not ('hors-render-v2' in name or 'hors-v2' in name) or 'beta' in name:
+        return False
+    match=re.search(r'-v(\d+\.\d+\.\d+)-',name)
+    return match is None or match.group(1)==version

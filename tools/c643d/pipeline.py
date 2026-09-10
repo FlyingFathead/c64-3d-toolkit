@@ -266,9 +266,10 @@ def classify_feature_edges(mesh:Mesh, feature_angle:float=40.0):
     return out, {'boundary':boundary,'nonmanifold':nonmanifold,'crease':crease,'features':sum(out.values()),'edges':len(out)}
 
 
-def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibility_mode:str="surface", z_tolerance:float=Z_TOL, feature_angle:float=40.0, animation:str='spin', animation_tilt:float=62.0, animation_travel:float=120.0, animation_rise:float=54.0, enable_source_colors:bool=False, fallback_color:int=1, clip_viewport:bool=False, *, width:int=W, height:int=H, max_visible_runs:int=255) -> tuple[list[FrameBuild],int]:
+def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibility_mode:str="surface", z_tolerance:float=Z_TOL, feature_angle:float=40.0, animation:str='spin', animation_tilt:float=62.0, animation_travel:float=120.0, animation_rise:float=54.0, enable_source_colors:bool=False, fallback_color:int=1, clip_viewport:bool=False, *, width:int=W, height:int=H, max_visible_runs:int=255, background_color:int=0) -> tuple[list[FrameBuild],int]:
     if not 1<=frames<=255: raise ValueError('frames must be 1..255')
     if not 0<=fallback_color<=15: raise ValueError('fallback colour must be 0..15')
+    if not 0<=background_color<=15: raise ValueError('background colour must be 0..15')
     # Precompute face geometry in object space.
     fcent=[face_center(mesh,f) for f in mesh.faces]
     fnorm=[face_normal(mesh,f) for f in mesh.faces]
@@ -433,11 +434,11 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
                     run_count+=1; prev_cx=cx
                     continue
                 if run_count is not None:
-                    color_spans.append((start_off&255,start_off>>8,run_count,hires_screen_byte(run_color)))
+                    color_spans.append((start_off&255,start_off>>8,run_count,hires_screen_byte(run_color,background_color)))
                 start_off=cy*40+cx; prev_cx=cx; prev_cy=cy
                 run_color=color; run_count=1
             if run_count is not None:
-                color_spans.append((start_off&255,start_off>>8,run_count,hires_screen_byte(run_color)))
+                color_spans.append((start_off&255,start_off>>8,run_count,hires_screen_byte(run_color,background_color)))
         all_frames.append(FrameBuild(
             records,spans,raw,len(touched),mism,color_spans,
             len(cell_color_counts),color_conflicts,tuple(sorted(palette)),
@@ -448,7 +449,7 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
 def build_scene_frames(scene, *, visibility_mode:str='surface', z_tolerance:float=Z_TOL,
                        feature_angle:float=40.0, enable_source_colors:bool=False,
                        fallback_color:int=1, width:int=W, height:int=H,
-                       max_frames:int=255, max_visible_runs:int=255) -> tuple[list[FrameBuild],int]:
+                       max_frames:int=255, max_visible_runs:int=255, background_color:int=0) -> tuple[list[FrameBuild],int]:
     """Render camera-space frames loaded from a ``.c643dscene`` source.
 
     Each authored frame is fed through the same hidden-line/DDA implementation
@@ -474,7 +475,7 @@ def build_scene_frames(scene, *, visibility_mode:str='surface', z_tolerance:floa
                 current,1,camera,animation='recede',animation_travel=0.0,
                 visibility_mode=visibility_mode,z_tolerance=z_tolerance,
                 feature_angle=feature_angle,enable_source_colors=enable_source_colors,
-                fallback_color=fallback_color,clip_viewport=True,width=width,height=height,
+                fallback_color=fallback_color,background_color=background_color,clip_viewport=True,width=width,height=height,
                 max_visible_runs=max_visible_runs,
             )
         except RuntimeError as e:

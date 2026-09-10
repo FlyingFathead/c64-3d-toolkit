@@ -8,6 +8,7 @@ from .cartridge import (new_easyflash_image,easyflash_offset,pack_demo_prgs,
     build_menu_charset,convert_easyflash,check_easyflash_crt)
 from .emit import bytes_lines
 from .prgframes import extract
+from .colors import configure_asm_colors
 
 @dataclass
 class Demo:
@@ -21,6 +22,9 @@ class Demo:
     frame_ticks:int=1
     finite:bool=False
     show_hud:bool=True
+    border:int=0
+    interactive_colors:bool=False
+    color_controls:bool=False
 
 
 def demos(root):
@@ -112,7 +116,14 @@ def prepare(root,renderer,tass,tass_args=(),sources=None,prefer="fps",work_prefi
         helper=helper.replace('        lda #$06\n        sta $de02','        lda cart_selected_mode\n        sta $de02')
         helper=helper.replace('cart_cache_hi:', 'cart_selected_mode: .byte 0\ncart_cache_hi:')
         (gen/f'cart-{variant}-helper.inc').write_text(helper)
-        src=(root/f'c64/renderer-{renderer}.asm').read_text().replace('FRAME_COUNT = 48',f'FRAME_COUNT = {len(demo.frames)}',1).replace('COLORS_ENABLED = 0',f'COLORS_ENABLED = {int(demo.colors)}',1).replace('SCREEN_COLOR = $10',f'SCREEN_COLOR = ${demo.screen:02x}',1)
+        src=(root/f'c64/renderer-{renderer}.asm').read_text().replace('FRAME_COUNT = 48',f'FRAME_COUNT = {len(demo.frames)}',1).replace('COLORS_ENABLED = 0',f'COLORS_ENABLED = {int(demo.colors)}',1)
+        src=configure_asm_colors(src,demo.screen>>4,demo.screen&15,demo.border)
+        if demo.interactive_colors:
+            from .colorcombos import configure_combo_runtime
+            src=configure_combo_runtime(src)
+        if demo.color_controls:
+            from .demo_colors import configure_runtime
+            src=configure_runtime(src,demo.border)
         src=src.replace('        .include "generated/hud.inc"','        .include "generated/hud.inc"\n.if * > $1700\n.error "renderer/HUD overlaps LUT"\n.endif')
         if optimization:
             src=src.replace('V5_REUSE_ENABLED = 0', f'V5_REUSE_ENABLED = {int(optimization["duplicate_pictures"] > 0)}')
@@ -131,7 +142,11 @@ def prepare(root,renderer,tass,tass_args=(),sources=None,prefer="fps",work_prefi
         # Fixed three-bank reservation gives every version identical frame addresses.
         entries.append((demo.name,prg))
         (work/'oracle.json').write_text(json.dumps([asdict(f) for f in original_frames]))
-        info.append(dict(name=demo.name,renderer=renderer,frames=len(demo.frames),colors=demo.colors,screen_color=demo.screen,source=demo.source,source_sha256=demo.source_sha256,work=work.relative_to(root).as_posix(),rom_frame_bytes=sum(x['bytes'] for x in directory if 'reference_frame' not in x),frame_data=directory))
+        info.append(dict(name=demo.name,renderer=renderer,frames=len(demo.frames),colors=demo.colors,screen_color=demo.screen,border_color=demo.border,source=demo.source,source_sha256=demo.source_sha256,work=work.relative_to(root).as_posix(),rom_frame_bytes=sum(x['bytes'] for x in directory if 'reference_frame' not in x),frame_data=directory))
+        if demo.interactive_colors:info[-1]['interactive_colors']=dict(foreground_key='F3',background_key='F4 / SHIFT+F3',border_follows_background=True,reset_on_entry=True)
+        if demo.color_controls:
+            from .demo_colors import metadata
+            info[-1]['color_controls']=metadata(not demo.colors)
         if optimization: info[-1]["optimization"]=optimization
         if clearing: info[-1]["clearing"]=clearing
         if joining: info[-1]["joining"]=joining
@@ -173,6 +188,8 @@ def build(a, *, sources=None, reel=False,frame_encoders=None):
     renderer=implementation(a.stream_renderer);variant=renderer.rsplit('-',1)[1]
     prefer=getattr(a,'prefer','fps')
     seconds=getattr(a,'play_all_seconds',10)
+    color_combo=getattr(a,'color_combo_test',False)
+    color_controls=bool(sources) and all(d.color_controls for d in sources)
     if not 1 <= seconds <= 255: raise ValueError('--play-all-seconds must be 1..255')
     if variant not in ('v7', 'v8', 'v9', 'v10') and seconds != 10: raise ValueError('--play-all-seconds requires V7, V8 or V9')
     if prefer == 'ram' and variant not in ('v7', 'v8', 'v9', 'v10'): raise ValueError('--prefer ram requires V7, V8 or V9')
@@ -191,9 +208,15 @@ def build(a, *, sources=None, reel=False,frame_encoders=None):
     write_demo_include(gen/'cart-demo-data.inc',plans)
     from .buildscreen import menu_title_lines
     (gen/'menu-title.inc').write_text('\n'.join(menu_title_lines(__version__, public_renderer))+'\n')
+    if color_combo:
+        from .buildscreen import screen_codes
+        (gen/'menu-title.inc').write_text('\n'.join(['title_default:',*bytes_lines(screen_codes('COLOR COMBO TEST')),'    .byte 0'])+'\n')
     if variant in ('v5', 'v6', 'v7', 'v8', 'v9', 'v10'):
         from .buildscreen import build_screen_lines
         (gen/'build-screen.inc').write_text('\n'.join(build_screen_lines(__version__, ('hors-render-v1' if variant == 'v10' else f'yunroll-{variant}')+(' (ram)' if prefer == 'ram' else ''),hifi_reel=variant == 'v10' and not reel))+'\n')
+        if color_combo:
+            # A three-second, SPACE-skippable title, then automatic normal PLAY ALL.
+            (gen/'build-screen.inc').write_text('\n'.join(build_screen_lines(__version__,'COLOR COMBO TEST'))+'\n')
     if variant in ('v7', 'v8', 'v9', 'v10'):
         from .buildscreen import play_all_thanks_lines
         (gen/'play-all-thanks.inc').write_text('\n'.join(play_all_thanks_lines(__version__))+'\n')
@@ -209,7 +232,11 @@ def build(a, *, sources=None, reel=False,frame_encoders=None):
     from .versioning import stamp_menu_source
     menu_source=root/('c64/cart/easyflash-hifi-reel-runtime.asm' if reel else f'c64/cart/easyflash-demo-scroll-runtime-{variant}.asm' if variant in ('v8', 'v9', 'v10') else 'c64/cart/easyflash-demo-scroll-runtime.asm')
     versioned_menu=work/'menu-runtime.asm'
-    versioned_menu.write_text(stamp_menu_source(menu_source.read_text(),__version__))
+    menu_text=stamp_menu_source(menu_source.read_text(),__version__)
+    if color_combo:
+        from .colorcombos import configure_combo_menu
+        menu_text=configure_combo_menu(menu_text)
+    versioned_menu.write_text(menu_text)
     for i,style in enumerate(cli.DEMO_MENU_STYLE_ORDER):
         binpath=work/f'{stem}-runtime-{style}.bin';whole=work/f'{stem}-menu-{style}-whole.bin'
         subprocess.run([tass,*(a.tass_args or ()),'-I',str(gen),'-D','VICE_DEBUGCART=0','-D','AUTO_LAUNCH=255','-D',f'MENU_STYLE={i}','-D',f'RENDERER_VERSION={int(variant[1:])}','-D',f'PLAY_ALL_SECONDS={seconds}','-b','--vice-labels','-l',str(work/f'{stem}-runtime-{style}.lbl'),'-L',str(work/f'{stem}-runtime-{style}.lst'),'-o',str(whole),str(versioned_menu)],check=True,cwd=root,stdout=subprocess.DEVNULL)
@@ -218,7 +245,13 @@ def build(a, *, sources=None, reel=False,frame_encoders=None):
         shared[style]=data[:2048];binpath.write_bytes(data[2048:]);runtimes[style]=binpath
 
     control=work/f'{stem}-control.bin';boot=work/f'{stem}-romh0.bin';font=work/f'{stem}-menu-font.bin';font.write_bytes(build_menu_charset())
-    assemble_demo_control(tass=tass,tass_args=a.tass_args or (),source=cli.CART/(f'easyflash-demo-control-{variant}.asm' if variant in ('v8', 'v9', 'v10') else 'easyflash-demo-control-v7.asm' if variant == 'v7' else 'easyflash-demo-control.asm'),output=control,labels=work/f'{stem}-control.lbl',listing=work/f'{stem}-control.lst',cwd=root)
+    control_source=cli.CART/(f'easyflash-demo-control-{variant}.asm' if variant in ('v8', 'v9', 'v10') else 'easyflash-demo-control-v7.asm' if variant == 'v7' else 'easyflash-demo-control.asm')
+    if color_controls:
+        from .demo_colors import configure_control_source
+        local_control=work/'color-control.asm'
+        local_control.write_text(configure_control_source(control_source.read_text()))
+        control_source=local_control
+    assemble_demo_control(tass=tass,tass_args=a.tass_args or (),source=control_source,output=control,labels=work/f'{stem}-control.lbl',listing=work/f'{stem}-control.lst',cwd=root)
     assemble_demo_boot(tass=tass,tass_args=a.tass_args or (),source=cli.CART/'easyflash-demo-boot.asm',output=boot,labels=work/f'{stem}-boot.lbl',listing=work/f'{stem}-boot.lst',cwd=root)
     install_demo_boot(image,boot.read_bytes(),runtimes[a.menu_style].read_bytes(),control=control.read_bytes(),style_runtimes=[runtimes[s].read_bytes() for s in cli.DEMO_MENU_STYLE_ORDER],menu_font=font.read_bytes())
     for i,style in enumerate(cli.DEMO_MENU_STYLE_ORDER):
@@ -251,8 +284,15 @@ def build(a, *, sources=None, reel=False,frame_encoders=None):
         highest_bank_used=max([first_free-1]+[bank for bank,chip in used]),
         data_banks_used=len(set(range(1,first_free))|{bank for bank,chip in used}),
         shared_menu_load='$c000',shared_menu_size=2048)
+    if color_combo:
+        manifest['color_combo_test']=dict(title='COLOR COMBO TEST',entries=len(stream_info),automatic_start=True,border_matches_background=True)
+        manifest['build_screen'].update(ticks=150,wait_for_space=False,title='COLOR COMBO TEST')
+        manifest['play_all'].pop('thank_you',None)
+        manifest['play_all'].update(position='automatic',between_rounds='immediate-wrap')
+        manifest.pop('exhibition',None)
+        manifest['note']='Four monochrome colour pairs using preserved classic geometry; automatic normal PLAY ALL; F3/F4 colour cycling.'
     raw=work/f'{stem}.bin';raw.write_bytes(image);crt=out/f'{stem}.crt'
-    convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name=f'C643D {__version__} ALL {variant.upper()}',cwd=root);check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=root)
+    convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name='COLOR COMBO TEST' if color_combo else f'C643D {__version__} ALL {variant.upper()}',cwd=root);check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=root)
     (metadata/f'{stem}-cart-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     (metadata/f'{stem}-cart-map.txt').write_text('Uniform '+renderer+' cartridge\nBank 0: boot/control/font; ROMH 1: menus; ROMH 2: menu directory/helpers\n'+''.join(f'{x["name"]}: {x["frames"]} frames, {x["rom_frame_bytes"]} stream bytes\n' for x in stream_info)+'Frame chips: '+', '.join(f'{b}:{c}' for b,c in used)+'\n')
     print(f'built {crt}\nall {len(plans)} entries: {renderer}; 10-row scrolling menu; {sum(x["rom_frame_bytes"] for x in stream_info)} frame bytes',flush=True)

@@ -16,6 +16,8 @@
   "pixel_match": true,
   "color_match": true,
   "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
   "display_interval_cycles": [
     60492,
     59615,

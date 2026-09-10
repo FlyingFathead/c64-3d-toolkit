@@ -45,26 +45,58 @@ _COLOR_NAMES = {
 
 
 def c64_color_index(value: str | int | None) -> int:
+    """Resolve a native name/index or an opaque RGB colour on the host.
+
+    Decimal and 0x/$/0b/% numbers denote palette indices (0..15).
+    #RGB/#RRGGBB and rgb(...) denote RGB, mapped to the nearest palette entry.
+    Native C64 names take precedence over CSS names, preserving old presets.
+    """
     if value is None:
         return C64_PALETTE['white'][0]
     if isinstance(value, int):
         if 0 <= value <= 15:
             return value
         raise ValueError('C64 colour index must be 0..15')
-    s=str(value).strip().lower().replace('-','_').replace(' ','_')
-    if s.isdigit():
-        n=int(s)
-        if 0 <= n <= 15:
-            return n
+    raw=str(value).strip().lower()
+    if re.fullmatch(r'[+-]?\d+|0x[0-9a-f]+|\$[0-9a-f]+|0b[01]+|%[01]+',raw):
+        if raw.startswith(('0x','$')):
+            n=int(raw[2:] if raw.startswith('0x') else raw[1:],16)
+        elif raw.startswith(('0b','%')):
+            n=int(raw[2:] if raw.startswith('0b') else raw[1:],2)
+        else:
+            n=int(raw,10)
+        return c64_color_index(n)
+    s=raw.replace('-','_').replace(' ','_')
     aliases={
         'grey':'gray', 'dark_grey':'dark_gray', 'light_grey':'light_gray',
         'lightred':'light_red', 'lightgreen':'light_green',
         'lightblue':'light_blue',
+        'darkgray':'dark_gray', 'darkgrey':'dark_gray',
+        'lightgray':'light_gray', 'lightgrey':'light_gray',
     }
     s=aliases.get(s,s)
-    if s not in C64_PALETTE:
-        raise ValueError(f'unknown C64 colour {value!r}; use a palette name or 0..15')
-    return C64_PALETTE[s][0]
+    if s in C64_PALETTE:
+        return C64_PALETTE[s][0]
+    # Explicit output colours are opaque. Do not silently discard alpha or
+    # silently clamp malformed/out-of-range channel values.
+    rgb_match=re.fullmatch(r'rgb\(\s*(\d+(?:\.\d+)?)(%?)\s*,\s*(\d+(?:\.\d+)?)(%?)\s*,\s*(\d+(?:\.\d+)?)(%?)\s*\)',raw)
+    if rgb_match:
+        channels=rgb_match.groups()
+        percentages=[channels[i] for i in (1,3,5)]
+        if len(set(percentages))!=1:
+            raise ValueError('rgb() channels must all use percentages or all use 0..255')
+        maximum=100 if percentages[0] else 255
+        numbers=[float(channels[i]) for i in (0,2,4)]
+        if any(v>maximum for v in numbers):
+            raise ValueError(f'rgb() channels must be 0..{maximum}')
+        rgb=tuple(round(v*255/maximum) for v in numbers)
+        return nearest_c64_color_index(rgb)
+    if re.fullmatch(r'#[0-9a-f]{3}|#[0-9a-f]{6}',raw) or raw in _COLOR_NAMES:
+        rgb=parse_source_color(raw)
+        if rgb is not None:
+            return nearest_c64_color_index(rgb)
+    raise ValueError(f'unknown C64 colour {value!r}; use a palette name, index 0..15 '
+                     '(decimal, 0x0f, $0f, 0b1111 or %1111), #RGB, #RRGGBB or rgb(r,g,b)')
 
 
 def c64_color_name(index: int) -> str:
@@ -158,3 +190,30 @@ def hires_screen_byte(foreground: int, background: int=0) -> int:
     if not 0<=foreground<=15 or not 0<=background<=15:
         raise ValueError('VIC-II colour indices must be 0..15')
     return (foreground<<4)|background
+
+
+def configure_asm_colors(source: str, foreground: int=1, background: int=0,
+                         border: int=0) -> str:
+    """Configure generated copies; the zero-background default is byte-identical.
+
+    Screen RAM carries the bitmap colours in all three buffers. D020 is the
+    independent border; D021 is also initialized for consistent VIC state.
+    The authored intro may animate its colours, so restore the chosen registers
+    on return. Timing-profiler writes remain intentional timing indicators.
+    """
+    screen=hires_screen_byte(foreground,background)
+    if not 0<=border<=15:
+        raise ValueError('border colour must be 0..15')
+    if 'SCREEN_COLOR = $10' not in source:
+        raise ValueError('renderer is missing its SCREEN_COLOR configuration site')
+    source=source.replace('SCREEN_COLOR = $10',f'SCREEN_COLOR = ${screen:02X}',1)
+    if background or border:
+        old='        lda #0\n        sta $d020\n        sta $d021'
+        registers=(f'        lda #{border}\n        sta $d020\n'
+                   f'        lda #{background}\n        sta $d021')
+        if old not in source:
+            raise ValueError('renderer is missing its initial VIC colour stores')
+        source=source.replace(old,registers,1)
+        source=source.replace('        jsr intro_start\n',
+                              '        jsr intro_start\n'+registers+'\n',1)
+    return source

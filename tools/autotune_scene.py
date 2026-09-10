@@ -4,6 +4,7 @@ from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict
 import argparse, csv, hashlib, itertools, json, math, os, shutil, statistics, subprocess, sys
+from c643d.colors import c64_color_index
 
 ROOT=Path(__file__).resolve().parents[1]
 SCRIPT=Path(__file__).resolve()
@@ -85,7 +86,7 @@ def main():
     ap.add_argument('--max-refreshes',type=int,default=10000)
     ap.add_argument('--jobs',type=int,default=2)
     ap.add_argument('--mono',action='store_true')
-    ap.add_argument('--color-index',type=int,default=1)
+    ap.add_argument('--color-index',type=c64_color_index,default=1,help='foreground/fallback: C64 name, palette index, #RGB/#RRGGBB or rgb(r,g,b)')
     ap.add_argument('--width',type=int,choices=[256,320],default=256,help='Projection viewport width; preserve the source export framing')
     ap.add_argument('--visibility',choices=['surface','surface_features','surface_creases','frontface'],default='surface')
     ap.add_argument('--tass',default='64tass');ap.add_argument('--cartconv',default='cartconv');ap.add_argument('--vice',default='x64sc');ap.add_argument('--vice-data')

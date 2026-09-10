@@ -1481,6 +1481,8 @@
     "pixel_match": true,
     "color_match": true,
     "reused_samples": 52,
+    "border_match": true,
+    "border_color": 0,
     "display_interval_cycles": [
       1299752,
       233419,

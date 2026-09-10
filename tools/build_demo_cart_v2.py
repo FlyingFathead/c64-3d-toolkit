@@ -19,6 +19,7 @@ def main():
     ap.add_argument('--tass',default='64tass');ap.add_argument('--cartconv',default='cartconv')
     ap.add_argument('--gap',type=int,default=6);ap.add_argument('--batch-budget',type=int,default=2048)
     ap.add_argument('--prefer',choices=['fps','ram'],default='fps')
+    ap.add_argument('--color-controls',action=argparse.BooleanOptionalAction,default=True,help='stable v2: F3/F4 monochrome colours, F7 border, F8 reset')
     ap.add_argument('--policy',type=Path,default=ROOT/'examples/cart_demos_v2/encoding-policy.json',help='Measured per-scene encoding choices, guarded by source hash')
     ap.add_argument('--water',nargs='+',choices=['ripples_lite','cross_swell','liquid_floor'],default=['ripples_lite'],help='Selected complete water loops; default Ripples Lite. Capacity failures never reduce samples.')
     a=ap.parse_args()
@@ -53,7 +54,7 @@ def main():
                     n=min(32,count);spans.append((offset&255,offset>>8,n));offset+=8*n;count-=n
             frame.clear_spans=spans
         sources.append(cartuniform.Demo(title,frames,colour,0x10,bytes(bitmap_text(title,31)),path,
-            hashlib.sha256((ROOT/path).read_bytes()).hexdigest()))
+            hashlib.sha256((ROOT/path).read_bytes()).hexdigest(),color_controls=a.renderer=='hors-render-v2' and a.color_controls))
     beta=a.renderer in ('hors-render-v2-beta1','hors-render-v2')
     stable=a.renderer=='hors-render-v2'
     policy=json.loads(a.policy.read_text()) if beta else {'scenes':{}}

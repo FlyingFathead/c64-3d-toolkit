@@ -8,6 +8,7 @@ from __future__ import annotations
 from dataclasses import asdict
 import hashlib
 import json
+from .colors import hires_screen_byte, configure_asm_colors
 from pathlib import Path
 import shutil
 import subprocess
@@ -70,7 +71,7 @@ def validate_hud(text):
     return text
 
 
-def assemble_scene(root,frames,scene,*,tass,cartconv,outdir,stem,hud_text,frame_ticks=4,tass_args=(),colors=True,color_index=1,intro=False,text_overlay=True,ending=False,renderer=RENDERER,optimize=True,prefer="fps",output_fps=None):
+def assemble_scene(root,frames,scene,*,tass,cartconv,outdir,stem,hud_text,frame_ticks=4,tass_args=(),colors=True,color_index=1,background_color=0,border_color=0,intro=False,text_overlay=True,ending=False,renderer=RENDERER,optimize=True,prefer="fps",output_fps=None):
     from .renderer_names import implementation
     renderer=implementation(renderer)
     if renderer not in (RENDERER, "yunroll-cart-v5-scene", "yunroll-cart-v6-scene", "yunroll-cart-v7-scene", "yunroll-cart-v8-scene", "yunroll-cart-v9-scene", "yunroll-cart-v10-scene"):
@@ -87,7 +88,7 @@ def assemble_scene(root,frames,scene,*,tass,cartconv,outdir,stem,hud_text,frame_
     optimization = None
     if variant in ("v5", "v6", "v7", "v8", "v9", "v10") and optimize:
         from .optimize import optimize_frames
-        frames, optimization = optimize_frames(frames, color_index<<4)
+        frames, optimization = optimize_frames(frames, hires_screen_byte(color_index,background_color))
     joining = None
     if variant in ("v7", "v8", "v9", "v10") and optimize:
         from .runjoin import join_frames
@@ -109,7 +110,7 @@ def assemble_scene(root,frames,scene,*,tass,cartconv,outdir,stem,hud_text,frame_
     (gen/'hud.inc').write_text(f'; {hud_text}\nHUD_STATIC_LEN = {len(raw_hud)}\nhud_static_bitmap:\n'+'\n'.join(bytes_lines(raw_hud))+'\nhud_static_bitmap_end:\n')
     shutil.copyfile(root/f'c64/cart/easyflash-stream-{variant}-scene-helper.asm',gen/f'cart-{variant}-scene-helper.inc')
     src=(root/f'c64/renderer-{renderer}.asm').read_text()
-    src=src.replace('FRAME_COUNT = 48',f'FRAME_COUNT = {len(frames)}\nFRAME_TICKS = {frame_ticks}',1).replace('COLORS_ENABLED = 0',f'COLORS_ENABLED = {int(colors)}',1).replace('SCREEN_COLOR = $10',f'SCREEN_COLOR = ${color_index:X}0',1)
+    src=src.replace('FRAME_COUNT = 48',f'FRAME_COUNT = {len(frames)}\nFRAME_TICKS = {frame_ticks}',1).replace('COLORS_ENABLED = 0',f'COLORS_ENABLED = {int(colors)}',1)
     if not text_overlay:
         src=src.replace('        jsr init_static_hud','').replace('        jsr init_fps_label','').replace('        jsr maybe_update_fps','')
     if intro:
@@ -145,6 +146,7 @@ scene_continue:
     if variant in ("v8", "v9", "v10"):
         from .bytespan import configure_source
         src = configure_source(src.replace('V9_BYTE_SPANS', 'V8_BYTE_SPANS'), directory).replace('V8_BYTE_SPANS', 'V9_BYTE_SPANS') if variant in ('v9', 'v10') else configure_source(src, directory)
+    src=configure_asm_colors(src,color_index,background_color,border_color)
     if output_fps is not None:
         if variant != 'v10' or not 1 <= output_fps <= 50:
             raise ValueError('output FPS requires V10 and a rate from 1..50')
@@ -173,7 +175,7 @@ scene_continue:
     raw=work/f'{stem}.bin';raw.write_bytes(image)
     crt=outdir/f'{stem}.crt';convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name=scene.name.replace('_',' ')[:32],cwd=root)
     check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=root)
-    manifest=dict(format='c643d-easyflash-stream-scene',version=1,toolkit_version=__version__,renderer=renderer,name=scene.name,frames=len(frames),vertices=len(scene.mesh.vertices),edges=len(scene.mesh.edges),faces=len(scene.mesh.faces),colors=colors,screen_color=color_index<<4,hud_text=hud_text,text_overlay=text_overlay,intro=intro,ending=ending,frame_index_bits=16,frame_ticks=frame_ticks,target_fps=50/frame_ticks,target_duration_seconds=len(frames)*frame_ticks/50,source_fps=scene.source_fps,sample_step=scene.sample_step,source_frames=[f.source_frame for f in scene.frames],directory_ram_bytes=1792,directory_rom_bytes=((len(frames)+255)//256)*1792,frame_buffer_bytes=8192,metadata_cache_bytes=3072,rom_frame_bytes=sum(d['bytes'] for d in directory if 'reference_frame' not in d),data_bank_capacity_bytes=122*8192,run_count_bits=16,frame_data=directory)
+    manifest=dict(format='c643d-easyflash-stream-scene',version=1,toolkit_version=__version__,renderer=renderer,name=scene.name,frames=len(frames),vertices=len(scene.mesh.vertices),edges=len(scene.mesh.edges),faces=len(scene.mesh.faces),colors=colors,screen_color=hires_screen_byte(color_index,background_color),foreground_color=color_index,background_color=background_color,border_color=border_color,hud_text=hud_text,text_overlay=text_overlay,intro=intro,ending=ending,frame_index_bits=16,frame_ticks=frame_ticks,target_fps=50/frame_ticks,target_duration_seconds=len(frames)*frame_ticks/50,source_fps=scene.source_fps,sample_step=scene.sample_step,source_frames=[f.source_frame for f in scene.frames],directory_ram_bytes=1792,directory_rom_bytes=((len(frames)+255)//256)*1792,frame_buffer_bytes=8192,metadata_cache_bytes=3072,rom_frame_bytes=sum(d['bytes'] for d in directory if 'reference_frame' not in d),data_bank_capacity_bytes=122*8192,run_count_bits=16,frame_data=directory)
     if optimization:
         manifest['optimization']=optimization
         if intro: manifest['build_screen']=dict(version=__version__,renderer=('hors-render-v1' if variant == 'v10' else f'yunroll-{variant}')+(' (ram)' if prefer == 'ram' else ''),ticks=None if variant == 'v10' else 150,skip_key='SPACE',wait_for_space=variant == 'v10')
@@ -225,7 +227,7 @@ def cmd_build_cart_scene(a):
     scene=load_scene(export)
     color,_,percell=cli._scene_color_policy(scene.mesh,a)
     print(f'compiling {len(scene.frames)} authored scene samples with {a.renderer} kernels...',flush=True)
-    frames,_=build_scene_frames(scene,visibility_mode='surface' if a.visibility=='auto' else a.visibility,z_tolerance=0.0008 if a.z_tolerance is None else a.z_tolerance,feature_angle=40 if a.feature_angle is None else a.feature_angle,enable_source_colors=percell,fallback_color=c64_color_index(color),height=192,max_frames=MAX_SCENE_FRAMES,max_visible_runs=65535)
+    frames,_=build_scene_frames(scene,visibility_mode='surface' if a.visibility=='auto' else a.visibility,z_tolerance=0.0008 if a.z_tolerance is None else a.z_tolerance,feature_angle=40 if a.feature_angle is None else a.feature_angle,enable_source_colors=percell,fallback_color=c64_color_index(color),background_color=c64_color_index(getattr(a,"background_color",0)),height=192,max_frames=MAX_SCENE_FRAMES,max_visible_runs=65535)
     builder=assemble_scene
     beta_options={}
     if getattr(a,'public_renderer','').startswith('hors-render-v2-beta1'):
@@ -234,7 +236,7 @@ def cmd_build_cart_scene(a):
     if getattr(a,'public_renderer','') in ('hors-render-v2','hors-render-v2-scene'):
         from .hors_v2_stable import assemble_scene as builder
         beta_options=dict(draw_gap=getattr(a,'v2_draw_gap',6),batch_budget=getattr(a,'v2_batch_budget',2048))
-    crt,_=builder(cli.ROOT,frames,scene,tass=tass,cartconv=cartconv,outdir=outdir,stem=stem,hud_text=a.hud_text or scene.name[:31],frame_ticks=a.frame_ticks,tass_args=a.tass_args or (),colors=percell,color_index=c64_color_index(color),intro=a.intro,text_overlay=a.text_overlay,ending=a.ending,renderer=a.renderer,prefer=getattr(a,"prefer","fps"),output_fps=rate,**beta_options)
+    crt,_=builder(cli.ROOT,frames,scene,tass=tass,cartconv=cartconv,outdir=outdir,stem=stem,hud_text=a.hud_text or scene.name[:31],frame_ticks=a.frame_ticks,tass_args=a.tass_args or (),colors=percell,color_index=c64_color_index(color),background_color=c64_color_index(getattr(a,"background_color",0)),border_color=c64_color_index(getattr(a,"border_color",0)),intro=a.intro,text_overlay=a.text_overlay,ending=a.ending,renderer=a.renderer,prefer=getattr(a,"prefer","fps"),output_fps=rate,**beta_options)
     if a.run:
         vice=cli.resolve_executable(a.vice,'vice')
         if not vice:raise ValueError('VICE not found')

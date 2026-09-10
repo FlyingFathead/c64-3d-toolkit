@@ -1,6 +1,6 @@
 <#
  c64-3d-toolkit Windows installer / configuration assistant
- Installer revision: r24 (2026-09-02)
+ Installer revision: r25 (2026-09-10)
  Target toolkit release: read from VERSION
 
  Security model:
@@ -8,6 +8,8 @@
    WinGet `winget` source before any new WinGet install is attempted.
  - Existing WinGet packages are kept by default; the user may explicitly request
    an upgrade or same-version force-reinstall/repair attempt through WinGet.
+ - A new VICE installation requires an explicit Y/YES response; declining
+   offers an existing executable path or explains how to install it later.
  - If WinGet package-status lookup fails, setup treats the status as UNKNOWN and
    does not assume the component is absent or install a duplicate solely on that basis.
  - 64tass is NEVER downloaded or installed automatically by this script.
@@ -35,7 +37,7 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-$InstallerRevision = 'r24'
+$InstallerRevision = 'r25'
 $ToolkitRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $TargetRelease = (Get-Content -LiteralPath (Join-Path $ToolkitRoot 'VERSION') -Raw).Trim()
 if ($TargetRelease -notmatch '^[0-9]+\.[0-9]+\.[0-9]+(?:[-+][0-9A-Za-z.-]+)?$') {
@@ -542,6 +544,7 @@ function Show-InstallerHelp {
     Write-Host ''
     Write-Host 'What setup manages:'
     Write-Host '  - Python 3, Git and VICE: exact WinGet package detection plus install/upgrade/reinstall support.'
+    Write-Host '  - A new VICE installation requires Y/YES. N/NO (default) lets you select an existing copy or install it yourself later.'
     Write-Host '  - Blender: optional but highly recommended; if absent, setup asks before installing BlenderFoundation.Blender.'
     Write-Host '  - 64tass: manual acquisition only; setup never downloads or executes it.'
     Write-Host '    64tass is REQUIRED to assemble generated data into a runnable .prg; only --no-assemble works without it.'
@@ -871,6 +874,25 @@ function Request-BlenderInstall {
         if (($answer -eq '') -or ($answer -ieq 'y') -or ($answer -ieq 'yes')) { return $true }
         if (($answer -ieq 'n') -or ($answer -ieq 'no') -or ($answer -ieq 'skip')) { return $false }
         Write-Host 'Please enter Y or N.' -ForegroundColor Yellow
+    }
+}
+
+function Request-ViceInstall {
+    Write-Host ''
+    Write-Host 'VICE was not found. It provides the C64 emulator and the cartconv cartridge-building utility.' -ForegroundColor Cyan
+    Write-Host "Install VICE now through WinGet package $($KnownLocations.VICE.PreferredWingetId)?"
+    Write-Host 'If you decline, select an existing x64sc.exe below or install VICE yourself later.'
+    while ($true) {
+        Write-Host '  Y / YES = install VICE'
+        Write-Host '  N / NO  = do not install; select an existing copy or skip (default)'
+        Write-Host '  Q / QUIT = show the session summary, then quit'
+        $answer = Read-Host 'Choice [N]'
+        if ($null -eq $answer) { $answer = '' }
+        $answer = $answer.Trim()
+        if (($answer -ieq 'y') -or ($answer -ieq 'yes')) { return 'Install' }
+        if (($answer -eq '') -or ($answer -ieq 'n') -or ($answer -ieq 'no') -or ($answer -ieq 'skip')) { return 'Manual' }
+        if (($answer -ieq 'q') -or ($answer -ieq 'quit') -or ($answer -ieq 'cancel') -or ($answer -ieq 'exit')) { return 'Quit' }
+        Write-Host 'Please enter Y, N or Q.' -ForegroundColor Yellow
     }
 }
 
@@ -2203,15 +2225,32 @@ try {
             Write-Host 'VICE was not found on disk, but at least one VICE WinGet package-state lookup is UNKNOWN.' -ForegroundColor Yellow
             Write-Host 'Automatic VICE installation is skipped to avoid installing a duplicate when WinGet/source access may simply be blocked.'
         }
+        elseif (-not $winget) {
+            $viceAction = 'not found; WinGet unavailable, manual installation required'
+            Write-Host 'WinGet is unavailable. Select an existing VICE copy below or install VICE yourself later.' -ForegroundColor Yellow
+        }
         else {
-            try {
-                Install-WinGetPackage -Id $KnownLocations.VICE.PreferredWingetId -Label 'VICE GTK3'
-                $viceAction = 'installed through WinGet'
-                $vice = Find-Vice -ConfiguredPath $viceConfiguredCandidate
+            $viceInstallChoice = Request-ViceInstall
+            if ($viceInstallChoice -eq 'Quit') {
+                Invoke-QuitWithSummary -PythonExe $python -GitExe $git -ViceExe $vice -TassExe $tass `
+                    -PythonAction $pythonAction -GitAction $gitAction -ViceAction $viceAction -TassAction $tassAction `
+                    -OriginalConfig $existingConfig
+                exit 3
             }
-            catch {
-                $viceAction = 'automatic WinGet install failed'
-                Write-Host "VICE automatic installation failed: $($_.Exception.Message)" -ForegroundColor Yellow
+            elseif ($viceInstallChoice -eq 'Install') {
+                try {
+                    Install-WinGetPackage -Id $KnownLocations.VICE.PreferredWingetId -Label 'VICE GTK3'
+                    $viceAction = 'installed through WinGet with user approval'
+                    $vice = Find-Vice -ConfiguredPath $viceConfiguredCandidate
+                }
+                catch {
+                    $viceAction = 'user-approved WinGet install failed'
+                    Write-Host "VICE installation failed: $($_.Exception.Message)" -ForegroundColor Yellow
+                }
+            }
+            else {
+                $viceAction = 'installation declined; manual/existing path selection pending'
+                Write-Host 'VICE will not be installed by setup. Select an existing copy below or install it yourself later.' -ForegroundColor Yellow
             }
         }
     }
@@ -2235,6 +2274,10 @@ try {
     }
     else {
         Write-Host 'VICE skipped for now.' -ForegroundColor Yellow
+        Write-Host 'To use --run or VICE-based tests, you must install VICE yourself or configure an existing x64sc.exe.' -ForegroundColor Yellow
+        Write-Host 'Building .crt files also requires cartconv, supplied with VICE. Prebuilt .crt files need no build.'
+        Write-Host 'After installing VICE, rerun setup or use:'
+        Write-Host '  .\setup-windows.cmd -VicePath "C:\path\to\VICE\bin\x64sc.exe"'
     }
 
     Write-Section '64tass'

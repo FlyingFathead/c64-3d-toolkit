@@ -177,6 +177,12 @@ on `PATH`, configure its exact path (or the containing VICE directory) in the
 
 ## Render/build defaults (v0.7.2)
 
+Since 0.7.3, `[render_defaults]` also accepts `foreground_color = auto`,
+`background_color = black` and `border_color = black`. Each colour accepts the
+same names, indices and RGB formats as the CLI. Border selection is independent
+of the background. CLI overrides: `--foreground-color` (also `--color`),
+`--background-color`, `--border-color`. See [Output colours](OUTPUT_COLORS.md).
+
 The default renderer is hors-render-v2 for `build`, `cart-stream` and
 `cart-demos`; authored inputs select hors-render-v2-scene. Explicit
 `--renderer step|bytechunk|yunroll` selects resident PRG output. The following

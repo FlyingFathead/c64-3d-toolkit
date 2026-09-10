@@ -1,8 +1,8 @@
-> Current default: **hors-render-v2**. [Release build and example migration](RELEASE_0.7.2.md).
+> Current default: **hors-render-v2**. [Release notes and installation](RELEASE_0.7.3.md).
 
 # Windows setup
 
-`c64-3d-toolkit` v0.7.2 includes a Windows 11 setup helper with optional Blender support. Cartridge `.crt` builds also use the `cartconv` utility supplied with VICE; its path can be set in `config/c643d.ini` or with `--cartconv` when automatic discovery is not sufficient.
+`c64-3d-toolkit` v0.7.3 includes a Windows 11 setup helper with optional Blender support. Cartridge `.crt` builds also use the `cartconv` utility supplied with VICE; its path can be set in `config/c643d.ini` or with `--cartconv` when automatic discovery is not sufficient.
 
 ## First-time bootstrap on Windows 11
 
@@ -33,13 +33,21 @@ checkout and release ZIP; there is no separate installer version constant.
 
 ## What the installer does
 
-The installer first detects existing tools. When Python, Git, or VICE is missing, it may install the missing component through Microsoft's WinGet `winget` source. It also detects optional Blender and asks before installing it when absent:
+The installer first detects existing tools. When Python or Git is missing, it may install the missing component through Microsoft's WinGet `winget` source. A new VICE installation requires an explicit **Y/YES** response. It also detects optional Blender and asks before installing it when absent:
 
 - Python: `Python.Python.3.13`
 - Git: `Git.Git`
 - VICE (preferred): `VICE-Team.VICE.GTK3`
 - VICE (also recognized): `VICE-Team.VICE.SDL2`
 - Blender (optional, highly recommended): `BlenderFoundation.Blender`
+
+For VICE, **N/NO or Enter declines installation**. You can then select an existing
+`x64sc.exe` or skip VICE and continue setup. **Q/QUIT** opens the usual session
+summary before exiting. If VICE remains unconfigured, setup explains that you
+must install/configure it yourself before using `--run` or VICE-based tests.
+Cartridge builds also require its `cartconv` utility. Existing installations
+keep their usual keep/upgrade/reinstall choices. Missing WinGet or an unknown
+package state leads to manual selection without an installation attempt.
 
 Blender is optional for procedural, OBJ, and SVG workflows but highly
 recommended because it enables authored multi-object animation and camera
@@ -149,6 +157,26 @@ py -3 .\c643d.py doctor
 ```
 
 That command will execute the configured dependency binaries.
+
+### Building from PowerShell or Command Prompt
+
+Use the Python entry point directly:
+
+```powershell
+py -3 .\c643d.py build --shape torus
+```
+
+`build.sh` is a Bash wrapper, not a PowerShell or batch script. Git Bash can
+run it if Python 3 is available there and the script retains LF line endings.
+A CRLF-converted copy produces Bash syntax errors. Windows users do not need
+that wrapper to use the toolkit.
+
+### Playing prebuilt cartridges
+
+The `.crt` files under `examples/` are ready to run. They do not require setup,
+Python, an assembler or a rebuild. Open them as cartridge images in VICE's
+C64 emulator, `x64sc.exe`; press SPACE when a start screen asks for it.
+Setup changes dependency paths, not the contents of these cartridges.
 
 ## Installer help and adding 64tass later
 

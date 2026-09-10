@@ -1,9 +1,14 @@
-# Examples — hors-render-v2 / toolkit 0.7.2
+# Examples — hors-render-v2 / toolkit 0.7.3
+
+[COLOR COMBO TEST](color_combo_test/README.md) is new in 0.7.3. Demo Cart 1 and
+Demo Cart 2.0 are rebuilt with runtime colour controls. Other prebuilt
+cartridges retain their 0.7.2 bytes and build identities.
 
 All active prebuilt cartridges use **hors-render-v2**. Older CRT and PRG previews are archived outside this checkout; original renderer code and frozen test inputs remain available.
 
 | Folder | Stable cartridges |
 | --- | ---: |
+| [color_combo_test](color_combo_test/README.md) | 1 |
 | [blender_falling_cubes](blender_falling_cubes/README.md) | 2 |
 | [cart_demos](cart_demos/README.md) | 2 |
 | [cart_demos_v2](cart_demos_v2/README.md) | 1 |
@@ -20,6 +25,6 @@ All active prebuilt cartridges use **hors-render-v2**. Older CRT and PRG preview
 | [torus](torus/README.md) | 1 |
 | [torus_dense](torus_dense/README.md) | 1 |
 
-Sources remain in the Blender and autotune folders. Use [COMPILE-RELEASE.sh](../docs/RELEASE_0.7.2.md) to rebuild and verify the complete release.
+Sources remain in the Blender and autotune folders. Use [COMPILE-RELEASE.sh](../docs/RELEASE_0.7.3.md#rebuild-and-validate) to rebuild and verify the complete release.
 
 `examples.json` remains the explicit resident regression recipe used by `generate-examples` / `test-examples`. For current v2 artifacts use `tools/build_current_examples.py` or the complete release compiler above.

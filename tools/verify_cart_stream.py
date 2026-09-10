@@ -69,6 +69,7 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None,oracle_
         from c643d.cartframes import load_menu_reference
         reel_hud = next((d.hud for d in load_menu_reference(root) if d.name == entry['name']), b'')
     oracle_file=Path(oracle_path) if oracle_path else work/'oracle.json'
+    border=(entry if menu_entry is not None and manifest.get('uniform_renderer') else manifest).get('border_color')
     frames=json.loads(oracle_file.read_text());n=len(frames);finite=manifest.get('ending',False) or (bool(manifest.get('reel')) and menu_entry == 0);count=n if finite else n*cycles+3
     # publish_wait can revisit the publication entry on very cheap frames.
     # Stop at the once-per-frame call site, before the handoff wait instead.
@@ -78,7 +79,7 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None,oracle_
         if menu is not None:
             startup,menu_go=startup_monitor(manifest,menu)
             mon += startup
-            mon += [f'break ${menu["menu_launch_nowait" if manifest.get("reel") else "menu_wait_key"]:04x}',menu_go,'delete',f'> ${menu["selected_entry"]:04x} ${menu_entry:02x}',f'break ${completed:04x}']
+            mon += [f'break ${menu["menu_launch_nowait" if manifest.get("reel") or manifest.get("color_combo_test") else "menu_wait_key"]:04x}',menu_go,'delete',f'> ${menu["selected_entry"]:04x} ${menu_entry:02x}',f'break ${completed:04x}']
             first_go=f'g ${menu["menu_launch_nowait"]:04x}'
             if manifest.get('reel'):
                 # Pixel coverage is independent of the wall-clock reel test.
@@ -89,7 +90,10 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None,oracle_
         else:
             startup,first_go=startup_monitor(manifest,sym)
             mon += startup+[f'break ${completed:04x}']
-        for i in range(count):mon += [first_go if i==0 else 'g','bank ram',f'bsave "{td/f"frame-{i:04d}.ram"}" 0 $0000 $ffff','stopwatch']
+        for i in range(count):
+            mon += [first_go if i==0 else 'g','bank ram',f'bsave "{td/f"frame-{i:04d}.ram"}" 0 $0000 $ffff','stopwatch']
+            if border is not None:
+                mon += ['bank cpu',f'bsave "{td/f"frame-{i:04d}.vic"}" 0 $d020 $d021','bank ram']
         mon += ['quit'];(td/'run.mon').write_text('\n'.join(mon)+'\n')
         cmd=[vice,'-console', '+easyflashcrtwrite','-pal','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(td/'run.mon'),'-monlog','-monlogname',str(td/'monitor.log'),'-limitcycles',str(count*1000000+2000000)]
         if vice_data:cmd+=['-directory',str(vice_data)]
@@ -105,6 +109,9 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None,oracle_
         slot_counts={};images=[];reused=0
         for i in range(count):
             ram=(td/f'frame-{i:04d}.ram').read_bytes();fi=ram[sym['frame_index']];slot=ram[sym['render_slot']]
+            if border is not None:
+                vic=(td/f'frame-{i:04d}.vic').read_bytes()
+                assert vic[0]&15 == border, ('border colour mismatch',i,vic[0]&15,border)
             if manifest.get('frame_index_bits')==16:fi+=ram[sym['frame_index_hi']]<<8
             assert fi==i%n,(i,fi)
             slot_counts[slot]=slot_counts.get(slot,0)+1
@@ -128,6 +135,7 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None,oracle_
         assert set(slot_counts)=={0,1,2} or reused>0,slot_counts
         delta=[b-a for a,b in zip(ticks,ticks[1:])];clock=985248
         result=dict(cartridge=crt.name,menu_entry=menu_entry,verified_frames=count,orientations=n,bitmap_bytes_checked=count*7680,color_bytes_checked=count*960,slots=slot_counts,average_fps=clock*(count-1)/(ticks[-1]-ticks[0]),min_frame_cycles=min(delta),max_frame_cycles=max(delta),pixel_match=True,color_match=True,reused_samples=reused)
+        if border is not None:result.update(border_match=True,border_color=border)
         if manifest.get('frame_index_bits')==16:
             result.update(loop_seconds=(ticks[2*n]-ticks[n])/clock if cycles>=2 and not finite else None, target_fps=manifest['target_fps'], hud_match=True, text_overlay=manifest.get('text_overlay',True), frame_index_bits=16)
         if capture and images:

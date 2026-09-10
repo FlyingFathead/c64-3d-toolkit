@@ -26,6 +26,9 @@ class ToolchainSettings:
     viewport_height: Optional[int] = None
     overwrite_policy: str = 'warn'
     rastertime_profiler: bool = False
+    foreground_color: Optional[str] = None
+    background_color: str = "black"
+    border_color: str = "black"
 
 
 def platform_key(system: Optional[str] = None) -> str:
@@ -69,6 +72,7 @@ def load_toolchain_settings(path: Optional[Path], *, system: Optional[str] = Non
         'viewport_height':None,
         'overwrite_policy':'warn',
         'rastertime_profiler':False,
+        'foreground_color':None, 'background_color':'black', 'border_color':'black',
     }
     loaded=None
     if path is not None:
@@ -88,6 +92,14 @@ def load_toolchain_settings(path: Optional[Path], *, system: Optional[str] = Non
                         values[key]=split_args(raw,windows=(pkey=='windows'))
             if cfg.has_section('render_defaults'):
                 section=cfg['render_defaults']
+                from .colors import c64_color_index, c64_color_name
+                for key in ('foreground_color','background_color','border_color'):
+                    if key in section:
+                        raw=section.get(key,raw=True).strip()
+                        if key=='foreground_color' and raw.lower() in ('','auto'):
+                            values[key]=None
+                        else:
+                            values[key]=c64_color_name(c64_color_index(raw))
                 if 'text_overlay' in section:
                     values['text_overlay']=section.getboolean('text_overlay')
                 if 'rastertime_profiler' in section:
@@ -115,6 +127,7 @@ def load_toolchain_settings(path: Optional[Path], *, system: Optional[str] = Non
         config_path=loaded, platform_key=pkey,
         text_overlay=bool(values['text_overlay']), viewport_height=values['viewport_height'],
         overwrite_policy=str(values['overwrite_policy']), rastertime_profiler=bool(values['rastertime_profiler']),
+        foreground_color=values['foreground_color'],background_color=values['background_color'],border_color=values['border_color'],
     )
 
 

@@ -1,7 +1,7 @@
 {
-  "version": "0.7.2",
+  "version": "0.7.3",
   "renderer": "hors-render-v2",
-  "cartridges": 19,
+  "cartridges": 22,
   "files": [
     {
       "path": "examples/blender_falling_cubes/falling_cubes_c64-hors-render-v2-manifest.json",
@@ -36,6 +36,14 @@
       "sha256": "153073c912ac0b3b6d2c4b15297a663751346ffabedbb93e2ecc72c8b02ecac7"
     },
     {
+      "path": "examples/cart_demos/c643d-demo-v0.7.3-hors-render-v2-all-ram.crt",
+      "sha256": "e3f1c4a7a2d59bb0978d597f425d8643f261f7c0fbc3a7ab6e706804767b58ab"
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.3-hors-render-v2-all.crt",
+      "sha256": "384ac27ca491e0ce4c04983f0a02707fb39b0ab080568bab0d54913cd0f1c780"
+    },
+    {
       "path": "examples/cart_demos/metadata/c643d-demo-v0.7.2-hors-render-v2-all-cart-manifest.json",
       "sha256": "8d1a31ce787a8532f1c62781b23f3d8b7fc06754640691a99790a8865cd51d24"
     },
@@ -52,12 +60,28 @@
       "sha256": "e34c31fafd1a7f27a00fe7db98cde1c9456d0d01a5a074f75dfa52f177a58833"
     },
     {
+      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.3-hors-render-v2-all-cart-manifest.json",
+      "sha256": "c4760f4183224b7ee17611320cea9b2fb123399e5162daec7662eba79dff2a3f"
+    },
+    {
+      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.3-hors-render-v2-all-cart-map.txt",
+      "sha256": "e34c31fafd1a7f27a00fe7db98cde1c9456d0d01a5a074f75dfa52f177a58833"
+    },
+    {
+      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.3-hors-render-v2-all-ram-cart-manifest.json",
+      "sha256": "27ae24c97759a9483cd913078d1b8a17dad31f9a71b0a43401236dccc4825c94"
+    },
+    {
+      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.3-hors-render-v2-all-ram-cart-map.txt",
+      "sha256": "e34c31fafd1a7f27a00fe7db98cde1c9456d0d01a5a074f75dfa52f177a58833"
+    },
+    {
       "path": "examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt",
-      "sha256": "0f6e6cc97133ee93c83509783d8b960d57a3acf5b118a3bbc7cd73611fe090b3"
+      "sha256": "35cac536294e32cc912eadff7efd496584a63dbf0192d6c1ce003c17f83c13fa"
     },
     {
       "path": "examples/cart_demos_v2/metadata/demo-cart-2-preview-hors-v2-cart-manifest.json",
-      "sha256": "8c6546c29cc498c5a91d4d24564383242eb06c8829389388dfffe7e5c6a74065"
+      "sha256": "3102101dc5e07fed461dd6fe07eff778efd702fb4a4d5d353ecffa37c4013a82"
     },
     {
       "path": "examples/cart_demos_v2/metadata/demo-cart-2-preview-hors-v2-cart-map.txt",
@@ -110,6 +134,18 @@
     {
       "path": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.lbl",
       "sha256": "756134fdab87bb753f63fa0e1ac81c76692f1fe175aef07373188cf12bd228bb"
+    },
+    {
+      "path": "examples/color_combo_test/color-combo-test.crt",
+      "sha256": "f5ede2bfd4771f2d6667de5f20e6cc9349d95723d572cc8da04e3b4a3aabda53"
+    },
+    {
+      "path": "examples/color_combo_test/metadata/color-combo-test-cart-manifest.json",
+      "sha256": "82ffbeac34bdd4acfe0625c15aa0b7e52df85ac380525fe8b5678fce99e8c347"
+    },
+    {
+      "path": "examples/color_combo_test/metadata/color-combo-test-cart-map.txt",
+      "sha256": "8b7c25ec6e0650fe6e29805a7e64ba223d6b09e0534faa85c0a30f0b4448140b"
     },
     {
       "path": "examples/cube/cube-hors-render-v2-manifest.json",
@@ -231,5 +267,6 @@
       "path": "examples/torus_dense/torus_dense-hors-render-v2.lbl",
       "sha256": "19070c5f1a44191a72bd6b1290ce485d784680b30c6669fc00956c9deb691141"
     }
-  ]
+  ],
+  "note": "Packaged examples, including preserved 0.7.2 binaries; new colour controls are in the 0.7.3 demo carts and Color Combo Test."
 }

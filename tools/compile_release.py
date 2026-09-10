@@ -70,12 +70,21 @@ def main():
             if proc.wait():raise RuntimeError(label+' failed; see '+str(logs/(label+'.log')))
     run('build-examples',[sys.executable,'tools/build_hors_v2_examples.py','--tass',a.tass,'--cartconv',a.cartconv])
     run('build-showcase',[sys.executable,'tools/build_demo_cart_v2.py','--tass',a.tass,'--cartconv',a.cartconv])
+    run('build-color-combos',[sys.executable,'c643d.py','color-combo-test','--tass',a.tass,'--cartconv',a.cartconv,'--overwrite-policy','allow'])
     run('index-examples',[sys.executable,'tools/index_release_examples.py'])
     run('archive-prebuilt',[sys.executable,'tools/cleanup_examples.py','--apply','--archive',str(work/'old-examples')])
     run('verify-release',[sys.executable,'tools/verify_hors_v2_release.py','--out',str(work/'example-checks'),
         '--vice',wrapper,'--vice-data',env['VICE_DATA'],'--jobs',str(a.jobs)])
     run('verify-version',[sys.executable,'tools/verify_release_version.py','--out',str(work/'version-checks'),
         '--tass',a.tass,'--cartconv',a.cartconv,'--vice',wrapper,'--vice-data',env['VICE_DATA']])
+    run('verify-color-combos',[sys.executable,'tools/verify_color_combos.py',str(stage/'examples/color_combo_test/color-combo-test.crt'),
+        '--vice',wrapper,'--vice-data',env['VICE_DATA'],'--report',str(work/'color-combo-checks.json')])
+    version=(stage/'VERSION').read_text().strip()
+    for label,cart in (
+        ('demo1',f'examples/cart_demos/c643d-demo-v{version}-hors-render-v2-all.crt'),
+        ('demo2','examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt')):
+        run('verify-'+label+'-colors',[sys.executable,'tools/verify_demo_colors.py',cart,
+            '--vice',wrapper,'--vice-data',env['VICE_DATA'],'--report',str(work/(label+'-color-checks.json'))])
     run('all-checks',['bash','RUN-CHECKS.sh',str(work/'checks')])
     run('release-report',[sys.executable,'tools/report_hors_v2_release.py',str(work)])
     version=(stage/'VERSION').read_text().strip()

@@ -59,6 +59,13 @@ vice_args = +VICIIfull
 # Command-line switches always override these values.
 [render_defaults]
 
+# Output colours: C64 names, palette indices 0..15, 0x/$/0b/% indices,
+# #RGB/#RRGGBB or rgb(r,g,b). RGB values map to the nearest C64 colour.
+# auto preserves source/preset foreground colours. Border is independent.
+foreground_color = auto
+background_color = black
+border_color = black
+
 # true  = production renderer with HUD/FPS; auto viewport = 192 lines
 # false = separate no-overlay ASM variant; auto viewport = full 200 lines
 text_overlay = true

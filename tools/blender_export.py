@@ -18,7 +18,7 @@ import bpy
 # own Python, so add the toolkit root containing the ``tools`` package.
 TOOLKIT_ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(TOOLKIT_ROOT))
-from tools.c643d.colors import nearest_c64_color_index
+from tools.c643d.colors import nearest_c64_color_index, c64_color_index
 from tools.c643d.blender import blender_frame_plan, output_frame_plan
 
 
@@ -44,10 +44,10 @@ def _nearest_c64(rgb):
 def _property_color(obj,material):
     for owner in (material,obj):
         if owner is not None and 'c643d_color' in owner:
-            value=int(owner['c643d_color'])
-            if not 0<=value<=15:
-                raise RuntimeError(f'{owner.name}: c643d_color must be 0..15')
-            return value
+            try:
+                return c64_color_index(owner['c643d_color'])
+            except ValueError as exc:
+                raise RuntimeError(f'{owner.name}: invalid c643d_color: {exc}') from exc
     if material is None:
         return None
     return _nearest_c64(material.diffuse_color)

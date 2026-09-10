@@ -1,0 +1,230 @@
+[
+  {
+    "cartridge": "c643d-demo-v0.7.2-hors-render-v2-all.crt",
+    "menu_entry": 0,
+    "verified_frames": 67,
+    "orientations": 32,
+    "bitmap_bytes_checked": 514560,
+    "color_bytes_checked": 64320,
+    "slots": {
+      "1": 23,
+      "2": 22,
+      "0": 22
+    },
+    "average_fps": 17.72256732389821,
+    "min_frame_cycles": 42397,
+    "max_frame_cycles": 66484,
+    "pixel_match": true,
+    "color_match": true,
+    "reused_samples": 0
+  },
+  {
+    "cartridge": "c643d-demo-v0.7.2-hors-render-v2-all.crt",
+    "menu_entry": 1,
+    "verified_frames": 67,
+    "orientations": 32,
+    "bitmap_bytes_checked": 514560,
+    "color_bytes_checked": 64320,
+    "slots": {
+      "1": 23,
+      "2": 22,
+      "0": 22
+    },
+    "average_fps": 17.21037370008501,
+    "min_frame_cycles": 41779,
+    "max_frame_cycles": 68388,
+    "pixel_match": true,
+    "color_match": true,
+    "reused_samples": 0
+  },
+  {
+    "cartridge": "c643d-demo-v0.7.2-hors-render-v2-all.crt",
+    "menu_entry": 2,
+    "verified_frames": 75,
+    "orientations": 36,
+    "bitmap_bytes_checked": 576000,
+    "color_bytes_checked": 72000,
+    "slots": {
+      "1": 25,
+      "2": 25,
+      "0": 25
+    },
+    "average_fps": 30.328084832370212,
+    "min_frame_cycles": 19894,
+    "max_frame_cycles": 37550,
+    "pixel_match": true,
+    "color_match": true,
+    "reused_samples": 0
+  },
+  {
+    "cartridge": "c643d-demo-v0.7.2-hors-render-v2-all.crt",
+    "menu_entry": 3,
+    "verified_frames": 51,
+    "orientations": 24,
+    "bitmap_bytes_checked": 391680,
+    "color_bytes_checked": 48960,
+    "slots": {
+      "1": 17,
+      "2": 17,
+      "0": 17
+    },
+    "average_fps": 17.549189484963865,
+    "min_frame_cycles": 39054,
+    "max_frame_cycles": 58218,
+    "pixel_match": true,
+    "color_match": true,
+    "reused_samples": 0
+  },
+  {
+    "cartridge": "c643d-demo-v0.7.2-hors-render-v2-all.crt",
+    "menu_entry": 4,
+    "verified_frames": 67,
+    "orientations": 32,
+    "bitmap_bytes_checked": 514560,
+    "color_bytes_checked": 64320,
+    "slots": {
+      "1": 23,
+      "2": 22,
+      "0": 22
+    },
+    "average_fps": 29.573961090081685,
+    "min_frame_cycles": 21666,
+    "max_frame_cycles": 40655,
+    "pixel_match": true,
+    "color_match": true,
+    "reused_samples": 0
+  },
+  {
+    "cartridge": "c643d-demo-v0.7.2-hors-render-v2-all.crt",
+    "menu_entry": 5,
+    "verified_frames": 59,
+    "orientations": 28,
+    "bitmap_bytes_checked": 453120,
+    "color_bytes_checked": 56640,
+    "slots": {
+      "1": 20,
+      "2": 20,
+      "0": 19
+    },
+    "average_fps": 28.852493979006045,
+    "min_frame_cycles": 22995,
+    "max_frame_cycles": 44530,
+    "pixel_match": true,
+    "color_match": true,
+    "reused_samples": 0
+  },
+  {
+    "cartridge": "c643d-demo-v0.7.2-hors-render-v2-all.crt",
+    "menu_entry": 6,
+    "verified_frames": 43,
+    "orientations": 20,
+    "bitmap_bytes_checked": 330240,
+    "color_bytes_checked": 41280,
+    "slots": {
+      "1": 15,
+      "2": 14,
+      "0": 14
+    },
+    "average_fps": 20.96528299554302,
+    "min_frame_cycles": 35721,
+    "max_frame_cycles": 58776,
+    "pixel_match": true,
+    "color_match": true,
+    "reused_samples": 0
+  },
+  {
+    "cartridge": "c643d-demo-v0.7.2-hors-render-v2-all.crt",
+    "menu_entry": 7,
+    "verified_frames": 51,
+    "orientations": 24,
+    "bitmap_bytes_checked": 391680,
+    "color_bytes_checked": 48960,
+    "slots": {
+      "1": 17,
+      "2": 17,
+      "0": 17
+    },
+    "average_fps": 19.070573556527403,
+    "min_frame_cycles": 25548,
+    "max_frame_cycles": 66624,
+    "pixel_match": true,
+    "color_match": true,
+    "reused_samples": 0
+  },
+  {
+    "cartridge": "c643d-demo-v0.7.2-hors-render-v2-all.crt",
+    "menu_entry": 8,
+    "verified_frames": 67,
+    "orientations": 32,
+    "bitmap_bytes_checked": 514560,
+    "color_bytes_checked": 64320,
+    "slots": {
+      "1": 23,
+      "2": 22,
+      "0": 22
+    },
+    "average_fps": 37.824368327433184,
+    "min_frame_cycles": 14439,
+    "max_frame_cycles": 46718,
+    "pixel_match": true,
+    "color_match": true,
+    "reused_samples": 0
+  },
+  {
+    "cartridge": "c643d-demo-v0.7.2-hors-render-v2-all.crt",
+    "menu_entry": 9,
+    "verified_frames": 39,
+    "orientations": 18,
+    "bitmap_bytes_checked": 299520,
+    "color_bytes_checked": 37440,
+    "slots": {
+      "1": 13,
+      "2": 13,
+      "0": 13
+    },
+    "average_fps": 21.493267750302255,
+    "min_frame_cycles": 22556,
+    "max_frame_cycles": 56603,
+    "pixel_match": true,
+    "color_match": true,
+    "reused_samples": 0
+  },
+  {
+    "cartridge": "c643d-demo-v0.7.2-hors-render-v2-all.crt",
+    "menu_entry": 10,
+    "verified_frames": 259,
+    "orientations": 128,
+    "bitmap_bytes_checked": 1989120,
+    "color_bytes_checked": 248640,
+    "slots": {
+      "1": 87,
+      "2": 86,
+      "0": 86
+    },
+    "average_fps": 21.269168873750772,
+    "min_frame_cycles": 31824,
+    "max_frame_cycles": 54064,
+    "pixel_match": true,
+    "color_match": true,
+    "reused_samples": 0
+  },
+  {
+    "cartridge": "c643d-demo-v0.7.2-hors-render-v2-all.crt",
+    "menu_entry": 11,
+    "verified_frames": 259,
+    "orientations": 128,
+    "bitmap_bytes_checked": 1989120,
+    "color_bytes_checked": 248640,
+    "slots": {
+      "1": 87,
+      "2": 86,
+      "0": 86
+    },
+    "average_fps": 20.60097797798966,
+    "min_frame_cycles": 27340,
+    "max_frame_cycles": 59357,
+    "pixel_match": true,
+    "color_match": true,
+    "reused_samples": 0
+  }
+]

@@ -8,6 +8,7 @@ from pathlib import Path
 import subprocess
 import sys
 from c643d.cartpaths import menu_manifest_path
+from c643d.released_examples import is_current_v2_example
 from verify_cart_stream import verify
 from verify_cart_ending import verify as verify_ending
 from verify_hifi_reel import verify as verify_reel
@@ -23,7 +24,7 @@ def main():
     a=p.parse_args();a.out=a.out.resolve();a.out.mkdir(parents=True,exist_ok=True)
     if a.jobs<1:p.error('--jobs must be positive')
     carts=sorted(p for p in (ROOT/'examples').rglob('*.crt') if
-        ('hors-render-v2' in p.name or 'hors-v2' in p.name) and 'beta' not in p.name)
+        is_current_v2_example(p,(ROOT/'VERSION').read_text().strip()))
     if len(carts)<19:raise ValueError('Release is missing stable v2 examples')
     jobs=[]
     for crt in carts:

@@ -4,7 +4,7 @@
   "diagnostic_only": true,
   "profile": {
     "cartridge": "marbles-hud-v6.crt",
-    "sha256": "db7494927f8ac42958f1641856df0ca87ffa460b66797d3dbcf986fc5ee1bcbf",
+    "sha256": "678ad9efabc1c3adcb9c994965688de57e30d4e2af6364d5d1c38a780fbf1060",
     "renderer": "yunroll-cart-v6-scene",
     "menu_entry": null,
     "frames": 200,
@@ -3252,6 +3252,8 @@
     "pixel_match": true,
     "color_match": true,
     "reused_samples": 0,
+    "border_match": true,
+    "border_color": 0,
     "display_interval_cycles": [
       137602,
       137590,

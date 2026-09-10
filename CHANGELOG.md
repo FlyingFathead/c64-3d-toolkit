@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.7.3 (2026-09-10): independent output colours and COLOR COMBO TEST
+
+- Windows setup r25 asks before a new VICE installation; declining offers an existing path or manual installation later and explains the effect on running/tests and cartridge builds. Clarify the native Python build command and direct use of prebuilt cartridges.
+- Add independent foreground, background and border selection to object and authored-scene builds, including resident PRGs and streamed cartridges. Keep `--color` compatible and add `--foreground-color`, `--background-color` and `--border-color` with documented aliases.
+- Accept native colour names, decimal/hex/binary palette indices, RGB hex and `rgb(...)`; map RGB inputs to the fixed C64 palette on the host. Apply the same parsing to SVG foreground selection, Blender `c643d_color` properties and the autotuner's `--color-index`.
+- Preserve the selected background in initial screen RAM, per-frame source-colour spans and recycled buffers. Restore selected VIC registers after an authored intro. Monochrome inversion changes screen colours without changing geometry.
+- Add optional foreground/background/border defaults in `config/c643d.ini`.
+- Add `color-combo-test`: four preserved classic animations, automatic ten-second PAL playback per entry, immediate repeat, F3 foreground cycling and F4 background cycling. Only this tester couples the border to the background. SPACE skips; F1 returns to its menu.
+- Add F3/F4 monochrome foreground/background, F7 independent border and F8 preset reset during playback in Demo Cart 1 (FPS/RAM) and Demo Cart 2.0. Preserve the menu's F4 HiFi shortcut and F5 exhibition mode. Multicolour entries retain their source palette and support border cycling/reset.
+- Reuse the existing IRQ keyboard scan with equal idle CPU cost; no drawing-loop polling or per-frame colour conversion is added. Controls occupy an unused vector-dispatch page in the direct-only v2 integration. `--no-color-controls` produces a build without these controls.
+- Include prebuilt test/demo cartridges, reproducible builders, pixel/border/timing/keyboard verifiers and the colour guide. Other 0.7.2 example cartridges retain their bytes and build identities.
+- Finalize after user acceptance. PAL VICE regression matches all 93 old/new timing windows exactly; idle keyboard polling remains 82 cycles. All 26 canonical renderer comparison jobs pass. See [release notes](docs/RELEASE_0.7.3.md) and [validation evidence](docs/COLORS_0.7.3_VALIDATION.md).
+
 ## 0.7.2: hors-render-v2 default, rebuilt examples and automated releases
 
 - Restore the original README banner, show Demo Cart 2.0 on the main performance page, and exclude the unreleased v2 beta from the public renderer comparison.
