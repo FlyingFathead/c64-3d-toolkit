@@ -43,6 +43,11 @@ run_check showcase "$python_bin" tools/run_hors_v2_perfs.py \
 run_check menu-ui "$python_bin" tools/verify_cart_menu.py \
   "$results_dir/showcase/carts/demo-cart-2-preview-hors-v2.crt" \
   --vice "$vice_bin" --vice-data "$vice_data" --report "$results_dir/menu-ui.json"
+for showcase_variant in v1 v2; do
+  mkdir -p "docs/benchmarks/hors-v2/showcase/$showcase_variant"
+  cp -- "$results_dir/showcase/$showcase_variant/play-all.json" \
+    "docs/benchmarks/hors-v2/showcase/$showcase_variant/play-all.json"
+done
 run_check canonical "$python_bin" tools/compare_renderers.py \
   --workspace "$results_dir/canonical" --workers "$jobs" \
   --tass "$tass_bin" --cartconv "$cartconv_bin" --vice "$vice_bin" \

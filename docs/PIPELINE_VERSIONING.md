@@ -46,10 +46,9 @@ same benchmark build.
 On 10 September 2026 the user independently reproduced the measurements,
 reviewed the video and authorized hors-render-v2 as the default. Stable v2
 retains the beta drawing kernel, adds object/menu/intro integration, and avoids
-constructing an unused vector stream in the host encoder. Beta1 remains
-selectable and its historical evidence retains its actual beta identity.
+constructing an unused vector stream in the host encoder. The unreleased beta implementation remains selectable for development; it is
+not a released generation and is excluded from the public comparison matrix.
 
 All 67 existing C64 assembly files and older encoders remain intact. Old
 prebuilt examples are archived outside the checkout; they are not active
-release outputs. The complete comparison adds stable rows alongside beta1
-and every older method. Publication requires a current passing chart.
+release outputs. The complete comparison includes stable v2 and every older released method. Publication requires a current passing chart.

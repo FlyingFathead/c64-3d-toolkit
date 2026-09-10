@@ -21,7 +21,10 @@ class UnsupportedResident(Exception):
 
 RESIDENT=('step','bytechunk','yunroll','yunroll-cart')
 METHODS=[(m,'fps') for m in RESIDENT]+[(f'yunroll-cart-v{i}','fps') for i in range(2,11)]+[(f'yunroll-cart-v{i}','ram') for i in (7,8,9,10)]
-METHODS += [('hors-render-v2-beta1','fps'),('hors-render-v2-beta1','ram'),('hors-render-v2','fps'),('hors-render-v2','ram')]
+METHODS += [('hors-render-v2','fps'),('hors-render-v2','ram')]
+
+SHOWCASE_REPORTS=tuple(f'docs/benchmarks/hors-v2/showcase/{variant}/play-all.json' for variant in ('v1','v2'))
+SHOWCASE_CART='examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt'
 
 def fingerprints(root):
     files={}
@@ -36,7 +39,37 @@ def fingerprints(root):
             files[rel.replace('/history/', '/')]=hashlib.sha256(p.read_bytes()).hexdigest()
     files['.gitignore']=hashlib.sha256((root/'.gitignore').read_bytes()).hexdigest()
     files['VERSION']=hashlib.sha256((root/'VERSION').read_bytes()).hexdigest()
+    for rel in (*SHOWCASE_REPORTS,SHOWCASE_CART):
+        files[rel]=hashlib.sha256((root/rel).read_bytes()).hexdigest()
     return files,hashlib.sha256(json.dumps(files,sort_keys=True).encode()).hexdigest()
+
+
+def showcase_section(root):
+    """Display the verified shipped showcase as a separate named workload."""
+    left,right=(json.loads((root/rel).read_text()) for rel in SHOWCASE_REPORTS)
+    for report,renderer in ((left,'hors-render-v1'),(right,'hors-render-v2')):
+        assert report['renderer']==renderer and report['preference']=='fps'
+        assert report['mode']=='normal PLAY ALL ONLY' and not report['exhibition']
+        assert report['loops']==3 and report['seconds_setting']==10
+        assert report['pal_clock_hz']==985248 and report['seed']==1 and report['vice_defaults']
+        assert len(report['entries'])==len(report['pixel_verification'])
+        for entry,proof in zip(report['entries'],report['pixel_verification'],strict=True):
+            assert proof['pixel_match'] and proof['color_match']
+            assert proof['orientations']==entry['frame_count']
+    assert right['sha256']==hashlib.sha256((root/SHOWCASE_CART).read_bytes()).hexdigest(), 'Showcase results do not match the shipped v2 cartridge; rebuild and rerun the showcase before publishing'
+    lines=['','## Demo Cart 2.0','',
+        'The seven-scene showcase has its own **hors-render-v1 vs hors-render-v2** comparison. Both methods use identical complete source pictures, colours and sample order. PAL VICE, FPS preference, normal PLAY ALL, three ten-second visits per entry. F5 is excluded.', '',
+        'These are the measured shipped showcase cartridges, with their per-scene encoding policy. This is a separate workload from the original twelve-animation matrix; the COLOUR CUBE 24 here is not its CUBE or FALLING CUBES entry. Gains rank displayed-frame counts rather than tiny timer-phase differences.','',
+        '| Scene | Samples | v1 FPS | v2 FPS | Gain | v1 worst display ms | v2 worst display ms |',
+        '| --- | ---: | ---: | ---: | ---: | ---: | ---: |']
+    for x,y in zip(left['entries'],right['entries'],strict=True):
+        assert (x['name'],x['frame_count'],x['oracle_sha256'])==(y['name'],y['frame_count'],y['oracle_sha256'])
+        lines.append(f"| {x['name']} | {x['frame_count']} | {x['display_fps']:.2f} | {y['display_fps']:.2f} | {(y['display_flips']/x['display_flips']-1)*100:+.2f}% | {x['worst_display_ms']:.2f} | {y['worst_display_ms']:.2f} |")
+    lines+=['',
+        'All seven entries passed bitmap and colour checks for both methods. Worst intervals describe the observed window; a higher average FPS does not guarantee a lower worst interval.', '',
+        '[Demo Cart 2.0 and source scenes](../examples/cart_demos_v2/README.md) · [v1 raw results](benchmarks/hors-v2/showcase/v1/play-all.json) · [v2 raw results](benchmarks/hors-v2/showcase/v2/play-all.json) · [Release and HiFi results](HORS_RENDER_V2_RESULTS.md)', '',
+        'The chart fingerprint includes both reports and the shipped v2 CRT; generation verifies their cartridge hash and matching picture oracles. The release/check runner refreshes the showcase evidence before generating this page.','']
+    return lines
 
 def once(text,old,new):
     if text.count(old)!=1:raise RuntimeError('Comparison adapter needs review: '+old[:90])
@@ -343,6 +376,7 @@ def chart(a,provenance):
         win=winners(name,fpskeys);old=results['yunroll-cart-v10'][name]['display_flips'];new=results['hors-render-v2'][name]['display_flips']
         legacy=(results['yunroll-cart-v9'][name]['display_flips']/results['yunroll-cart-v8'][name]['display_flips']-1)*100
         lines.append(f"| {name} | {oracles[name][0]} | {', '.join(short(k) for k in win)} | {results[win[0]][name]['display_fps']:.2f} | {legacy:+.2f}% | {(new/old-1)*100:+.2f}% |")
+    lines+=showcase_section(Path(__file__).resolve().parents[1])
     sizes={}
     for key in results:
         raw=json.loads((a.workspace/'results'/(key+'-sizes.json')).read_text());sizes[key]={e['name']:e for e in raw['entries']}
@@ -386,8 +420,8 @@ def chart(a,provenance):
             lines.append(f"| {name} | V{v}-scene | {p['frames_per_second']:.3f} | {p['mean_render_cycles']:,.0f} | {p['worst_render_cycles']:,} | {p.get('frames_exceeding_render_budget','—')} / {p['frames']} |")
     lines+=['','## Workload and interpretation','',
         '- '+input_note,
-        '- hors-render-v2 and its preserved beta1 use gap 3 / batch budget 2048 in this canonical twelve-entry cart, retaining the v1 byte-span payload sizes to fit the same cartridge budget. Its independent pictures and guarded vector-page reuse are built in a private assembly tree. The seven-entry Demo Cart 2.0 uses separate measured encoding choices and has its own results report.',
-        '- The authored-scene diagnostic rows preserve V4–V10. Beta 1 does not support the authored intro/ending path and is not substituted for those unchanged productions.',
+        '- hors-render-v2 uses gap 3 / batch budget 2048 in this canonical twelve-entry cart, retaining the v1 byte-span payload sizes to fit the same cartridge budget. Its independent pictures and guarded vector-page reuse are built in a private assembly tree. The seven-entry Demo Cart 2.0 uses separate measured encoding choices and is reported in its own section above.',
+        '- The public matrix compares released renderer generations. The authored-scene diagnostic rows preserve the unchanged V4–V10 productions.',
         '- This table compares preserved renderer implementations under one **external comparison PLAY ALL wrapper**, not the exact historical release cartridges. The V9 normal PLAY ALL controller is used for every method. Its identical timer instructions live at `$0334` instead of `$c700`, because resident data occupies `$c700`; launch metadata is cached before loading and shared menu data restored between entries. Renderer code is unchanged apart from the existing cartridge IRQ-vector redirection. All these wrapper adaptations are generated outside the repo.',
         '- Resident and streamed methods have different memory/ROM costs. A faster resident method does not imply it can hold the larger HiFi datasets. Compare the same named animation and sample count.',
         '- A frame count tie is reported as a tie; a few extra samples over roughly 30 seconds are a small gain. Compare individual animations before quoting a suite total.',

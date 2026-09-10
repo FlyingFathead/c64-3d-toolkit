@@ -1,0 +1,107 @@
+{
+  "passed": true,
+  "completed_jobs": 26,
+  "menu_method_preferences": 19,
+  "unreleased_beta_rows": 0,
+  "demo_cart_2_scenes": 7,
+  "comparison_unit_tests": 8,
+  "original_banner_restored": true,
+  "renderer_or_crt_changes": false,
+  "methods": [
+    {
+      "method": "bytechunk-play-all",
+      "display_counts_match": true,
+      "result_sha256": "bb9bf28a79e93058c53ea793701aead2e728b6dbb74228de89d4e5bbc3016083"
+    },
+    {
+      "method": "hors-render-v2-play-all",
+      "display_counts_match": true,
+      "result_sha256": "b672f2c1f00ac4944dd692fb8861464079d89a17c093dc9e166dc3df5f136164"
+    },
+    {
+      "method": "hors-render-v2-ram-play-all",
+      "display_counts_match": true,
+      "result_sha256": "19e49b65e18485e607e3645628edafe13df8a0924bc4759c16567f772c434a8b"
+    },
+    {
+      "method": "step-play-all",
+      "display_counts_match": true,
+      "result_sha256": "0918598ffb59d2c9d6f4ef9837590fc649e926a02407d5711fa38b223759b389"
+    },
+    {
+      "method": "yunroll-cart-play-all",
+      "display_counts_match": true,
+      "result_sha256": "8392c94b774a04212492e6f6f8cc1bfd62af1ab8eb3239585aad33bb513a2721"
+    },
+    {
+      "method": "yunroll-cart-v10-play-all",
+      "display_counts_match": true,
+      "result_sha256": "d72c4e7c448bb0a5b85bc3c37a7197a438a8ac60f96c58047e84d7c6de221049"
+    },
+    {
+      "method": "yunroll-cart-v10-ram-play-all",
+      "display_counts_match": true,
+      "result_sha256": "30ca12db3de664b4ca75506f59bdaa77c69dd588f525f7e64917f9aefb96b859"
+    },
+    {
+      "method": "yunroll-cart-v2-play-all",
+      "display_counts_match": true,
+      "result_sha256": "2ab39d33affb91e096c7a03f47218f5151119790e26969d79496766f74420fe7"
+    },
+    {
+      "method": "yunroll-cart-v3-play-all",
+      "display_counts_match": true,
+      "result_sha256": "fb08115f89eef62ae0a57f0cecff1def88c6a6fc8fa85069a873ccfccbc0c2e0"
+    },
+    {
+      "method": "yunroll-cart-v4-play-all",
+      "display_counts_match": true,
+      "result_sha256": "6ac2d64b73d749c24c873a653ad946ac4a5af7e21ba2c96ffc928dccff25906f"
+    },
+    {
+      "method": "yunroll-cart-v5-play-all",
+      "display_counts_match": true,
+      "result_sha256": "0dc5c4db33cd5514cd4e554faa34a74d4052b6278913d9452370e62df3f9f03a"
+    },
+    {
+      "method": "yunroll-cart-v6-play-all",
+      "display_counts_match": true,
+      "result_sha256": "c0a48ff3032173658439d5825a06b433b0f28c4223838a947bde7efb055c2e47"
+    },
+    {
+      "method": "yunroll-cart-v7-play-all",
+      "display_counts_match": true,
+      "result_sha256": "84ec51da9a72bdd4f7f2144e13e940bb51d3e2f4fa2ab42a2be412cf4d8dccbb"
+    },
+    {
+      "method": "yunroll-cart-v7-ram-play-all",
+      "display_counts_match": true,
+      "result_sha256": "644e39c5bfae9eb58b6044d26818cc116d3be6eec7f4ba51e87e71fbe9bb8405"
+    },
+    {
+      "method": "yunroll-cart-v8-play-all",
+      "display_counts_match": true,
+      "result_sha256": "49e81126e28577336e33a73483d0ec1f456e8606f16b58667c490b414b7a7c9b"
+    },
+    {
+      "method": "yunroll-cart-v8-ram-play-all",
+      "display_counts_match": true,
+      "result_sha256": "a95399c5b429b4e26ad4a7b5b954f5aaca3c41e1d4fd8d76a93b1ac0250e98db"
+    },
+    {
+      "method": "yunroll-cart-v9-play-all",
+      "display_counts_match": true,
+      "result_sha256": "c6b8e28079fac6cd9d3956edf0c3ee1918feba79bb82b52f0b537a55d7a1a600"
+    },
+    {
+      "method": "yunroll-cart-v9-ram-play-all",
+      "display_counts_match": true,
+      "result_sha256": "7181f469c5bb192434c458b02b870a265e4b0ea3fe467d33d28aa8b63163995f"
+    },
+    {
+      "method": "yunroll-play-all",
+      "display_counts_match": true,
+      "result_sha256": "0d223ce5bd691d0700dd452063de9ec46c944fc06272c0dcf8fbdc30720ba0ac"
+    }
+  ]
+}

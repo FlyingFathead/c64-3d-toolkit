@@ -64,8 +64,8 @@ all samples of Marbles plus its complete native ending, and HiFi reel transition
 The test launcher supplies clean VICE defaults and retains individual emulator
 logs. The ending verifier shares the SPACE-start helper used by picture tests.
 
-Performance charts come from normal PLAY ALL using the frozen inputs. Beta1 and
-all older rows remain; stable v2 gets additional rows. The chart fingerprint must
+Performance charts come from normal PLAY ALL using the frozen inputs. All older released rows remain; the unreleased beta is excluded. Stable v2
+has FPS/RAM rows, and Demo Cart 2.0 has a separate seven-scene section. The chart fingerprint must
 match the packaged source. No release command commits, tags or pushes Git.
 
 Optional tests against external historical binary archives report skips when

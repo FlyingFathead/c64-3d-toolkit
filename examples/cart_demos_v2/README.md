@@ -20,6 +20,6 @@ Cross Swell and Liquid Floor are optional source loops under `scenes/`; rebuild 
 python3 tools/build_demo_cart_v2.py --renderer hors-render-v2
 ```
 
-[Full performance comparison](../../docs/PERFORMANCE_COMPARISON.md) · [Release build and cleanup](../../docs/RELEASE_0.7.2.md)
+**[Demo Cart 2.0 performance: v1 vs v2, all seven scenes](../../docs/PERFORMANCE_COMPARISON.md#demo-cart-20)** · [Release build and cleanup](../../docs/RELEASE_0.7.2.md)
 
 Old preview binaries are in prior release ZIPs or `../c64-3d-toolkit-history/pre-hors-v2/` relative to the repository root.

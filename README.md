@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/c64-3d-toolkit_banner.png" alt="c64-3d-toolkit" width="100%">
+</p>
+
 # c64-3d-toolkit
 
 ## 👀💦👉 LOOKI LOOKI! `hors-render-v2` just dropped — UP TO 35.5% FASTER!
@@ -13,6 +17,8 @@ The independent Linux run reproduced the beta measurements exactly; stable
 v2 retains that drawing kernel. See the [complete comparison](docs/PERFORMANCE_COMPARISON.md)
 and [showcase results](docs/HORS_RENDER_V2_RESULTS.md) for the actual workloads.
 These are emulated C64 timings, not host wall-clock speed or the HUD counter.
+
+**Performance tables:** [Original twelve animations](docs/PERFORMANCE_COMPARISON.md#best-method-for-each-animation) · [Demo Cart 2.0: all seven scenes](docs/PERFORMANCE_COMPARISON.md#demo-cart-20)
 
 ### Grab a cartridge and hit SPACE
 
@@ -135,7 +141,6 @@ regression inputs remain available for reproducible tests.
 | `yunroll-cart` | Original resident cartridge scaffold |
 | `yunroll-cart-v2` through `yunroll-cart-v9` | Earlier streamed generations |
 | `hors-render-v1`, `hors-render-v1-scene` | Original v1 / internal V10 implementations |
-| `hors-render-v2-beta1`, `hors-render-v2-beta1-scene` | Preserved looping-scene beta |
 | **`hors-render-v2`, `hors-render-v2-scene`** | **Current default, with object, scene and menu integration** |
 
 A new pipeline is added incrementally. Old assembly, encoders and comparisons

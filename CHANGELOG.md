@@ -2,6 +2,8 @@
 
 ## 0.7.2: hors-render-v2 default, rebuilt examples and automated releases
 
+- Restore the original README banner, show Demo Cart 2.0 on the main performance page, and exclude the unreleased v2 beta from the public renderer comparison.
+
 - Promote the independently reproduced beta drawing kernel to stable hors-render-v2; preserve beta1 and all older explicit renderer names.
 - Add default object/scene/menu integration and rebuild all 19 active cartridges, including the complete Marbles presentation.
 - Archive old CRT/PRG previews outside the checkout; retain compact frozen regression inputs and original renderer source.
@@ -16,7 +18,7 @@
 - Add source-hash-guarded per-scene encoder selection and an independent three-worker local performance runner.
 - Fix benchmark SPACE startup handling, verifier menu-style symbols, dynamic menu-entry counts, and failure diagnostics.
 - Bump VERSION, Python and setup labels to 0.7.2; make hors-render-v2 the default.
-- Extend the canonical tester with stable v2 FPS/RAM rows alongside beta1 and all older methods. The release pipeline regenerates the complete 28-job matrix before packaging.
+- Extend the canonical tester with stable v2 FPS/RAM rows alongside all older released methods. The release pipeline regenerates the complete 26-job matrix before packaging.
 - Include a Linux all-checks script and both overlay/complete packages. Stable adoption follows independent beta results and the user’s visual review.
 
 ## 0.7.1: HiFi exhibition cartridge and presentation update

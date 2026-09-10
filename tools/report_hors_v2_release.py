@@ -37,8 +37,8 @@ def main():
     text+='Peak interval FPS is not sustained throughput. F5 is excluded.\n\n'
     text+=comparison+'\n'
     text+='The alternate-VERSION gate also passed: temporary v1/v2 carts showed the manifest version on their startup screens, all menu styles and thanks screens. Root VERSION supplies Python and Windows setup identity.\n\n'
-    text+='The separate [historical comparison](PERFORMANCE_COMPARISON.md) retains every older renderer, '
-    text+='the beta1 rows, and adds stable v2 FPS/RAM rows. CUBE can still favour the resident yunroll renderer.\n\n'
+    text+='The [main performance page](PERFORMANCE_COMPARISON.md) compares released renderer generations, '
+    text+='including stable v2 FPS/RAM rows, and displays Demo Cart 2.0 in its own section. CUBE can still favour the resident yunroll renderer.\n\n'
     text+=f"Release examples: **{proof['cartridges']} cartridges**, **{proof['checks']} picture checks**, "
     text+=f"**{proof['verified_pictures']:,} completed pictures**. Native Marbles ending, menu states and HiFi reel transitions also passed. "
     text+='The ending verifier acknowledges the SPACE build screen after reaching intro_start, before waiting for frame_begin.\n\n'

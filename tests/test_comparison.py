@@ -27,17 +27,23 @@ class ComparisonTests(unittest.TestCase):
         self.assertEqual(run.returncode,2)
         self.assertIn('not allowed with argument',run.stderr)
 
-    def test_fingerprint_tracks_inputs_not_local_config_or_docs(self):
+    def test_fingerprint_tracks_inputs_not_local_config_or_markdown(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)
             for folder in ('tools','c64','assets','config','examples'): (root/folder).mkdir()
             (root/'VERSION').write_text('0.6.9\n');(root/'.gitignore').write_text('/comparison-tests/\n')
             (root/'assets/input.json').write_text('original')
+            for rel in (*comparison.SHOWCASE_REPORTS,comparison.SHOWCASE_CART):
+                path=root/rel;path.parent.mkdir(parents=True,exist_ok=True)
+                path.write_bytes(b'original showcase evidence')
             before=comparison.fingerprints(root)[1]
             (root/'config/c643d.ini').write_text('local tool paths')
             (root/'examples/README.md').write_text('documentation')
             self.assertEqual(before,comparison.fingerprints(root)[1])
             (root/'assets/input.json').write_text('changed pictures')
+            self.assertNotEqual(before,comparison.fingerprints(root)[1])
+            before=comparison.fingerprints(root)[1]
+            (root/comparison.SHOWCASE_REPORTS[0]).write_text('changed measurements')
             self.assertNotEqual(before,comparison.fingerprints(root)[1])
 
     def test_frozen_scene_references_are_self_contained(self):

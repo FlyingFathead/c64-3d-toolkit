@@ -27,7 +27,7 @@ Horse Head displayed 618 → 642 pictures and Sunflower Torus 594 → 609 across
 
 The alternate-VERSION gate also passed: temporary v1/v2 carts showed the manifest version on their startup screens, all menu styles and thanks screens. Root VERSION supplies Python and Windows setup identity.
 
-The separate [historical comparison](PERFORMANCE_COMPARISON.md) retains every older renderer, the beta1 rows, and adds stable v2 FPS/RAM rows. CUBE can still favour the resident yunroll renderer.
+The [main performance page](PERFORMANCE_COMPARISON.md) compares released renderer generations, including stable v2 FPS/RAM rows, and displays [Demo Cart 2.0 in its own section](PERFORMANCE_COMPARISON.md#demo-cart-20). CUBE can still favour the resident yunroll renderer.
 
 Release examples: **19 cartridges**, **49 picture checks**, **8,429 completed pictures**. Native Marbles ending, menu states and HiFi reel transitions also passed. The ending verifier acknowledges the SPACE build screen after reaching intro_start, before waiting for frame_begin.
 
