@@ -38,6 +38,7 @@ examples/cart_demos/c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all*
 
 # Candidate experiment reports and bundles.
 /logs/
+*.log
 
 # Obsolete generated outputs belong outside the checkout, never in new commits.
 /examples/*/history/
