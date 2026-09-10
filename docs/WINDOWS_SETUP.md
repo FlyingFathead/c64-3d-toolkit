@@ -1,6 +1,8 @@
+> Current default: **hors-render-v2**. [Release build and example migration](RELEASE_0.7.2.md).
+
 # Windows setup
 
-`c64-3d-toolkit` v0.7.1 includes a Windows 11 setup helper with optional Blender support. Cartridge `.crt` builds also use the `cartconv` utility supplied with VICE; its path can be set in `config/c643d.ini` or with `--cartconv` when automatic discovery is not sufficient.
+`c64-3d-toolkit` v0.7.2 includes a Windows 11 setup helper with optional Blender support. Cartridge `.crt` builds also use the `cartconv` utility supplied with VICE; its path can be set in `config/c643d.ini` or with `--cartconv` when automatic discovery is not sufficient.
 
 ## First-time bootstrap on Windows 11
 
@@ -25,7 +27,9 @@ Now run the setup helper:
 
 If you already obtained the toolkit another way (for example, a GitHub release ZIP or a copy from another machine), you can run `setup-windows.cmd` directly from the toolkit root. The installer **still checks for Git** and can install it through WinGet if it is missing.
 
-The batch file launches `setup-windows.ps1` from the toolkit root.
+The batch file launches `setup-windows.ps1` from the toolkit root. The helper
+reads its target release from the adjacent `VERSION` file, which ships with the
+checkout and release ZIP; there is no separate installer version constant.
 
 ## What the installer does
 

@@ -1,0 +1,28 @@
+{
+  "external_reference": "wobbling-plane-hors-render-v1-v3.zip",
+  "archive_sha256": "0b40ef8cae5ace092cf4403661eafa010a796f99536fb1e03a750cc74479cf90",
+  "imported_members": [
+    {
+      "scene": "ripples_lite",
+      "archive_member": "wobbling-plane-v3/ripples_lite.c643dscene",
+      "sha256": "1bccfbe40c1fd19787df9ca6a06f2d48c7f1c016f74b17dbc719ed4376e6d772",
+      "source_samples": 100,
+      "default_reel": true
+    },
+    {
+      "scene": "cross_swell",
+      "archive_member": "wobbling-plane-v3/cross_swell.c643dscene",
+      "sha256": "66dc8de677e93f7f46a51b4fab99ad9b46c4787a8a2070571b126fa70494938c",
+      "source_samples": 100,
+      "default_reel": false
+    },
+    {
+      "scene": "liquid_floor",
+      "archive_member": "wobbling-plane-v3/liquid_floor.c643dscene",
+      "sha256": "de2fd2ee16380bc79a33404610f901cb762964cdee6151d51bec650fb19b90b0",
+      "source_samples": 100,
+      "default_reel": false
+    }
+  ],
+  "policy": "Only these selected source scenes are imported. The original archive stays external. Cross Swell bug report withdrawn by the user; optional scene. No private production assets imported."
+}

@@ -1,0 +1,22 @@
+{
+  "cartridge": "torus_dense-hors-render-v2.crt",
+  "menu_entry": null,
+  "verified_frames": 387,
+  "orientations": 192,
+  "bitmap_bytes_checked": 2972160,
+  "color_bytes_checked": 371520,
+  "slots": {
+    "1": 129,
+    "2": 129,
+    "0": 129
+  },
+  "average_fps": 17.218922328118985,
+  "min_frame_cycles": 38463,
+  "max_frame_cycles": 69822,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "path": "examples/torus_dense/torus_dense-hors-render-v2.crt",
+  "entry": null,
+  "sha256": "8e28ecc3f73ebca22518f7f8f071673f2ba3f60f5da1b140146d9b495accab20"
+}

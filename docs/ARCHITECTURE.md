@@ -32,11 +32,13 @@ OBJ data enters as polygon surfaces; `usemtl` assigns MTL `Kd` colours to faces.
 
 ## C64 side
 
-The default hors-render-v1 backend receives host-precomputed pictures encoded
-as sparse bitmap-byte spans whenever they fit the 8 KiB frame arena. It copies
-those spans directly from EasyFlash ROM to a recycled hires bitmap. Pictures
-whose byte encoding exceeds the arena use the vector fallback; a picture that
-fits neither encoding fails compilation. Projection and visibility remain host work.
+The default hors-render-v2 backend receives host-precomputed pictures encoded
+as literal bitmap spans. It copies bounded groups from EasyFlash ROM into a
+hidden hires bitmap, reducing repeated mapping setup. It requires direct spans
+for every picture so it can reuse the vector-dispatch page. A frame that exceeds
+the final 8 KiB bank or metadata limit is rejected without dropping geometry.
+The older hors-render-v1 retains its vector fallback. Projection and visibility
+remain host work. See [stable v2](HORS_RENDER_V2.md).
 
 The C64 clears/reuses hidden buffers, draws or copies the next picture, updates
 its screen colours, and presents completed buffers through the VIC-II. HUD/FPS
@@ -47,12 +49,13 @@ about total free RAM. See [capacity](CARTRIDGE_CAPACITY.md) and
 
 Selectable backends include:
 
-- `hors-render-v1` / `hors-render-v1-scene`: current EasyFlash defaults;
+- `hors-render-v2` / `hors-render-v2-scene`: current EasyFlash defaults;
+- `hors-render-v1` / `hors-render-v1-scene` and beta1: preserved explicit backends;
 - `step`, `bytechunk`, `yunroll`: explicit resident PRG vector renderers;
 - preserved cartridge scaffold and V2–V9 stream/scene generations.
 
 `yunroll-cart-v10` and `yunroll-cart-v10-scene` remain compatibility aliases.
-See the [renderer table](../README.md#renderers) for each generation's format.
+See the [renderer table](../README.md) for each generation's format.
 
 ### Preserved resident PRG colour implementation
 

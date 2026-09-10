@@ -1,0 +1,22 @@
+{
+  "cartridge": "horse_head_hifi-hors-render-v2.crt",
+  "menu_entry": null,
+  "verified_frames": 387,
+  "orientations": 192,
+  "bitmap_bytes_checked": 2972160,
+  "color_bytes_checked": 371520,
+  "slots": {
+    "1": 129,
+    "2": 129,
+    "0": 129
+  },
+  "average_fps": 21.38806676328176,
+  "min_frame_cycles": 31843,
+  "max_frame_cycles": 53168,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "path": "examples/hifi_showcase/horse_head_hifi-hors-render-v2.crt",
+  "entry": null,
+  "sha256": "c27e99841e870271143547ee388f1b6d03209c6fd18ef6677dd7516216d08adb"
+}

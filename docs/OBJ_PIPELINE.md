@@ -1,6 +1,8 @@
+> Current default: **hors-render-v2**. [Release build and example migration](RELEASE_0.7.2.md).
+
 # OBJ pipeline
 
-v0.7.1 defaults to hors-render-v1 EasyFlash output. Add `--renderer yunroll`
+v0.7.2 defaults to hors-render-v2 EasyFlash output. Add `--renderer yunroll`
 for resident PRG output; input parsing and visibility are shared. See
 [renderer formats](../README.md#renderers).
 

@@ -20,7 +20,7 @@ class V9Tests(unittest.TestCase):
         frozen=json.loads((root/'tests/data/preserved-v0.6.8.json').read_text())
         for name,digest in frozen['files'].items():
             if name.startswith('../'): continue  # Checked separately when the external archive is available.
-            self.assertEqual(hashlib.sha256((root/name).read_bytes()).hexdigest(),digest,name)
+            self.assertEqual(hashlib.sha256((root/('build/reference-prgs/'+name if name.startswith('examples/') and name.endswith('.prg') else name)).read_bytes()).hexdigest(),digest,name)
 
     def test_external_historical_binaries(self):
         import hashlib, json
@@ -34,7 +34,7 @@ class V9Tests(unittest.TestCase):
             if not (root/name).is_file():
                 missing.append(name)
                 continue
-            self.assertEqual(hashlib.sha256((root/name).read_bytes()).hexdigest(),expected,name)
+            self.assertEqual(hashlib.sha256((root/('build/reference-prgs/'+name if name.startswith('examples/') and name.endswith('.prg') else name)).read_bytes()).hexdigest(),expected,name)
         if missing:
             self.skipTest(f'Optional historical archive is incomplete: {len(missing)} reference files absent')
 
@@ -70,8 +70,8 @@ class V9Tests(unittest.TestCase):
 
     def test_v9_is_opt_in_and_exhibition_remains_separate(self):
         p=make_parser(load_toolchain_settings(Path('/missing/config.ini')))
-        self.assertEqual(p.parse_args(['cart-demos']).stream_renderer,'hors-render-v1')
-        self.assertEqual(p.parse_args(['build']).renderer,'hors-render-v1')
+        self.assertEqual(p.parse_args(['cart-demos']).stream_renderer,'hors-render-v2')
+        self.assertEqual(p.parse_args(['build']).renderer,'hors-render-v2')
         for variant in ('yunroll-cart-v9','yunroll-cart-v9-scene'):
             self.assertEqual(p.parse_args(['build','--renderer',variant]).renderer,variant)
         self.assertEqual(p.parse_args(['cart-demos','--stream-renderer','yunroll-cart-v9']).play_all_seconds,10)

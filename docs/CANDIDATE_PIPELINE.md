@@ -1,6 +1,8 @@
 # Candidate experiments after V9
 
-v0.7.0 status: hors-render-v1 is the production default; this runner remains an
+**0.7.2 update:** hors-render-v2 is the default. The measured scene search and full release compiler are available; see [stable v2](HORS_RENDER_V2.md) and [release automation](RELEASE_0.7.2.md). Older milestone descriptions below are retained as history.
+
+Historical v0.7.0 status: hors-render-v1 was the production default; this runner remains an
 independent comparison/experiment workflow. V9 IDs and the provenance notes
 below describe its initial baseline, not the current release version. The full
 profile follows the registered methods; production defaults and accepted

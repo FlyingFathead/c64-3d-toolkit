@@ -1,3 +1,5 @@
+> Historical version documentation. Current builds and prebuilt examples use [hors-render-v2](HORS_RENDER_V2.md); see [0.7.2 release instructions](RELEASE_0.7.2.md). Older preview binaries are in prior release ZIPs or the external local archive.
+
 # hors-render-v1 cartridge inventory — 0.7.1
 
 The v0.7.1 menu cartridges are rebuilt for this release, alongside the new

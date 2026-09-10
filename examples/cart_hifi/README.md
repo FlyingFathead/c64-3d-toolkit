@@ -1,34 +1,23 @@
-# HiFi exhibition cartridge — v0.7.1
+# Cart Hifi — hors-render-v2
 
-[Download the HiFi cart](c643d-hifi-v0.7.1-hors-render-v1.crt).
+**Toolkit 0.7.2 · stable hors-render-v2 prebuilt examples.**
 
-Press SPACE on the opening screen to begin. The reel then repeats:
-
-1. The complete Horse and Sunflower animation: the horse sniffs the flower and withdraws its head. All 84 authored samples play once, with the original six-PAL-tick minimum pacing. This takes approximately 11.6 seconds in PAL VICE; the animation completes before the next section starts.
-2. Rotating HiFi sunflower torus, with its caption: 10 seconds.
-3. Rotating HiFi horse head, with its caption: 10 seconds.
-4. Native THANK YOU FOR WATCHING screen with v0.7.1 identification: 10 seconds.
-
-The next cycle starts with the sniffing scene. The opening SPACE wait appears
-only at startup or after exiting the reel. During animation, SPACE skips to the
-next section; F1 or RUN/STOP returns to the opening screen. F1 also exits the
-thank-you screen.
-
-The spinners use the same 128-orientation sources and captions as the multi-demo
-cart. The first section uses the frozen vector reference for
-`horse_and_sunflower-hors-render-v1-scene.crt`; it is rebuilt into the shared reel
-runtime, so this cartridge does not concatenate or launch the original CRT files.
-
-## Build and verify
-
-From the repository root, with 64tass, cartconv and VICE installed:
+| Cartridge | Samples | Colours |
+| --- | ---: | --- |
+| [c643d-hifi-v0.7.2-hors-render-v2.crt](c643d-hifi-v0.7.2-hors-render-v2.crt) | 84 / 128 / 128 | Per entry |
 
 ```bash
-python tools/build_hifi_cart.py
-python tools/verify_hifi_reel.py \
-  examples/cart_hifi/c643d-hifi-v0.7.1-hors-render-v1.crt \
-  --vice-data /usr/local/share/vice
+x64sc +easyflashcrtwrite -cartcrt examples/cart_hifi/c643d-hifi-v0.7.2-hors-render-v2.crt
 ```
 
-Blender and the external historical archive are not needed. The bundled vector
-references retain the original scene sampling. Timing is specified for PAL.
+Press SPACE when an identification screen is shown. Companion labels and manifests identify the exact build.
+
+```bash
+python3 tools/build_hors_v2_examples.py --only cart_hifi
+```
+
+The finite Horse & Sunflower scene is followed by two ten-second HiFi spinners and the native thanks/title loop.
+
+[Full performance comparison](../../docs/PERFORMANCE_COMPARISON.md) · [Release build and cleanup](../../docs/RELEASE_0.7.2.md)
+
+Old preview binaries are in prior release ZIPs or `../c64-3d-toolkit-history/pre-hors-v2/` relative to the repository root.

@@ -1,0 +1,22 @@
+{
+  "cartridge": "demo-cart-2-preview-hors-v2.crt",
+  "menu_entry": 0,
+  "verified_frames": 51,
+  "orientations": 24,
+  "bitmap_bytes_checked": 391680,
+  "color_bytes_checked": 48960,
+  "slots": {
+    "1": 17,
+    "2": 17,
+    "0": 17
+  },
+  "average_fps": 35.961526107701204,
+  "min_frame_cycles": 20038,
+  "max_frame_cycles": 31070,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "path": "examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt",
+  "entry": 0,
+  "sha256": "0f6e6cc97133ee93c83509783d8b960d57a3acf5b118a3bbc7cd73611fe090b3"
+}

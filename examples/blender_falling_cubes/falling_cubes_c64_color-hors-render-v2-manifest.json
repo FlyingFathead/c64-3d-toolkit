@@ -1,0 +1,270 @@
+{
+  "format": "c643d-easyflash-stream-v2",
+  "version": 1,
+  "renderer": "hors-render-v2",
+  "name": "FALLING CUBES",
+  "frames": 18,
+  "vertices": 0,
+  "edges": 0,
+  "faces": 0,
+  "colors": true,
+  "screen_color": 48,
+  "directory_ram_bytes": 126,
+  "frame_buffer_bytes": 8192,
+  "metadata_cache_bytes": 3072,
+  "rom_frame_bytes": 19518,
+  "highest_bank": 5,
+  "run_count_bits": 16,
+  "frame_data": [
+    {
+      "frame": 0,
+      "bank": 3,
+      "address": 32768,
+      "bytes": 725,
+      "metadata_bytes": 174,
+      "runs": 112,
+      "sha256": "fec67230bbaeadf163ad89f67ed77a31ce26becbfef95433da03e360fe92879a",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 1,
+      "bank": 3,
+      "address": 33493,
+      "bytes": 727,
+      "metadata_bytes": 174,
+      "runs": 114,
+      "sha256": "4de4aae04e60928e5ed24ffe88fd57481f3791a5e2b55b5f9b24f64797ccad99",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 2,
+      "bank": 3,
+      "address": 34220,
+      "bytes": 779,
+      "metadata_bytes": 195,
+      "runs": 132,
+      "sha256": "aae9faf6c34d8c44d27055a098b661ba939885e12512bd1ff0aa5ae145eac3d5",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 3,
+      "bank": 3,
+      "address": 34999,
+      "bytes": 839,
+      "metadata_bytes": 202,
+      "runs": 152,
+      "sha256": "6e49699fcb2519f644fa2edeec426fa7f97723cbb344ff06fc36364847650ed6",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 4,
+      "bank": 3,
+      "address": 35838,
+      "bytes": 923,
+      "metadata_bytes": 227,
+      "runs": 164,
+      "sha256": "e037c6a86850dd3bfcbe4d9b5d3bdca3544ae29d1886b7b913d6a6ec1001795d",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 5,
+      "bank": 3,
+      "address": 36761,
+      "bytes": 1021,
+      "metadata_bytes": 260,
+      "runs": 170,
+      "sha256": "b607ea3d0bfdfcd988758a09186b313f70e71918947601523ca6227301abc069",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 6,
+      "bank": 3,
+      "address": 37782,
+      "bytes": 1131,
+      "metadata_bytes": 277,
+      "runs": 181,
+      "sha256": "c4c48405d7be55c706ccdfd3ff329e232e3f5cbb0b99e0c8d90ef6b3525d4345",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 7,
+      "bank": 3,
+      "address": 38913,
+      "bytes": 1218,
+      "metadata_bytes": 324,
+      "runs": 208,
+      "sha256": "7986afcb1cf5140cd748e9b41c1ebb5207e3802773429b81ff3c73663212c668",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 8,
+      "bank": 4,
+      "address": 32768,
+      "bytes": 1358,
+      "metadata_bytes": 360,
+      "runs": 255,
+      "sha256": "1ac186433b77828b78cbfd4745cfa4bde16dab538dd59b94879715e1f8b02214",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 9,
+      "bank": 4,
+      "address": 34126,
+      "bytes": 1409,
+      "metadata_bytes": 373,
+      "runs": 278,
+      "sha256": "f9e3c35f63eccb83e1105449ea9aeada7466d30481774c9925e22fcd3050ed35",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 10,
+      "bank": 4,
+      "address": 35535,
+      "bytes": 1247,
+      "metadata_bytes": 316,
+      "runs": 337,
+      "sha256": "5536f9e9705d008cc682fc433928315d6058be5dd3a16b7c0fe448b1123c22ed",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 11,
+      "bank": 4,
+      "address": 36782,
+      "bytes": 1146,
+      "metadata_bytes": 267,
+      "runs": 310,
+      "sha256": "6d9eb16fd8f57bf8056605af6814c828770e986119474670111ad05e01896199",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 12,
+      "bank": 4,
+      "address": 37928,
+      "bytes": 1153,
+      "metadata_bytes": 271,
+      "runs": 298,
+      "sha256": "274c3fb8eed62a33ae6b40633b2e7a4467de399cd353077373aee65cb4352527",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 13,
+      "bank": 4,
+      "address": 39081,
+      "bytes": 1175,
+      "metadata_bytes": 292,
+      "runs": 262,
+      "sha256": "918448570e3d0db0d28c223fd617ecb8fdd1aa1f3d0d8f8ed95ecb52a7c2263e",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 14,
+      "bank": 5,
+      "address": 32768,
+      "bytes": 1177,
+      "metadata_bytes": 289,
+      "runs": 302,
+      "sha256": "23acab76eb4ca17ea5b278cb7fa69680717ce12e8a20529c3a7736a70baa95e0",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 15,
+      "bank": 5,
+      "address": 33945,
+      "bytes": 1171,
+      "metadata_bytes": 300,
+      "runs": 288,
+      "sha256": "85f6beb40d991c0f3852408d6c94ae7ba734191c7c70389f88ced27cad2cebbf",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 16,
+      "bank": 5,
+      "address": 35116,
+      "bytes": 1157,
+      "metadata_bytes": 285,
+      "runs": 276,
+      "sha256": "3f900d9d2d417c6752078dea91de93a80e53e9b8c81ec329df132a1c563e0a4d",
+      "encoding": "byte-spans"
+    },
+    {
+      "frame": 17,
+      "bank": 5,
+      "address": 36273,
+      "bytes": 1162,
+      "metadata_bytes": 281,
+      "runs": 300,
+      "sha256": "c1bf65ebb8bdf8d1d0da16fcbd2012b3a451e9c114627cd25ead8e9cf27cada7",
+      "encoding": "byte-spans"
+    }
+  ],
+  "optimization": {
+    "original_runs": 9924,
+    "retained_runs": 9924,
+    "removed_runs": 0,
+    "original_record_bytes": 50351,
+    "retained_record_bytes": 50351,
+    "saved_record_bytes": 0,
+    "unique_pictures": 18,
+    "duplicate_pictures": 0,
+    "consecutive_holds": 0,
+    "picture_references": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ],
+    "bitmap_and_colors_preserved": true
+  },
+  "clearing": {
+    "format": "v7-mixed-cell-byte-spans",
+    "cell_spans": 424,
+    "byte_spans": 149,
+    "original_clear_bytes": 18080,
+    "selected_clear_bytes": 16878,
+    "metadata_bytes_added": 0
+  },
+  "joining": {
+    "bitmap_and_colors_preserved": true,
+    "original_runs": 9924,
+    "retained_runs": 4139,
+    "merged_runs": 5785,
+    "saved_record_bytes": 28010
+  },
+  "preference": "fps",
+  "wire_format": "hors-v2-batched-literal-spans-1",
+  "byte_span_frames": 18,
+  "encoding_choice": {
+    "gap": 3,
+    "batch_budget": 2048
+  },
+  "implementation": "hors-render-v2-beta1 drawing kernel",
+  "previous_picture_dependency": false,
+  "vector_fallback": false,
+  "extra_reserved_RAM_bytes": 0,
+  "reclaimed_vector_dispatch_range": [
+    20224,
+    20480
+  ],
+  "batch_budget_is_host_cost_model_not_hard_measured_bound": true,
+  "runtime_work": "build/falling_cubes_c64_color-hors-render-v2-stream-v10",
+  "source_reference": {
+    "path": "assets/released-example-pictures-v1.json.gz",
+    "original_crt": "examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v1.crt",
+    "original_sha256": "1deb78d03bcaa9b6fef87ee19604b39d78e1071ff5ddf97c5e6543ac4d9be94d",
+    "preserved": "all source pictures, resolved colours, sample order, HUD and presentation pacing"
+  }
+}

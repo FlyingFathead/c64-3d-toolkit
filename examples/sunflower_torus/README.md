@@ -1,15 +1,22 @@
-⚠️🐴 Attention! For best quality, please enjoy each animation with `hors-render-v1` or a newer variant.
+# Sunflower Torus — hors-render-v2
 
-Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
+**Toolkit 0.7.2 · stable hors-render-v2 prebuilt examples.**
 
-# Sunflower Torus — hors-render-v1
-
-Start with the supplied hors-render-v1 cartridge:
+| Cartridge | Samples | Colours |
+| --- | ---: | --- |
+| [sunflower_torus-hors-render-v2.crt](sunflower_torus-hors-render-v2.crt) | 192 | Monochrome |
+| [sunflower_torus_color-hors-render-v2.crt](sunflower_torus_color-hors-render-v2.crt) | 192 | Yes |
 
 ```bash
-x64sc +easyflashcrtwrite -cartcrt examples/sunflower_torus/sunflower_torus-hors-render-v1.crt
-x64sc +easyflashcrtwrite -cartcrt examples/sunflower_torus/sunflower_torus_color-hors-render-v1.crt
+x64sc +easyflashcrtwrite -cartcrt examples/sunflower_torus/sunflower_torus-hors-render-v2.crt
 ```
 
-The PRG variants remain available for comparison. Rebuild current cartridges with
-`python tools/build_current_examples.py` from the repository root.
+Press SPACE when an identification screen is shown. Companion labels and manifests identify the exact build.
+
+```bash
+python3 tools/build_hors_v2_examples.py --only sunflower_torus
+```
+
+[Full performance comparison](../../docs/PERFORMANCE_COMPARISON.md) · [Release build and cleanup](../../docs/RELEASE_0.7.2.md)
+
+Old preview binaries are in prior release ZIPs or `../c64-3d-toolkit-history/pre-hors-v2/` relative to the repository root.

@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "renderer": "hors-render-v1",
+      "version": "9.8.7",
+      "all_menu_styles": true,
+      "build_screen": true,
+      "thanks_screen": true
+    },
+    {
+      "renderer": "hors-render-v2",
+      "version": "9.8.7",
+      "all_menu_styles": true,
+      "build_screen": true,
+      "thanks_screen": true
+    }
+  ]
+}

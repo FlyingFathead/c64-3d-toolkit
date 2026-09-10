@@ -1,0 +1,22 @@
+{
+  "cartridge": "cube-hors-render-v2.crt",
+  "menu_entry": null,
+  "verified_frames": 387,
+  "orientations": 192,
+  "bitmap_bytes_checked": 2972160,
+  "color_bytes_checked": 371520,
+  "slots": {
+    "1": 129,
+    "2": 129,
+    "0": 129
+  },
+  "average_fps": 30.141611766511993,
+  "min_frame_cycles": 18942,
+  "max_frame_cycles": 38405,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "path": "examples/cube/cube-hors-render-v2.crt",
+  "entry": null,
+  "sha256": "9806773ee8910f36c1652f24568128b91d5fcc4a11c5eaa9216e54a1aeb8fad2"
+}

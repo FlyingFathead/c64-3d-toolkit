@@ -39,18 +39,10 @@ NO_OVERLAY_RENDERERS={name:f'variants/renderer-{name}-no-overlay.asm' for name i
 RASTERTIME_RENDERERS={'yunroll':'debug/renderer-yunroll-rastertime.asm'}
 
 
-CARTRIDGE_DEMO_ENTRIES=(
-    ('TORUS', EXAMPLES/'torus'/'torus.prg'),
-    ('TORUS DENSE', EXAMPLES/'torus_dense'/'torus_dense.prg'),
-    ('CUBE', EXAMPLES/'cube'/'cube.prg'),
-    ('SPHERE', EXAMPLES/'sphere'/'sphere.prg'),
-    ('HORSE HEAD', EXAMPLES/'horse_head'/'horse_head.prg'),
-    ('SUNFLOWER TORUS', EXAMPLES/'sunflower_torus'/'sunflower_torus.prg'),
-    ('SUNFLOWER COLOR', EXAMPLES/'sunflower_torus'/'sunflower_torus_color.prg'),
-    ('SPACE HORSE SPIN', EXAMPLES/'space_horse_spin'/'space_horse_spin_color.prg'),
-    ('SPACE HORSE CRAWL', EXAMPLES/'space_horse_crawl'/'space_horse_crawl_color.prg'),
-    ('FALLING CUBES', EXAMPLES/'blender_falling_cubes'/'falling_cubes_c64_color-yunroll.prg'),
-)
+# Runnable legacy previews live outside examples; exact test inputs are
+# compressed in assets and materialized only into ignored build storage.
+from .reference_prgs import materialize
+CARTRIDGE_DEMO_ENTRIES=materialize(ROOT)
 
 
 def _executable_version(executable:str) -> str | None:
@@ -635,6 +627,9 @@ def cmd_build(a):
         return cmd_build_cart_scene(a)
     if a.renderer in ("yunroll-cart-v2", "yunroll-cart-v3", "yunroll-cart-v4", "yunroll-cart-v5", "yunroll-cart-v6", "yunroll-cart-v7", "yunroll-cart-v8", "yunroll-cart-v9", "yunroll-cart-v10"):
         from .cartstream import cmd_build_cart_v2
+        if a.public_renderer == 'hors-render-v2':
+            from .hors_v2_stable import cmd_build_object
+            return cmd_build_object(a)
         return cmd_build_cart_v2(a)
     if getattr(a,'blend',None) or getattr(a,'scene',None):
         return cmd_build_scene(a)
@@ -1197,14 +1192,16 @@ def make_parser(settings):
         q.add_argument('--visibility',choices=('auto','surface_features','surface_creases','surface','frontface'),default='auto',help='hidden-line surface mode; auto uses robust surface Z-buffer for OBJ and front-face mode for procedural closed meshes')
         q.add_argument('--z-tolerance',type=float,help='reciprocal-depth tolerance for visible wire edges; object presets may provide a default')
         q.add_argument('--feature-angle',type=float,help='surface_creases threshold in degrees; sharp manifold edges at/above this angle are preserved')
-    b=sub.add_parser('build',help='generate tables, assemble PRG, optionally run VICE'); common(b)
-    b.add_argument('--renderer',choices=('hors-render-v1', 'hors-render-v1-scene', *RENDERERS, 'yunroll-cart-v2', 'yunroll-cart-v3', 'yunroll-cart-v4', 'yunroll-cart-v4-scene', 'yunroll-cart-v5', 'yunroll-cart-v5-scene', 'yunroll-cart-v6', 'yunroll-cart-v6-scene', 'yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10', 'yunroll-cart-v7-scene', 'yunroll-cart-v8-scene', 'yunroll-cart-v9-scene', 'yunroll-cart-v10-scene'),default='hors-render-v1',help='default hors-render-v1 CRT; step/bytechunk/yunroll=PRG; yunroll-cart-v2 through v10=streamed EasyFlash CRT')
+    b=sub.add_parser('build',help='compile geometry and assemble a hors-render-v2 CRT by default'); common(b)
+    b.add_argument('--renderer',choices=('hors-render-v2', 'hors-render-v2-scene', 'hors-render-v2-beta1', 'hors-render-v2-beta1-scene', 'hors-render-v1', 'hors-render-v1-scene', *RENDERERS, 'yunroll-cart-v2', 'yunroll-cart-v3', 'yunroll-cart-v4', 'yunroll-cart-v4-scene', 'yunroll-cart-v5', 'yunroll-cart-v5-scene', 'yunroll-cart-v6', 'yunroll-cart-v6-scene', 'yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10', 'yunroll-cart-v7-scene', 'yunroll-cart-v8-scene', 'yunroll-cart-v9-scene', 'yunroll-cart-v10-scene'),default='hors-render-v2',help='default hors-render-v2 CRT; v1 and v2-beta1 remain explicit historical choices; step/bytechunk/yunroll=PRG; yunroll-cart-v2 through v10=streamed EasyFlash CRT')
     b.add_argument('--prefer',choices=('fps','ram'),default='fps',help='V7/V8: prioritize FPS (default) or smaller Y drawing kernels; geometry and pacing stay the same')
     b.add_argument('--frames',type=int,help='precomputed legacy animation frames/orientations (default 48; not used by --blend)')
     b.add_argument('--ending',action='store_true',help='finite scene, credits and ghost-in-BASIC epilogue; requires --intro')
     b.add_argument('--intro',action='store_true',help='play the native Marbles intro before a v4-scene stream')
     b.add_argument('--hud-text',help='custom static HUD, up to 31 characters (v4-scene)')
     b.add_argument('--frame-ticks',type=int,default=4,help='PAL display ticks per scene sample; 4 = 12.5 FPS (v4-scene)')
+    b.add_argument('--v2-draw-gap',type=int,default=6,help='v2: group nonzero bitmap bytes separated by at most this offset distance')
+    b.add_argument('--v2-batch-budget',type=int,default=2048,help='v2: host cost budget for grouping cartridge-mapped drawing spans')
     b.add_argument('--strict-frames',action='store_true',help='fail instead of reducing orientation count when table RAM overflows')
     b.add_argument('--camera',type=float,default=110.0)
     b.add_argument('--focal',type=float,default=180.0)
@@ -1291,7 +1288,7 @@ def make_parser(settings):
     cd.add_argument('--run',action='store_true',help='attach the generated demo CRT directly with VICE -cartcrt')
     cd.add_argument('--prefer',choices=('fps','ram'),default='fps',help='V7/V8: prioritize FPS (default) or smaller Y drawing kernels')
     cd.add_argument('--play-all-seconds',type=int,default=10,help='V7/V8 PLAY ALL duration per animation, 1..255 seconds (default 10; PAL)')
-    cd.add_argument('--stream-renderer',choices=('hors-render-v1', 'yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'),default='hors-render-v1',help='one renderer for every demo; writes a separate version-labelled comparison cart')
+    cd.add_argument('--stream-renderer',choices=('hors-render-v2', 'hors-render-v1', 'yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'),default='hors-render-v2',help='one renderer for every demo; writes a separate version-labelled comparison cart')
     cda=sub.add_parser('cartridge-demo',help=argparse.SUPPRESS)
     _add_toolchain_args(cda,settings)
     cda.add_argument('--output',help='output basename (default: version and renderer-labelled cart name)')
@@ -1301,8 +1298,8 @@ def make_parser(settings):
     cda.add_argument('--run',action='store_true',help='attach the generated demo CRT directly with VICE -cartcrt')
     cda.add_argument('--prefer',choices=('fps','ram'),default='fps',help='V7/V8: prioritize FPS (default) or smaller Y drawing kernels')
     cda.add_argument('--play-all-seconds',type=int,default=10,help='V7/V8 PLAY ALL duration per animation, 1..255 seconds (default 10; PAL)')
-    cda.add_argument('--stream-renderer',choices=('hors-render-v1', 'yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'),default='hors-render-v1',help='one renderer for every demo; writes a separate version-labelled comparison cart')
-    sub.add_parser('cart-stream',help='build a hors-render-v1 streamed EasyFlash CRT by default (same source flags as build)')
+    cda.add_argument('--stream-renderer',choices=('hors-render-v2', 'hors-render-v1', 'yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'),default='hors-render-v2',help='one renderer for every demo; writes a separate version-labelled comparison cart')
+    sub.add_parser('cart-stream',help='build a hors-render-v2 streamed EasyFlash CRT by default (same source flags as build)')
     doc=sub.add_parser('doctor',help='check local 64tass/VICE and optional Blender/cartconv availability')
     _add_toolchain_args(doc,settings)
     sub.add_parser('list-shapes',help='list procedural/built-in shapes')

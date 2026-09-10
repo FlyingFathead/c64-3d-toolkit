@@ -818,14 +818,13 @@ class TestRc062RenderAndChecksumControls(unittest.TestCase):
         self.assertEqual(merged[merged.index('--sample-step')+1],'3')
         self.assertEqual(merged[merged.index('--renderer')+1],'yunroll')
 
-    def test_release_version_is_071_and_older_menus_are_preserved(self):
+    def test_release_version_tracks_VERSION_and_older_menus_are_preserved(self):
         from tools.c643d import __version__
-        self.assertEqual(__version__,'0.7.1')
         self.assertEqual((ROOT/'VERSION').read_text(encoding='utf-8').strip(),__version__)
         import hashlib, json, re
         for name in ('setup-windows.cmd', 'setup-windows.ps1'):
-            self.assertIn('Target toolkit release: v'+__version__, (ROOT/name).read_text())
-        self.assertIn("$TargetRelease = '"+__version__+"'", (ROOT/'setup-windows.ps1').read_text())
+            self.assertIn('Target toolkit release: read from VERSION', (ROOT/name).read_text())
+        self.assertIn("Join-Path $ToolkitRoot 'VERSION'", (ROOT/'setup-windows.ps1').read_text())
         for name in ('easyflash-demo-runtime.asm', 'easyflash-demo-scroll-runtime.asm'):
             shown=re.findall(r'TOOLKIT (\d+\.\d+\.\d+(?:-rc\d+)?)', (ROOT/'c64/cart'/name).read_text())
             self.assertEqual(set(shown), {'0.6.7'}, name)
@@ -999,7 +998,7 @@ class TestCartridgeDemoStageTwo(unittest.TestCase):
         self.assertLessEqual(manifest['highest_bank_used'],63)
         self.assertEqual(manifest['data_banks_used'],57)
         self.assertEqual(plans[0].name,'TORUS')
-        self.assertEqual(manifest['entries'][0]['source'],'examples/torus/torus.prg')
+        self.assertEqual(manifest['entries'][0]['source'],'build/reference-prgs/examples/torus/torus.prg')
         self.assertFalse(Path(manifest['entries'][0]['source']).is_absolute())
         first_payload=bytearray(CARTRIDGE_DEMO_ENTRIES[0][1].read_bytes()[2:])
         # Cartridge copies redirect only the generated raster IRQ target to the

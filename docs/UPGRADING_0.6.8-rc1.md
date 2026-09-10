@@ -1,3 +1,5 @@
+> Historical version documentation. Current builds and prebuilt examples use [hors-render-v2](HORS_RENDER_V2.md); see [0.7.2 release instructions](RELEASE_0.7.2.md). Older preview binaries are in prior release ZIPs or the external local archive.
+
 # Apply 0.6.8-rc1 to an existing 0.6.7 checkout
 
 > Historical upgrade instructions for the version named above. They are not

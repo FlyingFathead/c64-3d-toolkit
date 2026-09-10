@@ -1,5 +1,7 @@
 # Roadmap
 
+**0.7.2 update:** hors-render-v2 is the default. The measured scene search and full release compiler are available; see [stable v2](HORS_RENDER_V2.md) and [release automation](RELEASE_0.7.2.md). Older milestone descriptions below are retained as history.
+
 ## Renderer / performance
 
 - Cycle-profile `yunroll` hot paths in the VICE monitor.
@@ -63,7 +65,7 @@ Next:
 
 ## Cartridge / streaming backend
 
-The current v0.7.1 menu streams all twelve entries through hors-render-v1,
+The current v0.7.2 menu streams all twelve entries through hors-render-v2,
 using fixed RAM buffers and metadata caches. V2–V7 established banking,
 staging, lossless vector optimizations and authored sequences. V8 added sparse
 byte-span pictures, V9 direct-ROM byte drawing, and hors-render-v1 prefers byte

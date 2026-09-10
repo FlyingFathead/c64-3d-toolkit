@@ -1,0 +1,96 @@
+{
+  "scene_sha256": "f632deb4dc46115dfbca829e1fd75c68e601d3253429b6edae651ad378027594",
+  "toolkit_version": "0.7.1",
+  "source_frames": 6,
+  "vertices": 8,
+  "source_fps": 24.0,
+  "sample_step": 1,
+  "per_frame": [
+    {
+      "frame": 0,
+      "drawing_records": 9,
+      "clear_spans": 19,
+      "colour_spans": 0,
+      "unique_pixels": 377
+    },
+    {
+      "frame": 1,
+      "drawing_records": 9,
+      "clear_spans": 19,
+      "colour_spans": 0,
+      "unique_pixels": 377
+    },
+    {
+      "frame": 2,
+      "drawing_records": 9,
+      "clear_spans": 26,
+      "colour_spans": 0,
+      "unique_pixels": 456
+    },
+    {
+      "frame": 3,
+      "drawing_records": 9,
+      "clear_spans": 30,
+      "colour_spans": 0,
+      "unique_pixels": 458
+    },
+    {
+      "frame": 4,
+      "drawing_records": 9,
+      "clear_spans": 30,
+      "colour_spans": 0,
+      "unique_pixels": 457
+    },
+    {
+      "frame": 5,
+      "drawing_records": 9,
+      "clear_spans": 30,
+      "colour_spans": 0,
+      "unique_pixels": 457
+    }
+  ],
+  "timing_policy": "All candidates use the same authored samples. Different holds may change animation speed; no implicit resampling.",
+  "test_environment": {
+    "PAL": true,
+    "seed": 1,
+    "sound": false,
+    "tass": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/64tass",
+    "cartconv": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/cartconv",
+    "vice": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/x64sc",
+    "vice_data": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/vice-data"
+  },
+  "search_configuration": {
+    "scene": "/workspace/scratch/a2344c11dad9/toolkit-work/c64-3d-toolkit/examples/autotune/repeated-holds.c643dscene",
+    "out": "/workspace/scratch/a2344c11dad9/toolkit-beta-tests/repeated-holds",
+    "renderers": [
+      "hors-render-v1-scene",
+      "hors-render-v2-beta1"
+    ],
+    "preferences": [
+      "ram"
+    ],
+    "ticks": [
+      1
+    ],
+    "plans": [
+      "optimized"
+    ],
+    "gaps": [
+      6
+    ],
+    "batches": [
+      2048
+    ],
+    "objective": "fps",
+    "seconds": 4.0,
+    "max_refreshes": 10000,
+    "jobs": 2,
+    "mono": true,
+    "color_index": 1,
+    "visibility": "surface",
+    "tass": "restored-tools/c64-tools/bin/64tass",
+    "cartconv": "restored-tools/c64-tools/bin/cartconv",
+    "vice": "restored-tools/c64-tools/bin/x64sc",
+    "vice_data": "restored-tools/c64-tools/vice-data"
+  }
+}

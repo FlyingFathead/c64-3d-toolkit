@@ -1,0 +1,12 @@
+{
+  "winner": "hors-render-v2-beta1-fps-optimized-t1-g10-b2048",
+  "objective": "fps",
+  "tie_tolerance_fps": 0.08396069992133542,
+  "throughput_ties": [
+    "hors-render-v2-beta1-fps-optimized-t1-g10-b2048"
+  ],
+  "smallest_ROM_candidate": "hors-render-v2-beta1-fps-optimized-t1-g3-b2048",
+  "slowest_measured_candidate": "hors-render-v1-scene-fps-optimized-t1",
+  "tie_rule": "Prefer a longer minimum hold, then less measured preparation work, then smaller payload",
+  "automatically_promoted": false
+}

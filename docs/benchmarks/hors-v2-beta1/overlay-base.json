@@ -1,0 +1,25 @@
+{
+  "snapshot": "c64-3d-toolkit-2026-09-10_024143.zip",
+  "snapshot_sha256": "74de1edcb9d3608a3cd66ae98412072c30e290ac32ead669d62e19b636a3f3d1",
+  "modified_original_files": {
+    "CHANGELOG.md": "c996ec81cb902f2e346c4cdf65485146e176715746df59e14779b1c1d2805196",
+    "README.md": "85e27961d06ec1da300aa17797041e9478d19808db21efab8583f35f6ffe02ce",
+    "VERSION": "902311c7bb38fa1658ff403def6158ee7378fe9d6e2e284fa1c38735c31bd30b",
+    "docs/PERFORMANCE_COMPARISON.md": "00826f14e22dc4a475d526da7beb140281c0bca1e24fc845ae239c9ce75da1f2",
+    "setup-windows.cmd": "1f56c40f337400b18989e9b2be4eee1023d7e0cb8fc7e1536d23401ed9bfe06d",
+    "setup-windows.ps1": "b3088103a209f0900b0b08cc463af840dd0c2477077f835822a2ff0a68dbf7c0",
+    "tests/test_basic.py": "11cf2a52cab5776f2aebcacaac44176e3a638ff9d0e6e711281114263a5ae0b2",
+    "tools/benchmark_play_all.py": "91c10762de8286b30588c19e558946a3f2283d7793c23d8039ba47c33be827d4",
+    "tools/c643d/__init__.py": "d8a2590d230e1bb292f3603160ead9e198a16315f4c237d48c3b08661dcbd36e",
+    "tools/c643d/cartscene.py": "0216c393bcb1857525f47ff2188dc1592defe2a9585633bacc207a706b354b52",
+    "tools/c643d/cartuniform.py": "1ce1ebeb149c35db84e654a445a19e2b0576d6f963c50b45fbd6f87eefc59a7f",
+    "tools/c643d/cli.py": "1c56c0e5d899464f36263d40c73b52ba7d322a16d4fdf28fef1cde6d7ab6c324",
+    "tools/c643d/renderer_names.py": "27a8b39c0ede13360ee765123167afd2d3328da8b14868c7c775fe44a7c9a3bd",
+    "tools/compare_renderers.py": "5f538af32204a3ba08d2caa95f92a8dcde01e9a611a1ea4d4f5a318af779a7e2",
+    "tools/verify_cart_menu.py": "d00cad08f4d7d8ac5f83bd3bb1f7ae72ae6f67805f85c959a1210c4b640b19de",
+    "tools/verify_cart_stream.py": "69f08187f1fa5f3711143859c93cb7c3259fa209e736ca1503d68e7f6afacd3a"
+  },
+  "deleted_original_files": [],
+  "version": "0.7.2",
+  "renderer": "hors-render-v2-beta1"
+}

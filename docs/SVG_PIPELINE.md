@@ -1,7 +1,9 @@
+> Current default: **hors-render-v2**. [Release build and example migration](RELEASE_0.7.2.md).
+
 # SVG pipeline
 
 `c64-3d-toolkit` can import SVG vector artwork and turn it into wire geometry that uses the same host compiler and selectable C64 backends as OBJ/procedural meshes.
-v0.7.1 defaults to hors-render-v1 EasyFlash output; `--renderer yunroll` selects
+v0.7.2 defaults to hors-render-v2 EasyFlash output; `--renderer yunroll` selects
 the preserved resident PRG vector renderer.
 
 ## Basic use
@@ -65,8 +67,10 @@ The generated frame table is no longer limited to a 360-degree spin. Available h
   --animation-tilt 62 --animation-travel 105 --animation-rise 42 --run
 ```
 
-The animation is a finite precomputed orientation/pose sequence. hors-render-v1
-loops through pictures using direct-ROM byte spans or the vector fallback.
+The animation is a finite precomputed orientation/pose sequence. hors-render-v2
+loops through independent pictures using batched direct-ROM byte spans. The
+preserved v1 backend has a vector fallback; v2 rejects pictures that exceed
+its literal-frame or metadata limits.
 The explicit resident PRG renderers rasterize the encoded lines on the C64.
 
 ## SVG colours -> C64 hires colours

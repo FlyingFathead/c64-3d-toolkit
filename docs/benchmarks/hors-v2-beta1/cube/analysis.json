@@ -1,0 +1,226 @@
+{
+  "scene_sha256": "db69b043fe923c01476ce52a1e33ed283105d2c7c77a14040e5e8c92e74d365e",
+  "toolkit_version": "0.7.1",
+  "source_frames": 24,
+  "vertices": 8,
+  "source_fps": 24.0,
+  "sample_step": 1,
+  "per_frame": [
+    {
+      "frame": 0,
+      "drawing_records": 9,
+      "clear_spans": 19,
+      "colour_spans": 19,
+      "unique_pixels": 377
+    },
+    {
+      "frame": 1,
+      "drawing_records": 9,
+      "clear_spans": 26,
+      "colour_spans": 35,
+      "unique_pixels": 456
+    },
+    {
+      "frame": 2,
+      "drawing_records": 9,
+      "clear_spans": 30,
+      "colour_spans": 33,
+      "unique_pixels": 458
+    },
+    {
+      "frame": 3,
+      "drawing_records": 9,
+      "clear_spans": 30,
+      "colour_spans": 33,
+      "unique_pixels": 457
+    },
+    {
+      "frame": 4,
+      "drawing_records": 9,
+      "clear_spans": 28,
+      "colour_spans": 37,
+      "unique_pixels": 460
+    },
+    {
+      "frame": 5,
+      "drawing_records": 7,
+      "clear_spans": 20,
+      "colour_spans": 20,
+      "unique_pixels": 377
+    },
+    {
+      "frame": 6,
+      "drawing_records": 9,
+      "clear_spans": 19,
+      "colour_spans": 19,
+      "unique_pixels": 377
+    },
+    {
+      "frame": 7,
+      "drawing_records": 9,
+      "clear_spans": 26,
+      "colour_spans": 35,
+      "unique_pixels": 456
+    },
+    {
+      "frame": 8,
+      "drawing_records": 9,
+      "clear_spans": 30,
+      "colour_spans": 35,
+      "unique_pixels": 458
+    },
+    {
+      "frame": 9,
+      "drawing_records": 9,
+      "clear_spans": 30,
+      "colour_spans": 33,
+      "unique_pixels": 457
+    },
+    {
+      "frame": 10,
+      "drawing_records": 9,
+      "clear_spans": 28,
+      "colour_spans": 35,
+      "unique_pixels": 460
+    },
+    {
+      "frame": 11,
+      "drawing_records": 7,
+      "clear_spans": 20,
+      "colour_spans": 20,
+      "unique_pixels": 377
+    },
+    {
+      "frame": 12,
+      "drawing_records": 9,
+      "clear_spans": 19,
+      "colour_spans": 19,
+      "unique_pixels": 377
+    },
+    {
+      "frame": 13,
+      "drawing_records": 9,
+      "clear_spans": 26,
+      "colour_spans": 35,
+      "unique_pixels": 456
+    },
+    {
+      "frame": 14,
+      "drawing_records": 9,
+      "clear_spans": 30,
+      "colour_spans": 33,
+      "unique_pixels": 458
+    },
+    {
+      "frame": 15,
+      "drawing_records": 9,
+      "clear_spans": 30,
+      "colour_spans": 33,
+      "unique_pixels": 457
+    },
+    {
+      "frame": 16,
+      "drawing_records": 9,
+      "clear_spans": 28,
+      "colour_spans": 37,
+      "unique_pixels": 460
+    },
+    {
+      "frame": 17,
+      "drawing_records": 7,
+      "clear_spans": 20,
+      "colour_spans": 20,
+      "unique_pixels": 377
+    },
+    {
+      "frame": 18,
+      "drawing_records": 9,
+      "clear_spans": 19,
+      "colour_spans": 19,
+      "unique_pixels": 377
+    },
+    {
+      "frame": 19,
+      "drawing_records": 9,
+      "clear_spans": 26,
+      "colour_spans": 35,
+      "unique_pixels": 456
+    },
+    {
+      "frame": 20,
+      "drawing_records": 9,
+      "clear_spans": 30,
+      "colour_spans": 35,
+      "unique_pixels": 458
+    },
+    {
+      "frame": 21,
+      "drawing_records": 9,
+      "clear_spans": 30,
+      "colour_spans": 33,
+      "unique_pixels": 457
+    },
+    {
+      "frame": 22,
+      "drawing_records": 9,
+      "clear_spans": 28,
+      "colour_spans": 35,
+      "unique_pixels": 460
+    },
+    {
+      "frame": 23,
+      "drawing_records": 7,
+      "clear_spans": 20,
+      "colour_spans": 20,
+      "unique_pixels": 377
+    }
+  ],
+  "timing_policy": "All candidates use the same authored samples. Different holds may change animation speed; no implicit resampling.",
+  "test_environment": {
+    "PAL": true,
+    "seed": 1,
+    "sound": false,
+    "tass": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/64tass",
+    "cartconv": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/cartconv",
+    "vice": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/x64sc",
+    "vice_data": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/vice-data"
+  },
+  "search_configuration": {
+    "scene": "/workspace/scratch/a2344c11dad9/toolkit-work/c64-3d-toolkit/examples/autotune/colour-cube.c643dscene",
+    "out": "/workspace/scratch/a2344c11dad9/toolkit-beta-tests/cube-final",
+    "renderers": [
+      "hors-render-v1-scene",
+      "hors-render-v2-beta1"
+    ],
+    "preferences": [
+      "fps"
+    ],
+    "ticks": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "plans": [
+      "optimized",
+      "raw"
+    ],
+    "gaps": [
+      6
+    ],
+    "batches": [
+      2048
+    ],
+    "objective": "fps",
+    "seconds": 10.0,
+    "max_refreshes": 10000,
+    "jobs": 4,
+    "mono": false,
+    "color_index": 1,
+    "visibility": "surface",
+    "tass": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/64tass",
+    "cartconv": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/cartconv",
+    "vice": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/x64sc",
+    "vice_data": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/vice-data"
+  }
+}

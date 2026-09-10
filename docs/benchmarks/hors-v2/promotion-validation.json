@@ -1,0 +1,102 @@
+{
+  "passed": true,
+  "methods_compared": 21,
+  "version_label_change": [
+    {
+      "method": "bytechunk-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    },
+    {
+      "method": "hors-render-v2-beta1-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    },
+    {
+      "method": "hors-render-v2-beta1-ram-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    },
+    {
+      "method": "hors-render-v2-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    },
+    {
+      "method": "hors-render-v2-ram-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    },
+    {
+      "method": "step-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    },
+    {
+      "method": "yunroll-cart-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    },
+    {
+      "method": "yunroll-cart-v10-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    },
+    {
+      "method": "yunroll-cart-v10-ram-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    },
+    {
+      "method": "yunroll-cart-v2-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    },
+    {
+      "method": "yunroll-cart-v3-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    },
+    {
+      "method": "yunroll-cart-v4-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    },
+    {
+      "method": "yunroll-cart-v5-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    },
+    {
+      "method": "yunroll-cart-v6-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    },
+    {
+      "method": "yunroll-cart-v7-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    },
+    {
+      "method": "yunroll-cart-v7-ram-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    },
+    {
+      "method": "yunroll-cart-v8-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    },
+    {
+      "method": "yunroll-cart-v8-ram-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    },
+    {
+      "method": "yunroll-cart-v9-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    },
+    {
+      "method": "yunroll-cart-v9-ram-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    },
+    {
+      "method": "yunroll-play-all",
+      "same_display_counts_as_pre_version_fix": true
+    }
+  ],
+  "stable_vs_beta": [
+    {
+      "preference": "fps",
+      "entries": 12,
+      "same_display_counts": true
+    },
+    {
+      "preference": "ram",
+      "entries": 12,
+      "same_display_counts": true
+    }
+  ]
+}

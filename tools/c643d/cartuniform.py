@@ -49,7 +49,7 @@ def demos(root):
     return out
 
 
-def prepare(root,renderer,tass,tass_args=(),sources=None,prefer="fps",work_prefix="uniform"):
+def prepare(root,renderer,tass,tass_args=(),sources=None,prefer="fps",work_prefix="uniform",frame_encoders=None):
     from .renderer_names import implementation
     renderer=implementation(renderer)
     if renderer not in ('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'):raise ValueError('unsupported uniform renderer')
@@ -86,6 +86,8 @@ def prepare(root,renderer,tass,tass_args=(),sources=None,prefer="fps",work_prefi
             from .bytespan import frame_block as encoder
             if variant == 'v10':
                 from .bytespan_v10 import frame_block as encoder
+        if frame_encoders is not None:
+            encoder = frame_encoders.get(demo.name, encoder)
         directory=[]
         for fi,f in enumerate(demo.frames):
             alias=optimization["picture_references"][fi] if optimization else fi
@@ -158,7 +160,10 @@ def play_all_durations(entries, seconds, renderer):
             for entry in entries]
 
 
-def build(a, *, sources=None, reel=False):
+def build(a, *, sources=None, reel=False,frame_encoders=None):
+    if a.stream_renderer == 'hors-render-v2':
+        from .hors_v2_stable import build_menu
+        return build_menu(a,sources=sources,reel=reel,frame_encoders=frame_encoders)
     print('fps locking: not set')
     from . import cli,__version__
     tass=cli.resolve_executable(a.tass,'tass');cartconv=cli.require_cartconv(a.cartconv,verbose=True)
@@ -176,7 +181,8 @@ def build(a, *, sources=None, reel=False):
     metadata=out/'metadata';metadata.mkdir(parents=True,exist_ok=True)
     paths=[out/f'{stem}.crt',metadata/f'{stem}-cart-manifest.json',metadata/f'{stem}-cart-map.txt']
     if not cli._check_overwrite(paths,a.overwrite_policy):return 2
-    entries,frame_image,stream_info,used,first_free=prepare(root,renderer,tass,a.tass_args or (),sources=sources,prefer=prefer,**({"work_prefix":"hifi"} if reel else {}))
+    entries,frame_image,stream_info,used,first_free=prepare(root,renderer,tass,a.tass_args or (),sources=sources,prefer=prefer,
+        **({"work_prefix":"hifi"} if reel else {}),**({"frame_encoders":frame_encoders} if frame_encoders is not None else {}))
     image,plans,manifest=pack_demo_prgs(entries,source_root=root)
     if any(p.banks!=3 for p in plans) or manifest['highest_bank_used']!=first_free-1:raise ValueError('runtime bank reservation differs from planned frame pool')
     for b,chip in used:
@@ -200,9 +206,13 @@ def build(a, *, sources=None, reel=False):
         with (gen/'play-all-durations.inc').open('a') as f:
             f.write(f'HIFI_HORSE_INDEX = {hifi_indices[0]}\nHIFI_FLOWER_INDEX = {hifi_indices[1]}\n')
     runtimes={};shared={}
+    from .versioning import stamp_menu_source
+    menu_source=root/('c64/cart/easyflash-hifi-reel-runtime.asm' if reel else f'c64/cart/easyflash-demo-scroll-runtime-{variant}.asm' if variant in ('v8', 'v9', 'v10') else 'c64/cart/easyflash-demo-scroll-runtime.asm')
+    versioned_menu=work/'menu-runtime.asm'
+    versioned_menu.write_text(stamp_menu_source(menu_source.read_text(),__version__))
     for i,style in enumerate(cli.DEMO_MENU_STYLE_ORDER):
         binpath=work/f'{stem}-runtime-{style}.bin';whole=work/f'{stem}-menu-{style}-whole.bin'
-        subprocess.run([tass,*(a.tass_args or ()),'-I',str(gen),'-D','VICE_DEBUGCART=0','-D','AUTO_LAUNCH=255','-D',f'MENU_STYLE={i}','-D',f'RENDERER_VERSION={int(variant[1:])}','-D',f'PLAY_ALL_SECONDS={seconds}','-b','--vice-labels','-l',str(work/f'{stem}-runtime-{style}.lbl'),'-L',str(work/f'{stem}-runtime-{style}.lst'),'-o',str(whole),str(root/('c64/cart/easyflash-hifi-reel-runtime.asm' if reel else f'c64/cart/easyflash-demo-scroll-runtime-{variant}.asm' if variant in ('v8', 'v9', 'v10') else 'c64/cart/easyflash-demo-scroll-runtime.asm'))],check=True,cwd=root,stdout=subprocess.DEVNULL)
+        subprocess.run([tass,*(a.tass_args or ()),'-I',str(gen),'-D','VICE_DEBUGCART=0','-D','AUTO_LAUNCH=255','-D',f'MENU_STYLE={i}','-D',f'RENDERER_VERSION={int(variant[1:])}','-D',f'PLAY_ALL_SECONDS={seconds}','-b','--vice-labels','-l',str(work/f'{stem}-runtime-{style}.lbl'),'-L',str(work/f'{stem}-runtime-{style}.lst'),'-o',str(whole),str(versioned_menu)],check=True,cwd=root,stdout=subprocess.DEVNULL)
         data=whole.read_bytes()
         if len(data)!=4096:raise ValueError('scroll menu must occupy $c000-$cfff')
         shared[style]=data[:2048];binpath.write_bytes(data[2048:]);runtimes[style]=binpath

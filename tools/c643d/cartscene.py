@@ -226,7 +226,15 @@ def cmd_build_cart_scene(a):
     color,_,percell=cli._scene_color_policy(scene.mesh,a)
     print(f'compiling {len(scene.frames)} authored scene samples with {a.renderer} kernels...',flush=True)
     frames,_=build_scene_frames(scene,visibility_mode='surface' if a.visibility=='auto' else a.visibility,z_tolerance=0.0008 if a.z_tolerance is None else a.z_tolerance,feature_angle=40 if a.feature_angle is None else a.feature_angle,enable_source_colors=percell,fallback_color=c64_color_index(color),height=192,max_frames=MAX_SCENE_FRAMES,max_visible_runs=65535)
-    crt,_=assemble_scene(cli.ROOT,frames,scene,tass=tass,cartconv=cartconv,outdir=outdir,stem=stem,hud_text=a.hud_text or scene.name[:31],frame_ticks=a.frame_ticks,tass_args=a.tass_args or (),colors=percell,color_index=c64_color_index(color),intro=a.intro,text_overlay=a.text_overlay,ending=a.ending,renderer=a.renderer,prefer=getattr(a,"prefer","fps"),output_fps=rate)
+    builder=assemble_scene
+    beta_options={}
+    if getattr(a,'public_renderer','').startswith('hors-render-v2-beta1'):
+        from .hors_v2 import assemble_scene as builder
+        beta_options=dict(draw_gap=getattr(a,'v2_draw_gap',6),batch_budget=getattr(a,'v2_batch_budget',2048))
+    if getattr(a,'public_renderer','') in ('hors-render-v2','hors-render-v2-scene'):
+        from .hors_v2_stable import assemble_scene as builder
+        beta_options=dict(draw_gap=getattr(a,'v2_draw_gap',6),batch_budget=getattr(a,'v2_batch_budget',2048))
+    crt,_=builder(cli.ROOT,frames,scene,tass=tass,cartconv=cartconv,outdir=outdir,stem=stem,hud_text=a.hud_text or scene.name[:31],frame_ticks=a.frame_ticks,tass_args=a.tass_args or (),colors=percell,color_index=c64_color_index(color),intro=a.intro,text_overlay=a.text_overlay,ending=a.ending,renderer=a.renderer,prefer=getattr(a,"prefer","fps"),output_fps=rate,**beta_options)
     if a.run:
         vice=cli.resolve_executable(a.vice,'vice')
         if not vice:raise ValueError('VICE not found')

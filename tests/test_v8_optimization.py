@@ -33,7 +33,7 @@ class V8Tests(unittest.TestCase):
         frozen = json.loads((root/'tests/data/preserved-v0.6.7.json').read_text())
         for name, expected in frozen['files'].items():
             if name.startswith('../'): continue  # Checked separately when the external archive is available.
-            self.assertEqual(hashlib.sha256((root/name).read_bytes()).hexdigest(), expected, name)
+            self.assertEqual(hashlib.sha256((root/('build/reference-prgs/'+name if name.startswith('examples/') and name.endswith('.prg') else name)).read_bytes()).hexdigest(), expected, name)
 
     def test_external_historical_binaries(self):
         import hashlib, json
@@ -47,7 +47,7 @@ class V8Tests(unittest.TestCase):
             if not (root/name).is_file():
                 missing.append(name)
                 continue
-            self.assertEqual(hashlib.sha256((root/name).read_bytes()).hexdigest(),expected,name)
+            self.assertEqual(hashlib.sha256((root/('build/reference-prgs/'+name if name.startswith('examples/') and name.endswith('.prg') else name)).read_bytes()).hexdigest(),expected,name)
         if missing:
             self.skipTest(f'Optional historical archive is incomplete: {len(missing)} reference files absent')
 
@@ -102,8 +102,8 @@ class V8Tests(unittest.TestCase):
 
     def test_cli_keeps_old_defaults_and_accepts_v8(self):
         parser = make_parser(load_toolchain_settings(Path('/missing/c643d.ini')))
-        self.assertEqual(parser.parse_args(['build']).renderer, 'hors-render-v1')
-        self.assertEqual(parser.parse_args(['cart-demos']).stream_renderer, 'hors-render-v1')
+        self.assertEqual(parser.parse_args(['build']).renderer, 'hors-render-v2')
+        self.assertEqual(parser.parse_args(['cart-demos']).stream_renderer, 'hors-render-v2')
         for renderer in ('yunroll-cart-v8', 'yunroll-cart-v8-scene'):
             self.assertEqual(parser.parse_args(['build', '--renderer', renderer]).renderer, renderer)
 

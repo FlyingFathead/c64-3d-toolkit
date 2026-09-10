@@ -1,7 +1,7 @@
 <#
  c64-3d-toolkit Windows installer / configuration assistant
  Installer revision: r24 (2026-09-02)
- Target toolkit release: v0.7.1
+ Target toolkit release: read from VERSION
 
  Security model:
  - Python, Git, VICE and optional Blender are checked against exact package IDs in Microsoft's
@@ -36,8 +36,11 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $InstallerRevision = 'r24'
-$TargetRelease = '0.7.1'
 $ToolkitRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
+$TargetRelease = (Get-Content -LiteralPath (Join-Path $ToolkitRoot 'VERSION') -Raw).Trim()
+if ($TargetRelease -notmatch '^[0-9]+\.[0-9]+\.[0-9]+(?:[-+][0-9A-Za-z.-]+)?$') {
+    throw 'VERSION contains an invalid toolkit version.'
+}
 $ConfigDir = Join-Path $ToolkitRoot 'config'
 $ConfigPath = Join-Path $ConfigDir 'c643d.ini'
 

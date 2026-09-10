@@ -1,7 +1,9 @@
+> Current default: **hors-render-v2**. [Release build and example migration](RELEASE_0.7.2.md).
+
 # Blender animated-scene pipeline
 
-v0.7.1 Blender builds default to hors-render-v1-scene EasyFlash output. See
-[current scene streaming](CARTRIDGE_SCENES.md) and [build targets](V10_TESTING.md).
+v0.7.2 Blender builds default to hors-render-v2-scene EasyFlash output. See
+[current scene streaming](CARTRIDGE_SCENES.md) and [build targets](HORS_RENDER_V2.md).
 Use `--renderer yunroll` explicitly for the preserved resident PRG path. Its
 255-sample/table-RAM limits differ from the streamed scene directory's 2048
 sample maximum; per-frame and total cartridge capacity can limit either earlier.
@@ -18,12 +20,13 @@ scene.blend
     -> evaluated objects + active camera for each sampled frame
     -> temporary .c643dscene interchange data
     -> existing hidden-line / colour / DDA compiler
-    -> hors-render-v1-scene byte-span/vector stream, or explicit resident PRG
+    -> hors-render-v2-scene batched byte-span stream, or explicit resident PRG
 ```
 
 Blender exports geometry, motion, deformation, materials and camera state.
-The host projects/clips that geometry, then hors-render-v1 prefers sparse
-bitmap-byte spans for direct ROM-to-bitmap copying, with a vector fallback.
+The host projects/clips that geometry, then hors-render-v2 encodes independent literal bitmap spans for batched
+ROM-to-bitmap copying. The explicit v1 backend retains its vector fallback;
+v2 rejects inputs that exceed its final literal-frame or metadata limits.
 Explicit resident PRG renderers rasterize the encoded vectors on the C64.
 
 ## Install and verify Blender

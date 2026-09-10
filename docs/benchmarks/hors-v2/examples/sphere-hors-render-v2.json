@@ -1,0 +1,22 @@
+{
+  "cartridge": "sphere-hors-render-v2.crt",
+  "menu_entry": null,
+  "verified_frames": 387,
+  "orientations": 192,
+  "bitmap_bytes_checked": 2972160,
+  "color_bytes_checked": 371520,
+  "slots": {
+    "1": 129,
+    "2": 129,
+    "0": 129
+  },
+  "average_fps": 17.502409617040342,
+  "min_frame_cycles": 39053,
+  "max_frame_cycles": 58434,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "path": "examples/sphere/sphere-hors-render-v2.crt",
+  "entry": null,
+  "sha256": "5f9435072fbd6352e0713695bd022a13c50ee6cab170df8c188fd5a5138a2948"
+}

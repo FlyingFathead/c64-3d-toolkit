@@ -1,3 +1,5 @@
+> Current default: **hors-render-v2**. [Release build and example migration](RELEASE_0.7.2.md).
+
 # Toolchain configuration
 
 `c64-3d-toolkit` can run with no configuration file. Built-in defaults are:
@@ -173,10 +175,10 @@ For cartridge builds, `cartconv.exe` is part of the VICE tool set. If it is not
 on `PATH`, configure its exact path (or the containing VICE directory) in the
 `[windows]` section, or pass `--cartconv` to the cartridge command.
 
-## Render/build defaults (v0.7.1)
+## Render/build defaults (v0.7.2)
 
-The default renderer is hors-render-v1 for `build`, `cart-stream` and
-`cart-demos`; authored inputs select hors-render-v1-scene. Explicit
+The default renderer is hors-render-v2 for `build`, `cart-stream` and
+`cart-demos`; authored inputs select hors-render-v2-scene. Explicit
 `--renderer step|bytechunk|yunroll` selects resident PRG output. The following
 settings originated with the PRG path and remain available in `[render_defaults]`:
 
@@ -217,11 +219,11 @@ Command-line options always override `[render_defaults]` for that invocation.
 
 | CLI option | Default | Scope |
 | --- | --- | --- |
-| `--prefer fps|ram` | `fps` | V7–V10 stream/scene renderers, including hors-render-v1; RAM selects smaller Y kernels |
+| `--prefer fps|ram` | `fps` | V7–V10 stream/scene renderers, including hors-render-v2; RAM selects smaller Y kernels |
 | `--play-all-seconds N` | `10` | V7–V10 multi-demo menus; integer 1..255, 50 PAL ticks per second |
 
 `cart-demos` / `cartridge-demo` accept both; individual `build` and
-`cart-stream` accept `--prefer`. The general CLI default is hors-render-v1,
+`cart-stream` accept `--prefer`. The general CLI default is hors-render-v2,
 not V7. The generated menu's RAM name gains `-ram` unless `--output` is supplied.
 Fixed bitmap/staging allocations do not shrink with RAM preference.
 
@@ -236,7 +238,7 @@ picture from its window. F5 is an exhibition schedule, not an A/B benchmark.
 See the [comparison protocol](PERFORMANCE_COMPARISON.md).
 
 For authored scenes, `--frame-ticks N` specifies integer PAL holds. The optional
-`--blender-output-fps N` on hors-render-v1 Blender builds selects integer source
+`--blender-output-fps N` on hors-render-v2 Blender builds selects integer source
 samples and fractional PAL holds. It requires the default sample step of 1;
 do not combine it with custom frame ticks. Requested pacing is not a guarantee
-of achieved throughput. See [current scene builds](V10_TESTING.md).
+of achieved throughput. See [current scene builds](HORS_RENDER_V2.md).

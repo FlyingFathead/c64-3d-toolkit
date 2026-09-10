@@ -2,7 +2,7 @@
 """Verify the finite Marbles story in real PAL VICE, including text and timing."""
 import argparse,json,re,subprocess,tempfile
 from pathlib import Path
-from verify_cart_stream import labels,render_ram
+from verify_cart_stream import labels,render_ram,startup_monitor
 from c643d.colors import C64_PALETTE
 
 MESSAGE="HEY... DON'T LOSE YOUR MARBLES. :-)"
@@ -23,9 +23,12 @@ def verify(crt,vice,data,out):
     assert manifest.get('ending')
     stages=['intro_start','frame_begin','outro_start','greeting_oops','greeting_done','outro_credits_visible','fake_basic_ready','ghost_message_done','ghost_idle','ghost_idle']
     with tempfile.TemporaryDirectory() as tmp:
-        tmp=Path(tmp);mon=['delete']
+        tmp=Path(tmp);startup,first_go=startup_monitor(manifest,syms);mon=['delete']
         for i,name in enumerate(stages):
-            mon += [f'break ${syms[name]:04x}','g','bank ram',f'bsave "{tmp/i.__str__()}.ram" 0 $0000 $ffff','bank cpu',f'bsave "{tmp/i.__str__()}.io" 0 $d000 $dbff','stopwatch','delete']
+            # intro_start is before the build screen: observe it first, then
+            # acknowledge SPACE before advancing to frame_begin.
+            if i==1: mon += startup
+            mon += [f'break ${syms[name]:04x}',first_go if i==1 else 'g','bank ram',f'bsave "{tmp/i.__str__()}.ram" 0 $0000 $ffff','bank cpu',f'bsave "{tmp/i.__str__()}.io" 0 $d000 $dbff','stopwatch','delete']
         mon += ['quit'];(tmp/'run.mon').write_text('\n'.join(mon)+'\n')
         cmd=[vice,'-console', '+easyflashcrtwrite','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(tmp/'run.mon'),'-monlog','-monlogname',str(tmp/'monitor.log'),'-limitcycles','160000000']
         if data:cmd+=['-directory',str(data)]

@@ -1,0 +1,19 @@
+{
+  "cartridge": "demo-cart-2-preview-hors-v1.crt",
+  "menu_entry": 6,
+  "verified_frames": 203,
+  "orientations": 100,
+  "bitmap_bytes_checked": 1559040,
+  "color_bytes_checked": 194880,
+  "slots": {
+    "1": 68,
+    "2": 68,
+    "0": 67
+  },
+  "average_fps": 12.354434666941623,
+  "min_frame_cycles": 58347,
+  "max_frame_cycles": 86956,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0
+}

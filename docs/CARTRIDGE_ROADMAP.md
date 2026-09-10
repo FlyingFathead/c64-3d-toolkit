@@ -1,10 +1,12 @@
 # Cartridge / streaming roadmap
 
+**0.7.2 update:** hors-render-v2 is the default. The measured scene search and full release compiler are available; see [stable v2](HORS_RENDER_V2.md) and [release automation](RELEASE_0.7.2.md). Older milestone descriptions below are retained as history.
+
 ## Delivered in 0.7.0 and remaining work
 
 EasyFlash boot, banked frame streaming, menu controls, authored sequences,
 comparison reports and direct-ROM byte-span rendering are implemented.
-hors-render-v1 is the default. Marbles ships as the accepted 640-sample,
+hors-render-v2 is the default. Marbles ships as the accepted 640-sample,
 16 FPS force-bytes presentation, with its timing compromise documented.
 General automatic timing/encoding selection, music integration and GMod
 backends remain future work. See [current status](ROADMAP.md) and

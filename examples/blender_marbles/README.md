@@ -1,8 +1,8 @@
-⚠️🐴 Attention! For best quality, please enjoy each animation with `hors-render-v1` or a newer variant.
+⚠️🐴 Attention! For best quality, please enjoy each animation with `hors-render-v2` or a newer variant.
 
-Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
+Recommended for quality and FPS: the `hors-render-v2` cartridge linked below.
 
-**Current hors-render-v1 cartridge:** [play the example](../cart_marbles/README.md).
+**Current hors-render-v2 cartridge:** [play the example](../cart_marbles/README.md).
 
 # Don't Lose Your Marbles: Blender example
 

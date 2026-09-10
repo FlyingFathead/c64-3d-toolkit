@@ -69,7 +69,7 @@ class ComparisonTests(unittest.TestCase):
     def test_cart_stream_default_and_explicit_old_method(self):
         with patch.object(cli,'cmd_build',return_value=0) as build,contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(cli.main(['cart-stream','--no-config']),0)
-            self.assertEqual(build.call_args.args[0].renderer,'hors-render-v1')
+            self.assertEqual(build.call_args.args[0].renderer,'hors-render-v2')
             self.assertEqual(cli.main(['cart-stream','--no-config','--renderer','yunroll-cart-v2']),0)
             self.assertEqual(build.call_args.args[0].renderer,'yunroll-cart-v2')
 

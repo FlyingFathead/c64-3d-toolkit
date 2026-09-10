@@ -1,0 +1,27 @@
+{
+  "cartridge": "horse_and_sunflower-hors-render-v2-scene.crt",
+  "menu_entry": null,
+  "verified_frames": 171,
+  "orientations": 84,
+  "bitmap_bytes_checked": 1313280,
+  "color_bytes_checked": 164160,
+  "slots": {
+    "1": 49,
+    "2": 58,
+    "0": 64
+  },
+  "average_fps": 7.617544439878252,
+  "min_frame_cycles": 6578,
+  "max_frame_cycles": 256129,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 52,
+  "loop_seconds": 11.132224576959304,
+  "target_fps": 8.333333333333334,
+  "hud_match": true,
+  "text_overlay": false,
+  "frame_index_bits": 16,
+  "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt",
+  "entry": null,
+  "sha256": "adc52c5615a9b1288bafd8b586ffaa7a58e2916dcffa57aedefd807820554647"
+}

@@ -1,0 +1,3460 @@
+{
+  "name": "marbles-hud",
+  "renderer": "v6-scene",
+  "diagnostic_only": true,
+  "profile": {
+    "cartridge": "marbles-hud-v6.crt",
+    "sha256": "db7494927f8ac42958f1641856df0ca87ffa460b66797d3dbcf986fc5ee1bcbf",
+    "renderer": "yunroll-cart-v6-scene",
+    "menu_entry": null,
+    "frames": 200,
+    "finite": true,
+    "warmup_frames": 0,
+    "clock_hz": 985248,
+    "accounting": "PAL elapsed cycles include VIC stalls and IRQs; publish_wait includes call/ready tests; final advance includes final display hold.",
+    "mean_cycles": {
+      "directory": 135.72,
+      "recycle_bitmap_and_colors": 18479.42,
+      "fetch": 22165.28,
+      "apply_colors": 5960.9,
+      "draw_lines": 91215.96,
+      "bookkeeping": 11.21,
+      "publish_wait": 15399.72,
+      "publish_commit": 33.28,
+      "advance_and_final_hold": 1588.53
+    },
+    "mean_render_cycles": 137957.27,
+    "worst_render_cycles": 297677,
+    "mean_total_cycles": 154990.02,
+    "worst_total_cycles": 412605,
+    "measured_seconds": 31.46213339179577,
+    "frames_per_second": 6.356848008665333,
+    "samples": [
+      {
+        "frame": 0,
+        "cycles": {
+          "directory": 22438,
+          "recycle_bitmap_and_colors": 32,
+          "fetch": 5126,
+          "apply_colors": 2936,
+          "draw_lines": 18309,
+          "bookkeeping": 54,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 48841,
+        "total_cycles": 49044
+      },
+      {
+        "frame": 1,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 32,
+          "fetch": 5732,
+          "apply_colors": 2969,
+          "draw_lines": 18445,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 27201,
+        "total_cycles": 27361
+      },
+      {
+        "frame": 2,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 32,
+          "fetch": 5710,
+          "apply_colors": 2838,
+          "draw_lines": 18626,
+          "bookkeeping": 11,
+          "publish_wait": 93457,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 27229,
+        "total_cycles": 120824
+      },
+      {
+        "frame": 3,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 9979,
+          "fetch": 6008,
+          "apply_colors": 3109,
+          "draw_lines": 18776,
+          "bookkeeping": 11,
+          "publish_wait": 99552,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 37895,
+        "total_cycles": 137585
+      },
+      {
+        "frame": 4,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 9811,
+          "fetch": 7313,
+          "apply_colors": 3600,
+          "draw_lines": 21870,
+          "bookkeeping": 11,
+          "publish_wait": 94843,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 42617,
+        "total_cycles": 137598
+      },
+      {
+        "frame": 5,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 10309,
+          "fetch": 8438,
+          "apply_colors": 3596,
+          "draw_lines": 25294,
+          "bookkeeping": 11,
+          "publish_wait": 89791,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 47660,
+        "total_cycles": 137589
+      },
+      {
+        "frame": 6,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 10436,
+          "fetch": 9252,
+          "apply_colors": 3708,
+          "draw_lines": 27902,
+          "bookkeeping": 11,
+          "publish_wait": 86135,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 51321,
+        "total_cycles": 137594
+      },
+      {
+        "frame": 7,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 12098,
+          "fetch": 8573,
+          "apply_colors": 4096,
+          "draw_lines": 32027,
+          "bookkeeping": 11,
+          "publish_wait": 80640,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 56817,
+        "total_cycles": 137595
+      },
+      {
+        "frame": 8,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 12595,
+          "fetch": 8297,
+          "apply_colors": 3932,
+          "draw_lines": 31472,
+          "bookkeeping": 11,
+          "publish_wait": 81133,
+          "publish_commit": 32,
+          "advance_and_final_hold": 881
+        },
+        "render_cycles": 56319,
+        "total_cycles": 138376
+      },
+      {
+        "frame": 9,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 13465,
+          "fetch": 9415,
+          "apply_colors": 4413,
+          "draw_lines": 35006,
+          "bookkeeping": 11,
+          "publish_wait": 74340,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 62322,
+        "total_cycles": 136800
+      },
+      {
+        "frame": 10,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 14901,
+          "fetch": 9445,
+          "apply_colors": 4504,
+          "draw_lines": 34304,
+          "bookkeeping": 11,
+          "publish_wait": 74277,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 63177,
+        "total_cycles": 137592
+      },
+      {
+        "frame": 11,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 14029,
+          "fetch": 10184,
+          "apply_colors": 5122,
+          "draw_lines": 39698,
+          "bookkeeping": 11,
+          "publish_wait": 68405,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 69056,
+        "total_cycles": 137599
+      },
+      {
+        "frame": 12,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 15131,
+          "fetch": 10097,
+          "apply_colors": 5176,
+          "draw_lines": 41791,
+          "bookkeeping": 11,
+          "publish_wait": 65231,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 72218,
+        "total_cycles": 137587
+      },
+      {
+        "frame": 13,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 14965,
+          "fetch": 10933,
+          "apply_colors": 5323,
+          "draw_lines": 42931,
+          "bookkeeping": 11,
+          "publish_wait": 63277,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 74175,
+        "total_cycles": 137590
+      },
+      {
+        "frame": 14,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16733,
+          "fetch": 11370,
+          "apply_colors": 5617,
+          "draw_lines": 45004,
+          "bookkeeping": 11,
+          "publish_wait": 58715,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 78747,
+        "total_cycles": 137600
+      },
+      {
+        "frame": 15,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17276,
+          "fetch": 11647,
+          "apply_colors": 5598,
+          "draw_lines": 45257,
+          "bookkeeping": 11,
+          "publish_wait": 57653,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 79801,
+        "total_cycles": 137592
+      },
+      {
+        "frame": 16,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16484,
+          "fetch": 11622,
+          "apply_colors": 6019,
+          "draw_lines": 49665,
+          "bookkeeping": 11,
+          "publish_wait": 53639,
+          "publish_commit": 32,
+          "advance_and_final_hold": 881
+        },
+        "render_cycles": 83813,
+        "total_cycles": 138376
+      },
+      {
+        "frame": 17,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17278,
+          "fetch": 11761,
+          "apply_colors": 5564,
+          "draw_lines": 46645,
+          "bookkeeping": 11,
+          "publish_wait": 55394,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 81271,
+        "total_cycles": 136803
+      },
+      {
+        "frame": 18,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17275,
+          "fetch": 11433,
+          "apply_colors": 5626,
+          "draw_lines": 45209,
+          "bookkeeping": 11,
+          "publish_wait": 57887,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 79566,
+        "total_cycles": 137591
+      },
+      {
+        "frame": 19,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18002,
+          "fetch": 10481,
+          "apply_colors": 5475,
+          "draw_lines": 47282,
+          "bookkeeping": 11,
+          "publish_wait": 56195,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 81263,
+        "total_cycles": 137596
+      },
+      {
+        "frame": 20,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16692,
+          "fetch": 10462,
+          "apply_colors": 5274,
+          "draw_lines": 47713,
+          "bookkeeping": 11,
+          "publish_wait": 57284,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 80164,
+        "total_cycles": 137586
+      },
+      {
+        "frame": 21,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16548,
+          "fetch": 10406,
+          "apply_colors": 5461,
+          "draw_lines": 46458,
+          "bookkeeping": 11,
+          "publish_wait": 58562,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 78896,
+        "total_cycles": 137596
+      },
+      {
+        "frame": 22,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 15716,
+          "fetch": 12756,
+          "apply_colors": 4977,
+          "draw_lines": 45070,
+          "bookkeeping": 11,
+          "publish_wait": 58913,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 78542,
+        "total_cycles": 137593
+      },
+      {
+        "frame": 23,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 15511,
+          "fetch": 11299,
+          "apply_colors": 5323,
+          "draw_lines": 48868,
+          "bookkeeping": 11,
+          "publish_wait": 56429,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 81024,
+        "total_cycles": 137591
+      },
+      {
+        "frame": 24,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 15693,
+          "fetch": 13505,
+          "apply_colors": 5565,
+          "draw_lines": 51919,
+          "bookkeeping": 11,
+          "publish_wait": 50747,
+          "publish_commit": 32,
+          "advance_and_final_hold": 881
+        },
+        "render_cycles": 86705,
+        "total_cycles": 138376
+      },
+      {
+        "frame": 25,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 15239,
+          "fetch": 15619,
+          "apply_colors": 6123,
+          "draw_lines": 60635,
+          "bookkeeping": 11,
+          "publish_wait": 39031,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 97639,
+        "total_cycles": 136808
+      },
+      {
+        "frame": 26,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16112,
+          "fetch": 17589,
+          "apply_colors": 6161,
+          "draw_lines": 65398,
+          "bookkeeping": 11,
+          "publish_wait": 32175,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 105283,
+        "total_cycles": 137596
+      },
+      {
+        "frame": 27,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16757,
+          "fetch": 18908,
+          "apply_colors": 5968,
+          "draw_lines": 73973,
+          "bookkeeping": 11,
+          "publish_wait": 21820,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 115629,
+        "total_cycles": 137587
+      },
+      {
+        "frame": 28,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17898,
+          "fetch": 21761,
+          "apply_colors": 6084,
+          "draw_lines": 79432,
+          "bookkeeping": 11,
+          "publish_wait": 12257,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 125198,
+        "total_cycles": 137593
+      },
+      {
+        "frame": 29,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18149,
+          "fetch": 21164,
+          "apply_colors": 5853,
+          "draw_lines": 79760,
+          "bookkeeping": 11,
+          "publish_wait": 12509,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 124949,
+        "total_cycles": 137596
+      },
+      {
+        "frame": 30,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18523,
+          "fetch": 21985,
+          "apply_colors": 5706,
+          "draw_lines": 85043,
+          "bookkeeping": 11,
+          "publish_wait": 6170,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 131280,
+        "total_cycles": 137588
+      },
+      {
+        "frame": 31,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19690,
+          "fetch": 22995,
+          "apply_colors": 5956,
+          "draw_lines": 88596,
+          "bookkeeping": 11,
+          "publish_wait": 191,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 137260,
+        "total_cycles": 137589
+      },
+      {
+        "frame": 32,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19039,
+          "fetch": 25166,
+          "apply_colors": 5595,
+          "draw_lines": 94555,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 967
+        },
+        "render_cycles": 144378,
+        "total_cycles": 145410
+      },
+      {
+        "frame": 33,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18218,
+          "fetch": 25708,
+          "apply_colors": 6075,
+          "draw_lines": 98184,
+          "bookkeeping": 11,
+          "publish_wait": 65,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 148208,
+        "total_cycles": 148411
+      },
+      {
+        "frame": 34,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18009,
+          "fetch": 27638,
+          "apply_colors": 6543,
+          "draw_lines": 105296,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 75,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 157509,
+        "total_cycles": 157712
+      },
+      {
+        "frame": 35,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16926,
+          "fetch": 26532,
+          "apply_colors": 6492,
+          "draw_lines": 103416,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 153389,
+        "total_cycles": 153549
+      },
+      {
+        "frame": 36,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17469,
+          "fetch": 29702,
+          "apply_colors": 6644,
+          "draw_lines": 114726,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 168564,
+        "total_cycles": 168724
+      },
+      {
+        "frame": 37,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18902,
+          "fetch": 28056,
+          "apply_colors": 6815,
+          "draw_lines": 107696,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 161492,
+        "total_cycles": 161652
+      },
+      {
+        "frame": 38,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19502,
+          "fetch": 24956,
+          "apply_colors": 6310,
+          "draw_lines": 100715,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 151506,
+        "total_cycles": 151666
+      },
+      {
+        "frame": 39,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 20118,
+          "fetch": 25090,
+          "apply_colors": 6264,
+          "draw_lines": 101044,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 881
+        },
+        "render_cycles": 152539,
+        "total_cycles": 153485
+      },
+      {
+        "frame": 40,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19803,
+          "fetch": 25541,
+          "apply_colors": 6319,
+          "draw_lines": 101885,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 153571,
+        "total_cycles": 153731
+      },
+      {
+        "frame": 41,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18458,
+          "fetch": 26722,
+          "apply_colors": 5898,
+          "draw_lines": 105279,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 156380,
+        "total_cycles": 156540
+      },
+      {
+        "frame": 42,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18057,
+          "fetch": 25724,
+          "apply_colors": 5694,
+          "draw_lines": 102141,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 151639,
+        "total_cycles": 151799
+      },
+      {
+        "frame": 43,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18306,
+          "fetch": 25277,
+          "apply_colors": 5765,
+          "draw_lines": 101059,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 150430,
+        "total_cycles": 150590
+      },
+      {
+        "frame": 44,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17252,
+          "fetch": 25987,
+          "apply_colors": 6119,
+          "draw_lines": 101784,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 151165,
+        "total_cycles": 151325
+      },
+      {
+        "frame": 45,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16463,
+          "fetch": 25302,
+          "apply_colors": 5179,
+          "draw_lines": 100914,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 147881,
+        "total_cycles": 148041
+      },
+      {
+        "frame": 46,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16331,
+          "fetch": 24286,
+          "apply_colors": 5728,
+          "draw_lines": 98120,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 966
+        },
+        "render_cycles": 144488,
+        "total_cycles": 145519
+      },
+      {
+        "frame": 47,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16837,
+          "fetch": 23726,
+          "apply_colors": 5448,
+          "draw_lines": 96419,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 142453,
+        "total_cycles": 142613
+      },
+      {
+        "frame": 48,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16116,
+          "fetch": 23153,
+          "apply_colors": 5765,
+          "draw_lines": 91757,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 136814,
+        "total_cycles": 136974
+      },
+      {
+        "frame": 49,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16808,
+          "fetch": 22349,
+          "apply_colors": 5639,
+          "draw_lines": 87658,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 138
+        },
+        "render_cycles": 132477,
+        "total_cycles": 132680
+      },
+      {
+        "frame": 50,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16949,
+          "fetch": 23470,
+          "apply_colors": 5379,
+          "draw_lines": 90462,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 136283,
+        "total_cycles": 136443
+      },
+      {
+        "frame": 51,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17631,
+          "fetch": 23020,
+          "apply_colors": 5576,
+          "draw_lines": 88049,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 134299,
+        "total_cycles": 134459
+      },
+      {
+        "frame": 52,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17447,
+          "fetch": 18217,
+          "apply_colors": 5727,
+          "draw_lines": 71708,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 113122,
+        "total_cycles": 113282
+      },
+      {
+        "frame": 53,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17218,
+          "fetch": 17631,
+          "apply_colors": 5450,
+          "draw_lines": 67533,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 107855,
+        "total_cycles": 108015
+      },
+      {
+        "frame": 54,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17587,
+          "fetch": 15670,
+          "apply_colors": 5042,
+          "draw_lines": 63331,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 881
+        },
+        "render_cycles": 101653,
+        "total_cycles": 102599
+      },
+      {
+        "frame": 55,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17246,
+          "fetch": 16587,
+          "apply_colors": 4576,
+          "draw_lines": 61591,
+          "bookkeeping": 11,
+          "publish_wait": 14766,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 100023,
+        "total_cycles": 114927
+      },
+      {
+        "frame": 56,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16858,
+          "fetch": 17678,
+          "apply_colors": 5272,
+          "draw_lines": 71248,
+          "bookkeeping": 11,
+          "publish_wait": 26374,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 111079,
+        "total_cycles": 137591
+      },
+      {
+        "frame": 57,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 15490,
+          "fetch": 17502,
+          "apply_colors": 5474,
+          "draw_lines": 68839,
+          "bookkeeping": 11,
+          "publish_wait": 30131,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 107328,
+        "total_cycles": 137597
+      },
+      {
+        "frame": 58,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 14569,
+          "fetch": 18718,
+          "apply_colors": 6263,
+          "draw_lines": 73973,
+          "bookkeeping": 11,
+          "publish_wait": 23909,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 113546,
+        "total_cycles": 137593
+      },
+      {
+        "frame": 59,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 15652,
+          "fetch": 21290,
+          "apply_colors": 6092,
+          "draw_lines": 81842,
+          "bookkeeping": 11,
+          "publish_wait": 12554,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 124899,
+        "total_cycles": 137591
+      },
+      {
+        "frame": 60,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17068,
+          "fetch": 18361,
+          "apply_colors": 6444,
+          "draw_lines": 77235,
+          "bookkeeping": 11,
+          "publish_wait": 18321,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 119131,
+        "total_cycles": 137590
+      },
+      {
+        "frame": 61,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19503,
+          "fetch": 15045,
+          "apply_colors": 6071,
+          "draw_lines": 60803,
+          "bookkeeping": 11,
+          "publish_wait": 36007,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 101445,
+        "total_cycles": 137590
+      },
+      {
+        "frame": 62,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19353,
+          "fetch": 16039,
+          "apply_colors": 6350,
+          "draw_lines": 67354,
+          "bookkeeping": 11,
+          "publish_wait": 28337,
+          "publish_commit": 32,
+          "advance_and_final_hold": 881
+        },
+        "render_cycles": 109119,
+        "total_cycles": 138380
+      },
+      {
+        "frame": 63,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 20771,
+          "fetch": 17274,
+          "apply_colors": 6095,
+          "draw_lines": 70020,
+          "bookkeeping": 11,
+          "publish_wait": 22484,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 114183,
+        "total_cycles": 136805
+      },
+      {
+        "frame": 64,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19692,
+          "fetch": 18984,
+          "apply_colors": 6613,
+          "draw_lines": 80190,
+          "bookkeeping": 11,
+          "publish_wait": 11953,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 125502,
+        "total_cycles": 137593
+      },
+      {
+        "frame": 65,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 20979,
+          "fetch": 18197,
+          "apply_colors": 5940,
+          "draw_lines": 75771,
+          "bookkeeping": 11,
+          "publish_wait": 16539,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 120910,
+        "total_cycles": 137587
+      },
+      {
+        "frame": 66,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 20688,
+          "fetch": 15062,
+          "apply_colors": 6029,
+          "draw_lines": 59897,
+          "bookkeeping": 11,
+          "publish_wait": 35755,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 101699,
+        "total_cycles": 137592
+      },
+      {
+        "frame": 67,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 21685,
+          "fetch": 15214,
+          "apply_colors": 6121,
+          "draw_lines": 64045,
+          "bookkeeping": 11,
+          "publish_wait": 30372,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 107088,
+        "total_cycles": 137598
+      },
+      {
+        "frame": 68,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19443,
+          "fetch": 14022,
+          "apply_colors": 5811,
+          "draw_lines": 59273,
+          "bookkeeping": 11,
+          "publish_wait": 38878,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 98572,
+        "total_cycles": 137588
+      },
+      {
+        "frame": 69,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18336,
+          "fetch": 13374,
+          "apply_colors": 5698,
+          "draw_lines": 56333,
+          "bookkeeping": 11,
+          "publish_wait": 43692,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 93764,
+        "total_cycles": 137594
+      },
+      {
+        "frame": 70,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19465,
+          "fetch": 15222,
+          "apply_colors": 5486,
+          "draw_lines": 55618,
+          "bookkeeping": 11,
+          "publish_wait": 41639,
+          "publish_commit": 32,
+          "advance_and_final_hold": 881
+        },
+        "render_cycles": 95814,
+        "total_cycles": 138377
+      },
+      {
+        "frame": 71,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18238,
+          "fetch": 14126,
+          "apply_colors": 5757,
+          "draw_lines": 56729,
+          "bookkeeping": 11,
+          "publish_wait": 41792,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 94873,
+        "total_cycles": 136803
+      },
+      {
+        "frame": 72,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17131,
+          "fetch": 16259,
+          "apply_colors": 5414,
+          "draw_lines": 56573,
+          "bookkeeping": 11,
+          "publish_wait": 42060,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 95400,
+        "total_cycles": 137598
+      },
+      {
+        "frame": 73,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16773,
+          "fetch": 16832,
+          "apply_colors": 5542,
+          "draw_lines": 67553,
+          "bookkeeping": 11,
+          "publish_wait": 30732,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 106723,
+        "total_cycles": 137593
+      },
+      {
+        "frame": 74,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17113,
+          "fetch": 17085,
+          "apply_colors": 5189,
+          "draw_lines": 63079,
+          "bookkeeping": 11,
+          "publish_wait": 34963,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 102489,
+        "total_cycles": 137590
+      },
+      {
+        "frame": 75,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16026,
+          "fetch": 17320,
+          "apply_colors": 4899,
+          "draw_lines": 63839,
+          "bookkeeping": 11,
+          "publish_wait": 35350,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 102107,
+        "total_cycles": 137595
+      },
+      {
+        "frame": 76,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17382,
+          "fetch": 19792,
+          "apply_colors": 4893,
+          "draw_lines": 68484,
+          "bookkeeping": 11,
+          "publish_wait": 26876,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 110574,
+        "total_cycles": 137588
+      },
+      {
+        "frame": 77,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16981,
+          "fetch": 18856,
+          "apply_colors": 4970,
+          "draw_lines": 70656,
+          "bookkeeping": 11,
+          "publish_wait": 25971,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 111486,
+        "total_cycles": 137595
+      },
+      {
+        "frame": 78,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16087,
+          "fetch": 19183,
+          "apply_colors": 5277,
+          "draw_lines": 75395,
+          "bookkeeping": 11,
+          "publish_wait": 21489,
+          "publish_commit": 32,
+          "advance_and_final_hold": 881
+        },
+        "render_cycles": 115965,
+        "total_cycles": 138378
+      },
+      {
+        "frame": 79,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16904,
+          "fetch": 21572,
+          "apply_colors": 5268,
+          "draw_lines": 86746,
+          "bookkeeping": 11,
+          "publish_wait": 6152,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 130513,
+        "total_cycles": 136803
+      },
+      {
+        "frame": 80,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16545,
+          "fetch": 22932,
+          "apply_colors": 5382,
+          "draw_lines": 89436,
+          "bookkeeping": 11,
+          "publish_wait": 3140,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 134318,
+        "total_cycles": 137596
+      },
+      {
+        "frame": 81,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17027,
+          "fetch": 23528,
+          "apply_colors": 5465,
+          "draw_lines": 95835,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 141878,
+        "total_cycles": 142038
+      },
+      {
+        "frame": 82,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18176,
+          "fetch": 22025,
+          "apply_colors": 5663,
+          "draw_lines": 88255,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 134142,
+        "total_cycles": 134302
+      },
+      {
+        "frame": 83,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18618,
+          "fetch": 24324,
+          "apply_colors": 5890,
+          "draw_lines": 98312,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 138
+        },
+        "render_cycles": 147167,
+        "total_cycles": 147370
+      },
+      {
+        "frame": 84,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18569,
+          "fetch": 24037,
+          "apply_colors": 5972,
+          "draw_lines": 97605,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 146206,
+        "total_cycles": 146366
+      },
+      {
+        "frame": 85,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17920,
+          "fetch": 25439,
+          "apply_colors": 5692,
+          "draw_lines": 103005,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 967
+        },
+        "render_cycles": 152079,
+        "total_cycles": 153111
+      },
+      {
+        "frame": 86,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18568,
+          "fetch": 27769,
+          "apply_colors": 6177,
+          "draw_lines": 111800,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 164337,
+        "total_cycles": 164497
+      },
+      {
+        "frame": 87,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18223,
+          "fetch": 27608,
+          "apply_colors": 6475,
+          "draw_lines": 112197,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 164526,
+        "total_cycles": 164686
+      },
+      {
+        "frame": 88,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17801,
+          "fetch": 28915,
+          "apply_colors": 5834,
+          "draw_lines": 115500,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 168073,
+        "total_cycles": 168233
+      },
+      {
+        "frame": 89,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19044,
+          "fetch": 28290,
+          "apply_colors": 6361,
+          "draw_lines": 109247,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 162965,
+        "total_cycles": 163125
+      },
+      {
+        "frame": 90,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19097,
+          "fetch": 28442,
+          "apply_colors": 5434,
+          "draw_lines": 105404,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 158400,
+        "total_cycles": 158560
+      },
+      {
+        "frame": 91,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18867,
+          "fetch": 27352,
+          "apply_colors": 5599,
+          "draw_lines": 106578,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 967
+        },
+        "render_cycles": 158419,
+        "total_cycles": 159451
+      },
+      {
+        "frame": 92,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18913,
+          "fetch": 27458,
+          "apply_colors": 5426,
+          "draw_lines": 108407,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 138
+        },
+        "render_cycles": 160227,
+        "total_cycles": 160430
+      },
+      {
+        "frame": 93,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16662,
+          "fetch": 26694,
+          "apply_colors": 5068,
+          "draw_lines": 100792,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 149239,
+        "total_cycles": 149399
+      },
+      {
+        "frame": 94,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17318,
+          "fetch": 24133,
+          "apply_colors": 5695,
+          "draw_lines": 97406,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 144575,
+        "total_cycles": 144735
+      },
+      {
+        "frame": 95,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17276,
+          "fetch": 24864,
+          "apply_colors": 5259,
+          "draw_lines": 99544,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 146966,
+        "total_cycles": 147126
+      },
+      {
+        "frame": 96,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16422,
+          "fetch": 24498,
+          "apply_colors": 5524,
+          "draw_lines": 99021,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 145488,
+        "total_cycles": 145648
+      },
+      {
+        "frame": 97,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16549,
+          "fetch": 28174,
+          "apply_colors": 5235,
+          "draw_lines": 103464,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 153445,
+        "total_cycles": 153605
+      },
+      {
+        "frame": 98,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16567,
+          "fetch": 24056,
+          "apply_colors": 5624,
+          "draw_lines": 99438,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 967
+        },
+        "render_cycles": 145708,
+        "total_cycles": 146740
+      },
+      {
+        "frame": 99,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16611,
+          "fetch": 24523,
+          "apply_colors": 5380,
+          "draw_lines": 99250,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 145787,
+        "total_cycles": 145947
+      },
+      {
+        "frame": 100,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16793,
+          "fetch": 24060,
+          "apply_colors": 5809,
+          "draw_lines": 100052,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 146737,
+        "total_cycles": 146897
+      },
+      {
+        "frame": 101,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17154,
+          "fetch": 25199,
+          "apply_colors": 5499,
+          "draw_lines": 98455,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 146330,
+        "total_cycles": 146490
+      },
+      {
+        "frame": 102,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17629,
+          "fetch": 23584,
+          "apply_colors": 5895,
+          "draw_lines": 94390,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 141521,
+        "total_cycles": 141681
+      },
+      {
+        "frame": 103,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17689,
+          "fetch": 24188,
+          "apply_colors": 6155,
+          "draw_lines": 94460,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 142515,
+        "total_cycles": 142675
+      },
+      {
+        "frame": 104,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17296,
+          "fetch": 25184,
+          "apply_colors": 6370,
+          "draw_lines": 96858,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 145731,
+        "total_cycles": 145891
+      },
+      {
+        "frame": 105,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18184,
+          "fetch": 24086,
+          "apply_colors": 6014,
+          "draw_lines": 94620,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 967
+        },
+        "render_cycles": 142927,
+        "total_cycles": 143959
+      },
+      {
+        "frame": 106,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18313,
+          "fetch": 21764,
+          "apply_colors": 6178,
+          "draw_lines": 86944,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 133222,
+        "total_cycles": 133382
+      },
+      {
+        "frame": 107,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19374,
+          "fetch": 21906,
+          "apply_colors": 6289,
+          "draw_lines": 88257,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 135849,
+        "total_cycles": 136009
+      },
+      {
+        "frame": 108,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18420,
+          "fetch": 22368,
+          "apply_colors": 6177,
+          "draw_lines": 88359,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 135347,
+        "total_cycles": 135507
+      },
+      {
+        "frame": 109,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18233,
+          "fetch": 22774,
+          "apply_colors": 5843,
+          "draw_lines": 90945,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 137818,
+        "total_cycles": 137978
+      },
+      {
+        "frame": 110,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18729,
+          "fetch": 21399,
+          "apply_colors": 5905,
+          "draw_lines": 87390,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 133446,
+        "total_cycles": 133606
+      },
+      {
+        "frame": 111,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18861,
+          "fetch": 23212,
+          "apply_colors": 5971,
+          "draw_lines": 91783,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 139850,
+        "total_cycles": 140010
+      },
+      {
+        "frame": 112,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18793,
+          "fetch": 22847,
+          "apply_colors": 5948,
+          "draw_lines": 90647,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 138258,
+        "total_cycles": 138418
+      },
+      {
+        "frame": 113,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18441,
+          "fetch": 22903,
+          "apply_colors": 6192,
+          "draw_lines": 92345,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 881
+        },
+        "render_cycles": 139904,
+        "total_cycles": 140850
+      },
+      {
+        "frame": 114,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18999,
+          "fetch": 22244,
+          "apply_colors": 6963,
+          "draw_lines": 90020,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 138249,
+        "total_cycles": 138409
+      },
+      {
+        "frame": 115,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18440,
+          "fetch": 23583,
+          "apply_colors": 7347,
+          "draw_lines": 88478,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 137871,
+        "total_cycles": 138031
+      },
+      {
+        "frame": 116,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18959,
+          "fetch": 22892,
+          "apply_colors": 7221,
+          "draw_lines": 89598,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 138693,
+        "total_cycles": 138853
+      },
+      {
+        "frame": 117,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 20869,
+          "fetch": 21181,
+          "apply_colors": 6555,
+          "draw_lines": 81811,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 130439,
+        "total_cycles": 130599
+      },
+      {
+        "frame": 118,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 21515,
+          "fetch": 22181,
+          "apply_colors": 6925,
+          "draw_lines": 89891,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 140535,
+        "total_cycles": 140695
+      },
+      {
+        "frame": 119,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 21256,
+          "fetch": 23713,
+          "apply_colors": 7688,
+          "draw_lines": 93604,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 146284,
+        "total_cycles": 146444
+      },
+      {
+        "frame": 120,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19538,
+          "fetch": 19133,
+          "apply_colors": 6804,
+          "draw_lines": 75732,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 121230,
+        "total_cycles": 121390
+      },
+      {
+        "frame": 121,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 20795,
+          "fetch": 18240,
+          "apply_colors": 6436,
+          "draw_lines": 73027,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 966
+        },
+        "render_cycles": 118521,
+        "total_cycles": 119552
+      },
+      {
+        "frame": 122,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 21955,
+          "fetch": 18242,
+          "apply_colors": 6331,
+          "draw_lines": 74151,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 120702,
+        "total_cycles": 120862
+      },
+      {
+        "frame": 123,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19777,
+          "fetch": 17135,
+          "apply_colors": 5778,
+          "draw_lines": 74476,
+          "bookkeeping": 11,
+          "publish_wait": 65,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 117189,
+        "total_cycles": 117392
+      },
+      {
+        "frame": 124,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19029,
+          "fetch": 17854,
+          "apply_colors": 5909,
+          "draw_lines": 73713,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 116528,
+        "total_cycles": 116688
+      },
+      {
+        "frame": 125,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19067,
+          "fetch": 17618,
+          "apply_colors": 5828,
+          "draw_lines": 68638,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 111174,
+        "total_cycles": 111334
+      },
+      {
+        "frame": 126,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17657,
+          "fetch": 16959,
+          "apply_colors": 6162,
+          "draw_lines": 65771,
+          "bookkeeping": 11,
+          "publish_wait": 20109,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 106572,
+        "total_cycles": 126819
+      },
+      {
+        "frame": 127,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17898,
+          "fetch": 16298,
+          "apply_colors": 6085,
+          "draw_lines": 63888,
+          "bookkeeping": 11,
+          "publish_wait": 33262,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 104192,
+        "total_cycles": 137592
+      },
+      {
+        "frame": 128,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17546,
+          "fetch": 17711,
+          "apply_colors": 6130,
+          "draw_lines": 66569,
+          "bookkeeping": 11,
+          "publish_wait": 29476,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 107979,
+        "total_cycles": 137593
+      },
+      {
+        "frame": 129,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18067,
+          "fetch": 17161,
+          "apply_colors": 5553,
+          "draw_lines": 66665,
+          "bookkeeping": 11,
+          "publish_wait": 29978,
+          "publish_commit": 32,
+          "advance_and_final_hold": 881
+        },
+        "render_cycles": 107469,
+        "total_cycles": 138371
+      },
+      {
+        "frame": 130,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18129,
+          "fetch": 17293,
+          "apply_colors": 5225,
+          "draw_lines": 67288,
+          "bookkeeping": 11,
+          "publish_wait": 28715,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 107958,
+        "total_cycles": 136811
+      },
+      {
+        "frame": 131,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18252,
+          "fetch": 18169,
+          "apply_colors": 4995,
+          "draw_lines": 63446,
+          "bookkeeping": 11,
+          "publish_wait": 32569,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 104885,
+        "total_cycles": 137592
+      },
+      {
+        "frame": 132,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17195,
+          "fetch": 17153,
+          "apply_colors": 5303,
+          "draw_lines": 65931,
+          "bookkeeping": 11,
+          "publish_wait": 31851,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 105605,
+        "total_cycles": 137594
+      },
+      {
+        "frame": 133,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16737,
+          "fetch": 17604,
+          "apply_colors": 5521,
+          "draw_lines": 66707,
+          "bookkeeping": 11,
+          "publish_wait": 30856,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 106592,
+        "total_cycles": 137586
+      },
+      {
+        "frame": 134,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16006,
+          "fetch": 19284,
+          "apply_colors": 5890,
+          "draw_lines": 75703,
+          "bookkeeping": 11,
+          "publish_wait": 20548,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 116906,
+        "total_cycles": 137592
+      },
+      {
+        "frame": 135,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16050,
+          "fetch": 22368,
+          "apply_colors": 5684,
+          "draw_lines": 83527,
+          "bookkeeping": 11,
+          "publish_wait": 9801,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 127652,
+        "total_cycles": 137591
+      },
+      {
+        "frame": 136,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16985,
+          "fetch": 21960,
+          "apply_colors": 6080,
+          "draw_lines": 86082,
+          "bookkeeping": 11,
+          "publish_wait": 6332,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 131130,
+        "total_cycles": 137600
+      },
+      {
+        "frame": 137,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18271,
+          "fetch": 24532,
+          "apply_colors": 6585,
+          "draw_lines": 94631,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 967
+        },
+        "render_cycles": 144042,
+        "total_cycles": 145074
+      },
+      {
+        "frame": 138,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18982,
+          "fetch": 25806,
+          "apply_colors": 7096,
+          "draw_lines": 102071,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 153978,
+        "total_cycles": 154138
+      },
+      {
+        "frame": 139,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19628,
+          "fetch": 25042,
+          "apply_colors": 6797,
+          "draw_lines": 102870,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 154360,
+        "total_cycles": 154520
+      },
+      {
+        "frame": 140,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 20027,
+          "fetch": 28735,
+          "apply_colors": 7051,
+          "draw_lines": 112606,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 75,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 168442,
+        "total_cycles": 168645
+      },
+      {
+        "frame": 141,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19855,
+          "fetch": 29059,
+          "apply_colors": 6556,
+          "draw_lines": 117300,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 172793,
+        "total_cycles": 172953
+      },
+      {
+        "frame": 142,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19754,
+          "fetch": 31514,
+          "apply_colors": 7010,
+          "draw_lines": 121489,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 179790,
+        "total_cycles": 179950
+      },
+      {
+        "frame": 143,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19797,
+          "fetch": 32292,
+          "apply_colors": 7188,
+          "draw_lines": 126947,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 881
+        },
+        "render_cycles": 186247,
+        "total_cycles": 187193
+      },
+      {
+        "frame": 144,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18994,
+          "fetch": 33213,
+          "apply_colors": 6861,
+          "draw_lines": 125262,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 184353,
+        "total_cycles": 184513
+      },
+      {
+        "frame": 145,
+        "cycles": {
+          "directory": 66,
+          "recycle_bitmap_and_colors": 20089,
+          "fetch": 32984,
+          "apply_colors": 6706,
+          "draw_lines": 131770,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 191615,
+        "total_cycles": 191775
+      },
+      {
+        "frame": 146,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19447,
+          "fetch": 34272,
+          "apply_colors": 6604,
+          "draw_lines": 131974,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 192320,
+        "total_cycles": 192480
+      },
+      {
+        "frame": 147,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19137,
+          "fetch": 30918,
+          "apply_colors": 6511,
+          "draw_lines": 119970,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 176559,
+        "total_cycles": 176719
+      },
+      {
+        "frame": 148,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 20256,
+          "fetch": 27340,
+          "apply_colors": 6362,
+          "draw_lines": 111383,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 165364,
+        "total_cycles": 165524
+      },
+      {
+        "frame": 149,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 20152,
+          "fetch": 32096,
+          "apply_colors": 6203,
+          "draw_lines": 127437,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 1041
+        },
+        "render_cycles": 185911,
+        "total_cycles": 187017
+      },
+      {
+        "frame": 150,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18210,
+          "fetch": 30750,
+          "apply_colors": 6308,
+          "draw_lines": 121057,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 176348,
+        "total_cycles": 176508
+      },
+      {
+        "frame": 151,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17432,
+          "fetch": 30952,
+          "apply_colors": 6392,
+          "draw_lines": 120711,
+          "bookkeeping": 11,
+          "publish_wait": 65,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 175510,
+        "total_cycles": 175713
+      },
+      {
+        "frame": 152,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17747,
+          "fetch": 30677,
+          "apply_colors": 6459,
+          "draw_lines": 120279,
+          "bookkeeping": 11,
+          "publish_wait": 65,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 175185,
+        "total_cycles": 175388
+      },
+      {
+        "frame": 153,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18060,
+          "fetch": 27640,
+          "apply_colors": 6470,
+          "draw_lines": 107576,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 159769,
+        "total_cycles": 159929
+      },
+      {
+        "frame": 154,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18370,
+          "fetch": 24784,
+          "apply_colors": 6001,
+          "draw_lines": 96200,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 145378,
+        "total_cycles": 145538
+      },
+      {
+        "frame": 155,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18720,
+          "fetch": 24072,
+          "apply_colors": 5823,
+          "draw_lines": 93981,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 967
+        },
+        "render_cycles": 142619,
+        "total_cycles": 143651
+      },
+      {
+        "frame": 156,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18521,
+          "fetch": 23827,
+          "apply_colors": 5363,
+          "draw_lines": 94104,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 74,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 141838,
+        "total_cycles": 142040
+      },
+      {
+        "frame": 157,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17647,
+          "fetch": 22453,
+          "apply_colors": 5684,
+          "draw_lines": 88571,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 75,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 134378,
+        "total_cycles": 134581
+      },
+      {
+        "frame": 158,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17005,
+          "fetch": 22783,
+          "apply_colors": 5808,
+          "draw_lines": 90432,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 136051,
+        "total_cycles": 136211
+      },
+      {
+        "frame": 159,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16381,
+          "fetch": 22568,
+          "apply_colors": 5819,
+          "draw_lines": 90398,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 136
+        },
+        "render_cycles": 135189,
+        "total_cycles": 135390
+      },
+      {
+        "frame": 160,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17315,
+          "fetch": 20267,
+          "apply_colors": 5435,
+          "draw_lines": 81487,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 124527,
+        "total_cycles": 124687
+      },
+      {
+        "frame": 161,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17030,
+          "fetch": 20896,
+          "apply_colors": 5390,
+          "draw_lines": 80989,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 124328,
+        "total_cycles": 124488
+      },
+      {
+        "frame": 162,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17453,
+          "fetch": 20974,
+          "apply_colors": 5776,
+          "draw_lines": 81577,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 125803,
+        "total_cycles": 125963
+      },
+      {
+        "frame": 163,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16266,
+          "fetch": 20615,
+          "apply_colors": 5594,
+          "draw_lines": 81149,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 993
+        },
+        "render_cycles": 123647,
+        "total_cycles": 124705
+      },
+      {
+        "frame": 164,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16401,
+          "fetch": 20294,
+          "apply_colors": 5121,
+          "draw_lines": 77844,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 119683,
+        "total_cycles": 119843
+      },
+      {
+        "frame": 165,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17557,
+          "fetch": 20700,
+          "apply_colors": 4654,
+          "draw_lines": 76038,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 118972,
+        "total_cycles": 119132
+      },
+      {
+        "frame": 166,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 16768,
+          "fetch": 19867,
+          "apply_colors": 4422,
+          "draw_lines": 74873,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 115953,
+        "total_cycles": 116113
+      },
+      {
+        "frame": 167,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 15285,
+          "fetch": 20280,
+          "apply_colors": 4805,
+          "draw_lines": 74448,
+          "bookkeeping": 11,
+          "publish_wait": 1384,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 114841,
+        "total_cycles": 116363
+      },
+      {
+        "frame": 168,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 14799,
+          "fetch": 18837,
+          "apply_colors": 4789,
+          "draw_lines": 69466,
+          "bookkeeping": 11,
+          "publish_wait": 29548,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 107914,
+        "total_cycles": 137600
+      },
+      {
+        "frame": 169,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 14528,
+          "fetch": 17889,
+          "apply_colors": 4606,
+          "draw_lines": 64102,
+          "bookkeeping": 11,
+          "publish_wait": 36304,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 101148,
+        "total_cycles": 137590
+      },
+      {
+        "frame": 170,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 15069,
+          "fetch": 26399,
+          "apply_colors": 4750,
+          "draw_lines": 118777,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 137
+        },
+        "render_cycles": 165018,
+        "total_cycles": 165220
+      },
+      {
+        "frame": 171,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 14461,
+          "fetch": 31619,
+          "apply_colors": 5399,
+          "draw_lines": 155094,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 967
+        },
+        "render_cycles": 206596,
+        "total_cycles": 207628
+      },
+      {
+        "frame": 172,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 13411,
+          "fetch": 34860,
+          "apply_colors": 6099,
+          "draw_lines": 162235,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 216628,
+        "total_cycles": 216788
+      },
+      {
+        "frame": 173,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17943,
+          "fetch": 33427,
+          "apply_colors": 7098,
+          "draw_lines": 174970,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 233461,
+        "total_cycles": 233621
+      },
+      {
+        "frame": 174,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 18851,
+          "fetch": 38037,
+          "apply_colors": 7519,
+          "draw_lines": 195443,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 259873,
+        "total_cycles": 260033
+      },
+      {
+        "frame": 175,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 21008,
+          "fetch": 39832,
+          "apply_colors": 7840,
+          "draw_lines": 206995,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 881
+        },
+        "render_cycles": 275698,
+        "total_cycles": 276644
+      },
+      {
+        "frame": 176,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 23559,
+          "fetch": 38906,
+          "apply_colors": 8612,
+          "draw_lines": 208334,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 279434,
+        "total_cycles": 279594
+      },
+      {
+        "frame": 177,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 27043,
+          "fetch": 41204,
+          "apply_colors": 8791,
+          "draw_lines": 217691,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 294752,
+        "total_cycles": 294912
+      },
+      {
+        "frame": 178,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 28897,
+          "fetch": 40890,
+          "apply_colors": 9264,
+          "draw_lines": 217803,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 296877,
+        "total_cycles": 297037
+      },
+      {
+        "frame": 179,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 30932,
+          "fetch": 40170,
+          "apply_colors": 9742,
+          "draw_lines": 216810,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 967
+        },
+        "render_cycles": 297677,
+        "total_cycles": 298709
+      },
+      {
+        "frame": 180,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 33727,
+          "fetch": 39383,
+          "apply_colors": 10359,
+          "draw_lines": 212015,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 75,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 295507,
+        "total_cycles": 295710
+      },
+      {
+        "frame": 181,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 35803,
+          "fetch": 37652,
+          "apply_colors": 9777,
+          "draw_lines": 208057,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 291312,
+        "total_cycles": 291472
+      },
+      {
+        "frame": 182,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 37132,
+          "fetch": 37968,
+          "apply_colors": 10075,
+          "draw_lines": 195256,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 280454,
+        "total_cycles": 280614
+      },
+      {
+        "frame": 183,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 37406,
+          "fetch": 39817,
+          "apply_colors": 9711,
+          "draw_lines": 204013,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 967
+        },
+        "render_cycles": 290970,
+        "total_cycles": 292002
+      },
+      {
+        "frame": 184,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 35946,
+          "fetch": 36622,
+          "apply_colors": 9617,
+          "draw_lines": 199404,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 281612,
+        "total_cycles": 281772
+      },
+      {
+        "frame": 185,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 35111,
+          "fetch": 36555,
+          "apply_colors": 9507,
+          "draw_lines": 196778,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 277974,
+        "total_cycles": 278134
+      },
+      {
+        "frame": 186,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 34744,
+          "fetch": 37406,
+          "apply_colors": 8330,
+          "draw_lines": 202338,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 75,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 282841,
+        "total_cycles": 283044
+      },
+      {
+        "frame": 187,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 32995,
+          "fetch": 37558,
+          "apply_colors": 8699,
+          "draw_lines": 193715,
+          "bookkeeping": 11,
+          "publish_wait": 65,
+          "publish_commit": 32,
+          "advance_and_final_hold": 967
+        },
+        "render_cycles": 272990,
+        "total_cycles": 274065
+      },
+      {
+        "frame": 188,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 32704,
+          "fetch": 37645,
+          "apply_colors": 8643,
+          "draw_lines": 181323,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 260338,
+        "total_cycles": 260498
+      },
+      {
+        "frame": 189,
+        "cycles": {
+          "directory": 66,
+          "recycle_bitmap_and_colors": 29248,
+          "fetch": 34721,
+          "apply_colors": 7245,
+          "draw_lines": 170169,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 241449,
+        "total_cycles": 241609
+      },
+      {
+        "frame": 190,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 28689,
+          "fetch": 32942,
+          "apply_colors": 7724,
+          "draw_lines": 148701,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 218079,
+        "total_cycles": 218239
+      },
+      {
+        "frame": 191,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 27795,
+          "fetch": 30021,
+          "apply_colors": 6958,
+          "draw_lines": 133704,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 198501,
+        "total_cycles": 198661
+      },
+      {
+        "frame": 192,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 25142,
+          "fetch": 26404,
+          "apply_colors": 6316,
+          "draw_lines": 110665,
+          "bookkeeping": 11,
+          "publish_wait": 65,
+          "publish_commit": 32,
+          "advance_and_final_hold": 924
+        },
+        "render_cycles": 168550,
+        "total_cycles": 169582
+      },
+      {
+        "frame": 193,
+        "cycles": {
+          "directory": 66,
+          "recycle_bitmap_and_colors": 23846,
+          "fetch": 23649,
+          "apply_colors": 6070,
+          "draw_lines": 89961,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 143592,
+        "total_cycles": 143752
+      },
+      {
+        "frame": 194,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 21749,
+          "fetch": 18323,
+          "apply_colors": 5205,
+          "draw_lines": 65340,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 137
+        },
+        "render_cycles": 110640,
+        "total_cycles": 110842
+      },
+      {
+        "frame": 195,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 19645,
+          "fetch": 14983,
+          "apply_colors": 4784,
+          "draw_lines": 43016,
+          "bookkeeping": 11,
+          "publish_wait": 22,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 82451,
+        "total_cycles": 82611
+      },
+      {
+        "frame": 196,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 17215,
+          "fetch": 11572,
+          "apply_colors": 4643,
+          "draw_lines": 29419,
+          "bookkeeping": 11,
+          "publish_wait": 33424,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 62872,
+        "total_cycles": 96434
+      },
+      {
+        "frame": 197,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 14254,
+          "fetch": 10885,
+          "apply_colors": 4210,
+          "draw_lines": 21958,
+          "bookkeeping": 11,
+          "publish_wait": 86126,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 51330,
+        "total_cycles": 137594
+      },
+      {
+        "frame": 198,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 12135,
+          "fetch": 9624,
+          "apply_colors": 3327,
+          "draw_lines": 14386,
+          "bookkeeping": 11,
+          "publish_wait": 97957,
+          "publish_commit": 32,
+          "advance_and_final_hold": 95
+        },
+        "render_cycles": 39495,
+        "total_cycles": 137590
+      },
+      {
+        "frame": 199,
+        "cycles": {
+          "directory": 23,
+          "recycle_bitmap_and_colors": 11866,
+          "fetch": 8741,
+          "apply_colors": 3121,
+          "draw_lines": 11918,
+          "bookkeeping": 11,
+          "publish_wait": 101785,
+          "publish_commit": 32,
+          "advance_and_final_hold": 275108
+        },
+        "render_cycles": 35669,
+        "total_cycles": 412605
+      }
+    ],
+    "render_budget_cycles": 137592,
+    "frames_exceeding_render_budget": 93
+  },
+  "verification": {
+    "cartridge": "marbles-hud-v6.crt",
+    "menu_entry": null,
+    "verified_frames": 200,
+    "orientations": 200,
+    "bitmap_bytes_checked": 1536000,
+    "color_bytes_checked": 192000,
+    "slots": {
+      "1": 67,
+      "2": 67,
+      "0": 66
+    },
+    "average_fps": 6.413152434070308,
+    "min_frame_cycles": 27389,
+    "max_frame_cycles": 297837,
+    "pixel_match": true,
+    "color_match": true,
+    "reused_samples": 0,
+    "display_interval_cycles": [
+      137602,
+      137590,
+      137593,
+      137591,
+      137592,
+      137595,
+      137590,
+      137591,
+      137592,
+      137594,
+      137589,
+      137593,
+      137595,
+      137592,
+      137590,
+      137591,
+      137591,
+      137594,
+      137591,
+      137591,
+      137593,
+      137591,
+      137592,
+      137592,
+      137596,
+      137589,
+      137591,
+      137596,
+      137588,
+      137594,
+      137595,
+      137588,
+      137596,
+      137588,
+      137591,
+      137592,
+      137919,
+      137266,
+      157242,
+      137597,
+      157242,
+      157252,
+      157247,
+      137596,
+      157242,
+      137597,
+      157242,
+      137599,
+      137593,
+      140302,
+      137424,
+      135048,
+      137593,
+      137592,
+      137591,
+      137595,
+      137593,
+      137591,
+      137590,
+      137592,
+      137592,
+      137591,
+      137593,
+      137592,
+      137592,
+      137593,
+      137590,
+      137592,
+      137593,
+      137592,
+      137593,
+      137593,
+      137590,
+      137595,
+      137588,
+      137595,
+      137592,
+      137589,
+      137596,
+      137592,
+      137591,
+      137591,
+      137592,
+      137592,
+      137590,
+      137592,
+      137594,
+      137590,
+      157242,
+      157248,
+      157248,
+      157250,
+      157246,
+      137598,
+      157243,
+      137599,
+      157240,
+      137601,
+      157239,
+      137598,
+      157241,
+      137600,
+      137594,
+      157240,
+      137601,
+      137589,
+      137591,
+      140403,
+      134784,
+      137675,
+      139817,
+      137975,
+      134899,
+      137591,
+      137594,
+      137590,
+      137594,
+      137591,
+      137595,
+      138571,
+      136610,
+      137594,
+      137589,
+      137594,
+      137592,
+      137592,
+      137593,
+      137590,
+      137592,
+      137592,
+      137594,
+      137591,
+      137592,
+      137591,
+      137595,
+      137589,
+      137592,
+      137593,
+      137594,
+      137590,
+      139663,
+      155168,
+      196564,
+      176903,
+      196557,
+      196561,
+      176905,
+      157246,
+      176906,
+      176903,
+      176904,
+      176903,
+      157251,
+      157245,
+      137603,
+      137589,
+      137592,
+      137592,
+      137595,
+      137623,
+      138256,
+      136893,
+      137592,
+      137593,
+      137592,
+      137592,
+      137595,
+      137590,
+      137590,
+      137593,
+      138514,
+      197423,
+      214424,
+      275183,
+      275186,
+      275183,
+      294839,
+      294841,
+      294843,
+      294839,
+      294841,
+      275184,
+      294836,
+      294843,
+      275181,
+      275186,
+      275186,
+      255525,
+      255529,
+      216214,
+      196561,
+      157248,
+      157250,
+      137600,
+      137590,
+      137591,
+      137593
+    ],
+    "loop_seconds": null,
+    "target_fps": 7.142857142857143,
+    "hud_match": true,
+    "text_overlay": true,
+    "frame_index_bits": 16
+  }
+}

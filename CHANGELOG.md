@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.7.2: hors-render-v2 default, rebuilt examples and automated releases
+
+- Promote the independently reproduced beta drawing kernel to stable hors-render-v2; preserve beta1 and all older explicit renderer names.
+- Add default object/scene/menu integration and rebuild all 19 active cartridges, including the complete Marbles presentation.
+- Archive old CRT/PRG previews outside the checkout; retain compact frozen regression inputs and original renderer source.
+- Read build identity from root VERSION, including Python and Windows setup. Stamp generated menu copies and verify actual startup/menu/thanks versions with an alternate-version VICE regression.
+- Add COMPILE-RELEASE.sh for isolated builds, picture/menu/ending checks, full comparison regeneration, packaging and optional installation.
+- Fix the separate ending verifier to acknowledge the native SPACE-start screen through the shared helper; read the HiFi thanks-screen version from its manifest.
+- Stable encoding writes metadata directly, avoiding rejection solely because an unused temporary vector representation exceeds 8 KiB.
+
+- Add batched direct-byte mapping with guarded vector-page reuse and independent pictures.
+- Add a measured multi-pass scene search with correctness gates, pacing/preferences/encoding choices, and CLI/Markdown/JSON/CSV reports.
+- Add Demo Cart 2.0, a separate seven-entry preview with new geometry and selected Ripples Lite source; archive superseded demo artifacts.
+- Add source-hash-guarded per-scene encoder selection and an independent three-worker local performance runner.
+- Fix benchmark SPACE startup handling, verifier menu-style symbols, dynamic menu-entry counts, and failure diagnostics.
+- Bump VERSION, Python and setup labels to 0.7.2; make hors-render-v2 the default.
+- Extend the canonical tester with stable v2 FPS/RAM rows alongside beta1 and all older methods. The release pipeline regenerates the complete 28-job matrix before packaging.
+- Include a Linux all-checks script and both overlay/complete packages. Stable adoption follows independent beta results and the user’s visual review.
+
 ## 0.7.1: HiFi exhibition cartridge and presentation update
 
 - Correct the default demo-menu header to use the release version and HORS-V1 label.

@@ -69,9 +69,10 @@ def verify(crt,vice,vice_data):
             assert loop[0x02f7]==2
             exit_ram=(out/'exit.ram').read_bytes();assert exit_ram[0x02f7]==exit_ram[0x02fd]==0
         from c643d.buildscreen import screen_codes
+        assert bytes(screen_codes(meta['version'])) in (out/'title.ram').read_bytes()[0x400:0x800], 'Build-screen version differs from cartridge manifest'
         thanks=(out/'thanks.ram').read_bytes()
         assert bytes(screen_codes('THANK YOU FOR WATCHING')) in thanks[0x400:0x800]
-        assert bytes(screen_codes('0.7.1')) in thanks[0x400:0x800]
+        assert bytes(screen_codes(meta['version'])) in thanks[0x400:0x800], 'Thanks screen version differs from cartridge manifest'
     return dict(cartridge=crt.name,sha256=hashlib.sha256(crt.read_bytes()).hexdigest(),
                 separate=separate,order=order,cycles=measured,loop=True,thanks=True,
                 method='PAL VICE production code; monitor acknowledges initial SPACE and injects F4 scanner samples')

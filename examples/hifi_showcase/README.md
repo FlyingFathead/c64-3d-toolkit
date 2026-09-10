@@ -1,21 +1,21 @@
-⚠️🐴 Attention! For best quality, please enjoy each animation with `hors-render-v1` or a newer variant.
+# Hifi Showcase — hors-render-v2
 
-Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
+**Toolkit 0.7.2 · stable hors-render-v2 prebuilt examples.**
 
-# HiFi horse head — hors-render-v1
-
-Example #3 for 0.7.0: the coloured HiFi horse head, compiled from
-`objects/horse_head_hifi.obj` and its material/preset files into 192 orientations.
-
-```bash
-x64sc +easyflashcrtwrite -cartcrt examples/hifi_showcase/horse_head_hifi-hors-render-v1.crt
-```
-
-Rebuild from the repository root:
+| Cartridge | Samples | Colours |
+| --- | ---: | --- |
+| [horse_head_hifi-hors-render-v2.crt](horse_head_hifi-hors-render-v2.crt) | 192 | Yes |
 
 ```bash
-python c643d.py build --object horse_head_hifi --renderer hors-render-v1 --frames 192 --strict-frames --viewport-height 192 --text-overlay --output horse_head_hifi-hors-render-v1 --output-dir examples/hifi_showcase --no-config --overwrite-policy allow
+x64sc +easyflashcrtwrite -cartcrt examples/hifi_showcase/horse_head_hifi-hors-render-v2.crt
 ```
 
-Only this current cartridge and its matching labels and manifest are shipped here.
-V2/V3 outputs remain outside the checkout. The cleanup script retains this example.
+Press SPACE when an identification screen is shown. Companion labels and manifests identify the exact build.
+
+```bash
+python3 tools/build_hors_v2_examples.py --only hifi_showcase
+```
+
+[Full performance comparison](../../docs/PERFORMANCE_COMPARISON.md) · [Release build and cleanup](../../docs/RELEASE_0.7.2.md)
+
+Old preview binaries are in prior release ZIPs or `../c64-3d-toolkit-history/pre-hors-v2/` relative to the repository root.

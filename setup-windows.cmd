@@ -1,7 +1,7 @@
 @echo off
 rem c64-3d-toolkit Windows installer / configuration assistant
 rem Installer revision: r24 (2026-09-02)
-rem Target toolkit release: v0.7.1
+rem Target toolkit release: read from VERSION by setup-windows.ps1
 
 setlocal
 set "SCRIPT_DIR=%~dp0"

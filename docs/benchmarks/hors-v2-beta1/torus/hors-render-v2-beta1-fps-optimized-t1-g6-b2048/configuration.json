@@ -1,0 +1,20 @@
+{
+  "candidate": "hors-render-v2-beta1-fps-optimized-t1-g6-b2048",
+  "directory": "/workspace/scratch/a2344c11dad9/toolkit-beta-tests/torus/hors-render-v2-beta1-fps-optimized-t1-g6-b2048",
+  "scene": "/workspace/scratch/a2344c11dad9/toolkit-work/c64-3d-toolkit/examples/autotune/colour-torus.c643dscene",
+  "frames": "/workspace/scratch/a2344c11dad9/toolkit-beta-tests/torus/compiled-frames.json",
+  "renderer": "hors-render-v2-beta1",
+  "preference": "fps",
+  "ticks": 1,
+  "plan": "optimized",
+  "gap": 6,
+  "batch": 2048,
+  "mono": false,
+  "color_index": 1,
+  "tass": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/64tass",
+  "cartconv": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/cartconv",
+  "vice": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/x64sc",
+  "vice_data": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/vice-data",
+  "seconds": 10.0,
+  "max_refreshes": 10000
+}

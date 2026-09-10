@@ -1,0 +1,22 @@
+{
+  "cartridge": "horse_head-hors-render-v2.crt",
+  "menu_entry": null,
+  "verified_frames": 387,
+  "orientations": 192,
+  "bitmap_bytes_checked": 2972160,
+  "color_bytes_checked": 371520,
+  "slots": {
+    "1": 129,
+    "2": 129,
+    "0": 129
+  },
+  "average_fps": 29.599948132767974,
+  "min_frame_cycles": 17887,
+  "max_frame_cycles": 42595,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "path": "examples/horse_head/horse_head-hors-render-v2.crt",
+  "entry": null,
+  "sha256": "a914856cbac75f0a69d06627b6ef4f850f6cb39e18e46e706c34d922d4bd88ee"
+}

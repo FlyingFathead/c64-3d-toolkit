@@ -1,3 +1,5 @@
+> Historical version documentation. Current builds and prebuilt examples use [hors-render-v2](HORS_RENDER_V2.md); see [0.7.2 release instructions](RELEASE_0.7.2.md). Older preview binaries are in prior release ZIPs or the external local archive.
+
 # yunroll-cart-v6: partial-byte drawing and direct metadata loading
 
 > Historical renderer guide. Release labels, defaults, measurements and

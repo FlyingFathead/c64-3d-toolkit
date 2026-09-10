@@ -21,6 +21,7 @@ class UnsupportedResident(Exception):
 
 RESIDENT=('step','bytechunk','yunroll','yunroll-cart')
 METHODS=[(m,'fps') for m in RESIDENT]+[(f'yunroll-cart-v{i}','fps') for i in range(2,11)]+[(f'yunroll-cart-v{i}','ram') for i in (7,8,9,10)]
+METHODS += [('hors-render-v2-beta1','fps'),('hors-render-v2-beta1','ram'),('hors-render-v2','fps'),('hors-render-v2','ram')]
 
 def fingerprints(root):
     files={}
@@ -75,10 +76,10 @@ def adapt_snapshot(root):
         p=root/'tools'/name;s=p.read_text();s=once(s,"'-console'","'-default','-console'");p.write_text(s)
     p=root/'tools/benchmark_play_all.py';s=p.read_text()
     s=s.replace("s['irq_no_flip']-5","s.get('comparison_flip',s['irq_no_flip']-5)").replace('s["irq_no_flip"]-5',"s.get('comparison_flip',s['irq_no_flip']-5)")
-    s=once(s,'            published=sum(',"            flip_ticks=[c for addr,c in w['events'] if addr==s.get('comparison_flip',s['irq_no_flip']-5)]\n            intervals=[b-a for a,b in zip(flip_ticks,flip_ticks[1:])]\n            published=sum(")
-    s=once(s,'published_samples=published,completed_render_cycles=costs','published_samples=published,display_interval_cycles=intervals,completed_render_cycles=costs')
-    s=once(s,"        costs=[n for x in rows for n in x['completed_render_cycles']]", "        costs=[n for x in rows for n in x['completed_render_cycles']]\n        intervals=[n for x in rows for n in x['display_interval_cycles']]\n        assert intervals, 'No complete display intervals'")
-    s=once(s,'display_fps=flips*CLOCK/cycles,','display_fps=flips*CLOCK/cycles,high_fps=CLOCK/min(intervals),low_fps=CLOCK/max(intervals),')
+    # The shared benchmark now records intervals natively; adapt only the
+    # optional paced flip label, without injecting duplicate keyword fields.
+    if 'display_interval_cycles=intervals' not in s:
+        raise RuntimeError('Comparison requires the interval-aware PLAY ALL benchmark')
     p.write_text(s)
     p=root/'tools/verify_cart_stream.py';s=p.read_text()
     s=once(s,'        for i in range(count):mon +=',"        mon += [f'trace exec ${sym.get(\"comparison_flip\",sym[\"irq_no_flip\"]-5):04x}']\n        for i in range(count):mon +=")
@@ -148,14 +149,49 @@ def resident_prepare(root,renderer,tass,tass_args=(),sources=None,prefer='fps'):
     from math import ceil
     return entries,new_easyflash_image(),info,[],1+sum(ceil((p.stat().st_size-2)/8192) for _,p in entries)
 
+def beta_prepare(root,renderer,tass,tass_args=(),sources=None,prefer='fps',**unused):
+    """Byte-only beta in a private assembly tree; legacy source stays intact.
+
+    Canonical twelve-entry carts retain gap 3 to keep the v1 frame payload
+    sizes within the same EasyFlash allocation. This isolates mapping changes.
+    Per-scene tuning is measured separately in the new showcase/search.
+    """
+    import tempfile
+    from c643d.hors_v2 import patch_helper,encoder
+    root=Path(root)
+    with tempfile.TemporaryDirectory(prefix='comparison-hors-v2-') as td:
+        stage=Path(td);shutil.copytree(root/'c64',stage/'c64')
+        helper=stage/'c64/cart/easyflash-stream-v10-helper.asm'
+        helper.write_text(patch_helper(helper.read_text()))
+        runtime=stage/'c64/renderer-yunroll-cart-v10.asm';text=runtime.read_text()
+        first=text.index('* = $4f00\nv3_entry_lo:');last=text.index('* = $5c00',first)
+        runtime.write_text(text[:first]+'v3_entry_lo = $4f00 ; beta direct-only\n'+text[last:])
+        entries,image,info,used,first_free=ORIGINAL_PREPARE(stage,'yunroll-cart-v10',tass,tass_args,
+            sources=sources,prefer=prefer,work_prefix='comparison-hors-v2',
+            frame_encoders={d.name:encoder(3,2048) for d in sources})
+        for e in info:
+            if e['byte_span_frames']!=e['frames']:raise ValueError('Beta requires all direct byte spans')
+            e.update(renderer='hors-render-v2-beta1',wire_format='hors-v2-batched-literal-spans-1',
+                     encoding_choice={'gap':3,'batch_budget':2048})
+        for path in (stage/'build').iterdir():shutil.copytree(path,root/'build'/path.name,dirs_exist_ok=True)
+        entries=[(name,root/path.relative_to(stage)) for name,path in entries]
+    return entries,image,info,used,first_free
+
+
 def menu_worker(method,pref,loops):
     global METHOD
     METHOD=method
     name=METHOD+('-ram' if pref=='ram' else '')
     resident=METHOD in ('step','bytechunk','yunroll','yunroll-cart')
     if resident:cartuniform.prepare=resident_prepare
+    beta=METHOD=='hors-render-v2-beta1'
+    if beta:cartuniform.prepare=beta_prepare
+    stable=METHOD=='hors-render-v2'
+    if stable:
+        from c643d.hors_v2_stable import prepare_menu
+        cartuniform.prepare=lambda *args,**kw:prepare_menu(*args,prepare=ORIGINAL_PREPARE,**kw)
     parser=cli.make_parser(load_toolchain_settings(ROOT/'config/c643d.ini'))
-    a=parser.parse_args(['cart-demos','--stream-renderer','yunroll-cart-v9' if resident else METHOD,'--prefer',pref,'--output',name,'--output-dir',str(OUT),'--tass',TASS,'--cartconv',CARTCONV,'--overwrite-policy','allow'])
+    a=parser.parse_args(['cart-demos','--stream-renderer','yunroll-cart-v9' if resident else 'yunroll-cart-v10' if beta or stable else METHOD,'--prefer',pref,'--output',name,'--output-dir',str(OUT),'--tass',TASS,'--cartconv',CARTCONV,'--overwrite-policy','allow'])
     crt=OUT/(name+'.crt')
     if not crt.exists():
         try:cartuniform.build(a,sources=SOURCES)
@@ -217,7 +253,7 @@ def paced_worker(method,pref,loops):
     cartuniform.comparison_pacer=lambda src,demo:apply_pacing(src,PACING_PLANS[demo.name])
     cartuniform.comparison_rate=lambda name:PACING_PLANS[name]
     name=key+'-paced'
-    a=cli.make_parser(load_toolchain_settings(ROOT/'config/c643d.ini')).parse_args(['cart-demos','--stream-renderer','yunroll-cart-v9' if method in RESIDENT else method,'--prefer',pref,'--output',name,'--output-dir',str(OUT),'--tass',TASS,'--cartconv',CARTCONV,'--overwrite-policy','allow'])
+    a=cli.make_parser(load_toolchain_settings(ROOT/'config/c643d.ini')).parse_args(['cart-demos','--stream-renderer','yunroll-cart-v9' if method in RESIDENT else 'yunroll-cart-v10' if method in ('hors-render-v2-beta1','hors-render-v2') else method,'--prefer',pref,'--output',name,'--output-dir',str(OUT),'--tass',TASS,'--cartconv',CARTCONV,'--overwrite-policy','allow'])
     cartuniform.build(a,sources=SOURCES)
     crt=OUT/(name+'.crt');meta=json.loads(menu_manifest_path(crt).read_text())
     for e in meta['streamed_entries']:aliases(ROOT/e['work'],e['colors'])
@@ -302,10 +338,11 @@ def chart(a,provenance):
         'Measured on PAL VICE 3.10, 985,248 cycles/s, default machine settings, sound disabled, seed 1; 64tass 1.59.3120. This is emulated C64 time, not host wall time or the HUD FPS counter. Physical C64 and NTSC are not measured.','',
         f'Each cell is actual display flips / elapsed emulated time across {a.loops} normal PLAY ALL visits. Every visit uses the unchanged 10-second setting. Observation starts on the first timer-count IRQ and ends at automatic-next: 499 PAL refresh intervals (about 9.955 s). The first visible picture is outside that window. Rates are rounded to two decimals; **bold** marks the highest displayed-frame count among FPS-preferred methods for that animation, including ties. Tiny timer-phase differences are not ranked as wins.','',
         '## Best method for each animation','',
-        '| Animation | Source samples | Best method(s), FPS preference | Display FPS | V9 vs V8 displayed frames |','| --- | ---: | --- | ---: | ---: |']
+        '| Animation | Source samples | Best method(s), FPS preference | Display FPS | V9 vs V8 displayed frames | HORS v2 vs v1 displayed frames |','| --- | ---: | --- | ---: | ---: | ---: |']
     for name in names:
-        win=winners(name,fpskeys);old=results['yunroll-cart-v8'][name]['display_flips'];new=results['yunroll-cart-v9'][name]['display_flips']
-        lines.append(f"| {name} | {oracles[name][0]} | {', '.join(short(k) for k in win)} | {results[win[0]][name]['display_fps']:.2f} | {(new/old-1)*100:+.2f}% |")
+        win=winners(name,fpskeys);old=results['yunroll-cart-v10'][name]['display_flips'];new=results['hors-render-v2'][name]['display_flips']
+        legacy=(results['yunroll-cart-v9'][name]['display_flips']/results['yunroll-cart-v8'][name]['display_flips']-1)*100
+        lines.append(f"| {name} | {oracles[name][0]} | {', '.join(short(k) for k in win)} | {results[win[0]][name]['display_fps']:.2f} | {legacy:+.2f}% | {(new/old-1)*100:+.2f}% |")
     sizes={}
     for key in results:
         raw=json.loads((a.workspace/'results'/(key+'-sizes.json')).read_text());sizes[key]={e['name']:e for e in raw['entries']}
@@ -349,6 +386,8 @@ def chart(a,provenance):
             lines.append(f"| {name} | V{v}-scene | {p['frames_per_second']:.3f} | {p['mean_render_cycles']:,.0f} | {p['worst_render_cycles']:,} | {p.get('frames_exceeding_render_budget','—')} / {p['frames']} |")
     lines+=['','## Workload and interpretation','',
         '- '+input_note,
+        '- hors-render-v2 and its preserved beta1 use gap 3 / batch budget 2048 in this canonical twelve-entry cart, retaining the v1 byte-span payload sizes to fit the same cartridge budget. Its independent pictures and guarded vector-page reuse are built in a private assembly tree. The seven-entry Demo Cart 2.0 uses separate measured encoding choices and has its own results report.',
+        '- The authored-scene diagnostic rows preserve V4–V10. Beta 1 does not support the authored intro/ending path and is not substituted for those unchanged productions.',
         '- This table compares preserved renderer implementations under one **external comparison PLAY ALL wrapper**, not the exact historical release cartridges. The V9 normal PLAY ALL controller is used for every method. Its identical timer instructions live at `$0334` instead of `$c700`, because resident data occupies `$c700`; launch metadata is cached before loading and shared menu data restored between entries. Renderer code is unchanged apart from the existing cartridge IRQ-vector redirection. All these wrapper adaptations are generated outside the repo.',
         '- Resident and streamed methods have different memory/ROM costs. A faster resident method does not imply it can hold the larger HiFi datasets. Compare the same named animation and sample count.',
         '- A frame count tie is reported as a tie; a few extra samples over roughly 30 seconds are a small gain. Compare individual animations before quoting a suite total.',

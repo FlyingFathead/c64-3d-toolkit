@@ -1,0 +1,12 @@
+{
+  "format": "hors-v2-scene-encoding-policy-1",
+  "scope": "Measured choice for the exact source below; other entries use the builder defaults. Standalone search is followed by normal PLAY ALL validation of the assembled cart.",
+  "scenes": {
+    "RIPPLES LITE": {
+      "source_sha256": "1bccfbe40c1fd19787df9ca6a06f2d48c7f1c016f74b17dbc719ed4376e6d772",
+      "gap": 10,
+      "batch_budget": 2048,
+      "evidence": "docs/benchmarks/hors-v2-beta1/ripples-search/results.json"
+    }
+  }
+}

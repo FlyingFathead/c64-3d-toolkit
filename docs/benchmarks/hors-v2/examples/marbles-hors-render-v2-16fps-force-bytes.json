@@ -1,0 +1,27 @@
+{
+  "cartridge": "marbles-hors-render-v2-16fps-force-bytes.crt",
+  "menu_entry": null,
+  "verified_frames": 640,
+  "orientations": 640,
+  "bitmap_bytes_checked": 4915200,
+  "color_bytes_checked": 614400,
+  "slots": {
+    "1": 214,
+    "2": 213,
+    "0": 213
+  },
+  "average_fps": 15.47762030116057,
+  "min_frame_cycles": 20018,
+  "max_frame_cycles": 106612,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "loop_seconds": null,
+  "target_fps": 16,
+  "hud_match": true,
+  "text_overlay": false,
+  "frame_index_bits": 16,
+  "path": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt",
+  "entry": null,
+  "sha256": "30e285a63090c30cc4488edea14bdf0117aa95ff257b8a5aa78aa06593b21c05"
+}

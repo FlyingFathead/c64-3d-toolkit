@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "sha256": "e2424b8e86b08830fff411464633b9c3316322232270a8ff98347319a5a32174",
+  "clock_hz": 985248,
+  "refresh_observations": 502,
+  "display_changes": 125,
+  "elapsed_cycles": 9847010,
+  "display_fps": 12.50694373215829,
+  "display_interval_mean_ms": 79.80122771119555,
+  "display_interval_worst_ms": 79.80427262983532,
+  "display_interval_p95_ms": 79.80427262983532,
+  "observed_hold_ticks": {
+    "4": 124
+  },
+  "requested_ticks": 4,
+  "fixed_cadence": true,
+  "unique_visible_pictures_expected": 24,
+  "unique_visible_pictures_observed": 24,
+  "picture_coverage_complete": true,
+  "display_switch_raster_lines": {
+    "251": 125
+  },
+  "measurement": "PAL VICE; seed 1; sound disabled; actual display-slot changes sampled at each raster IRQ after VIC register programming. Window edges count flips/time; interval extrema exclude edges.",
+  "limits": "Standalone looping scene only. Does not validate production overlays, NTSC or physical hardware; no claim that changing minimum holds preserves authored duration."
+}

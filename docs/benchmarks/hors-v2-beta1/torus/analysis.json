@@ -1,0 +1,182 @@
+{
+  "scene_sha256": "93485c5728d43920babb28bbddc658b73b6694bca40f23f8f7f248271f808d1a",
+  "toolkit_version": "0.7.1",
+  "source_frames": 18,
+  "vertices": 72,
+  "source_fps": 18.0,
+  "sample_step": 1,
+  "per_frame": [
+    {
+      "frame": 0,
+      "drawing_records": 86,
+      "clear_spans": 33,
+      "colour_spans": 62,
+      "unique_pixels": 1261
+    },
+    {
+      "frame": 1,
+      "drawing_records": 84,
+      "clear_spans": 32,
+      "colour_spans": 68,
+      "unique_pixels": 1239
+    },
+    {
+      "frame": 2,
+      "drawing_records": 87,
+      "clear_spans": 27,
+      "colour_spans": 62,
+      "unique_pixels": 1145
+    },
+    {
+      "frame": 3,
+      "drawing_records": 66,
+      "clear_spans": 24,
+      "colour_spans": 52,
+      "unique_pixels": 955
+    },
+    {
+      "frame": 4,
+      "drawing_records": 27,
+      "clear_spans": 29,
+      "colour_spans": 44,
+      "unique_pixels": 523
+    },
+    {
+      "frame": 5,
+      "drawing_records": 66,
+      "clear_spans": 26,
+      "colour_spans": 50,
+      "unique_pixels": 909
+    },
+    {
+      "frame": 6,
+      "drawing_records": 74,
+      "clear_spans": 27,
+      "colour_spans": 58,
+      "unique_pixels": 1117
+    },
+    {
+      "frame": 7,
+      "drawing_records": 82,
+      "clear_spans": 29,
+      "colour_spans": 64,
+      "unique_pixels": 1235
+    },
+    {
+      "frame": 8,
+      "drawing_records": 85,
+      "clear_spans": 35,
+      "colour_spans": 65,
+      "unique_pixels": 1255
+    },
+    {
+      "frame": 9,
+      "drawing_records": 85,
+      "clear_spans": 34,
+      "colour_spans": 70,
+      "unique_pixels": 1230
+    },
+    {
+      "frame": 10,
+      "drawing_records": 84,
+      "clear_spans": 36,
+      "colour_spans": 76,
+      "unique_pixels": 1219
+    },
+    {
+      "frame": 11,
+      "drawing_records": 79,
+      "clear_spans": 27,
+      "colour_spans": 64,
+      "unique_pixels": 1102
+    },
+    {
+      "frame": 12,
+      "drawing_records": 66,
+      "clear_spans": 29,
+      "colour_spans": 62,
+      "unique_pixels": 902
+    },
+    {
+      "frame": 13,
+      "drawing_records": 29,
+      "clear_spans": 32,
+      "colour_spans": 47,
+      "unique_pixels": 483
+    },
+    {
+      "frame": 14,
+      "drawing_records": 69,
+      "clear_spans": 29,
+      "colour_spans": 54,
+      "unique_pixels": 851
+    },
+    {
+      "frame": 15,
+      "drawing_records": 81,
+      "clear_spans": 28,
+      "colour_spans": 66,
+      "unique_pixels": 1074
+    },
+    {
+      "frame": 16,
+      "drawing_records": 88,
+      "clear_spans": 33,
+      "colour_spans": 75,
+      "unique_pixels": 1203
+    },
+    {
+      "frame": 17,
+      "drawing_records": 92,
+      "clear_spans": 36,
+      "colour_spans": 75,
+      "unique_pixels": 1231
+    }
+  ],
+  "timing_policy": "All candidates use the same authored samples. Different holds may change animation speed; no implicit resampling.",
+  "test_environment": {
+    "PAL": true,
+    "seed": 1,
+    "sound": false,
+    "tass": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/64tass",
+    "cartconv": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/cartconv",
+    "vice": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/x64sc",
+    "vice_data": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/vice-data"
+  },
+  "search_configuration": {
+    "scene": "/workspace/scratch/a2344c11dad9/toolkit-work/c64-3d-toolkit/examples/autotune/colour-torus.c643dscene",
+    "out": "/workspace/scratch/a2344c11dad9/toolkit-beta-tests/torus",
+    "renderers": [
+      "hors-render-v1-scene",
+      "hors-render-v2-beta1"
+    ],
+    "preferences": [
+      "fps",
+      "ram"
+    ],
+    "ticks": [
+      1,
+      4
+    ],
+    "plans": [
+      "optimized"
+    ],
+    "gaps": [
+      6
+    ],
+    "batches": [
+      2048
+    ],
+    "objective": "fps",
+    "seconds": 10.0,
+    "max_refreshes": 10000,
+    "jobs": 3,
+    "mono": false,
+    "color_index": 1,
+    "visibility": "surface",
+    "tass": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/64tass",
+    "cartconv": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/cartconv",
+    "vice": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/x64sc",
+    "vice_data": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/vice-data"
+  }
+}

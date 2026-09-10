@@ -1,12 +1,12 @@
-⚠️🐴 Attention! For best quality, please enjoy each animation with `hors-render-v1` or a newer variant.
+⚠️🐴 Attention! For best quality, please enjoy each animation with `hors-render-v2` or a newer variant.
 
-Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
+Recommended for quality and FPS: the `hors-render-v2` cartridge linked below.
 
-**Current hors-render-v1 cartridge:** [play the example](../cart_horse_and_sunflower/README.md).
+**Current hors-render-v2 cartridge:** [play the example](../cart_horse_and_sunflower/README.md).
 
 # Horse and sunflower
 
-**v0.7.0 uses hors-render-v1-scene.** The Blender shot was introduced in v0.6.7
+**v0.7.0 uses hors-render-v2-scene.** The Blender shot was introduced in v0.6.7
 and remains separate from the multi-demo menu.
 
 A very close side-view shot of the HiFi horse sniffing the HiFi sunflower.
@@ -43,7 +43,7 @@ Blender's smooth wire render shows the composition. The C64 capture shows its
 timing. The C64 bitmap is 320×200, so this existing renderer also has an unused
 strip on the right and a blank bottom HUD row in the clean build.
 
-## Rebuilding with hors-render-v1
+## Rebuilding with hors-render-v2
 
 For a fresh Blender compilation, use the [current scene build
 command](../../docs/CARTRIDGE_SCENES.md#current-scene-path-in-071). It exports
@@ -53,7 +53,7 @@ Blender geometry as a byte-exact copy of the supplied cart. Use `--prefer ram`
 for the smaller-kernel alternative.
 
 The preserved `tools/build_horse_and_sunflower.py` is a **V7 reproduction tool**;
-it still emits V7, not hors-render-v1. Its `--regenerate` option recreates the
+it still emits V7, not hors-render-v2. Its `--regenerate` option recreates the
 source scene, so omit it to preserve Blender edits. To deliberately regenerate
 only the Blender scene from its original OBJ/MTL inputs:
 
@@ -66,7 +66,7 @@ blender --background --python-exit-code 1 --python examples/blender_horse_and_su
 The original V7 test requested six PAL ticks per sample (about 8.33 FPS). Its
 84-sample loop took 19.71 seconds, about 4.3 samples per second, in the recorded
 PAL VICE test. That number describes V7; it is not a measured speed for the
-current hors-render-v1 cartridge. Current FPS/RAM carts are linked above.
+current hors-render-v2 cartridge. Current FPS/RAM carts are linked above.
 
 ## Verification
 

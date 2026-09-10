@@ -1,0 +1,22 @@
+{
+  "cartridge": "space_horse_spin_color-hors-render-v2.crt",
+  "menu_entry": null,
+  "verified_frames": 387,
+  "orientations": 192,
+  "bitmap_bytes_checked": 2972160,
+  "color_bytes_checked": 371520,
+  "slots": {
+    "1": 129,
+    "2": 129,
+    "0": 129
+  },
+  "average_fps": 18.83430660610659,
+  "min_frame_cycles": 14009,
+  "max_frame_cycles": 69656,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "path": "examples/space_horse_spin/space_horse_spin_color-hors-render-v2.crt",
+  "entry": null,
+  "sha256": "8ad0818df1dc1c9dc3d849ec04995a78dd012659c724a27cf33712067c81904a"
+}

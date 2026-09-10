@@ -1,0 +1,22 @@
+{
+  "cartridge": "torus-hors-render-v2.crt",
+  "menu_entry": null,
+  "verified_frames": 387,
+  "orientations": 192,
+  "bitmap_bytes_checked": 2972160,
+  "color_bytes_checked": 371520,
+  "slots": {
+    "1": 129,
+    "2": 129,
+    "0": 129
+  },
+  "average_fps": 17.71487960398268,
+  "min_frame_cycles": 39206,
+  "max_frame_cycles": 66849,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "path": "examples/torus/torus-hors-render-v2.crt",
+  "entry": null,
+  "sha256": "44d67af406ae47432007ec92fe82a0008db8dff0bc9fbf3a751f48e6b707398f"
+}

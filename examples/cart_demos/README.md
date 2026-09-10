@@ -1,40 +1,24 @@
-⚠️🐴 Attention! For best quality, please enjoy each animation with `hors-render-v1` or a newer variant.
+# Cart Demos — hors-render-v2
 
-Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
+**Toolkit 0.7.2 · stable hors-render-v2 prebuilt examples.**
 
-# 0.7.1 demo menu
-
-Current hors-render-v1 cartridges: [FPS preferred](c643d-demo-v0.7.1-hors-render-v1-all.crt) and [RAM preferred](c643d-demo-v0.7.1-hors-render-v1-all-ram.crt).
-
-Each cart contains twelve animations rendered with hors-render-v1. Normal
-PLAY ALL runs each for ten seconds by default. F5 is an exhibition mode with a
-different schedule and must not be used for comparative FPS measurements.
+| Cartridge | Entries | Colours |
+| --- | ---: | --- |
+| [c643d-demo-v0.7.2-hors-render-v2-all-ram.crt](c643d-demo-v0.7.2-hors-render-v2-all-ram.crt) | 12 | Per entry |
+| [c643d-demo-v0.7.2-hors-render-v2-all.crt](c643d-demo-v0.7.2-hors-render-v2-all.crt) | 12 | Per entry |
 
 ```bash
-# Run from the repository root.
-x64sc +easyflashcrtwrite -cartcrt examples/cart_demos/c643d-demo-v0.7.1-hors-render-v1-all.crt
-
-# Rebuild the menu with the current renderer.
-./build.sh cart-demos
-./build.sh cart-demos --prefer ram
+x64sc +easyflashcrtwrite -cartcrt examples/cart_demos/c643d-demo-v0.7.2-hors-render-v2-all-ram.crt
 ```
 
-| Context | Key | Action |
-| --- | --- | --- |
-| Menu | Cursor keys / RETURN | Select and launch an entry or PLAY ALL |
-| Menu | F1 | Cycle menu style |
-| Menu | F5 | Start exhibition playback |
-| Animation | SPACE | Next demo |
-| Animation | RUN/STOP or F1 | Return to menu |
+Press SPACE when an identification screen is shown. Companion labels and manifests identify the exact build.
 
-Use [the performance chart](../../docs/PERFORMANCE_COMPARISON.md) for matched
-results and [the build guide](../../docs/V10_TESTING.md) for validation.
+The original twelve-animation menu retains styles, normal PLAY ALL and HiFi mode. FPS/RAM variants use the same source pictures. F5 is exhibition playback; benchmark with normal PLAY ALL only.
 
-Historical cartridges and metadata are outside the checkout. Renderer source and historical build tools remain available. These current cartridges are unchanged by the cleanup.
+```bash
+python3 tools/build_hors_v2_examples.py --only cart_demos
+```
 
-## Historical outputs removed
+[Full performance comparison](../../docs/PERFORMANCE_COMPARISON.md) · [Release build and cleanup](../../docs/RELEASE_0.7.2.md)
 
-Obsolete cartridges and validation captures are outside this checkout in
-`../c64-3d-toolkit-history/` (relative to the repository root). They are not
-shipped examples. Run `python perf/prune_old_examples.py` to remove leftovers
-from earlier patch extractions. Current source assets and renderer code remain.
+Old preview binaries are in prior release ZIPs or `../c64-3d-toolkit-history/pre-hors-v2/` relative to the repository root.

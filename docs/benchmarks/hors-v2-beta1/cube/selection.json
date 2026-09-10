@@ -1,0 +1,10 @@
+{
+  "winner": "hors-render-v2-beta1-fps-optimized-t1-g6-b2048",
+  "objective": "fps",
+  "tie_tolerance_fps": 0.10005836453572976,
+  "throughput_ties": [
+    "hors-render-v2-beta1-fps-optimized-t1-g6-b2048"
+  ],
+  "tie_rule": "Prefer a longer minimum hold, then less measured preparation work, then smaller payload",
+  "automatically_promoted": false
+}

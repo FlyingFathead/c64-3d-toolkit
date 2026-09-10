@@ -48,7 +48,7 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None,oracle_
     if menu_entry is None:
         sym=labels(crt.with_suffix('.lbl'))
         manifest=json.loads(crt.with_name(crt.stem+'-manifest.json').read_text());screen=manifest['screen_color'];menu=None
-        variant=manifest['renderer'].rsplit('-',1)[1];work=root/'build'/f'{crt.stem}-stream-{variant}'
+        variant=manifest['renderer'].rsplit('-',1)[1];work=root/manifest.get('runtime_work',f'build/{crt.stem}-stream-{variant}')
     else:
         manifest=json.loads(menu_manifest_path(crt).read_text())
         if manifest.get('uniform_renderer'):
@@ -63,7 +63,7 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None,oracle_
             variant=manifest.get('stream_renderer','yunroll-cart-v2').rsplit('-',1)[1]
             work=root/f'build/menu-stream-{variant}'/name
         sym=labels(work/'runtime.lbl')
-        menu=labels(root/'build'/f'{crt.stem}-cartridge-demo'/f'{crt.stem}-runtime-default.lbl')
+        menu=labels(root/'build'/f'{crt.stem}-cartridge-demo'/f'{crt.stem}-runtime-{manifest.get("menu_style", "default")}.lbl')
     reel_hud = None
     if manifest.get('reel'):
         from c643d.cartframes import load_menu_reference
@@ -93,7 +93,13 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None,oracle_
         mon += ['quit'];(td/'run.mon').write_text('\n'.join(mon)+'\n')
         cmd=[vice,'-console', '+easyflashcrtwrite','-pal','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(td/'run.mon'),'-monlog','-monlogname',str(td/'monitor.log'),'-limitcycles',str(count*1000000+2000000)]
         if vice_data:cmd+=['-directory',str(vice_data)]
-        with (td/'vice.log').open('w') as log:subprocess.run(cmd,stdout=log,stderr=subprocess.STDOUT,timeout=180,check=True)
+        try:
+            with (td/'vice.log').open('w') as log:
+                subprocess.run(cmd,stdout=log,stderr=subprocess.STDOUT,timeout=180,check=True)
+        except subprocess.SubprocessError as exc:
+            detail=(td/'vice.log').read_text(errors='replace')[-2500:]
+            if (td/'monitor.log').exists():detail+='\n'+(td/'monitor.log').read_text(errors='replace')[-2500:]
+            raise RuntimeError('VICE verification failed; final emulator/monitor output:\n'+detail) from exc
         ticks=[int(x) for x in re.findall(r'Stopwatch:\s*(\d+)',(td/'monitor.log').read_text())]
         if len(ticks)!=count:raise AssertionError('Emulator did not reach every completed frame: '+(td/'monitor.log').read_text()[-1800:])
         slot_counts={};images=[];reused=0

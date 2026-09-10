@@ -8,12 +8,13 @@ from c643d.toolchain import load_toolchain_settings
 from compare_renderers import load_scene_references
 
 
-def main():
+def main(argv=None):
     root=Path(__file__).resolve().parents[1]
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--tass',default='64tass');p.add_argument('--cartconv',default='cartconv')
     p.add_argument('--prefer',choices=('fps','ram'),default='fps')
-    a=p.parse_args()
+    p.add_argument('--renderer',choices=('hors-render-v1','hors-render-v2'),default='hors-render-v2')
+    a=p.parse_args(argv)
     frames,scene,ref=load_scene_references(root)['horse-sunflower']
     path=root/'assets/comparison-scene-vector-reference.json.gz'
     authored=cartuniform.Demo('HORSE AND SUNFLOWER',frames,ref['colors'],ref['screen_color'],
@@ -23,9 +24,9 @@ def main():
     sources=[authored]+[next(d for d in sources if d.name==name)
                        for name in ('SUNFLOWER TORUS HIFI','HORSE HEAD HIFI')]
     parser=cli.make_parser(load_toolchain_settings(root/'config/c643d.ini'))
-    args=parser.parse_args(['cart-demos','--stream-renderer','hors-render-v1',
+    args=parser.parse_args(['cart-demos','--stream-renderer',a.renderer,
         '--prefer',a.prefer,'--play-all-seconds','10','--tass',a.tass,'--cartconv',a.cartconv,
-        '--output',f'c643d-hifi-v{__version__}-hors-render-v1'+('-ram' if a.prefer=='ram' else ''),
+        '--output',f'c643d-hifi-v{__version__}-{a.renderer}'+('-ram' if a.prefer=='ram' else ''),
         '--output-dir',str(root/'examples/cart_hifi'),'--overwrite-policy','allow'])
     return cartuniform.build(args,sources=sources,reel=True)
 

@@ -1,0 +1,106 @@
+{
+  "passed": true,
+  "cartridges": 19,
+  "checks": 49,
+  "verified_pictures": 8429,
+  "native_ending": {
+    "cartridge": "marbles-hors-render-v2-16fps-force-bytes.crt",
+    "finite_ending": true,
+    "greeting_correction_verified": true,
+    "basic_banner_verified": true,
+    "ghost_message_verified": true,
+    "idle_cursor_verified": true,
+    "seconds_from_reset": {
+      "0-intro_start": 0.48690786482185194,
+      "1-frame_begin": 9.625359300399493,
+      "2-outro_start": 51.12876351943876,
+      "3-greeting_oops": 53.72223643184254,
+      "4-greeting_done": 55.158661575562704,
+      "5-outro_credits_visible": 56.83875125856637,
+      "6-fake_basic_ready": 59.02358492481081,
+      "7-ghost_message_done": 63.29838578713177,
+      "8-ghost_idle": 63.29839187696905,
+      "9-ghost_idle": 64.29589301373868
+    },
+    "scene_seconds": 41.50340421903927,
+    "total_to_ghost_seconds": 63.29838578713177
+  },
+  "carts": [
+    {
+      "path": "examples/blender_falling_cubes/falling_cubes_c64-hors-render-v2.crt",
+      "sha256": "0b7a0d95eaea6f22a6406dae803ee9b5195d27ad3416605a56ecd2401b2b44c3"
+    },
+    {
+      "path": "examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v2.crt",
+      "sha256": "82c226942457af416f159948f6309df089ec8a205231aa2f82fa4822b48aec3c"
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.2-hors-render-v2-all-ram.crt",
+      "sha256": "94958c25843eb0b58af3b52c055964005344e6052d91f3404e64997802defa70"
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.2-hors-render-v2-all.crt",
+      "sha256": "153073c912ac0b3b6d2c4b15297a663751346ffabedbb93e2ecc72c8b02ecac7"
+    },
+    {
+      "path": "examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt",
+      "sha256": "0f6e6cc97133ee93c83509783d8b960d57a3acf5b118a3bbc7cd73611fe090b3"
+    },
+    {
+      "path": "examples/cart_hifi/c643d-hifi-v0.7.2-hors-render-v2.crt",
+      "sha256": "eeb46660e4b8f75fadceaba6819ea7b23b2a7d40252eb76b1a51d57619f52939"
+    },
+    {
+      "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-ram.crt",
+      "sha256": "f03bb967303bdb6e54e0897672d8332b4effb6fa889afe9d8ecc584cb7bd24ee"
+    },
+    {
+      "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt",
+      "sha256": "adc52c5615a9b1288bafd8b586ffaa7a58e2916dcffa57aedefd807820554647"
+    },
+    {
+      "path": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt",
+      "sha256": "30e285a63090c30cc4488edea14bdf0117aa95ff257b8a5aa78aa06593b21c05"
+    },
+    {
+      "path": "examples/cube/cube-hors-render-v2.crt",
+      "sha256": "9806773ee8910f36c1652f24568128b91d5fcc4a11c5eaa9216e54a1aeb8fad2"
+    },
+    {
+      "path": "examples/hifi_showcase/horse_head_hifi-hors-render-v2.crt",
+      "sha256": "c27e99841e870271143547ee388f1b6d03209c6fd18ef6677dd7516216d08adb"
+    },
+    {
+      "path": "examples/horse_head/horse_head-hors-render-v2.crt",
+      "sha256": "a914856cbac75f0a69d06627b6ef4f850f6cb39e18e46e706c34d922d4bd88ee"
+    },
+    {
+      "path": "examples/space_horse_crawl/space_horse_crawl_color-hors-render-v2.crt",
+      "sha256": "882c2518fabbd03d5faf5743cf1967540eb757ffe8bf406be211134db5fc716f"
+    },
+    {
+      "path": "examples/space_horse_spin/space_horse_spin_color-hors-render-v2.crt",
+      "sha256": "8ad0818df1dc1c9dc3d849ec04995a78dd012659c724a27cf33712067c81904a"
+    },
+    {
+      "path": "examples/sphere/sphere-hors-render-v2.crt",
+      "sha256": "5f9435072fbd6352e0713695bd022a13c50ee6cab170df8c188fd5a5138a2948"
+    },
+    {
+      "path": "examples/sunflower_torus/sunflower_torus-hors-render-v2.crt",
+      "sha256": "dc055c242d53799b311bfb93f6b06abd2f99008b2db9fe19ee67bb27284878ef"
+    },
+    {
+      "path": "examples/sunflower_torus/sunflower_torus_color-hors-render-v2.crt",
+      "sha256": "d5212369b5ae8f321965c65d8650b970bbe860c2d4d1fe5b0ac6883e9363b1a8"
+    },
+    {
+      "path": "examples/torus/torus-hors-render-v2.crt",
+      "sha256": "44d67af406ae47432007ec92fe82a0008db8dff0bc9fbf3a751f48e6b707398f"
+    },
+    {
+      "path": "examples/torus_dense/torus_dense-hors-render-v2.crt",
+      "sha256": "8e28ecc3f73ebca22518f7f8f071673f2ba3f60f5da1b140146d9b495accab20"
+    }
+  ]
+}

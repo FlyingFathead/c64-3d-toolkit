@@ -1,18 +1,22 @@
-⚠️🐴 Attention! For best quality, please enjoy each animation with `hors-render-v1` or a newer variant.
+# Blender Falling Cubes — hors-render-v2
 
-Recommended for quality and FPS: the `hors-render-v1` cartridge linked below.
+**Toolkit 0.7.2 · stable hors-render-v2 prebuilt examples.**
 
-# Blender Falling Cubes — hors-render-v1
-
-Start with the supplied hors-render-v1 cartridge:
+| Cartridge | Samples | Colours |
+| --- | ---: | --- |
+| [falling_cubes_c64-hors-render-v2.crt](falling_cubes_c64-hors-render-v2.crt) | 18 | Monochrome |
+| [falling_cubes_c64_color-hors-render-v2.crt](falling_cubes_c64_color-hors-render-v2.crt) | 18 | Yes |
 
 ```bash
-x64sc +easyflashcrtwrite -cartcrt examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v1.crt
-x64sc +easyflashcrtwrite -cartcrt examples/blender_falling_cubes/falling_cubes_c64-hors-render-v1.crt
+x64sc +easyflashcrtwrite -cartcrt examples/blender_falling_cubes/falling_cubes_c64-hors-render-v2.crt
 ```
 
-The PRG variants remain available for comparison. Rebuild current cartridges with
-`python tools/build_current_examples.py` from the repository root.
+Press SPACE when an identification screen is shown. Companion labels and manifests identify the exact build.
 
-Falling cubes uses the 18 preserved vector samples from the menu reference.
-This is the existing short loop, not a new Blender physics render.
+```bash
+python3 tools/build_hors_v2_examples.py --only blender_falling_cubes
+```
+
+[Full performance comparison](../../docs/PERFORMANCE_COMPARISON.md) · [Release build and cleanup](../../docs/RELEASE_0.7.2.md)
+
+Old preview binaries are in prior release ZIPs or `../c64-3d-toolkit-history/pre-hors-v2/` relative to the repository root.

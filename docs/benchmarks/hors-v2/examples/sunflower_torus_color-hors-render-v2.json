@@ -1,0 +1,22 @@
+{
+  "cartridge": "sunflower_torus_color-hors-render-v2.crt",
+  "menu_entry": null,
+  "verified_frames": 387,
+  "orientations": 192,
+  "bitmap_bytes_checked": 2972160,
+  "color_bytes_checked": 371520,
+  "slots": {
+    "1": 129,
+    "2": 129,
+    "0": 129
+  },
+  "average_fps": 20.892343315965427,
+  "min_frame_cycles": 24854,
+  "max_frame_cycles": 61281,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "path": "examples/sunflower_torus/sunflower_torus_color-hors-render-v2.crt",
+  "entry": null,
+  "sha256": "d5212369b5ae8f321965c65d8650b970bbe860c2d4d1fe5b0ac6883e9363b1a8"
+}

@@ -14,7 +14,7 @@ import statistics
 import subprocess
 import tempfile
 from c643d.cartpaths import menu_manifest_path
-from verify_cart_stream import labels
+from verify_cart_stream import labels, startup_monitor
 
 CLOCK = 985248
 
@@ -38,7 +38,8 @@ def benchmark(crt, vice, vice_data, loops=3):
         assert prg[i:i+5] == bytes((0xa9,255,0x8d,s['ready_slot']&255,s['ready_slot']>>8))
     with tempfile.TemporaryDirectory(prefix='c643d-play-all-benchmark-') as tmp:
         tmp=Path(tmp)
-        commands=['delete',f'break ${menu["menu_wait_key"]:04x}','g']
+        startup,first_go=startup_monitor(meta,menu)
+        commands=['delete',*startup,f'break ${menu["menu_wait_key"]:04x}',first_go]
         for i in range(len(entries)*loops):
             s=syms[i%len(entries)]
             commands+=['delete',f'break ${menu["play_all_count"]:04x}',f'g ${menu["menu_launch"]:04x}' if i==0 else 'g',
@@ -70,6 +71,8 @@ def benchmark(crt, vice, vice_data, loops=3):
             elapsed=w['end']-w['start'];expected=(seconds*50-1)*19656
             assert abs(elapsed-expected)<4096,(i,elapsed,expected)
             flips=sum(a==s['irq_no_flip']-5 for a,c in w['events'])
+            flip_clocks=[c for a,c in w['events'] if a==s['irq_no_flip']-5]
+            intervals=[b-a for a,b in zip(flip_clocks,flip_clocks[1:])]
             published=sum(a==s['profile_published'] for a,c in w['events'])
             costs=[];begin=None
             for a,c in w['events']:
@@ -77,17 +80,23 @@ def benchmark(crt, vice, vice_data, loops=3):
                 elif a==s['frame_draw_complete'] and begin is not None:
                     costs.append(c-begin);begin=None
             samples.append(dict(loop=i//len(entries),entry=idx,window_cycles=elapsed,display_flips=flips,
-                                published_samples=published,completed_render_cycles=costs))
+                                published_samples=published,completed_render_cycles=costs,
+                                display_interval_cycles=intervals))
     results=[]
     for i,e in enumerate(entries):
         rows=[x for x in samples if x['entry']==i];cycles=sum(x['window_cycles'] for x in rows)
         flips=sum(x['display_flips'] for x in rows);published=sum(x['published_samples'] for x in rows)
         costs=[n for x in rows for n in x['completed_render_cycles']]
+        intervals=[n for x in rows for n in x['display_interval_cycles']]
         results.append(dict(name=e['name'],entry=i,frame_count=e['frames'],
                             oracle_sha256=hashlib.sha256((root/e['work']/'oracle.json').read_bytes()).hexdigest(),display_flips=flips,published_samples=published,
                             observation_seconds=cycles/CLOCK,display_fps=flips*CLOCK/cycles,
                             published_samples_per_second=published*CLOCK/cycles,
-                            mean_render_cycles=statistics.mean(costs),worst_render_cycles=max(costs)))
+                            mean_render_cycles=statistics.mean(costs),worst_render_cycles=max(costs),
+                            high_fps=CLOCK/min(intervals) if intervals else None,
+                            low_fps=CLOCK/max(intervals) if intervals else None,
+                            worst_display_ms=max(intervals)/985.248 if intervals else None,
+                            p95_display_ms=sorted(intervals)[int(.95*(len(intervals)-1))]/985.248 if intervals else None))
     return dict(cartridge=crt.name,sha256=hashlib.sha256(crt.read_bytes()).hexdigest(),renderer=meta['stream_renderer'],
                 preference=meta.get('preference','fps'),mode='normal PLAY ALL ONLY',exhibition=False,loops=loops,
                 seconds_setting=seconds,ticks_per_second=50,pal_clock_hz=CLOCK,vice_defaults=True,seed=1,

@@ -1,0 +1,24 @@
+{
+  "cartridge": "candidate.crt",
+  "menu_entry": null,
+  "verified_frames": 15,
+  "orientations": 6,
+  "bitmap_bytes_checked": 115200,
+  "color_bytes_checked": 14400,
+  "slots": {
+    "1": 6,
+    "2": 5,
+    "0": 4
+  },
+  "average_fps": 40.42339218990402,
+  "min_frame_cycles": 1896,
+  "max_frame_cycles": 42859,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 5,
+  "loop_seconds": 0.15960245542239113,
+  "target_fps": 50.0,
+  "hud_match": true,
+  "text_overlay": false,
+  "frame_index_bits": 16
+}

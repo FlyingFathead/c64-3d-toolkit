@@ -1,0 +1,20 @@
+{
+  "candidate": "hors-render-v1-scene-fps-raw-t1",
+  "directory": "/workspace/scratch/a2344c11dad9/toolkit-beta-tests/cube-final/hors-render-v1-scene-fps-raw-t1",
+  "scene": "/workspace/scratch/a2344c11dad9/toolkit-work/c64-3d-toolkit/examples/autotune/colour-cube.c643dscene",
+  "frames": "/workspace/scratch/a2344c11dad9/toolkit-beta-tests/cube-final/compiled-frames.json",
+  "renderer": "hors-render-v1-scene",
+  "preference": "fps",
+  "ticks": 1,
+  "plan": "raw",
+  "gap": null,
+  "batch": null,
+  "mono": false,
+  "color_index": 1,
+  "tass": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/64tass",
+  "cartconv": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/cartconv",
+  "vice": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/x64sc",
+  "vice_data": "/workspace/scratch/a2344c11dad9/restored-tools/c64-tools/vice-data",
+  "seconds": 10.0,
+  "max_refreshes": 10000
+}

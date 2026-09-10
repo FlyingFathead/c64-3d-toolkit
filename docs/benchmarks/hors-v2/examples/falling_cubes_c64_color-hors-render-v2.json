@@ -1,0 +1,22 @@
+{
+  "cartridge": "falling_cubes_c64_color-hors-render-v2.crt",
+  "menu_entry": null,
+  "verified_frames": 39,
+  "orientations": 18,
+  "bitmap_bytes_checked": 299520,
+  "color_bytes_checked": 37440,
+  "slots": {
+    "1": 13,
+    "2": 13,
+    "0": 13
+  },
+  "average_fps": 21.616245689963765,
+  "min_frame_cycles": 22813,
+  "max_frame_cycles": 56327,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "path": "examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v2.crt",
+  "entry": null,
+  "sha256": "82c226942457af416f159948f6309df089ec8a205231aa2f82fa4822b48aec3c"
+}

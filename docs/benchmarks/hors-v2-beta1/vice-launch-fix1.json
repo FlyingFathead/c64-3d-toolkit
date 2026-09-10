@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "version": "0.7.2",
+  "change": "Test launch configuration only; hors-render-v2-beta1 unchanged",
+  "injected_cpu_jam_rejected": true,
+  "ripples_v1_verified_pictures": 203,
+  "three_workers_all_seven_v1_scenes_passed": true,
+  "v1_completed_pictures": 689,
+  "all_v1_play_all_display_counts_match_baseline": true,
+  "chart_input_fingerprint_unchanged": true,
+  "user_gtk_crash_trigger": "Not yet established from the supplied log",
+  "emulator": "VICE 3.10 PAL; default settings, seed 1, sound disabled"
+}

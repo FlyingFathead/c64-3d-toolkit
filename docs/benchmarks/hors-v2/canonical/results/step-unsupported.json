@@ -1,0 +1,10 @@
+[
+  {
+    "name": "HORSE HEAD HIFI",
+    "reason": "frame pointer tables reach $1800, limit $1700; reduce --frames"
+  },
+  {
+    "name": "SUNFLOWER TORUS HIFI",
+    "reason": "resident record count exceeds 255"
+  }
+]

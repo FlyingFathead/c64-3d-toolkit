@@ -1,11 +1,13 @@
+> Current default: **hors-render-v2**. [Release build and example migration](RELEASE_0.7.2.md).
+
 # Marbles recording start — 0.7.0
 
-The shipped `examples/cart_marbles/marbles-hors-render-v1-16fps-force-bytes.crt`
+The shipped `examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt`
 already waits indefinitely for SPACE. Start recording in VICE, focus its window,
 then press SPACE to begin the native intro. The scene follows, then the ending.
 See [the presentation guide](../examples/cart_marbles/README.md).
 
-No cleanup or startup patch is required for this release. New hors-render-v1
+No cleanup or startup patch is required for this release. New hors-render-v2
 scene builds with the native intro also wait for SPACE. Historical renderer
 build screens retain their original behaviour. Automated playback verifiers
 must acknowledge the startup screen.
