@@ -4,13 +4,16 @@
 
 # c64-3d-toolkit
 
-**Version 0.7.3: independent foreground, background and border colours.**
-Use names, palette indices or RGB hex. The new [COLOR COMBO TEST](examples/color_combo_test/README.md)
-cycles through four classic animations and lets you change colours with F3/F4.
-Demo Cart 1 and Demo Cart 2.0 also support F3/F4 on monochrome entries, F7 for
-the independent border on every entry, and F8 to restore the preset.
-See [output colours](docs/OUTPUT_COLORS.md) for options and inversion examples,
-and [0.7.3 release notes and installation](docs/RELEASE_0.7.3.md).
+**Version 0.7.4: cartridge loading and EasyFlash metadata.**
+Generated carts include genuine EasyAPI and PETSCII names, checked metadata
+placement, and stronger reset initialization. The shared VICE launcher disables
+CRT write-back and offers temporary default settings for troubleshooting.
+See [0.7.4 release notes and installation](docs/RELEASE_0.7.4.md) and
+[cartridge loading](docs/CARTRIDGE_LOADING.md).
+
+The independent colours and F3/F4/F7/F8 controls introduced in 0.7.3 remain
+available in Demo Cart 1, Demo Cart 2.0 and [COLOR COMBO TEST](examples/color_combo_test/README.md).
+See [output colours](docs/OUTPUT_COLORS.md) for options and inversion examples.
 
 ## 👀💦👉 LOOKI LOOKI! `hors-render-v2` just dropped — UP TO 35.5% FASTER!
 
@@ -33,17 +36,21 @@ These are emulated C64 timings, not host wall-clock speed or the HUD counter.
 | Prebuilt | What is inside |
 | --- | --- |
 | [Color Combo Test](examples/color_combo_test/color-combo-test.crt) | Four colour pairs, ten seconds each, automatic looping, F3/F4 cycling |
-| [Twelve-demo cart — FPS](examples/cart_demos/c643d-demo-v0.7.3-hors-render-v2-all.crt) | The original twelve animations, menu styles, PLAY ALL, HiFi mode and colour controls |
-| [Twelve-demo cart — RAM](examples/cart_demos/c643d-demo-v0.7.3-hors-render-v2-all-ram.crt) | Same material and colour controls, smaller drawing kernels |
+| [Twelve-demo cart — FPS](examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all.crt) | The original twelve animations, menu styles, PLAY ALL, HiFi mode and colour controls |
+| [Twelve-demo cart — RAM](examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all-ram.crt) | Same material and colour controls, smaller drawing kernels |
 | [Demo Cart 2.0](examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt) | Colour cube, colour torus, twist tunnel, ribbon dance, orbital cubes, wave lattice and Ripples Lite |
-| [HiFi reel](examples/cart_hifi/c643d-hifi-v0.7.2-hors-render-v2.crt) | Horse & Sunflower followed by two HiFi spinners |
+| [HiFi reel](examples/cart_hifi/c643d-hifi-v0.7.4-hors-render-v2.crt) | Horse & Sunflower followed by two HiFi spinners |
 | [Marbles](examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt) | All 640 authored samples, original 16 FPS target, native intro and ending |
 | [Horse & Sunflower](examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt) | Authored scene, with a separate RAM build in the same folder |
 
 ```bash
-x64sc +easyflashcrtwrite -cartcrt examples/cart_demos/c643d-demo-v0.7.3-hors-render-v2-all.crt
-x64sc +easyflashcrtwrite -cartcrt examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt
+python c643d.py run-cart examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all.crt
+python c643d.py run-cart examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt
 ```
+
+Use `--vice-clean-settings` to try temporary VICE defaults when diagnosing a
+loading failure. See [cartridge loading](docs/CARTRIDGE_LOADING.md) for the
+standalone VICE command, write-back protection and the loader changes.
 
 Press **SPACE** on the identification screen. In the menu, use the cursor keys
 and RETURN; F1 changes styles or returns from playback. Normal PLAY ALL is the
@@ -116,9 +123,9 @@ renderer throughput improvement.
 ## Compile and validate an entire release
 
 ```bash
-cd ~/NeuralNetwork/c64-3d-toolkit
+cd path/to/c64-3d-toolkit
 JOBS=3 VICE_DATA=/usr/local/share/vice bash COMPILE-RELEASE.sh \
-  --workspace ../c64-073-release-build
+  --workspace ../c64-074-release-build
 ```
 
 This makes an isolated source copy, builds every stable example, validates
@@ -128,19 +135,19 @@ Add `--install` to install only after all checks pass. Add `--baseline-zip PATH`
 to also generate a patch ZIP. The pipeline never commits, tags or pushes. Root `VERSION` supplies the build
 identity; an alternate-version VICE test guards startup, menu and thanks labels.
 
-To install the supplied 0.7.3 release, put the ZIP in `~/NeuralNetwork/` and
-extract it there, one level above the checkout:
+To install the supplied 0.7.4 release, save the ZIP one level above your
+checkout and extract it from that parent directory:
 
 ```bash
-cd ~/NeuralNetwork
-unzip -o c64-3d-toolkit-v0.7.3-final.zip
+unzip -o c64-3d-toolkit-v0.7.4.zip
+cd c64-3d-toolkit
+python tools/compare_renderers.py --check
 ```
 
-The ZIP includes its own `c64-3d-toolkit/` directory. This updates
-`~/NeuralNetwork/c64-3d-toolkit/`; no cleanup is required for the 0.7.2-to-0.7.3
-update. The tested cartridge bytes are retained in this final package.
-See the [release guide](docs/RELEASE_0.7.3.md) for checksums and rebuilds, or the
-[historical 0.7.2 migration guide](docs/RELEASE_0.7.2.md) for older preview cleanup.
+The ZIP contains its own `c64-3d-toolkit/` directory. Current cartridges are
+already rebuilt. Previous versioned menu/HiFi carts remain as historical
+references; use the 0.7.4 links above for the updated loader. See the
+[release guide](docs/RELEASE_0.7.4.md) for checks and rebuilds.
 
 ## Earlier renderers remain available
 

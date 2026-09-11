@@ -10,12 +10,14 @@
     "2": 58,
     "0": 64
   },
-  "average_fps": 7.617544439878252,
+  "average_fps": 7.616645865050001,
   "min_frame_cycles": 6578,
   "max_frame_cycles": 256129,
   "pixel_match": true,
   "color_match": true,
   "reused_samples": 52,
+  "border_match": true,
+  "border_color": 0,
   "loop_seconds": 11.132224576959304,
   "target_fps": 8.333333333333334,
   "hud_match": true,
@@ -23,5 +25,5 @@
   "frame_index_bits": 16,
   "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt",
   "entry": null,
-  "sha256": "adc52c5615a9b1288bafd8b586ffaa7a58e2916dcffa57aedefd807820554647"
+  "sha256": "07296e94bfa28ad11b313e82f14df1dce19687f4559448616686633724f9f5af"
 }

@@ -16,7 +16,9 @@
   "pixel_match": true,
   "color_match": true,
   "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
   "path": "examples/space_horse_crawl/space_horse_crawl_color-hors-render-v2.crt",
   "entry": null,
-  "sha256": "882c2518fabbd03d5faf5743cf1967540eb757ffe8bf406be211134db5fc716f"
+  "sha256": "2404aab1d9974120a4ffec2493e50d34bbfe4c1df3e5afe2789697370e83d7f1"
 }

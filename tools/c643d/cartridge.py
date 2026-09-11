@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 import math
 import subprocess
+import struct
+import hashlib
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Sequence
@@ -13,6 +15,11 @@ EASYFLASH_BANKS = 64
 EASYFLASH_CHIP_SIZE = 0x2000
 EASYFLASH_BANK_SIZE = EASYFLASH_CHIP_SIZE * 2
 EASYFLASH_RAW_SIZE = EASYFLASH_BANKS * EASYFLASH_BANK_SIZE
+EASYFLASH_METADATA_START = 0x1800
+EASYFLASH_METADATA_END = 0x1C00
+EASYFLASH_NAME_OFFSET = 0x1B00
+EASYFLASH_NAME_MAGIC = bytes.fromhex('65 66 2d 6e 41 4d 45 3a')
+EASYAPI_SHA256 = '032f3f21f2299e2fd96b28dc1a901a6ed19a04f600d446c7a362781b4592f432'
 
 
 def easyflash_offset(bank: int, chip: str, offset: int = 0) -> int:
@@ -113,7 +120,75 @@ def assemble_smoke_bootstrap(*, tass: str, tass_args: Sequence[str], source: Pat
         raise RuntimeError(f'EasyFlash bootstrap assembled to {size} bytes; expected exactly 8192')
 
 
+def cartridge_title(name: str) -> str:
+    """A printable, deterministic CRT title (the container field is ASCII)."""
+    title = ''.join(ch if 32 <= ord(ch) <= 126 else '?' for ch in name).strip()
+    return (title or 'C64 3D TOOLKIT')[:32]
+
+
+def petscii_title(name: str) -> bytes:
+    """Encode the EF menu's upper/lower-case PETSCII alphabet, not screen codes."""
+    values = []
+    for ch in cartridge_title(name)[:16]:
+        if 'A' <= ch <= 'Z':
+            values.append(ord(ch) + 32)
+        elif 'a' <= ch <= 'z':
+            values.append(ord(ch) - 32)
+        elif 32 <= ord(ch) <= 63:
+            values.append(ord(ch))
+        else:
+            values.append(ord('?'))
+    return bytes(values).ljust(16, b'\0')
+
+
+def easyapi_bytes() -> bytes:
+    data = (Path(__file__).parent / 'data/easyapi/eapi-am29f040-14.bin').read_bytes()
+    if len(data) != 768 or hashlib.sha256(data).hexdigest() != EASYAPI_SHA256:
+        raise ValueError('Bundled EasyAPI binary is missing, corrupt, or has a PRG load-address prefix')
+    return data
+
+
+def install_easyflash_metadata(image: bytearray, name: str) -> None:
+    if len(image) != EASYFLASH_RAW_SIZE:
+        raise ValueError('EasyFlash image must be exactly 1 MiB')
+    start = easyflash_offset(0, 'romh', EASYFLASH_METADATA_START)
+    end = easyflash_offset(0, 'romh', EASYFLASH_METADATA_END)
+    expected = bytearray(b'\xff' * (end - start))
+    expected[:768] = easyapi_bytes()
+    offset = EASYFLASH_NAME_OFFSET - EASYFLASH_METADATA_START
+    expected[offset:offset + 24] = EASYFLASH_NAME_MAGIC + petscii_title(name)
+    if image[start:end] == expected:
+        return
+    if image[start:end] != b'\xff' * (end - start):
+        raise ValueError('EasyFlash metadata overlaps bank 0 ROMH $1800-$1bff; '
+                         'reserve or relocate this content before conversion')
+    image[start:end] = expected
+
+
+def install_scene_extension(image: bytearray, boot: bytes, extension: bytes) -> None:
+    """Preserve RAM $9400-$97ff in unused ROML bank 2 tail, freeing metadata.
+
+    The scene bootstrap restores these four pages after its normal ROMH copy.
+    No frame bank, frame address, runtime address, or renderer byte changes.
+    """
+    if len(boot) != EASYFLASH_CHIP_SIZE or len(extension) > 0x1FFA - 0x400:
+        raise ValueError('Scene extension overlaps EasyFlash reset vectors')
+    romh = bytearray(boot)
+    romh[0x400:0x400 + len(extension)] = extension
+    spill = easyflash_offset(2, 'roml', 0x1800)
+    # The 88-page bootstrap uses only the first 24 pages of this ROML bank.
+    if any(image[spill:spill + 0x400]):
+        raise ValueError('Scene metadata relocation overlaps ROML bank 2 tail')
+    image[spill:spill + 0x400] = romh[EASYFLASH_METADATA_START:EASYFLASH_METADATA_END]
+    romh[EASYFLASH_METADATA_START:EASYFLASH_METADATA_END] = b'\xff' * 0x400
+    put_easyflash_chip(image, 0, 'romh', bytes(romh))
+
+
 def convert_easyflash(*, cartconv: str, raw: Path, crt: Path, name: str, cwd: Path) -> None:
+    name = cartridge_title(name)
+    image = bytearray(raw.read_bytes())
+    install_easyflash_metadata(image, name)
+    raw.write_bytes(image)
     command = [cartconv, '-t', 'easy', '-i', str(raw), '-o', str(crt), '-n', name]
     print('+', ' '.join(command))
     subprocess.run(command, cwd=cwd, check=True)
@@ -130,7 +205,50 @@ def validate_easyflash_info(info: str) -> None:
         raise RuntimeError('cartconv info did not describe a native EasyFlash CRT: ' + ', '.join(missing))
 
 
+def inspect_easyflash_crt(crt: Path, *, require_metadata: bool = False) -> dict:
+    """Validate actual container bytes, packet coverage and native reset target."""
+    data = Path(crt).read_bytes()
+    if len(data) < 64 or data[:16] != b'C64 CARTRIDGE   ':
+        raise ValueError('Not a C64 CRT file (missing/truncated container header)')
+    header_size, version, hardware = struct.unpack_from('>IHH', data, 16)
+    if not 64 <= header_size <= len(data) or version != 0x100 or hardware != 32:
+        raise ValueError('Expected a CRT v1.0 EasyFlash image (hardware ID 32)')
+    if data[24:26] != bytes((1, 0)):
+        raise ValueError('Native EasyFlash requires EXROM=1, GAME=0 at reset')
+    chips = {}
+    pos = header_size
+    while pos < len(data):
+        if len(data) - pos < 16:
+            raise ValueError('Truncated CRT CHIP header')
+        sig, length, kind, bank, address, size = struct.unpack_from('>4sIHHHH', data, pos)
+        if (sig != b'CHIP' or length != size + 16 or size != 8192 or
+                pos + length > len(data) or kind != 2 or bank >= 64 or
+                address not in (0x8000, 0xA000)):
+            raise ValueError(f'Invalid EasyFlash CHIP packet at file offset ${pos:x}')
+        key = (bank, address)
+        if key in chips:
+            raise ValueError(f'Duplicate EasyFlash CHIP packet: {key}')
+        chips[key] = data[pos + 16:pos + length]
+        pos += length
+    romh = chips.get((0, 0xA000))
+    if romh is None:
+        raise ValueError('Missing bank 0 ROMH bootstrap/reset vectors')
+    reset = int.from_bytes(romh[0x1FFC:0x1FFE], 'little')
+    if not 0xE000 <= reset < 0xFFFA or romh[reset - 0xE000] == 0xFF:
+        raise ValueError(f'Invalid or erased EasyFlash reset target ${reset:04x}')
+    internal_name = romh[EASYFLASH_NAME_OFFSET:EASYFLASH_NAME_OFFSET + 24]
+    if require_metadata and internal_name[:8] != EASYFLASH_NAME_MAGIC:
+        raise ValueError('Missing EasyFlash PETSCII cartridge-name structure')
+    if require_metadata and romh[0x1800:0x1B00] != easyapi_bytes():
+        raise ValueError('Generated cartridge does not contain the bundled real EasyAPI driver')
+    return dict(name=data[32:64].split(b'\0')[0].decode('ascii', errors='replace'),
+                hardware_id=hardware, chip_packets=len(chips), reset_address=reset,
+                internal_name=internal_name[8:].hex() if internal_name[:8] == EASYFLASH_NAME_MAGIC else None,
+                eapi_present=romh[0x1800:0x1804] == b'eapi')
+
+
 def check_easyflash_crt(*, cartconv: str, crt: Path, cwd: Path) -> str:
+    inspect_easyflash_crt(crt, require_metadata=True)
     completed = subprocess.run(
         [cartconv, '-c', str(crt)], cwd=cwd, capture_output=True, text=True, check=False,
     )

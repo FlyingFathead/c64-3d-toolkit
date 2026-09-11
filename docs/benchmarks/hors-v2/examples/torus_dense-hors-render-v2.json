@@ -16,7 +16,9 @@
   "pixel_match": true,
   "color_match": true,
   "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
   "path": "examples/torus_dense/torus_dense-hors-render-v2.crt",
   "entry": null,
-  "sha256": "8e28ecc3f73ebca22518f7f8f071673f2ba3f60f5da1b140146d9b495accab20"
+  "sha256": "3f58e08599c662a5bcbdd96a0d6798ba7e0bf142c0055189e758fbbf0dc26923"
 }

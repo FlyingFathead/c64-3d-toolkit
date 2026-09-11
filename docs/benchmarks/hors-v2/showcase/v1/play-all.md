@@ -4,7 +4,7 @@ New Demo Cart 2.0 material; not the frozen canonical 12-animation release compar
 
 | Animation | Samples | High FPS | Display FPS | Low FPS | Worst display ms |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| COLOUR CUBE 24 | 24 | 56.82 | 32.45 | 22.77 | 43.91 |
+| COLOUR CUBE 24 | 24 | 56.82 | 32.45 | 22.78 | 43.90 |
 | COLOUR TORUS 18 | 18 | 26.84 | 18.38 | 12.53 | 79.80 |
 | TWIST TUNNEL | 48 | 12.96 | 9.14 | 8.35 | 119.72 |
 | RIBBON DANCE | 48 | 57.27 | 31.64 | 22.55 | 44.34 |

@@ -181,6 +181,7 @@ def build_menu(a, *, sources=None, reel=False, frame_encoders=None):
         sources=[replace(d,color_controls=True) for d in sources]
     options=copy(a)
     options.stream_renderer='hors-render-v1'
+    options.cartridge_name=getattr(a, 'cartridge_name', None) or f'C643D {__version__} HORS V2 {a.prefer.upper()}'
     options.output=options.output or f'c643d-demo-v{__version__}-{NAME}-all'+('-ram' if a.prefer=='ram' else '')
     options.output_dir=str(Path(a.output_dir).resolve() if a.output_dir else root/'examples/cart_demos')
     with staged(root) as stage, identity():

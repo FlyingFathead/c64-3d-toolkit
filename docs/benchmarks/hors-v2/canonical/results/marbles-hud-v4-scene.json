@@ -4,7 +4,7 @@
   "diagnostic_only": true,
   "profile": {
     "cartridge": "marbles-hud-v4.crt",
-    "sha256": "8f6284c6e9037149b2d8be6a4d068d1b4efd35bf791b23775a575c95bfb99f7d",
+    "sha256": "67b882ea1ed5c0f8feda9aa9f4c3b62ec41eeec44b11fcf3128257e40752a543",
     "renderer": "yunroll-cart-v4-scene",
     "menu_entry": null,
     "frames": 200,

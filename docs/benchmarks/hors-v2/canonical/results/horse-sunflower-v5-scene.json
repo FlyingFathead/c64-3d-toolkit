@@ -4,7 +4,7 @@
   "diagnostic_only": true,
   "profile": {
     "cartridge": "horse-sunflower-v5.crt",
-    "sha256": "16ed4fa953353e373c2bbc7b337fd7f64abf14504c66d324d5f56da4400bd58d",
+    "sha256": "30ce173b5e2ef177aea749cc12f00bd17bb3558eaefffede5bdac58bc7857147",
     "renderer": "yunroll-cart-v5-scene",
     "menu_entry": null,
     "frames": 84,
@@ -16,21 +16,21 @@
       "directory": 23.51,
       "picture_lookup_and_queue_wait": 466.82,
       "fetch": 24115.92,
-      "recycle_bitmap_and_colors": 32209.58,
+      "recycle_bitmap_and_colors": 32209.67,
       "cache_metadata": 7145.94,
-      "apply_colors": 10875.35,
-      "draw_lines": 128469.54,
+      "apply_colors": 10875.37,
+      "draw_lines": 128469.49,
       "bookkeeping": 11,
       "publish_wait": 35038.55,
       "publish_commit": 40.61,
       "advance_and_final_hold": 49.13
     },
-    "mean_render_cycles": 203306.65,
+    "mean_render_cycles": 203306.71,
     "worst_render_cycles": 296295,
-    "mean_total_cycles": 238445.94,
+    "mean_total_cycles": 238446,
     "worst_total_cycles": 296425,
-    "measured_seconds": 20.32935768456267,
-    "frames_per_second": 4.13195543624019,
+    "measured_seconds": 20.329362759427067,
+    "frames_per_second": 4.131954404770892,
     "samples": [
       {
         "frame": 3,
@@ -163,54 +163,54 @@
         "cycles": {
           "directory": 23,
           "picture_lookup_and_queue_wait": 116,
-          "fetch": 32928,
+          "fetch": 32929,
           "recycle_bitmap_and_colors": 38,
           "cache_metadata": 10211,
-          "apply_colors": 14601,
-          "draw_lines": 179475,
+          "apply_colors": 14600,
+          "draw_lines": 179463,
           "bookkeeping": 11,
           "publish_wait": 31,
           "publish_commit": 41,
           "advance_and_final_hold": 47
         },
-        "render_cycles": 237392,
-        "total_cycles": 237522
+        "render_cycles": 237380,
+        "total_cycles": 237510
       },
       {
         "frame": 11,
         "cycles": {
           "directory": 23,
           "picture_lookup_and_queue_wait": 136,
-          "fetch": 33540,
+          "fetch": 33537,
           "recycle_bitmap_and_colors": 38,
           "cache_metadata": 10064,
-          "apply_colors": 14809,
-          "draw_lines": 180538,
+          "apply_colors": 14810,
+          "draw_lines": 180529,
           "bookkeeping": 11,
           "publish_wait": 31,
           "publish_commit": 41,
           "advance_and_final_hold": 47
         },
-        "render_cycles": 239148,
-        "total_cycles": 239278
+        "render_cycles": 239137,
+        "total_cycles": 239267
       },
       {
         "frame": 12,
         "cycles": {
           "directory": 23,
           "picture_lookup_and_queue_wait": 126,
-          "fetch": 33371,
-          "recycle_bitmap_and_colors": 43880,
+          "fetch": 33373,
+          "recycle_bitmap_and_colors": 43881,
           "cache_metadata": 10408,
-          "apply_colors": 14453,
-          "draw_lines": 179637,
+          "apply_colors": 14455,
+          "draw_lines": 179654,
           "bookkeeping": 11,
           "publish_wait": 31,
           "publish_commit": 41,
           "advance_and_final_hold": 47
         },
-        "render_cycles": 281898,
-        "total_cycles": 282028
+        "render_cycles": 281920,
+        "total_cycles": 282050
       },
       {
         "frame": 13,
@@ -218,7 +218,7 @@
           "directory": 23,
           "picture_lookup_and_queue_wait": 179,
           "fetch": 33666,
-          "recycle_bitmap_and_colors": 44146,
+          "recycle_bitmap_and_colors": 44152,
           "cache_metadata": 10638,
           "apply_colors": 14750,
           "draw_lines": 181755,
@@ -227,8 +227,8 @@
           "publish_commit": 41,
           "advance_and_final_hold": 47
         },
-        "render_cycles": 285157,
-        "total_cycles": 285287
+        "render_cycles": 285163,
+        "total_cycles": 285293
       },
       {
         "frame": 14,
@@ -1560,7 +1560,7 @@
       "2": 58,
       "0": 64
     },
-    "average_fps": 4.159249962980943,
+    "average_fps": 4.158990838071659,
     "min_frame_cycles": 1887,
     "max_frame_cycles": 410360,
     "pixel_match": true,
@@ -1569,10 +1569,10 @@
     "border_match": true,
     "border_color": 0,
     "display_interval_cycles": [
-      1318918,
-      235931,
-      275654,
-      294857,
+      1318901,
+      235924,
+      275674,
+      294862,
       273935,
       294318,
       276266,

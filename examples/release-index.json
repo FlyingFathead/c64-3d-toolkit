@@ -1,15 +1,15 @@
 {
-  "version": "0.7.3",
+  "version": "0.7.4",
   "renderer": "hors-render-v2",
-  "cartridges": 22,
+  "cartridges": 20,
   "files": [
     {
       "path": "examples/blender_falling_cubes/falling_cubes_c64-hors-render-v2-manifest.json",
-      "sha256": "31a1a594ec935859c83466837f3798007f1fb55cc993a2c3dca283ed7f7a9ebb"
+      "sha256": "12832db1fec56fd5cf54af509873942b0de915edbfb1d422cdb1c06a2c9ead11"
     },
     {
       "path": "examples/blender_falling_cubes/falling_cubes_c64-hors-render-v2.crt",
-      "sha256": "0b7a0d95eaea6f22a6406dae803ee9b5195d27ad3416605a56ecd2401b2b44c3"
+      "sha256": "90cfde9f370f9f583d43d4941d89f4b02c9b8ebbdf47cf2fbb41fe43f1b24a33"
     },
     {
       "path": "examples/blender_falling_cubes/falling_cubes_c64-hors-render-v2.lbl",
@@ -17,99 +17,75 @@
     },
     {
       "path": "examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v2-manifest.json",
-      "sha256": "546459b9bff6289c5ff90b9c5cf9802f38254f1e400f1f0d17cfac72f47327d1"
+      "sha256": "012d5fd84c5169efc39c7cfa8fd46c71b47bc90090087208aca0a6ce73131c19"
     },
     {
       "path": "examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v2.crt",
-      "sha256": "82c226942457af416f159948f6309df089ec8a205231aa2f82fa4822b48aec3c"
+      "sha256": "81eaec40808c6f845d60cfc32130c770b21116188805d0c5c4241ba736eb1313"
     },
     {
       "path": "examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v2.lbl",
       "sha256": "8172cbabe0dff01b372e471ff32f44c07e67fac2ee2017fa8dc4068d6d6a058e"
     },
     {
-      "path": "examples/cart_demos/c643d-demo-v0.7.2-hors-render-v2-all-ram.crt",
-      "sha256": "94958c25843eb0b58af3b52c055964005344e6052d91f3404e64997802defa70"
+      "path": "examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all-ram.crt",
+      "sha256": "420a6f0c39721346c9585c45bff10f688d48b9bc08f81f9eb1f4fe2f41b79055"
     },
     {
-      "path": "examples/cart_demos/c643d-demo-v0.7.2-hors-render-v2-all.crt",
-      "sha256": "153073c912ac0b3b6d2c4b15297a663751346ffabedbb93e2ecc72c8b02ecac7"
+      "path": "examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all.crt",
+      "sha256": "c1c540b938070702e40add7c2803148386c1c9499efa1f9bb1e0d7bb35c53575"
     },
     {
-      "path": "examples/cart_demos/c643d-demo-v0.7.3-hors-render-v2-all-ram.crt",
-      "sha256": "e3f1c4a7a2d59bb0978d597f425d8643f261f7c0fbc3a7ab6e706804767b58ab"
+      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.4-hors-render-v2-all-cart-manifest.json",
+      "sha256": "b6b5026adb255c1fe43042dc250ab2d8fae9a0b5f8e2a78e97d7169934e55a9d"
     },
     {
-      "path": "examples/cart_demos/c643d-demo-v0.7.3-hors-render-v2-all.crt",
-      "sha256": "384ac27ca491e0ce4c04983f0a02707fb39b0ab080568bab0d54913cd0f1c780"
-    },
-    {
-      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.2-hors-render-v2-all-cart-manifest.json",
-      "sha256": "8d1a31ce787a8532f1c62781b23f3d8b7fc06754640691a99790a8865cd51d24"
-    },
-    {
-      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.2-hors-render-v2-all-cart-map.txt",
+      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.4-hors-render-v2-all-cart-map.txt",
       "sha256": "e34c31fafd1a7f27a00fe7db98cde1c9456d0d01a5a074f75dfa52f177a58833"
     },
     {
-      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.2-hors-render-v2-all-ram-cart-manifest.json",
-      "sha256": "dfb7f133b1a2a3425f69d1e3b160ce98867603130486ebdc6e50eff1f3d7709f"
+      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.4-hors-render-v2-all-ram-cart-manifest.json",
+      "sha256": "1a26525d441609035435962429cce6af56f9559d084984ba29bfe06fc3a10da9"
     },
     {
-      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.2-hors-render-v2-all-ram-cart-map.txt",
-      "sha256": "e34c31fafd1a7f27a00fe7db98cde1c9456d0d01a5a074f75dfa52f177a58833"
-    },
-    {
-      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.3-hors-render-v2-all-cart-manifest.json",
-      "sha256": "c4760f4183224b7ee17611320cea9b2fb123399e5162daec7662eba79dff2a3f"
-    },
-    {
-      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.3-hors-render-v2-all-cart-map.txt",
-      "sha256": "e34c31fafd1a7f27a00fe7db98cde1c9456d0d01a5a074f75dfa52f177a58833"
-    },
-    {
-      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.3-hors-render-v2-all-ram-cart-manifest.json",
-      "sha256": "27ae24c97759a9483cd913078d1b8a17dad31f9a71b0a43401236dccc4825c94"
-    },
-    {
-      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.3-hors-render-v2-all-ram-cart-map.txt",
+      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.4-hors-render-v2-all-ram-cart-map.txt",
       "sha256": "e34c31fafd1a7f27a00fe7db98cde1c9456d0d01a5a074f75dfa52f177a58833"
     },
     {
       "path": "examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt",
-      "sha256": "35cac536294e32cc912eadff7efd496584a63dbf0192d6c1ce003c17f83c13fa"
+      "sha256": "71640c3499b88a63b1616c75127cc01f7de32ce26d27f7fd0aac53e071d5523e"
     },
     {
       "path": "examples/cart_demos_v2/metadata/demo-cart-2-preview-hors-v2-cart-manifest.json",
-      "sha256": "3102101dc5e07fed461dd6fe07eff778efd702fb4a4d5d353ecffa37c4013a82"
+      "sha256": "3fe5fbb3b6db36e104e09de331a7c752ea4ed34777d75d628e115ce799204f4d"
     },
     {
       "path": "examples/cart_demos_v2/metadata/demo-cart-2-preview-hors-v2-cart-map.txt",
       "sha256": "a4f8510bd0d97bd9055d296b75c52b31f9e075fdfdfa93379c2ea6ef8c9e6f74"
     },
     {
-      "path": "examples/cart_hifi/c643d-hifi-v0.7.2-hors-render-v2.crt",
-      "sha256": "eeb46660e4b8f75fadceaba6819ea7b23b2a7d40252eb76b1a51d57619f52939"
+      "path": "examples/cart_hifi/c643d-hifi-v0.7.4-hors-render-v2.crt",
+      "sha256": "523754d8f6b22555846aa8d09107195bca74f7d3d0d315b94e1abaf790b3bad1"
     },
     {
-      "path": "examples/cart_hifi/metadata/c643d-hifi-v0.7.2-hors-render-v2-cart-manifest.json",
-      "sha256": "5876288ca61344b67eadc911c16c013a983bb4514b8d3268f7cf10a4996a2c02"
+      "path": "examples/cart_hifi/metadata/c643d-hifi-v0.7.4-hors-render-v2-cart-manifest.json",
+      "sha256": "9cbcc176ee626e2ba83358051a40a92a1fa64546122de3a4e411d6ea98e72f39"
     },
     {
-      "path": "examples/cart_hifi/metadata/c643d-hifi-v0.7.2-hors-render-v2-cart-map.txt",
+      "path": "examples/cart_hifi/metadata/c643d-hifi-v0.7.4-hors-render-v2-cart-map.txt",
       "sha256": "20bada7b1ed143428b034a257743809288ec052998512c615f29a5801dcf2837"
     },
     {
       "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-manifest.json",
-      "sha256": "51d6d9d620ad5dbdcf9a7e75f0c5256d8fed58071364d60c9e0e282dd3f5fee4"
+      "sha256": "cf51323beb81c47fdfb7c168136d0dcb2e0a1f4807e5a22b857d89b47e10ddf1"
     },
     {
       "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-ram-manifest.json",
-      "sha256": "5d6c4433e668e3e5af81fe0d61184df7df590a780fb44b78950ac11c4171e694"
+      "sha256": "e14cb43996c7991e43326a1874494b08b69cf9aac4f3c95b161319a7656b445c"
     },
     {
       "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-ram.crt",
-      "sha256": "f03bb967303bdb6e54e0897672d8332b4effb6fa889afe9d8ecc584cb7bd24ee"
+      "sha256": "8279cbae4a40e5b792c2cc29b72553c24c281e20497f13f7d928d19904bf239c"
     },
     {
       "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-ram.lbl",
@@ -117,7 +93,7 @@
     },
     {
       "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt",
-      "sha256": "adc52c5615a9b1288bafd8b586ffaa7a58e2916dcffa57aedefd807820554647"
+      "sha256": "07296e94bfa28ad11b313e82f14df1dce19687f4559448616686633724f9f5af"
     },
     {
       "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.lbl",
@@ -125,11 +101,11 @@
     },
     {
       "path": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes-manifest.json",
-      "sha256": "7a7fbccf280dcac598851096506114527dfdf04b8f13aad1eb3c45e4a8e146c3"
+      "sha256": "1442164bf0dfaa96af3bb3afbf2defb1f55f95c97a8f23546b34c4d4f395bc25"
     },
     {
       "path": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt",
-      "sha256": "30e285a63090c30cc4488edea14bdf0117aa95ff257b8a5aa78aa06593b21c05"
+      "sha256": "f5c6741033d1e632c9568aeca7ac5604079b3599ac26857766fcdc9604e35cb2"
     },
     {
       "path": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.lbl",
@@ -137,11 +113,11 @@
     },
     {
       "path": "examples/color_combo_test/color-combo-test.crt",
-      "sha256": "f5ede2bfd4771f2d6667de5f20e6cc9349d95723d572cc8da04e3b4a3aabda53"
+      "sha256": "017827ffddb8c42e592214b4b7ef9bfdd74370dd6daf9ddd7281d8f7c55ce6e9"
     },
     {
       "path": "examples/color_combo_test/metadata/color-combo-test-cart-manifest.json",
-      "sha256": "82ffbeac34bdd4acfe0625c15aa0b7e52df85ac380525fe8b5678fce99e8c347"
+      "sha256": "b0f6548dfe2fea2e30edfd84d27a2a71d8545d0348067a4d56f7530115c40588"
     },
     {
       "path": "examples/color_combo_test/metadata/color-combo-test-cart-map.txt",
@@ -149,11 +125,11 @@
     },
     {
       "path": "examples/cube/cube-hors-render-v2-manifest.json",
-      "sha256": "fad3b23c1bb365d91a5c517368f63ddf788aaa24b6d9f8423e1e1be147117ea0"
+      "sha256": "1cb4ee39c52bf5f2954b6b56049b0749f579622d9908cec2abf53053c5d2a166"
     },
     {
       "path": "examples/cube/cube-hors-render-v2.crt",
-      "sha256": "9806773ee8910f36c1652f24568128b91d5fcc4a11c5eaa9216e54a1aeb8fad2"
+      "sha256": "a6deddc384b83ff23bef1c92f55969a9b76bc8cf2c94d9a667663f9dd86791be"
     },
     {
       "path": "examples/cube/cube-hors-render-v2.lbl",
@@ -161,11 +137,11 @@
     },
     {
       "path": "examples/hifi_showcase/horse_head_hifi-hors-render-v2-manifest.json",
-      "sha256": "44ef63b872621997e17feb8045e42ed42cb2d30ace1c673973ecdbe235bae2bd"
+      "sha256": "cd41b1708e273f64848562130e982aa5acf72b1564c4dcac2d4f45dd46570ec3"
     },
     {
       "path": "examples/hifi_showcase/horse_head_hifi-hors-render-v2.crt",
-      "sha256": "c27e99841e870271143547ee388f1b6d03209c6fd18ef6677dd7516216d08adb"
+      "sha256": "4dcc852c10e9d821ae39e23ef45f6126dbde3ce2a0bb3639c7450c88d8c23215"
     },
     {
       "path": "examples/hifi_showcase/horse_head_hifi-hors-render-v2.lbl",
@@ -173,11 +149,11 @@
     },
     {
       "path": "examples/horse_head/horse_head-hors-render-v2-manifest.json",
-      "sha256": "83a9c5450c38136fa3f029b3ad3d8d9938a087c4d367309ab7e06f00c0047938"
+      "sha256": "8c704795efa00c3349f16bc1ccf77e1458ee55038439baf08492f066dcfe05ea"
     },
     {
       "path": "examples/horse_head/horse_head-hors-render-v2.crt",
-      "sha256": "a914856cbac75f0a69d06627b6ef4f850f6cb39e18e46e706c34d922d4bd88ee"
+      "sha256": "b0129a2f94ab4bd7494140842886f9053fb75691c993cf922a9c2725005a09b6"
     },
     {
       "path": "examples/horse_head/horse_head-hors-render-v2.lbl",
@@ -185,11 +161,11 @@
     },
     {
       "path": "examples/space_horse_crawl/space_horse_crawl_color-hors-render-v2-manifest.json",
-      "sha256": "f6fde39f13de3aeb57d841dd4d83b38f099bcbe1aaec1303b5042501077f8575"
+      "sha256": "51b5ab595919f69e4c8bea43fbf7c31743e8c00bf054d3808b01bdae44098073"
     },
     {
       "path": "examples/space_horse_crawl/space_horse_crawl_color-hors-render-v2.crt",
-      "sha256": "882c2518fabbd03d5faf5743cf1967540eb757ffe8bf406be211134db5fc716f"
+      "sha256": "2404aab1d9974120a4ffec2493e50d34bbfe4c1df3e5afe2789697370e83d7f1"
     },
     {
       "path": "examples/space_horse_crawl/space_horse_crawl_color-hors-render-v2.lbl",
@@ -197,11 +173,11 @@
     },
     {
       "path": "examples/space_horse_spin/space_horse_spin_color-hors-render-v2-manifest.json",
-      "sha256": "3f0a71d6f2f8a8eac9821f760228a2911fd8f5c094c847e1c3503cdaa454657a"
+      "sha256": "d4cd305597fea711b587f96ebffeff21f2c732bf35473fb94054f37a69404417"
     },
     {
       "path": "examples/space_horse_spin/space_horse_spin_color-hors-render-v2.crt",
-      "sha256": "8ad0818df1dc1c9dc3d849ec04995a78dd012659c724a27cf33712067c81904a"
+      "sha256": "f176e1a1cd946469a939edb266184229d5f2573942b670b31b85a482d8114630"
     },
     {
       "path": "examples/space_horse_spin/space_horse_spin_color-hors-render-v2.lbl",
@@ -209,11 +185,11 @@
     },
     {
       "path": "examples/sphere/sphere-hors-render-v2-manifest.json",
-      "sha256": "ac08a7ad301ee9cba9488cab727890f9a77699f21fc1b3e391ed9d716533089c"
+      "sha256": "f7defd8ca60a55b22b6db3043f2ca8b049e0286990ec2418851f2426b5bbcdd7"
     },
     {
       "path": "examples/sphere/sphere-hors-render-v2.crt",
-      "sha256": "5f9435072fbd6352e0713695bd022a13c50ee6cab170df8c188fd5a5138a2948"
+      "sha256": "9f4ff8bc6f8624a33b2772e41edaa68ee4d099dd39a3d31b8044651e001c8f79"
     },
     {
       "path": "examples/sphere/sphere-hors-render-v2.lbl",
@@ -221,11 +197,11 @@
     },
     {
       "path": "examples/sunflower_torus/sunflower_torus-hors-render-v2-manifest.json",
-      "sha256": "29ec510befc8c515a5a46484ea7067dca54172753b98b6701cf97b3799d86488"
+      "sha256": "a97294ba0186099a6b21fcc76db20cac3c40b786ecf7826eb6d1d1ac77fdb26f"
     },
     {
       "path": "examples/sunflower_torus/sunflower_torus-hors-render-v2.crt",
-      "sha256": "dc055c242d53799b311bfb93f6b06abd2f99008b2db9fe19ee67bb27284878ef"
+      "sha256": "2ed899c9746952723eeeb4de555bc9661ec0acb60d1b6faf1acf10a798ac60f1"
     },
     {
       "path": "examples/sunflower_torus/sunflower_torus-hors-render-v2.lbl",
@@ -233,11 +209,11 @@
     },
     {
       "path": "examples/sunflower_torus/sunflower_torus_color-hors-render-v2-manifest.json",
-      "sha256": "a1bc1fff574a4caa0f4848a7208657b90d07f035826849668839f1bdfcf02bd1"
+      "sha256": "0fd94fa6d4273764f5554061716581db54f7f82499d18fb5807a17a9630e13da"
     },
     {
       "path": "examples/sunflower_torus/sunflower_torus_color-hors-render-v2.crt",
-      "sha256": "d5212369b5ae8f321965c65d8650b970bbe860c2d4d1fe5b0ac6883e9363b1a8"
+      "sha256": "84622658e266e7c003c02820a9e54d3e27fbc14083ba0017e871ffd894981ca6"
     },
     {
       "path": "examples/sunflower_torus/sunflower_torus_color-hors-render-v2.lbl",
@@ -245,11 +221,11 @@
     },
     {
       "path": "examples/torus/torus-hors-render-v2-manifest.json",
-      "sha256": "54b222a73e60a3ab3710031730ca39dfb4e3aaafde225c388886aa590e3b56af"
+      "sha256": "95857aba9d22f72e4045d6583839fe5c060c54bb8e0c6a9b3ab25505a384c1b6"
     },
     {
       "path": "examples/torus/torus-hors-render-v2.crt",
-      "sha256": "44d67af406ae47432007ec92fe82a0008db8dff0bc9fbf3a751f48e6b707398f"
+      "sha256": "9566466cc69eebc74db1a559bedab355a51e70a208ac772f817bdb5be5e621c6"
     },
     {
       "path": "examples/torus/torus-hors-render-v2.lbl",
@@ -257,16 +233,15 @@
     },
     {
       "path": "examples/torus_dense/torus_dense-hors-render-v2-manifest.json",
-      "sha256": "e2733f73af3e7e6acb57a68a9465edd377d100546fe6fafae44bd62e55e12058"
+      "sha256": "480702576fdafe2cebad1bf68877abb42a18900f309886feafdcd3f2e9fd11e6"
     },
     {
       "path": "examples/torus_dense/torus_dense-hors-render-v2.crt",
-      "sha256": "8e28ecc3f73ebca22518f7f8f071673f2ba3f60f5da1b140146d9b495accab20"
+      "sha256": "3f58e08599c662a5bcbdd96a0d6798ba7e0bf142c0055189e758fbbf0dc26923"
     },
     {
       "path": "examples/torus_dense/torus_dense-hors-render-v2.lbl",
       "sha256": "19070c5f1a44191a72bd6b1290ce485d784680b30c6669fc00956c9deb691141"
     }
-  ],
-  "note": "Packaged examples, including preserved 0.7.2 binaries; new colour controls are in the 0.7.3 demo carts and Color Combo Test."
+  ]
 }

@@ -4,7 +4,7 @@
   "diagnostic_only": true,
   "profile": {
     "cartridge": "horse-sunflower-v10.crt",
-    "sha256": "5617735ab830a830c898fcfaf679aa33c89d34d7137e4d39dfaa759bb96301f2",
+    "sha256": "8b29a4b6fadbc676f1886c7ed99254e37489b5ef70996f0344d72a951c527133",
     "renderer": "yunroll-cart-v10-scene",
     "menu_entry": null,
     "frames": 84,
@@ -16,20 +16,20 @@
       "directory": 24.54,
       "picture_lookup_and_queue_wait": 257.01,
       "recycle_bitmap_and_colors": 31986.87,
-      "fetch": 7084.25,
-      "apply_colors": 10863.2,
+      "fetch": 7084.26,
+      "apply_colors": 10863.23,
       "draw_lines": 48956.85,
       "bookkeeping": 11.51,
       "publish_wait": 35040.52,
       "publish_commit": 41.25,
       "advance_and_final_hold": 49.98
     },
-    "mean_render_cycles": 99172.71,
+    "mean_render_cycles": 99172.75,
     "worst_render_cycles": 146290,
-    "mean_total_cycles": 134315.98,
+    "mean_total_cycles": 134316.01,
     "worst_total_cycles": 146463,
-    "measured_seconds": 11.451474146610803,
-    "frames_per_second": 7.335300147785845,
+    "measured_seconds": 11.451477191529442,
+    "frames_per_second": 7.335298197348205,
     "samples": [
       {
         "frame": 3,
@@ -156,16 +156,16 @@
           "directory": 23,
           "picture_lookup_and_queue_wait": 116,
           "recycle_bitmap_and_colors": 38,
-          "fetch": 9997,
-          "apply_colors": 14428,
+          "fetch": 9998,
+          "apply_colors": 14430,
           "draw_lines": 65253,
           "bookkeeping": 11,
           "publish_wait": 31,
           "publish_commit": 41,
           "advance_and_final_hold": 47
         },
-        "render_cycles": 89855,
-        "total_cycles": 89985
+        "render_cycles": 89858,
+        "total_cycles": 89988
       },
       {
         "frame": 11,
@@ -1475,7 +1475,7 @@
       "2": 58,
       "0": 64
     },
-    "average_fps": 7.350364801418077,
+    "average_fps": 7.349475907378052,
     "min_frame_cycles": 3170,
     "max_frame_cycles": 262996,
     "pixel_match": true,
@@ -1484,7 +1484,7 @@
     "border_match": true,
     "border_color": 0,
     "display_interval_cycles": [
-      1179576,
+      1179577,
       117727,
       117934,
       117940,

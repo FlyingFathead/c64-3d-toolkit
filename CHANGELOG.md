@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.7.4 (2026-09-11): cartridge loading and EasyFlash metadata
+
+- Route every cartridge `--run` through one VICE launcher: PAL/windowed/non-Warp defaults, explicit user overrides, default-cartridge detachment, CRT write-back disabled and automatic settings saving disabled. Add `run-cart` for existing CRTs and `--vice-clean-settings` for temporary factory defaults.
+- Validate CRT header/mapper/reset mode, CHIP lengths/banks/duplicates and reset target directly before launching; verify actual EasyAPI and PETSCII metadata bytes after building.
+- Embed the original 768-byte AM/M29F040 V1.4 EasyAPI with source, redistribution notice, pinned provenance and payload checksum. Add the separate 16-character PETSCII EasyFlash menu name. Use object names and the public HORS V2 identity in CRT container titles.
+- Introduce shared loader templates with early CIA interrupt/timer shutdown, VIC IRQ acknowledgement and assembly bounds checks. Preserve the frozen historical loader/renderer source files for regression comparisons.
+- Move the scene bytes displaced by bank 0 ROMH metadata into the previously unused ROML bank 2 tail. Restore the exact bytes to RAM before entering the renderer; reject overlaps with reset vectors and unexpected occupied relocation space.
+- Linux VICE 3.10 validation covers startup, Warp transitions with soft resets, all menu styles and Marbles' complete ending. The reported Windows GUI `$F800` JAM is not yet reproduced or confirmed fixed. See [cartridge loading](docs/CARTRIDGE_LOADING.md).
+
+- Rebuild the current standalone, scene, menu, HiFi and colour-test cartridges with the new loader and 0.7.4 identity. Preserve older versioned cartridges as historical references.
+- Refresh the complete renderer comparison and release validation evidence. See [0.7.4 release notes](docs/RELEASE_0.7.4.md).
+
 ## 0.7.3 (2026-09-10): independent output colours and COLOR COMBO TEST
 
 - Windows setup r25 asks before a new VICE installation; declining offers an existing path or manual installation later and explains the effect on running/tests and cartridge builds. Clarify the native Python build command and direct use of prebuilt cartridges.

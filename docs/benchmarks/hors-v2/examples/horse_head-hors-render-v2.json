@@ -16,7 +16,9 @@
   "pixel_match": true,
   "color_match": true,
   "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
   "path": "examples/horse_head/horse_head-hors-render-v2.crt",
   "entry": null,
-  "sha256": "a914856cbac75f0a69d06627b6ef4f850f6cb39e18e46e706c34d922d4bd88ee"
+  "sha256": "b0129a2f94ab4bd7494140842886f9053fb75691c993cf922a9c2725005a09b6"
 }

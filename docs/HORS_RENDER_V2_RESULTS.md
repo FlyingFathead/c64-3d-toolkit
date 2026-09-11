@@ -14,20 +14,9 @@ Stable v2, PAL VICE, normal PLAY ALL: three ten-second visits per entry. Changes
 
 Normal PLAY ALL, three visits at ten seconds each. New Demo Cart 2.0 material; not the original release matrix. Change uses display counts to avoid ranking timer-phase noise.
 
-## HiFi comparison against hors-render-v1
-
-Same 128 source samples, FPS preference, three normal PLAY ALL visits per animation. Gains are based on displayed-frame counts; tiny timer-phase differences are not ranked.
-
-| Animation | v1 FPS | v2 FPS | Gain | v1 worst display interval | v2 worst display interval |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| HORSE HEAD HIFI | 20.69 | 21.50 | +3.88% | 63.81 ms | 63.95 ms |
-| SUNFLOWER TORUS HIFI | 19.89 | 20.39 | +2.53% | 79.80 ms | 62.58 ms |
-
-Horse Head displayed 618 → 642 pictures and Sunflower Torus 594 → 609 across roughly 29.86 measured seconds each. All picture/colour checks passed. Sunflower Torus also had a shorter worst observed display interval; Horse Head’s worst interval was essentially unchanged. These extrema describe this measured window, not a guarantee for arbitrary scenes.
-
 The alternate-VERSION gate also passed: temporary v1/v2 carts showed the manifest version on their startup screens, all menu styles and thanks screens. Root VERSION supplies Python and Windows setup identity.
 
-The [main performance page](PERFORMANCE_COMPARISON.md) compares released renderer generations, including stable v2 FPS/RAM rows, and displays [Demo Cart 2.0 in its own section](PERFORMANCE_COMPARISON.md#demo-cart-20). CUBE can still favour the resident yunroll renderer.
+The [main performance page](PERFORMANCE_COMPARISON.md) compares released renderer generations, including stable v2 FPS/RAM rows, and displays Demo Cart 2.0 in its own section. CUBE can still favour the resident yunroll renderer.
 
 Release examples: **19 cartridges**, **49 picture checks**, **8,429 completed pictures**. Native Marbles ending, menu states and HiFi reel transitions also passed. The ending verifier acknowledges the SPACE build screen after reaching intro_start, before waiting for frame_begin.
 
@@ -35,4 +24,4 @@ The independent Linux beta run reproduced the earlier raw measurements and cartr
 
 V2 adds no reserved RAM to the drawing helper. Fixed graphics storage is 27,000 bytes and staging/metadata caches reserve 11,264 bytes. These components are not a total free-RAM figure. ROM and runtime sizes for each historical row are in the full chart.
 
-Reproduce with `JOBS=3 bash COMPILE-RELEASE.sh --workspace ../c64-072-release-build`. Detailed JSON evidence is in `docs/benchmarks/hors-v2/`; full monitor traces remain in the external release workspace.
+Reproduce with `JOBS=3 bash COMPILE-RELEASE.sh --workspace ../c64-074-release-build`. Detailed JSON evidence is in `docs/benchmarks/hors-v2/`; full monitor traces remain in the external release workspace.

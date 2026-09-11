@@ -9,6 +9,7 @@ from __future__ import annotations
 import hashlib,json,shutil,subprocess
 from .colors import hires_screen_byte, configure_asm_colors
 from pathlib import Path
+from .cartlaunch import run as run_cartridge
 from .cartridge import new_easyflash_image, easyflash_offset, put_easyflash_chip, convert_easyflash, check_easyflash_crt
 from .emit import bytes_lines,emit_hud
 from .pipeline import build_xchunk_tables
@@ -122,10 +123,10 @@ def assemble_cartridge(root,frames,mesh,*,tass,cartconv,outdir,stem,tass_args=()
     padded=bytearray(0x5800 if variant in ("v5", "v6", "v7", "v8", "v9", "v10") else 0x4800);padded[load-0x0800:end-0x0800]=blob[2:]
     for bank in range(3):put_easyflash_chip(image,bank,'roml',bytes(padded[bank*8192:(bank+1)*8192]).ljust(8192,b'\0'))
     boot=work/'boot.bin'
-    subprocess.run([tass,*tass_args,'--nostart','-o',str(boot),str(root/(f'c64/cart/easyflash-stream-{variant}-boot.asm' if variant in ('v5', 'v6', 'v7', 'v8', 'v9', 'v10') else 'c64/cart/easyflash-stream-v2-boot.asm'))],check=True,cwd=root)
+    subprocess.run([tass,*tass_args,'-D',f'BOOT_PAGES={88 if variant in ("v5", "v6", "v7", "v8", "v9", "v10") else 72}','--nostart','-o',str(boot),str(root/'c64/cart/easyflash-object-boot.asm')],check=True,cwd=root)
     put_easyflash_chip(image,0,'romh',boot.read_bytes())
     raw=work/f'{stem}.bin';raw.write_bytes(image)
-    crt=outdir/f'{stem}.crt';convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name=f'C643D STREAM {variant.upper()}',cwd=root)
+    crt=outdir/f'{stem}.crt';convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name=mesh.name.replace('_', ' '),cwd=root)
     check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=root)
     manifest=dict(format='c643d-easyflash-stream-v2',version=1,renderer=renderer,name=mesh.name,frames=len(frames),vertices=len(mesh.vertices),edges=len(mesh.edges),faces=len(mesh.faces),colors=colors,screen_color=hires_screen_byte(color_index,background_color),foreground_color=color_index,background_color=background_color,border_color=border_color,directory_ram_bytes=len(frames)*7,frame_buffer_bytes=FRAME_CAP,metadata_cache_bytes=3*META_CAP,rom_frame_bytes=sum(d['bytes'] for d in directory if 'reference_frame' not in d),highest_bank=max(d['bank'] for d in directory),run_count_bits=16,frame_data=directory)
     if optimization: manifest['optimization']=optimization
@@ -170,7 +171,7 @@ def cmd_build_cart_v2(a):
     if a.run:
         vice=cli.resolve_executable(a.vice,'vice')
         if not vice:raise ValueError('VICE not found')
-        subprocess.run([vice,*a.vice_args,'-cartcrt',str(crt)],check=False,cwd=cli.ROOT)
+        run_cartridge(vice, crt, a.vice_args, clean_settings=getattr(a, 'vice_clean_settings', False), cwd=cli.ROOT)
     return 0
 
 

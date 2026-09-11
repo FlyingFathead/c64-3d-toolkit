@@ -1,6 +1,8 @@
-# Documentation — 0.7.3
+# Documentation — 0.7.4
 
-- [0.7.3 release notes, installation and rebuilds](RELEASE_0.7.3.md).
+- [0.7.4 release notes, installation and rebuilds](RELEASE_0.7.4.md).
+- [Cartridge loading, EasyFlash layout and VICE troubleshooting](CARTRIDGE_LOADING.md).
+- [Historical 0.7.3 colour-control release](RELEASE_0.7.3.md).
 - [Output colours and COLOR COMBO TEST](OUTPUT_COLORS.md).
 - [0.7.3 colour-control regression and timing results](COLORS_0.7.3_VALIDATION.md).
 

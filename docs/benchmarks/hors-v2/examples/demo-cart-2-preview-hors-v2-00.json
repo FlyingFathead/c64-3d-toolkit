@@ -16,7 +16,9 @@
   "pixel_match": true,
   "color_match": true,
   "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
   "path": "examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt",
   "entry": 0,
-  "sha256": "0f6e6cc97133ee93c83509783d8b960d57a3acf5b118a3bbc7cd73611fe090b3"
+  "sha256": "71640c3499b88a63b1616c75127cc01f7de32ce26d27f7fd0aac53e071d5523e"
 }

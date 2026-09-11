@@ -1,0 +1,17 @@
+{
+  "original_scene_seconds": 41.50340421903927,
+  "release_scene_seconds": 41.50340421903927,
+  "ending_images": {
+    "02-outro_start.png": true,
+    "03-greeting_oops.png": true,
+    "04-greeting_done.png": true,
+    "05-outro_credits_visible.png": true,
+    "06-fake_basic_ready.png": true,
+    "07-ghost_message_done.png": true,
+    "08-ghost_idle.png": true,
+    "09-ghost_idle.png": true,
+    "ending-storyboard.png": true
+  },
+  "all_pixels_match": true,
+  "same_vice_configuration": true
+}

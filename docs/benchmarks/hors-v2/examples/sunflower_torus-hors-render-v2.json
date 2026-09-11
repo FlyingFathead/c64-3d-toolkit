@@ -16,7 +16,9 @@
   "pixel_match": true,
   "color_match": true,
   "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
   "path": "examples/sunflower_torus/sunflower_torus-hors-render-v2.crt",
   "entry": null,
-  "sha256": "dc055c242d53799b311bfb93f6b06abd2f99008b2db9fe19ee67bb27284878ef"
+  "sha256": "2ed899c9746952723eeeb4de555bc9661ec0acb60d1b6faf1acf10a798ac60f1"
 }

@@ -1,7 +1,7 @@
 {
   "format": "c643d-easyflash-stream-scene",
   "version": 1,
-  "toolkit_version": "0.7.2",
+  "toolkit_version": "0.7.4",
   "renderer": "hors-render-v2",
   "name": "DON'T LOSE YOUR MARBLES",
   "frames": 640,
@@ -10,6 +10,9 @@
   "faces": 1216,
   "colors": true,
   "screen_color": 16,
+  "foreground_color": 1,
+  "background_color": 0,
+  "border_color": 0,
   "hud_text": "DONT LOSE YOUR MARBLES",
   "text_overlay": false,
   "intro": true,
@@ -8366,7 +8369,7 @@
     "bitmap_and_colors_preserved": true
   },
   "build_screen": {
-    "version": "0.7.2",
+    "version": "0.7.4",
     "renderer": "hors-render-v2",
     "ticks": null,
     "skip_key": "SPACE",

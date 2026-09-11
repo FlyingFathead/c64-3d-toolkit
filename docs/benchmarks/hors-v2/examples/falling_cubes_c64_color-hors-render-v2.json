@@ -10,13 +10,15 @@
     "2": 13,
     "0": 13
   },
-  "average_fps": 21.616245689963765,
-  "min_frame_cycles": 22813,
-  "max_frame_cycles": 56327,
+  "average_fps": 21.615783921974135,
+  "min_frame_cycles": 22816,
+  "max_frame_cycles": 56329,
   "pixel_match": true,
   "color_match": true,
   "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
   "path": "examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v2.crt",
   "entry": null,
-  "sha256": "82c226942457af416f159948f6309df089ec8a205231aa2f82fa4822b48aec3c"
+  "sha256": "81eaec40808c6f845d60cfc32130c770b21116188805d0c5c4241ba736eb1313"
 }

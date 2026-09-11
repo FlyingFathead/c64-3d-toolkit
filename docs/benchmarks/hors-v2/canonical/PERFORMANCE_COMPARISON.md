@@ -31,7 +31,7 @@ These are the measured shipped showcase cartridges, with their per-scene encodin
 
 | Scene | Samples | v1 FPS | v2 FPS | Gain | v1 worst display ms | v2 worst display ms |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| COLOUR CUBE 24 | 24 | 32.45 | 35.56 | +9.60% | 43.91 | 42.79 |
+| COLOUR CUBE 24 | 24 | 32.45 | 35.56 | +9.60% | 43.90 | 42.71 |
 | COLOUR TORUS 18 | 18 | 18.38 | 19.99 | +8.74% | 79.80 | 62.59 |
 | TWIST TUNNEL | 48 | 9.14 | 9.94 | +8.79% | 119.72 | 119.70 |
 | RIBBON DANCE | 48 | 31.64 | 33.45 | +5.71% | 44.34 | 44.42 |
@@ -404,7 +404,7 @@ These are **not PLAY ALL A/B FPS results** and must not be mixed into the menu t
 | marbles-hud | V8-scene | 6.899 | 83,970 | 283,024 | 8 / 200 |
 | marbles-hud | V9-scene | 6.904 | 78,212 | 281,085 | 8 / 200 |
 | marbles-hud | V10-scene | 7.145 | 57,590 | 106,810 | 0 / 200 |
-| horse-sunflower | V4-scene | 3.350 | 293,992 | 301,458 | 84 / 84 |
+| horse-sunflower | V4-scene | 3.350 | 293,992 | 301,456 | 84 / 84 |
 | horse-sunflower | V5-scene | 4.132 | 203,307 | 296,295 | 59 / 84 |
 | horse-sunflower | V6-scene | 4.275 | 195,348 | 284,084 | 59 / 84 |
 | horse-sunflower | V7-scene | 4.279 | 195,116 | 283,624 | 59 / 84 |
@@ -446,5 +446,5 @@ Use `--resume` only with the same source/tool fingerprint and options. Logs and 
 
 **Release gate:** run `--check` before publishing. If renderer code, builders, input assets, examples, version or this tester changes, rerun the complete uncapped matrix and replace this chart before tagging. Preserve old method rows; add new generations to the tester and regenerate. Never silently copy old numbers into a changed workload. Capped runs are separate experiments and must not replace this uncapped baseline.
 
-<!-- comparison-input-sha256: ef1264d6da610b251f183ea433618d520269010dc557e422ee05dc35b3f71a95 -->
-<!-- comparison-source-version: 0.7.3 -->
+<!-- comparison-input-sha256: 08b8138560aa53c3dd56f62e7eda2b10a9c4a4c6b09b118aef14be7ef8a8dfd3 -->
+<!-- comparison-source-version: 0.7.4 -->

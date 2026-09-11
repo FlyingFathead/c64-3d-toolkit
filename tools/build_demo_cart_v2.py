@@ -23,7 +23,7 @@ def main():
     ap.add_argument('--policy',type=Path,default=ROOT/'examples/cart_demos_v2/encoding-policy.json',help='Measured per-scene encoding choices, guarded by source hash')
     ap.add_argument('--water',nargs='+',choices=['ripples_lite','cross_swell','liquid_floor'],default=['ripples_lite'],help='Selected complete water loops; default Ripples Lite. Capacity failures never reduce samples.')
     a=ap.parse_args()
-    from c643d import cli, cartuniform, buildscreen
+    from c643d import cli, cartuniform, buildscreen, __version__
     from c643d.hors_v2 import encoder,patch_helper
     from c643d.sceneio import load_scene
     from c643d.pipeline import build_scene_frames
@@ -71,6 +71,7 @@ def main():
     parser=cli.make_parser(load_toolchain_settings(ROOT/'config/c643d.ini'))
     options=parser.parse_args(['cart-demos','--stream-renderer','hors-render-v1','--output',stem,
         '--output-dir',str(a.output_dir),'--tass',a.tass,'--cartconv',a.cartconv,'--menu-style','demoscene','--prefer',a.prefer])
+    options.cartridge_name=f'DEMO CART 2 {__version__} '+('HORS V2' if stable else 'HORS V2 BETA' if beta else 'HORS V1')
     options.overwrite_policy='allow'
     oldroot,oldcart=cli.ROOT,cli.CART
     oldtitle,oldscreen=buildscreen.menu_title_lines,buildscreen.build_screen_lines

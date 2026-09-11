@@ -1,0 +1,24 @@
+{
+  "cartridge": "c643d-demo-v0.7.4-hors-render-v2-all-ram.crt",
+  "menu_entry": 2,
+  "verified_frames": 75,
+  "orientations": 36,
+  "bitmap_bytes_checked": 576000,
+  "color_bytes_checked": 72000,
+  "slots": {
+    "1": 25,
+    "2": 25,
+    "0": 25
+  },
+  "average_fps": 30.322976318763196,
+  "min_frame_cycles": 19936,
+  "max_frame_cycles": 37557,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
+  "path": "examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all-ram.crt",
+  "entry": 2,
+  "sha256": "420a6f0c39721346c9585c45bff10f688d48b9bc08f81f9eb1f4fe2f41b79055"
+}

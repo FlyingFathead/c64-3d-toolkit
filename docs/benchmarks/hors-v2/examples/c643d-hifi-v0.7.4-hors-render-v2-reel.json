@@ -1,0 +1,18 @@
+{
+  "cartridge": "c643d-hifi-v0.7.4-hors-render-v2.crt",
+  "sha256": "523754d8f6b22555846aa8d09107195bca74f7d3d0d315b94e1abaf790b3bad1",
+  "separate": true,
+  "order": [
+    1,
+    2
+  ],
+  "cycles": {
+    "complete-scene": 11025651,
+    "entry-1": 9807116,
+    "entry-2": 9808371,
+    "thanks": 9816656
+  },
+  "loop": true,
+  "thanks": true,
+  "method": "PAL VICE production code; monitor acknowledges initial SPACE and injects F4 scanner samples"
+}

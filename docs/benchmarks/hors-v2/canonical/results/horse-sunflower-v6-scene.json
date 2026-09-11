@@ -4,7 +4,7 @@
   "diagnostic_only": true,
   "profile": {
     "cartridge": "horse-sunflower-v6.crt",
-    "sha256": "36519a3e18c57080e696c24ba07427591620a72188380634e1b8a0ef47755478",
+    "sha256": "903c37e9da38dd5111477664e0a25acf6665042eaf6966a5d1bbdb43c656f885",
     "renderer": "yunroll-cart-v6-scene",
     "menu_entry": null,
     "frames": 84,
@@ -16,20 +16,20 @@
       "directory": 24.54,
       "picture_lookup_and_queue_wait": 411.4,
       "recycle_bitmap_and_colors": 31978.76,
-      "fetch": 24587.13,
-      "apply_colors": 10897.9,
-      "draw_lines": 127447.83,
+      "fetch": 24587.14,
+      "apply_colors": 10897.92,
+      "draw_lines": 127447.77,
       "bookkeeping": 11,
       "publish_wait": 35041.06,
       "publish_commit": 41.26,
       "advance_and_final_hold": 49.15
     },
-    "mean_render_cycles": 195347.57,
+    "mean_render_cycles": 195347.54,
     "worst_render_cycles": 284084,
-    "mean_total_cycles": 230490.05,
+    "mean_total_cycles": 230490.01,
     "worst_total_cycles": 284214,
-    "measured_seconds": 19.651056383773426,
-    "frames_per_second": 4.274579358968293,
+    "measured_seconds": 19.651053338854787,
+    "frames_per_second": 4.274580021311738,
     "samples": [
       {
         "frame": 3,
@@ -156,16 +156,16 @@
           "directory": 23,
           "picture_lookup_and_queue_wait": 116,
           "recycle_bitmap_and_colors": 38,
-          "fetch": 34771,
-          "apply_colors": 14257,
-          "draw_lines": 178197,
+          "fetch": 34772,
+          "apply_colors": 14258,
+          "draw_lines": 178192,
           "bookkeeping": 11,
           "publish_wait": 31,
           "publish_commit": 41,
           "advance_and_final_hold": 47
         },
-        "render_cycles": 227402,
-        "total_cycles": 227532
+        "render_cycles": 227399,
+        "total_cycles": 227529
       },
       {
         "frame": 11,
@@ -1475,8 +1475,8 @@
       "2": 58,
       "0": 64
     },
-    "average_fps": 4.300968710798366,
-    "min_frame_cycles": 4214,
+    "average_fps": 4.300669872882681,
+    "min_frame_cycles": 5003,
     "max_frame_cycles": 398076,
     "pixel_match": true,
     "color_match": true,
@@ -1484,7 +1484,7 @@
     "border_match": true,
     "border_color": 0,
     "display_interval_cycles": [
-      1300011,
+      1300008,
       233158,
       275188,
       275179,

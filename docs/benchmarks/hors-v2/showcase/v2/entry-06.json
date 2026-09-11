@@ -15,5 +15,7 @@
   "max_frame_cycles": 63767,
   "pixel_match": true,
   "color_match": true,
-  "reused_samples": 0
+  "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0
 }

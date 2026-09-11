@@ -1,0 +1,24 @@
+{
+  "version": "0.7.4",
+  "base_commit": "78b197d38b3ffd6adf06f92d007a9487dd0050d5",
+  "snapshot_matches_base": true,
+  "unit_tests": {
+    "run": 208,
+    "skipped": 3,
+    "failures": 0
+  },
+  "current_cartridges": 20,
+  "cold_boot_cases": 40,
+  "canonical_jobs_passed": 26,
+  "playback_picture_checks": 49,
+  "verified_pictures": 8429,
+  "matched_fps_windows": 93,
+  "all_window_display_counts_identical": true,
+  "maximum_average_fps_difference_percent": 0.0002787027177042489,
+  "marbles_scene_seconds": 41.50340421903927,
+  "marbles_ending_images_identical": true,
+  "limitations": [
+    "PAL Linux VICE 3.10; Windows GUI Warp/JAM sequence unverified",
+    "No physical EasyFlash hardware test"
+  ]
+}

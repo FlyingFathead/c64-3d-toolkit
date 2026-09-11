@@ -10,12 +10,13 @@ import hashlib
 import json
 from .colors import hires_screen_byte, configure_asm_colors
 from pathlib import Path
+from .cartlaunch import run as run_cartridge
 import shutil
 import subprocess
 
 from . import __version__
 from .cartstream import frame_block, emit_directory
-from .cartridge import new_easyflash_image, easyflash_offset, put_easyflash_chip, convert_easyflash, check_easyflash_crt
+from .cartridge import new_easyflash_image, easyflash_offset, put_easyflash_chip, convert_easyflash, check_easyflash_crt, install_scene_extension
 from .emit import bytes_lines
 from .font import bitmap_text, FONT
 
@@ -166,12 +167,11 @@ scene_continue:
     for bank in range(3):
         put_easyflash_chip(image,bank,'roml',bytes(padded[bank*8192:(bank+1)*8192]).ljust(8192,b'\0'))
     boot=work/'boot.bin'
-    subprocess.run([tass,*tass_args,'--nostart','-o',str(boot),str(root/f'c64/cart/easyflash-stream-{variant}-scene-boot.asm')],check=True,cwd=root)
-    boot_blob=bytearray(boot.read_bytes())
+    subprocess.run([tass,*tass_args,'-D',f'EXTENSION_PAGES={26 if variant == "v4" else 28}','--nostart','-o',str(boot),str(root/'c64/cart/easyflash-scene-boot.asm')],check=True,cwd=root)
+    intro_bytes = b''
     if intro or variant in ("v5", "v6", "v7", "v8", "v9", "v10"):
         intro_bytes=blob[2+0x8000-load:2+end-load]
-        boot_blob[0x400:0x400+len(intro_bytes)]=intro_bytes
-    put_easyflash_chip(image,0,'romh',bytes(boot_blob))
+    install_scene_extension(image, boot.read_bytes(), intro_bytes)
     raw=work/f'{stem}.bin';raw.write_bytes(image)
     crt=outdir/f'{stem}.crt';convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name=scene.name.replace('_',' ')[:32],cwd=root)
     check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=root)
@@ -240,5 +240,5 @@ def cmd_build_cart_scene(a):
     if a.run:
         vice=cli.resolve_executable(a.vice,'vice')
         if not vice:raise ValueError('VICE not found')
-        subprocess.run([vice,*a.vice_args,'-cartcrt',str(crt)],cwd=cli.ROOT,check=False)
+        run_cartridge(vice, crt, a.vice_args, clean_settings=getattr(a, 'vice_clean_settings', False), cwd=cli.ROOT)
     return 0

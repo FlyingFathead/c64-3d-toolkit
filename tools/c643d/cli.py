@@ -2,6 +2,7 @@ from __future__ import annotations
 import argparse, json, math, re, shutil, subprocess, sys, tempfile
 from pathlib import Path
 from . import __version__
+from .cartlaunch import run as run_cartridge
 from .mesh import Mesh, normalize_mesh, transform_mesh, fix_winding_outward, mesh_diagnostics
 from .shapes import (
     torus, cube, sphere, choose_torus_segments, choose_sphere_segments,
@@ -980,7 +981,7 @@ def cmd_cartridge_smoke(a):
         return 2
     try:
         assemble_smoke_bootstrap(
-            tass=tass,tass_args=a.tass_args,source=CART/'easyflash-smoke.asm',
+            tass=tass,tass_args=a.tass_args,source=CART/'easyflash-smoke-loading.asm',
             output=boot,labels=labels,listing=listing,cwd=ROOT,
         )
         raw_bytes,manifest=build_smoke_raw(boot.read_bytes())
@@ -1000,9 +1001,7 @@ def cmd_cartridge_smoke(a):
         print(f'cartconv:   {check_output.splitlines()[-1]}')
     print('expected:   three lines: C643D EASYFLASH BANK 1/2/3 OK')
     if a.run:
-        cmd=tool_command(vice,a.vice_args,['-cartcrt',str(crt)])
-        print('+',' '.join(cmd))
-        subprocess.run(cmd,cwd=ROOT,check=False)
+        run_cartridge(vice, crt, a.vice_args, clean_settings=a.vice_clean_settings, cwd=ROOT)
     return 0
 
 
@@ -1094,7 +1093,7 @@ def cmd_cart_demos_legacy(a):
             output=control,labels=control_lbl,listing=control_lst,cwd=ROOT,
         )
         assemble_demo_boot(
-            tass=tass,tass_args=a.tass_args,source=CART/'easyflash-demo-boot.asm',
+            tass=tass,tass_args=a.tass_args,source=CART/'easyflash-menu-boot.asm',
             output=boot,labels=boot_lbl,listing=boot_lst,cwd=ROOT,
         )
         install_demo_boot(
@@ -1131,9 +1130,7 @@ def cmd_cart_demos_legacy(a):
     print('             in demo F1/RUN-STOP = menu, SPACE = next')
     print('streaming:   two HiFi demos use 128 orientations each from ROMH; original ten PRGs preserved')
     if a.run:
-        cmd=tool_command(vice,a.vice_args,['-cartcrt',str(crt)])
-        print('+',' '.join(cmd))
-        subprocess.run(cmd,cwd=ROOT,check=False)
+        run_cartridge(vice, crt, a.vice_args, clean_settings=a.vice_clean_settings, cwd=ROOT)
     return 0
 
 def _color_arg(value):
@@ -1173,6 +1170,7 @@ def _add_toolchain_args(q,settings):
     q.add_argument('--vice-arg',dest='vice_args',action='append',default=None,metavar='ARG',help='VICE argument; repeatable; when used, replaces configured default args')
     q.add_argument('--no-tass-default-args',action='store_true',help='discard configured/built-in 64tass default arguments for this invocation')
     q.add_argument('--no-vice-default-args',action='store_true',help='discard configured/built-in VICE default arguments for this invocation')
+    q.add_argument('--vice-clean-settings',action='store_true',help='cartridge launches: use temporary VICE defaults without saving them')
 
 
 def make_parser(settings):
@@ -1330,6 +1328,9 @@ def make_parser(settings):
     combo.add_argument('--prefer',choices=('fps','ram'),default='fps')
     combo.add_argument('--overwrite-policy',choices=('allow','warn','error'),default=settings.overwrite_policy)
     combo.add_argument('--run',action='store_true',help='launch the generated cartridge in VICE')
+    launch=sub.add_parser('run-cart',help='launch an existing EasyFlash CRT with protected write-back and consistent startup options')
+    _add_toolchain_args(launch,settings)
+    launch.add_argument('crt',type=Path)
     sub.add_parser('cart-stream',help='build a hors-render-v2 streamed EasyFlash CRT by default (same source flags as build)')
     doc=sub.add_parser('doctor',help='check local 64tass/VICE and optional Blender/cartconv availability')
     _add_toolchain_args(doc,settings)
@@ -1374,6 +1375,16 @@ def main(argv=None):
     if a.command=='generate-examples': return cmd_generate_examples(a)
     if a.command=='test-examples': return cmd_test_examples(a)
     if a.command=='doctor': return cmd_doctor(a)
+    if a.command=='run-cart':
+        vice=resolve_executable(a.vice,'vice')
+        if not vice:
+            print('error: VICE not found',file=sys.stderr)
+            return 2
+        try:
+            return run_cartridge(vice,a.crt,a.vice_args,clean_settings=a.vice_clean_settings,cwd=ROOT)
+        except (OSError,ValueError) as e:
+            print(f'error: {e}',file=sys.stderr)
+            return 2
     if a.command=='cartridge-smoke': return cmd_cartridge_smoke(a)
     if a.command in ('cart-demos','cartridge-demo'): return cmd_cart_demos(a)
     if a.command=='color-combo-test':

@@ -1,5 +1,6 @@
 """Uniform-renderer comparison cartridges; canonical vector data, banked frames."""
 from pathlib import Path
+from .cartlaunch import run as run_cartridge
 from dataclasses import dataclass,asdict
 import hashlib,json,subprocess
 from .cartstream import frame_block,emit_directory
@@ -252,7 +253,7 @@ def build(a, *, sources=None, reel=False,frame_encoders=None):
         local_control.write_text(configure_control_source(control_source.read_text()))
         control_source=local_control
     assemble_demo_control(tass=tass,tass_args=a.tass_args or (),source=control_source,output=control,labels=work/f'{stem}-control.lbl',listing=work/f'{stem}-control.lst',cwd=root)
-    assemble_demo_boot(tass=tass,tass_args=a.tass_args or (),source=cli.CART/'easyflash-demo-boot.asm',output=boot,labels=work/f'{stem}-boot.lbl',listing=work/f'{stem}-boot.lst',cwd=root)
+    assemble_demo_boot(tass=tass,tass_args=a.tass_args or (),source=cli.CART/'easyflash-menu-boot.asm',output=boot,labels=work/f'{stem}-boot.lbl',listing=work/f'{stem}-boot.lst',cwd=root)
     install_demo_boot(image,boot.read_bytes(),runtimes[a.menu_style].read_bytes(),control=control.read_bytes(),style_runtimes=[runtimes[s].read_bytes() for s in cli.DEMO_MENU_STYLE_ORDER],menu_font=font.read_bytes())
     for i,style in enumerate(cli.DEMO_MENU_STYLE_ORDER):
         pos=easyflash_offset(2,'romh',i*2048);image[pos:pos+2048]=shared[style]
@@ -292,12 +293,12 @@ def build(a, *, sources=None, reel=False,frame_encoders=None):
         manifest.pop('exhibition',None)
         manifest['note']='Four monochrome colour pairs using preserved classic geometry; automatic normal PLAY ALL; F3/F4 colour cycling.'
     raw=work/f'{stem}.bin';raw.write_bytes(image);crt=out/f'{stem}.crt'
-    convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name='COLOR COMBO TEST' if color_combo else f'C643D {__version__} ALL {variant.upper()}',cwd=root);check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=root)
+    convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name='COLOR COMBO TEST' if color_combo else getattr(a, 'cartridge_name', None) or f'C643D {__version__} {public_renderer.upper()} {prefer.upper()}',cwd=root);check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=root)
     (metadata/f'{stem}-cart-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     (metadata/f'{stem}-cart-map.txt').write_text('Uniform '+renderer+' cartridge\nBank 0: boot/control/font; ROMH 1: menus; ROMH 2: menu directory/helpers\n'+''.join(f'{x["name"]}: {x["frames"]} frames, {x["rom_frame_bytes"]} stream bytes\n' for x in stream_info)+'Frame chips: '+', '.join(f'{b}:{c}' for b,c in used)+'\n')
     print(f'built {crt}\nall {len(plans)} entries: {renderer}; 10-row scrolling menu; {sum(x["rom_frame_bytes"] for x in stream_info)} frame bytes',flush=True)
     if a.run:
         vice=cli.resolve_executable(a.vice,'vice')
         if not vice:raise ValueError('VICE not found')
-        subprocess.run([vice,*(a.vice_args or ()),'-cartcrt',str(crt)],check=False,cwd=root)
+        run_cartridge(vice, crt, a.vice_args or (), clean_settings=getattr(a, 'vice_clean_settings', False), cwd=root)
     return 0

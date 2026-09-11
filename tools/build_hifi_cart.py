@@ -28,6 +28,7 @@ def main(argv=None):
         '--prefer',a.prefer,'--play-all-seconds','10','--tass',a.tass,'--cartconv',a.cartconv,
         '--output',f'c643d-hifi-v{__version__}-{a.renderer}'+('-ram' if a.prefer=='ram' else ''),
         '--output-dir',str(root/'examples/cart_hifi'),'--overwrite-policy','allow'])
+    args.cartridge_name=f'C643D {__version__} HIFI '+a.renderer.replace('hors-render-', 'HORS ').upper()
     return cartuniform.build(args,sources=sources,reel=True)
 
 if __name__=='__main__':main()

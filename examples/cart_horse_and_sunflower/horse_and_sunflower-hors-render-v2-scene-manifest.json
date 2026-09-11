@@ -1,7 +1,7 @@
 {
   "format": "c643d-easyflash-stream-scene",
   "version": 1,
-  "toolkit_version": "0.7.2",
+  "toolkit_version": "0.7.4",
   "renderer": "hors-render-v2",
   "name": "HORSE AND SUNFLOWER",
   "frames": 84,
@@ -10,6 +10,9 @@
   "faces": 416,
   "colors": true,
   "screen_color": 48,
+  "foreground_color": 3,
+  "background_color": 0,
+  "border_color": 0,
   "hud_text": "HORSE AND SUNFLOWER",
   "text_overlay": false,
   "intro": false,

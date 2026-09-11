@@ -1,0 +1,1041 @@
+{
+  "baseline_version": "0.7.3",
+  "release_version": "0.7.4",
+  "method": "PAL VICE 3.10, normal PLAY ALL, three ten-second visits per entry; no F5",
+  "total_windows": 93,
+  "all_window_display_counts_identical": true,
+  "maximum_absolute_average_fps_change_percent": 0.0002787027177042489,
+  "cases": [
+    {
+      "case": "demo1-fps",
+      "baseline_crt_sha256": "384ac27ca491e0ce4c04983f0a02707fb39b0ab080568bab0d54913cd0f1c780",
+      "release_crt_sha256": "c1c540b938070702e40add7c2803148386c1c9499efa1f9bb1e0d7bb35c53575",
+      "sample_pictures_match": true,
+      "windows": 36,
+      "all_window_display_counts_identical": true,
+      "raw_timing_records_identical": true,
+      "entries": [
+        {
+          "name": "TORUS",
+          "old_flips": 528,
+          "new_flips": 528,
+          "old_fps": 17.679555319259137,
+          "new_fps": 17.679555319259137,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "TORUS DENSE",
+          "old_flips": 513,
+          "new_flips": 513,
+          "old_fps": 17.17931357756654,
+          "new_fps": 17.17931357756654,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "CUBE",
+          "old_flips": 897,
+          "new_flips": 897,
+          "old_fps": 30.038918656996756,
+          "new_fps": 30.038918656996756,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "SPHERE",
+          "old_flips": 519,
+          "new_flips": 519,
+          "old_fps": 17.37599776866814,
+          "new_fps": 17.37599776866814,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "HORSE HEAD",
+          "old_flips": 876,
+          "new_flips": 876,
+          "old_fps": 29.331520991095093,
+          "new_fps": 29.331520991095093,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "SUNFLOWER TORUS",
+          "old_flips": 858,
+          "new_flips": 858,
+          "old_fps": 28.728704273230306,
+          "new_fps": 28.728704273230306,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "SUNFLOWER COLOR",
+          "old_flips": 624,
+          "new_flips": 624,
+          "old_fps": 20.89290655978977,
+          "new_fps": 20.89290655978977,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "SPACE HORSE SPIN",
+          "old_flips": 570,
+          "new_flips": 570,
+          "old_fps": 19.08508643729887,
+          "new_fps": 19.08508643729887,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "SPACE HORSE CRAWL",
+          "old_flips": 1143,
+          "new_flips": 1143,
+          "old_fps": 38.27643129963641,
+          "new_fps": 38.27643129963641,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "FALLING CUBES",
+          "old_flips": 624,
+          "new_flips": 624,
+          "old_fps": 20.891032288133967,
+          "new_fps": 20.891032288133967,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "HORSE HEAD HIFI",
+          "old_flips": 642,
+          "new_flips": 642,
+          "old_fps": 21.496252789965787,
+          "new_fps": 21.496252789965787,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "SUNFLOWER TORUS HIFI",
+          "old_flips": 609,
+          "new_flips": 609,
+          "old_fps": 20.393513323032167,
+          "new_fps": 20.393513323032167,
+          "fps_change_percent": 0.0
+        }
+      ],
+      "observations": [
+        {
+          "loop": 0,
+          "entry": 0,
+          "old_flips": 176,
+          "new_flips": 176,
+          "old_window_cycles": 9808164,
+          "new_window_cycles": 9808164
+        },
+        {
+          "loop": 0,
+          "entry": 1,
+          "old_flips": 171,
+          "new_flips": 171,
+          "old_window_cycles": 9807099,
+          "new_window_cycles": 9807099
+        },
+        {
+          "loop": 0,
+          "entry": 2,
+          "old_flips": 299,
+          "new_flips": 299,
+          "old_window_cycles": 9806916,
+          "new_window_cycles": 9806916
+        },
+        {
+          "loop": 0,
+          "entry": 3,
+          "old_flips": 173,
+          "new_flips": 173,
+          "old_window_cycles": 9809388,
+          "new_window_cycles": 9809388
+        },
+        {
+          "loop": 0,
+          "entry": 4,
+          "old_flips": 292,
+          "new_flips": 292,
+          "old_window_cycles": 9808302,
+          "new_window_cycles": 9808302
+        },
+        {
+          "loop": 0,
+          "entry": 5,
+          "old_flips": 286,
+          "new_flips": 286,
+          "old_window_cycles": 9808341,
+          "new_window_cycles": 9808341
+        },
+        {
+          "loop": 0,
+          "entry": 6,
+          "old_flips": 208,
+          "new_flips": 208,
+          "old_window_cycles": 9808668,
+          "new_window_cycles": 9808668
+        },
+        {
+          "loop": 0,
+          "entry": 7,
+          "old_flips": 190,
+          "new_flips": 190,
+          "old_window_cycles": 9808555,
+          "new_window_cycles": 9808555
+        },
+        {
+          "loop": 0,
+          "entry": 8,
+          "old_flips": 381,
+          "new_flips": 381,
+          "old_window_cycles": 9807066,
+          "new_window_cycles": 9807066
+        },
+        {
+          "loop": 0,
+          "entry": 9,
+          "old_flips": 208,
+          "new_flips": 208,
+          "old_window_cycles": 9809548,
+          "new_window_cycles": 9809548
+        },
+        {
+          "loop": 0,
+          "entry": 10,
+          "old_flips": 214,
+          "new_flips": 214,
+          "old_window_cycles": 9808364,
+          "new_window_cycles": 9808364
+        },
+        {
+          "loop": 0,
+          "entry": 11,
+          "old_flips": 203,
+          "new_flips": 203,
+          "old_window_cycles": 9807302,
+          "new_window_cycles": 9807302
+        },
+        {
+          "loop": 1,
+          "entry": 0,
+          "old_flips": 176,
+          "new_flips": 176,
+          "old_window_cycles": 9808136,
+          "new_window_cycles": 9808136
+        },
+        {
+          "loop": 1,
+          "entry": 1,
+          "old_flips": 171,
+          "new_flips": 171,
+          "old_window_cycles": 9806940,
+          "new_window_cycles": 9806940
+        },
+        {
+          "loop": 1,
+          "entry": 2,
+          "old_flips": 299,
+          "new_flips": 299,
+          "old_window_cycles": 9806916,
+          "new_window_cycles": 9806916
+        },
+        {
+          "loop": 1,
+          "entry": 3,
+          "old_flips": 173,
+          "new_flips": 173,
+          "old_window_cycles": 9809388,
+          "new_window_cycles": 9809388
+        },
+        {
+          "loop": 1,
+          "entry": 4,
+          "old_flips": 292,
+          "new_flips": 292,
+          "old_window_cycles": 9808302,
+          "new_window_cycles": 9808302
+        },
+        {
+          "loop": 1,
+          "entry": 5,
+          "old_flips": 286,
+          "new_flips": 286,
+          "old_window_cycles": 9808341,
+          "new_window_cycles": 9808341
+        },
+        {
+          "loop": 1,
+          "entry": 6,
+          "old_flips": 208,
+          "new_flips": 208,
+          "old_window_cycles": 9808668,
+          "new_window_cycles": 9808668
+        },
+        {
+          "loop": 1,
+          "entry": 7,
+          "old_flips": 190,
+          "new_flips": 190,
+          "old_window_cycles": 9808555,
+          "new_window_cycles": 9808555
+        },
+        {
+          "loop": 1,
+          "entry": 8,
+          "old_flips": 381,
+          "new_flips": 381,
+          "old_window_cycles": 9807066,
+          "new_window_cycles": 9807066
+        },
+        {
+          "loop": 1,
+          "entry": 9,
+          "old_flips": 208,
+          "new_flips": 208,
+          "old_window_cycles": 9809548,
+          "new_window_cycles": 9809548
+        },
+        {
+          "loop": 1,
+          "entry": 10,
+          "old_flips": 214,
+          "new_flips": 214,
+          "old_window_cycles": 9808364,
+          "new_window_cycles": 9808364
+        },
+        {
+          "loop": 1,
+          "entry": 11,
+          "old_flips": 203,
+          "new_flips": 203,
+          "old_window_cycles": 9807302,
+          "new_window_cycles": 9807302
+        },
+        {
+          "loop": 2,
+          "entry": 0,
+          "old_flips": 176,
+          "new_flips": 176,
+          "old_window_cycles": 9808136,
+          "new_window_cycles": 9808136
+        },
+        {
+          "loop": 2,
+          "entry": 1,
+          "old_flips": 171,
+          "new_flips": 171,
+          "old_window_cycles": 9806940,
+          "new_window_cycles": 9806940
+        },
+        {
+          "loop": 2,
+          "entry": 2,
+          "old_flips": 299,
+          "new_flips": 299,
+          "old_window_cycles": 9806916,
+          "new_window_cycles": 9806916
+        },
+        {
+          "loop": 2,
+          "entry": 3,
+          "old_flips": 173,
+          "new_flips": 173,
+          "old_window_cycles": 9809388,
+          "new_window_cycles": 9809388
+        },
+        {
+          "loop": 2,
+          "entry": 4,
+          "old_flips": 292,
+          "new_flips": 292,
+          "old_window_cycles": 9808302,
+          "new_window_cycles": 9808302
+        },
+        {
+          "loop": 2,
+          "entry": 5,
+          "old_flips": 286,
+          "new_flips": 286,
+          "old_window_cycles": 9808341,
+          "new_window_cycles": 9808341
+        },
+        {
+          "loop": 2,
+          "entry": 6,
+          "old_flips": 208,
+          "new_flips": 208,
+          "old_window_cycles": 9808668,
+          "new_window_cycles": 9808668
+        },
+        {
+          "loop": 2,
+          "entry": 7,
+          "old_flips": 190,
+          "new_flips": 190,
+          "old_window_cycles": 9808555,
+          "new_window_cycles": 9808555
+        },
+        {
+          "loop": 2,
+          "entry": 8,
+          "old_flips": 381,
+          "new_flips": 381,
+          "old_window_cycles": 9807066,
+          "new_window_cycles": 9807066
+        },
+        {
+          "loop": 2,
+          "entry": 9,
+          "old_flips": 208,
+          "new_flips": 208,
+          "old_window_cycles": 9809548,
+          "new_window_cycles": 9809548
+        },
+        {
+          "loop": 2,
+          "entry": 10,
+          "old_flips": 214,
+          "new_flips": 214,
+          "old_window_cycles": 9808364,
+          "new_window_cycles": 9808364
+        },
+        {
+          "loop": 2,
+          "entry": 11,
+          "old_flips": 203,
+          "new_flips": 203,
+          "old_window_cycles": 9807302,
+          "new_window_cycles": 9807302
+        }
+      ]
+    },
+    {
+      "case": "demo1-ram",
+      "baseline_crt_sha256": "e3f1c4a7a2d59bb0978d597f425d8643f261f7c0fbc3a7ab6e706804767b58ab",
+      "release_crt_sha256": "420a6f0c39721346c9585c45bff10f688d48b9bc08f81f9eb1f4fe2f41b79055",
+      "sample_pictures_match": true,
+      "windows": 36,
+      "all_window_display_counts_identical": true,
+      "raw_timing_records_identical": true,
+      "entries": [
+        {
+          "name": "TORUS",
+          "old_flips": 528,
+          "new_flips": 528,
+          "old_fps": 17.68190554043478,
+          "new_fps": 17.68190554043478,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "TORUS DENSE",
+          "old_flips": 513,
+          "new_flips": 513,
+          "old_fps": 17.176129502342334,
+          "new_fps": 17.176129502342334,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "CUBE",
+          "old_flips": 897,
+          "new_flips": 897,
+          "old_fps": 30.033776702983456,
+          "new_fps": 30.033776702983456,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "SPHERE",
+          "old_flips": 519,
+          "new_flips": 519,
+          "old_fps": 17.379822985677198,
+          "new_fps": 17.379822985677198,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "HORSE HEAD",
+          "old_flips": 876,
+          "new_flips": 876,
+          "old_fps": 29.332322461361777,
+          "new_fps": 29.332322461361777,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "SUNFLOWER TORUS",
+          "old_flips": 861,
+          "new_flips": 861,
+          "old_fps": 28.82983327063012,
+          "new_fps": 28.82983327063012,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "SUNFLOWER COLOR",
+          "old_flips": 624,
+          "new_flips": 624,
+          "old_fps": 20.892024758280133,
+          "new_fps": 20.892024758280133,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "SPACE HORSE SPIN",
+          "old_flips": 570,
+          "new_flips": 570,
+          "old_fps": 19.086018501487956,
+          "new_fps": 19.086018501487956,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "SPACE HORSE CRAWL",
+          "old_flips": 1143,
+          "new_flips": 1143,
+          "old_fps": 38.2729228744189,
+          "new_fps": 38.2729228744189,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "FALLING CUBES",
+          "old_flips": 624,
+          "new_flips": 624,
+          "old_fps": 20.893777784620085,
+          "new_fps": 20.893777784620085,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "HORSE HEAD HIFI",
+          "old_flips": 642,
+          "new_flips": 642,
+          "old_fps": 21.495045272591312,
+          "new_fps": 21.495045272591312,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "SUNFLOWER TORUS HIFI",
+          "old_flips": 609,
+          "new_flips": 609,
+          "old_fps": 20.39129482179963,
+          "new_fps": 20.39129482179963,
+          "fps_change_percent": 0.0
+        }
+      ],
+      "observations": [
+        {
+          "loop": 0,
+          "entry": 0,
+          "old_flips": 176,
+          "new_flips": 176,
+          "old_window_cycles": 9806881,
+          "new_window_cycles": 9806881
+        },
+        {
+          "loop": 0,
+          "entry": 1,
+          "old_flips": 171,
+          "new_flips": 171,
+          "old_window_cycles": 9808811,
+          "new_window_cycles": 9808811
+        },
+        {
+          "loop": 0,
+          "entry": 2,
+          "old_flips": 299,
+          "new_flips": 299,
+          "old_window_cycles": 9808595,
+          "new_window_cycles": 9808595
+        },
+        {
+          "loop": 0,
+          "entry": 3,
+          "old_flips": 173,
+          "new_flips": 173,
+          "old_window_cycles": 9807229,
+          "new_window_cycles": 9807229
+        },
+        {
+          "loop": 0,
+          "entry": 4,
+          "old_flips": 292,
+          "new_flips": 292,
+          "old_window_cycles": 9808034,
+          "new_window_cycles": 9808034
+        },
+        {
+          "loop": 0,
+          "entry": 5,
+          "old_flips": 287,
+          "new_flips": 287,
+          "old_window_cycles": 9808110,
+          "new_window_cycles": 9808110
+        },
+        {
+          "loop": 0,
+          "entry": 6,
+          "old_flips": 208,
+          "new_flips": 208,
+          "old_window_cycles": 9809082,
+          "new_window_cycles": 9809082
+        },
+        {
+          "loop": 0,
+          "entry": 7,
+          "old_flips": 190,
+          "new_flips": 190,
+          "old_window_cycles": 9808076,
+          "new_window_cycles": 9808076
+        },
+        {
+          "loop": 0,
+          "entry": 8,
+          "old_flips": 381,
+          "new_flips": 381,
+          "old_window_cycles": 9807965,
+          "new_window_cycles": 9807965
+        },
+        {
+          "loop": 0,
+          "entry": 9,
+          "old_flips": 208,
+          "new_flips": 208,
+          "old_window_cycles": 9808259,
+          "new_window_cycles": 9808259
+        },
+        {
+          "loop": 0,
+          "entry": 10,
+          "old_flips": 214,
+          "new_flips": 214,
+          "old_window_cycles": 9808915,
+          "new_window_cycles": 9808915
+        },
+        {
+          "loop": 0,
+          "entry": 11,
+          "old_flips": 203,
+          "new_flips": 203,
+          "old_window_cycles": 9808369,
+          "new_window_cycles": 9808369
+        },
+        {
+          "loop": 1,
+          "entry": 0,
+          "old_flips": 176,
+          "new_flips": 176,
+          "old_window_cycles": 9806822,
+          "new_window_cycles": 9806822
+        },
+        {
+          "loop": 1,
+          "entry": 1,
+          "old_flips": 171,
+          "new_flips": 171,
+          "old_window_cycles": 9808811,
+          "new_window_cycles": 9808811
+        },
+        {
+          "loop": 1,
+          "entry": 2,
+          "old_flips": 299,
+          "new_flips": 299,
+          "old_window_cycles": 9808595,
+          "new_window_cycles": 9808595
+        },
+        {
+          "loop": 1,
+          "entry": 3,
+          "old_flips": 173,
+          "new_flips": 173,
+          "old_window_cycles": 9807229,
+          "new_window_cycles": 9807229
+        },
+        {
+          "loop": 1,
+          "entry": 4,
+          "old_flips": 292,
+          "new_flips": 292,
+          "old_window_cycles": 9808034,
+          "new_window_cycles": 9808034
+        },
+        {
+          "loop": 1,
+          "entry": 5,
+          "old_flips": 287,
+          "new_flips": 287,
+          "old_window_cycles": 9808110,
+          "new_window_cycles": 9808110
+        },
+        {
+          "loop": 1,
+          "entry": 6,
+          "old_flips": 208,
+          "new_flips": 208,
+          "old_window_cycles": 9809082,
+          "new_window_cycles": 9809082
+        },
+        {
+          "loop": 1,
+          "entry": 7,
+          "old_flips": 190,
+          "new_flips": 190,
+          "old_window_cycles": 9808076,
+          "new_window_cycles": 9808076
+        },
+        {
+          "loop": 1,
+          "entry": 8,
+          "old_flips": 381,
+          "new_flips": 381,
+          "old_window_cycles": 9807965,
+          "new_window_cycles": 9807965
+        },
+        {
+          "loop": 1,
+          "entry": 9,
+          "old_flips": 208,
+          "new_flips": 208,
+          "old_window_cycles": 9808259,
+          "new_window_cycles": 9808259
+        },
+        {
+          "loop": 1,
+          "entry": 10,
+          "old_flips": 214,
+          "new_flips": 214,
+          "old_window_cycles": 9808915,
+          "new_window_cycles": 9808915
+        },
+        {
+          "loop": 1,
+          "entry": 11,
+          "old_flips": 203,
+          "new_flips": 203,
+          "old_window_cycles": 9808369,
+          "new_window_cycles": 9808369
+        },
+        {
+          "loop": 2,
+          "entry": 0,
+          "old_flips": 176,
+          "new_flips": 176,
+          "old_window_cycles": 9806822,
+          "new_window_cycles": 9806822
+        },
+        {
+          "loop": 2,
+          "entry": 1,
+          "old_flips": 171,
+          "new_flips": 171,
+          "old_window_cycles": 9808811,
+          "new_window_cycles": 9808811
+        },
+        {
+          "loop": 2,
+          "entry": 2,
+          "old_flips": 299,
+          "new_flips": 299,
+          "old_window_cycles": 9808595,
+          "new_window_cycles": 9808595
+        },
+        {
+          "loop": 2,
+          "entry": 3,
+          "old_flips": 173,
+          "new_flips": 173,
+          "old_window_cycles": 9807229,
+          "new_window_cycles": 9807229
+        },
+        {
+          "loop": 2,
+          "entry": 4,
+          "old_flips": 292,
+          "new_flips": 292,
+          "old_window_cycles": 9808034,
+          "new_window_cycles": 9808034
+        },
+        {
+          "loop": 2,
+          "entry": 5,
+          "old_flips": 287,
+          "new_flips": 287,
+          "old_window_cycles": 9808110,
+          "new_window_cycles": 9808110
+        },
+        {
+          "loop": 2,
+          "entry": 6,
+          "old_flips": 208,
+          "new_flips": 208,
+          "old_window_cycles": 9809082,
+          "new_window_cycles": 9809082
+        },
+        {
+          "loop": 2,
+          "entry": 7,
+          "old_flips": 190,
+          "new_flips": 190,
+          "old_window_cycles": 9808076,
+          "new_window_cycles": 9808076
+        },
+        {
+          "loop": 2,
+          "entry": 8,
+          "old_flips": 381,
+          "new_flips": 381,
+          "old_window_cycles": 9807965,
+          "new_window_cycles": 9807965
+        },
+        {
+          "loop": 2,
+          "entry": 9,
+          "old_flips": 208,
+          "new_flips": 208,
+          "old_window_cycles": 9808259,
+          "new_window_cycles": 9808259
+        },
+        {
+          "loop": 2,
+          "entry": 10,
+          "old_flips": 214,
+          "new_flips": 214,
+          "old_window_cycles": 9808915,
+          "new_window_cycles": 9808915
+        },
+        {
+          "loop": 2,
+          "entry": 11,
+          "old_flips": 203,
+          "new_flips": 203,
+          "old_window_cycles": 9808369,
+          "new_window_cycles": 9808369
+        }
+      ]
+    },
+    {
+      "case": "demo2",
+      "baseline_crt_sha256": "35cac536294e32cc912eadff7efd496584a63dbf0192d6c1ce003c17f83c13fa",
+      "release_crt_sha256": "71640c3499b88a63b1616c75127cc01f7de32ce26d27f7fd0aac53e071d5523e",
+      "sample_pictures_match": true,
+      "windows": 21,
+      "all_window_display_counts_identical": true,
+      "raw_timing_records_identical": false,
+      "entries": [
+        {
+          "name": "COLOUR CUBE 24",
+          "old_flips": 1062,
+          "new_flips": 1062,
+          "old_fps": 35.55820923926618,
+          "new_fps": 35.55830349449185,
+          "fps_change_percent": 0.0002650730384967659
+        },
+        {
+          "name": "COLOUR TORUS 18",
+          "old_flips": 597,
+          "new_flips": 597,
+          "old_fps": 19.991641478271884,
+          "new_fps": 19.99158576102377,
+          "fps_change_percent": -0.0002787027177042489
+        },
+        {
+          "name": "TWIST TUNNEL",
+          "old_flips": 297,
+          "new_flips": 297,
+          "old_fps": 9.944161147941129,
+          "new_fps": 9.944161147941129,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "RIBBON DANCE",
+          "old_flips": 999,
+          "new_flips": 999,
+          "old_fps": 33.449759486006286,
+          "new_fps": 33.449759486006286,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "ORBITAL CUBES",
+          "old_flips": 939,
+          "new_flips": 939,
+          "old_fps": 31.447308717391465,
+          "new_fps": 31.447308717391465,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "WAVE LATTICE",
+          "old_flips": 741,
+          "new_flips": 741,
+          "old_fps": 24.809820664321308,
+          "new_fps": 24.809820664321308,
+          "fps_change_percent": 0.0
+        },
+        {
+          "name": "RIPPLES LITE",
+          "old_flips": 504,
+          "new_flips": 504,
+          "old_fps": 16.877109834192627,
+          "new_fps": 16.877109834192627,
+          "fps_change_percent": 0.0
+        }
+      ],
+      "observations": [
+        {
+          "loop": 0,
+          "entry": 0,
+          "old_flips": 354,
+          "new_flips": 354,
+          "old_window_cycles": 9809252,
+          "new_window_cycles": 9809174
+        },
+        {
+          "loop": 0,
+          "entry": 1,
+          "old_flips": 199,
+          "new_flips": 199,
+          "old_window_cycles": 9806733,
+          "new_window_cycles": 9806815
+        },
+        {
+          "loop": 0,
+          "entry": 2,
+          "old_flips": 99,
+          "new_flips": 99,
+          "old_window_cycles": 9808726,
+          "new_window_cycles": 9808726
+        },
+        {
+          "loop": 0,
+          "entry": 3,
+          "old_flips": 333,
+          "new_flips": 333,
+          "old_window_cycles": 9808369,
+          "new_window_cycles": 9808369
+        },
+        {
+          "loop": 0,
+          "entry": 4,
+          "old_flips": 313,
+          "new_flips": 313,
+          "old_window_cycles": 9806328,
+          "new_window_cycles": 9806328
+        },
+        {
+          "loop": 0,
+          "entry": 5,
+          "old_flips": 247,
+          "new_flips": 247,
+          "old_window_cycles": 9808868,
+          "new_window_cycles": 9808868
+        },
+        {
+          "loop": 0,
+          "entry": 6,
+          "old_flips": 168,
+          "new_flips": 168,
+          "old_window_cycles": 9807465,
+          "new_window_cycles": 9807465
+        },
+        {
+          "loop": 1,
+          "entry": 0,
+          "old_flips": 354,
+          "new_flips": 354,
+          "old_window_cycles": 9808339,
+          "new_window_cycles": 9808339
+        },
+        {
+          "loop": 1,
+          "entry": 1,
+          "old_flips": 199,
+          "new_flips": 199,
+          "old_window_cycles": 9807608,
+          "new_window_cycles": 9807608
+        },
+        {
+          "loop": 1,
+          "entry": 2,
+          "old_flips": 99,
+          "new_flips": 99,
+          "old_window_cycles": 9808726,
+          "new_window_cycles": 9808726
+        },
+        {
+          "loop": 1,
+          "entry": 3,
+          "old_flips": 333,
+          "new_flips": 333,
+          "old_window_cycles": 9808369,
+          "new_window_cycles": 9808369
+        },
+        {
+          "loop": 1,
+          "entry": 4,
+          "old_flips": 313,
+          "new_flips": 313,
+          "old_window_cycles": 9806328,
+          "new_window_cycles": 9806328
+        },
+        {
+          "loop": 1,
+          "entry": 5,
+          "old_flips": 247,
+          "new_flips": 247,
+          "old_window_cycles": 9808868,
+          "new_window_cycles": 9808868
+        },
+        {
+          "loop": 1,
+          "entry": 6,
+          "old_flips": 168,
+          "new_flips": 168,
+          "old_window_cycles": 9807465,
+          "new_window_cycles": 9807465
+        },
+        {
+          "loop": 2,
+          "entry": 0,
+          "old_flips": 354,
+          "new_flips": 354,
+          "old_window_cycles": 9808339,
+          "new_window_cycles": 9808339
+        },
+        {
+          "loop": 2,
+          "entry": 1,
+          "old_flips": 199,
+          "new_flips": 199,
+          "old_window_cycles": 9807608,
+          "new_window_cycles": 9807608
+        },
+        {
+          "loop": 2,
+          "entry": 2,
+          "old_flips": 99,
+          "new_flips": 99,
+          "old_window_cycles": 9808726,
+          "new_window_cycles": 9808726
+        },
+        {
+          "loop": 2,
+          "entry": 3,
+          "old_flips": 333,
+          "new_flips": 333,
+          "old_window_cycles": 9808369,
+          "new_window_cycles": 9808369
+        },
+        {
+          "loop": 2,
+          "entry": 4,
+          "old_flips": 313,
+          "new_flips": 313,
+          "old_window_cycles": 9806328,
+          "new_window_cycles": 9806328
+        },
+        {
+          "loop": 2,
+          "entry": 5,
+          "old_flips": 247,
+          "new_flips": 247,
+          "old_window_cycles": 9808868,
+          "new_window_cycles": 9808868
+        },
+        {
+          "loop": 2,
+          "entry": 6,
+          "old_flips": 168,
+          "new_flips": 168,
+          "old_window_cycles": 9807465,
+          "new_window_cycles": 9807465
+        }
+      ]
+    }
+  ]
+}

@@ -16,7 +16,9 @@
   "pixel_match": true,
   "color_match": true,
   "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
   "path": "examples/torus/torus-hors-render-v2.crt",
   "entry": null,
-  "sha256": "44d67af406ae47432007ec92fe82a0008db8dff0bc9fbf3a751f48e6b707398f"
+  "sha256": "9566466cc69eebc74db1a559bedab355a51e70a208ac772f817bdb5be5e621c6"
 }

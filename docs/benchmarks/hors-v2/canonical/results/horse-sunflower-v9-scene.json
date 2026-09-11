@@ -4,7 +4,7 @@
   "diagnostic_only": true,
   "profile": {
     "cartridge": "horse-sunflower-v9.crt",
-    "sha256": "1012864b28f650cd1626b0f136d475fa064ded684b4cc47cf410abe1fee61acd",
+    "sha256": "bcaafda8c7f4df2e83a0572f1e1da8a5f553f31292d39173fb7fc2d845730e9d",
     "renderer": "yunroll-cart-v9-scene",
     "menu_entry": null,
     "frames": 84,
@@ -16,7 +16,7 @@
       "directory": 24.54,
       "picture_lookup_and_queue_wait": 525.54,
       "recycle_bitmap_and_colors": 32015.04,
-      "fetch": 23228.58,
+      "fetch": 23228.62,
       "apply_colors": 10884.25,
       "draw_lines": 127267.6,
       "bookkeeping": 11,
@@ -24,12 +24,12 @@
       "publish_commit": 40.75,
       "advance_and_final_hold": 48.63
     },
-    "mean_render_cycles": 193945.54,
+    "mean_render_cycles": 193945.57,
     "worst_render_cycles": 282090,
-    "mean_total_cycles": 229086.01,
+    "mean_total_cycles": 229086.05,
     "worst_total_cycles": 282220,
-    "measured_seconds": 19.531351497287993,
-    "frames_per_second": 4.300777650315891,
+    "measured_seconds": 19.531354542206632,
+    "frames_per_second": 4.300776979828956,
     "samples": [
       {
         "frame": 3,
@@ -156,7 +156,7 @@
           "directory": 23,
           "picture_lookup_and_queue_wait": 116,
           "recycle_bitmap_and_colors": 38,
-          "fetch": 32926,
+          "fetch": 32929,
           "apply_colors": 14301,
           "draw_lines": 177889,
           "bookkeeping": 11,
@@ -164,8 +164,8 @@
           "publish_commit": 41,
           "advance_and_final_hold": 47
         },
-        "render_cycles": 225293,
-        "total_cycles": 225423
+        "render_cycles": 225296,
+        "total_cycles": 225426
       },
       {
         "frame": 11,
@@ -1475,7 +1475,7 @@
       "2": 58,
       "0": 64
     },
-    "average_fps": 4.328984408646102,
+    "average_fps": 4.328678868271697,
     "min_frame_cycles": 6085,
     "max_frame_cycles": 396096,
     "pixel_match": true,
@@ -1484,7 +1484,7 @@
     "border_match": true,
     "border_color": 0,
     "display_interval_cycles": [
-      1297702,
+      1297703,
       235466,
       255528,
       275185,

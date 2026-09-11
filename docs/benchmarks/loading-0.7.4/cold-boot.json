@@ -1,0 +1,350 @@
+{
+  "passed": true,
+  "version": "0.7.4",
+  "vice": "Linux VICE 3.10",
+  "cycles_per_case": 2000000,
+  "cartridges": 20,
+  "cold_boot_cases": 40,
+  "results": [
+    {
+      "path": "examples/blender_falling_cubes/falling_cubes_c64-hors-render-v2.crt",
+      "sha256": "90cfde9f370f9f583d43d4941d89f4b02c9b8ebbdf47cf2fbb41fe43f1b24a33",
+      "name": "FALLING CUBES",
+      "hardware_id": 32,
+      "chip_packets": 7,
+      "reset_address": 57344,
+      "internal_name": "66616c6c696e67206375626573000000",
+      "eapi_present": true,
+      "warp_modes": [
+        "off",
+        "on"
+      ],
+      "no_jam": true,
+      "startup_pixels_match": true,
+      "crt_unchanged": true
+    },
+    {
+      "path": "examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v2.crt",
+      "sha256": "81eaec40808c6f845d60cfc32130c770b21116188805d0c5c4241ba736eb1313",
+      "name": "FALLING CUBES",
+      "hardware_id": 32,
+      "chip_packets": 7,
+      "reset_address": 57344,
+      "internal_name": "66616c6c696e67206375626573000000",
+      "eapi_present": true,
+      "warp_modes": [
+        "off",
+        "on"
+      ],
+      "no_jam": true,
+      "startup_pixels_match": true,
+      "crt_unchanged": true
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all-ram.crt",
+      "sha256": "420a6f0c39721346c9585c45bff10f688d48b9bc08f81f9eb1f4fe2f41b79055",
+      "name": "C643D 0.7.4 HORS V2 RAM",
+      "hardware_id": 32,
+      "chip_packets": 120,
+      "reset_address": 57344,
+      "internal_name": "633634336420302e372e3420686f7273",
+      "eapi_present": true,
+      "warp_modes": [
+        "off",
+        "on"
+      ],
+      "no_jam": true,
+      "startup_pixels_match": true,
+      "crt_unchanged": true
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all.crt",
+      "sha256": "c1c540b938070702e40add7c2803148386c1c9499efa1f9bb1e0d7bb35c53575",
+      "name": "C643D 0.7.4 HORS V2 FPS",
+      "hardware_id": 32,
+      "chip_packets": 120,
+      "reset_address": 57344,
+      "internal_name": "633634336420302e372e3420686f7273",
+      "eapi_present": true,
+      "warp_modes": [
+        "off",
+        "on"
+      ],
+      "no_jam": true,
+      "startup_pixels_match": true,
+      "crt_unchanged": true
+    },
+    {
+      "path": "examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt",
+      "sha256": "71640c3499b88a63b1616c75127cc01f7de32ce26d27f7fd0aac53e071d5523e",
+      "name": "DEMO CART 2 0.7.4 HORS V2",
+      "hardware_id": 32,
+      "chip_packets": 94,
+      "reset_address": 57344,
+      "internal_name": "64656d6f2063617274203220302e372e",
+      "eapi_present": true,
+      "warp_modes": [
+        "off",
+        "on"
+      ],
+      "no_jam": true,
+      "startup_pixels_match": true,
+      "crt_unchanged": true
+    },
+    {
+      "path": "examples/cart_hifi/c643d-hifi-v0.7.4-hors-render-v2.crt",
+      "sha256": "523754d8f6b22555846aa8d09107195bca74f7d3d0d315b94e1abaf790b3bad1",
+      "name": "C643D 0.7.4 HIFI HORS V2",
+      "hardware_id": 32,
+      "chip_packets": 84,
+      "reset_address": 57344,
+      "internal_name": "633634336420302e372e342068696669",
+      "eapi_present": true,
+      "warp_modes": [
+        "off",
+        "on"
+      ],
+      "no_jam": true,
+      "startup_pixels_match": true,
+      "crt_unchanged": true
+    },
+    {
+      "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-ram.crt",
+      "sha256": "8279cbae4a40e5b792c2cc29b72553c24c281e20497f13f7d928d19904bf239c",
+      "name": "HORSE AND SUNFLOWER",
+      "hardware_id": 32,
+      "chip_packets": 34,
+      "reset_address": 57344,
+      "internal_name": "686f72736520616e642073756e666c6f",
+      "eapi_present": true,
+      "warp_modes": [
+        "off",
+        "on"
+      ],
+      "no_jam": true,
+      "startup_pixels_match": true,
+      "crt_unchanged": true
+    },
+    {
+      "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt",
+      "sha256": "07296e94bfa28ad11b313e82f14df1dce19687f4559448616686633724f9f5af",
+      "name": "HORSE AND SUNFLOWER",
+      "hardware_id": 32,
+      "chip_packets": 34,
+      "reset_address": 57344,
+      "internal_name": "686f72736520616e642073756e666c6f",
+      "eapi_present": true,
+      "warp_modes": [
+        "off",
+        "on"
+      ],
+      "no_jam": true,
+      "startup_pixels_match": true,
+      "crt_unchanged": true
+    },
+    {
+      "path": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt",
+      "sha256": "f5c6741033d1e632c9568aeca7ac5604079b3599ac26857766fcdc9604e35cb2",
+      "name": "DON'T LOSE YOUR MARBLES",
+      "hardware_id": 32,
+      "chip_packets": 120,
+      "reset_address": 57344,
+      "internal_name": "646f6e2774206c6f736520796f757220",
+      "eapi_present": true,
+      "warp_modes": [
+        "off",
+        "on"
+      ],
+      "no_jam": true,
+      "startup_pixels_match": true,
+      "crt_unchanged": true
+    },
+    {
+      "path": "examples/color_combo_test/color-combo-test.crt",
+      "sha256": "017827ffddb8c42e592214b4b7ef9bfdd74370dd6daf9ddd7281d8f7c55ce6e9",
+      "name": "COLOR COMBO TEST",
+      "hardware_id": 32,
+      "chip_packets": 32,
+      "reset_address": 57344,
+      "internal_name": "636f6c6f7220636f6d626f2074657374",
+      "eapi_present": true,
+      "warp_modes": [
+        "off",
+        "on"
+      ],
+      "no_jam": true,
+      "startup_pixels_match": true,
+      "crt_unchanged": true
+    },
+    {
+      "path": "examples/cube/cube-hors-render-v2.crt",
+      "sha256": "a6deddc384b83ff23bef1c92f55969a9b76bc8cf2c94d9a667663f9dd86791be",
+      "name": "CUBE",
+      "hardware_id": 32,
+      "chip_packets": 10,
+      "reset_address": 57344,
+      "internal_name": "63756265000000000000000000000000",
+      "eapi_present": true,
+      "warp_modes": [
+        "off",
+        "on"
+      ],
+      "no_jam": true,
+      "startup_pixels_match": true,
+      "crt_unchanged": true
+    },
+    {
+      "path": "examples/hifi_showcase/horse_head_hifi-hors-render-v2.crt",
+      "sha256": "4dcc852c10e9d821ae39e23ef45f6126dbde3ce2a0bb3639c7450c88d8c23215",
+      "name": "HORSE HEAD HIFI",
+      "hardware_id": 32,
+      "chip_packets": 36,
+      "reset_address": 57344,
+      "internal_name": "686f7273652068656164206869666900",
+      "eapi_present": true,
+      "warp_modes": [
+        "off",
+        "on"
+      ],
+      "no_jam": true,
+      "startup_pixels_match": true,
+      "crt_unchanged": true
+    },
+    {
+      "path": "examples/horse_head/horse_head-hors-render-v2.crt",
+      "sha256": "b0129a2f94ab4bd7494140842886f9053fb75691c993cf922a9c2725005a09b6",
+      "name": "HORSE HEAD",
+      "hardware_id": 32,
+      "chip_packets": 28,
+      "reset_address": 57344,
+      "internal_name": "686f7273652068656164000000000000",
+      "eapi_present": true,
+      "warp_modes": [
+        "off",
+        "on"
+      ],
+      "no_jam": true,
+      "startup_pixels_match": true,
+      "crt_unchanged": true
+    },
+    {
+      "path": "examples/space_horse_crawl/space_horse_crawl_color-hors-render-v2.crt",
+      "sha256": "2404aab1d9974120a4ffec2493e50d34bbfe4c1df3e5afe2789697370e83d7f1",
+      "name": "SPACE HORSE CRAWL",
+      "hardware_id": 32,
+      "chip_packets": 20,
+      "reset_address": 57344,
+      "internal_name": "737061636520686f7273652063726177",
+      "eapi_present": true,
+      "warp_modes": [
+        "off",
+        "on"
+      ],
+      "no_jam": true,
+      "startup_pixels_match": true,
+      "crt_unchanged": true
+    },
+    {
+      "path": "examples/space_horse_spin/space_horse_spin_color-hors-render-v2.crt",
+      "sha256": "f176e1a1cd946469a939edb266184229d5f2573942b670b31b85a482d8114630",
+      "name": "SPACE HORSE",
+      "hardware_id": 32,
+      "chip_packets": 43,
+      "reset_address": 57344,
+      "internal_name": "737061636520686f7273650000000000",
+      "eapi_present": true,
+      "warp_modes": [
+        "off",
+        "on"
+      ],
+      "no_jam": true,
+      "startup_pixels_match": true,
+      "crt_unchanged": true
+    },
+    {
+      "path": "examples/sphere/sphere-hors-render-v2.crt",
+      "sha256": "9f4ff8bc6f8624a33b2772e41edaa68ee4d099dd39a3d31b8044651e001c8f79",
+      "name": "SPHERE",
+      "hardware_id": 32,
+      "chip_packets": 24,
+      "reset_address": 57344,
+      "internal_name": "73706865726500000000000000000000",
+      "eapi_present": true,
+      "warp_modes": [
+        "off",
+        "on"
+      ],
+      "no_jam": true,
+      "startup_pixels_match": true,
+      "crt_unchanged": true
+    },
+    {
+      "path": "examples/sunflower_torus/sunflower_torus-hors-render-v2.crt",
+      "sha256": "2ed899c9746952723eeeb4de555bc9661ec0acb60d1b6faf1acf10a798ac60f1",
+      "name": "SUNFLOWER TORUS",
+      "hardware_id": 32,
+      "chip_packets": 31,
+      "reset_address": 57344,
+      "internal_name": "73756e666c6f77657220746f72757300",
+      "eapi_present": true,
+      "warp_modes": [
+        "off",
+        "on"
+      ],
+      "no_jam": true,
+      "startup_pixels_match": true,
+      "crt_unchanged": true
+    },
+    {
+      "path": "examples/sunflower_torus/sunflower_torus_color-hors-render-v2.crt",
+      "sha256": "84622658e266e7c003c02820a9e54d3e27fbc14083ba0017e871ffd894981ca6",
+      "name": "SUNFLOWER TORUS",
+      "hardware_id": 32,
+      "chip_packets": 36,
+      "reset_address": 57344,
+      "internal_name": "73756e666c6f77657220746f72757300",
+      "eapi_present": true,
+      "warp_modes": [
+        "off",
+        "on"
+      ],
+      "no_jam": true,
+      "startup_pixels_match": true,
+      "crt_unchanged": true
+    },
+    {
+      "path": "examples/torus/torus-hors-render-v2.crt",
+      "sha256": "9566466cc69eebc74db1a559bedab355a51e70a208ac772f817bdb5be5e621c6",
+      "name": "TORUS",
+      "hardware_id": 32,
+      "chip_packets": 41,
+      "reset_address": 57344,
+      "internal_name": "746f7275730000000000000000000000",
+      "eapi_present": true,
+      "warp_modes": [
+        "off",
+        "on"
+      ],
+      "no_jam": true,
+      "startup_pixels_match": true,
+      "crt_unchanged": true
+    },
+    {
+      "path": "examples/torus_dense/torus_dense-hors-render-v2.crt",
+      "sha256": "3f58e08599c662a5bcbdd96a0d6798ba7e0bf142c0055189e758fbbf0dc26923",
+      "name": "TORUS",
+      "hardware_id": 32,
+      "chip_packets": 44,
+      "reset_address": 57344,
+      "internal_name": "746f7275730000000000000000000000",
+      "eapi_present": true,
+      "warp_modes": [
+        "off",
+        "on"
+      ],
+      "no_jam": true,
+      "startup_pixels_match": true,
+      "crt_unchanged": true
+    }
+  ]
+}
