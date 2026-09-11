@@ -50,7 +50,8 @@ class ComparisonTests(unittest.TestCase):
             for folder in ('tools','c64','assets','config','examples'): (root/folder).mkdir()
             (root/'VERSION').write_text('0.6.9\n');(root/'.gitignore').write_text('/comparison-tests/\n')
             (root/'assets/input.json').write_text('original')
-            for rel in (*comparison.SHOWCASE_REPORTS,comparison.SHOWCASE_CART):
+            for rel in (*comparison.SHOWCASE_REPORTS,comparison.SHOWCASE_CART,comparison.SANDE_REPORT,
+                        'examples/demos_sande/recipe.json'):
                 path=root/rel;path.parent.mkdir(parents=True,exist_ok=True)
                 path.write_bytes(b'original showcase evidence')
             before=comparison.fingerprints(root)[1]

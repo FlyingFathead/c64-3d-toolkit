@@ -4,7 +4,18 @@
 
 # c64-3d-toolkit
 
-**Version 0.7.5: optional legacy cartridge generation.**
+> **ATTENTION:** [FlyingFathead/c64-3d-toolkit](https://github.com/FlyingFathead/c64-3d-toolkit/) is the one and only official, original source for `c64-3d-toolkit`. Steer clear of other sources or repositories claiming to be the official project.
+
+**Version 0.7.6: Sande's Pretzel and TAC-2 demo/test kit.**
+
+New models by **Sande**, with reproducible builds, a separate
+[Sande performance comparison](docs/PERFORMANCE_COMPARISON.md#sandes-models),
+and optional cursor/joystick rotation and F-key palette controls.
+See [Sande's demo kit](examples/demos_sande/README.md).
+Defaults are black and white. Separate HORS-V2 `-color` carts use Sande's
+original MTL materials: [Pretzel](examples/demos_sande/sande_pretzel-hors-render-v2-color.crt)
+and [TAC-2](examples/demos_sande/sande_tac2-hors-render-v2-color.crt).
+
 By default, generated carts include genuine EasyAPI and PETSCII names, checked metadata
 placement, and stronger reset initialization. The shared VICE launcher disables
 CRT write-back and offers temporary default settings for troubleshooting.
@@ -13,14 +24,14 @@ It warns before conversion, omits EAPI/name metadata and keeps the original scen
 layout. Standard generation remains the default; generated legacy names end in
 `-legacy`. See [legacy compatibility mode](docs/CARTRIDGE_LOADING.md#legacy-compatibility-mode).
 
-See [0.7.5 release notes and installation](docs/RELEASE_0.7.5.md) and
+See [0.7.6 release notes and installation](docs/RELEASE_0.7.6.md) and
 [cartridge loading](docs/CARTRIDGE_LOADING.md).
 
 The independent colours and F3/F4/F7/F8 controls introduced in 0.7.3 remain
 available in Demo Cart 1, Demo Cart 2.0 and [COLOR COMBO TEST](examples/color_combo_test/README.md).
 See [output colours](docs/OUTPUT_COLORS.md) for options and inversion examples.
 
-## 👀💦👉 LOOKI LOOKI! `hors-render-v2` just dropped — UP TO 35.5% FASTER!
+## 👀💦👉 `hors-render-v2` out now (Sep 2026) and is UP TO 35.5% FASTER!
 
 **Since version 0.7.2, `hors-render-v2` is the default.** Prebuilt cartridges,
 measured multi-pass optimization, and a complete release build/check pipeline.
@@ -34,22 +45,24 @@ v2 retains that drawing kernel. See the [complete comparison](docs/PERFORMANCE_C
 and [showcase results](docs/HORS_RENDER_V2_RESULTS.md) for the actual workloads.
 These are emulated C64 timings, not host wall-clock speed or the HUD counter.
 
-**Performance tables:** [Original twelve animations](docs/PERFORMANCE_COMPARISON.md#best-method-for-each-animation) · [Demo Cart 2.0: all seven scenes](docs/PERFORMANCE_COMPARISON.md#demo-cart-20)
+**Performance tables:** [Original twelve animations](docs/PERFORMANCE_COMPARISON.md#best-method-for-each-animation) · [Demo Cart 2.0: all seven scenes](docs/PERFORMANCE_COMPARISON.md#demo-cart-20) · [Sande test kit](docs/PERFORMANCE_COMPARISON.md#sandes-models)
 
 ### Grab a cartridge and hit SPACE
 
 | Prebuilt | What is inside |
 | --- | --- |
+| [Sande's Pretzel](examples/demos_sande/sande_pretzel-hors-render-v2-interactive.crt) | Sande's 1,552-vertex knot; left/right rotation and F-key colours |
+| [Sande's TAC-2](examples/demos_sande/sande_tac2-hors-render-v2-interactive.crt) | Sande's joystick model; the same interactive controls |
 | [Color Combo Test](examples/color_combo_test/color-combo-test.crt) | Four colour pairs, ten seconds each, automatic looping, F3/F4 cycling |
-| [Twelve-demo cart — FPS](examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all.crt) | The original twelve animations, menu styles, PLAY ALL, HiFi mode and colour controls |
-| [Twelve-demo cart — RAM](examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all-ram.crt) | Same material and colour controls, smaller drawing kernels |
+| [Twelve-demo cart — FPS](examples/cart_demos/c643d-demo-v0.7.6-hors-render-v2-all.crt) | The original twelve animations, menu styles, PLAY ALL, HiFi mode and colour controls |
+| [Twelve-demo cart — RAM](examples/cart_demos/c643d-demo-v0.7.6-hors-render-v2-all-ram.crt) | Same material and colour controls, smaller drawing kernels |
 | [Demo Cart 2.0](examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt) | Colour cube, colour torus, twist tunnel, ribbon dance, orbital cubes, wave lattice and Ripples Lite |
-| [HiFi reel](examples/cart_hifi/c643d-hifi-v0.7.5-hors-render-v2.crt) | Horse & Sunflower followed by two HiFi spinners |
+| [HiFi reel](examples/cart_hifi/c643d-hifi-v0.7.6-hors-render-v2.crt) | Horse & Sunflower followed by two HiFi spinners |
 | [Marbles](examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt) | All 640 authored samples, original 16 FPS target, native intro and ending |
 | [Horse & Sunflower](examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt) | Authored scene, with a separate RAM build in the same folder |
 
 ```bash
-python c643d.py run-cart examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all.crt
+python c643d.py run-cart examples/cart_demos/c643d-demo-v0.7.6-hors-render-v2-all.crt
 python c643d.py run-cart examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt
 ```
 
@@ -130,7 +143,7 @@ renderer throughput improvement.
 ```bash
 cd path/to/c64-3d-toolkit
 JOBS=3 VICE_DATA=/usr/local/share/vice bash COMPILE-RELEASE.sh \
-  --workspace ../c64-074-release-build
+  --workspace ../c64-076-release-build
 ```
 
 This makes an isolated source copy, builds every stable example, validates
@@ -140,19 +153,19 @@ Add `--install` to install only after all checks pass. Add `--baseline-zip PATH`
 to also generate a patch ZIP. The pipeline never commits, tags or pushes. Root `VERSION` supplies the build
 identity; an alternate-version VICE test guards startup, menu and thanks labels.
 
-To install the supplied 0.7.5 release, save the ZIP one level above your
+To install the supplied 0.7.6 release, save the ZIP one level above your
 checkout and extract it from that parent directory:
 
 ```bash
-unzip -o c64-3d-toolkit-v0.7.5.zip
+unzip -o c64-3d-toolkit-v0.7.6.zip
 cd c64-3d-toolkit
 python tools/compare_renderers.py --check
 ```
 
 The ZIP contains its own `c64-3d-toolkit/` directory. Current cartridges are
 already rebuilt. Previous versioned menu/HiFi carts remain as historical
-references; use the 0.7.5 links above for the updated loader. See the
-[release guide](docs/RELEASE_0.7.5.md) for checks and rebuilds.
+references; use the 0.7.6 links above for the updated builds. See the
+[release guide](docs/RELEASE_0.7.6.md) for checks and rebuilds.
 
 ## Earlier renderers remain available
 
@@ -169,3 +182,13 @@ stay intact. The resident `yunroll` method still narrowly wins the canonical
 CUBE workload; the chart retains that result. See [pipeline versioning](docs/PIPELINE_VERSIONING.md).
 
 [Changelog](CHANGELOG.md) · [Documentation index](docs/README.md)
+
+---
+
+# Credits
+
+`c64-3d-toolkit` by [FlyingFathead](https://github.com/FlyingFathead/)
+Thanks: ChaosWhisperer
+Additional 3D models supplied by: **Sande**
+
+A big thank you to everyone who has contributed, collaborated and given ideas for the project.

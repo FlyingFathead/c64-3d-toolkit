@@ -1,0 +1,122 @@
+{
+  "cartridge": "color-combo-test.crt",
+  "sha256": "fc93e0d1e816a2e4b0f5278048c91a093cd8ae8e978abd0478a992a6f66e50bf",
+  "automatic_start": true,
+  "loops_verified": 2,
+  "order": [
+    0,
+    1,
+    2,
+    3,
+    0,
+    1,
+    2,
+    3
+  ],
+  "measured_timer_seconds": [
+    9.954576918704733,
+    9.954847916463672,
+    9.955032641527819,
+    9.953029085062846,
+    9.954998132449902,
+    9.954847916463672,
+    9.955032641527819,
+    9.953029085062846
+  ],
+  "foreground_wrap": true,
+  "background_wrap": true,
+  "both_shift_keys": true,
+  "held_key_debounce": true,
+  "all_three_screen_buffers": true,
+  "border_follows_background": true,
+  "reset_on_next_entry": true,
+  "menu_exit": true,
+  "keyboard_checks": 96,
+  "method": "PAL VICE; real automatic playback; F3/F4 sampled keyboard rows injected by monitor",
+  "picture_checks": [
+    {
+      "cartridge": "color-combo-test.crt",
+      "menu_entry": 0,
+      "verified_frames": 67,
+      "orientations": 32,
+      "bitmap_bytes_checked": 514560,
+      "color_bytes_checked": 64320,
+      "slots": {
+        "1": 23,
+        "2": 22,
+        "0": 22
+      },
+      "average_fps": 17.69788087134068,
+      "min_frame_cycles": 42220,
+      "max_frame_cycles": 66524,
+      "pixel_match": true,
+      "color_match": true,
+      "reused_samples": 0,
+      "border_match": true,
+      "border_color": 1
+    },
+    {
+      "cartridge": "color-combo-test.crt",
+      "menu_entry": 1,
+      "verified_frames": 67,
+      "orientations": 32,
+      "bitmap_bytes_checked": 514560,
+      "color_bytes_checked": 64320,
+      "slots": {
+        "1": 23,
+        "2": 22,
+        "0": 22
+      },
+      "average_fps": 17.186388508078423,
+      "min_frame_cycles": 41685,
+      "max_frame_cycles": 68382,
+      "pixel_match": true,
+      "color_match": true,
+      "reused_samples": 0,
+      "border_match": true,
+      "border_color": 6
+    },
+    {
+      "cartridge": "color-combo-test.crt",
+      "menu_entry": 2,
+      "verified_frames": 51,
+      "orientations": 24,
+      "bitmap_bytes_checked": 391680,
+      "color_bytes_checked": 48960,
+      "slots": {
+        "1": 17,
+        "2": 17,
+        "0": 17
+      },
+      "average_fps": 17.527753592996643,
+      "min_frame_cycles": 39040,
+      "max_frame_cycles": 58318,
+      "pixel_match": true,
+      "color_match": true,
+      "reused_samples": 0,
+      "border_match": true,
+      "border_color": 0
+    },
+    {
+      "cartridge": "color-combo-test.crt",
+      "menu_entry": 3,
+      "verified_frames": 75,
+      "orientations": 36,
+      "bitmap_bytes_checked": 576000,
+      "color_bytes_checked": 72000,
+      "slots": {
+        "1": 25,
+        "2": 25,
+        "0": 25
+      },
+      "average_fps": 30.283629149866854,
+      "min_frame_cycles": 20009,
+      "max_frame_cycles": 37474,
+      "pixel_match": true,
+      "color_match": true,
+      "reused_samples": 0,
+      "border_match": true,
+      "border_color": 4
+    }
+  ]
+}

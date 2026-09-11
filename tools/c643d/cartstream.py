@@ -155,6 +155,8 @@ def cmd_build_cart_v2(a):
     tass=cli.resolve_executable(a.tass,'tass');cartconv=cli.require_cartconv(a.cartconv,verbose=True)
     if not tass or not cartconv:return 2
     mesh,label,axis,vis,ztol,angle,color,source,percell,anim,tilt,travel,rise=cli.build_mesh(a)
+    if getattr(a,'interactive_cart',False) and anim != 'spin':
+        raise ValueError('--interactive-cart requires a looping spin, including for named presets')
     n=a.frames if a.frames is not None else 192
     if not 1<=n<=MAX_FRAMES:raise ValueError('V2 requires 1..255 frames')
     height=cli._viewport_height(a)
@@ -166,9 +168,26 @@ def cmd_build_cart_v2(a):
     frames,_=build_frames(mesh,n,cam,spin_axis=axis,visibility_mode=vis,z_tolerance=ztol,feature_angle=angle,animation=anim,animation_tilt=tilt,animation_travel=travel,animation_rise=rise,enable_source_colors=percell,fallback_color=c64_color_index(color),background_color=c64_color_index(getattr(a,"background_color",0)),height=height,max_visible_runs=65535)
     outdir=Path(a.output_dir).resolve() if a.output_dir else cli.BUILD
     stem=a.output or label.lower().replace(' ','_')+'-'+getattr(a,'public_renderer',a.renderer)+('-ram' if getattr(a,'prefer','fps') == 'ram' else '')
+    if not a.output and getattr(a,'interactive_cart',False):stem+='-interactive'
     if not a.output and getattr(a,'legacy_cart',False):stem+='-legacy'
     if not cli._check_overwrite([outdir/f'{stem}.crt',outdir/f'{stem}.lbl',outdir/f'{stem}-manifest.json'],a.overwrite_policy):return 2
-    crt,_=assemble_cartridge(cli.ROOT,frames,mesh,tass=tass,cartconv=cartconv,outdir=outdir,stem=stem,legacy_cart=getattr(a,"legacy_cart",False),tass_args=a.tass_args,color_index=c64_color_index(color),background_color=c64_color_index(getattr(a,"background_color",0)),border_color=c64_color_index(getattr(a,"border_color",0)),colors=percell,renderer=a.renderer,prefer=getattr(a,"prefer","fps"))
+    crt,manifest=assemble_cartridge(cli.ROOT,frames,mesh,tass=tass,cartconv=cartconv,outdir=outdir,stem=stem,legacy_cart=getattr(a,"legacy_cart",False),tass_args=a.tass_args,color_index=c64_color_index(color),background_color=c64_color_index(getattr(a,"background_color",0)),border_color=c64_color_index(getattr(a,"border_color",0)),colors=percell,renderer=a.renderer,prefer=getattr(a,"prefer","fps"))
+    if getattr(a,'interactive_cart',False):
+        manifest['interactive_cart']=dict(rotation='cursor left/right and joystick ports 1/2 left/right',
+            direction_persists=True,foreground_key='F3',background_key='F4 / SHIFT+F3',
+            border_key='F8 / SHIFT+F7 toggles black or follow background',reset_key='F2 / SHIFT+F1',monochrome=True,
+            border_follows_background_default=True,
+            independent_border_key='CTRL+F7',
+            reset_flash_pal_ticks=5,
+            cycle_key='F5',slower_key='F6 / SHIFT+F5',faster_key='F7',
+            cycle=dict(default_enabled=False,sequence='alternate foreground then background/border',
+                       palette='sequential, skipping identical foreground/background',
+                       default_pal_ticks=50,rate_pal_ticks=[200,100,50,25,12,6,3,1]),
+            border_follows_background_key=True,
+            polling='once per produced sample; ordinary renderer is unchanged')
+        if a.text_overlay:
+            manifest['interactive_overlay']=dict(text='INTERACTIVE',x=232,y=0,width=88,height=8,font='HUD 5x7')
+        (outdir/f'{stem}-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     if a.run:
         vice=cli.resolve_executable(a.vice,'vice')
         if not vice:raise ValueError('VICE not found')

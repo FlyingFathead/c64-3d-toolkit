@@ -1,0 +1,185 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "cartridge": "sande_pretzel-hors-render-v2-interactive.crt",
+      "sha256": "e2ee51c07d6b86f437470722105feb60cf4c4387e19bc9d52cd34f8c0cdacde6",
+      "reverse": {
+        "verified_frames": 450,
+        "all_orientations": true,
+        "forward_reverse_wrap": true,
+        "repeated_direction_changes": true,
+        "pixel_match": true,
+        "color_match": true,
+        "interactive_label_match": true
+      },
+      "keys": {
+        "checks": 193,
+        "palette_wrap": true,
+        "f8_black_or_follow": true,
+        "f4_links_background_and_border": true,
+        "f3_preserves_border": true,
+        "ctrl_f7_custom_border": true,
+        "f5_toggle": true,
+        "f6_f7_rate_limits": true,
+        "f2_white_flash": true,
+        "key_debounce": true,
+        "reset_defaults": true,
+        "both_shift_keys": true,
+        "both_joystick_ports": true,
+        "opposing_directions_ignored": true,
+        "input_method": "VICE monitor injects CIA read results at labelled scan boundaries; host key mappings and physical controllers are not tested"
+      },
+      "cycle": {
+        "passed": true,
+        "cases": [
+          {
+            "interval_pal_ticks": 200,
+            "border_mode": "follow",
+            "updates": 36,
+            "min_tick_gap": 200,
+            "max_tick_gap": 202,
+            "alternation": true,
+            "palette_wrap": true,
+            "distinct_colours": true,
+            "stopped_frames_checked": 100
+          },
+          {
+            "interval_pal_ticks": 50,
+            "border_mode": "follow",
+            "updates": 36,
+            "min_tick_gap": 50,
+            "max_tick_gap": 53,
+            "alternation": true,
+            "palette_wrap": true,
+            "distinct_colours": true,
+            "stopped_frames_checked": 100
+          },
+          {
+            "interval_pal_ticks": 1,
+            "border_mode": "follow",
+            "updates": 36,
+            "min_tick_gap": 2,
+            "max_tick_gap": 5,
+            "alternation": true,
+            "palette_wrap": true,
+            "distinct_colours": true,
+            "stopped_frames_checked": 100
+          },
+          {
+            "interval_pal_ticks": 1,
+            "border_mode": "black",
+            "updates": 36,
+            "min_tick_gap": 2,
+            "max_tick_gap": 5,
+            "alternation": true,
+            "palette_wrap": true,
+            "distinct_colours": true,
+            "stopped_frames_checked": 100
+          },
+          {
+            "interval_pal_ticks": 1,
+            "border_mode": "custom",
+            "updates": 36,
+            "min_tick_gap": 2,
+            "max_tick_gap": 5,
+            "alternation": true,
+            "palette_wrap": true,
+            "distinct_colours": true,
+            "stopped_frames_checked": 100
+          }
+        ]
+      }
+    },
+    {
+      "cartridge": "sande_tac2-hors-render-v2-interactive.crt",
+      "sha256": "900dd2e03f3f639e87f079cc9140cba746f0689a42b36d18500be9768ab9ff94",
+      "reverse": {
+        "verified_frames": 450,
+        "all_orientations": true,
+        "forward_reverse_wrap": true,
+        "repeated_direction_changes": true,
+        "pixel_match": true,
+        "color_match": true,
+        "interactive_label_match": true
+      },
+      "keys": {
+        "checks": 193,
+        "palette_wrap": true,
+        "f8_black_or_follow": true,
+        "f4_links_background_and_border": true,
+        "f3_preserves_border": true,
+        "ctrl_f7_custom_border": true,
+        "f5_toggle": true,
+        "f6_f7_rate_limits": true,
+        "f2_white_flash": true,
+        "key_debounce": true,
+        "reset_defaults": true,
+        "both_shift_keys": true,
+        "both_joystick_ports": true,
+        "opposing_directions_ignored": true,
+        "input_method": "VICE monitor injects CIA read results at labelled scan boundaries; host key mappings and physical controllers are not tested"
+      },
+      "cycle": {
+        "passed": true,
+        "cases": [
+          {
+            "interval_pal_ticks": 200,
+            "border_mode": "follow",
+            "updates": 36,
+            "min_tick_gap": 200,
+            "max_tick_gap": 202,
+            "alternation": true,
+            "palette_wrap": true,
+            "distinct_colours": true,
+            "stopped_frames_checked": 100
+          },
+          {
+            "interval_pal_ticks": 50,
+            "border_mode": "follow",
+            "updates": 36,
+            "min_tick_gap": 50,
+            "max_tick_gap": 52,
+            "alternation": true,
+            "palette_wrap": true,
+            "distinct_colours": true,
+            "stopped_frames_checked": 100
+          },
+          {
+            "interval_pal_ticks": 1,
+            "border_mode": "follow",
+            "updates": 36,
+            "min_tick_gap": 2,
+            "max_tick_gap": 4,
+            "alternation": true,
+            "palette_wrap": true,
+            "distinct_colours": true,
+            "stopped_frames_checked": 100
+          },
+          {
+            "interval_pal_ticks": 1,
+            "border_mode": "black",
+            "updates": 36,
+            "min_tick_gap": 2,
+            "max_tick_gap": 4,
+            "alternation": true,
+            "palette_wrap": true,
+            "distinct_colours": true,
+            "stopped_frames_checked": 100
+          },
+          {
+            "interval_pal_ticks": 1,
+            "border_mode": "custom",
+            "updates": 36,
+            "min_tick_gap": 2,
+            "max_tick_gap": 4,
+            "alternation": true,
+            "palette_wrap": true,
+            "distinct_colours": true,
+            "stopped_frames_checked": 100
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "crt_bytes": 377632,
+  "entries": [
+    {
+      "name": "SANDE TAC2",
+      "runtime_prg_bytes": 21777,
+      "resident_frame_data_bytes": 0,
+      "rom_frame_bytes": 287688
+    }
+  ]
+}

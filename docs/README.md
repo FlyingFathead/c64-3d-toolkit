@@ -1,6 +1,8 @@
-# Documentation — 0.7.5
+# Documentation — 0.7.6
 
-- [0.7.5 release notes, installation and rebuilds](RELEASE_0.7.5.md).
+- [0.7.6 release notes, installation and Sande test kit](RELEASE_0.7.6.md).
+- [Sande models, controls and rebuilds](../examples/demos_sande/README.md).
+- [Historical 0.7.5 release notes, installation and rebuilds](RELEASE_0.7.5.md).
 - [Legacy A/B checks and GitHub baseline validation](LEGACY_CART_VALIDATION.md).
 - [Historical 0.7.4 cartridge loading release](RELEASE_0.7.4.md).
 - [Cartridge loading, EasyFlash layout and VICE troubleshooting](CARTRIDGE_LOADING.md).

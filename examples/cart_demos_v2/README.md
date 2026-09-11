@@ -1,6 +1,6 @@
 # Cart Demos V2 — hors-render-v2
 
-**Toolkit 0.7.5 · stable hors-render-v2 prebuilt examples.**
+**Toolkit 0.7.6 · stable hors-render-v2 prebuilt examples.**
 
 | Cartridge | Samples | Colours |
 | --- | ---: | --- |
@@ -26,6 +26,6 @@ Cross Swell and Liquid Floor are optional source loops under `scenes/`; rebuild 
 python3 tools/build_demo_cart_v2.py --renderer hors-render-v2
 ```
 
-**[Demo Cart 2.0 performance: v1 vs v2, all seven scenes](../../docs/PERFORMANCE_COMPARISON.md#demo-cart-20)** · [Release build and loading](../../docs/RELEASE_0.7.5.md)
+**[Demo Cart 2.0 performance: v1 vs v2, all seven scenes](../../docs/PERFORMANCE_COMPARISON.md#demo-cart-20)** · [Release build and loading](../../docs/RELEASE_0.7.6.md)
 
 Old preview binaries are in prior release ZIPs or `../c64-3d-toolkit-history/pre-hors-v2/` relative to the repository root.

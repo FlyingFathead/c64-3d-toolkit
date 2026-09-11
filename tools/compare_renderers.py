@@ -25,6 +25,10 @@ METHODS += [('hors-render-v2','fps'),('hors-render-v2','ram')]
 
 SHOWCASE_REPORTS=tuple(f'docs/benchmarks/hors-v2/showcase/{variant}/play-all.json' for variant in ('v1','v2'))
 SHOWCASE_CART='examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt'
+SANDE_REPORT='docs/benchmarks/sande/summary.json'
+SANDE_METHODS_REPORT='docs/benchmarks/sande/methods.json'
+SANDE_COLOR_REPORT='docs/benchmarks/sande/summary-color.json'
+SANDE_COLOR_METHODS_REPORT='docs/benchmarks/sande/methods-color.json'
 
 def fingerprints(root):
     files={}
@@ -41,6 +45,14 @@ def fingerprints(root):
     files['VERSION']=hashlib.sha256((root/'VERSION').read_bytes()).hexdigest()
     for rel in (*SHOWCASE_REPORTS,SHOWCASE_CART):
         files[rel]=hashlib.sha256((root/rel).read_bytes()).hexdigest()
+    for path in sorted((root/'examples/demos_sande').iterdir()):
+        if path.suffix in ('.obj','.mtl','.crt') or path.name=='recipe.json':
+            files[path.relative_to(root).as_posix()]=hashlib.sha256(path.read_bytes()).hexdigest()
+    files[SANDE_REPORT]=hashlib.sha256((root/SANDE_REPORT).read_bytes()).hexdigest()
+    if (root/SANDE_METHODS_REPORT).exists():
+        files[SANDE_METHODS_REPORT]=hashlib.sha256((root/SANDE_METHODS_REPORT).read_bytes()).hexdigest()
+    for rel in (SANDE_COLOR_REPORT, SANDE_COLOR_METHODS_REPORT):
+        if (root/rel).exists():files[rel]=hashlib.sha256((root/rel).read_bytes()).hexdigest()
     return files,hashlib.sha256(json.dumps(files,sort_keys=True).encode()).hexdigest()
 
 
@@ -228,7 +240,19 @@ def menu_worker(method,pref,loops):
     crt=OUT/(name+'.crt')
     if not crt.exists():
         try:cartuniform.build(a,sources=SOURCES)
-        except UnsupportedResident as error:
+        except (UnsupportedResident, ValueError) as error:
+            # Only a single custom-model experiment may record a known stream
+            # capacity limit as N/A. Coding/verification errors still fail.
+            capacity = ('staging buffer', 'per-slot cache', 'frame arena',
+                        'capacity exceeded', 'exceed EasyFlash capacity', 'stream pool exhausted', 'frame-data chips',
+                        '8 KiB bank', '8-bit (maximum 255 each)')
+            if not isinstance(error, UnsupportedResident) and not (
+                    (BASE/'menu-input.json').exists() and len(SOURCES)==1 and
+                    any(text in str(error) for text in capacity)):
+                raise
+            if not isinstance(error, UnsupportedResident):
+                (REPORT/(name+'-unsupported.json')).write_text(json.dumps(
+                    [dict(name=SOURCES[0].name, reason=str(error))],indent=2)+'\n')
             (REPORT/(name+'-play-all.json')).write_text(json.dumps(dict(renderer=METHOD,mode='normal PLAY ALL ONLY',exhibition=False,seconds_setting=10,loops=loops,entries=[],unsupported=True,reason=str(error)),indent=2)+'\n')
             (REPORT/(name+'-sizes.json')).write_text(json.dumps(dict(crt_bytes=0,entries=[]))+'\n')
             print(name,'N/A:',error,flush=True);return
@@ -367,7 +391,7 @@ def chart(a,provenance):
     dataset=a.workspace/'menu-input.json'
     input_note=('All menu builds use one frozen custom/current-registry dataset, SHA-256 `'+hashlib.sha256(dataset.read_bytes()).hexdigest()+'`. Every method receives the same pictures, colours, HUD and sample order.' if dataset.exists() else 'All menu builds use the exact released V4 vector reference (`assets/v4-menu-vector-reference.json.gz`), including colours, HUD and animation sample order. Native method-specific lossless encoding is retained.')
     lines=['# Renderer performance comparison','',
-        'Canonical lookup table for comparing methods and toolkit releases. **ONLY use normal PLAY ALL for comparative FPS. F5 is an exhibition mode and MUST NOT be used for benchmarking.**','',
+        'Canonical lookup table for comparing methods and toolkit releases. **Historical method matrices use normal PLAY ALL. F5 is an exhibition mode and MUST NOT be used for benchmarking.** The separately labelled Sande standalone tests measure ordinary object playback and interactive idle cost; compare results within each protocol.','',
         'Measured on PAL VICE 3.10, 985,248 cycles/s, default machine settings, sound disabled, seed 1; 64tass 1.59.3120. This is emulated C64 time, not host wall time or the HUD FPS counter. Physical C64 and NTSC are not measured.','',
         f'Each cell is actual display flips / elapsed emulated time across {a.loops} normal PLAY ALL visits. Every visit uses the unchanged 10-second setting. Observation starts on the first timer-count IRQ and ends at automatic-next: 499 PAL refresh intervals (about 9.955 s). The first visible picture is outside that window. Rates are rounded to two decimals; **bold** marks the highest displayed-frame count among FPS-preferred methods for that animation, including ties. Tiny timer-phase differences are not ranked as wins.','',
         '## Best method for each animation','',
@@ -377,6 +401,12 @@ def chart(a,provenance):
         legacy=(results['yunroll-cart-v9'][name]['display_flips']/results['yunroll-cart-v8'][name]['display_flips']-1)*100
         lines.append(f"| {name} | {oracles[name][0]} | {', '.join(short(k) for k in win)} | {results[win[0]][name]['display_fps']:.2f} | {legacy:+.2f}% | {(new/old-1)*100:+.2f}% |")
     lines+=showcase_section(Path(__file__).resolve().parents[1])
+    from run_sande_perfs import comparison_section
+    lines+=comparison_section(Path(__file__).resolve().parents[1])
+    lines+=comparison_section(Path(__file__).resolve().parents[1], source_colors=True)
+    from run_sande_methods import comparison_section as sande_methods_section
+    lines+=sande_methods_section(Path(__file__).resolve().parents[1])
+    lines+=sande_methods_section(Path(__file__).resolve().parents[1], source_colors=True)
     sizes={}
     for key in results:
         raw=json.loads((a.workspace/'results'/(key+'-sizes.json')).read_text());sizes[key]={e['name']:e for e in raw['entries']}
@@ -459,6 +489,12 @@ def main():
     p.add_argument('--_worker',help=argparse.SUPPRESS)
     a=p.parse_args()
     if a.check:
+        from run_sande_perfs import comparison_section
+        comparison_section(repo)
+        comparison_section(repo, source_colors=True)
+        from run_sande_methods import comparison_section as sande_methods_section
+        sande_methods_section(repo)
+        sande_methods_section(repo, source_colors=True)
         _,sha=fingerprints(repo);path=repo/'docs/PERFORMANCE_COMPARISON.md'
         if not path.exists() or f'comparison-input-sha256: {sha}' not in path.read_text():p.error('comparison chart missing or stale; --check only validates, it does not regenerate. Run the full comparison with --vice-data PATH in a fresh --workspace, then copy its PERFORMANCE_COMPARISON.md into docs/. See docs/PERFORMANCE_COMPARISON.md for commands.')
         reference=re.search(r'comparison-reference-sha256: ([0-9a-f]{64})',path.read_text())

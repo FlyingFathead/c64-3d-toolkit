@@ -1,6 +1,6 @@
 # Cart Horse And Sunflower — hors-render-v2
 
-**Toolkit 0.7.5 · stable hors-render-v2 prebuilt examples.**
+**Toolkit 0.7.6 · stable hors-render-v2 prebuilt examples.**
 
 | Cartridge | Samples | Colours |
 | --- | ---: | --- |
@@ -17,6 +17,6 @@ Press SPACE when an identification screen is shown. Companion labels and manifes
 python3 tools/build_hors_v2_examples.py --only cart_horse_and_sunflower
 ```
 
-[Full performance comparison](../../docs/PERFORMANCE_COMPARISON.md) · [Release build and loading](../../docs/RELEASE_0.7.5.md)
+[Full performance comparison](../../docs/PERFORMANCE_COMPARISON.md) · [Release build and loading](../../docs/RELEASE_0.7.6.md)
 
 Old preview binaries are in prior release ZIPs or `../c64-3d-toolkit-history/pre-hors-v2/` relative to the repository root.

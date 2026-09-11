@@ -138,3 +138,13 @@ Run the dedicated key/idle scanner verifier after rebuilding:
 python tools/verify_demo_colors.py examples/cart_demos/c643d-demo-v0.7.3-hors-render-v2-all.crt \
   --vice x64sc --vice-data /usr/local/share/vice --report build/demo-colors.json
 ```
+
+## Standalone interactive Sande controls (0.7.6)
+
+The separately built `--interactive-cart` spin path uses its own controls:
+F2 flashes white then resets; F3 changes foreground; F4 changes background;
+F5 toggles alternating palette cycling; F6/F7 slow/speed the cycle; F8
+toggles a persistent black border or background-follow mode. Ctrl+F7 cycles
+a custom border. The border
+follows by default. These bindings apply to the interactive standalone
+carts. See [Sande controls](../examples/demos_sande/README.md#interactive-controls).

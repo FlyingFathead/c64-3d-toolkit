@@ -48,6 +48,32 @@ for showcase_variant in v1 v2; do
   cp -- "$results_dir/showcase/$showcase_variant/play-all.json" \
     "docs/benchmarks/hors-v2/showcase/$showcase_variant/play-all.json"
 done
+run_check sande "$python_bin" tools/run_sande_perfs.py \
+  --workspace "$results_dir/sande" --jobs "$jobs" \
+  --tass "$tass_bin" --cartconv "$cartconv_bin" --vice "$vice_real" \
+  --vice-data "$vice_data"
+mkdir -p docs/benchmarks/sande
+cp -- "$results_dir/sande/summary.json" docs/benchmarks/sande/summary.json
+run_check sande-methods "$python_bin" tools/run_sande_methods.py \
+  --workspace "$results_dir/sande-methods" --skip-build --jobs "$jobs" \
+  --tass "$tass_bin" --cartconv "$cartconv_bin" --vice "$vice_bin" --vice-data "$vice_data"
+cp -- "$results_dir/sande-methods/methods.json" docs/benchmarks/sande/methods.json
+run_check sande-controls "$python_bin" tools/verify_sande_controls.py \
+  --out "$results_dir/sande-controls" --vice "$vice_bin" --vice-data "$vice_data"
+cp -- "$results_dir/sande-controls/summary.json" docs/benchmarks/sande/controls.json
+run_check sande-colors-build "$python_bin" tools/build_sande_examples.py --source-colors \
+  --tass "$tass_bin" --cartconv "$cartconv_bin"
+run_check sande-colors "$python_bin" tools/verify_sande_colors.py \
+  --out "$results_dir/sande-colors" --vice "$vice_bin" --vice-data "$vice_data"
+cp -- "$results_dir/sande-colors/summary.json" docs/benchmarks/sande/colors.json
+run_check sande-color-perfs "$python_bin" tools/run_sande_perfs.py --source-colors \
+  --workspace "$results_dir/sande-color-perfs" --jobs "$jobs" \
+  --tass "$tass_bin" --cartconv "$cartconv_bin" --vice "$vice_real" --vice-data "$vice_data"
+cp -- "$results_dir/sande-color-perfs/summary-color.json" docs/benchmarks/sande/summary-color.json
+run_check sande-color-methods "$python_bin" tools/run_sande_methods.py --source-colors \
+  --workspace "$results_dir/sande-color-methods" --skip-build --jobs "$jobs" \
+  --tass "$tass_bin" --cartconv "$cartconv_bin" --vice "$vice_bin" --vice-data "$vice_data"
+cp -- "$results_dir/sande-color-methods/methods-color.json" docs/benchmarks/sande/methods-color.json
 run_check canonical "$python_bin" tools/compare_renderers.py \
   --workspace "$results_dir/canonical" --workers "$jobs" \
   --tass "$tass_bin" --cartconv "$cartconv_bin" --vice "$vice_bin" \

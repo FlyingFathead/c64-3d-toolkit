@@ -1,0 +1,58 @@
+{
+  "format": "c643d-sande-recipe-v1",
+  "author": "Sande",
+  "description": "Sande's separate contributed demo set; original geometry and material definitions preserved.",
+  "build_arguments": [
+    "--frames",
+    "192",
+    "--obj-up",
+    "y",
+    "--spin-axis",
+    "y",
+    "--animation",
+    "spin",
+    "--visibility",
+    "auto",
+    "--camera",
+    "110",
+    "--focal",
+    "180",
+    "--margin",
+    "4",
+    "--max-fit-scale",
+    "1.4",
+    "--background-color",
+    "black",
+    "--border-color",
+    "black",
+    "--text-overlay",
+    "--viewport-height",
+    "192",
+    "--no-rastertime-profiler",
+    "--v2-draw-gap",
+    "6",
+    "--v2-batch-budget",
+    "2048",
+    "--no-color",
+    "--color",
+    "white"
+  ],
+  "models": {
+    "sande_pretzel": {
+      "title": "Sande's Pretzel",
+      "topology": {
+        "vertices": 1552,
+        "edges": 3104,
+        "faces": 1552
+      }
+    },
+    "sande_tac2": {
+      "title": "Sande's TAC-2 joystick",
+      "topology": {
+        "vertices": 178,
+        "edges": 344,
+        "faces": 174
+      }
+    }
+  }
+}

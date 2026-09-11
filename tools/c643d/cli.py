@@ -613,6 +613,17 @@ def print_stats(mesh:Mesh,label:str,renderer:str,scale:float,stats:dict,hud:str,
 
 def cmd_build(a):
     from .renderer_names import implementation, public_name
+    if getattr(a, 'interactive_cart', False):
+        if a.renderer != 'hors-render-v2' or a.blend or a.scene:
+            raise ValueError('--interactive-cart requires the standalone hors-render-v2 CRT renderer; PRG renderers and authored scenes are unsupported')
+        if a.animation not in (None, 'spin'):
+            raise ValueError('--interactive-cart requires a looping spin animation')
+        if a.output and Path(a.output).suffix:
+            if Path(a.output).suffix.lower() != '.crt':
+                raise ValueError('--interactive-cart output must be a .crt file or an extensionless basename')
+            a.output = a.output[:-4]
+        # Interactive colour changes apply uniformly to all three screen buffers.
+        a.ignore_colors = True
     a.public_renderer = public_name(a.renderer)
     a.renderer = implementation(a.renderer)
     print('fps locking: not set')
@@ -631,6 +642,10 @@ def cmd_build(a):
         from .cartstream import cmd_build_cart_v2
         if a.public_renderer == 'hors-render-v2':
             from .hors_v2_stable import cmd_build_object
+            if getattr(a, 'interactive_cart', False):
+                from .sande_controls import enabled
+                with enabled(border=c64_color_index(a.border_color), text_overlay=a.text_overlay):
+                    return cmd_build_object(a)
             return cmd_build_object(a)
         return cmd_build_cart_v2(a)
     if getattr(a,'legacy_cart',False):
@@ -1221,6 +1236,7 @@ def make_parser(settings):
     b=sub.add_parser('build',help='compile geometry and assemble a hors-render-v2 CRT by default'); common(b)
     b.add_argument('--renderer',choices=('hors-render-v2', 'hors-render-v2-scene', 'hors-render-v2-beta1', 'hors-render-v2-beta1-scene', 'hors-render-v1', 'hors-render-v1-scene', *RENDERERS, 'yunroll-cart-v2', 'yunroll-cart-v3', 'yunroll-cart-v4', 'yunroll-cart-v4-scene', 'yunroll-cart-v5', 'yunroll-cart-v5-scene', 'yunroll-cart-v6', 'yunroll-cart-v6-scene', 'yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10', 'yunroll-cart-v7-scene', 'yunroll-cart-v8-scene', 'yunroll-cart-v9-scene', 'yunroll-cart-v10-scene'),default='hors-render-v2',help='default hors-render-v2 CRT; v1 and v2-beta1 remain explicit historical choices; step/bytechunk/yunroll=PRG; yunroll-cart-v2 through v10=streamed EasyFlash CRT')
     b.add_argument('--prefer',choices=('fps','ram'),default='fps',help='V7/V8: prioritize FPS (default) or smaller Y drawing kernels; geometry and pacing stay the same')
+    b.add_argument('--interactive-cart',action='store_true',help='standalone hors-render-v2 CRT spins only: cursor/joystick 1/2 direction and F3/F4/F7/F8 monochrome colours; separate runtime')
     b.add_argument('--frames',type=int,help='precomputed legacy animation frames/orientations (default 48; not used by --blend)')
     b.add_argument('--ending',action='store_true',help='finite scene, credits and ghost-in-BASIC epilogue; requires --intro')
     b.add_argument('--intro',action='store_true',help='play the native Marbles intro before a v4-scene stream')

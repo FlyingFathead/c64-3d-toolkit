@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.7.6: Sande demo and performance test kit
+
+- Show `INTERACTIVE` at the top right using the HUD font. F3 changes foreground; F4 changes background with a following border by default. F5 toggles alternating sequential palette cycling, F6/F7 adjust speed, F8 locks/unlocks a solid-black border, Ctrl+F7 cycles a custom border, and F2 flashes white briefly before restoring defaults. Benchmark idle, default-rate and fastest-rate cycling.
+- Keep the bw defaults and add separate HORS-V2 `-color` carts for both Sande models using their original MTL materials. Reproduce with `tools/build_sande_examples.py --source-colors`; include material/picture validation in the Sande and release checks.
+- Benchmark both bw and material-colour versions across the full historical renderer matrix and standalone v1/v2 FPS/RAM variants; include high/average/low FPS for each set on the main performance page.
+- Credit Sande for the contributed Pretzel and TAC-2 joystick models on the main page and in the separate `examples/demos_sande` set.
+- Rename both OBJ/MTL pairs consistently, including their OBJ object names and material-library references. Preserve source topology and material definitions.
+- Add reproducible 192-orientation white-on-black standalone carts, plus separately named interactive v2 carts with persistent left/right rotation direction and the colour controls documented above.
+- Expose `build --interactive-cart` for standalone HORS-V2 spin CRTs; reject PRG outputs, incompatible renderers and authored scenes.
+- Add a Sande v1/v2 FPS/RAM benchmark with full producer-picture and actual-display verification, matching source hashes and a shared PAL observation window.
+- Run all 19 historical method/preference combinations for each registered model, retain capacity failures as N/A, and provide `RUN-SANDE-CHECKS.sh` for a shareable log bundle. Preserve per-entry startup allowance and add between-loop screen allowance to the benchmark timeout budget.
+- Include Sande results in the generated performance comparison and its freshness checks, and integrate the set into current-example rebuilds and release checks.
+- Rebuild current cartridges and refresh release identities and performance evidence for 0.7.6.
+- Add the official-source notice, September 2026 HORS-V2 heading and requested project credits to the main README.
+
 ## 0.7.5 (2026-09-11): optional legacy cartridge generation
 
 - Add explicit `--legacy-cart` compatibility output for objects, scenes, demo menus, HiFi, Demo Cart 2, colour tests and cartridge smoke tests. Standard generation remains the default; no automatic fallback occurs.

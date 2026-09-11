@@ -49,6 +49,13 @@ def main():
     if not a.only or 'cart_hifi' in a.only:
         import build_hifi_cart
         build_hifi_cart.main(['--renderer','hors-render-v2','--tass',a.tass,'--cartconv',a.cartconv]+(['--legacy-cart'] if a.legacy_cart else []))
+    if not a.only or 'demos_sande' in a.only:
+        from build_sande_examples import build as build_sande
+        for interactive in (False, True):
+            build_sande(tass=a.tass, cartconv=a.cartconv,
+                        legacy_cart=a.legacy_cart, interactive=interactive)
+        build_sande(tass=a.tass, cartconv=a.cartconv,
+                    legacy_cart=a.legacy_cart, source_colors=True)
     (ROOT/'build/hors-v2-example-build.json').write_text(json.dumps(outputs,indent=2)+'\n')
 
 

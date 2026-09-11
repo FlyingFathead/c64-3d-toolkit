@@ -1,0 +1,10 @@
+{
+  "renderer": "yunroll-cart",
+  "mode": "normal PLAY ALL ONLY",
+  "exhibition": false,
+  "seconds_setting": 10,
+  "loops": 3,
+  "entries": [],
+  "unsupported": true,
+  "reason": "No complete demo fits this resident implementation"
+}

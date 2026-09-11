@@ -1,6 +1,6 @@
-# Examples: hors-render-v2 / toolkit 0.7.5
+# Examples: hors-render-v2 / toolkit 0.7.6
 
-All 20 current cartridges are rebuilt for 0.7.5 with the new loader, real EAPI
+All 26 current cartridges are built for 0.7.6 with the new loader, real EAPI
 and PETSCII name metadata. The 0.7.3 colour controls remain available in Demo
 Cart 1, Demo Cart 2.0 and [COLOR COMBO TEST](color_combo_test/README.md).
 Older versioned menu and HiFi CRTs remain unchanged as historical references;
@@ -10,6 +10,7 @@ All current prebuilt links use **hors-render-v2**. Historical versioned menu and
 
 | Folder | Stable cartridges |
 | --- | ---: |
+| [demos_sande](demos_sande/README.md) | 6 |
 | [color_combo_test](color_combo_test/README.md) | 1 |
 | [blender_falling_cubes](blender_falling_cubes/README.md) | 2 |
 | [cart_demos](cart_demos/README.md) | 2 |
@@ -27,6 +28,6 @@ All current prebuilt links use **hors-render-v2**. Historical versioned menu and
 | [torus](torus/README.md) | 1 |
 | [torus_dense](torus_dense/README.md) | 1 |
 
-Sources remain in the Blender and autotune folders. Use [COMPILE-RELEASE.sh](../docs/RELEASE_0.7.5.md#rebuild) to rebuild and verify the complete release.
+Sources remain in the Blender and autotune folders. Use [COMPILE-RELEASE.sh](../docs/RELEASE_0.7.6.md#rebuild) to rebuild and verify the complete release.
 
 `examples.json` remains the explicit resident regression recipe used by `generate-examples` / `test-examples`. For current v2 artifacts use `tools/build_current_examples.py` or the complete release compiler above.

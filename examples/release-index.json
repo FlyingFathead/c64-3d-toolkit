@@ -1,7 +1,7 @@
 {
-  "version": "0.7.5",
+  "version": "0.7.6",
   "renderer": "hors-render-v2",
-  "cartridges": 20,
+  "cartridges": 26,
   "files": [
     {
       "path": "examples/blender_falling_cubes/falling_cubes_c64-hors-render-v2-manifest.json",
@@ -28,60 +28,60 @@
       "sha256": "8172cbabe0dff01b372e471ff32f44c07e67fac2ee2017fa8dc4068d6d6a058e"
     },
     {
-      "path": "examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all-ram.crt",
-      "sha256": "b33a2d0f2dce9a08aefcad80d3d4832ee3af3ab2567ede93814ee930a2c30680"
+      "path": "examples/cart_demos/c643d-demo-v0.7.6-hors-render-v2-all-ram.crt",
+      "sha256": "9eec26f24400010f77c4989b2c561be0540a28b41afc64548df8e7e9a0389962"
     },
     {
-      "path": "examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all.crt",
-      "sha256": "dfb10bb96c1b83c368a59c849bcd51408a958190f743611c752c85bf29b37b07"
+      "path": "examples/cart_demos/c643d-demo-v0.7.6-hors-render-v2-all.crt",
+      "sha256": "866a414e0378fcb619066b4f58df345ffcab44f1e0482734114d34a9b70d72ae"
     },
     {
-      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.5-hors-render-v2-all-cart-manifest.json",
-      "sha256": "97d4e625ae38d2a63c145166d44b74da23314adce473f42f3f04e7db1f38fbab"
+      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.6-hors-render-v2-all-cart-manifest.json",
+      "sha256": "355f070ed1ed83aef148cc9a74d566861c1c47cdf5c3e7afc3445d597227627e"
     },
     {
-      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.5-hors-render-v2-all-cart-map.txt",
+      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.6-hors-render-v2-all-cart-map.txt",
       "sha256": "e34c31fafd1a7f27a00fe7db98cde1c9456d0d01a5a074f75dfa52f177a58833"
     },
     {
-      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.5-hors-render-v2-all-ram-cart-manifest.json",
-      "sha256": "d3d73bc858f892700e5346d10848cf66bb717eea8bda301c4018e94f181bf06f"
+      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.6-hors-render-v2-all-ram-cart-manifest.json",
+      "sha256": "e44f1b265150d0278b5320f8bbe50145df22235b195e189c3cf4a3183cb93fc8"
     },
     {
-      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.5-hors-render-v2-all-ram-cart-map.txt",
+      "path": "examples/cart_demos/metadata/c643d-demo-v0.7.6-hors-render-v2-all-ram-cart-map.txt",
       "sha256": "e34c31fafd1a7f27a00fe7db98cde1c9456d0d01a5a074f75dfa52f177a58833"
     },
     {
       "path": "examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt",
-      "sha256": "8591b06a3b3c716ca632a0c4b5542144b86a8bc04c0e935ebc87794788283e22"
+      "sha256": "655b8ea3fd1d9c2d450979a393a111dc89f6600529f9a233affcd0cf778173d7"
     },
     {
       "path": "examples/cart_demos_v2/metadata/demo-cart-2-preview-hors-v2-cart-manifest.json",
-      "sha256": "616a7b34bd9a9a3308eb4a2480a874fa5900d7eb3335e3261445c5fcf4a289be"
+      "sha256": "302382b65e2674f691c76da76c3e99facf959d681256042a0a77c1b797b2e3c2"
     },
     {
       "path": "examples/cart_demos_v2/metadata/demo-cart-2-preview-hors-v2-cart-map.txt",
       "sha256": "a4f8510bd0d97bd9055d296b75c52b31f9e075fdfdfa93379c2ea6ef8c9e6f74"
     },
     {
-      "path": "examples/cart_hifi/c643d-hifi-v0.7.5-hors-render-v2.crt",
-      "sha256": "b8e4ef03ec7f4c946e8c066ef150216e605ff7a01562bed08e5899702740e239"
+      "path": "examples/cart_hifi/c643d-hifi-v0.7.6-hors-render-v2.crt",
+      "sha256": "a132fb2c21f4b9cf64c7422d80bebbdf393bfa843bcca1e4d8dc9838dd0c4995"
     },
     {
-      "path": "examples/cart_hifi/metadata/c643d-hifi-v0.7.5-hors-render-v2-cart-manifest.json",
-      "sha256": "7b48cd1904a2b6ed5d6ecbd158666f276fe736bbc6be02d686766cc5d87d9104"
+      "path": "examples/cart_hifi/metadata/c643d-hifi-v0.7.6-hors-render-v2-cart-manifest.json",
+      "sha256": "09967e4dde1b4bc8f791d4315f4ade0312558d4537441d55b7625db3b0d2c6cc"
     },
     {
-      "path": "examples/cart_hifi/metadata/c643d-hifi-v0.7.5-hors-render-v2-cart-map.txt",
+      "path": "examples/cart_hifi/metadata/c643d-hifi-v0.7.6-hors-render-v2-cart-map.txt",
       "sha256": "20bada7b1ed143428b034a257743809288ec052998512c615f29a5801dcf2837"
     },
     {
       "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-manifest.json",
-      "sha256": "217d7d93534a5b27b93462a9535f0fa0174d5cdb733bb34db98825f58b2015a9"
+      "sha256": "a780aea4f0674f5b7536e63cc83ad287f000f59df4b4f4d53c22aaf333e18fcc"
     },
     {
       "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-ram-manifest.json",
-      "sha256": "af961dbee527b5e02e2121c9a823ece5343aa803ea766dcd89d1359983ea294c"
+      "sha256": "7478987a5f91cee9aa541684aa95fd18d140d1ec5926b3e12a9988753fdaf584"
     },
     {
       "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-ram.crt",
@@ -101,11 +101,11 @@
     },
     {
       "path": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes-manifest.json",
-      "sha256": "04b4ba487b390c66ae84b7209a1fc85bf4857cea4d3747b7627d999533eeec62"
+      "sha256": "7303befd4d609085ba376cea9a69cfe60f5523464b053de11eaccc91dd729fb1"
     },
     {
       "path": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt",
-      "sha256": "60e7da267f0381ffbe486df1a2e1bff680f2cb18b57a780972f5400b57396019"
+      "sha256": "b199db12f5c932aeb568bf1ac7bdc46f696dd9e4b8fcab7298806d6d753485f1"
     },
     {
       "path": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.lbl",
@@ -113,11 +113,11 @@
     },
     {
       "path": "examples/color_combo_test/color-combo-test.crt",
-      "sha256": "e6427e7911df99134c572f2abf498d2a3c8ebb5044eb0dd4098237ec8c22ef66"
+      "sha256": "fc93e0d1e816a2e4b0f5278048c91a093cd8ae8e978abd0478a992a6f66e50bf"
     },
     {
       "path": "examples/color_combo_test/metadata/color-combo-test-cart-manifest.json",
-      "sha256": "3788837093d3ae3ac8bd48cb99adc0213bfd5b7b5b642126f326876e597b7efe"
+      "sha256": "75178e9f8c3c0d8774efdefcac44797cdbde768e9dc6bb331b17d9705c6457ee"
     },
     {
       "path": "examples/color_combo_test/metadata/color-combo-test-cart-map.txt",
@@ -134,6 +134,78 @@
     {
       "path": "examples/cube/cube-hors-render-v2.lbl",
       "sha256": "0b32e394fec1c612d0995402b956a67c8ce5c4ac79b8e6ef25861936eb80b502"
+    },
+    {
+      "path": "examples/demos_sande/sande_pretzel-hors-render-v2-color-manifest.json",
+      "sha256": "5b10be49e803cb8ed8056768bfe7cd7ae427a10a59d0935424a4202c57e36e25"
+    },
+    {
+      "path": "examples/demos_sande/sande_pretzel-hors-render-v2-color.crt",
+      "sha256": "b53b071240b63e1b59241f3074218bb56332059f5b67b095e2d960a54d0fc8b6"
+    },
+    {
+      "path": "examples/demos_sande/sande_pretzel-hors-render-v2-color.lbl",
+      "sha256": "fc28a4ead350436953c46fce469c553ec00d3f96d6389a2a92cea58208cfda18"
+    },
+    {
+      "path": "examples/demos_sande/sande_pretzel-hors-render-v2-interactive-manifest.json",
+      "sha256": "82dd22e7d64e79c9e7e1595030fa71fc0e39959eed1b4ba177dc60b17f9f5831"
+    },
+    {
+      "path": "examples/demos_sande/sande_pretzel-hors-render-v2-interactive.crt",
+      "sha256": "e2ee51c07d6b86f437470722105feb60cf4c4387e19bc9d52cd34f8c0cdacde6"
+    },
+    {
+      "path": "examples/demos_sande/sande_pretzel-hors-render-v2-interactive.lbl",
+      "sha256": "fc1d1001f85cd944af678a7157e0c79b4c541b87de732df69f78d158e9b825d4"
+    },
+    {
+      "path": "examples/demos_sande/sande_pretzel-hors-render-v2-manifest.json",
+      "sha256": "f6d919c664f218aa702324983dac68ed9a3c3427a87906bbf56d05e63425e938"
+    },
+    {
+      "path": "examples/demos_sande/sande_pretzel-hors-render-v2.crt",
+      "sha256": "ae0634a8aadb928dc4d3a9326d52b9d7b68c9d4a3327d9868c8eeaf163a49385"
+    },
+    {
+      "path": "examples/demos_sande/sande_pretzel-hors-render-v2.lbl",
+      "sha256": "fc28a4ead350436953c46fce469c553ec00d3f96d6389a2a92cea58208cfda18"
+    },
+    {
+      "path": "examples/demos_sande/sande_tac2-hors-render-v2-color-manifest.json",
+      "sha256": "379c18f6dd8cac9fd25c6e8a74ebaa2b823eaf96aa41b4b498ac56604a981576"
+    },
+    {
+      "path": "examples/demos_sande/sande_tac2-hors-render-v2-color.crt",
+      "sha256": "99f7f82de654529f687a4cc49942d5f7108d4730184c67697d6eb864247cba27"
+    },
+    {
+      "path": "examples/demos_sande/sande_tac2-hors-render-v2-color.lbl",
+      "sha256": "fa0806d1ac4091d3c8f47151c9f359b9618cf5c24e5e95ac153ca6a442707b41"
+    },
+    {
+      "path": "examples/demos_sande/sande_tac2-hors-render-v2-interactive-manifest.json",
+      "sha256": "ccc331a36ee89525c5f2517cd4e941b892291f805a055356c9434a1f47470ef1"
+    },
+    {
+      "path": "examples/demos_sande/sande_tac2-hors-render-v2-interactive.crt",
+      "sha256": "900dd2e03f3f639e87f079cc9140cba746f0689a42b36d18500be9768ab9ff94"
+    },
+    {
+      "path": "examples/demos_sande/sande_tac2-hors-render-v2-interactive.lbl",
+      "sha256": "cfd48dda233770379e4c9468e5ff3411b1f96c000fc26975ea166f85e010d6f2"
+    },
+    {
+      "path": "examples/demos_sande/sande_tac2-hors-render-v2-manifest.json",
+      "sha256": "450bf858d5917ff8c3cff51287f92734eca2ece9f1db3ea76045b5094854bc6c"
+    },
+    {
+      "path": "examples/demos_sande/sande_tac2-hors-render-v2.crt",
+      "sha256": "ae70cef831c58229f5e52e260c29494487282ba124a26b860c03c685537d6174"
+    },
+    {
+      "path": "examples/demos_sande/sande_tac2-hors-render-v2.lbl",
+      "sha256": "cbc47a0792a8e238f36f7be4dd7d2be8374da2c130033365acd80070622087dc"
     },
     {
       "path": "examples/hifi_showcase/horse_head_hifi-hors-render-v2-manifest.json",

@@ -33,6 +33,14 @@ def expected_frame(f,screen):
         off=lo+(hi<<8);colors[off:off+n]=bytes([value])*n
     return bitmap,colors
 
+def apply_interactive_overlay(bitmap, manifest):
+    """Composite the documented UI separately from the unchanged model oracle."""
+    if manifest.get('interactive_overlay') and manifest.get('text_overlay', True):
+        from c643d.font import bitmap_text
+        assert manifest['interactive_overlay'] == dict(text='INTERACTIVE', x=232, y=0, width=88, height=8, font='HUD 5x7')
+        bitmap[232:320] = bitmap_text('INTERACTIVE')
+    return bitmap
+
 def render_ram(ram,slot):
     from PIL import Image
     im=Image.new('RGB',(320,200));pix=im.load();pal={v[0]:v[1] for v in C64_PALETTE.values()}
@@ -117,6 +125,7 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None,oracle_
             slot_counts[slot]=slot_counts.get(slot,0)+1
             reused += int('v5_reused' in sym and ram[sym['v5_reused']] != 0)
             bm,sc=expected_frame(frames[fi],screen)
+            apply_interactive_overlay(bm, manifest)
             baddr=[0x2000,0x6000,0xe000][slot];saddr=[0x400,0x4400,0xc800][slot]
             for what,want,actual in [('bitmap',bm,ram[baddr:baddr+7680]),('colour',sc,ram[saddr:saddr+960])]:
                 if want!=actual:
@@ -136,6 +145,7 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None,oracle_
         delta=[b-a for a,b in zip(ticks,ticks[1:])];clock=985248
         result=dict(cartridge=crt.name,menu_entry=menu_entry,verified_frames=count,orientations=n,bitmap_bytes_checked=count*7680,color_bytes_checked=count*960,slots=slot_counts,average_fps=clock*(count-1)/(ticks[-1]-ticks[0]),min_frame_cycles=min(delta),max_frame_cycles=max(delta),pixel_match=True,color_match=True,reused_samples=reused)
         if border is not None:result.update(border_match=True,border_color=border)
+        if manifest.get('interactive_overlay'):result['interactive_label_match']=True
         if manifest.get('frame_index_bits')==16:
             result.update(loop_seconds=(ticks[2*n]-ticks[n])/clock if cycles>=2 and not finite else None, target_fps=manifest['target_fps'], hud_match=True, text_overlay=manifest.get('text_overlay',True), frame_index_bits=16)
         if capture and images:

@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "frames": 264,
+  "all_payloads_ROMH": true,
+  "crossed_frame_255": true,
+  "blank_frame_index": 25,
+  "oversize_rejected": "frame block 19204 exceeds 8192-byte staging buffer",
+  "verification": {
+    "cartridge": "beta-boundaries.crt",
+    "menu_entry": null,
+    "verified_frames": 531,
+    "orientations": 264,
+    "bitmap_bytes_checked": 4078080,
+    "color_bytes_checked": 509760,
+    "slots": {
+      "1": 177,
+      "2": 177,
+      "0": 177
+    },
+    "average_fps": 35.502035456657595,
+    "min_frame_cycles": 10579,
+    "max_frame_cycles": 52444,
+    "pixel_match": true,
+    "color_match": true,
+    "reused_samples": 0,
+    "border_match": true,
+    "border_color": 0,
+    "loop_seconds": 7.443853730228328,
+    "target_fps": 50.0,
+    "hud_match": true,
+    "text_overlay": false,
+    "frame_index_bits": 16
+  },
+  "scope": "Synthetic compiler-level edge case; the normal geometry compiler still rejects wholly invisible scene samples."
+}

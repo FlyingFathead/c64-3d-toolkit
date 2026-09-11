@@ -1,0 +1,10 @@
+{
+  "renderer": "yunroll-cart-v3",
+  "mode": "normal PLAY ALL ONLY",
+  "exhibition": false,
+  "seconds_setting": 10,
+  "loops": 3,
+  "entries": [],
+  "unsupported": true,
+  "reason": "frame block 8654 exceeds 8192-byte staging buffer"
+}

@@ -1,6 +1,6 @@
 # Renderer performance comparison
 
-Canonical lookup table for comparing methods and toolkit releases. **ONLY use normal PLAY ALL for comparative FPS. F5 is an exhibition mode and MUST NOT be used for benchmarking.**
+Canonical lookup table for comparing methods and toolkit releases. **Historical method matrices use normal PLAY ALL. F5 is an exhibition mode and MUST NOT be used for benchmarking.** The separately labelled Sande standalone tests measure ordinary object playback and interactive idle cost; compare results within each protocol.
 
 Measured on PAL VICE 3.10, 985,248 cycles/s, default machine settings, sound disabled, seed 1; 64tass 1.59.3120. This is emulated C64 time, not host wall time or the HUD FPS counter. Physical C64 and NTSC are not measured.
 
@@ -44,6 +44,239 @@ All seven entries passed bitmap and colour checks for both methods. Worst interv
 [Demo Cart 2.0 and source scenes](../examples/cart_demos_v2/README.md) · [v1 raw results](benchmarks/hors-v2/showcase/v1/play-all.json) · [v2 raw results](benchmarks/hors-v2/showcase/v2/play-all.json) · [Release and HiFi results](HORS_RENDER_V2_RESULTS.md)
 
 The chart fingerprint includes both reports and the shipped v2 CRT; generation verifies their cartridge hash and matching picture oracles. The release/check runner refreshes the showcase evidence before generating this page.
+
+
+## Sande's Models
+
+Models contributed by **Sande**: **Sande's Pretzel** and **Sande's TAC-2 joystick**. This is a separate workload from the original twelve animations and Demo Cart 2.0.
+
+Each standalone cart uses the complete OBJ topology, white-on-black output, 192 Y-axis orientations, automatic surface visibility, the normal HUD and uncapped playback. V1/V2 and FPS/RAM builds use identical picture oracles. PAL VICE measures actual display-slot changes after each raster IRQ; every observed bitmap, colour matrix and Sande HUD is checked. The initial full-loop warmup is excluded.
+
+| Model | V / E | Renderer | Preference | High FPS | Average FPS | Low FPS | CRT bytes | Frame data ROM bytes |
+| --- | ---: | --- | --- | ---: | ---: | ---: | ---: | ---: |
+| Sande's Pretzel | 1552 / 3104 | hors-render-v1 | fps | 25.82 | 17.30 | 12.53 | 492,544 | 389,676 |
+| Sande's TAC-2 joystick | 178 / 344 | hors-render-v1 | fps | 26.50 | 21.86 | 16.13 | 287,344 | 235,981 |
+| Sande's Pretzel | 1552 / 3104 | hors-render-v1 | ram | 25.82 | 17.30 | 12.53 | 492,544 | 389,676 |
+| Sande's TAC-2 joystick | 178 / 344 | hors-render-v1 | ram | 26.50 | 21.86 | 16.13 | 287,344 | 235,981 |
+| Sande's Pretzel | 1552 / 3104 | hors-render-v2 | fps | 25.71 | 18.00 | 12.53 | 500,752 | 392,010 |
+| Sande's TAC-2 joystick | 178 / 344 | hors-render-v2 | fps | 54.49 | 24.60 | 16.29 | 295,552 | 240,004 |
+| Sande's Pretzel | 1552 / 3104 | hors-render-v2 | ram | 25.71 | 18.00 | 12.53 | 500,752 | 392,010 |
+| Sande's TAC-2 joystick | 178 / 344 | hors-render-v2 | ram | 54.49 | 24.60 | 16.29 | 295,552 | 240,004 |
+
+### Interactive path, no input
+
+The separate interactive v2/FPS builds poll the keyboard and both joystick ports once per produced sample. These rows include the top-right INTERACTIVE label and measure their cost with no control held, using the same source pictures and observation window. The label is checked separately over the model oracle.
+
+| Model | Automatic FPS | Interactive idle FPS | Change |
+| --- | ---: | ---: | ---: |
+| Sande's Pretzel | 18.00 | 17.50 | -2.77% |
+| Sande's TAC-2 joystick | 24.60 | 23.73 | -3.53% |
+
+### Interactive palette cycling
+
+F5 toggles sequential colour changes, alternating foreground and background. F6 slows the rate; F7 speeds it up. F8 toggles a persistent black border or background-follow mode (the default); Ctrl+F7 selects an independent border colour. F2 flashes white briefly and resets. Cycling uses the existing PAL tick counter; palette writes run only on a change event. The fastest setting requests one change per PAL tick but is limited to one event per produced frame.
+
+| Model | Cycle setting | High FPS | Average FPS | Low FPS | Change versus interactive idle |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Sande's Pretzel | Default: about 1 s per change | 26.20 | 17.14 | 10.02 | -2.07% |
+| Sande's Pretzel | Fastest: at most once per produced frame | 20.18 | 13.26 | 10.48 | -24.21% |
+| Sande's TAC-2 joystick | Default: about 1 s per change | 26.48 | 23.30 | 12.37 | -1.79% |
+| Sande's TAC-2 joystick | Fastest: at most once per produced frame | 25.06 | 16.60 | 12.53 | -30.03% |
+
+All cases use 1,504 PAL refresh intervals per observation window (approximately 30.01 seconds). Average FPS is displayed frames divided by emulated elapsed time. High/low are interval extrema, not sustained rates. A difference below one flip per window is within measurement granularity.
+
+**V/E are source-mesh totals, not runtime transformations or a count of visible lines drawn each frame.** Projection and visibility are computed offline; hors-render-v2 draws precomputed bitmap spans. No mesh simplification or orientation reduction is used. These are emulator measurements, not physical-hardware results.
+
+[Sande models, carts and reproduction](../examples/demos_sande/README.md) · [Raw Sande measurements](benchmarks/sande/summary.json)
+
+```bash
+python tools/run_sande_perfs.py --workspace ../c64-sande-perfs --vice-data /usr/local/share/vice
+```
+
+The Sande benchmark is also part of `RUN-CHECKS.sh`. Its checked report, source hashes and shipped cart hashes are verified when this page is generated and by `--check`.
+
+### Standalone material-colour variants
+
+These separate `-color` carts use the original MTL diffuse colours with the same 192 Y-axis orientations, visibility and gap-6 encoding recipe as the bw defaults. Pretzel maps to dark grey; TAC-2 retains red, white and greys. The measurements use the same PAL display-slot and complete-picture checks as the bw table.
+
+| Model | Renderer | Preference | High FPS | Average FPS | Low FPS | CRT bytes | Frame data ROM bytes |
+| --- | --- | --- | ---: | ---: | ---: | ---: | ---: |
+| Sande's Pretzel | hors-render-v1 | fps | 25.82 | 17.30 | 12.53 | 492,544 | 389,676 |
+| Sande's TAC-2 joystick | hors-render-v1 | fps | 28.19 | 16.93 | 12.53 | 328,384 | 270,153 |
+| Sande's Pretzel | hors-render-v1 | ram | 25.82 | 17.30 | 12.53 | 492,544 | 389,676 |
+| Sande's TAC-2 joystick | hors-render-v1 | ram | 28.19 | 16.93 | 12.53 | 328,384 | 270,153 |
+| Sande's Pretzel | hors-render-v2 | fps | 25.71 | 18.00 | 12.53 | 500,752 | 392,010 |
+| Sande's TAC-2 joystick | hors-render-v2 | fps | 28.02 | 18.53 | 15.61 | 336,592 | 274,176 |
+| Sande's Pretzel | hors-render-v2 | ram | 25.71 | 18.00 | 12.53 | 500,752 | 392,010 |
+| Sande's TAC-2 joystick | hors-render-v2 | ram | 28.02 | 18.53 | 15.61 | 336,592 | 274,176 |
+
+Shared colour-test window: 1,504 PAL refresh intervals; high/low are interval extrema, not sustained rates.
+
+[Raw material-colour measurements](benchmarks/sande/summary-color.json)
+
+```bash
+python tools/run_sande_perfs.py --source-colors --workspace ../c64-sande-color-perfs --vice-data /usr/local/share/vice
+```
+
+
+### Sande bw models across renderer methods
+
+This matrix uses the same isolated **normal PLAY ALL** harness as the original renderer comparison: three ten-second visits per model, all 192 orientations, no controls and no FPS cap. Each model gets its own comparison cart so another model cannot consume its cartridge budget. V2 uses the canonical comparison encoder settings (gap 3, batch budget 2048); the standalone carts above use gap 6. Menu/controller cost and encoding settings mean these rates should be compared within this matrix.
+
+`hors-render-v1` is the public name for `yunroll-cart-v10`. N/A is a recorded capacity failure with the original data, never a simplified substitute.
+
+#### Sande's Pretzel
+
+| Method | Preference | High FPS | Average FPS | Low FPS | Frame-table RAM (B) | Frame data ROM (B) |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| step | fps | N/A | N/A | N/A | N/A | N/A |
+| bytechunk | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll-cart | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll-cart-v2 | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll-cart-v3 | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll-cart-v4 | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll-cart-v5 | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll-cart-v6 | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll-cart-v7 | fps | 3.15 | 2.91 | 2.78 | 0 | 504,239 |
+| yunroll-cart-v8 | fps | 17.53 | 10.95 | 9.76 | 0 | 389,676 |
+| yunroll-cart-v9 | fps | 26.26 | 17.38 | 12.53 | 0 | 389,676 |
+| hors-render-v1 (v10) | fps | 26.26 | 17.38 | 12.53 | 0 | 389,676 |
+| yunroll-cart-v7 | ram | 2.96 | 2.71 | 2.64 | 0 | 504,239 |
+| yunroll-cart-v8 | ram | 17.53 | 10.95 | 9.91 | 0 | 389,676 |
+| yunroll-cart-v9 | ram | 25.79 | 17.38 | 12.53 | 0 | 389,676 |
+| hors-render-v1 (v10) | ram | 25.79 | 17.38 | 12.53 | 0 | 389,676 |
+| hors-render-v2 | fps | 26.02 | 17.58 | 12.53 | 0 | 389,676 |
+| hors-render-v2 | ram | 25.74 | 17.48 | 12.53 | 0 | 389,676 |
+
+Recorded capacity limits:
+
+- `step` (fps): resident record count exceeds 255
+- `bytechunk` (fps): resident record count exceeds 255
+- `yunroll` (fps): resident record count exceeds 255
+- `yunroll-cart` (fps): resident record count exceeds 255
+- `yunroll-cart-v2` (fps): frame block 8654 exceeds 8192-byte staging buffer
+- `yunroll-cart-v3` (fps): frame block 8654 exceeds 8192-byte staging buffer
+- `yunroll-cart-v4` (fps): frame block 8654 exceeds 8192-byte staging buffer
+- `yunroll-cart-v5` (fps): uniform demo frames exceed EasyFlash capacity; samples were not reduced
+- `yunroll-cart-v6` (fps): uniform demo frames exceed EasyFlash capacity; samples were not reduced
+
+#### Sande's TAC-2 joystick
+
+| Method | Preference | High FPS | Average FPS | Low FPS | Frame-table RAM (B) | Frame data ROM (B) |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| step | fps | N/A | N/A | N/A | N/A | N/A |
+| bytechunk | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll-cart | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll-cart-v2 | fps | 6.25 | 5.42 | 4.93 | 0 | 315,789 |
+| yunroll-cart-v3 | fps | 7.23 | 6.13 | 5.48 | 0 | 315,789 |
+| yunroll-cart-v4 | fps | 7.24 | 6.23 | 5.49 | 0 | 315,789 |
+| yunroll-cart-v5 | fps | 8.61 | 7.33 | 6.24 | 0 | 253,516 |
+| yunroll-cart-v6 | fps | 8.56 | 7.60 | 7.02 | 0 | 253,516 |
+| yunroll-cart-v7 | fps | 10.32 | 9.04 | 8.16 | 0 | 180,514 |
+| yunroll-cart-v8 | fps | 10.32 | 9.04 | 8.16 | 0 | 180,514 |
+| yunroll-cart-v9 | fps | 10.31 | 9.14 | 8.17 | 0 | 180,514 |
+| hors-render-v1 (v10) | fps | 51.63 | 21.69 | 16.14 | 0 | 235,981 |
+| yunroll-cart-v7 | ram | 10.31 | 8.54 | 7.06 | 0 | 180,514 |
+| yunroll-cart-v8 | ram | 10.31 | 8.54 | 7.06 | 0 | 180,514 |
+| yunroll-cart-v9 | ram | 10.30 | 8.54 | 7.05 | 0 | 180,514 |
+| hors-render-v1 (v10) | ram | 50.32 | 21.63 | 16.17 | 0 | 235,981 |
+| hors-render-v2 | fps | 54.44 | 23.20 | 16.16 | 0 | 235,981 |
+| hors-render-v2 | ram | 50.85 | 23.20 | 16.15 | 0 | 235,981 |
+
+Recorded capacity limits:
+
+- `step` (fps): resident record count exceeds 255
+- `bytechunk` (fps): resident record count exceeds 255
+- `yunroll` (fps): resident record count exceeds 255
+- `yunroll-cart` (fps): resident record count exceeds 255
+
+[Raw historical Sande method results](benchmarks/sande/methods.json)
+
+```bash
+python tools/run_sande_methods.py --workspace ../c64-sande-methods --vice-data /usr/local/share/vice
+```
+
+
+### Sande material colours across renderer methods
+
+This matrix uses the same isolated **normal PLAY ALL** harness as the original renderer comparison: three ten-second visits per model, all 192 orientations, no controls and no FPS cap. Each model gets its own comparison cart so another model cannot consume its cartridge budget. V2 uses the canonical comparison encoder settings (gap 3, batch budget 2048); the standalone carts above use gap 6. Menu/controller cost and encoding settings mean these rates should be compared within this matrix.
+
+`hors-render-v1` is the public name for `yunroll-cart-v10`. N/A is a recorded capacity failure with the original data, never a simplified substitute.
+
+#### Sande's Pretzel
+
+| Method | Preference | High FPS | Average FPS | Low FPS | Frame-table RAM (B) | Frame data ROM (B) |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| step | fps | N/A | N/A | N/A | N/A | N/A |
+| bytechunk | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll-cart | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll-cart-v2 | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll-cart-v3 | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll-cart-v4 | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll-cart-v5 | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll-cart-v6 | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll-cart-v7 | fps | 3.15 | 2.91 | 2.78 | 0 | 504,239 |
+| yunroll-cart-v8 | fps | 17.53 | 10.95 | 9.76 | 0 | 389,676 |
+| yunroll-cart-v9 | fps | 26.26 | 17.38 | 12.53 | 0 | 389,676 |
+| hors-render-v1 (v10) | fps | 26.26 | 17.38 | 12.53 | 0 | 389,676 |
+| yunroll-cart-v7 | ram | 2.96 | 2.71 | 2.64 | 0 | 504,239 |
+| yunroll-cart-v8 | ram | 17.53 | 10.95 | 9.91 | 0 | 389,676 |
+| yunroll-cart-v9 | ram | 25.79 | 17.38 | 12.53 | 0 | 389,676 |
+| hors-render-v1 (v10) | ram | 25.79 | 17.38 | 12.53 | 0 | 389,676 |
+| hors-render-v2 | fps | 26.02 | 17.58 | 12.53 | 0 | 389,676 |
+| hors-render-v2 | ram | 25.74 | 17.48 | 12.53 | 0 | 389,676 |
+
+Recorded capacity limits:
+
+- `step` (fps): resident record count exceeds 255
+- `bytechunk` (fps): resident record count exceeds 255
+- `yunroll` (fps): resident record count exceeds 255
+- `yunroll-cart` (fps): resident record count exceeds 255
+- `yunroll-cart-v2` (fps): frame block 8654 exceeds 8192-byte staging buffer
+- `yunroll-cart-v3` (fps): frame block 8654 exceeds 8192-byte staging buffer
+- `yunroll-cart-v4` (fps): frame block 8654 exceeds 8192-byte staging buffer
+- `yunroll-cart-v5` (fps): uniform demo frames exceed EasyFlash capacity; samples were not reduced
+- `yunroll-cart-v6` (fps): uniform demo frames exceed EasyFlash capacity; samples were not reduced
+
+#### Sande's TAC-2 joystick
+
+| Method | Preference | High FPS | Average FPS | Low FPS | Frame-table RAM (B) | Frame data ROM (B) |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| step | fps | N/A | N/A | N/A | N/A | N/A |
+| bytechunk | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll-cart | fps | N/A | N/A | N/A | N/A | N/A |
+| yunroll-cart-v2 | fps | 5.68 | 4.92 | 4.51 | 0 | 349,961 |
+| yunroll-cart-v3 | fps | 6.34 | 5.52 | 4.96 | 0 | 349,961 |
+| yunroll-cart-v4 | fps | 6.32 | 5.63 | 4.95 | 0 | 349,961 |
+| yunroll-cart-v5 | fps | 8.21 | 6.63 | 5.59 | 0 | 287,688 |
+| yunroll-cart-v6 | fps | 8.54 | 6.93 | 6.12 | 0 | 287,688 |
+| yunroll-cart-v7 | fps | 10.03 | 8.04 | 6.96 | 0 | 214,686 |
+| yunroll-cart-v8 | fps | 10.03 | 8.04 | 6.96 | 0 | 214,686 |
+| yunroll-cart-v9 | fps | 10.44 | 8.14 | 6.96 | 0 | 214,686 |
+| hors-render-v1 (v10) | fps | 27.69 | 16.88 | 12.53 | 0 | 270,153 |
+| yunroll-cart-v7 | ram | 8.64 | 7.63 | 6.97 | 0 | 214,686 |
+| yunroll-cart-v8 | ram | 8.64 | 7.63 | 6.97 | 0 | 214,686 |
+| yunroll-cart-v9 | ram | 8.65 | 7.63 | 6.96 | 0 | 214,686 |
+| hors-render-v1 (v10) | ram | 27.83 | 16.88 | 12.53 | 0 | 270,153 |
+| hors-render-v2 | fps | 50.14 | 17.78 | 15.66 | 0 | 270,153 |
+| hors-render-v2 | ram | 27.29 | 17.78 | 15.84 | 0 | 270,153 |
+
+Recorded capacity limits:
+
+- `step` (fps): resident record count exceeds 255
+- `bytechunk` (fps): resident record count exceeds 255
+- `yunroll` (fps): resident record count exceeds 255
+- `yunroll-cart` (fps): resident record count exceeds 255
+
+[Raw historical Sande method results](benchmarks/sande/methods-color.json)
+
+```bash
+python tools/run_sande_methods.py --source-colors --workspace ../c64-sande-methods --vice-data /usr/local/share/vice
+```
 
 
 ## Per-animation lookup
@@ -446,5 +679,5 @@ Use `--resume` only with the same source/tool fingerprint and options. Logs and 
 
 **Release gate:** run `--check` before publishing. If renderer code, builders, input assets, examples, version or this tester changes, rerun the complete uncapped matrix and replace this chart before tagging. Preserve old method rows; add new generations to the tester and regenerate. Never silently copy old numbers into a changed workload. Capped runs are separate experiments and must not replace this uncapped baseline.
 
-<!-- comparison-input-sha256: 8b9e6203172d5188e19f2fb841821aa37b6921a77e12f200b1701ce3a2ccefd1 -->
-<!-- comparison-source-version: 0.7.5 -->
+<!-- comparison-input-sha256: 791ce546ff425a12c80a7195079d381e6b309273a390a26d15f275bb8136cc73 -->
+<!-- comparison-source-version: 0.7.6 -->

@@ -1,0 +1,10 @@
+{
+  "renderer": "yunroll-cart-v5",
+  "mode": "normal PLAY ALL ONLY",
+  "exhibition": false,
+  "seconds_setting": 10,
+  "loops": 3,
+  "entries": [],
+  "unsupported": true,
+  "reason": "uniform demo frames exceed EasyFlash capacity; samples were not reduced"
+}

@@ -1,0 +1,11 @@
+{
+  "crt_bytes": 697744,
+  "entries": [
+    {
+      "name": "SANDE PRETZEL",
+      "runtime_prg_bytes": 21777,
+      "resident_frame_data_bytes": 0,
+      "rom_frame_bytes": 504239
+    }
+  ]
+}
