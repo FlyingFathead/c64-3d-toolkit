@@ -24,4 +24,4 @@ The independent Linux beta run reproduced the earlier raw measurements and cartr
 
 V2 adds no reserved RAM to the drawing helper. Fixed graphics storage is 27,000 bytes and staging/metadata caches reserve 11,264 bytes. These components are not a total free-RAM figure. ROM and runtime sizes for each historical row are in the full chart.
 
-Reproduce with `JOBS=3 bash COMPILE-RELEASE.sh --workspace ../c64-074-release-build`. Detailed JSON evidence is in `docs/benchmarks/hors-v2/`; full monitor traces remain in the external release workspace.
+Reproduce with `JOBS=3 bash COMPILE-RELEASE.sh --workspace ../c64-075-release-build`. Detailed JSON evidence is in `docs/benchmarks/hors-v2/`; full monitor traces remain in the external release workspace.

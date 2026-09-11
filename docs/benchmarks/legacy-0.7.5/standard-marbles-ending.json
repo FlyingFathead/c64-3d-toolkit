@@ -1,0 +1,22 @@
+{
+  "cartridge": "marbles-hors-render-v2-16fps-force-bytes.crt",
+  "finite_ending": true,
+  "greeting_correction_verified": true,
+  "basic_banner_verified": true,
+  "ghost_message_verified": true,
+  "idle_cursor_verified": true,
+  "seconds_from_reset": {
+    "0-intro_start": 0.5042507064211245,
+    "1-frame_begin": 9.645309607327292,
+    "2-outro_start": 51.14871382636656,
+    "3-greeting_oops": 53.74218673877034,
+    "4-greeting_done": 55.1786118824905,
+    "5-outro_credits_visible": 56.85870156549417,
+    "6-fake_basic_ready": 59.04353523173861,
+    "7-ghost_message_done": 63.31833609405957,
+    "8-ghost_idle": 63.318342183896846,
+    "9-ghost_idle": 64.31584332066647
+  },
+  "scene_seconds": 41.50340421903927,
+  "total_to_ghost_seconds": 63.31833609405957
+}

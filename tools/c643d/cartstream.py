@@ -10,7 +10,7 @@ import hashlib,json,shutil,subprocess
 from .colors import hires_screen_byte, configure_asm_colors
 from pathlib import Path
 from .cartlaunch import run as run_cartridge
-from .cartridge import new_easyflash_image, easyflash_offset, put_easyflash_chip, convert_easyflash, check_easyflash_crt
+from .cartridge import new_easyflash_image, easyflash_offset, put_easyflash_chip, convert_easyflash, check_easyflash_crt, cart_write_method
 from .emit import bytes_lines,emit_hud
 from .pipeline import build_xchunk_tables
 
@@ -71,7 +71,7 @@ def emit_directory(path,directory,*,direct_bytes=False):
     lines += ['.if * > $5000','.error "directory overlaps metadata cache"','.endif']
     path.write_text('\n'.join(lines)+'\n')
 
-def assemble_cartridge(root,frames,mesh,*,tass,cartconv,outdir,stem,tass_args=(),color_index=1,background_color=0,border_color=0,colors=True,renderer="yunroll-cart-v2",optimize=True,prefer="fps",hud=None):
+def assemble_cartridge(root,frames,mesh,*,tass,cartconv,outdir,stem,tass_args=(),color_index=1,background_color=0,border_color=0,colors=True,renderer="yunroll-cart-v2",optimize=True,prefer="fps",hud=None,legacy_cart=False):
     from .renderer_names import implementation
     renderer=implementation(renderer)
     if renderer not in ('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'):raise ValueError('unsupported stream renderer')
@@ -123,12 +123,12 @@ def assemble_cartridge(root,frames,mesh,*,tass,cartconv,outdir,stem,tass_args=()
     padded=bytearray(0x5800 if variant in ("v5", "v6", "v7", "v8", "v9", "v10") else 0x4800);padded[load-0x0800:end-0x0800]=blob[2:]
     for bank in range(3):put_easyflash_chip(image,bank,'roml',bytes(padded[bank*8192:(bank+1)*8192]).ljust(8192,b'\0'))
     boot=work/'boot.bin'
-    subprocess.run([tass,*tass_args,'-D',f'BOOT_PAGES={88 if variant in ("v5", "v6", "v7", "v8", "v9", "v10") else 72}','--nostart','-o',str(boot),str(root/'c64/cart/easyflash-object-boot.asm')],check=True,cwd=root)
+    subprocess.run([tass,*tass_args,'-D',f'BOOT_PAGES={88 if variant in ("v5", "v6", "v7", "v8", "v9", "v10") else 72}','--nostart','-o',str(boot),str(root/'c64/cart'/((f'easyflash-stream-{variant}-boot.asm' if variant in ('v5','v6','v7','v8','v9','v10') else 'easyflash-stream-v2-boot.asm') if legacy_cart else 'easyflash-object-boot.asm'))],check=True,cwd=root)
     put_easyflash_chip(image,0,'romh',boot.read_bytes())
     raw=work/f'{stem}.bin';raw.write_bytes(image)
-    crt=outdir/f'{stem}.crt';convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name=mesh.name.replace('_', ' '),cwd=root)
-    check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=root)
-    manifest=dict(format='c643d-easyflash-stream-v2',version=1,renderer=renderer,name=mesh.name,frames=len(frames),vertices=len(mesh.vertices),edges=len(mesh.edges),faces=len(mesh.faces),colors=colors,screen_color=hires_screen_byte(color_index,background_color),foreground_color=color_index,background_color=background_color,border_color=border_color,directory_ram_bytes=len(frames)*7,frame_buffer_bytes=FRAME_CAP,metadata_cache_bytes=3*META_CAP,rom_frame_bytes=sum(d['bytes'] for d in directory if 'reference_frame' not in d),highest_bank=max(d['bank'] for d in directory),run_count_bits=16,frame_data=directory)
+    crt=outdir/f'{stem}.crt';convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name=f'C643D STREAM {variant.upper()}' if legacy_cart else mesh.name.replace('_', ' '),cwd=root,legacy_cart=legacy_cart)
+    check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=root,legacy_cart=legacy_cart)
+    manifest=dict(cart_write_method=cart_write_method(legacy_cart),format='c643d-easyflash-stream-v2',version=1,renderer=renderer,name=mesh.name,frames=len(frames),vertices=len(mesh.vertices),edges=len(mesh.edges),faces=len(mesh.faces),colors=colors,screen_color=hires_screen_byte(color_index,background_color),foreground_color=color_index,background_color=background_color,border_color=border_color,directory_ram_bytes=len(frames)*7,frame_buffer_bytes=FRAME_CAP,metadata_cache_bytes=3*META_CAP,rom_frame_bytes=sum(d['bytes'] for d in directory if 'reference_frame' not in d),highest_bank=max(d['bank'] for d in directory),run_count_bits=16,frame_data=directory)
     if optimization: manifest['optimization']=optimization
     if clearing: manifest['clearing']=clearing
     if joining: manifest['joining']=joining
@@ -166,8 +166,9 @@ def cmd_build_cart_v2(a):
     frames,_=build_frames(mesh,n,cam,spin_axis=axis,visibility_mode=vis,z_tolerance=ztol,feature_angle=angle,animation=anim,animation_tilt=tilt,animation_travel=travel,animation_rise=rise,enable_source_colors=percell,fallback_color=c64_color_index(color),background_color=c64_color_index(getattr(a,"background_color",0)),height=height,max_visible_runs=65535)
     outdir=Path(a.output_dir).resolve() if a.output_dir else cli.BUILD
     stem=a.output or label.lower().replace(' ','_')+'-'+getattr(a,'public_renderer',a.renderer)+('-ram' if getattr(a,'prefer','fps') == 'ram' else '')
+    if not a.output and getattr(a,'legacy_cart',False):stem+='-legacy'
     if not cli._check_overwrite([outdir/f'{stem}.crt',outdir/f'{stem}.lbl',outdir/f'{stem}-manifest.json'],a.overwrite_policy):return 2
-    crt,_=assemble_cartridge(cli.ROOT,frames,mesh,tass=tass,cartconv=cartconv,outdir=outdir,stem=stem,tass_args=a.tass_args,color_index=c64_color_index(color),background_color=c64_color_index(getattr(a,"background_color",0)),border_color=c64_color_index(getattr(a,"border_color",0)),colors=percell,renderer=a.renderer,prefer=getattr(a,"prefer","fps"))
+    crt,_=assemble_cartridge(cli.ROOT,frames,mesh,tass=tass,cartconv=cartconv,outdir=outdir,stem=stem,legacy_cart=getattr(a,"legacy_cart",False),tass_args=a.tass_args,color_index=c64_color_index(color),background_color=c64_color_index(getattr(a,"background_color",0)),border_color=c64_color_index(getattr(a,"border_color",0)),colors=percell,renderer=a.renderer,prefer=getattr(a,"prefer","fps"))
     if a.run:
         vice=cli.resolve_executable(a.vice,'vice')
         if not vice:raise ValueError('VICE not found')

@@ -1,4 +1,4 @@
-blender export: /fake/blender --background --disable-autoexec /tmp/tmpifp3lg68/scene.blend --python-exit-code 1 --python /tmp/tmpifp3lg68/tools/blender_export.py -- --output /tmp/tmpifp3lg68/scene.c643dscene --sample-step 1 --viewport-height 144 --max-frames 255
+blender export: /fake/blender --background --disable-autoexec TEMP/tmpifp3lg68/scene.blend --python-exit-code 1 --python TEMP/tmpifp3lg68/tools/blender_export.py -- --output TEMP/tmpifp3lg68/scene.c643dscene --sample-step 1 --viewport-height 144 --max-frames 255
 ..............................output colours: foreground white (1); background black (0); border black (0)
 ...output colours: foreground white (1); background black (0); border black (0)
 .....output colours: foreground white (1); background black (0); border black (0)

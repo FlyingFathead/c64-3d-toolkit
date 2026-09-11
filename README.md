@@ -4,11 +4,16 @@
 
 # c64-3d-toolkit
 
-**Version 0.7.4: cartridge loading and EasyFlash metadata.**
-Generated carts include genuine EasyAPI and PETSCII names, checked metadata
+**Version 0.7.5: optional legacy cartridge generation.**
+By default, generated carts include genuine EasyAPI and PETSCII names, checked metadata
 placement, and stronger reset initialization. The shared VICE launcher disables
 CRT write-back and offers temporary default settings for troubleshooting.
-See [0.7.4 release notes and installation](docs/RELEASE_0.7.4.md) and
+Use `--legacy-cart` to reproduce the discontinued cartridge packing and boot method.
+It warns before conversion, omits EAPI/name metadata and keeps the original scene
+layout. Standard generation remains the default; generated legacy names end in
+`-legacy`. See [legacy compatibility mode](docs/CARTRIDGE_LOADING.md#legacy-compatibility-mode).
+
+See [0.7.5 release notes and installation](docs/RELEASE_0.7.5.md) and
 [cartridge loading](docs/CARTRIDGE_LOADING.md).
 
 The independent colours and F3/F4/F7/F8 controls introduced in 0.7.3 remain
@@ -36,15 +41,15 @@ These are emulated C64 timings, not host wall-clock speed or the HUD counter.
 | Prebuilt | What is inside |
 | --- | --- |
 | [Color Combo Test](examples/color_combo_test/color-combo-test.crt) | Four colour pairs, ten seconds each, automatic looping, F3/F4 cycling |
-| [Twelve-demo cart — FPS](examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all.crt) | The original twelve animations, menu styles, PLAY ALL, HiFi mode and colour controls |
-| [Twelve-demo cart — RAM](examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all-ram.crt) | Same material and colour controls, smaller drawing kernels |
+| [Twelve-demo cart — FPS](examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all.crt) | The original twelve animations, menu styles, PLAY ALL, HiFi mode and colour controls |
+| [Twelve-demo cart — RAM](examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all-ram.crt) | Same material and colour controls, smaller drawing kernels |
 | [Demo Cart 2.0](examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt) | Colour cube, colour torus, twist tunnel, ribbon dance, orbital cubes, wave lattice and Ripples Lite |
-| [HiFi reel](examples/cart_hifi/c643d-hifi-v0.7.4-hors-render-v2.crt) | Horse & Sunflower followed by two HiFi spinners |
+| [HiFi reel](examples/cart_hifi/c643d-hifi-v0.7.5-hors-render-v2.crt) | Horse & Sunflower followed by two HiFi spinners |
 | [Marbles](examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt) | All 640 authored samples, original 16 FPS target, native intro and ending |
 | [Horse & Sunflower](examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt) | Authored scene, with a separate RAM build in the same folder |
 
 ```bash
-python c643d.py run-cart examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all.crt
+python c643d.py run-cart examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all.crt
 python c643d.py run-cart examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt
 ```
 
@@ -135,19 +140,19 @@ Add `--install` to install only after all checks pass. Add `--baseline-zip PATH`
 to also generate a patch ZIP. The pipeline never commits, tags or pushes. Root `VERSION` supplies the build
 identity; an alternate-version VICE test guards startup, menu and thanks labels.
 
-To install the supplied 0.7.4 release, save the ZIP one level above your
+To install the supplied 0.7.5 release, save the ZIP one level above your
 checkout and extract it from that parent directory:
 
 ```bash
-unzip -o c64-3d-toolkit-v0.7.4.zip
+unzip -o c64-3d-toolkit-v0.7.5.zip
 cd c64-3d-toolkit
 python tools/compare_renderers.py --check
 ```
 
 The ZIP contains its own `c64-3d-toolkit/` directory. Current cartridges are
 already rebuilt. Previous versioned menu/HiFi carts remain as historical
-references; use the 0.7.4 links above for the updated loader. See the
-[release guide](docs/RELEASE_0.7.4.md) for checks and rebuilds.
+references; use the 0.7.5 links above for the updated loader. See the
+[release guide](docs/RELEASE_0.7.5.md) for checks and rebuilds.
 
 ## Earlier renderers remain available
 

@@ -18,6 +18,9 @@ def source_files(root):
     for parent,dirs,names in os.walk(root):
         dirs[:]=sorted(d for d in dirs if d not in SKIP)
         for name in sorted(names):
+            # A linked worktree uses a .git file, not a directory. Never copy
+            # its pointer into a release or an external A/B build tree.
+            if name in SKIP:continue
             path=Path(parent)/name
             if path.suffix not in ('.pyc','.zip') and not path.is_symlink():yield path
 

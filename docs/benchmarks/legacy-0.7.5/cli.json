@@ -1,0 +1,113 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "method": "standard",
+      "kind": "object",
+      "verified": {
+        "cartridge": "cli-object-standard.crt",
+        "menu_entry": null,
+        "verified_frames": 19,
+        "orientations": 8,
+        "bitmap_bytes_checked": 145920,
+        "color_bytes_checked": 18240,
+        "slots": {
+          "1": 10,
+          "2": 9
+        },
+        "average_fps": 51.12048772754133,
+        "min_frame_cycles": 6751,
+        "max_frame_cycles": 25668,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 17,
+        "border_match": true,
+        "border_color": 0
+      }
+    },
+    {
+      "method": "standard",
+      "kind": "scene",
+      "verified": {
+        "cartridge": "cli-scene-standard.crt",
+        "menu_entry": null,
+        "verified_frames": 51,
+        "orientations": 24,
+        "bitmap_bytes_checked": 391680,
+        "color_bytes_checked": 48960,
+        "slots": {
+          "1": 17,
+          "2": 17,
+          "0": 17
+        },
+        "average_fps": 12.898968761193748,
+        "min_frame_cycles": 19913,
+        "max_frame_cycles": 84785,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0,
+        "loop_seconds": 1.9152294650686934,
+        "target_fps": 12.5,
+        "hud_match": true,
+        "text_overlay": true,
+        "frame_index_bits": 16
+      }
+    },
+    {
+      "method": "legacy",
+      "kind": "object",
+      "verified": {
+        "cartridge": "cli-object-legacy.crt",
+        "menu_entry": null,
+        "verified_frames": 19,
+        "orientations": 8,
+        "bitmap_bytes_checked": 145920,
+        "color_bytes_checked": 18240,
+        "slots": {
+          "1": 10,
+          "2": 9
+        },
+        "average_fps": 51.11798277472242,
+        "min_frame_cycles": 6769,
+        "max_frame_cycles": 25667,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 17,
+        "border_match": true,
+        "border_color": 0
+      }
+    },
+    {
+      "method": "legacy",
+      "kind": "scene",
+      "verified": {
+        "cartridge": "cli-scene-legacy.crt",
+        "menu_entry": null,
+        "verified_frames": 51,
+        "orientations": 24,
+        "bitmap_bytes_checked": 391680,
+        "color_bytes_checked": 48960,
+        "slots": {
+          "1": 17,
+          "2": 17,
+          "0": 17
+        },
+        "average_fps": 12.907654762472468,
+        "min_frame_cycles": 19912,
+        "max_frame_cycles": 83324,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0,
+        "loop_seconds": 1.9152294650686934,
+        "target_fps": 12.5,
+        "hud_match": true,
+        "text_overlay": true,
+        "frame_index_bits": 16
+      }
+    }
+  ]
+}

@@ -1,4 +1,6 @@
 import struct
+import io
+from contextlib import redirect_stderr
 import tempfile
 import unittest
 from pathlib import Path
@@ -8,6 +10,7 @@ from tools.c643d.cartridge import (
     easyapi_bytes, easyflash_offset, inspect_easyflash_crt,
     install_easyflash_metadata, install_scene_extension, new_easyflash_image,
     petscii_title, put_easyflash_chip,
+    convert_easyflash, check_easyflash_crt,
 )
 from tools.c643d.cartlaunch import command
 
@@ -29,6 +32,14 @@ def crt_bytes(romh):
 
 
 class CartridgeLoadingTests(unittest.TestCase):
+    def test_external_build_copy_excludes_worktree_git_pointer(self):
+        from tools.compile_release import source_files
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            (root/'.git').write_text('gitdir: /some/other/checkout\n')
+            (root/'VERSION').write_text('0.7.5\n')
+            self.assertEqual([p.name for p in source_files(root)], ['VERSION'])
+
     def test_name_uses_reference_petscii_bytes(self):
         # The Programmer's Reference chapter 6 explicitly gives Myth as these bytes.
         self.assertEqual(petscii_title('Myth'), bytes.fromhex('6d 59 54 48') + b'\0' * 12)
@@ -81,6 +92,56 @@ class CartridgeLoadingTests(unittest.TestCase):
         image = new_easyflash_image()
         with self.assertRaisesRegex(ValueError, 'ROML bank 2 tail'):
             install_scene_extension(image, bootstrap(), b'')
+
+    def test_legacy_scene_keeps_original_romh_and_bank_two(self):
+        image = new_easyflash_image()
+        extension = bytes((i * 19 + 7) & 255 for i in range(0x1BFA))
+        original_bank_two = bytes(image[0x8000:0xC000])
+        install_scene_extension(image, bootstrap(), extension, legacy_cart=True)
+        base = easyflash_offset(0, 'romh')
+        self.assertEqual(image[base + 0x400:base + 0x1FFA], extension)
+        self.assertEqual(image[base + 0x1FFA:base + 0x2000], bootstrap()[-6:])
+        self.assertEqual(image[0x8000:0xC000], original_bank_two)
+        with self.assertRaisesRegex(ValueError, 'reset vectors'):
+            install_scene_extension(image, bootstrap(), extension + b'x', legacy_cart=True)
+
+    def test_legacy_conversion_warns_preserves_payload_and_still_checks_container(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); raw = root / 'scene.bin'; crt = root / 'scene.crt'
+            image = new_easyflash_image()
+            install_scene_extension(image, bootstrap(), bytes(0x1BFA), legacy_cart=True)
+            raw.write_bytes(image)
+            warning = io.StringIO()
+            with patch('tools.c643d.cartridge.subprocess.run'), redirect_stderr(warning):
+                convert_easyflash(cartconv='cartconv',raw=raw,crt=crt,name='TEST',cwd=root,legacy_cart=True)
+            self.assertEqual(raw.read_bytes(), image)
+            self.assertIn('discontinued since v0.7.4', warning.getvalue())
+            self.assertIn('outside recommended EasyFlash', warning.getvalue())
+            # Standard mode must reject this occupied metadata region, not silently fall back.
+            with self.assertRaisesRegex(ValueError, 'overlaps'):
+                convert_easyflash(cartconv='cartconv',raw=raw,crt=crt,name='TEST',cwd=root)
+            crt.write_bytes(crt_bytes(image[8192:16384]))
+            from types import SimpleNamespace
+            info = SimpleNamespace(returncode=0,stdout='Hardware ID: 32 (EasyFlash)\nMode: exrom: 1 game: 0 (ultimax)',stderr='')
+            with patch('tools.c643d.cartridge.subprocess.run',return_value=info) as run:
+                check_easyflash_crt(cartconv='cartconv',crt=crt,cwd=root,legacy_cart=True)
+                self.assertEqual([call.args[0][1] for call in run.call_args_list], ['-c','-f'])
+                crt.write_bytes(crt.read_bytes()[:-1])
+                with self.assertRaises(ValueError):
+                    check_easyflash_crt(cartconv='cartconv',crt=crt,cwd=root,legacy_cart=True)
+
+    def test_legacy_option_is_explicit_and_excluded_from_current_release(self):
+        from tools.c643d.cli import make_parser
+        from tools.c643d.toolchain import load_toolchain_settings
+        from tools.c643d.released_examples import is_current_v2_example
+        parser = make_parser(load_toolchain_settings(None))
+        for command_name in ('build','cart-demos','cartridge-demo','cartridge-smoke','color-combo-test'):
+            self.assertFalse(parser.parse_args([command_name]).legacy_cart)
+            self.assertTrue(parser.parse_args([command_name,'--legacy-cart']).legacy_cart)
+        crt = Path('cube-hors-render-v2-legacy.crt')
+        self.assertFalse(is_current_v2_example(crt,'0.7.5'))
+        self.assertTrue(is_current_v2_example(crt,'0.7.5',legacy_cart=True))
+        self.assertFalse(is_current_v2_example(Path('cube-hors-render-v2-legacy-manifest.json'),'0.7.5'))
 
     def test_crt_parser_accepts_old_carts_but_requires_metadata_for_new(self):
         with tempfile.TemporaryDirectory() as td:

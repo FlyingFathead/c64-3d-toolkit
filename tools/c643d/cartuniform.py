@@ -6,7 +6,7 @@ import hashlib,json,subprocess
 from .cartstream import frame_block,emit_directory
 from .cartridge import (new_easyflash_image,easyflash_offset,pack_demo_prgs,
     write_demo_include,assemble_demo_control,assemble_demo_boot,install_demo_boot,
-    build_menu_charset,convert_easyflash,check_easyflash_crt)
+    build_menu_charset,convert_easyflash,check_easyflash_crt,cart_write_method)
 from .emit import bytes_lines
 from .prgframes import extract
 from .colors import configure_asm_colors
@@ -187,6 +187,7 @@ def build(a, *, sources=None, reel=False,frame_encoders=None):
     from .renderer_names import implementation, public_name
     public_renderer=public_name(a.stream_renderer)
     renderer=implementation(a.stream_renderer);variant=renderer.rsplit('-',1)[1]
+    legacy_cart=getattr(a,'legacy_cart',False)
     prefer=getattr(a,'prefer','fps')
     seconds=getattr(a,'play_all_seconds',10)
     color_combo=getattr(a,'color_combo_test',False)
@@ -196,6 +197,7 @@ def build(a, *, sources=None, reel=False,frame_encoders=None):
     if prefer == 'ram' and variant not in ('v7', 'v8', 'v9', 'v10'): raise ValueError('--prefer ram requires V7, V8 or V9')
     root=cli.ROOT;out=Path(a.output_dir).resolve() if a.output_dir else default_output_dir(root,renderer);out.mkdir(parents=True,exist_ok=True)
     stem=a.output or f'c643d-demo-v{__version__}-{public_renderer}-all'+('-ram' if prefer == 'ram' else '')
+    if not a.output and legacy_cart:stem+='-legacy'
     metadata=out/'metadata';metadata.mkdir(parents=True,exist_ok=True)
     paths=[out/f'{stem}.crt',metadata/f'{stem}-cart-manifest.json',metadata/f'{stem}-cart-map.txt']
     if not cli._check_overwrite(paths,a.overwrite_policy):return 2
@@ -253,7 +255,7 @@ def build(a, *, sources=None, reel=False,frame_encoders=None):
         local_control.write_text(configure_control_source(control_source.read_text()))
         control_source=local_control
     assemble_demo_control(tass=tass,tass_args=a.tass_args or (),source=control_source,output=control,labels=work/f'{stem}-control.lbl',listing=work/f'{stem}-control.lst',cwd=root)
-    assemble_demo_boot(tass=tass,tass_args=a.tass_args or (),source=cli.CART/'easyflash-menu-boot.asm',output=boot,labels=work/f'{stem}-boot.lbl',listing=work/f'{stem}-boot.lst',cwd=root)
+    assemble_demo_boot(tass=tass,tass_args=a.tass_args or (),source=cli.CART/('easyflash-demo-boot.asm' if legacy_cart else 'easyflash-menu-boot.asm'),output=boot,labels=work/f'{stem}-boot.lbl',listing=work/f'{stem}-boot.lst',cwd=root)
     install_demo_boot(image,boot.read_bytes(),runtimes[a.menu_style].read_bytes(),control=control.read_bytes(),style_runtimes=[runtimes[s].read_bytes() for s in cli.DEMO_MENU_STYLE_ORDER],menu_font=font.read_bytes())
     for i,style in enumerate(cli.DEMO_MENU_STYLE_ORDER):
         pos=easyflash_offset(2,'romh',i*2048);image[pos:pos+2048]=shared[style]
@@ -292,8 +294,10 @@ def build(a, *, sources=None, reel=False,frame_encoders=None):
         manifest['play_all'].update(position='automatic',between_rounds='immediate-wrap')
         manifest.pop('exhibition',None)
         manifest['note']='Four monochrome colour pairs using preserved classic geometry; automatic normal PLAY ALL; F3/F4 colour cycling.'
+    manifest['cart_write_method']=cart_write_method(legacy_cart)
     raw=work/f'{stem}.bin';raw.write_bytes(image);crt=out/f'{stem}.crt'
-    convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name='COLOR COMBO TEST' if color_combo else getattr(a, 'cartridge_name', None) or f'C643D {__version__} {public_renderer.upper()} {prefer.upper()}',cwd=root);check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=root)
+    title=('COLOR COMBO TEST' if color_combo else f'C643D {__version__} ALL {variant.upper()}' if legacy_cart else getattr(a, 'cartridge_name', None) or f'C643D {__version__} {public_renderer.upper()} {prefer.upper()}')
+    convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name=title,cwd=root,legacy_cart=legacy_cart);check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=root,legacy_cart=legacy_cart)
     (metadata/f'{stem}-cart-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     (metadata/f'{stem}-cart-map.txt').write_text('Uniform '+renderer+' cartridge\nBank 0: boot/control/font; ROMH 1: menus; ROMH 2: menu directory/helpers\n'+''.join(f'{x["name"]}: {x["frames"]} frames, {x["rom_frame_bytes"]} stream bytes\n' for x in stream_info)+'Frame chips: '+', '.join(f'{b}:{c}' for b,c in used)+'\n')
     print(f'built {crt}\nall {len(plans)} entries: {renderer}; 10-row scrolling menu; {sum(x["rom_frame_bytes"] for x in stream_info)} frame bytes',flush=True)

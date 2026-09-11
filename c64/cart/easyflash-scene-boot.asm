@@ -9,10 +9,11 @@ boot:
         cld
         ldx #$ff
         txs
-        lda #$2f
-        sta $00
+        ; Set the output latch before enabling the port outputs (EasyFlash guide).
         lda #$37
         sta $01
+        lda #$2f
+        sta $00
         ; Reset may arrive with active CIA timers/interrupts. SEI alone
         ; does not mask CIA2 NMI. Quiesce sources before copying the loader.
         lda #$7f

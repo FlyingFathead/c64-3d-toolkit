@@ -26,7 +26,7 @@ from .cartridge import (
     convert_easyflash, write_manifest, write_smoke_map,
     assemble_demo_boot, assemble_demo_control, assemble_demo_runtime, install_demo_boot,
     build_menu_charset, pack_demo_prgs, write_demo_include, write_demo_map,
-    DEMO_MENU_STYLE_ORDER,
+    DEMO_MENU_STYLE_ORDER, add_legacy_cart_argument, cart_write_method,
 )
 
 ROOT=Path(__file__).resolve().parents[2]
@@ -633,6 +633,8 @@ def cmd_build(a):
             from .hors_v2_stable import cmd_build_object
             return cmd_build_object(a)
         return cmd_build_cart_v2(a)
+    if getattr(a,'legacy_cart',False):
+        raise ValueError('--legacy-cart requires a cartridge renderer; it does not apply to PRG output')
     if getattr(a,'blend',None) or getattr(a,'scene',None):
         return cmd_build_scene(a)
     if getattr(a,'rastertime_profiler',False) and not getattr(a,'text_overlay',True):
@@ -968,7 +970,8 @@ def cmd_cartridge_smoke(a):
     print(f'preflight: 64tass = {tass}{f" ({version})" if version else " (version unavailable)"}')
     outdir=Path(a.output_dir).resolve() if a.output_dir else BUILD
     outdir.mkdir(parents=True,exist_ok=True)
-    stem=a.output or 'easyflash-smoke'
+    legacy_cart=getattr(a,'legacy_cart',False)
+    stem=a.output or 'easyflash-smoke'+('-legacy' if legacy_cart else '')
     boot=outdir/f'{stem}-romh0.bin'
     raw=outdir/f'{stem}.bin'
     crt=outdir/f'{stem}.crt'
@@ -981,15 +984,16 @@ def cmd_cartridge_smoke(a):
         return 2
     try:
         assemble_smoke_bootstrap(
-            tass=tass,tass_args=a.tass_args,source=CART/'easyflash-smoke-loading.asm',
+            tass=tass,tass_args=a.tass_args,source=CART/('easyflash-smoke.asm' if legacy_cart else 'easyflash-smoke-loading.asm'),
             output=boot,labels=labels,listing=listing,cwd=ROOT,
         )
         raw_bytes,manifest=build_smoke_raw(boot.read_bytes())
+        manifest['cart_write_method']=cart_write_method(legacy_cart)
         raw.write_bytes(raw_bytes)
         write_smoke_map(map_txt,manifest)
         write_manifest(manifest_json,manifest)
-        convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name='C643D EF SMOKE',cwd=ROOT)
-        check_output=check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=ROOT)
+        convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name='C643D EF SMOKE',cwd=ROOT,legacy_cart=legacy_cart)
+        check_output=check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=ROOT,legacy_cart=legacy_cart)
     except (OSError,ValueError,RuntimeError,subprocess.CalledProcessError) as e:
         print(f'error: EasyFlash smoke build failed: {e}',file=sys.stderr)
         return 2
@@ -1037,7 +1041,9 @@ def cmd_cart_demos_legacy(a):
 
     outdir=Path(a.output_dir).resolve() if a.output_dir else CART_DEMOS
     outdir.mkdir(parents=True,exist_ok=True)
+    legacy_cart=getattr(a,'legacy_cart',False)
     stem=a.output or ('c643d-demo' if a.stream_renderer=='yunroll-cart-v2' else f'c643d-demo-v{__version__}-yunroll-cart-v3')
+    if not a.output and legacy_cart:stem+='-legacy'
     workdir=BUILD/f'{stem}-cartridge-demo'
     workdir.mkdir(parents=True,exist_ok=True)
     include_dir=workdir/'generated'
@@ -1072,6 +1078,7 @@ def cmd_cart_demos_legacy(a):
             off=bank*16384+8192
             image[off:off+8192]=stream_image[off:off+8192]
         manifest['version']=__version__
+        manifest['cart_write_method']=cart_write_method(legacy_cart)
         manifest['streamed_entries']=stream_info
         manifest['note']=f'Ten legacy PRGs plus two {a.stream_renderer.rsplit("-",1)[1].upper()} frame-streamed HiFi animations. PRG payloads use ROML; streamed frame blocks use ROMH.'
         if a.stream_renderer!='yunroll-cart-v2':manifest['stream_renderer']=a.stream_renderer
@@ -1093,7 +1100,7 @@ def cmd_cart_demos_legacy(a):
             output=control,labels=control_lbl,listing=control_lst,cwd=ROOT,
         )
         assemble_demo_boot(
-            tass=tass,tass_args=a.tass_args,source=CART/'easyflash-menu-boot.asm',
+            tass=tass,tass_args=a.tass_args,source=CART/('easyflash-demo-boot.asm' if legacy_cart else 'easyflash-menu-boot.asm'),
             output=boot,labels=boot_lbl,listing=boot_lst,cwd=ROOT,
         )
         install_demo_boot(
@@ -1106,8 +1113,8 @@ def cmd_cart_demos_legacy(a):
             for entry in stream_info:
                 stream_map.write(f"\n{entry['name']}: {entry['frames']} streamed frames, ROMH banks {entry['first_bank']}..{entry['last_bank']}, {entry['rom_frame_bytes']} frame bytes\n")
         write_manifest(manifest_json,manifest)
-        convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name=f'C643D {__version__} DEMO',cwd=ROOT)
-        check_output=check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=ROOT)
+        convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name=f'C643D {__version__} DEMO',cwd=ROOT,legacy_cart=legacy_cart)
+        check_output=check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=ROOT,legacy_cart=legacy_cart)
     except (OSError,ValueError,RuntimeError,subprocess.CalledProcessError) as e:
         print(f'error: EasyFlash demo build failed: {e}',file=sys.stderr)
         return 2
@@ -1246,6 +1253,7 @@ def make_parser(settings):
     b.add_argument('--viewport-height',type=_viewport_height_arg,default=settings.viewport_height,metavar='LINES',help='drawable height, multiple of 8 from 8..200; default auto=192 with overlay, 200 without')
     b.add_argument('--overwrite-policy',choices=('allow','warn','error'),default=settings.overwrite_policy,help='existing output handling (built-in default: warn)')
     _add_toolchain_args(b,settings)
+    add_legacy_cart_argument(b)
     b.add_argument('--no-assemble',action='store_true')
     b.add_argument('--run',action='store_true')
     i=sub.add_parser('inspect',help='report mesh topology/diagnostics'); common(i)
@@ -1294,12 +1302,14 @@ def make_parser(settings):
     te.add_argument('--reproduce-reference',action='store_true',help='apply the selected reference set build_overrides (for example the legacy 144-line viewport); requires --variants normal')
     cs=sub.add_parser('cartridge-smoke',help='build a minimal EasyFlash bank-switch .crt diagnostic')
     _add_toolchain_args(cs,settings)
+    add_legacy_cart_argument(cs)
     cs.add_argument('--output',help='output basename (default: easyflash-smoke)')
     cs.add_argument('--output-dir',help='output directory (default: build/)')
     cs.add_argument('--overwrite-policy',choices=('allow','warn','error'),default=settings.overwrite_policy,help='existing output handling (built-in default: warn)')
     cs.add_argument('--run',action='store_true',help='attach the generated CRT directly with VICE -cartcrt')
     cd=sub.add_parser('cart-demos',help='build shipped EasyFlash demo CRT(s) into examples/cart_demos/')
     _add_toolchain_args(cd,settings)
+    add_legacy_cart_argument(cd)
     cd.add_argument('--output',help='output basename (default: version and renderer-labelled cart name)')
     cd.add_argument('--output-dir',help='final demo output directory (default: examples/cart_demos/ for V4/V5/V6/V7, examples/old/cart_demos/ for V2/V3; intermediates stay in build/)')
     cd.add_argument('--overwrite-policy',choices=('allow','warn','error'),default=settings.overwrite_policy,help='existing output handling (built-in default: warn)')
@@ -1311,6 +1321,7 @@ def make_parser(settings):
     cd.add_argument('--stream-renderer',choices=('hors-render-v2', 'hors-render-v1', 'yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'),default='hors-render-v2',help='one renderer for every demo; writes a separate version-labelled comparison cart')
     cda=sub.add_parser('cartridge-demo',help=argparse.SUPPRESS)
     _add_toolchain_args(cda,settings)
+    add_legacy_cart_argument(cda)
     cda.add_argument('--output',help='output basename (default: version and renderer-labelled cart name)')
     cda.add_argument('--output-dir',help='final demo output directory (default: examples/cart_demos/ for V4/V5/V6/V7, examples/old/cart_demos/ for V2/V3; intermediates stay in build/)')
     cda.add_argument('--overwrite-policy',choices=('allow','warn','error'),default=settings.overwrite_policy,help='existing output handling (built-in default: warn)')
@@ -1322,6 +1333,7 @@ def make_parser(settings):
     cda.add_argument('--stream-renderer',choices=('hors-render-v2', 'hors-render-v1', 'yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'),default='hors-render-v2',help='one renderer for every demo; writes a separate version-labelled comparison cart')
     combo=sub.add_parser('color-combo-test',help='build COLOR COMBO TEST: four monochrome colour pairs with F3/F4 cycling, automatic 10-second looping playback')
     _add_toolchain_args(combo,settings)
+    add_legacy_cart_argument(combo)
     combo.add_argument('--output',help='output basename (default color-combo-test)')
     combo.add_argument('--output-dir',help='output directory (default examples/color_combo_test/)')
     combo.add_argument('--play-all-seconds',type=int,default=10,help='seconds per colour pair, 1..255 (default 10, PAL)')

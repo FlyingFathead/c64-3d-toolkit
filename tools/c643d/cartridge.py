@@ -5,6 +5,7 @@ import math
 import subprocess
 import struct
 import hashlib
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Sequence
@@ -20,6 +21,26 @@ EASYFLASH_METADATA_END = 0x1C00
 EASYFLASH_NAME_OFFSET = 0x1B00
 EASYFLASH_NAME_MAGIC = bytes.fromhex('65 66 2d 6e 41 4d 45 3a')
 EASYAPI_SHA256 = '032f3f21f2299e2fd96b28dc1a901a6ed19a04f600d446c7a362781b4592f432'
+LEGACY_CART_DISCONTINUED_VERSION = '0.7.4'
+
+
+def add_legacy_cart_argument(parser) -> None:
+    parser.add_argument('--legacy-cart', action='store_true', help=(
+        'use the discontinued pre-0.7.4 cartridge layout and boot code; '
+        'omits EAPI/name metadata and may violate EasyFlash layout conventions'))
+
+
+def cart_write_method(legacy_cart: bool) -> str:
+    return 'legacy' if legacy_cart else 'standard'
+
+
+def legacy_cart_warning() -> None:
+    print(f'WARNING: --legacy-cart selects the write method discontinued since '
+          f'v{LEGACY_CART_DISCONTINUED_VERSION}. It may produce images outside '
+          'recommended EasyFlash layout conventions: no EAPI/EF-Name metadata, '
+          'original boot code, and unrelocated scene content in the metadata area. '
+          'Use only for compatibility testing; VICE may report EAPI not found. '
+          'CRT size, bank and reset-vector checks still apply.', file=sys.stderr, flush=True)
 
 
 def easyflash_offset(bank: int, chip: str, offset: int = 0) -> int:
@@ -165,7 +186,7 @@ def install_easyflash_metadata(image: bytearray, name: str) -> None:
     image[start:end] = expected
 
 
-def install_scene_extension(image: bytearray, boot: bytes, extension: bytes) -> None:
+def install_scene_extension(image: bytearray, boot: bytes, extension: bytes, *, legacy_cart: bool = False) -> None:
     """Preserve RAM $9400-$97ff in unused ROML bank 2 tail, freeing metadata.
 
     The scene bootstrap restores these four pages after its normal ROMH copy.
@@ -175,6 +196,11 @@ def install_scene_extension(image: bytearray, boot: bytes, extension: bytes) -> 
         raise ValueError('Scene extension overlaps EasyFlash reset vectors')
     romh = bytearray(boot)
     romh[0x400:0x400 + len(extension)] = extension
+    if legacy_cart:
+        # Preserve the pre-0.7.4 ROMH layout. Its original bootstrap copies
+        # this content directly; never pair it with the relocation bootstrap.
+        put_easyflash_chip(image, 0, 'romh', bytes(romh))
+        return
     spill = easyflash_offset(2, 'roml', 0x1800)
     # The 88-page bootstrap uses only the first 24 pages of this ROML bank.
     if any(image[spill:spill + 0x400]):
@@ -184,11 +210,16 @@ def install_scene_extension(image: bytearray, boot: bytes, extension: bytes) -> 
     put_easyflash_chip(image, 0, 'romh', bytes(romh))
 
 
-def convert_easyflash(*, cartconv: str, raw: Path, crt: Path, name: str, cwd: Path) -> None:
+def convert_easyflash(*, cartconv: str, raw: Path, crt: Path, name: str, cwd: Path, legacy_cart: bool = False) -> None:
     name = cartridge_title(name)
     image = bytearray(raw.read_bytes())
-    install_easyflash_metadata(image, name)
-    raw.write_bytes(image)
+    if len(image) != EASYFLASH_RAW_SIZE:
+        raise ValueError('EasyFlash image must be exactly 1 MiB')
+    if legacy_cart:
+        legacy_cart_warning()
+    else:
+        install_easyflash_metadata(image, name)
+        raw.write_bytes(image)
     command = [cartconv, '-t', 'easy', '-i', str(raw), '-o', str(crt), '-n', name]
     print('+', ' '.join(command))
     subprocess.run(command, cwd=cwd, check=True)
@@ -247,8 +278,8 @@ def inspect_easyflash_crt(crt: Path, *, require_metadata: bool = False) -> dict:
                 eapi_present=romh[0x1800:0x1804] == b'eapi')
 
 
-def check_easyflash_crt(*, cartconv: str, crt: Path, cwd: Path) -> str:
-    inspect_easyflash_crt(crt, require_metadata=True)
+def check_easyflash_crt(*, cartconv: str, crt: Path, cwd: Path, legacy_cart: bool = False) -> str:
+    inspect_easyflash_crt(crt, require_metadata=not legacy_cart)
     completed = subprocess.run(
         [cartconv, '-c', str(crt)], cwd=cwd, capture_output=True, text=True, check=False,
     )

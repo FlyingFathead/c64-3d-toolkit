@@ -151,6 +151,6 @@ def cmd_color_combo_test(a):
     a.color_combo_test=True
     a.stream_renderer='hors-render-v2'
     a.menu_style='default'
-    a.output=a.output or 'color-combo-test'
+    a.output=a.output or 'color-combo-test'+('-legacy' if getattr(a,'legacy_cart',False) else '')
     a.output_dir=a.output_dir or str(cli.ROOT/'examples/color_combo_test')
     return cartuniform.build(a,sources=combo_sources(cli.ROOT))

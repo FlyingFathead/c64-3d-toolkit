@@ -59,10 +59,17 @@ def decode(row):
     return frames,mesh,scene
 
 
-def is_current_v2_example(path, version):
+def is_legacy_cart_output(path):
+    import re
+    return bool(re.search(r'-legacy(?:\.|-cart-|-manifest)', path.name))
+
+
+def is_current_v2_example(path, version, *, legacy_cart=False):
     """Select stable examples without treating an old versioned menu as current."""
     import re
     name=path.name
+    if is_legacy_cart_output(path) != legacy_cart:
+        return False
     if not ('hors-render-v2' in name or 'hors-v2' in name) or 'beta' in name:
         return False
     match=re.search(r'-v(\d+\.\d+\.\d+)-',name)

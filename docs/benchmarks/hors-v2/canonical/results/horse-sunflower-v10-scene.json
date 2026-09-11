@@ -4,7 +4,7 @@
   "diagnostic_only": true,
   "profile": {
     "cartridge": "horse-sunflower-v10.crt",
-    "sha256": "8b29a4b6fadbc676f1886c7ed99254e37489b5ef70996f0344d72a951c527133",
+    "sha256": "a53f70cc9a3799fcc7334a10bc2cbe4808acd97c272a4734e7b49caf9d0e5daf",
     "renderer": "yunroll-cart-v10-scene",
     "menu_entry": null,
     "frames": 84,

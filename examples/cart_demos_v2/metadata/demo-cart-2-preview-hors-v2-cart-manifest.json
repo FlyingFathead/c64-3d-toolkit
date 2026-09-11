@@ -109,7 +109,7 @@
     }
   ],
   "note": "Demo Cart 2.0 preview: six new scenes plus selected complete water loops; separate from the frozen release comparison dataset.",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "public_renderer": "hors-render-v2",
   "stream_renderer": "hors-render-v2",
   "uniform_renderer": true,
@@ -4836,7 +4836,7 @@
     }
   ],
   "build_screen": {
-    "version": "0.7.4",
+    "version": "0.7.5",
     "renderer": "hors-render-v2",
     "ticks": null,
     "skip_key": "SPACE",
@@ -4859,7 +4859,7 @@
       "seconds": 10,
       "ticks": 500,
       "exit_key": "F1",
-      "version": "0.7.4",
+      "version": "0.7.5",
       "position": "after-last-demo",
       "next": "first-demo"
     }
@@ -4883,6 +4883,7 @@
   "highest_runtime_bank_used": 21,
   "shared_menu_load": "$c000",
   "shared_menu_size": 2048,
+  "cart_write_method": "standard",
   "preview": {
     "version": 1,
     "draw_gap": 6,

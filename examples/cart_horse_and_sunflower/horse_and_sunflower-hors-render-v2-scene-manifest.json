@@ -1,7 +1,8 @@
 {
+  "cart_write_method": "standard",
   "format": "c643d-easyflash-stream-scene",
   "version": 1,
-  "toolkit_version": "0.7.4",
+  "toolkit_version": "0.7.5",
   "renderer": "hors-render-v2",
   "name": "HORSE AND SUNFLOWER",
   "frames": 84,

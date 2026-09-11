@@ -1,0 +1,916 @@
+{
+  "version": "0.7.5",
+  "downloads": [
+    {
+      "version": "0.7.3",
+      "release_url": "https://github.com/FlyingFathead/c64-3d-toolkit/releases/tag/v0.7.3",
+      "asset_url": "https://github.com/FlyingFathead/c64-3d-toolkit/releases/download/v0.7.3/c64-3d-toolkit-v0.7.3.zip",
+      "archive_sha256": "69089302c440f2a82128939aaf2e6710c0f8b0543d08945038584f18f535f3f2",
+      "github_digest": "sha256:69089302c440f2a82128939aaf2e6710c0f8b0543d08945038584f18f535f3f2",
+      "checksum_asset": false,
+      "indexed_files_verified": 66
+    },
+    {
+      "version": "0.7.4",
+      "release_url": "https://github.com/FlyingFathead/c64-3d-toolkit/releases/tag/v0.7.4",
+      "asset_url": "https://github.com/FlyingFathead/c64-3d-toolkit/releases/download/v0.7.4/c64-3d-toolkit-v0.7.4.zip",
+      "archive_sha256": "abdb0c9f9e48c685f5d6039ec22f0c0d6c02e0b8ed4fff312980842156c64705",
+      "github_digest": "sha256:abdb0c9f9e48c685f5d6039ec22f0c0d6c02e0b8ed4fff312980842156c64705",
+      "checksum_asset": true,
+      "indexed_files_verified": 60
+    }
+  ],
+  "control_identity_overrides": [
+    {
+      "cartridge": "examples/cart_hifi/c643d-hifi-v0.7.2-hors-render-v2.crt",
+      "recorded_identity": "0.7.2",
+      "action": "Reassembled with recorded VERSION; no binary patching"
+    },
+    {
+      "cartridge": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt",
+      "recorded_identity": "0.7.2",
+      "action": "Reassembled with recorded VERSION; no binary patching"
+    }
+  ],
+  "legacy_073_exact": [
+    {
+      "cart": "c643d-demo-vVERSION-hors-render-v2-all-ram.crt",
+      "before_sha256": "e3f1c4a7a2d59bb0978d597f425d8643f261f7c0fbc3a7ab6e706804767b58ab",
+      "after_sha256": "e3f1c4a7a2d59bb0978d597f425d8643f261f7c0fbc3a7ab6e706804767b58ab",
+      "before_file": "examples/cart_demos/c643d-demo-v0.7.3-hors-render-v2-all-ram.crt",
+      "after_file": "examples/cart_demos/c643d-demo-v0.7.3-hors-render-v2-all-ram-legacy.crt",
+      "identical": true,
+      "before_bytes": 985024,
+      "after_bytes": 985024,
+      "differing_bytes": 0
+    },
+    {
+      "cart": "c643d-demo-vVERSION-hors-render-v2-all.crt",
+      "before_sha256": "384ac27ca491e0ce4c04983f0a02707fb39b0ab080568bab0d54913cd0f1c780",
+      "after_sha256": "384ac27ca491e0ce4c04983f0a02707fb39b0ab080568bab0d54913cd0f1c780",
+      "before_file": "examples/cart_demos/c643d-demo-v0.7.3-hors-render-v2-all.crt",
+      "after_file": "examples/cart_demos/c643d-demo-v0.7.3-hors-render-v2-all-legacy.crt",
+      "identical": true,
+      "before_bytes": 985024,
+      "after_bytes": 985024,
+      "differing_bytes": 0
+    },
+    {
+      "cart": "c643d-hifi-vVERSION-hors-render-v2.crt",
+      "before_sha256": "eeb46660e4b8f75fadceaba6819ea7b23b2a7d40252eb76b1a51d57619f52939",
+      "after_sha256": "eeb46660e4b8f75fadceaba6819ea7b23b2a7d40252eb76b1a51d57619f52939",
+      "before_file": "examples/cart_hifi/c643d-hifi-v0.7.2-hors-render-v2.crt",
+      "after_file": "examples/cart_hifi/c643d-hifi-v0.7.2-hors-render-v2-legacy.crt",
+      "identical": true,
+      "before_bytes": 689536,
+      "after_bytes": 689536,
+      "differing_bytes": 0
+    },
+    {
+      "cart": "color-combo-test.crt",
+      "before_sha256": "f5ede2bfd4771f2d6667de5f20e6cc9349d95723d572cc8da04e3b4a3aabda53",
+      "after_sha256": "f5ede2bfd4771f2d6667de5f20e6cc9349d95723d572cc8da04e3b4a3aabda53",
+      "before_file": "examples/color_combo_test/color-combo-test.crt",
+      "after_file": "examples/color_combo_test/color-combo-test-legacy.crt",
+      "identical": true,
+      "before_bytes": 262720,
+      "after_bytes": 262720,
+      "differing_bytes": 0
+    },
+    {
+      "cart": "cube-hors-render-v2.crt",
+      "before_sha256": "9806773ee8910f36c1652f24568128b91d5fcc4a11c5eaa9216e54a1aeb8fad2",
+      "after_sha256": "9806773ee8910f36c1652f24568128b91d5fcc4a11c5eaa9216e54a1aeb8fad2",
+      "before_file": "examples/cube/cube-hors-render-v2.crt",
+      "after_file": "examples/cube/cube-hors-render-v2-legacy.crt",
+      "identical": true,
+      "before_bytes": 82144,
+      "after_bytes": 82144,
+      "differing_bytes": 0
+    },
+    {
+      "cart": "demo-cart-2-preview-hors-v2.crt",
+      "before_sha256": "35cac536294e32cc912eadff7efd496584a63dbf0192d6c1ce003c17f83c13fa",
+      "after_sha256": "35cac536294e32cc912eadff7efd496584a63dbf0192d6c1ce003c17f83c13fa",
+      "before_file": "examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt",
+      "after_file": "examples/cart_demos_v2/demo-cart-2-preview-hors-v2-legacy.crt",
+      "identical": true,
+      "before_bytes": 771616,
+      "after_bytes": 771616,
+      "differing_bytes": 0
+    },
+    {
+      "cart": "falling_cubes_c64-hors-render-v2.crt",
+      "before_sha256": "0b7a0d95eaea6f22a6406dae803ee9b5195d27ad3416605a56ecd2401b2b44c3",
+      "after_sha256": "0b7a0d95eaea6f22a6406dae803ee9b5195d27ad3416605a56ecd2401b2b44c3",
+      "before_file": "examples/blender_falling_cubes/falling_cubes_c64-hors-render-v2.crt",
+      "after_file": "examples/blender_falling_cubes/falling_cubes_c64-hors-render-v2-legacy.crt",
+      "identical": true,
+      "before_bytes": 57520,
+      "after_bytes": 57520,
+      "differing_bytes": 0
+    },
+    {
+      "cart": "falling_cubes_c64_color-hors-render-v2.crt",
+      "before_sha256": "82c226942457af416f159948f6309df089ec8a205231aa2f82fa4822b48aec3c",
+      "after_sha256": "82c226942457af416f159948f6309df089ec8a205231aa2f82fa4822b48aec3c",
+      "before_file": "examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v2.crt",
+      "after_file": "examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v2-legacy.crt",
+      "identical": true,
+      "before_bytes": 57520,
+      "after_bytes": 57520,
+      "differing_bytes": 0
+    },
+    {
+      "cart": "horse_and_sunflower-hors-render-v2-scene-ram.crt",
+      "before_sha256": "f03bb967303bdb6e54e0897672d8332b4effb6fa889afe9d8ecc584cb7bd24ee",
+      "after_sha256": "f03bb967303bdb6e54e0897672d8332b4effb6fa889afe9d8ecc584cb7bd24ee",
+      "before_file": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-ram.crt",
+      "after_file": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-ram-legacy.crt",
+      "identical": true,
+      "before_bytes": 279136,
+      "after_bytes": 279136,
+      "differing_bytes": 0
+    },
+    {
+      "cart": "horse_and_sunflower-hors-render-v2-scene.crt",
+      "before_sha256": "adc52c5615a9b1288bafd8b586ffaa7a58e2916dcffa57aedefd807820554647",
+      "after_sha256": "adc52c5615a9b1288bafd8b586ffaa7a58e2916dcffa57aedefd807820554647",
+      "before_file": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt",
+      "after_file": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-legacy.crt",
+      "identical": true,
+      "before_bytes": 279136,
+      "after_bytes": 279136,
+      "differing_bytes": 0
+    },
+    {
+      "cart": "horse_head-hors-render-v2.crt",
+      "before_sha256": "a914856cbac75f0a69d06627b6ef4f850f6cb39e18e46e706c34d922d4bd88ee",
+      "after_sha256": "a914856cbac75f0a69d06627b6ef4f850f6cb39e18e46e706c34d922d4bd88ee",
+      "before_file": "examples/horse_head/horse_head-hors-render-v2.crt",
+      "after_file": "examples/horse_head/horse_head-hors-render-v2-legacy.crt",
+      "identical": true,
+      "before_bytes": 229888,
+      "after_bytes": 229888,
+      "differing_bytes": 0
+    },
+    {
+      "cart": "horse_head_hifi-hors-render-v2.crt",
+      "before_sha256": "c27e99841e870271143547ee388f1b6d03209c6fd18ef6677dd7516216d08adb",
+      "after_sha256": "c27e99841e870271143547ee388f1b6d03209c6fd18ef6677dd7516216d08adb",
+      "before_file": "examples/hifi_showcase/horse_head_hifi-hors-render-v2.crt",
+      "after_file": "examples/hifi_showcase/horse_head_hifi-hors-render-v2-legacy.crt",
+      "identical": true,
+      "before_bytes": 295552,
+      "after_bytes": 295552,
+      "differing_bytes": 0
+    },
+    {
+      "cart": "marbles-hors-render-v2-16fps-force-bytes.crt",
+      "before_sha256": "30e285a63090c30cc4488edea14bdf0117aa95ff257b8a5aa78aa06593b21c05",
+      "after_sha256": "30e285a63090c30cc4488edea14bdf0117aa95ff257b8a5aa78aa06593b21c05",
+      "before_file": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt",
+      "after_file": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes-legacy.crt",
+      "identical": true,
+      "before_bytes": 985024,
+      "after_bytes": 985024,
+      "differing_bytes": 0
+    },
+    {
+      "cart": "space_horse_crawl_color-hors-render-v2.crt",
+      "before_sha256": "882c2518fabbd03d5faf5743cf1967540eb757ffe8bf406be211134db5fc716f",
+      "after_sha256": "882c2518fabbd03d5faf5743cf1967540eb757ffe8bf406be211134db5fc716f",
+      "before_file": "examples/space_horse_crawl/space_horse_crawl_color-hors-render-v2.crt",
+      "after_file": "examples/space_horse_crawl/space_horse_crawl_color-hors-render-v2-legacy.crt",
+      "identical": true,
+      "before_bytes": 164224,
+      "after_bytes": 164224,
+      "differing_bytes": 0
+    },
+    {
+      "cart": "space_horse_spin_color-hors-render-v2.crt",
+      "before_sha256": "8ad0818df1dc1c9dc3d849ec04995a78dd012659c724a27cf33712067c81904a",
+      "after_sha256": "8ad0818df1dc1c9dc3d849ec04995a78dd012659c724a27cf33712067c81904a",
+      "before_file": "examples/space_horse_spin/space_horse_spin_color-hors-render-v2.crt",
+      "after_file": "examples/space_horse_spin/space_horse_spin_color-hors-render-v2-legacy.crt",
+      "identical": true,
+      "before_bytes": 353008,
+      "after_bytes": 353008,
+      "differing_bytes": 0
+    },
+    {
+      "cart": "sphere-hors-render-v2.crt",
+      "before_sha256": "5f9435072fbd6352e0713695bd022a13c50ee6cab170df8c188fd5a5138a2948",
+      "after_sha256": "5f9435072fbd6352e0713695bd022a13c50ee6cab170df8c188fd5a5138a2948",
+      "before_file": "examples/sphere/sphere-hors-render-v2.crt",
+      "after_file": "examples/sphere/sphere-hors-render-v2-legacy.crt",
+      "identical": true,
+      "before_bytes": 197056,
+      "after_bytes": 197056,
+      "differing_bytes": 0
+    },
+    {
+      "cart": "sunflower_torus-hors-render-v2.crt",
+      "before_sha256": "dc055c242d53799b311bfb93f6b06abd2f99008b2db9fe19ee67bb27284878ef",
+      "after_sha256": "dc055c242d53799b311bfb93f6b06abd2f99008b2db9fe19ee67bb27284878ef",
+      "before_file": "examples/sunflower_torus/sunflower_torus-hors-render-v2.crt",
+      "after_file": "examples/sunflower_torus/sunflower_torus-hors-render-v2-legacy.crt",
+      "identical": true,
+      "before_bytes": 254512,
+      "after_bytes": 254512,
+      "differing_bytes": 0
+    },
+    {
+      "cart": "sunflower_torus_color-hors-render-v2.crt",
+      "before_sha256": "d5212369b5ae8f321965c65d8650b970bbe860c2d4d1fe5b0ac6883e9363b1a8",
+      "after_sha256": "d5212369b5ae8f321965c65d8650b970bbe860c2d4d1fe5b0ac6883e9363b1a8",
+      "before_file": "examples/sunflower_torus/sunflower_torus_color-hors-render-v2.crt",
+      "after_file": "examples/sunflower_torus/sunflower_torus_color-hors-render-v2-legacy.crt",
+      "identical": true,
+      "before_bytes": 295552,
+      "after_bytes": 295552,
+      "differing_bytes": 0
+    },
+    {
+      "cart": "torus-hors-render-v2.crt",
+      "before_sha256": "44d67af406ae47432007ec92fe82a0008db8dff0bc9fbf3a751f48e6b707398f",
+      "after_sha256": "44d67af406ae47432007ec92fe82a0008db8dff0bc9fbf3a751f48e6b707398f",
+      "before_file": "examples/torus/torus-hors-render-v2.crt",
+      "after_file": "examples/torus/torus-hors-render-v2-legacy.crt",
+      "identical": true,
+      "before_bytes": 336592,
+      "after_bytes": 336592,
+      "differing_bytes": 0
+    },
+    {
+      "cart": "torus_dense-hors-render-v2.crt",
+      "before_sha256": "8e28ecc3f73ebca22518f7f8f071673f2ba3f60f5da1b140146d9b495accab20",
+      "after_sha256": "8e28ecc3f73ebca22518f7f8f071673f2ba3f60f5da1b140146d9b495accab20",
+      "before_file": "examples/torus_dense/torus_dense-hors-render-v2.crt",
+      "after_file": "examples/torus_dense/torus_dense-hors-render-v2-legacy.crt",
+      "identical": true,
+      "before_bytes": 361216,
+      "after_bytes": 361216,
+      "differing_bytes": 0
+    }
+  ],
+  "all_legacy_073_identical": true,
+  "standard_vs_074": [
+    {
+      "cart": "c643d-demo-vVERSION-hors-render-v2-all-ram.crt",
+      "before_sha256": "420a6f0c39721346c9585c45bff10f688d48b9bc08f81f9eb1f4fe2f41b79055",
+      "after_sha256": "b33a2d0f2dce9a08aefcad80d3d4832ee3af3ab2567ede93814ee930a2c30680",
+      "before_file": "examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all-ram.crt",
+      "after_file": "examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all-ram.crt",
+      "identical": false,
+      "before_bytes": 985024,
+      "after_bytes": 985024,
+      "differing_bytes": 16
+    },
+    {
+      "cart": "c643d-demo-vVERSION-hors-render-v2-all.crt",
+      "before_sha256": "c1c540b938070702e40add7c2803148386c1c9499efa1f9bb1e0d7bb35c53575",
+      "after_sha256": "dfb10bb96c1b83c368a59c849bcd51408a958190f743611c752c85bf29b37b07",
+      "before_file": "examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all.crt",
+      "after_file": "examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all.crt",
+      "identical": false,
+      "before_bytes": 985024,
+      "after_bytes": 985024,
+      "differing_bytes": 16
+    },
+    {
+      "cart": "c643d-hifi-vVERSION-hors-render-v2.crt",
+      "before_sha256": "523754d8f6b22555846aa8d09107195bca74f7d3d0d315b94e1abaf790b3bad1",
+      "after_sha256": "b8e4ef03ec7f4c946e8c066ef150216e605ff7a01562bed08e5899702740e239",
+      "before_file": "examples/cart_hifi/c643d-hifi-v0.7.4-hors-render-v2.crt",
+      "after_file": "examples/cart_hifi/c643d-hifi-v0.7.5-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 689536,
+      "after_bytes": 689536,
+      "differing_bytes": 16
+    },
+    {
+      "cart": "color-combo-test.crt",
+      "before_sha256": "017827ffddb8c42e592214b4b7ef9bfdd74370dd6daf9ddd7281d8f7c55ce6e9",
+      "after_sha256": "e6427e7911df99134c572f2abf498d2a3c8ebb5044eb0dd4098237ec8c22ef66",
+      "before_file": "examples/color_combo_test/color-combo-test.crt",
+      "after_file": "examples/color_combo_test/color-combo-test.crt",
+      "identical": false,
+      "before_bytes": 262720,
+      "after_bytes": 262720,
+      "differing_bytes": 10
+    },
+    {
+      "cart": "cube-hors-render-v2.crt",
+      "before_sha256": "a6deddc384b83ff23bef1c92f55969a9b76bc8cf2c94d9a667663f9dd86791be",
+      "after_sha256": "0fbaf7d73cd7b1973d71cf4a3501ed34ed982dfd7ec8e3e718fa730979ea7cf9",
+      "before_file": "examples/cube/cube-hors-render-v2.crt",
+      "after_file": "examples/cube/cube-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 82144,
+      "after_bytes": 82144,
+      "differing_bytes": 4
+    },
+    {
+      "cart": "demo-cart-2-preview-hors-v2.crt",
+      "before_sha256": "71640c3499b88a63b1616c75127cc01f7de32ce26d27f7fd0aac53e071d5523e",
+      "after_sha256": "8591b06a3b3c716ca632a0c4b5542144b86a8bc04c0e935ebc87794788283e22",
+      "before_file": "examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt",
+      "after_file": "examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt",
+      "identical": false,
+      "before_bytes": 771616,
+      "after_bytes": 771616,
+      "differing_bytes": 15
+    },
+    {
+      "cart": "falling_cubes_c64-hors-render-v2.crt",
+      "before_sha256": "90cfde9f370f9f583d43d4941d89f4b02c9b8ebbdf47cf2fbb41fe43f1b24a33",
+      "after_sha256": "066abd40fe8111b975fcf894fae10176b82dfef8b131d02f90b322b1e66e479c",
+      "before_file": "examples/blender_falling_cubes/falling_cubes_c64-hors-render-v2.crt",
+      "after_file": "examples/blender_falling_cubes/falling_cubes_c64-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 57520,
+      "after_bytes": 57520,
+      "differing_bytes": 4
+    },
+    {
+      "cart": "falling_cubes_c64_color-hors-render-v2.crt",
+      "before_sha256": "81eaec40808c6f845d60cfc32130c770b21116188805d0c5c4241ba736eb1313",
+      "after_sha256": "bf4cc9523be374eb6f73acc1fcf76f27bf54a41edc7f018805892ad852625f4a",
+      "before_file": "examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v2.crt",
+      "after_file": "examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 57520,
+      "after_bytes": 57520,
+      "differing_bytes": 4
+    },
+    {
+      "cart": "horse_and_sunflower-hors-render-v2-scene-ram.crt",
+      "before_sha256": "8279cbae4a40e5b792c2cc29b72553c24c281e20497f13f7d928d19904bf239c",
+      "after_sha256": "08eae876f228d3be3c2a98a8f2afca8dbce299f68101b8d9656f82affa92a60c",
+      "before_file": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-ram.crt",
+      "after_file": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-ram.crt",
+      "identical": false,
+      "before_bytes": 279136,
+      "after_bytes": 279136,
+      "differing_bytes": 4
+    },
+    {
+      "cart": "horse_and_sunflower-hors-render-v2-scene.crt",
+      "before_sha256": "07296e94bfa28ad11b313e82f14df1dce19687f4559448616686633724f9f5af",
+      "after_sha256": "7d5f0ebf35f821d0c9ec2b162bef73c0b4766359b9a6a0b3e88e7519d7cf045f",
+      "before_file": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt",
+      "after_file": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt",
+      "identical": false,
+      "before_bytes": 279136,
+      "after_bytes": 279136,
+      "differing_bytes": 4
+    },
+    {
+      "cart": "horse_head-hors-render-v2.crt",
+      "before_sha256": "b0129a2f94ab4bd7494140842886f9053fb75691c993cf922a9c2725005a09b6",
+      "after_sha256": "25717f9157f685c20ffcfcf331a73ee686b52daff0ef66d6d2e757614d663a3c",
+      "before_file": "examples/horse_head/horse_head-hors-render-v2.crt",
+      "after_file": "examples/horse_head/horse_head-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 229888,
+      "after_bytes": 229888,
+      "differing_bytes": 4
+    },
+    {
+      "cart": "horse_head_hifi-hors-render-v2.crt",
+      "before_sha256": "4dcc852c10e9d821ae39e23ef45f6126dbde3ce2a0bb3639c7450c88d8c23215",
+      "after_sha256": "869ca813d8de32a8db4d8a06f74775a616bfa5e32b344eb7a2a5df222be0d2d5",
+      "before_file": "examples/hifi_showcase/horse_head_hifi-hors-render-v2.crt",
+      "after_file": "examples/hifi_showcase/horse_head_hifi-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 295552,
+      "after_bytes": 295552,
+      "differing_bytes": 4
+    },
+    {
+      "cart": "marbles-hors-render-v2-16fps-force-bytes.crt",
+      "before_sha256": "f5c6741033d1e632c9568aeca7ac5604079b3599ac26857766fcdc9604e35cb2",
+      "after_sha256": "60e7da267f0381ffbe486df1a2e1bff680f2cb18b57a780972f5400b57396019",
+      "before_file": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt",
+      "after_file": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt",
+      "identical": false,
+      "before_bytes": 985024,
+      "after_bytes": 985024,
+      "differing_bytes": 5
+    },
+    {
+      "cart": "space_horse_crawl_color-hors-render-v2.crt",
+      "before_sha256": "2404aab1d9974120a4ffec2493e50d34bbfe4c1df3e5afe2789697370e83d7f1",
+      "after_sha256": "e20424401ff0f274029e7d7816545dd732237e27e797ab2af23048e15fda74df",
+      "before_file": "examples/space_horse_crawl/space_horse_crawl_color-hors-render-v2.crt",
+      "after_file": "examples/space_horse_crawl/space_horse_crawl_color-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 164224,
+      "after_bytes": 164224,
+      "differing_bytes": 4
+    },
+    {
+      "cart": "space_horse_spin_color-hors-render-v2.crt",
+      "before_sha256": "f176e1a1cd946469a939edb266184229d5f2573942b670b31b85a482d8114630",
+      "after_sha256": "e2ab49ea350585a9ee903abca6abb1b8b44259b3441e573a30ca25754843b38b",
+      "before_file": "examples/space_horse_spin/space_horse_spin_color-hors-render-v2.crt",
+      "after_file": "examples/space_horse_spin/space_horse_spin_color-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 353008,
+      "after_bytes": 353008,
+      "differing_bytes": 4
+    },
+    {
+      "cart": "sphere-hors-render-v2.crt",
+      "before_sha256": "9f4ff8bc6f8624a33b2772e41edaa68ee4d099dd39a3d31b8044651e001c8f79",
+      "after_sha256": "359a64bcd40935a112ef5f23978889fed9f451ad03397d55fd7b292113e5dc92",
+      "before_file": "examples/sphere/sphere-hors-render-v2.crt",
+      "after_file": "examples/sphere/sphere-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 197056,
+      "after_bytes": 197056,
+      "differing_bytes": 4
+    },
+    {
+      "cart": "sunflower_torus-hors-render-v2.crt",
+      "before_sha256": "2ed899c9746952723eeeb4de555bc9661ec0acb60d1b6faf1acf10a798ac60f1",
+      "after_sha256": "cb64ed7eb26c626eeb5d71ebd0efcf8068ace4b5a84cf439c294ed33ba9ff1c9",
+      "before_file": "examples/sunflower_torus/sunflower_torus-hors-render-v2.crt",
+      "after_file": "examples/sunflower_torus/sunflower_torus-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 254512,
+      "after_bytes": 254512,
+      "differing_bytes": 4
+    },
+    {
+      "cart": "sunflower_torus_color-hors-render-v2.crt",
+      "before_sha256": "84622658e266e7c003c02820a9e54d3e27fbc14083ba0017e871ffd894981ca6",
+      "after_sha256": "d212aa1ff56fe4972326a4b570054f59e685f0558525a7f0b7073866121042f7",
+      "before_file": "examples/sunflower_torus/sunflower_torus_color-hors-render-v2.crt",
+      "after_file": "examples/sunflower_torus/sunflower_torus_color-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 295552,
+      "after_bytes": 295552,
+      "differing_bytes": 4
+    },
+    {
+      "cart": "torus-hors-render-v2.crt",
+      "before_sha256": "9566466cc69eebc74db1a559bedab355a51e70a208ac772f817bdb5be5e621c6",
+      "after_sha256": "d7db879b527b5846a5dbc98c0771e898272cdfc407dace5f2177c52103b5b0bc",
+      "before_file": "examples/torus/torus-hors-render-v2.crt",
+      "after_file": "examples/torus/torus-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 336592,
+      "after_bytes": 336592,
+      "differing_bytes": 4
+    },
+    {
+      "cart": "torus_dense-hors-render-v2.crt",
+      "before_sha256": "3f58e08599c662a5bcbdd96a0d6798ba7e0bf142c0055189e758fbbf0dc26923",
+      "after_sha256": "94b693dcd572b56e750c6198bae8b626d27d77953a082361f5a6a493a44e6e00",
+      "before_file": "examples/torus_dense/torus_dense-hors-render-v2.crt",
+      "after_file": "examples/torus_dense/torus_dense-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 361216,
+      "after_bytes": 361216,
+      "differing_bytes": 4
+    }
+  ],
+  "legacy_vs_standard": [
+    {
+      "cart": "c643d-demo-vVERSION-hors-render-v2-all-ram.crt",
+      "before_sha256": "adc22e3252b75ecd07ef92b685be32fcc6dc3ccf8c8521f93d43dacb4d5b1fd7",
+      "after_sha256": "b33a2d0f2dce9a08aefcad80d3d4832ee3af3ab2567ede93814ee930a2c30680",
+      "before_file": "examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all-ram-legacy.crt",
+      "after_file": "examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all-ram.crt",
+      "identical": false,
+      "before_bytes": 985024,
+      "after_bytes": 985024,
+      "differing_bytes": 911
+    },
+    {
+      "cart": "c643d-demo-vVERSION-hors-render-v2-all.crt",
+      "before_sha256": "c69cf0bed7472aa5160c0e0f896d3ec4b49ff8a666648cf1f8c0ca137bcaec5b",
+      "after_sha256": "dfb10bb96c1b83c368a59c849bcd51408a958190f743611c752c85bf29b37b07",
+      "before_file": "examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all-legacy.crt",
+      "after_file": "examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all.crt",
+      "identical": false,
+      "before_bytes": 985024,
+      "after_bytes": 985024,
+      "differing_bytes": 911
+    },
+    {
+      "cart": "c643d-hifi-vVERSION-hors-render-v2.crt",
+      "before_sha256": "23d938f842ed488ddc101149f8501dad0fe43472ef2388ec0a975f266d8f6180",
+      "after_sha256": "b8e4ef03ec7f4c946e8c066ef150216e605ff7a01562bed08e5899702740e239",
+      "before_file": "examples/cart_hifi/c643d-hifi-v0.7.5-hors-render-v2-legacy.crt",
+      "after_file": "examples/cart_hifi/c643d-hifi-v0.7.5-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 689536,
+      "after_bytes": 689536,
+      "differing_bytes": 912
+    },
+    {
+      "cart": "color-combo-test.crt",
+      "before_sha256": "5f691c5c618a068fb5c4e976795e293d042f14489e410caba879981e36d7039f",
+      "after_sha256": "e6427e7911df99134c572f2abf498d2a3c8ebb5044eb0dd4098237ec8c22ef66",
+      "before_file": "examples/color_combo_test/color-combo-test-legacy.crt",
+      "after_file": "examples/color_combo_test/color-combo-test.crt",
+      "identical": false,
+      "before_bytes": 262720,
+      "after_bytes": 262720,
+      "differing_bytes": 900
+    },
+    {
+      "cart": "cube-hors-render-v2.crt",
+      "before_sha256": "9806773ee8910f36c1652f24568128b91d5fcc4a11c5eaa9216e54a1aeb8fad2",
+      "after_sha256": "0fbaf7d73cd7b1973d71cf4a3501ed34ed982dfd7ec8e3e718fa730979ea7cf9",
+      "before_file": "examples/cube/cube-hors-render-v2-legacy.crt",
+      "after_file": "examples/cube/cube-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 82144,
+      "after_bytes": 82144,
+      "differing_bytes": 913
+    },
+    {
+      "cart": "demo-cart-2-preview-hors-v2.crt",
+      "before_sha256": "300bc696cba1426be773ea3d91d59b3902643a4814c39a504d123a4e8425ac70",
+      "after_sha256": "8591b06a3b3c716ca632a0c4b5542144b86a8bc04c0e935ebc87794788283e22",
+      "before_file": "examples/cart_demos_v2/demo-cart-2-preview-hors-v2-legacy.crt",
+      "after_file": "examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt",
+      "identical": false,
+      "before_bytes": 771616,
+      "after_bytes": 771616,
+      "differing_bytes": 924
+    },
+    {
+      "cart": "falling_cubes_c64-hors-render-v2.crt",
+      "before_sha256": "0b7a0d95eaea6f22a6406dae803ee9b5195d27ad3416605a56ecd2401b2b44c3",
+      "after_sha256": "066abd40fe8111b975fcf894fae10176b82dfef8b131d02f90b322b1e66e479c",
+      "before_file": "examples/blender_falling_cubes/falling_cubes_c64-hors-render-v2-legacy.crt",
+      "after_file": "examples/blender_falling_cubes/falling_cubes_c64-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 57520,
+      "after_bytes": 57520,
+      "differing_bytes": 914
+    },
+    {
+      "cart": "falling_cubes_c64_color-hors-render-v2.crt",
+      "before_sha256": "82c226942457af416f159948f6309df089ec8a205231aa2f82fa4822b48aec3c",
+      "after_sha256": "bf4cc9523be374eb6f73acc1fcf76f27bf54a41edc7f018805892ad852625f4a",
+      "before_file": "examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v2-legacy.crt",
+      "after_file": "examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 57520,
+      "after_bytes": 57520,
+      "differing_bytes": 914
+    },
+    {
+      "cart": "horse_and_sunflower-hors-render-v2-scene-ram.crt",
+      "before_sha256": "f03bb967303bdb6e54e0897672d8332b4effb6fa889afe9d8ecc584cb7bd24ee",
+      "after_sha256": "08eae876f228d3be3c2a98a8f2afca8dbce299f68101b8d9656f82affa92a60c",
+      "before_file": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-ram-legacy.crt",
+      "after_file": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-ram.crt",
+      "identical": false,
+      "before_bytes": 279136,
+      "after_bytes": 279136,
+      "differing_bytes": 1197
+    },
+    {
+      "cart": "horse_and_sunflower-hors-render-v2-scene.crt",
+      "before_sha256": "adc52c5615a9b1288bafd8b586ffaa7a58e2916dcffa57aedefd807820554647",
+      "after_sha256": "7d5f0ebf35f821d0c9ec2b162bef73c0b4766359b9a6a0b3e88e7519d7cf045f",
+      "before_file": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-legacy.crt",
+      "after_file": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt",
+      "identical": false,
+      "before_bytes": 279136,
+      "after_bytes": 279136,
+      "differing_bytes": 1197
+    },
+    {
+      "cart": "horse_head-hors-render-v2.crt",
+      "before_sha256": "a914856cbac75f0a69d06627b6ef4f850f6cb39e18e46e706c34d922d4bd88ee",
+      "after_sha256": "25717f9157f685c20ffcfcf331a73ee686b52daff0ef66d6d2e757614d663a3c",
+      "before_file": "examples/horse_head/horse_head-hors-render-v2-legacy.crt",
+      "after_file": "examples/horse_head/horse_head-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 229888,
+      "after_bytes": 229888,
+      "differing_bytes": 913
+    },
+    {
+      "cart": "horse_head_hifi-hors-render-v2.crt",
+      "before_sha256": "c27e99841e870271143547ee388f1b6d03209c6fd18ef6677dd7516216d08adb",
+      "after_sha256": "869ca813d8de32a8db4d8a06f74775a616bfa5e32b344eb7a2a5df222be0d2d5",
+      "before_file": "examples/hifi_showcase/horse_head_hifi-hors-render-v2-legacy.crt",
+      "after_file": "examples/hifi_showcase/horse_head_hifi-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 295552,
+      "after_bytes": 295552,
+      "differing_bytes": 913
+    },
+    {
+      "cart": "marbles-hors-render-v2-16fps-force-bytes.crt",
+      "before_sha256": "4172f3f4af93c59fa88826d2634aecab46886e0b6f270c4c31ccff79522e1bef",
+      "after_sha256": "60e7da267f0381ffbe486df1a2e1bff680f2cb18b57a780972f5400b57396019",
+      "before_file": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes-legacy.crt",
+      "after_file": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt",
+      "identical": false,
+      "before_bytes": 985024,
+      "after_bytes": 985024,
+      "differing_bytes": 1954
+    },
+    {
+      "cart": "space_horse_crawl_color-hors-render-v2.crt",
+      "before_sha256": "882c2518fabbd03d5faf5743cf1967540eb757ffe8bf406be211134db5fc716f",
+      "after_sha256": "e20424401ff0f274029e7d7816545dd732237e27e797ab2af23048e15fda74df",
+      "before_file": "examples/space_horse_crawl/space_horse_crawl_color-hors-render-v2-legacy.crt",
+      "after_file": "examples/space_horse_crawl/space_horse_crawl_color-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 164224,
+      "after_bytes": 164224,
+      "differing_bytes": 913
+    },
+    {
+      "cart": "space_horse_spin_color-hors-render-v2.crt",
+      "before_sha256": "8ad0818df1dc1c9dc3d849ec04995a78dd012659c724a27cf33712067c81904a",
+      "after_sha256": "e2ab49ea350585a9ee903abca6abb1b8b44259b3441e573a30ca25754843b38b",
+      "before_file": "examples/space_horse_spin/space_horse_spin_color-hors-render-v2-legacy.crt",
+      "after_file": "examples/space_horse_spin/space_horse_spin_color-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 353008,
+      "after_bytes": 353008,
+      "differing_bytes": 912
+    },
+    {
+      "cart": "sphere-hors-render-v2.crt",
+      "before_sha256": "5f9435072fbd6352e0713695bd022a13c50ee6cab170df8c188fd5a5138a2948",
+      "after_sha256": "359a64bcd40935a112ef5f23978889fed9f451ad03397d55fd7b292113e5dc92",
+      "before_file": "examples/sphere/sphere-hors-render-v2-legacy.crt",
+      "after_file": "examples/sphere/sphere-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 197056,
+      "after_bytes": 197056,
+      "differing_bytes": 914
+    },
+    {
+      "cart": "sunflower_torus-hors-render-v2.crt",
+      "before_sha256": "dc055c242d53799b311bfb93f6b06abd2f99008b2db9fe19ee67bb27284878ef",
+      "after_sha256": "cb64ed7eb26c626eeb5d71ebd0efcf8068ace4b5a84cf439c294ed33ba9ff1c9",
+      "before_file": "examples/sunflower_torus/sunflower_torus-hors-render-v2-legacy.crt",
+      "after_file": "examples/sunflower_torus/sunflower_torus-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 254512,
+      "after_bytes": 254512,
+      "differing_bytes": 913
+    },
+    {
+      "cart": "sunflower_torus_color-hors-render-v2.crt",
+      "before_sha256": "d5212369b5ae8f321965c65d8650b970bbe860c2d4d1fe5b0ac6883e9363b1a8",
+      "after_sha256": "d212aa1ff56fe4972326a4b570054f59e685f0558525a7f0b7073866121042f7",
+      "before_file": "examples/sunflower_torus/sunflower_torus_color-hors-render-v2-legacy.crt",
+      "after_file": "examples/sunflower_torus/sunflower_torus_color-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 295552,
+      "after_bytes": 295552,
+      "differing_bytes": 913
+    },
+    {
+      "cart": "torus-hors-render-v2.crt",
+      "before_sha256": "44d67af406ae47432007ec92fe82a0008db8dff0bc9fbf3a751f48e6b707398f",
+      "after_sha256": "d7db879b527b5846a5dbc98c0771e898272cdfc407dace5f2177c52103b5b0bc",
+      "before_file": "examples/torus/torus-hors-render-v2-legacy.crt",
+      "after_file": "examples/torus/torus-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 336592,
+      "after_bytes": 336592,
+      "differing_bytes": 914
+    },
+    {
+      "cart": "torus_dense-hors-render-v2.crt",
+      "before_sha256": "8e28ecc3f73ebca22518f7f8f071673f2ba3f60f5da1b140146d9b495accab20",
+      "after_sha256": "94b693dcd572b56e750c6198bae8b626d27d77953a082361f5a6a493a44e6e00",
+      "before_file": "examples/torus_dense/torus_dense-hors-render-v2-legacy.crt",
+      "after_file": "examples/torus_dense/torus_dense-hors-render-v2.crt",
+      "identical": false,
+      "before_bytes": 361216,
+      "after_bytes": 361216,
+      "differing_bytes": 914
+    }
+  ],
+  "runtime_payloads": [
+    {
+      "cart": "falling_cubes_c64-hors-render-v2.crt",
+      "runtime_and_frame_bytes_identical": true,
+      "scene_relocation_verified": false
+    },
+    {
+      "cart": "falling_cubes_c64_color-hors-render-v2.crt",
+      "runtime_and_frame_bytes_identical": true,
+      "scene_relocation_verified": false
+    },
+    {
+      "cart": "c643d-demo-vVERSION-hors-render-v2-all.crt",
+      "runtime_and_frame_bytes_identical": true,
+      "scene_relocation_verified": false
+    },
+    {
+      "cart": "c643d-demo-vVERSION-hors-render-v2-all-ram.crt",
+      "runtime_and_frame_bytes_identical": true,
+      "scene_relocation_verified": false
+    },
+    {
+      "cart": "demo-cart-2-preview-hors-v2.crt",
+      "runtime_and_frame_bytes_identical": true,
+      "scene_relocation_verified": false
+    },
+    {
+      "cart": "c643d-hifi-vVERSION-hors-render-v2.crt",
+      "runtime_and_frame_bytes_identical": true,
+      "scene_relocation_verified": false
+    },
+    {
+      "cart": "horse_and_sunflower-hors-render-v2-scene.crt",
+      "runtime_and_frame_bytes_identical": true,
+      "scene_relocation_verified": true
+    },
+    {
+      "cart": "horse_and_sunflower-hors-render-v2-scene-ram.crt",
+      "runtime_and_frame_bytes_identical": true,
+      "scene_relocation_verified": true
+    },
+    {
+      "cart": "marbles-hors-render-v2-16fps-force-bytes.crt",
+      "runtime_and_frame_bytes_identical": true,
+      "scene_relocation_verified": true
+    },
+    {
+      "cart": "color-combo-test.crt",
+      "runtime_and_frame_bytes_identical": true,
+      "scene_relocation_verified": false
+    },
+    {
+      "cart": "cube-hors-render-v2.crt",
+      "runtime_and_frame_bytes_identical": true,
+      "scene_relocation_verified": false
+    },
+    {
+      "cart": "horse_head_hifi-hors-render-v2.crt",
+      "runtime_and_frame_bytes_identical": true,
+      "scene_relocation_verified": false
+    },
+    {
+      "cart": "horse_head-hors-render-v2.crt",
+      "runtime_and_frame_bytes_identical": true,
+      "scene_relocation_verified": false
+    },
+    {
+      "cart": "space_horse_crawl_color-hors-render-v2.crt",
+      "runtime_and_frame_bytes_identical": true,
+      "scene_relocation_verified": false
+    },
+    {
+      "cart": "space_horse_spin_color-hors-render-v2.crt",
+      "runtime_and_frame_bytes_identical": true,
+      "scene_relocation_verified": false
+    },
+    {
+      "cart": "sphere-hors-render-v2.crt",
+      "runtime_and_frame_bytes_identical": true,
+      "scene_relocation_verified": false
+    },
+    {
+      "cart": "sunflower_torus-hors-render-v2.crt",
+      "runtime_and_frame_bytes_identical": true,
+      "scene_relocation_verified": false
+    },
+    {
+      "cart": "sunflower_torus_color-hors-render-v2.crt",
+      "runtime_and_frame_bytes_identical": true,
+      "scene_relocation_verified": false
+    },
+    {
+      "cart": "torus-hors-render-v2.crt",
+      "runtime_and_frame_bytes_identical": true,
+      "scene_relocation_verified": false
+    },
+    {
+      "cart": "torus_dense-hors-render-v2.crt",
+      "runtime_and_frame_bytes_identical": true,
+      "scene_relocation_verified": false
+    }
+  ],
+  "fps_comparison": [
+    {
+      "case": "all",
+      "method": "legacy",
+      "reference": "v0.7.4",
+      "windows": 36,
+      "identical_display_counts": true,
+      "identical_timing_samples": true,
+      "max_absolute_fps_change_percent": 0.0
+    },
+    {
+      "case": "all",
+      "method": "legacy",
+      "reference": "standard",
+      "windows": 36,
+      "identical_display_counts": true,
+      "identical_timing_samples": true,
+      "max_absolute_fps_change_percent": 0.0
+    },
+    {
+      "case": "all",
+      "method": "standard",
+      "reference": "v0.7.4",
+      "windows": 36,
+      "identical_display_counts": true,
+      "identical_timing_samples": true,
+      "max_absolute_fps_change_percent": 0.0
+    },
+    {
+      "case": "all",
+      "method": "standard",
+      "reference": "standard",
+      "windows": 36,
+      "identical_display_counts": true,
+      "identical_timing_samples": true,
+      "max_absolute_fps_change_percent": 0.0
+    },
+    {
+      "case": "all-ram",
+      "method": "legacy",
+      "reference": "v0.7.4",
+      "windows": 36,
+      "identical_display_counts": true,
+      "identical_timing_samples": true,
+      "max_absolute_fps_change_percent": 0.0
+    },
+    {
+      "case": "all-ram",
+      "method": "legacy",
+      "reference": "standard",
+      "windows": 36,
+      "identical_display_counts": true,
+      "identical_timing_samples": true,
+      "max_absolute_fps_change_percent": 0.0
+    },
+    {
+      "case": "all-ram",
+      "method": "standard",
+      "reference": "v0.7.4",
+      "windows": 36,
+      "identical_display_counts": true,
+      "identical_timing_samples": true,
+      "max_absolute_fps_change_percent": 0.0
+    },
+    {
+      "case": "all-ram",
+      "method": "standard",
+      "reference": "standard",
+      "windows": 36,
+      "identical_display_counts": true,
+      "identical_timing_samples": true,
+      "max_absolute_fps_change_percent": 0.0
+    },
+    {
+      "case": "demo2",
+      "method": "legacy",
+      "reference": "v0.7.4",
+      "windows": 21,
+      "identical_display_counts": true,
+      "identical_timing_samples": false,
+      "max_absolute_fps_change_percent": 0.0002787034944606859
+    },
+    {
+      "case": "demo2",
+      "method": "legacy",
+      "reference": "standard",
+      "windows": 21,
+      "identical_display_counts": true,
+      "identical_timing_samples": false,
+      "max_absolute_fps_change_percent": 0.0002787034944606859
+    },
+    {
+      "case": "demo2",
+      "method": "standard",
+      "reference": "v0.7.4",
+      "windows": 21,
+      "identical_display_counts": true,
+      "identical_timing_samples": true,
+      "max_absolute_fps_change_percent": 0.0
+    },
+    {
+      "case": "demo2",
+      "method": "standard",
+      "reference": "standard",
+      "windows": 21,
+      "identical_display_counts": true,
+      "identical_timing_samples": true,
+      "max_absolute_fps_change_percent": 0.0
+    }
+  ],
+  "passed": true,
+  "playback_tested": true
+}

@@ -16,7 +16,7 @@ import subprocess
 
 from . import __version__
 from .cartstream import frame_block, emit_directory
-from .cartridge import new_easyflash_image, easyflash_offset, put_easyflash_chip, convert_easyflash, check_easyflash_crt, install_scene_extension
+from .cartridge import new_easyflash_image, easyflash_offset, put_easyflash_chip, convert_easyflash, check_easyflash_crt, cart_write_method, install_scene_extension
 from .emit import bytes_lines
 from .font import bitmap_text, FONT
 
@@ -72,7 +72,7 @@ def validate_hud(text):
     return text
 
 
-def assemble_scene(root,frames,scene,*,tass,cartconv,outdir,stem,hud_text,frame_ticks=4,tass_args=(),colors=True,color_index=1,background_color=0,border_color=0,intro=False,text_overlay=True,ending=False,renderer=RENDERER,optimize=True,prefer="fps",output_fps=None):
+def assemble_scene(root,frames,scene,*,tass,cartconv,outdir,stem,hud_text,frame_ticks=4,tass_args=(),colors=True,color_index=1,background_color=0,border_color=0,intro=False,text_overlay=True,ending=False,renderer=RENDERER,optimize=True,prefer="fps",output_fps=None,legacy_cart=False):
     from .renderer_names import implementation
     renderer=implementation(renderer)
     if renderer not in (RENDERER, "yunroll-cart-v5-scene", "yunroll-cart-v6-scene", "yunroll-cart-v7-scene", "yunroll-cart-v8-scene", "yunroll-cart-v9-scene", "yunroll-cart-v10-scene"):
@@ -167,15 +167,15 @@ scene_continue:
     for bank in range(3):
         put_easyflash_chip(image,bank,'roml',bytes(padded[bank*8192:(bank+1)*8192]).ljust(8192,b'\0'))
     boot=work/'boot.bin'
-    subprocess.run([tass,*tass_args,'-D',f'EXTENSION_PAGES={26 if variant == "v4" else 28}','--nostart','-o',str(boot),str(root/'c64/cart/easyflash-scene-boot.asm')],check=True,cwd=root)
+    subprocess.run([tass,*tass_args,'-D',f'EXTENSION_PAGES={26 if variant == "v4" else 28}','--nostart','-o',str(boot),str(root/'c64/cart'/(f'easyflash-stream-{variant}-scene-boot.asm' if legacy_cart else 'easyflash-scene-boot.asm'))],check=True,cwd=root)
     intro_bytes = b''
     if intro or variant in ("v5", "v6", "v7", "v8", "v9", "v10"):
         intro_bytes=blob[2+0x8000-load:2+end-load]
-    install_scene_extension(image, boot.read_bytes(), intro_bytes)
+    install_scene_extension(image, boot.read_bytes(), intro_bytes, legacy_cart=legacy_cart)
     raw=work/f'{stem}.bin';raw.write_bytes(image)
-    crt=outdir/f'{stem}.crt';convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name=scene.name.replace('_',' ')[:32],cwd=root)
-    check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=root)
-    manifest=dict(format='c643d-easyflash-stream-scene',version=1,toolkit_version=__version__,renderer=renderer,name=scene.name,frames=len(frames),vertices=len(scene.mesh.vertices),edges=len(scene.mesh.edges),faces=len(scene.mesh.faces),colors=colors,screen_color=hires_screen_byte(color_index,background_color),foreground_color=color_index,background_color=background_color,border_color=border_color,hud_text=hud_text,text_overlay=text_overlay,intro=intro,ending=ending,frame_index_bits=16,frame_ticks=frame_ticks,target_fps=50/frame_ticks,target_duration_seconds=len(frames)*frame_ticks/50,source_fps=scene.source_fps,sample_step=scene.sample_step,source_frames=[f.source_frame for f in scene.frames],directory_ram_bytes=1792,directory_rom_bytes=((len(frames)+255)//256)*1792,frame_buffer_bytes=8192,metadata_cache_bytes=3072,rom_frame_bytes=sum(d['bytes'] for d in directory if 'reference_frame' not in d),data_bank_capacity_bytes=122*8192,run_count_bits=16,frame_data=directory)
+    crt=outdir/f'{stem}.crt';convert_easyflash(cartconv=cartconv,raw=raw,crt=crt,name=scene.name.replace('_',' ')[:32],cwd=root,legacy_cart=legacy_cart)
+    check_easyflash_crt(cartconv=cartconv,crt=crt,cwd=root,legacy_cart=legacy_cart)
+    manifest=dict(cart_write_method=cart_write_method(legacy_cart),format='c643d-easyflash-stream-scene',version=1,toolkit_version=__version__,renderer=renderer,name=scene.name,frames=len(frames),vertices=len(scene.mesh.vertices),edges=len(scene.mesh.edges),faces=len(scene.mesh.faces),colors=colors,screen_color=hires_screen_byte(color_index,background_color),foreground_color=color_index,background_color=background_color,border_color=border_color,hud_text=hud_text,text_overlay=text_overlay,intro=intro,ending=ending,frame_index_bits=16,frame_ticks=frame_ticks,target_fps=50/frame_ticks,target_duration_seconds=len(frames)*frame_ticks/50,source_fps=scene.source_fps,sample_step=scene.sample_step,source_frames=[f.source_frame for f in scene.frames],directory_ram_bytes=1792,directory_rom_bytes=((len(frames)+255)//256)*1792,frame_buffer_bytes=8192,metadata_cache_bytes=3072,rom_frame_bytes=sum(d['bytes'] for d in directory if 'reference_frame' not in d),data_bank_capacity_bytes=122*8192,run_count_bits=16,frame_data=directory)
     if optimization:
         manifest['optimization']=optimization
         if intro: manifest['build_screen']=dict(version=__version__,renderer=('hors-render-v1' if variant == 'v10' else f'yunroll-{variant}')+(' (ram)' if prefer == 'ram' else ''),ticks=None if variant == 'v10' else 150,skip_key='SPACE',wait_for_space=variant == 'v10')
@@ -218,6 +218,7 @@ def cmd_build_cart_scene(a):
     if not tass or not cartconv:return 2
     outdir=Path(a.output_dir).resolve() if a.output_dir else cli.BUILD
     stem=a.output or Path(a.blend or a.scene).stem+'-'+getattr(a,'public_renderer',a.renderer)+('-ram' if getattr(a,'prefer','fps') == 'ram' else '')
+    if not a.output and getattr(a,'legacy_cart',False):stem+='-legacy'
     if not cli._check_overwrite([outdir/f'{stem}{suffix}' for suffix in ('.crt','.lbl','-manifest.json')],a.overwrite_policy):return 2
     if getattr(a,'public_renderer',None)=='hors-render-v1':a.public_renderer='hors-render-v1-scene'
     if a.blend:
@@ -236,7 +237,7 @@ def cmd_build_cart_scene(a):
     if getattr(a,'public_renderer','') in ('hors-render-v2','hors-render-v2-scene'):
         from .hors_v2_stable import assemble_scene as builder
         beta_options=dict(draw_gap=getattr(a,'v2_draw_gap',6),batch_budget=getattr(a,'v2_batch_budget',2048))
-    crt,_=builder(cli.ROOT,frames,scene,tass=tass,cartconv=cartconv,outdir=outdir,stem=stem,hud_text=a.hud_text or scene.name[:31],frame_ticks=a.frame_ticks,tass_args=a.tass_args or (),colors=percell,color_index=c64_color_index(color),background_color=c64_color_index(getattr(a,"background_color",0)),border_color=c64_color_index(getattr(a,"border_color",0)),intro=a.intro,text_overlay=a.text_overlay,ending=a.ending,renderer=a.renderer,prefer=getattr(a,"prefer","fps"),output_fps=rate,**beta_options)
+    crt,_=builder(cli.ROOT,frames,scene,tass=tass,cartconv=cartconv,outdir=outdir,stem=stem,legacy_cart=getattr(a,"legacy_cart",False),hud_text=a.hud_text or scene.name[:31],frame_ticks=a.frame_ticks,tass_args=a.tass_args or (),colors=percell,color_index=c64_color_index(color),background_color=c64_color_index(getattr(a,"background_color",0)),border_color=c64_color_index(getattr(a,"border_color",0)),intro=a.intro,text_overlay=a.text_overlay,ending=a.ending,renderer=a.renderer,prefer=getattr(a,"prefer","fps"),output_fps=rate,**beta_options)
     if a.run:
         vice=cli.resolve_executable(a.vice,'vice')
         if not vice:raise ValueError('VICE not found')

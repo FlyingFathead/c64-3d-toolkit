@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.7.5 (2026-09-11): optional legacy cartridge generation
+
+- Add explicit `--legacy-cart` compatibility output for objects, scenes, demo menus, HiFi, Demo Cart 2, colour tests and cartridge smoke tests. Standard generation remains the default; no automatic fallback occurs.
+- Restore the preserved pre-0.7.4 boot programs and original scene ROMH packing together. Legacy mode omits EAPI/EF-Name and does not relocate the scene's 1 KiB into bank 2 ROML.
+- Warn that the selected method was discontinued since 0.7.4 and may fall outside recommended EasyFlash layout conventions. Retain physical capacity, packet and reset-vector checks.
+- Label automatically named compatibility outputs with `-legacy` and record `cart_write_method` in manifests. Keep these outputs out of the current release index.
+- Correct the default object/scene bootstraps to initialize the CPU port latch `$01` before direction register `$00`, matching the EasyFlash guide. Historical boot files remain unchanged.
+- Verify exact legacy reproduction against the downloaded v0.7.3 release: all 20 control CRTs have equal before/after SHA-256 and zero differing bytes, including headers, with no masking or binary patching. Controls use the published identities, including 0.7.2 for inherited Marbles/HiFi; actual release builds use 0.7.5.
+- Rebuild current examples and refresh release validation. See [0.7.5 release notes](docs/RELEASE_0.7.5.md).
+
 ## 0.7.4 (2026-09-11): cartridge loading and EasyFlash metadata
 
 - Route every cartridge `--run` through one VICE launcher: PAL/windowed/non-Warp defaults, explicit user overrides, default-cartridge detachment, CRT write-back disabled and automatic settings saving disabled. Add `run-cart` for existing CRTs and `--vice-clean-settings` for temporary factory defaults.

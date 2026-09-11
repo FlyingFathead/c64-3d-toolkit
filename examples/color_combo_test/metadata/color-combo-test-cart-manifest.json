@@ -67,7 +67,7 @@
     }
   ],
   "note": "Four monochrome colour pairs using preserved classic geometry; automatic normal PLAY ALL; F3/F4 colour cycling.",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "public_renderer": "hors-render-v2",
   "stream_renderer": "hors-render-v2",
   "uniform_renderer": true,
@@ -1934,7 +1934,7 @@
     }
   ],
   "build_screen": {
-    "version": "0.7.4",
+    "version": "0.7.5",
     "renderer": "hors-render-v2",
     "ticks": 150,
     "skip_key": "SPACE",
@@ -1965,5 +1965,6 @@
     "entries": 4,
     "automatic_start": true,
     "border_matches_background": true
-  }
+  },
+  "cart_write_method": "standard"
 }

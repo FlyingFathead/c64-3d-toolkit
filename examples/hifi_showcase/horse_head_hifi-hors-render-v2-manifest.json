@@ -1,4 +1,5 @@
 {
+  "cart_write_method": "standard",
   "format": "c643d-easyflash-stream-v2",
   "version": 1,
   "renderer": "hors-render-v2",

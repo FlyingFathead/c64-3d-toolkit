@@ -1,6 +1,8 @@
-# Documentation — 0.7.4
+# Documentation — 0.7.5
 
-- [0.7.4 release notes, installation and rebuilds](RELEASE_0.7.4.md).
+- [0.7.5 release notes, installation and rebuilds](RELEASE_0.7.5.md).
+- [Legacy A/B checks and GitHub baseline validation](LEGACY_CART_VALIDATION.md).
+- [Historical 0.7.4 cartridge loading release](RELEASE_0.7.4.md).
 - [Cartridge loading, EasyFlash layout and VICE troubleshooting](CARTRIDGE_LOADING.md).
 - [Historical 0.7.3 colour-control release](RELEASE_0.7.3.md).
 - [Output colours and COLOR COMBO TEST](OUTPUT_COLORS.md).

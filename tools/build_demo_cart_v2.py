@@ -16,6 +16,8 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--renderer',choices=['hors-render-v1','hors-render-v2-beta1','hors-render-v2'],default='hors-render-v2')
     ap.add_argument('--output-dir',type=Path,default=ROOT/'examples/cart_demos_v2')
+    from c643d.cartridge import add_legacy_cart_argument
+    add_legacy_cart_argument(ap)
     ap.add_argument('--tass',default='64tass');ap.add_argument('--cartconv',default='cartconv')
     ap.add_argument('--gap',type=int,default=6);ap.add_argument('--batch-budget',type=int,default=2048)
     ap.add_argument('--prefer',choices=['fps','ram'],default='fps')
@@ -67,10 +69,12 @@ def main():
     stem='demo-cart-2-preview-'+('hors-v2' if stable else 'hors-v2-beta1' if beta else 'hors-v1')+('-ram' if a.prefer=='ram' else '')
     suffix='' if a.water==['ripples_lite'] else '-'+ '-'.join(a.water).replace('_','-')
     stem+=suffix
+    if a.legacy_cart:stem+='-legacy'
     worktag=f'demo-cart-v2-{a.renderer}-{a.prefer}'+suffix
     parser=cli.make_parser(load_toolchain_settings(ROOT/'config/c643d.ini'))
     options=parser.parse_args(['cart-demos','--stream-renderer','hors-render-v1','--output',stem,
         '--output-dir',str(a.output_dir),'--tass',a.tass,'--cartconv',a.cartconv,'--menu-style','demoscene','--prefer',a.prefer])
+    options.legacy_cart=a.legacy_cart
     options.cartridge_name=f'DEMO CART 2 {__version__} '+('HORS V2' if stable else 'HORS V2 BETA' if beta else 'HORS V1')
     options.overwrite_policy='allow'
     oldroot,oldcart=cli.ROOT,cli.CART

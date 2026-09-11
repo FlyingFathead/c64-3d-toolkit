@@ -32,7 +32,7 @@
     "0.6.8-rc1": {
       "overlay_matches_full_pack": true,
       "protected_files_unchanged": 102,
-      "cleanup_output": "Archived 6 files / 1,954,176 bytes to /tmp/c643d-overlay-8lqbpi1k/0.6.8-rc1-oldies.zip\nRun git add -A when committing to record removal of previously tracked files."
+      "cleanup_output": "Archived 6 files / 1,954,176 bytes to TEMP/c643d-overlay-8lqbpi1k/0.6.8-rc1-oldies.zip\nRun git add -A when committing to record removal of previously tracked files."
     }
   }
 }

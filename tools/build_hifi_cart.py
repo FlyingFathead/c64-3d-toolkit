@@ -11,6 +11,8 @@ from compare_renderers import load_scene_references
 def main(argv=None):
     root=Path(__file__).resolve().parents[1]
     p=argparse.ArgumentParser(description=__doc__)
+    from c643d.cartridge import add_legacy_cart_argument
+    add_legacy_cart_argument(p)
     p.add_argument('--tass',default='64tass');p.add_argument('--cartconv',default='cartconv')
     p.add_argument('--prefer',choices=('fps','ram'),default='fps')
     p.add_argument('--renderer',choices=('hors-render-v1','hors-render-v2'),default='hors-render-v2')
@@ -28,6 +30,8 @@ def main(argv=None):
         '--prefer',a.prefer,'--play-all-seconds','10','--tass',a.tass,'--cartconv',a.cartconv,
         '--output',f'c643d-hifi-v{__version__}-{a.renderer}'+('-ram' if a.prefer=='ram' else ''),
         '--output-dir',str(root/'examples/cart_hifi'),'--overwrite-policy','allow'])
+    args.legacy_cart=a.legacy_cart
+    if a.legacy_cart:args.output+='-legacy'
     args.cartridge_name=f'C643D {__version__} HIFI '+a.renderer.replace('hors-render-', 'HORS ').upper()
     return cartuniform.build(args,sources=sources,reel=True)
 

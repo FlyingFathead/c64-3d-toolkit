@@ -73,6 +73,66 @@ The demos do not initialize or call it to write flash. Attribution, original
 source and rebuild instructions are in
 [`tools/c643d/data/easyapi`](../tools/c643d/data/easyapi/README.md).
 
+## Legacy compatibility mode
+
+Added in **0.7.5**. The older write method was discontinued as the default in
+**0.7.4**. Select it explicitly when reproducing an older layout or investigating
+compatibility problems:
+
+```sh
+python c643d.py build --shape cube --legacy-cart
+python c643d.py build --scene examples/autotune/colour-cube.c643dscene --legacy-cart
+python c643d.py cart-demos --legacy-cart
+python c643d.py color-combo-test --legacy-cart
+python c643d.py cartridge-smoke --legacy-cart
+python tools/build_demo_cart_v2.py --legacy-cart
+python tools/build_hifi_cart.py --legacy-cart
+```
+
+The option also works through `build.sh`, `cart-stream`, the `cartridge-demo`
+alias and `tools/build_hors_v2_examples.py`. Python object/scene assemblers accept
+`legacy_cart=True`. PRG-only renderers reject this option.
+
+Every legacy conversion prints a warning to stderr identifying the discontinued
+method and its limitations. This mode may fall outside the recommended EasyFlash
+image conventions. VICE's **EAPI not found** warning is expected. Missing EAPI
+alone does not make the CRT container invalid or prove a boot failure.
+
+| Property | Standard, default | `--legacy-cart` |
+|---|---|---|
+| CRT writer / hardware type | cartconv / EasyFlash 32 | cartconv / EasyFlash 32 |
+| Boot code | Updated shared loaders | Preserved pre-0.7.4 loaders |
+| EAPI and internal EF-Name | Installed and verified | Not installed or required |
+| Scene ROMH `$1800-$1bff` | Reserved for metadata | Original scene content may occupy it |
+| Displaced 1 KiB | Bank 2 ROML, restored to RAM `$9400-$97ff` | No relocation; original ROMH copy |
+| Packet, bank and reset-vector checks | Required | Required |
+| Manifest `cart_write_method` | `standard` | `legacy` |
+
+Legacy object and menu carts also retain their old CRT title convention
+(`C643D STREAM ...` / `C643D <version> ALL ...`); colour tests keep their title.
+This allows exact checksum reproduction when the old VERSION identity is used.
+
+The two scene loaders must stay paired with their respective packing methods.
+Legacy mode restores both parts, rather than removing metadata from an image
+already packed for the standard loader. It permits use of the conventional
+metadata area; it does **not** allow writes beyond the 1 MiB flash capacity,
+out-of-range banks, damaged packets or extension data overwriting reset vectors.
+The renderers, frame encoding and pacing remain selected by their normal options.
+This is the old packing and startup method with current rendering code and release
+identity, not a claim that every byte of a new build equals an old release.
+
+Automatically chosen output names append `-legacy`; an explicit `--output NAME`
+is used as supplied and follows the ordinary overwrite policy. Existing CRTs are
+not converted by `run-cart`. `--run` and `run-cart` retain protected write-back
+and settings handling for both formats. No automatic fallback occurs if standard
+packing or validation fails. Omit `--legacy-cart` to return to the standard path.
+Official prebuilt release cartridges use the standard path.
+
+The default object/scene loaders in 0.7.5 also initialize `$01` before `$00`, as
+specified by the [EasyFlash Programmer's Guide](https://skoe.de/easyflash/files/devdocs/EasyFlash-ProgRef.pdf),
+chapter 4. Legacy boot sources deliberately retain their historical sequence.
+This does not establish that the reported Windows GUI JAM was caused by that order.
+
 ## Windows `$f800` report
 
 A tester reported v0.7.2 failing in VICE 3.10 Win64 after toggling Warp, with

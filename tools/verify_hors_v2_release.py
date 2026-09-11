@@ -21,10 +21,11 @@ def main():
     p.add_argument('--out',type=Path,required=True)
     p.add_argument('--vice',default='x64sc');p.add_argument('--vice-data',required=True)
     p.add_argument('--jobs',type=int,default=3)
+    p.add_argument('--legacy-cart',action='store_true',help='verify the separately named legacy example set')
     a=p.parse_args();a.out=a.out.resolve();a.out.mkdir(parents=True,exist_ok=True)
     if a.jobs<1:p.error('--jobs must be positive')
     carts=sorted(p for p in (ROOT/'examples').rglob('*.crt') if
-        is_current_v2_example(p,(ROOT/'VERSION').read_text().strip()))
+        is_current_v2_example(p,(ROOT/'VERSION').read_text().strip(),legacy_cart=a.legacy_cart))
     if len(carts)<19:raise ValueError('Release is missing stable v2 examples')
     jobs=[]
     for crt in carts:

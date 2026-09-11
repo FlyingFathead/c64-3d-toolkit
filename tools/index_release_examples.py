@@ -3,7 +3,7 @@
 import hashlib,json
 from pathlib import Path
 
-from c643d.released_examples import is_current_v2_example
+from c643d.released_examples import is_current_v2_example, is_legacy_cart_output
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -12,6 +12,7 @@ def main():
     paths=[]
     for p in (ROOT/'examples').rglob('*'):
         if not p.is_file() or p.suffix not in ('.crt','.lbl','.json','.txt'):continue
+        if is_legacy_cart_output(p):continue
         if is_current_v2_example(p,(ROOT/'VERSION').read_text().strip()) or 'color_combo_test' in p.parts:
             paths.append(p)
     carts=[p for p in paths if p.suffix=='.crt']

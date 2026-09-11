@@ -1,0 +1,300 @@
+{
+  "passed": true,
+  "cases": 84,
+  "carts": [
+    {
+      "method": "standard",
+      "cart": "falling_cubes_c64-hors-render-v2.crt",
+      "sha256": "066abd40fe8111b975fcf894fae10176b82dfef8b131d02f90b322b1e66e479c",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "standard",
+      "cart": "falling_cubes_c64_color-hors-render-v2.crt",
+      "sha256": "bf4cc9523be374eb6f73acc1fcf76f27bf54a41edc7f018805892ad852625f4a",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "standard",
+      "cart": "c643d-demo-v0.7.5-hors-render-v2-all-ram.crt",
+      "sha256": "b33a2d0f2dce9a08aefcad80d3d4832ee3af3ab2567ede93814ee930a2c30680",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "standard",
+      "cart": "c643d-demo-v0.7.5-hors-render-v2-all.crt",
+      "sha256": "dfb10bb96c1b83c368a59c849bcd51408a958190f743611c752c85bf29b37b07",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "standard",
+      "cart": "demo-cart-2-preview-hors-v2.crt",
+      "sha256": "8591b06a3b3c716ca632a0c4b5542144b86a8bc04c0e935ebc87794788283e22",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "standard",
+      "cart": "c643d-hifi-v0.7.5-hors-render-v2.crt",
+      "sha256": "b8e4ef03ec7f4c946e8c066ef150216e605ff7a01562bed08e5899702740e239",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "standard",
+      "cart": "horse_and_sunflower-hors-render-v2-scene-ram.crt",
+      "sha256": "08eae876f228d3be3c2a98a8f2afca8dbce299f68101b8d9656f82affa92a60c",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "standard",
+      "cart": "horse_and_sunflower-hors-render-v2-scene.crt",
+      "sha256": "7d5f0ebf35f821d0c9ec2b162bef73c0b4766359b9a6a0b3e88e7519d7cf045f",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "standard",
+      "cart": "marbles-hors-render-v2-16fps-force-bytes.crt",
+      "sha256": "60e7da267f0381ffbe486df1a2e1bff680f2cb18b57a780972f5400b57396019",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "standard",
+      "cart": "color-combo-test.crt",
+      "sha256": "e6427e7911df99134c572f2abf498d2a3c8ebb5044eb0dd4098237ec8c22ef66",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "standard",
+      "cart": "cube-hors-render-v2.crt",
+      "sha256": "0fbaf7d73cd7b1973d71cf4a3501ed34ed982dfd7ec8e3e718fa730979ea7cf9",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "standard",
+      "cart": "horse_head_hifi-hors-render-v2.crt",
+      "sha256": "869ca813d8de32a8db4d8a06f74775a616bfa5e32b344eb7a2a5df222be0d2d5",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "standard",
+      "cart": "horse_head-hors-render-v2.crt",
+      "sha256": "25717f9157f685c20ffcfcf331a73ee686b52daff0ef66d6d2e757614d663a3c",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "standard",
+      "cart": "space_horse_crawl_color-hors-render-v2.crt",
+      "sha256": "e20424401ff0f274029e7d7816545dd732237e27e797ab2af23048e15fda74df",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "standard",
+      "cart": "space_horse_spin_color-hors-render-v2.crt",
+      "sha256": "e2ab49ea350585a9ee903abca6abb1b8b44259b3441e573a30ca25754843b38b",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "standard",
+      "cart": "sphere-hors-render-v2.crt",
+      "sha256": "359a64bcd40935a112ef5f23978889fed9f451ad03397d55fd7b292113e5dc92",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "standard",
+      "cart": "sunflower_torus-hors-render-v2.crt",
+      "sha256": "cb64ed7eb26c626eeb5d71ebd0efcf8068ace4b5a84cf439c294ed33ba9ff1c9",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "standard",
+      "cart": "sunflower_torus_color-hors-render-v2.crt",
+      "sha256": "d212aa1ff56fe4972326a4b570054f59e685f0558525a7f0b7073866121042f7",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "standard",
+      "cart": "torus-hors-render-v2.crt",
+      "sha256": "d7db879b527b5846a5dbc98c0771e898272cdfc407dace5f2177c52103b5b0bc",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "standard",
+      "cart": "torus_dense-hors-render-v2.crt",
+      "sha256": "94b693dcd572b56e750c6198bae8b626d27d77953a082361f5a6a493a44e6e00",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "standard",
+      "cart": "easyflash-smoke.crt",
+      "sha256": "ad0a5d7e613d542f93057297549d39c0d99da114a1444f3479c20a3da12ecb98",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "falling_cubes_c64-hors-render-v2-legacy.crt",
+      "sha256": "0b7a0d95eaea6f22a6406dae803ee9b5195d27ad3416605a56ecd2401b2b44c3",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "falling_cubes_c64_color-hors-render-v2-legacy.crt",
+      "sha256": "82c226942457af416f159948f6309df089ec8a205231aa2f82fa4822b48aec3c",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "c643d-demo-v0.7.5-hors-render-v2-all-legacy.crt",
+      "sha256": "c69cf0bed7472aa5160c0e0f896d3ec4b49ff8a666648cf1f8c0ca137bcaec5b",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "c643d-demo-v0.7.5-hors-render-v2-all-ram-legacy.crt",
+      "sha256": "adc22e3252b75ecd07ef92b685be32fcc6dc3ccf8c8521f93d43dacb4d5b1fd7",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "demo-cart-2-preview-hors-v2-legacy.crt",
+      "sha256": "300bc696cba1426be773ea3d91d59b3902643a4814c39a504d123a4e8425ac70",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "c643d-hifi-v0.7.5-hors-render-v2-legacy.crt",
+      "sha256": "23d938f842ed488ddc101149f8501dad0fe43472ef2388ec0a975f266d8f6180",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "horse_and_sunflower-hors-render-v2-scene-legacy.crt",
+      "sha256": "adc52c5615a9b1288bafd8b586ffaa7a58e2916dcffa57aedefd807820554647",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "horse_and_sunflower-hors-render-v2-scene-ram-legacy.crt",
+      "sha256": "f03bb967303bdb6e54e0897672d8332b4effb6fa889afe9d8ecc584cb7bd24ee",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "marbles-hors-render-v2-16fps-force-bytes-legacy.crt",
+      "sha256": "4172f3f4af93c59fa88826d2634aecab46886e0b6f270c4c31ccff79522e1bef",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "color-combo-test-legacy.crt",
+      "sha256": "5f691c5c618a068fb5c4e976795e293d042f14489e410caba879981e36d7039f",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "cube-hors-render-v2-legacy.crt",
+      "sha256": "9806773ee8910f36c1652f24568128b91d5fcc4a11c5eaa9216e54a1aeb8fad2",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "horse_head_hifi-hors-render-v2-legacy.crt",
+      "sha256": "c27e99841e870271143547ee388f1b6d03209c6fd18ef6677dd7516216d08adb",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "horse_head-hors-render-v2-legacy.crt",
+      "sha256": "a914856cbac75f0a69d06627b6ef4f850f6cb39e18e46e706c34d922d4bd88ee",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "space_horse_crawl_color-hors-render-v2-legacy.crt",
+      "sha256": "882c2518fabbd03d5faf5743cf1967540eb757ffe8bf406be211134db5fc716f",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "space_horse_spin_color-hors-render-v2-legacy.crt",
+      "sha256": "8ad0818df1dc1c9dc3d849ec04995a78dd012659c724a27cf33712067c81904a",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "sphere-hors-render-v2-legacy.crt",
+      "sha256": "5f9435072fbd6352e0713695bd022a13c50ee6cab170df8c188fd5a5138a2948",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "sunflower_torus-hors-render-v2-legacy.crt",
+      "sha256": "dc055c242d53799b311bfb93f6b06abd2f99008b2db9fe19ee67bb27284878ef",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "sunflower_torus_color-hors-render-v2-legacy.crt",
+      "sha256": "d5212369b5ae8f321965c65d8650b970bbe860c2d4d1fe5b0ac6883e9363b1a8",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "torus-hors-render-v2-legacy.crt",
+      "sha256": "44d67af406ae47432007ec92fe82a0008db8dff0bc9fbf3a751f48e6b707398f",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "torus_dense-hors-render-v2-legacy.crt",
+      "sha256": "8e28ecc3f73ebca22518f7f8f071673f2ba3f60f5da1b140146d9b495accab20",
+      "warp_on_off": true,
+      "unchanged": true
+    },
+    {
+      "method": "legacy",
+      "cart": "easyflash-smoke-legacy.crt",
+      "sha256": "d39f2b4d36a5c619c8687095222ae1215c38ef7433479d028174298f7bd0982a",
+      "warp_on_off": true,
+      "unchanged": true
+    }
+  ]
+}
