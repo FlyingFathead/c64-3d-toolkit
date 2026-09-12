@@ -203,5 +203,5 @@ Additional 3D models supplied by: **Sande**
 
 A big thank you to everyone who has contributed, collaborated and given ideas for the project.
 
-Inspired by Saku magazine demo competition
+Inspired by Saku magazine demo competition.
 Saku's home page: [https://sakulehti.fi](https://sakulehti.fi)
