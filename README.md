@@ -198,7 +198,8 @@ CUBE workload; the chart retains that result. See [pipeline versioning](docs/PIP
 # Credits
 
 `c64-3d-toolkit` by [FlyingFathead](https://github.com/FlyingFathead/)<br>
-Thanks: ChaosWhisperer<br>
+
+Thanks to: ChaosWhisperer<br>
 
 Additional 3D models supplied by: **Sande**
 
