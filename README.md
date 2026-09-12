@@ -16,6 +16,24 @@ HORS-V3 adds solid metallic shading, MTL surface colours and image textures, wit
 
 Use `--renderer hors-renderer-v3 --surface-fill metallic` to build a filled object. HORS-V2 wireframe remains the default. [Measured FPS and storage costs](docs/PERFORMANCE_COMPARISON.md#hors-v3-surfaces-and-textures).
 
+## Examples showreel
+
+<p align="center">
+  <a href="assets/c64-3d-toolkit-examples-showreel-v0.7.7.mp4">
+    <img src="assets/c64-3d-toolkit-examples-showreel-v0.7.7-teaser.gif" alt="Animated highlights from the c64-3d-toolkit examples showreel" width="640">
+  </a>
+</p>
+
+<p align="center">
+  <strong><a href="assets/c64-3d-toolkit-examples-showreel-v0.7.7.mp4">Watch the full 85-second MP4</a></strong>
+</p>
+
+The footage is captured from completed display buffers in PAL VICE 3.10 and
+shown at native demo timing. It covers the Blender scenes, Demo Cart 2.0,
+HORS-V2 wireframes, HORS-V3 surfaces and textures, HiFi geometry, Sande's
+models, Space Horse and Don't Lose Your Marbles. The video is silent; the
+featured cartridges do not share a soundtrack.
+
 New models by **Sande**, with reproducible builds, a separate
 [Sande performance comparison](docs/PERFORMANCE_COMPARISON.md#sandes-models),
 and optional cursor/joystick rotation and F-key palette controls.
