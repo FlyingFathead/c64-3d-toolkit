@@ -1,20 +1,30 @@
-<p align="center">
-  <img src="assets/c64-3d-toolkit_banner.png" alt="c64-3d-toolkit" width="100%">
-</p>
-
 # c64-3d-toolkit
 
 > **ATTENTION:** [FlyingFathead/c64-3d-toolkit](https://github.com/FlyingFathead/c64-3d-toolkit/) is the one and only official, original source for `c64-3d-toolkit`. Steer clear of other sources or repositories claiming to be the official project.
 
-**Version 0.7.7: Pretzel Logic - The Great Texture Update**
+## v0.7.8: The Stanford Dragon Has Arrived!
 
 <p align="center">
-  <img src="examples/hors_v3_preview/previews/sande_pretzel-surface-metallic-128-v3-indexed4-vice.gif" alt="Sande's metallic Pretzel running on HORS-V3 with compact colour dictionary encoding" width="640">
+  <img src="examples/stanford_dragon/stanford_dragon-showcase.gif" alt="Stanford Dragon: one full rotation each in wireframe, metallic grey, red, green and blue" width="640">
 </p>
 
-HORS-V3 adds solid metallic shading, MTL surface colours and image textures, with an optional compact colour dictionary. Try the [interactive metallic Pretzel](examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-interactive.crt), or browse [all HORS-V3 cartridges and controls](examples/hors_v3_preview/README.md).
+Five HORS-V3 demo carts bring Stanford's **5,205-vertex / 11,102-triangle Dragon** to the C64: **wireframe, metallic (grey), red, green and blue**. The showcase above presents one complete rotation of each, in that order, with the measured PAL playback timing.
 
-Use `--renderer hors-renderer-v3 --surface-fill metallic` to build a filled object. HORS-V2 wireframe remains the default. [Measured FPS and storage costs](docs/PERFORMANCE_COMPARISON.md#hors-v3-surfaces-and-textures).
+**New texture colours:** red, green and blue shading ramps join metallic (grey) for generated surfaces. Select them with `--surface-fill metallic --surface-palette red|green|blue`; `--surface-fill grey` aliases the metallic preset.
+
+[Download the five Dragon carts, watch individual GIFs and see performance](examples/stanford_dragon/README.md) · [v0.7.8 release notes and installation](docs/RELEASE_0.7.8.md)
+
+## Previous release: v0.7.7 — Pretzel Logic - The Great Texture Update
+
+<p align="center">
+  <img src="examples/hors_v3_preview/previews/sande_pretzel-surface-metallic-128-v3-vice.gif" alt="Sande's Pretzel rotating with metallic grey HORS-V3 shading, direct colour encoding and PAL-timed playback" width="640">
+</p>
+
+**Sande's Pretzel** introduced HORS-V3's metallic shading, MTL surface colours and image textures, with an optional compact colour dictionary. The GIF shows the metallic (grey) version with direct colour encoding. Separate interactive carts add rotation and background controls.
+
+[Play the metallic Pretzel](examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3.crt) · [Try the interactive version](examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-interactive.crt) · [All HORS-V3 examples and controls](examples/hors_v3_preview/README.md) · [v0.7.7 release notes](docs/RELEASE_0.7.7.md)
+
+[Older releases and announcements](docs/RELEASE_HISTORY.md) · [Full changelog](CHANGELOG.md)
 
 ## Examples showreel
 
@@ -37,42 +47,9 @@ the HiFi horse head and 243-vertex sunflower, Sande's TAC-2, the complete
 Cubes and every Demo Cart 2.0 scene. The video is silent; the featured
 cartridges do not share a soundtrack.
 
-New models by **Sande**, with reproducible builds, a separate
-[Sande performance comparison](docs/PERFORMANCE_COMPARISON.md#sandes-models),
-and optional cursor/joystick rotation and F-key palette controls.
-See [Sande's demo kit](examples/demos_sande/README.md).
-Defaults are black and white. Separate HORS-V2 `-color` carts use Sande's
-original MTL materials: [Pretzel](examples/demos_sande/sande_pretzel-hors-render-v2-color.crt)
-and [TAC-2](examples/demos_sande/sande_tac2-hors-render-v2-color.crt).
+## Try the toolkit
 
-By default, generated carts include genuine EasyAPI and PETSCII names, checked metadata
-placement, and stronger reset initialization. The shared VICE launcher disables
-CRT write-back and offers temporary default settings for troubleshooting.
-Use `--legacy-cart` to reproduce the discontinued cartridge packing and boot method.
-It warns before conversion, omits EAPI/name metadata and keeps the original scene
-layout. Standard generation remains the default; generated legacy names end in
-`-legacy`. See [legacy compatibility mode](docs/CARTRIDGE_LOADING.md#legacy-compatibility-mode).
-
-See [0.7.7 release notes and installation](docs/RELEASE_0.7.7.md) and
-[cartridge loading](docs/CARTRIDGE_LOADING.md).
-
-The independent colours and F3/F4/F7/F8 controls introduced in 0.7.3 remain
-available in Demo Cart 1, Demo Cart 2.0 and [COLOR COMBO TEST](examples/color_combo_test/README.md).
-See [output colours](docs/OUTPUT_COLORS.md) for options and inversion examples.
-
-## 👀💦👉 `hors-render-v2` out now (Sep 2026) and is UP TO 35.5% FASTER!
-
-**Since version 0.7.2, `hors-render-v2` is the default.** Prebuilt cartridges,
-measured multi-pass optimization, and a complete release build/check pipeline.
-
-The biggest measured gain is **Ripples Lite: 12.46 → 16.88 display FPS,
-+35.48%**, using matching samples in normal PAL VICE PLAY ALL. The new
-seven-scene showcase improved by **5.71–35.48%** over hors-render-v1.
-The original twelve-animation comparison improved by **2.53–10.00%**.
-The independent Linux run reproduced the beta measurements exactly; stable
-v2 retains that drawing kernel. See the [complete comparison](docs/PERFORMANCE_COMPARISON.md)
-and [showcase results](docs/HORS_RENDER_V2_RESULTS.md) for the actual workloads.
-These are emulated C64 timings, not host wall-clock speed or the HUD counter.
+HORS-V2 wireframe is the default; select `--renderer hors-renderer-v3` for the surface and texture pipeline. The prebuilt cartridges below are ready to run. See [cartridge loading](docs/CARTRIDGE_LOADING.md) and [output colours](docs/OUTPUT_COLORS.md) for setup and controls.
 
 **Performance tables:** [Original twelve animations](docs/PERFORMANCE_COMPARISON.md#best-method-for-each-animation) · [Demo Cart 2.0: all seven scenes](docs/PERFORMANCE_COMPARISON.md#demo-cart-20) · [Sande test kit](docs/PERFORMANCE_COMPARISON.md#sandes-models)
 
@@ -80,19 +57,20 @@ These are emulated C64 timings, not host wall-clock speed or the HUD counter.
 
 | Prebuilt | What is inside |
 | --- | --- |
+| [Stanford Dragon: all five looks](examples/stanford_dragon/README.md) | HORS-V3 wireframe, metallic (grey), red, green and blue; carts, timed GIFs and performance |
 | [Metallic Pretzel — interactive](examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-interactive.crt) | HORS-V3 shaded surfaces, rotation and background controls |
 | [Sande's Pretzel](examples/demos_sande/sande_pretzel-hors-render-v2-interactive.crt) | Sande's 1,552-vertex knot; left/right rotation and F-key colours |
 | [Sande's TAC-2](examples/demos_sande/sande_tac2-hors-render-v2-interactive.crt) | Sande's joystick model; the same interactive controls |
 | [Color Combo Test](examples/color_combo_test/color-combo-test.crt) | Four colour pairs, ten seconds each, automatic looping, F3/F4 cycling |
-| [Twelve-demo cart — FPS](examples/cart_demos/c643d-demo-v0.7.7-hors-render-v2-all.crt) | The original twelve animations, menu styles, PLAY ALL, HiFi mode and colour controls |
-| [Twelve-demo cart — RAM](examples/cart_demos/c643d-demo-v0.7.7-hors-render-v2-all-ram.crt) | Same material and colour controls, smaller drawing kernels |
+| [Twelve-demo cart — FPS](examples/cart_demos/c643d-demo-v0.7.8-hors-render-v2-all.crt) | The original twelve animations, menu styles, PLAY ALL, HiFi mode and colour controls |
+| [Twelve-demo cart — RAM](examples/cart_demos/c643d-demo-v0.7.8-hors-render-v2-all-ram.crt) | Same material and colour controls, smaller drawing kernels |
 | [Demo Cart 2.0](examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt) | Colour cube, colour torus, twist tunnel, ribbon dance, orbital cubes, wave lattice and Ripples Lite |
-| [HiFi reel](examples/cart_hifi/c643d-hifi-v0.7.7-hors-render-v2.crt) | Horse & Sunflower followed by two HiFi spinners |
+| [HiFi reel](examples/cart_hifi/c643d-hifi-v0.7.8-hors-render-v2.crt) | Horse & Sunflower followed by two HiFi spinners |
 | [Marbles](examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt) | All 640 authored samples, original 16 FPS target, native intro and ending |
 | [Horse & Sunflower](examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt) | Authored scene, with a separate RAM build in the same folder |
 
 ```bash
-python c643d.py run-cart examples/cart_demos/c643d-demo-v0.7.7-hors-render-v2-all.crt
+python c643d.py run-cart examples/cart_demos/c643d-demo-v0.7.8-hors-render-v2-all.crt
 python c643d.py run-cart examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt
 ```
 
@@ -107,6 +85,10 @@ benchmark path. **F5 is an exhibition mode and must not be used to compare FPS.*
 [Browse all current examples](examples/README.md).
 
 ## What the toolkit does
+
+<p align="center">
+  <img src="assets/c64-3d-toolkit_banner.png" alt="c64-3d-toolkit" width="100%">
+</p>
 
 A host-assisted 3D compiler and native C64 renderer: import OBJ, SVG or baked
 Blender scenes; compute projection and visibility on the host; pack drawing
@@ -173,7 +155,7 @@ renderer throughput improvement.
 ```bash
 cd path/to/c64-3d-toolkit
 JOBS=3 VICE_DATA=/usr/local/share/vice bash COMPILE-RELEASE.sh \
-  --workspace ../c64-077-release-build
+  --workspace ../c64-078-release-build
 ```
 
 This makes an isolated source copy, builds every stable example, validates
@@ -183,20 +165,21 @@ Add `--install` to install only after all checks pass. Add `--baseline-zip PATH`
 to also generate a patch ZIP. The pipeline never commits, tags or pushes. Root `VERSION` supplies the build
 identity; an alternate-version VICE test guards startup, menu and thanks labels.
 
-To install the supplied 0.7.7 release, save the ZIP one level above your
+To install the supplied 0.7.8 release, save the ZIP one level above your
 checkout and extract it from that parent directory:
 
 ```bash
-unzip -o c64-3d-toolkit-v0.7.7.zip
+unzip -o c64-3d-toolkit-v0.7.8-incremental.zip
 cd c64-3d-toolkit
+python examples/stanford_dragon/verify.py --check
 python tools/compare_renderers.py --check
 python tools/run_hors_v3_perfs.py --check
 ```
 
 The ZIP contains its own `c64-3d-toolkit/` directory. Current cartridges are
 already rebuilt. Previous versioned menu/HiFi carts remain as historical
-references; use the 0.7.7 links above for the updated builds. See the
-[release guide](docs/RELEASE_0.7.7.md) for checks and rebuilds.
+references; use the 0.7.8 links above for the updated builds. See the
+[release guide](docs/RELEASE_0.7.8.md) for checks and rebuilds.
 
 ## Earlier renderers remain available
 
@@ -212,7 +195,7 @@ A new pipeline is added incrementally. Old assembly, encoders and comparisons
 stay intact. The resident `yunroll` method still narrowly wins the canonical
 CUBE workload; the chart retains that result. See [pipeline versioning](docs/PIPELINE_VERSIONING.md).
 
-[Changelog](CHANGELOG.md) · [Documentation index](docs/README.md)
+[Release history](docs/RELEASE_HISTORY.md) · [Changelog](CHANGELOG.md) · [Documentation index](docs/README.md)
 
 ---
 
@@ -229,3 +212,7 @@ Inspired by Saku magazine demo competition.
 Saku's home page: [https://sakulehti.fi](https://sakulehti.fi)
 
 A big thank you to everyone who has contributed, collaborated and given ideas for the project.
+
+**Stanford Dragon:** model data from the [Stanford University Computer Graphics Laboratory's 3D Scanning Repository](https://graphics.stanford.edu/data/3Dscanrep/#dragon). The [Dragon example](examples/stanford_dragon/README.md) includes the original source credit, provenance and usage terms.
+
+**EasyFlash / EasyAPI:** thanks to **Thomas "skoe" Giesel** for the [EasyFlash project and developer documentation](https://skoe.de/easyflash/develdocs/) and the original EasyAPI AM/M29F040 V1.4 flash driver embedded in standard toolkit cartridges. [Bundled source, original notice and attribution](tools/c643d/data/easyapi/README.md). CRT files are generated with VICE's `cartconv`; these demos do not call EasyAPI to write flash.

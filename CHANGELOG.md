@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.7.8: The Stanford Dragon Has Arrived!
+
+- Lead the main page with the Dragon release and showcase GIF, retain v0.7.7 with Sande's metallic Pretzel GIF, and collect older announcements in a release-history page.
+- Add `examples/stanford_dragon/` with Stanford's official res4 Dragon mesh, a lossless PLY-to-OBJ conversion and source attribution/terms.
+- Include separate 128-orientation wireframe, metallic (grey), red, green and blue EasyFlash cartridges built with HORS-V3 and `--prefer fps`.
+- Add five individual GIFs and a 40.34-second combined showcase captured from actual PAL VICE display buffers. The showcase contains one complete rotation each of wireframe, metallic (grey), red, green and blue. Include measured display performance, full picture/colour checks, source hashes and rebuild/verification commands.
+- Add Stanford University Computer Graphics Laboratory and Thomas "skoe" Giesel / EasyFlash / EasyAPI to the main README credits.
+- Add `--surface-palette grey|blue|red|green` for native shaded surfaces, with `--surface-fill grey` as an alias for metallic. Preserve existing default shading and earlier renderers.
+- Rebuild the current release set, integrate Dragon verification and GIF capture into the release runner, and refresh the complete performance comparison.
+- Fix incremental packaging so it cannot overwrite the complete release ZIP.
+- Store required HORS-V3 test transcripts as tracked `.txt` files and derive the release evidence path from VERSION.
+
 ## 0.7.7: Pretzel Logic - The Great Texture Update
 
 - Add HORS-V3 (`hors-renderer-v3`, alias `hors-render-v3`) as an opt-in surface and texture pipeline, preserving all older renderer implementations and the existing default.

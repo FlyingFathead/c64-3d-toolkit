@@ -1,0 +1,21 @@
+{
+  "experimental": true,
+  "preset": "metallic",
+  "encoding": "native",
+  "frames": 128,
+  "fit_scale": 1.0979136607330289,
+  "triangles": 11102,
+  "lighting": "flat Blinn-Phong blue preset",
+  "native_limit": "two colours per 8x8 cell; black preserved at silhouettes",
+  "host_rasterized": true,
+  "runtime_triangle_lighting": false,
+  "uniform_material_fast_path": false,
+  "shade_palette": "blue",
+  "shade_palette_indices": [
+    0,
+    6,
+    14,
+    3,
+    1
+  ]
+}

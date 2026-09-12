@@ -6,6 +6,8 @@ import json
 from pathlib import Path
 import re
 import shutil
+import subprocess
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 RECORD = 'docs/benchmarks/hors-v3-preview/summary.json'
@@ -117,8 +119,18 @@ def main():
             row['background_controls']=background
     record.update(experimental=False,target='HORS-V3 in '+(ROOT/'VERSION').read_text().strip(),
                   version=(ROOT/'VERSION').read_text().strip(),evidence_origin='Fresh complete PAL VICE run on the release cartridges')
+    record['release_title']='The Stanford Dragon Has Arrived!' if record['version']=='0.7.8' else record['release_title']
     record['tests'].pop('complete_release_suite_rerun', None)
-    record['tests']['release_suite_report']='docs/benchmarks/release-0.7.7/validation.json'
+    record['tests']['release_suite_report']='docs/benchmarks/release-'+record['version']+'/validation.json'
+    # Keep required evidence in tracked text files; *.log is excluded by Git.
+    for stem, pattern in [('surface-tests','test_surface*.py'),
+                          ('legacy-interactive-tests','test_interactive_cart.py'),
+                          ('legacy-sande-tests','test_sande_variants.py')]:
+        with (target / (stem + '.txt')).open('w') as log:
+            subprocess.run([sys.executable,'-m','unittest','discover','-s','tests','-p',pattern],
+                           cwd=ROOT,stdout=log,stderr=subprocess.STDOUT,check=True)
+        record['sha256'].pop('docs/benchmarks/hors-v3-preview/' + stem + '.log', None)
+    record['tests']['new_surface_texture_tests']=21
     charts(record,target)
     table,bg=tables(record)
     doc=ROOT/'docs/HORS_RENDER_V3_RESULTS.md';text=doc.read_text()
@@ -126,7 +138,7 @@ def main():
     text=re.sub(r'\| Background mode \|[^\n]*\n(?:\|[^\n]*\n)+','\n'.join(bg)+'\n',text,count=1)
     doc.write_text(text)
     relevant=set(record['sha256'])
-    for folder in ('tools','c64','examples/hors_v3_preview','docs/benchmarks/hors-v3-preview'):
+    for folder in ('tools','c64','tests','examples/hors_v3_preview','docs/benchmarks/hors-v3-preview'):
         relevant.update(f.relative_to(ROOT).as_posix() for f in (ROOT/folder).rglob('*') if f.is_file() and '__pycache__' not in f.parts and f.suffix not in ('.pyc','.md') and f.name!='summary.json')
     record['sha256']={name:sha(ROOT/name) for name in sorted(relevant) if name!=RECORD}
     (ROOT/RECORD).write_text(json.dumps(record,indent=2)+'\n')

@@ -1,0 +1,24 @@
+{
+  "cartridge": "c643d-hifi-v0.7.8-hors-render-v2.crt",
+  "menu_entry": 1,
+  "verified_frames": 259,
+  "orientations": 128,
+  "bitmap_bytes_checked": 1989120,
+  "color_bytes_checked": 248640,
+  "slots": {
+    "1": 87,
+    "2": 86,
+    "0": 86
+  },
+  "average_fps": 20.601921340780784,
+  "min_frame_cycles": 27488,
+  "max_frame_cycles": 59385,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
+  "path": "examples/cart_hifi/c643d-hifi-v0.7.8-hors-render-v2.crt",
+  "entry": 1,
+  "sha256": "0fffa20073616c72edb47e5fcecd2d2bf7efa3f4ab582063ee10a4acb020359d"
+}

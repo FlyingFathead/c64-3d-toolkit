@@ -13,7 +13,7 @@ def main():
     for p in (ROOT/'examples').rglob('*'):
         if not p.is_file() or p.suffix not in ('.crt','.lbl','.json','.txt'):continue
         if is_legacy_cart_output(p):continue
-        if is_current_v2_example(p,(ROOT/'VERSION').read_text().strip()) or 'color_combo_test' in p.parts or 'hors_v3_preview' in p.parts:
+        if is_current_v2_example(p,(ROOT/'VERSION').read_text().strip()) or 'color_combo_test' in p.parts or 'hors_v3_preview' in p.parts or 'stanford_dragon' in p.parts:
             paths.append(p)
     carts=[p for p in paths if p.suffix=='.crt']
     if len(carts)<19:raise ValueError('Expected every stable v2 example to be built')

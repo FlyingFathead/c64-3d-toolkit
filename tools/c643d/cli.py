@@ -618,6 +618,8 @@ def cmd_build(a):
         return cmd_build_v3(a)
     if getattr(a, 'surface_fill', 'none') != 'none':
         raise ValueError('--surface-fill is a new HORS-V3 feature; select --renderer hors-renderer-v3')
+    if getattr(a, 'surface_palette', 'grey') != 'grey':
+        raise ValueError('--surface-palette requires --renderer hors-renderer-v3 --surface-fill metallic')
     if getattr(a, 'v3_color_encoding', 'literal') != 'literal':
         raise ValueError('--compact-color-dictionary requires --renderer hors-renderer-v3')
     from .renderer_names import implementation, public_name
@@ -1245,7 +1247,8 @@ def make_parser(settings):
     b.add_argument('--renderer',choices=('hors-renderer-v3', 'hors-render-v3', 'hors-render-v2', 'hors-render-v2-scene', 'hors-render-v2-beta1', 'hors-render-v2-beta1-scene', 'hors-render-v1', 'hors-render-v1-scene', *RENDERERS, 'yunroll-cart-v2', 'yunroll-cart-v3', 'yunroll-cart-v4', 'yunroll-cart-v4-scene', 'yunroll-cart-v5', 'yunroll-cart-v5-scene', 'yunroll-cart-v6', 'yunroll-cart-v6-scene', 'yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10', 'yunroll-cart-v7-scene', 'yunroll-cart-v8-scene', 'yunroll-cart-v9-scene', 'yunroll-cart-v10-scene'),default='hors-render-v2',help='default hors-render-v2 CRT; v1 and v2-beta1 remain explicit historical choices; step/bytechunk/yunroll=PRG; yunroll-cart-v2 through v10=streamed EasyFlash CRT')
     b.add_argument('--prefer',choices=('fps','ram'),default='fps',help='V7/V8: prioritize FPS (default) or smaller Y drawing kernels; geometry and pacing stay the same')
     b.add_argument('--interactive-cart',action='store_true',help='standalone V2/V3 spins: persistent cursor/joystick direction; V2 adds uniform palette controls, V3 remaps black backgrounds and preserves surface shades')
-    b.add_argument('--surface-fill', '--surface-fills', choices=('none', 'metallic', 'material', 'textured'), default='none', nargs='?', const='material', help='HORS-V3 experimental surfaces: metallic grey lighting, MTL Kd colours, or map_Kd image textures (default: wireframe)')
+    b.add_argument('--surface-fill', '--surface-fills', type=lambda value: 'metallic' if value in ('grey', 'gray') else value, choices=('none', 'metallic', 'material', 'textured'), default='none', nargs='?', const='material', help='HORS-V3 surfaces: metallic lighting (grey/gray aliases), MTL Kd colours, or map_Kd image textures (default: wireframe)')
+    b.add_argument('--surface-palette', type=lambda value: 'grey' if value in ('metallic', 'gray') else value, choices=('grey', 'blue', 'red', 'green'), default='grey', help='HORS-V3 metallic lighting ramp in the fixed C64 palette (default grey; metallic/gray aliases); coloured ramps require native encoding')
     v3color=b.add_mutually_exclusive_group()
     v3color.add_argument('--v3-color-encoding', choices=('literal', 'indexed4'), default='literal', help='HORS-V3 colour plan: direct bytes (speed) or packed 4-bit pair dictionary (size)')
     v3color.add_argument('--compact-color-dictionary', '--compact-color-lookup', dest='v3_color_encoding', action='store_const', const='indexed4', help='HORS-V3: pack two colour-pair dictionary indices into each byte')

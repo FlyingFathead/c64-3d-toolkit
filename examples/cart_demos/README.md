@@ -4,11 +4,11 @@
 
 | Cartridge | Entries | Colours |
 | --- | ---: | --- |
-| [c643d-demo-v0.7.7-hors-render-v2-all-ram.crt](c643d-demo-v0.7.7-hors-render-v2-all-ram.crt) | 12 | Per entry |
-| [c643d-demo-v0.7.7-hors-render-v2-all.crt](c643d-demo-v0.7.7-hors-render-v2-all.crt) | 12 | Per entry |
+| [c643d-demo-v0.7.8-hors-render-v2-all-ram.crt](c643d-demo-v0.7.8-hors-render-v2-all-ram.crt) | 12 | Per entry |
+| [c643d-demo-v0.7.8-hors-render-v2-all.crt](c643d-demo-v0.7.8-hors-render-v2-all.crt) | 12 | Per entry |
 
 ```bash
-x64sc +easyflashcrtwrite -cartcrt examples/cart_demos/c643d-demo-v0.7.7-hors-render-v2-all-ram.crt
+x64sc +easyflashcrtwrite -cartcrt examples/cart_demos/c643d-demo-v0.7.8-hors-render-v2-all-ram.crt
 ```
 
 Press SPACE when an identification screen is shown. Companion labels and manifests identify the exact build.

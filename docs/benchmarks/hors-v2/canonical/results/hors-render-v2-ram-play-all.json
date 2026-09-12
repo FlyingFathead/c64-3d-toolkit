@@ -1,6 +1,6 @@
 {
   "cartridge": "hors-render-v2-ram.crt",
-  "sha256": "f0acf11a2843b57598a2cb1312c3bf406be00d8d5719b01180e276d1ddeb7bf4",
+  "sha256": "fbff768225365c436ee0e0ffdf422bd8819fec074022535a11681a46772ca749",
   "renderer": "hors-render-v2",
   "preference": "ram",
   "mode": "normal PLAY ALL ONLY",

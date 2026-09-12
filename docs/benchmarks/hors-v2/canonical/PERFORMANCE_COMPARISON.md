@@ -315,6 +315,21 @@ Direct colour bytes remain the speed default. Compact dictionary encoding is opt
 Interactive controls replace originally black pixels only; other metallic shades are preserved. Default cycling requests 50 PAL ticks between changes; the fastest setting requests one tick but performs at most one change per produced picture. The displayed border follows its buffer’s background unless locked or independently selected.
 
 
+## Stanford Dragon: HORS-V3 palettes
+
+The official Stanford res4 mesh: 5,205 vertices, 15,796 edges and 11,102 triangles; 128 orientations. PAL VICE, FPS preference, 1,504-refresh display windows after warmup. Projection, visibility and surface lighting are precomputed on the host.
+
+| Surface | Average displayed FPS | Longest display hold (ms) | Frame stream bytes | CRT bytes |
+| --- | ---: | ---: | ---: | ---: |
+| wireframe | 20.00 | 59.85 | 233,306 | 303,760 |
+| metallic (grey) | 15.13 | 79.80 | 279,935 | 361,216 |
+| red | 15.10 | 79.80 | 277,791 | 353,008 |
+| green | 15.13 | 79.80 | 279,215 | 361,216 |
+| blue | 15.13 | 79.80 | 280,945 | 361,216 |
+
+[Cartridges, correctly timed GIFs, source credits and full results](../examples/stanford_dragon/README.md).
+
+
 ## Per-animation lookup
 
 High/low are 985,248 divided by the shortest/longest **actual display-flip interval within a normal PLAY ALL window**, including VIC and IRQ stalls. Average is total displayed frames / measured time, not an arithmetic average of instantaneous FPS. Window edges are excluded from interval extrema. High FPS can include a brief queued-frame burst; it does not describe sustained throughput. Bold average marks the best frame-count result across FPS-preferred methods. RAM variants are listed separately. All values are FPS unless the header says bytes.
@@ -715,5 +730,5 @@ Use `--resume` only with the same source/tool fingerprint and options. Logs and 
 
 **Release gate:** run `--check` before publishing. If renderer code, builders, input assets, examples, version or this tester changes, rerun the complete uncapped matrix and replace this chart before tagging. Preserve old method rows; add new generations to the tester and regenerate. Never silently copy old numbers into a changed workload. Capped runs are separate experiments and must not replace this uncapped baseline.
 
-<!-- comparison-input-sha256: 0fd3853c563393a860be25fd07abee19959409b292e8be175a4bc46ae30ae6e4 -->
-<!-- comparison-source-version: 0.7.7 -->
+<!-- comparison-input-sha256: 4d9a07375a226500992527c7a59a6d52293331ec48eaffea9851500c344ea5d5 -->
+<!-- comparison-source-version: 0.7.8 -->

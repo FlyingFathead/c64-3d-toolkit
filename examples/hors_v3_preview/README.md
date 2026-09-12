@@ -19,6 +19,12 @@ Open the `.crt` files in `cartridges/` with VICE or your normal EasyFlash setup.
 
 New features require `--renderer hors-renderer-v3`. The overall toolkit default remains HORS-V2 wireframe. In this preview V3 is limited to standalone spinning objects with the standard 192-line viewport, an initially black background and text overlay. Interactive rotation and background overrides are supported using `--interactive-cart`; it preserves surface shades and displays the `INTERACTIVE` label. Authored scenes, foreground recolouring, no-overlay mode and custom intros/endings are not integrated yet. Old pipelines retain their existing features.
 
+## Coloured shading in v0.7.8
+
+HORS-V3 now supports **red, green and blue surface-shading ramps**, alongside the original metallic grey. Use `--surface-fill metallic --surface-palette red`, `green` or `blue`. `--surface-fill grey` (also `gray`) aliases `metallic`; palette names `metallic` and `gray` alias `grey`. The default grey output is preserved. These ramps colour the generated shaded surfaces; imported `map_Kd` textures and plain MTL materials keep their existing colours.
+
+[Stanford Dragon: all five carts, timed GIFs and performance](../stanford_dragon/README.md).
+
 ## Build your own
 
 Run these commands at the repository root. Surface generation requires NumPy and Pillow in addition to the existing toolkit toolchain; 64tass and cartconv assemble the cartridge.

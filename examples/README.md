@@ -1,6 +1,6 @@
-# Examples: toolkit 0.7.7
+# Examples: toolkit 0.7.8
 
-The 26 HORS-V2 and colour-test cartridges are rebuilt for 0.7.7 with the new loader, real EAPI
+The 26 HORS-V2 and colour-test cartridges are rebuilt for 0.7.8 with the new loader, real EAPI
 and PETSCII name metadata. The 0.7.3 colour controls remain available in Demo
 Cart 1, Demo Cart 2.0 and [COLOR COMBO TEST](color_combo_test/README.md).
 Older versioned menu and HiFi CRTs remain unchanged as historical references;
@@ -8,8 +8,11 @@ use the current links below for the updated builds.
 
 HORS-V2 remains the default. The additional [HORS-V3 collection](hors_v3_preview/README.md) contains 11 surface, texture, interactive and comparison cartridges. Historical versioned menu and HiFi cartridges, original renderer code and frozen test inputs remain available.
 
+The [Stanford Dragon example](stanford_dragon/README.md) adds five standalone HORS-V3 cartridges: wireframe, metallic (grey), red, green and blue, with PAL-timed GIFs, performance results and a reproducible source mesh. It uses the HORS-V3 surface palette options introduced in 0.7.8.
+
 | Folder | Stable cartridges |
 | --- | ---: |
+| [stanford_dragon](stanford_dragon/README.md) | 5 |
 | [hors_v3_preview](hors_v3_preview/README.md) | 11 |
 | [demos_sande](demos_sande/README.md) | 6 |
 | [color_combo_test](color_combo_test/README.md) | 1 |
@@ -29,6 +32,6 @@ HORS-V2 remains the default. The additional [HORS-V3 collection](hors_v3_preview
 | [torus](torus/README.md) | 1 |
 | [torus_dense](torus_dense/README.md) | 1 |
 
-Sources remain in the Blender and autotune folders. Use [COMPILE-RELEASE.sh](../COMPILE-RELEASE.sh) to rebuild and verify the complete release; see the [release guide](../docs/RELEASE_0.7.7.md).
+Sources remain in the Blender and autotune folders. Use [COMPILE-RELEASE.sh](../COMPILE-RELEASE.sh) to rebuild and verify the complete release; see the [release guide](../docs/RELEASE_0.7.8.md).
 
 `examples.json` remains the explicit resident regression recipe used by `generate-examples` / `test-examples`. For current v2 artifacts use `tools/build_current_examples.py` or the complete release compiler above.

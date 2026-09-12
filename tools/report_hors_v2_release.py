@@ -4,6 +4,7 @@ import argparse
 import json
 from pathlib import Path
 import shutil
+import re
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -51,6 +52,26 @@ def main():
     text+='Reproduce with `JOBS=3 bash COMPILE-RELEASE.sh --workspace ../c64-072-release-build`. '
     text+='Detailed JSON evidence is in `docs/benchmarks/hors-v2/`; full monitor traces remain in the external release workspace.\n'
     (ROOT/'docs/HORS_RENDER_V2_RESULTS.md').write_text(text)
+    version=(ROOT/'VERSION').read_text().strip()
+    release=ROOT/'docs/benchmarks'/('release-'+version)
+    release.mkdir(parents=True,exist_ok=True)
+    for source,name in [(checks/'unit.log','unit.txt'),(checks/'canonical.log','canonical.txt'),
+                        (work/'example-checks/summary.json','examples.json'),
+                        (work/'color-combo-checks.json','color-combo.json'),
+                        (work/'demo1-color-checks.json','demo1-colors.json'),
+                        (work/'demo2-color-checks.json','demo2-colors.json')]:
+        shutil.copy2(source,release/name)
+    unit=(checks/'unit.log').read_text()
+    count=re.search(r'Ran (\d+) tests?',unit)
+    skipped=re.search(r'skipped=(\d+)',unit)
+    v3=json.loads((ROOT/'docs/benchmarks/hors-v3-preview/summary.json').read_text())
+    dragon=json.loads((ROOT/'examples/stanford_dragon/validation.json').read_text())
+    report=dict(passed=True,version=version,unit_tests=int(count[1]) if count else None,
+        unit_skipped=int(skipped[1]) if skipped else 0,v2_examples=proof,
+        hors_v3_cartridges=len(v3['results']),stanford_dragon_cartridges=len(dragon['results']),
+        stanford_dragon_pictures=sum(r['verification']['verified_frames'] for r in dragon['results']),
+        canonical_comparison_passed=True,physical_hardware_tested=False)
+    (release/'validation.json').write_text(json.dumps(report,indent=2)+'\n')
     print(text)
 
 

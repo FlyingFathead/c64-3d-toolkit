@@ -36,7 +36,7 @@ def package(root, output, baseline=None):
         with zipfile.ZipFile(baseline) as z:
             prefix='' if 'VERSION' in z.namelist() else next(n[:-7] for n in z.namelist() if n.endswith('/VERSION'))
             old={n[len(prefix):]:hashlib.sha256(z.read(n)).digest() for n in z.namelist() if n.startswith(prefix) and not n.endswith('/')}
-        patch=output.with_name(output.stem.replace('-complete','-overlay')+'.zip')
+        patch=output.with_name(output.stem.removesuffix('-complete')+'-incremental.zip')
         with zipfile.ZipFile(patch,'w',zipfile.ZIP_DEFLATED,compresslevel=9) as z:
             for rel,path in current.items():
                 if old.get(rel)!=hashlib.sha256(path.read_bytes()).digest():z.write(path,'c64-3d-toolkit/'+rel)
@@ -77,6 +77,8 @@ def main():
     run('build-color-combos',[sys.executable,'c643d.py','color-combo-test','--tass',a.tass,'--cartconv',a.cartconv,'--overwrite-policy','allow'])
     run('build-v3',[sys.executable,'tools/build_hors_v3_examples.py','--tass',a.tass,'--cartconv',a.cartconv,
         '--output-dir',str(stage/'examples/hors_v3_preview/cartridges')])
+    run('build-dragon',[sys.executable,'examples/stanford_dragon/build.py','--tass',a.tass,'--cartconv',a.cartconv,
+        '--output-dir',str(stage/'examples/stanford_dragon/cartridges')])
     run('index-examples',[sys.executable,'tools/index_release_examples.py'])
     run('verify-release',[sys.executable,'tools/verify_hors_v2_release.py','--out',str(work/'example-checks'),
         '--vice',wrapper,'--vice-data',env['VICE_DATA'],'--jobs',str(a.jobs)])

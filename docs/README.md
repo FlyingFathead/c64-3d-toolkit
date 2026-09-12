@@ -1,6 +1,8 @@
-# Documentation — 0.7.7
+# Documentation — 0.7.8
 
+- [0.7.8: The Stanford Dragon Has Arrived!](RELEASE_0.7.8.md).
 - [0.7.7: Pretzel Logic - The Great Texture Update](RELEASE_0.7.7.md).
+- [Release history and older announcements](RELEASE_HISTORY.md).
 - [HORS-V3 surface, texture and compact-dictionary results](HORS_RENDER_V3_RESULTS.md).
 - [HORS-V3 cartridges, presets and interactive controls](../examples/hors_v3_preview/README.md).
 - [Historical 0.7.6 release notes and Sande test kit](RELEASE_0.7.6.md).

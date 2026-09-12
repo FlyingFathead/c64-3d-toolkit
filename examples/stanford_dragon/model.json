@@ -1,0 +1,11 @@
+{
+  "source_member": "dragon_recon/dragon_vrip_res4.ply",
+  "source_ply_sha256": "23fe8c7b3b006de91d5307504c4a1624e5e5e4d4fcb9e96569b00ce971fdc480",
+  "obj_sha256": "f4a427c1dc2b36e5f33bf340e6f72de830de331747ae9aae4abff27ec992bc5e",
+  "vertices": 5205,
+  "edges": 15796,
+  "triangles": 11102,
+  "additional_decimation": false,
+  "coordinates_preserved": true,
+  "face_order_and_winding_preserved": true
+}

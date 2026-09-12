@@ -55,7 +55,26 @@ def fingerprints(root):
         if (root/rel).exists():files[rel]=hashlib.sha256((root/rel).read_bytes()).hexdigest()
     rel='docs/benchmarks/hors-v3-preview/summary.json'
     if (root/rel).exists():files[rel]=hashlib.sha256((root/rel).read_bytes()).hexdigest()
+    rel='examples/stanford_dragon/validation.json'
+    if (root/rel).exists():files[rel]=hashlib.sha256((root/rel).read_bytes()).hexdigest()
     return files,hashlib.sha256(json.dumps(files,sort_keys=True).encode()).hexdigest()
+
+
+def dragon_section(root):
+    path=root/'examples/stanford_dragon/validation.json'
+    record=json.loads(path.read_text())
+    for name,digest in record['sha256'].items():
+        if hashlib.sha256((root/name).read_bytes()).hexdigest()!=digest:
+            raise ValueError('Stanford Dragon evidence is stale: '+name)
+    lines=['','## Stanford Dragon: HORS-V3 palettes','',
+        'The official Stanford res4 mesh: 5,205 vertices, 15,796 edges and 11,102 triangles; 128 orientations. PAL VICE, FPS preference, 1,504-refresh display windows after warmup. Projection, visibility and surface lighting are precomputed on the host.','',
+        '| Surface | Average displayed FPS | Longest display hold (ms) | Frame stream bytes | CRT bytes |',
+        '| --- | ---: | ---: | ---: | ---: |']
+    for row in record['results']:
+        d=row['display']
+        assert d['pixel_match'] and d['color_match'] and d['orientations_seen']==128
+        lines.append(f"| {'metallic (grey)' if row['id']=='metallic' else row['id']} | {d['display_fps']:.2f} | {d['worst_display_ms']:.2f} | {row['rom_frame_bytes']:,} | {row['crt_bytes']:,} |")
+    return lines+['','[Cartridges, correctly timed GIFs, source credits and full results](../examples/stanford_dragon/README.md).','']
 
 
 def showcase_section(root):
@@ -411,6 +430,7 @@ def chart(a,provenance):
     lines+=sande_methods_section(Path(__file__).resolve().parents[1], source_colors=True)
     from report_hors_v3_release import comparison_section as v3_section
     lines+=v3_section(Path(__file__).resolve().parents[1])
+    lines+=dragon_section(Path(__file__).resolve().parents[1])
     sizes={}
     for key in results:
         raw=json.loads((a.workspace/'results'/(key+'-sizes.json')).read_text());sizes[key]={e['name']:e for e in raw['entries']}
@@ -495,6 +515,7 @@ def main():
     if a.check:
         from report_hors_v3_release import comparison_section as v3_section
         v3_section(repo)
+        dragon_section(repo)
         from run_sande_perfs import comparison_section
         comparison_section(repo)
         comparison_section(repo, source_colors=True)

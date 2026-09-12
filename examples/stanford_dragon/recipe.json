@@ -1,0 +1,89 @@
+{
+  "renderer": "hors-renderer-v3",
+  "name": "STANFORD DRAGON",
+  "obj": "stanford_dragon.obj",
+  "common_arguments": [
+    "--obj-up",
+    "y",
+    "--spin-axis",
+    "y",
+    "--frames",
+    "128",
+    "--rotate-y",
+    "20",
+    "--keep-winding",
+    "--visibility",
+    "surface",
+    "--camera",
+    "110",
+    "--focal",
+    "180",
+    "--margin",
+    "6",
+    "--max-fit-scale",
+    "1.4",
+    "--prefer",
+    "fps",
+    "--background-color",
+    "black",
+    "--border-color",
+    "black",
+    "--text-overlay"
+  ],
+  "variants": [
+    {
+      "id": "wireframe",
+      "stem": "stanford_dragon-wireframe-hors-v3",
+      "arguments": [
+        "--color",
+        "white"
+      ]
+    },
+    {
+      "id": "metallic",
+      "stem": "stanford_dragon-metallic-hors-v3",
+      "arguments": [
+        "--surface-fill",
+        "metallic",
+        "--v3-color-encoding",
+        "literal"
+      ]
+    },
+    {
+      "id": "red",
+      "stem": "stanford_dragon-red-hors-v3",
+      "arguments": [
+        "--surface-fill",
+        "metallic",
+        "--surface-palette",
+        "red",
+        "--v3-color-encoding",
+        "literal"
+      ]
+    },
+    {
+      "id": "green",
+      "stem": "stanford_dragon-green-hors-v3",
+      "arguments": [
+        "--surface-fill",
+        "metallic",
+        "--surface-palette",
+        "green",
+        "--v3-color-encoding",
+        "literal"
+      ]
+    },
+    {
+      "id": "blue",
+      "stem": "stanford_dragon-blue-hors-v3",
+      "arguments": [
+        "--surface-fill",
+        "metallic",
+        "--surface-palette",
+        "blue",
+        "--v3-color-encoding",
+        "literal"
+      ]
+    }
+  ]
+}

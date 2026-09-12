@@ -1,0 +1,27 @@
+blender export: /fake/blender --background --disable-autoexec /tmp/tmpe1lfrajr/scene.blend --python-exit-code 1 --python /tmp/tmpe1lfrajr/tools/blender_export.py -- --output /tmp/tmpe1lfrajr/scene.c643dscene --sample-step 1 --viewport-height 144 --max-frames 255
+..............................output colours: foreground white (1); background black (0); border black (0)
+...output colours: foreground white (1); background black (0); border black (0)
+.....output colours: foreground white (1); background black (0); border black (0)
+.............s.........output colours: foreground white (1); background black (0); border black (0)
+.output colours: foreground white (1); background black (0); border black (0)
+.......output colours: foreground yellow (7); background black (0); border black (0)
+output colours: foreground white (1); background black (0); border black (0)
+..............output colours: foreground source colours; background black (0); border black (0)
+.output colours: foreground source colours; background black (0); border black (0)
+output colours: foreground source colours; background black (0); border black (0)
+................................................................................................+ cartconv -t easy -i /tmp/tmptoy8_rdy/scene.bin -o /tmp/tmptoy8_rdy/scene.crt -n TEST
+Packing: payload=32 bytes; sequential=1 banks; packed=1 banks; available=122; unused in allocated banks=8160 bytes
+.Packing: payload=1007616 bytes; sequential=123 banks; packed=123 banks; available=122; unused in allocated banks=0 bytes
+.Packing: payload=800000 bytes; sequential=150 banks; packed=100 banks; available=122; unused in allocated banks=19200 bytes
+...........fps locking: not set
+Surface-fill raster: 1/1
+..Surface-fill raster: 1/4
+Surface-fill raster: 4/4
+Surface-fill raster: 1/4
+Surface-fill raster: 4/4
+..................................s......s..
+----------------------------------------------------------------------
+Ran 239 tests in 5.099s
+
+OK (skipped=3)
+fps locking: not set

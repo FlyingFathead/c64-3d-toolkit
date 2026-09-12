@@ -1355,6 +1355,14 @@
     "native_limit": "two colours per 8x8 cell; black preserved at silhouettes",
     "host_rasterized": true,
     "runtime_triangle_lighting": false,
-    "uniform_material_fast_path": false
+    "uniform_material_fast_path": false,
+    "shade_palette": "grey",
+    "shade_palette_indices": [
+      0,
+      11,
+      12,
+      15,
+      1
+    ]
   }
 }

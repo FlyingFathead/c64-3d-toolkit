@@ -74,6 +74,11 @@ run_check sande-color-methods "$python_bin" tools/run_sande_methods.py --source-
   --workspace "$results_dir/sande-color-methods" --skip-build --jobs "$jobs" \
   --tass "$tass_bin" --cartconv "$cartconv_bin" --vice "$vice_bin" --vice-data "$vice_data"
 cp -- "$results_dir/sande-color-methods/methods-color.json" docs/benchmarks/sande/methods-color.json
+run_check dragon-surface-tests "$python_bin" -m unittest discover -s tests -p 'test_surface*.py'
+cp -- "$results_dir/dragon-surface-tests.log" examples/stanford_dragon/evidence/surface-tests.txt
+run_check dragon "$python_bin" examples/stanford_dragon/verify.py --run --install \
+  --vice "$vice_bin" --vice-data "$vice_data" --output-dir "$results_dir/dragon"
+run_check dragon-provenance "$python_bin" examples/stanford_dragon/verify.py --check
 run_check hors-v3 "$python_bin" tools/run_hors_v3_perfs.py --run \
   --vice "$vice_bin" --vice-data "$vice_data" --output-dir "$results_dir/hors-v3"
 run_check hors-v3-report "$python_bin" tools/report_hors_v3_release.py "$results_dir/hors-v3"

@@ -1,6 +1,8 @@
 # HORS-V3: measured results
 
-HORS-V3 in v0.7.7: **Pretzel Logic - The Great Texture Update**. The complete release gates rebuild the examples and repeat the PAL VICE measurements.
+HORS-V3 was introduced in v0.7.7: **Pretzel Logic - The Great Texture Update**. These measurements were rerun for **v0.7.8: The Stanford Dragon Has Arrived!**. The complete release gates rebuild the examples and repeat the PAL VICE measurements.
+
+The new [Stanford Dragon example](../examples/stanford_dragon/README.md) demonstrates wireframe, metallic (grey), red, green and blue shaded surfaces, with its own measured performance and timed GIFs. Select coloured shading with `--surface-fill metallic --surface-palette red|green|blue`; `--surface-fill grey` aliases metallic.
 
 The default stays wireframe. New surface generation and colour compression require `--renderer hors-renderer-v3`. The shared CLI adds an opt-in dispatch; older renderer implementations retain their functionality. Current example builds carry the new toolkit version; historical versioned cartridges remain available.
 
@@ -38,7 +40,7 @@ The 128-orientation comparisons use the same full 1,552-vertex, 1,552-quad mesh,
 
 Every variant passed independent expected-bitmap and colour checks across all three buffers: **259 completed pictures per 128-orientation cartridge**, and **387 for the 192-orientation cartridge**. The display windows also covered every orientation and checked bitmap, colours and HUD. Release measurements are repeated against the rebuilt cartridges and recorded with their SHA-256 hashes.
 
-The public compact CLI was rebuilt end to end and exactly matched the benchmarked CRT SHA256. Sixteen focused surface/texture tests and four existing Sande/interactive compatibility tests passed. The complete release suite additionally checks the historical renderers; see `docs/benchmarks/release-0.7.7/`. Real hardware is not tested.
+The public compact CLI was rebuilt end to end and exactly matched the benchmarked CRT SHA256. Twenty-one focused surface/texture and colour-palette tests and four existing Sande/interactive compatibility tests passed. The complete release suite additionally checks the historical renderers; see `docs/benchmarks/release-0.7.8/`. Real hardware is not tested.
 
 ## Interactive metallic cartridges
 

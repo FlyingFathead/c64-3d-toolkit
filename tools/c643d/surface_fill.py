@@ -18,6 +18,13 @@ from .clearplan import selective_clear
 
 GREYS = np.array([0, 51, 119, 187, 255], dtype=float)
 GREY_CODES = np.array([0, 11, 12, 15, 1], dtype=np.uint8)
+# Four lighting levels in the fixed VIC-II palette, plus silhouette black.
+SHADE_PALETTES = {
+    'grey': (0, 11, 12, 15, 1),
+    'blue': (0, 6, 14, 3, 1),
+    'red': (0, 9, 2, 10, 1),
+    'green': (0, 11, 5, 13, 1),
+}
 RGB = np.zeros((16, 3), dtype=float)
 for _code, _rgb in C64_PALETTE.values():
     RGB[_code] = _rgb
@@ -26,7 +33,8 @@ BAYER = np.array([[0, 8, 2, 10], [12, 4, 14, 6],
 
 
 def raster(mesh, camera, index, count, preset='metallic', axis='y',
-           fallback=1, source_colors=True, textures=None):
+           fallback=1, source_colors=True, textures=None, shade_palette='grey'):
+    shade_codes = SHADE_PALETTES[shade_palette]
     vertices = [_rotate_axis(p, 2 * math.pi * index / count, axis)
                 for p in mesh.vertices]
     if any(camera.distance + z <= 0 for x, y, z in vertices):
@@ -49,7 +57,7 @@ def raster(mesh, camera, index, count, preset='metallic', axis='y',
             half = normalize(tuple(light[i] + view[i] for i in range(3)))
             intensity = 255 * min(1.0, 0.12 + 0.55 * max(0, dot(normal, light))
                                  + 0.8 * max(0, dot(normal, half)) ** 18)
-            shade = int(GREY_CODES[np.argmin(abs(GREYS[1:] - intensity)) + 1])
+            shade = int(shade_codes[np.argmin(abs(GREYS[1:] - intensity)) + 1])
         shades.append(shade)
         raster_triangle(depth, owner, ti, points[a], points[b], points[c],
                         width=256, height=192)
@@ -63,7 +71,11 @@ def raster(mesh, camera, index, count, preset='metallic', axis='y',
     return picture
 
 
-def quantize(picture, encoding='native', preset='metallic'):
+def quantize(picture, encoding='native', preset='metallic', shade_palette='grey'):
+    if shade_palette not in SHADE_PALETTES:
+        raise ValueError('Unknown surface shade palette')
+    if shade_palette != 'grey' and (preset != 'metallic' or encoding != 'native'):
+        raise ValueError('Coloured shade palettes require metallic fill with native encoding')
     bit = np.zeros((192, 320), dtype=bool)
     screen = np.full((24, 40), 0x10, dtype=np.uint8)
     expected = np.zeros((192, 320), dtype=np.uint8)
@@ -78,7 +90,7 @@ def quantize(picture, encoding='native', preset='metallic'):
             counts = np.bincount(cell.ravel(), minlength=16)
             if counts[0] == 64:
                 continue
-            candidates = list(map(int, GREY_CODES)) if preset == 'metallic' else sorted(set(cell.ravel()) | {0})
+            candidates = list(SHADE_PALETTES[shade_palette]) if preset == 'metallic' else sorted(set(cell.ravel()) | {0})
             best = None
             for lo, hi in itertools.combinations(candidates, 2):
                 if counts[0] and lo != 0:
@@ -134,23 +146,28 @@ def frame_from_pixels(bit, screen, base_screen=0x10):
 
 
 def build_frames(mesh, count, camera, *, preset='metallic', encoding='native',
-                 axis='y', fallback=1, source_colors=True, uniform_foreground=None, textures=None):
+                 axis='y', fallback=1, source_colors=True, uniform_foreground=None, textures=None,
+                 shade_palette='grey'):
     if preset not in ('metallic', 'material', 'textured') or encoding not in ('native', 'dither'):
         raise ValueError('Unknown surface preset or encoding')
     if preset != 'metallic' and encoding != 'native':
         raise ValueError('Material fill uses native colours; dither is a metallic-preset option')
+    if shade_palette not in SHADE_PALETTES:
+        raise ValueError('Unknown surface shade palette')
+    if shade_palette != 'grey' and (preset != 'metallic' or encoding != 'native'):
+        raise ValueError('Coloured shade palettes require metallic fill with native encoding')
     if not mesh.faces:
         raise ValueError('Surface fill requires polygon faces, not only line edges')
     frames = []
     for i in range(count):
-        picture = raster(mesh, camera, i, count, preset, axis, fallback, source_colors, textures)
+        picture = raster(mesh, camera, i, count, preset, axis, fallback, source_colors, textures, shade_palette)
         if uniform_foreground is not None:
             bits = np.zeros((192, 320), dtype=bool)
             bits[:, :256] = picture != 0
             base_screen = uniform_foreground << 4
             screen = np.full((24, 40), base_screen, dtype=np.uint8)
         else:
-            bits, screen, _ = quantize(picture, encoding, preset)
+            bits, screen, _ = quantize(picture, encoding, preset, shade_palette)
             base_screen = 0x10
         frames.append(frame_from_pixels(bits, screen, base_screen))
         if i % 24 == 0 or i == count - 1:
@@ -170,6 +187,9 @@ def cmd_build(a):
         from .hors_v3 import assemble_cartridge, prepare_colors, color_plan, color_plan_fits, literal_encoder
     if a.renderer != 'hors-renderer-v3' or a.blend or a.scene:
         raise ValueError('Experimental --surface-fill requires hors-renderer-v3; scenes are unsupported (V3 interactive rotation is supported)')
+    shade_palette = getattr(a, 'surface_palette', 'grey')
+    if shade_palette != 'grey' and (a.surface_fill != 'metallic' or a.surface_encoding != 'native'):
+        raise ValueError('--surface-palette colours require --surface-fill metallic and --surface-encoding native')
     if not a.text_overlay or a.rastertime_profiler or cli._viewport_height(a) != 192:
         raise ValueError('Experimental --surface-fill requires the standard 192-line viewport and text overlay, without raster profiler')
     if c64_color_index(a.background_color) != 0:
@@ -190,6 +210,8 @@ def cmd_build(a):
     stem = a.output or label.lower().replace(' ', '_') + '-surface-' + a.surface_fill + '-' + a.surface_encoding + '-' + a.renderer
     if not a.output and a.interactive_cart:
         stem += '-interactive'
+    if not a.output and shade_palette != 'grey':
+        stem += '-' + shade_palette
     if stem.endswith('.crt'):
         stem = stem[:-4]
     targets = [outdir / (stem + suffix) for suffix in ('.crt', '.lbl', '-manifest.json', '-surface.json')]
@@ -224,7 +246,7 @@ def cmd_build(a):
         frames = build_frames(mesh, count, camera, preset=a.surface_fill,
                               encoding=a.surface_encoding, axis=axis,
                               fallback=fallback, source_colors=source,
-                              uniform_foreground=uniform, textures=textures)
+                              uniform_foreground=uniform, textures=textures, shade_palette=shade_palette)
     outdir.mkdir(parents=True, exist_ok=True)
     settings = dict(experimental=True, preset=a.surface_fill, encoding=a.surface_encoding,
                     frames=count, fit_scale=scale, triangles=len(mesh.triangulated_faces()),
@@ -232,6 +254,9 @@ def cmd_build(a):
                     native_limit='two colours per 8x8 cell; black preserved at silhouettes',
                     host_rasterized=True, runtime_triangle_lighting=False,
                     uniform_material_fast_path=uniform is not None)
+    if a.surface_fill == 'metallic':
+        settings.update(shade_palette=shade_palette, shade_palette_indices=list(SHADE_PALETTES[shade_palette]),
+                        lighting='flat Blinn-Phong '+shade_palette+' preset')
     (outdir / (stem + '-surface.json')).write_text(json.dumps(settings, indent=2) + '\n')
     oracle = outdir / (stem + '-oracle.json')
     oracle.write_text(json.dumps([asdict(f) for f in frames]))

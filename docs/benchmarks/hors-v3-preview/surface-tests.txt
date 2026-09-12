@@ -1,0 +1,11 @@
+.........fps locking: not set
+Surface-fill raster: 1/1
+..Surface-fill raster: 1/4
+Surface-fill raster: 4/4
+Surface-fill raster: 1/4
+Surface-fill raster: 4/4
+..........
+----------------------------------------------------------------------
+Ran 21 tests in 0.211s
+
+OK
