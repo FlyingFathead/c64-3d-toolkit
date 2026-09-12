@@ -25,14 +25,17 @@ Use `--renderer hors-renderer-v3 --surface-fill metallic` to build a filled obje
 </p>
 
 <p align="center">
-  <strong><a href="assets/c64-3d-toolkit-examples-showreel-v0.7.7.mp4">Watch the full 85-second MP4</a></strong>
+  <strong><a href="assets/c64-3d-toolkit-examples-showreel-v0.7.7.mp4">Watch the full 71-second MP4</a></strong>
 </p>
 
-The footage is captured from completed display buffers in PAL VICE 3.10 and
-shown at native demo timing. It covers the Blender scenes, Demo Cart 2.0,
-HORS-V2 wireframes, HORS-V3 surfaces and textures, HiFi geometry, Sande's
-models, Space Horse and Don't Lose Your Marbles. The video is silent; the
-featured cartridges do not share a soundtrack.
+The footage uses verified completed display buffers captured in PAL VICE 3.10.
+For the showreel, every authored animation sample is presented on a fixed 25 fps
+clock instead of inheriting renderer-dependent capture delays; HUD FPS values
+remain the cartridge's benchmark counters. The reel includes Horse & Sunflower,
+the HiFi horse head and 243-vertex sunflower, Sande's TAC-2, the complete
+1,552-vertex Pretzel wireframe, the HORS-V3 metallic Pretzel, Blender Falling
+Cubes and every Demo Cart 2.0 scene. The video is silent; the featured
+cartridges do not share a soundtrack.
 
 New models by **Sande**, with reproducible builds, a separate
 [Sande performance comparison](docs/PERFORMANCE_COMPARISON.md#sandes-models),
