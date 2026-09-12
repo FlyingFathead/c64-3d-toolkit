@@ -1,0 +1,104 @@
+{
+  "sha256": "1fd50e7ba2b55e12bc2790efb8fc75bb68d0676e046ad3351935d5f1c0aaac16",
+  "keys": {
+    "passed": true,
+    "input_checks": 47,
+    "f4_debounced": true,
+    "f3_unchanged": true,
+    "f5_start_stop": true,
+    "f6_f7_rates_and_clamps": true,
+    "f8_follow_black": true,
+    "ctrl_f7_custom": true,
+    "f2_reset": true
+  },
+  "palette": {
+    "passed": true,
+    "pictures_checked": 272,
+    "all_16_colors": true,
+    "all_three_buffers": true,
+    "nonblack_colors_preserved": true,
+    "bitmap_unchanged": true,
+    "hud_background": true,
+    "border_modes": true,
+    "visible_border_matches_buffer": true,
+    "all_256_lookup_values": true,
+    "f2_five_tick_white_flash": true
+  },
+  "measurements": {
+    "steady": {
+      "sha256": "1fd50e7ba2b55e12bc2790efb8fc75bb68d0676e046ad3351935d5f1c0aaac16",
+      "clock_hz": 985248,
+      "refreshes": 1504,
+      "display_flips": 366,
+      "elapsed_cycles": 29563375,
+      "display_fps": 12.197550787080297,
+      "worst_display_ms": 104.02761538211699,
+      "hold_ticks": {
+        "4": 289,
+        "5": 57,
+        "3": 19
+      },
+      "cycle_period_pal_ticks": null,
+      "initial_background": 6,
+      "observed_palette_changes": 0,
+      "unique_pictures_observed": 128,
+      "picture_coverage_complete": true,
+      "pixel_match": true,
+      "color_match": true,
+      "nonblack_colors_preserved": true,
+      "border_background_match": true,
+      "hud_match": true,
+      "cycle_mean_seconds": null
+    },
+    "auto-50": {
+      "sha256": "1fd50e7ba2b55e12bc2790efb8fc75bb68d0676e046ad3351935d5f1c0aaac16",
+      "clock_hz": 985248,
+      "refreshes": 1504,
+      "display_flips": 358,
+      "elapsed_cycles": 29562742,
+      "display_fps": 11.931193121395843,
+      "worst_display_ms": 103.70079411478125,
+      "hold_ticks": {
+        "4": 263,
+        "5": 81,
+        "3": 13
+      },
+      "cycle_period_pal_ticks": 50,
+      "initial_background": 6,
+      "observed_palette_changes": 29,
+      "unique_pictures_observed": 128,
+      "picture_coverage_complete": true,
+      "pixel_match": true,
+      "color_match": true,
+      "nonblack_colors_preserved": true,
+      "border_background_match": true,
+      "hud_match": true,
+      "cycle_mean_seconds": 1.0352785361075152
+    },
+    "auto-1": {
+      "sha256": "1fd50e7ba2b55e12bc2790efb8fc75bb68d0676e046ad3351935d5f1c0aaac16",
+      "clock_hz": 985248,
+      "refreshes": 1504,
+      "display_flips": 333,
+      "elapsed_cycles": 29562972,
+      "display_fps": 11.097922901662255,
+      "worst_display_ms": 99.75660950339407,
+      "hold_ticks": {
+        "5": 169,
+        "4": 163
+      },
+      "cycle_period_pal_ticks": 1,
+      "initial_background": 6,
+      "observed_palette_changes": 333,
+      "unique_pictures_observed": 128,
+      "picture_coverage_complete": true,
+      "pixel_match": true,
+      "color_match": true,
+      "nonblack_colors_preserved": true,
+      "border_background_match": true,
+      "hud_match": true,
+      "cycle_mean_seconds": 0.08995666114717078
+    }
+  },
+  "passed": true
+}

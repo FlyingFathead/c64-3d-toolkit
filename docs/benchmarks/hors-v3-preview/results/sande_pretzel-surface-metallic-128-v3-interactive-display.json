@@ -1,0 +1,25 @@
+{
+  "sha256": "659ecf4f25fb906ed8b6ca2f1550e21df1d28d1a6142b7c1bf57474de590ac2a",
+  "clock_hz": 985248,
+  "refreshes": 1504,
+  "warmup_samples": 134,
+  "display_flips": 429,
+  "elapsed_cycles": 29562623,
+  "display_fps": 14.2974928848499,
+  "high_fps": 17.433389365655135,
+  "low_fps": 12.151554020720276,
+  "worst_display_ms": 82.29400110429049,
+  "hold_ticks": {
+    "4": 216,
+    "3": 212
+  },
+  "unique_pictures_expected": 128,
+  "unique_pictures_observed": 128,
+  "picture_coverage_complete": true,
+  "pixel_match": true,
+  "color_match": true,
+  "hud_match": true,
+  "interactive_label_match": true,
+  "cycle_period_pal_ticks": null,
+  "observed_palette_changes": 0
+}

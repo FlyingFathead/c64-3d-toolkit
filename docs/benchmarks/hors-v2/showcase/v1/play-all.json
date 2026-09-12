@@ -1,6 +1,6 @@
 {
   "cartridge": "demo-cart-2-preview-hors-v1.crt",
-  "sha256": "441f664f1397d5b6189e7fc077f1e2faebd472f27baa0cb38e73bab5a0a0de72",
+  "sha256": "c31a14a626fe7f6f1f6cbc96be17d2557935fc0c593be30896feeef434ee49b2",
   "renderer": "hors-render-v1",
   "preference": "fps",
   "mode": "normal PLAY ALL ONLY",

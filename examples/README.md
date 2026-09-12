@@ -1,15 +1,16 @@
-# Examples: hors-render-v2 / toolkit 0.7.6
+# Examples: toolkit 0.7.7
 
-All 26 current cartridges are built for 0.7.6 with the new loader, real EAPI
+The 26 HORS-V2 and colour-test cartridges are rebuilt for 0.7.7 with the new loader, real EAPI
 and PETSCII name metadata. The 0.7.3 colour controls remain available in Demo
 Cart 1, Demo Cart 2.0 and [COLOR COMBO TEST](color_combo_test/README.md).
 Older versioned menu and HiFi CRTs remain unchanged as historical references;
 use the current links below for the updated builds.
 
-All current prebuilt links use **hors-render-v2**. Historical versioned menu and HiFi cartridges, original renderer code and frozen test inputs remain available. Superseded preview sets are archived outside the checkout.
+HORS-V2 remains the default. The additional [HORS-V3 collection](hors_v3_preview/README.md) contains 11 surface, texture, interactive and comparison cartridges. Historical versioned menu and HiFi cartridges, original renderer code and frozen test inputs remain available.
 
 | Folder | Stable cartridges |
 | --- | ---: |
+| [hors_v3_preview](hors_v3_preview/README.md) | 11 |
 | [demos_sande](demos_sande/README.md) | 6 |
 | [color_combo_test](color_combo_test/README.md) | 1 |
 | [blender_falling_cubes](blender_falling_cubes/README.md) | 2 |
@@ -28,6 +29,6 @@ All current prebuilt links use **hors-render-v2**. Historical versioned menu and
 | [torus](torus/README.md) | 1 |
 | [torus_dense](torus_dense/README.md) | 1 |
 
-Sources remain in the Blender and autotune folders. Use [COMPILE-RELEASE.sh](../docs/RELEASE_0.7.6.md#rebuild) to rebuild and verify the complete release.
+Sources remain in the Blender and autotune folders. Use [COMPILE-RELEASE.sh](../COMPILE-RELEASE.sh) to rebuild and verify the complete release; see the [release guide](../docs/RELEASE_0.7.7.md).
 
 `examples.json` remains the explicit resident regression recipe used by `generate-examples` / `test-examples`. For current v2 artifacts use `tools/build_current_examples.py` or the complete release compiler above.

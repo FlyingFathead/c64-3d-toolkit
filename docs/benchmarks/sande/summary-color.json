@@ -1,6 +1,6 @@
 {
   "set_id": "sande_models",
-  "version": "0.7.6",
+  "version": "0.7.7",
   "author": "Sande",
   "protocol": "standalone looping objects; normal uncapped playback; PAL; seed 1; factory defaults; sound off",
   "refreshes": 1504,
@@ -79,7 +79,10 @@
         "picture_coverage_complete": true,
         "pixel_match": true,
         "color_match": true,
-        "hud_match": true
+        "hud_match": true,
+        "interactive_label_match": false,
+        "cycle_period_pal_ticks": null,
+        "observed_palette_changes": 0
       }
     },
     {
@@ -144,7 +147,10 @@
         "picture_coverage_complete": true,
         "pixel_match": true,
         "color_match": true,
-        "hud_match": true
+        "hud_match": true,
+        "interactive_label_match": false,
+        "cycle_period_pal_ticks": null,
+        "observed_palette_changes": 0
       }
     },
     {
@@ -209,7 +215,10 @@
         "picture_coverage_complete": true,
         "pixel_match": true,
         "color_match": true,
-        "hud_match": true
+        "hud_match": true,
+        "interactive_label_match": false,
+        "cycle_period_pal_ticks": null,
+        "observed_palette_changes": 0
       }
     },
     {
@@ -274,7 +283,10 @@
         "picture_coverage_complete": true,
         "pixel_match": true,
         "color_match": true,
-        "hud_match": true
+        "hud_match": true,
+        "interactive_label_match": false,
+        "cycle_period_pal_ticks": null,
+        "observed_palette_changes": 0
       }
     },
     {
@@ -339,7 +351,10 @@
         "picture_coverage_complete": true,
         "pixel_match": true,
         "color_match": true,
-        "hud_match": true
+        "hud_match": true,
+        "interactive_label_match": false,
+        "cycle_period_pal_ticks": null,
+        "observed_palette_changes": 0
       }
     },
     {
@@ -403,7 +418,10 @@
         "picture_coverage_complete": true,
         "pixel_match": true,
         "color_match": true,
-        "hud_match": true
+        "hud_match": true,
+        "interactive_label_match": false,
+        "cycle_period_pal_ticks": null,
+        "observed_palette_changes": 0
       }
     },
     {
@@ -468,7 +486,10 @@
         "picture_coverage_complete": true,
         "pixel_match": true,
         "color_match": true,
-        "hud_match": true
+        "hud_match": true,
+        "interactive_label_match": false,
+        "cycle_period_pal_ticks": null,
+        "observed_palette_changes": 0
       }
     },
     {
@@ -532,7 +553,10 @@
         "picture_coverage_complete": true,
         "pixel_match": true,
         "color_match": true,
-        "hud_match": true
+        "hud_match": true,
+        "interactive_label_match": false,
+        "cycle_period_pal_ticks": null,
+        "observed_palette_changes": 0
       }
     }
   ],

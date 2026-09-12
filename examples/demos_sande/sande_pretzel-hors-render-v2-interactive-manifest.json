@@ -2220,7 +2220,7 @@
     "height": 8,
     "font": "HUD 5x7"
   },
-  "toolkit_version": "0.7.6",
+  "toolkit_version": "0.7.7",
   "sande_controls": {
     "rotation": "CRSR left/right or joystick port 1/2 left/right; direction persists after release",
     "foreground": "F3",

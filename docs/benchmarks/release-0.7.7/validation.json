@@ -1,0 +1,230 @@
+{
+  "passed": true,
+  "version": "0.7.7",
+  "title": "Pretzel Logic - The Great Texture Update",
+  "unit_tests": 233,
+  "unit_skipped": 3,
+  "canonical_jobs": 26,
+  "canonical_completed_pictures": 22901,
+  "v2_examples": {
+    "passed": true,
+    "cartridges": 25,
+    "checks": 55,
+    "verified_pictures": 10751,
+    "native_ending": {
+      "cartridge": "marbles-hors-render-v2-16fps-force-bytes.crt",
+      "finite_ending": true,
+      "greeting_correction_verified": true,
+      "basic_banner_verified": true,
+      "ghost_message_verified": true,
+      "idle_cursor_verified": true,
+      "seconds_from_reset": {
+        "0-intro_start": 0.5042507064211245,
+        "1-frame_begin": 9.645309607327292,
+        "2-outro_start": 51.14871382636656,
+        "3-greeting_oops": 53.74218673877034,
+        "4-greeting_done": 55.1786118824905,
+        "5-outro_credits_visible": 56.85870156549417,
+        "6-fake_basic_ready": 59.04353523173861,
+        "7-ghost_message_done": 63.31833609405957,
+        "8-ghost_idle": 63.318342183896846,
+        "9-ghost_idle": 64.31584332066647
+      },
+      "scene_seconds": 41.50340421903927,
+      "total_to_ghost_seconds": 63.31833609405957
+    },
+    "carts": [
+      {
+        "path": "examples/blender_falling_cubes/falling_cubes_c64-hors-render-v2.crt",
+        "sha256": "066abd40fe8111b975fcf894fae10176b82dfef8b131d02f90b322b1e66e479c"
+      },
+      {
+        "path": "examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v2.crt",
+        "sha256": "bf4cc9523be374eb6f73acc1fcf76f27bf54a41edc7f018805892ad852625f4a"
+      },
+      {
+        "path": "examples/cart_demos/c643d-demo-v0.7.7-hors-render-v2-all-ram.crt",
+        "sha256": "9e4d316ad510b2edeb2800f453ef952e8122897aa986d0093f82d4d40a7f57b9"
+      },
+      {
+        "path": "examples/cart_demos/c643d-demo-v0.7.7-hors-render-v2-all.crt",
+        "sha256": "db028851e4078b7938853fff19183f893a80aa182ccd7a24755bb9faafd8be59"
+      },
+      {
+        "path": "examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt",
+        "sha256": "6d73a0389b8ee4df1dac433bb7138c7b4d206d6bb03b3642a6a2585953699f86"
+      },
+      {
+        "path": "examples/cart_hifi/c643d-hifi-v0.7.7-hors-render-v2.crt",
+        "sha256": "b73a7dc49b974e36b56d12efcf280d78fc9c3737e313c406d424b205f319ef30"
+      },
+      {
+        "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-ram.crt",
+        "sha256": "08eae876f228d3be3c2a98a8f2afca8dbce299f68101b8d9656f82affa92a60c"
+      },
+      {
+        "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt",
+        "sha256": "7d5f0ebf35f821d0c9ec2b162bef73c0b4766359b9a6a0b3e88e7519d7cf045f"
+      },
+      {
+        "path": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt",
+        "sha256": "67f2bf0aa41a2bddadd508db8662abd4247cad7d7e0eb0a67ff7f6150e62eb1f"
+      },
+      {
+        "path": "examples/cube/cube-hors-render-v2.crt",
+        "sha256": "0fbaf7d73cd7b1973d71cf4a3501ed34ed982dfd7ec8e3e718fa730979ea7cf9"
+      },
+      {
+        "path": "examples/demos_sande/sande_pretzel-hors-render-v2-color.crt",
+        "sha256": "b53b071240b63e1b59241f3074218bb56332059f5b67b095e2d960a54d0fc8b6"
+      },
+      {
+        "path": "examples/demos_sande/sande_pretzel-hors-render-v2-interactive.crt",
+        "sha256": "e2ee51c07d6b86f437470722105feb60cf4c4387e19bc9d52cd34f8c0cdacde6"
+      },
+      {
+        "path": "examples/demos_sande/sande_pretzel-hors-render-v2.crt",
+        "sha256": "ae0634a8aadb928dc4d3a9326d52b9d7b68c9d4a3327d9868c8eeaf163a49385"
+      },
+      {
+        "path": "examples/demos_sande/sande_tac2-hors-render-v2-color.crt",
+        "sha256": "99f7f82de654529f687a4cc49942d5f7108d4730184c67697d6eb864247cba27"
+      },
+      {
+        "path": "examples/demos_sande/sande_tac2-hors-render-v2-interactive.crt",
+        "sha256": "900dd2e03f3f639e87f079cc9140cba746f0689a42b36d18500be9768ab9ff94"
+      },
+      {
+        "path": "examples/demos_sande/sande_tac2-hors-render-v2.crt",
+        "sha256": "ae70cef831c58229f5e52e260c29494487282ba124a26b860c03c685537d6174"
+      },
+      {
+        "path": "examples/hifi_showcase/horse_head_hifi-hors-render-v2.crt",
+        "sha256": "869ca813d8de32a8db4d8a06f74775a616bfa5e32b344eb7a2a5df222be0d2d5"
+      },
+      {
+        "path": "examples/horse_head/horse_head-hors-render-v2.crt",
+        "sha256": "25717f9157f685c20ffcfcf331a73ee686b52daff0ef66d6d2e757614d663a3c"
+      },
+      {
+        "path": "examples/space_horse_crawl/space_horse_crawl_color-hors-render-v2.crt",
+        "sha256": "e20424401ff0f274029e7d7816545dd732237e27e797ab2af23048e15fda74df"
+      },
+      {
+        "path": "examples/space_horse_spin/space_horse_spin_color-hors-render-v2.crt",
+        "sha256": "e2ab49ea350585a9ee903abca6abb1b8b44259b3441e573a30ca25754843b38b"
+      },
+      {
+        "path": "examples/sphere/sphere-hors-render-v2.crt",
+        "sha256": "359a64bcd40935a112ef5f23978889fed9f451ad03397d55fd7b292113e5dc92"
+      },
+      {
+        "path": "examples/sunflower_torus/sunflower_torus-hors-render-v2.crt",
+        "sha256": "cb64ed7eb26c626eeb5d71ebd0efcf8068ace4b5a84cf439c294ed33ba9ff1c9"
+      },
+      {
+        "path": "examples/sunflower_torus/sunflower_torus_color-hors-render-v2.crt",
+        "sha256": "d212aa1ff56fe4972326a4b570054f59e685f0558525a7f0b7073866121042f7"
+      },
+      {
+        "path": "examples/torus/torus-hors-render-v2.crt",
+        "sha256": "d7db879b527b5846a5dbc98c0771e898272cdfc407dace5f2177c52103b5b0bc"
+      },
+      {
+        "path": "examples/torus_dense/torus_dense-hors-render-v2.crt",
+        "sha256": "94b693dcd572b56e750c6198bae8b626d27d77953a082361f5a6a493a44e6e00"
+      }
+    ]
+  },
+  "v3_variants": 11,
+  "v3_freshly_measured": true,
+  "older_assembly_and_versioned_cartridges_preserved": [
+    "c64/cart/easyflash-demo-boot.asm",
+    "c64/cart/easyflash-demo-control-v10.asm",
+    "c64/cart/easyflash-demo-control-v7.asm",
+    "c64/cart/easyflash-demo-control-v8.asm",
+    "c64/cart/easyflash-demo-control-v9.asm",
+    "c64/cart/easyflash-demo-control.asm",
+    "c64/cart/easyflash-demo-runtime.asm",
+    "c64/cart/easyflash-demo-scroll-runtime-v10.asm",
+    "c64/cart/easyflash-demo-scroll-runtime-v8.asm",
+    "c64/cart/easyflash-demo-scroll-runtime-v9.asm",
+    "c64/cart/easyflash-demo-scroll-runtime.asm",
+    "c64/cart/easyflash-hifi-reel-runtime.asm",
+    "c64/cart/easyflash-menu-boot.asm",
+    "c64/cart/easyflash-object-boot.asm",
+    "c64/cart/easyflash-scene-boot.asm",
+    "c64/cart/easyflash-smoke-loading.asm",
+    "c64/cart/easyflash-smoke.asm",
+    "c64/cart/easyflash-stream-v10-boot.asm",
+    "c64/cart/easyflash-stream-v10-helper.asm",
+    "c64/cart/easyflash-stream-v10-scene-boot.asm",
+    "c64/cart/easyflash-stream-v10-scene-helper.asm",
+    "c64/cart/easyflash-stream-v2-boot.asm",
+    "c64/cart/easyflash-stream-v2-helper.asm",
+    "c64/cart/easyflash-stream-v3-helper.asm",
+    "c64/cart/easyflash-stream-v4-helper.asm",
+    "c64/cart/easyflash-stream-v4-scene-boot.asm",
+    "c64/cart/easyflash-stream-v4-scene-helper.asm",
+    "c64/cart/easyflash-stream-v5-boot.asm",
+    "c64/cart/easyflash-stream-v5-helper.asm",
+    "c64/cart/easyflash-stream-v5-scene-boot.asm",
+    "c64/cart/easyflash-stream-v5-scene-helper.asm",
+    "c64/cart/easyflash-stream-v6-boot.asm",
+    "c64/cart/easyflash-stream-v6-helper.asm",
+    "c64/cart/easyflash-stream-v6-scene-boot.asm",
+    "c64/cart/easyflash-stream-v6-scene-helper.asm",
+    "c64/cart/easyflash-stream-v7-boot.asm",
+    "c64/cart/easyflash-stream-v7-helper.asm",
+    "c64/cart/easyflash-stream-v7-scene-boot.asm",
+    "c64/cart/easyflash-stream-v7-scene-helper.asm",
+    "c64/cart/easyflash-stream-v8-boot.asm",
+    "c64/cart/easyflash-stream-v8-helper.asm",
+    "c64/cart/easyflash-stream-v8-scene-boot.asm",
+    "c64/cart/easyflash-stream-v8-scene-helper.asm",
+    "c64/cart/easyflash-stream-v9-boot.asm",
+    "c64/cart/easyflash-stream-v9-helper.asm",
+    "c64/cart/easyflash-stream-v9-scene-boot.asm",
+    "c64/cart/easyflash-stream-v9-scene-helper.asm",
+    "c64/debug/renderer-yunroll-rastertime.asm",
+    "c64/renderer-bytechunk.asm",
+    "c64/renderer-step.asm",
+    "c64/renderer-yunroll-cart-v10-scene.asm",
+    "c64/renderer-yunroll-cart-v10.asm",
+    "c64/renderer-yunroll-cart-v2.asm",
+    "c64/renderer-yunroll-cart-v3.asm",
+    "c64/renderer-yunroll-cart-v4-scene.asm",
+    "c64/renderer-yunroll-cart-v4.asm",
+    "c64/renderer-yunroll-cart-v5-scene.asm",
+    "c64/renderer-yunroll-cart-v5.asm",
+    "c64/renderer-yunroll-cart-v6-scene.asm",
+    "c64/renderer-yunroll-cart-v6.asm",
+    "c64/renderer-yunroll-cart-v7-scene.asm",
+    "c64/renderer-yunroll-cart-v7.asm",
+    "c64/renderer-yunroll-cart-v8-scene.asm",
+    "c64/renderer-yunroll-cart-v8.asm",
+    "c64/renderer-yunroll-cart-v9-scene.asm",
+    "c64/renderer-yunroll-cart-v9.asm",
+    "c64/renderer-yunroll-cart.asm",
+    "c64/renderer-yunroll.asm",
+    "c64/variants/renderer-bytechunk-no-overlay.asm",
+    "c64/variants/renderer-step-no-overlay.asm",
+    "c64/variants/renderer-yunroll-no-overlay.asm",
+    "examples/cart_demos/c643d-demo-v0.7.2-hors-render-v2-all-ram.crt",
+    "examples/cart_demos/c643d-demo-v0.7.2-hors-render-v2-all.crt",
+    "examples/cart_demos/c643d-demo-v0.7.3-hors-render-v2-all-ram.crt",
+    "examples/cart_demos/c643d-demo-v0.7.3-hors-render-v2-all.crt",
+    "examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all-ram.crt",
+    "examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all.crt",
+    "examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all-ram.crt",
+    "examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all.crt",
+    "examples/cart_demos/c643d-demo-v0.7.6-hors-render-v2-all-ram.crt",
+    "examples/cart_demos/c643d-demo-v0.7.6-hors-render-v2-all.crt",
+    "examples/cart_hifi/c643d-hifi-v0.7.2-hors-render-v2.crt",
+    "examples/cart_hifi/c643d-hifi-v0.7.4-hors-render-v2.crt",
+    "examples/cart_hifi/c643d-hifi-v0.7.5-hors-render-v2.crt",
+    "examples/cart_hifi/c643d-hifi-v0.7.6-hors-render-v2.crt"
+  ],
+  "real_hardware_tested": false,
+  "ntsc_tested": false
+}

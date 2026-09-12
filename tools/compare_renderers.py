@@ -53,6 +53,8 @@ def fingerprints(root):
         files[SANDE_METHODS_REPORT]=hashlib.sha256((root/SANDE_METHODS_REPORT).read_bytes()).hexdigest()
     for rel in (SANDE_COLOR_REPORT, SANDE_COLOR_METHODS_REPORT):
         if (root/rel).exists():files[rel]=hashlib.sha256((root/rel).read_bytes()).hexdigest()
+    rel='docs/benchmarks/hors-v3-preview/summary.json'
+    if (root/rel).exists():files[rel]=hashlib.sha256((root/rel).read_bytes()).hexdigest()
     return files,hashlib.sha256(json.dumps(files,sort_keys=True).encode()).hexdigest()
 
 
@@ -407,6 +409,8 @@ def chart(a,provenance):
     from run_sande_methods import comparison_section as sande_methods_section
     lines+=sande_methods_section(Path(__file__).resolve().parents[1])
     lines+=sande_methods_section(Path(__file__).resolve().parents[1], source_colors=True)
+    from report_hors_v3_release import comparison_section as v3_section
+    lines+=v3_section(Path(__file__).resolve().parents[1])
     sizes={}
     for key in results:
         raw=json.loads((a.workspace/'results'/(key+'-sizes.json')).read_text());sizes[key]={e['name']:e for e in raw['entries']}
@@ -489,6 +493,8 @@ def main():
     p.add_argument('--_worker',help=argparse.SUPPRESS)
     a=p.parse_args()
     if a.check:
+        from report_hors_v3_release import comparison_section as v3_section
+        v3_section(repo)
         from run_sande_perfs import comparison_section
         comparison_section(repo)
         comparison_section(repo, source_colors=True)

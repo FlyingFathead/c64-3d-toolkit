@@ -1,6 +1,9 @@
-# Documentation — 0.7.6
+# Documentation — 0.7.7
 
-- [0.7.6 release notes, installation and Sande test kit](RELEASE_0.7.6.md).
+- [0.7.7: Pretzel Logic - The Great Texture Update](RELEASE_0.7.7.md).
+- [HORS-V3 surface, texture and compact-dictionary results](HORS_RENDER_V3_RESULTS.md).
+- [HORS-V3 cartridges, presets and interactive controls](../examples/hors_v3_preview/README.md).
+- [Historical 0.7.6 release notes and Sande test kit](RELEASE_0.7.6.md).
 - [Sande models, controls and rebuilds](../examples/demos_sande/README.md).
 - [Historical 0.7.5 release notes, installation and rebuilds](RELEASE_0.7.5.md).
 - [Legacy A/B checks and GitHub baseline validation](LEGACY_CART_VALIDATION.md).
@@ -19,5 +22,5 @@
 - [Architecture](ARCHITECTURE.md), [pipeline versioning](PIPELINE_VERSIONING.md).
 
 Version-specific V2–V10 and earlier upgrade notes are historical references;
-current runnable examples use hors-render-v2. Beta reports retain their original
+current examples include default HORS-V2 and opt-in HORS-V3. Beta reports retain their original
 measurement identities for auditing.

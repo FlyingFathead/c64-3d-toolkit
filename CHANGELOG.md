@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.7: Pretzel Logic - The Great Texture Update
+
+- Add HORS-V3 (`hors-renderer-v3`, alias `hors-render-v3`) as an opt-in surface and texture pipeline, preserving all older renderer implementations and the existing default.
+- Add metallic grey/white, MTL face-colour and opaque `map_Kd` image-texture fills, plus optional compact colour-pair dictionary encoding.
+- Include direct and compact interactive metallic Pretzel cartridges, cursor/joystick rotation controls, the `INTERACTIVE` overlay, and measured input/picture verification.
+- Add black-only background cycling to V3 interactive surfaces: F4 manual, F5 automatic, F6/F7 speed, F8 black-border lock, Ctrl+F7 custom border, and F2 reset flash. Preserve all nonblack surface shades and synchronize borders to displayed buffers.
+- Add the selected metallic animation beneath the README version heading and document FPS, frame-stream storage and capacity tradeoffs. See [release notes](docs/RELEASE_0.7.7.md).
+
 ## 0.7.6: Sande demo and performance test kit
 
 - Show `INTERACTIVE` at the top right using the HUD font. F3 changes foreground; F4 changes background with a following border by default. F5 toggles alternating sequential palette cycling, F6/F7 adjust speed, F8 locks/unlocks a solid-black border, Ctrl+F7 cycles a custom border, and F2 flashes white briefly before restoring defaults. Benchmark idle, default-rate and fastest-rate cycling.

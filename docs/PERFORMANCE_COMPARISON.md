@@ -45,6 +45,7 @@ All seven entries passed bitmap and colour checks for both methods. Worst interv
 
 The chart fingerprint includes both reports and the shipped v2 CRT; generation verifies their cartridge hash and matching picture oracles. The release/check runner refreshes the showcase evidence before generating this page.
 
+
 ## Sande's Models
 
 Models contributed by **Sande**: **Sande's Pretzel** and **Sande's TAC-2 joystick**. This is a separate workload from the original twelve animations and Demo Cart 2.0.
@@ -276,6 +277,42 @@ Recorded capacity limits:
 ```bash
 python tools/run_sande_methods.py --source-colors --workspace ../c64-sande-methods --vice-data /usr/local/share/vice
 ```
+
+
+## HORS-V3 surfaces and textures
+
+Sande’s complete Pretzel mesh, PAL VICE 3.10, 1,504-refresh windows. FPS counts actual display-buffer flips. These standalone workloads are separate from normal PLAY ALL. The V2 metallic row replays identical filled pictures through the unchanged V2 kernel as a comparison harness; V2 does not gain a surface-fill CLI.
+
+| Workload | Orientations | Displayed FPS | Frame stream bytes | CRT bytes |
+| --- | ---: | ---: | ---: | ---: |
+| V2 wireframe, white | 128 | 17.96 | 261,277 | 344,800 |
+| V3 wireframe, white | 128 | 17.96 | 261,277 | 344,800 |
+| V3 MTL flat fill | 128 | 18.26 | 257,470 | 336,592 |
+| V3 metallic, B/W dither | 128 | 18.46 | 252,089 | 328,384 |
+| V2 kernel, same metallic pictures | 128 | 10.73 | 332,248 | 451,504 |
+| V3 metallic, direct colours | 128 | 14.70 | 296,092 | 377,632 |
+| V3 MTL image texture | 128 | 14.70 | 295,932 | 377,632 |
+| V3 metallic, compact dictionary | 128 | 12.46 | 274,460 | 361,216 |
+| V3 metallic, interactive | 128 | 14.30 | 296,092 | 377,632 |
+| V3 compact, interactive | 128 | 12.20 | 274,460 | 361,216 |
+| V3 metallic, compact / 192 | 192 | 12.46 | 411,701 | 517,168 |
+
+![HORS-V3 FPS and ROM comparison](benchmarks/hors-v3-preview/performance.png)
+
+Direct colour bytes remain the speed default. Compact dictionary encoding is optional: smaller streams, additional decoding cost. [Method, limitations and raw evidence](HORS_RENDER_V3_RESULTS.md).
+
+### Background controls and performance
+
+| Background mode | Direct FPS | Compact FPS |
+| --- | ---: | ---: |
+| Black, cycling off | 14.30 | 12.20 |
+| Blue, cycling off | 13.80 | 12.20 |
+| Automatic, 50 ticks | 13.53 | 11.93 |
+| Automatic, 1 tick | 12.50 | 11.10 |
+
+![Background-control performance](benchmarks/hors-v3-preview/background-performance.png)
+
+Interactive controls replace originally black pixels only; other metallic shades are preserved. Default cycling requests 50 PAL ticks between changes; the fastest setting requests one tick but performs at most one change per produced picture. The displayed border follows its buffer’s background unless locked or independently selected.
 
 
 ## Per-animation lookup
@@ -678,5 +715,5 @@ Use `--resume` only with the same source/tool fingerprint and options. Logs and 
 
 **Release gate:** run `--check` before publishing. If renderer code, builders, input assets, examples, version or this tester changes, rerun the complete uncapped matrix and replace this chart before tagging. Preserve old method rows; add new generations to the tester and regenerate. Never silently copy old numbers into a changed workload. Capped runs are separate experiments and must not replace this uncapped baseline.
 
-<!-- comparison-input-sha256: 791ce546ff425a12c80a7195079d381e6b309273a390a26d15f275bb8136cc73 -->
-<!-- comparison-source-version: 0.7.6 -->
+<!-- comparison-input-sha256: 0fd3853c563393a860be25fd07abee19959409b292e8be175a4bc46ae30ae6e4 -->
+<!-- comparison-source-version: 0.7.7 -->

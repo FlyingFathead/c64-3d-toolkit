@@ -1,0 +1,21 @@
+{
+  "cartridge": "sande_pretzel-surface-metallic-128-v3-indexed4.crt",
+  "menu_entry": null,
+  "verified_frames": 259,
+  "orientations": 128,
+  "bitmap_bytes_checked": 1989120,
+  "color_bytes_checked": 248640,
+  "slots": {
+    "1": 87,
+    "2": 86,
+    "0": 86
+  },
+  "average_fps": 12.471468583543718,
+  "min_frame_cycles": 62838,
+  "max_frame_cycles": 85626,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0
+}

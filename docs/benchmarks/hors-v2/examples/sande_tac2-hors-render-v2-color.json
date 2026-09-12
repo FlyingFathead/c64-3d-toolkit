@@ -1,0 +1,24 @@
+{
+  "cartridge": "sande_tac2-hors-render-v2-color.crt",
+  "menu_entry": null,
+  "verified_frames": 387,
+  "orientations": 192,
+  "bitmap_bytes_checked": 2972160,
+  "color_bytes_checked": 371520,
+  "slots": {
+    "1": 129,
+    "2": 129,
+    "0": 129
+  },
+  "average_fps": 18.60880041591486,
+  "min_frame_cycles": 33023,
+  "max_frame_cycles": 57198,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
+  "path": "examples/demos_sande/sande_tac2-hors-render-v2-color.crt",
+  "entry": null,
+  "sha256": "99f7f82de654529f687a4cc49942d5f7108d4730184c67697d6eb864247cba27"
+}

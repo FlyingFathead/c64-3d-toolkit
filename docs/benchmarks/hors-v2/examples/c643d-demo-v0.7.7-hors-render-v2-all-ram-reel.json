@@ -1,0 +1,18 @@
+{
+  "cartridge": "c643d-demo-v0.7.7-hors-render-v2-all-ram.crt",
+  "sha256": "9e4d316ad510b2edeb2800f453ef952e8122897aa986d0093f82d4d40a7f57b9",
+  "separate": false,
+  "order": [
+    10,
+    11
+  ],
+  "cycles": {
+    "entry-10": 9809810,
+    "entry-11": 9808373,
+    "thanks": 9816656,
+    "title": 9814023
+  },
+  "loop": true,
+  "thanks": true,
+  "method": "PAL VICE production code; monitor acknowledges initial SPACE and injects F4 scanner samples"
+}

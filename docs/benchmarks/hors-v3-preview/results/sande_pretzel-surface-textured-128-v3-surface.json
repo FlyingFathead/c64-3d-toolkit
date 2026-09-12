@@ -1,0 +1,13 @@
+{
+  "experimental": true,
+  "preset": "textured",
+  "encoding": "native",
+  "frames": 128,
+  "fit_scale": 0.9548340649786405,
+  "triangles": 3104,
+  "lighting": "perspective-correct map_Kd times Kd",
+  "native_limit": "two colours per 8x8 cell; black preserved at silhouettes",
+  "host_rasterized": true,
+  "runtime_triangle_lighting": false,
+  "uniform_material_fast_path": false
+}

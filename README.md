@@ -6,7 +6,15 @@
 
 > **ATTENTION:** [FlyingFathead/c64-3d-toolkit](https://github.com/FlyingFathead/c64-3d-toolkit/) is the one and only official, original source for `c64-3d-toolkit`. Steer clear of other sources or repositories claiming to be the official project.
 
-**Version 0.7.6: Sande's Pretzel and TAC-2 demo/test kit.**
+**Version 0.7.7: Pretzel Logic - The Great Texture Update**
+
+<p align="center">
+  <img src="examples/hors_v3_preview/previews/sande_pretzel-surface-metallic-128-v3-indexed4-vice.gif" alt="Sande's metallic Pretzel running on HORS-V3 with compact colour dictionary encoding" width="640">
+</p>
+
+HORS-V3 adds solid metallic shading, MTL surface colours and image textures, with an optional compact colour dictionary. Try the [interactive metallic Pretzel](examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-interactive.crt), or browse [all HORS-V3 cartridges and controls](examples/hors_v3_preview/README.md).
+
+Use `--renderer hors-renderer-v3 --surface-fill metallic` to build a filled object. HORS-V2 wireframe remains the default. [Measured FPS and storage costs](docs/PERFORMANCE_COMPARISON.md#hors-v3-surfaces-and-textures).
 
 New models by **Sande**, with reproducible builds, a separate
 [Sande performance comparison](docs/PERFORMANCE_COMPARISON.md#sandes-models),
@@ -24,7 +32,7 @@ It warns before conversion, omits EAPI/name metadata and keeps the original scen
 layout. Standard generation remains the default; generated legacy names end in
 `-legacy`. See [legacy compatibility mode](docs/CARTRIDGE_LOADING.md#legacy-compatibility-mode).
 
-See [0.7.6 release notes and installation](docs/RELEASE_0.7.6.md) and
+See [0.7.7 release notes and installation](docs/RELEASE_0.7.7.md) and
 [cartridge loading](docs/CARTRIDGE_LOADING.md).
 
 The independent colours and F3/F4/F7/F8 controls introduced in 0.7.3 remain
@@ -51,18 +59,19 @@ These are emulated C64 timings, not host wall-clock speed or the HUD counter.
 
 | Prebuilt | What is inside |
 | --- | --- |
+| [Metallic Pretzel — interactive](examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-interactive.crt) | HORS-V3 shaded surfaces, rotation and background controls |
 | [Sande's Pretzel](examples/demos_sande/sande_pretzel-hors-render-v2-interactive.crt) | Sande's 1,552-vertex knot; left/right rotation and F-key colours |
 | [Sande's TAC-2](examples/demos_sande/sande_tac2-hors-render-v2-interactive.crt) | Sande's joystick model; the same interactive controls |
 | [Color Combo Test](examples/color_combo_test/color-combo-test.crt) | Four colour pairs, ten seconds each, automatic looping, F3/F4 cycling |
-| [Twelve-demo cart — FPS](examples/cart_demos/c643d-demo-v0.7.6-hors-render-v2-all.crt) | The original twelve animations, menu styles, PLAY ALL, HiFi mode and colour controls |
-| [Twelve-demo cart — RAM](examples/cart_demos/c643d-demo-v0.7.6-hors-render-v2-all-ram.crt) | Same material and colour controls, smaller drawing kernels |
+| [Twelve-demo cart — FPS](examples/cart_demos/c643d-demo-v0.7.7-hors-render-v2-all.crt) | The original twelve animations, menu styles, PLAY ALL, HiFi mode and colour controls |
+| [Twelve-demo cart — RAM](examples/cart_demos/c643d-demo-v0.7.7-hors-render-v2-all-ram.crt) | Same material and colour controls, smaller drawing kernels |
 | [Demo Cart 2.0](examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt) | Colour cube, colour torus, twist tunnel, ribbon dance, orbital cubes, wave lattice and Ripples Lite |
-| [HiFi reel](examples/cart_hifi/c643d-hifi-v0.7.6-hors-render-v2.crt) | Horse & Sunflower followed by two HiFi spinners |
+| [HiFi reel](examples/cart_hifi/c643d-hifi-v0.7.7-hors-render-v2.crt) | Horse & Sunflower followed by two HiFi spinners |
 | [Marbles](examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt) | All 640 authored samples, original 16 FPS target, native intro and ending |
 | [Horse & Sunflower](examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt) | Authored scene, with a separate RAM build in the same folder |
 
 ```bash
-python c643d.py run-cart examples/cart_demos/c643d-demo-v0.7.6-hors-render-v2-all.crt
+python c643d.py run-cart examples/cart_demos/c643d-demo-v0.7.7-hors-render-v2-all.crt
 python c643d.py run-cart examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt
 ```
 
@@ -143,7 +152,7 @@ renderer throughput improvement.
 ```bash
 cd path/to/c64-3d-toolkit
 JOBS=3 VICE_DATA=/usr/local/share/vice bash COMPILE-RELEASE.sh \
-  --workspace ../c64-076-release-build
+  --workspace ../c64-077-release-build
 ```
 
 This makes an isolated source copy, builds every stable example, validates
@@ -153,19 +162,20 @@ Add `--install` to install only after all checks pass. Add `--baseline-zip PATH`
 to also generate a patch ZIP. The pipeline never commits, tags or pushes. Root `VERSION` supplies the build
 identity; an alternate-version VICE test guards startup, menu and thanks labels.
 
-To install the supplied 0.7.6 release, save the ZIP one level above your
+To install the supplied 0.7.7 release, save the ZIP one level above your
 checkout and extract it from that parent directory:
 
 ```bash
-unzip -o c64-3d-toolkit-v0.7.6.zip
+unzip -o c64-3d-toolkit-v0.7.7.zip
 cd c64-3d-toolkit
 python tools/compare_renderers.py --check
+python tools/run_hors_v3_perfs.py --check
 ```
 
 The ZIP contains its own `c64-3d-toolkit/` directory. Current cartridges are
 already rebuilt. Previous versioned menu/HiFi carts remain as historical
-references; use the 0.7.6 links above for the updated builds. See the
-[release guide](docs/RELEASE_0.7.6.md) for checks and rebuilds.
+references; use the 0.7.7 links above for the updated builds. See the
+[release guide](docs/RELEASE_0.7.7.md) for checks and rebuilds.
 
 ## Earlier renderers remain available
 
@@ -187,8 +197,8 @@ CUBE workload; the chart retains that result. See [pipeline versioning](docs/PIP
 
 # Credits
 
-`c64-3d-toolkit` by [FlyingFathead](https://github.com/FlyingFathead/)
-Thanks: ChaosWhisperer
+`c64-3d-toolkit` by [FlyingFathead](https://github.com/FlyingFathead/)<br>
+Thanks: ChaosWhisperer<br>
 Additional 3D models supplied by: **Sande**
 
 A big thank you to everyone who has contributed, collaborated and given ideas for the project.

@@ -1,0 +1,12 @@
+{
+  "experimental": true,
+  "preset": "metallic",
+  "encoding": "native",
+  "frames": 128,
+  "fit_scale": 0.9548340649786405,
+  "triangles": 3104,
+  "lighting": "flat Blinn-Phong grey preset",
+  "native_limit": "two colours per 8x8 cell; black preserved at silhouettes",
+  "host_rasterized": true,
+  "runtime_triangle_lighting": false
+}

@@ -1,0 +1,21 @@
+{
+  "cartridge": "sande_pretzel-surface-dither-128-v3.crt",
+  "menu_entry": null,
+  "verified_frames": 259,
+  "orientations": 128,
+  "bitmap_bytes_checked": 1989120,
+  "color_bytes_checked": 248640,
+  "slots": {
+    "1": 87,
+    "2": 86,
+    "0": 86
+  },
+  "average_fps": 18.49017149930835,
+  "min_frame_cycles": 37365,
+  "max_frame_cycles": 59759,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0
+}

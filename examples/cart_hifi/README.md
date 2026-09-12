@@ -4,10 +4,10 @@
 
 | Cartridge | Samples | Colours |
 | --- | ---: | --- |
-| [c643d-hifi-v0.7.6-hors-render-v2.crt](c643d-hifi-v0.7.6-hors-render-v2.crt) | 84 / 128 / 128 | Per entry |
+| [c643d-hifi-v0.7.7-hors-render-v2.crt](c643d-hifi-v0.7.7-hors-render-v2.crt) | 84 / 128 / 128 | Per entry |
 
 ```bash
-x64sc +easyflashcrtwrite -cartcrt examples/cart_hifi/c643d-hifi-v0.7.6-hors-render-v2.crt
+x64sc +easyflashcrtwrite -cartcrt examples/cart_hifi/c643d-hifi-v0.7.7-hors-render-v2.crt
 ```
 
 Press SPACE when an identification screen is shown. Companion labels and manifests identify the exact build.

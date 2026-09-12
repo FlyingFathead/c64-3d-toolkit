@@ -1,0 +1,35 @@
+{
+  "cartridge": "demo-cart-2-preview-hors-v2.crt",
+  "sha256": "6d73a0389b8ee4df1dac433bb7138c7b4d206d6bb03b3642a6a2585953699f86",
+  "entries": [
+    {
+      "name": "RIPPLES LITE",
+      "index": 6,
+      "source_colors": false,
+      "keyboard_checks": 104,
+      "monochrome_foreground_background_wrap": true,
+      "multicolor_foreground_background_ignored": false,
+      "independent_border": true,
+      "source_palette_preserved": true,
+      "reset": true,
+      "held_key_debounce": true,
+      "both_shift_keys": true,
+      "idle_irq_scan_cycles": 82
+    },
+    {
+      "name": "COLOUR CUBE 24",
+      "index": 0,
+      "source_colors": true,
+      "keyboard_checks": 104,
+      "monochrome_foreground_background_wrap": false,
+      "multicolor_foreground_background_ignored": true,
+      "independent_border": true,
+      "source_palette_preserved": true,
+      "reset": true,
+      "held_key_debounce": true,
+      "both_shift_keys": true,
+      "idle_irq_scan_cycles": 82
+    }
+  ],
+  "method": "PAL VICE; sampled keyboard rows injected in the existing IRQ scanner"
+}

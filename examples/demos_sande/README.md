@@ -171,3 +171,27 @@ The builder, dedicated benchmarks and input verifier discover this registry;
 there is no fixed two-model limit. New authored scene formats would require
 their own appropriate recipe rather than being treated as OBJ spins.
 Rebuild and rerun the complete checks before publishing fresh comparisons.
+
+
+## HORS-V3 metallic surface cartridges
+
+The metallic Pretzel is also available as a filled HORS-V3 surface, with direct or compact colour streams and a separate interactive version of each.
+
+- [Direct metallic interactive cartridge](../hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-interactive.crt)
+- [Compact metallic interactive cartridge](../hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-indexed4-interactive.crt)
+- [Build commands, variants and controls](../hors_v3_preview/README.md)
+- [Measured performance and storage](../../docs/HORS_RENDER_V3_RESULTS.md)
+
+Use `--renderer hors-renderer-v3 --surface-fill metallic --interactive-cart`. `hors-render-v3` remains an alias. Cursor left/right or either joystick port selects persistent rotation direction; both C64 Shift keys work. The top-right `INTERACTIVE` label uses the HUD font. V3 preserves all nonblack metallic shades. Its background controls are:
+
+| Key | HORS-V3 action |
+| --- | --- |
+| F2 (Shift+F1) | White flash, reset background to black, follow border, auto off, default speed |
+| F3 | No action; foreground shades are preserved |
+| F4 (Shift+F3) | Next background colour, replacing only original black pixels |
+| F5 | Toggle automatic background palette cycling |
+| F6 (Shift+F5) / F7 | Slower / faster cycling |
+| F8 (Shift+F7) | Toggle persistent black border / follow background |
+| Ctrl+F7 | Next independent border colour |
+
+The border follows the background by default. Black lock and custom borders persist through background changes. Cycling is sequential, initially about once per second; intervals range from 200 to 1 PAL tick and are limited by the rate of produced pictures. Nonblack grey/white shades are never remapped. Release function keys between presses. V2 retains its existing foreground/background controls.

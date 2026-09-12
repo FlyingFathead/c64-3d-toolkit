@@ -1,0 +1,140 @@
+{
+  "variants": [
+    {
+      "id": "v2-wire",
+      "stem": "sande_pretzel-wire-bw-128",
+      "renderer": "hors-render-v2",
+      "frames": 128,
+      "obj": "examples/demos_sande/sande_pretzel.obj",
+      "arguments": [
+        "--color",
+        "white"
+      ],
+      "oracle": "docs/benchmarks/hors-v3-preview/oracles/sande_pretzel-wire-bw-128-oracle.json"
+    },
+    {
+      "id": "v3-wire",
+      "stem": "sande_pretzel-wire-bw-128-v3",
+      "renderer": "hors-renderer-v3",
+      "frames": 128,
+      "obj": "examples/demos_sande/sande_pretzel.obj",
+      "arguments": [
+        "--color",
+        "white"
+      ],
+      "oracle": "docs/benchmarks/hors-v3-preview/oracles/sande_pretzel-wire-bw-128-v3-oracle.json"
+    },
+    {
+      "id": "material",
+      "stem": "sande_pretzel-surface-material-128-v3",
+      "renderer": "hors-renderer-v3",
+      "frames": 128,
+      "obj": "examples/demos_sande/sande_pretzel.obj",
+      "arguments": [
+        "--surface-fill",
+        "material"
+      ],
+      "oracle": "docs/benchmarks/hors-v3-preview/oracles/sande_pretzel-surface-material-128-v3-oracle.json"
+    },
+    {
+      "id": "dither",
+      "stem": "sande_pretzel-surface-dither-128-v3",
+      "renderer": "hors-renderer-v3",
+      "frames": 128,
+      "obj": "examples/demos_sande/sande_pretzel.obj",
+      "arguments": [
+        "--surface-fill",
+        "metallic",
+        "--surface-encoding",
+        "dither"
+      ],
+      "oracle": "docs/benchmarks/hors-v3-preview/oracles/sande_pretzel-surface-dither-128-v3-oracle.json"
+    },
+    {
+      "id": "v2-metallic-reference",
+      "stem": "sande_pretzel-surface-metallic-128",
+      "renderer": "hors-render-v2",
+      "frames": 128,
+      "obj": "examples/demos_sande/sande_pretzel.obj",
+      "arguments": [],
+      "oracle": "docs/benchmarks/hors-v3-preview/oracles/sande_pretzel-surface-metallic-128-oracle.json"
+    },
+    {
+      "id": "metallic",
+      "stem": "sande_pretzel-surface-metallic-128-v3",
+      "renderer": "hors-renderer-v3",
+      "frames": 128,
+      "obj": "examples/demos_sande/sande_pretzel.obj",
+      "arguments": [
+        "--surface-fill",
+        "metallic"
+      ],
+      "oracle": "docs/benchmarks/hors-v3-preview/oracles/sande_pretzel-surface-metallic-128-v3-oracle.json"
+    },
+    {
+      "id": "textured",
+      "stem": "sande_pretzel-surface-textured-128-v3",
+      "renderer": "hors-renderer-v3",
+      "frames": 128,
+      "obj": "examples/hors_v3_preview/texture-demo/pretzel-test-texture.obj",
+      "arguments": [
+        "--surface-fill",
+        "textured"
+      ],
+      "oracle": "docs/benchmarks/hors-v3-preview/oracles/sande_pretzel-surface-textured-128-v3-oracle.json"
+    },
+    {
+      "id": "compact",
+      "stem": "sande_pretzel-surface-metallic-128-v3-indexed4",
+      "renderer": "hors-renderer-v3",
+      "frames": 128,
+      "obj": "examples/demos_sande/sande_pretzel.obj",
+      "arguments": [
+        "--surface-fill",
+        "metallic",
+        "--compact-color-dictionary"
+      ],
+      "oracle": "docs/benchmarks/hors-v3-preview/oracles/sande_pretzel-surface-metallic-128-v3-indexed4-oracle.json"
+    },
+    {
+      "id": "interactive",
+      "stem": "sande_pretzel-surface-metallic-128-v3-interactive",
+      "renderer": "hors-renderer-v3",
+      "frames": 128,
+      "obj": "examples/demos_sande/sande_pretzel.obj",
+      "arguments": [
+        "--surface-fill",
+        "metallic",
+        "--interactive-cart"
+      ],
+      "oracle": "docs/benchmarks/hors-v3-preview/oracles/sande_pretzel-surface-metallic-128-v3-interactive-oracle.json"
+    },
+    {
+      "id": "compact-interactive",
+      "stem": "sande_pretzel-surface-metallic-128-v3-indexed4-interactive",
+      "renderer": "hors-renderer-v3",
+      "frames": 128,
+      "obj": "examples/demos_sande/sande_pretzel.obj",
+      "arguments": [
+        "--surface-fill",
+        "metallic",
+        "--compact-color-dictionary",
+        "--interactive-cart"
+      ],
+      "oracle": "docs/benchmarks/hors-v3-preview/oracles/sande_pretzel-surface-metallic-128-v3-indexed4-interactive-oracle.json"
+    },
+    {
+      "id": "compact-192",
+      "stem": "sande_pretzel-surface-metallic-192-v3-indexed4",
+      "renderer": "hors-renderer-v3",
+      "frames": 192,
+      "obj": "examples/demos_sande/sande_pretzel.obj",
+      "arguments": [
+        "--surface-fill",
+        "metallic",
+        "--compact-color-dictionary"
+      ],
+      "oracle": "docs/benchmarks/hors-v3-preview/oracles/sande_pretzel-surface-metallic-192-v3-indexed4-oracle.json"
+    }
+  ]
+}

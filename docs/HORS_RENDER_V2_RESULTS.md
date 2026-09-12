@@ -18,10 +18,10 @@ The alternate-VERSION gate also passed: temporary v1/v2 carts showed the manifes
 
 The [main performance page](PERFORMANCE_COMPARISON.md) compares released renderer generations, including stable v2 FPS/RAM rows, and displays Demo Cart 2.0 in its own section. CUBE can still favour the resident yunroll renderer.
 
-Version 0.7.6 includes **26 current cartridges**. The current named-v2 evidence covers **25 cartridges**, **55 picture checks** and **10,751 completed pictures**, including **774 checks** for the two added Sande material-colour carts. Interactive proofs were refreshed for the final controls and HUD label; unchanged examples retain their verified cartridge hashes. Color Combo Test passed its separate verifier. Native Marbles ending, menu states and HiFi reel transitions also passed. The ending verifier acknowledges the SPACE build screen after reaching intro_start, before waiting for frame_begin. [Current release evidence](RELEASE_0.7.6.md#measured-performance-and-validation) includes the additional Sande direction and palette checks.
+Release examples: **25 cartridges**, **55 picture checks**, **10,751 completed pictures**. Native Marbles ending, menu states and HiFi reel transitions also passed. The ending verifier acknowledges the SPACE build screen after reaching intro_start, before waiting for frame_begin.
 
 The independent Linux beta run reproduced the earlier raw measurements and cartridge hashes. Stable results above are a new run after promotion, using the preserved beta drawing kernel. These checks measure emulated C64 time; physical C64 and NTSC are not measured.
 
 V2 adds no reserved RAM to the drawing helper. Fixed graphics storage is 27,000 bytes and staging/metadata caches reserve 11,264 bytes. These components are not a total free-RAM figure. ROM and runtime sizes for each historical row are in the full chart.
 
-Reproduce with `JOBS=3 bash COMPILE-RELEASE.sh --workspace ../c64-076-release-build`. Detailed JSON evidence is in `docs/benchmarks/hors-v2/`, `docs/benchmarks/sande/` and `docs/benchmarks/release-0.7.6/`; full monitor traces remain in the external release workspace.
+Reproduce with `JOBS=3 bash COMPILE-RELEASE.sh --workspace ../c64-072-release-build`. Detailed JSON evidence is in `docs/benchmarks/hors-v2/`; full monitor traces remain in the external release workspace.

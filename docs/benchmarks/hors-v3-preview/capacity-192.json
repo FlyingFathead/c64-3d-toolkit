@@ -1,0 +1,11 @@
+{
+  "literal": {
+    "fits": false,
+    "error": "EasyFlash ROML capacity exceeded; reduce frame count or detail"
+  },
+  "indexed4": {
+    "fits": true,
+    "rom_frame_bytes": 411701,
+    "highest_bank": 61
+  }
+}

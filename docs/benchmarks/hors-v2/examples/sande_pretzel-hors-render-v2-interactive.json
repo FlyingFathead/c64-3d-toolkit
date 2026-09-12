@@ -1,0 +1,25 @@
+{
+  "cartridge": "sande_pretzel-hors-render-v2-interactive.crt",
+  "menu_entry": null,
+  "verified_frames": 387,
+  "orientations": 192,
+  "bitmap_bytes_checked": 2972160,
+  "color_bytes_checked": 371520,
+  "slots": {
+    "1": 129,
+    "2": 129,
+    "0": 129
+  },
+  "average_fps": 17.523677135512198,
+  "min_frame_cycles": 40123,
+  "max_frame_cycles": 62521,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
+  "interactive_label_match": true,
+  "path": "examples/demos_sande/sande_pretzel-hors-render-v2-interactive.crt",
+  "entry": null,
+  "sha256": "e2ee51c07d6b86f437470722105feb60cf4c4387e19bc9d52cd34f8c0cdacde6"
+}

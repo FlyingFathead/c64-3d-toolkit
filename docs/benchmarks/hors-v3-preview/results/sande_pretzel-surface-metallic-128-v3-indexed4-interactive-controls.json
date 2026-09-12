@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "sha256": "1fd50e7ba2b55e12bc2790efb8fc75bb68d0676e046ad3351935d5f1c0aaac16",
+  "reverse_pictures_checked": 562,
+  "all_orientations": true,
+  "all_three_buffers": true,
+  "forward_reverse_wrap": true,
+  "repeated_direction_changes": true,
+  "pixel_match": true,
+  "color_match": true,
+  "interactive_label_match": true,
+  "input_checks": 20,
+  "both_shift_keys": true,
+  "both_joystick_ports": true,
+  "direction_persists": true,
+  "opposing_directions_ignored": true,
+  "cia_directions_restored": true,
+  "uniform_palette_controls": false,
+  "input_method": "VICE monitor injects CIA read results at labelled scan boundaries; host mappings and physical controllers are not tested"
+}

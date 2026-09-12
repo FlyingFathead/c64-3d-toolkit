@@ -20,7 +20,8 @@ def source_files(root):
         for name in sorted(names):
             # A linked worktree uses a .git file, not a directory. Never copy
             # its pointer into a release or an external A/B build tree.
-            if name in SKIP:continue
+            if name in SKIP or name=='monitor.log':continue
+            if (Path(parent)/name).relative_to(root).as_posix()=='config/c643d.ini':continue
             path=Path(parent)/name
             if path.suffix not in ('.pyc','.zip') and not path.is_symlink():yield path
 
@@ -28,7 +29,7 @@ def source_files(root):
 def package(root, output, baseline=None):
     current={p.relative_to(root).as_posix():p for p in source_files(root)}
     with zipfile.ZipFile(output,'w',zipfile.ZIP_DEFLATED,compresslevel=9) as z:
-        for rel,path in current.items():z.write(path,rel)
+        for rel,path in current.items():z.write(path,'c64-3d-toolkit/'+rel)
     with zipfile.ZipFile(output) as z:
         if z.testzip() is not None:raise ValueError('Package CRC failure')
     if baseline:
@@ -38,7 +39,7 @@ def package(root, output, baseline=None):
         patch=output.with_name(output.stem.replace('-complete','-overlay')+'.zip')
         with zipfile.ZipFile(patch,'w',zipfile.ZIP_DEFLATED,compresslevel=9) as z:
             for rel,path in current.items():
-                if old.get(rel)!=hashlib.sha256(path.read_bytes()).digest():z.write(path,rel)
+                if old.get(rel)!=hashlib.sha256(path.read_bytes()).digest():z.write(path,'c64-3d-toolkit/'+rel)
         return [output,patch]
     return [output]
 
@@ -74,8 +75,9 @@ def main():
     run('build-examples',[sys.executable,'tools/build_hors_v2_examples.py','--tass',a.tass,'--cartconv',a.cartconv])
     run('build-showcase',[sys.executable,'tools/build_demo_cart_v2.py','--tass',a.tass,'--cartconv',a.cartconv])
     run('build-color-combos',[sys.executable,'c643d.py','color-combo-test','--tass',a.tass,'--cartconv',a.cartconv,'--overwrite-policy','allow'])
+    run('build-v3',[sys.executable,'tools/build_hors_v3_examples.py','--tass',a.tass,'--cartconv',a.cartconv,
+        '--output-dir',str(stage/'examples/hors_v3_preview/cartridges')])
     run('index-examples',[sys.executable,'tools/index_release_examples.py'])
-    run('archive-prebuilt',[sys.executable,'tools/cleanup_examples.py','--apply','--archive',str(work/'old-examples')])
     run('verify-release',[sys.executable,'tools/verify_hors_v2_release.py','--out',str(work/'example-checks'),
         '--vice',wrapper,'--vice-data',env['VICE_DATA'],'--jobs',str(a.jobs)])
     run('verify-version',[sys.executable,'tools/verify_release_version.py','--out',str(work/'version-checks'),
@@ -91,7 +93,8 @@ def main():
     run('all-checks',['bash','RUN-CHECKS.sh',str(work/'checks')])
     run('release-report',[sys.executable,'tools/report_hors_v2_release.py',str(work)])
     version=(stage/'VERSION').read_text().strip()
-    outputs=package(stage,work/f'c64-3d-toolkit-{version}-hors-v2-complete.zip',a.baseline_zip)
+    run('final-index',[sys.executable,'tools/index_release_examples.py'])
+    outputs=package(stage,work/f'c64-3d-toolkit-v{version}.zip',a.baseline_zip)
     report=dict(passed=True,version=version,renderer='hors-render-v2',installed=a.install,
         packages=[dict(file=x.name,sha256=hashlib.sha256(x.read_bytes()).hexdigest()) for x in outputs])
     if a.install:

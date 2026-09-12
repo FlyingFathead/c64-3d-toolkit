@@ -74,6 +74,10 @@ run_check sande-color-methods "$python_bin" tools/run_sande_methods.py --source-
   --workspace "$results_dir/sande-color-methods" --skip-build --jobs "$jobs" \
   --tass "$tass_bin" --cartconv "$cartconv_bin" --vice "$vice_bin" --vice-data "$vice_data"
 cp -- "$results_dir/sande-color-methods/methods-color.json" docs/benchmarks/sande/methods-color.json
+run_check hors-v3 "$python_bin" tools/run_hors_v3_perfs.py --run \
+  --vice "$vice_bin" --vice-data "$vice_data" --output-dir "$results_dir/hors-v3"
+run_check hors-v3-report "$python_bin" tools/report_hors_v3_release.py "$results_dir/hors-v3"
+run_check hors-v3-provenance "$python_bin" tools/run_hors_v3_perfs.py --check
 run_check canonical "$python_bin" tools/compare_renderers.py \
   --workspace "$results_dir/canonical" --workers "$jobs" \
   --tass "$tass_bin" --cartconv "$cartconv_bin" --vice "$vice_bin" \
