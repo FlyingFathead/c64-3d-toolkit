@@ -1,7 +1,9 @@
 {
-  "experimental": true,
+  "experimental": false,
   "preset": "material",
   "encoding": "native",
+  "color_mapping": "nearest VIC-II palette; weighted CIELAB (0.5 L squared + a squared + b squared)",
+  "cell_mapping": "weighted CIELAB error; two colours per cell",
   "frames": 128,
   "fit_scale": 0.9548340649786405,
   "triangles": 3104,
@@ -9,5 +11,24 @@
   "native_limit": "two colours per 8x8 cell; black preserved at silhouettes",
   "host_rasterized": true,
   "runtime_triangle_lighting": false,
-  "uniform_material_fast_path": true
+  "uniform_material_fast_path": true,
+  "animation": {
+    "modes": [
+      "spin"
+    ],
+    "samples_per_mode": 128,
+    "total_samples": 128
+  },
+  "material_color_mapping": {
+    "Default": {
+      "source_rgb": [
+        51,
+        51,
+        51
+      ],
+      "c64_index": 11,
+      "c64_color": "dark_gray"
+    }
+  },
+  "texture_color_mapping": {}
 }

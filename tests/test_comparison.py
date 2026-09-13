@@ -58,6 +58,17 @@ class ComparisonTests(unittest.TestCase):
             (root/'config/c643d.ini').write_text('local tool paths')
             (root/'examples/README.md').write_text('documentation')
             self.assertEqual(before,comparison.fingerprints(root)[1])
+            # A README-linked recording must remain in assets without making
+            # the renderer evidence stale, regardless of Git ignore rules.
+            for suffix in ('.mp4','.MP4','.m4v','.mov','.webm','.mkv','.avi'):
+                with self.subTest(video_suffix=suffix):
+                    video=root/('assets/showreel'+suffix)
+                    video.write_bytes(b'local video fixture')
+                    self.assertEqual(before,comparison.fingerprints(root)[1])
+                    video.write_bytes(b'updated video fixture')
+                    self.assertEqual(before,comparison.fingerprints(root)[1])
+                    video.unlink()
+                    self.assertEqual(before,comparison.fingerprints(root)[1])
             (root/'assets/input.json').write_text('changed pictures')
             self.assertNotEqual(before,comparison.fingerprints(root)[1])
             before=comparison.fingerprints(root)[1]
@@ -93,7 +104,7 @@ class ComparisonTests(unittest.TestCase):
     def test_cart_stream_default_and_explicit_old_method(self):
         with patch.object(cli,'cmd_build',return_value=0) as build,contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(cli.main(['cart-stream','--no-config']),0)
-            self.assertEqual(build.call_args.args[0].renderer,'hors-render-v2')
+            self.assertEqual(build.call_args.args[0].renderer,'hors-renderer-v3')
             self.assertEqual(cli.main(['cart-stream','--no-config','--renderer','yunroll-cart-v2']),0)
             self.assertEqual(build.call_args.args[0].renderer,'yunroll-cart-v2')
 

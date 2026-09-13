@@ -1,0 +1,163 @@
+{
+  "checkpoint": "HORS-V3 defaults checkpoint 1",
+  "base_version": "0.7.8",
+  "version_file_changed": false,
+  "apply": "Extract from the parent of c64-3d-toolkit; review local edits before overwriting.",
+  "files": [
+    {
+      "path": "CHANGELOG.md",
+      "before_sha256": "dd53d26a3d7b986de9fc0bb7698e281f5bd3612cc79f7a270279e3c6c0e1fbf7",
+      "after_sha256": "60910729b1ea92e447ee19187bbe03013e2c12d38fe0b98e2453d36c5924a254"
+    },
+    {
+      "path": "README.md",
+      "before_sha256": "aa90d2e9f76ab90a812925ba9aa60ebb8a169bf044ba36fe39be2c1168afab7b",
+      "after_sha256": "a69cf1c09de34831b73da8b85efe727f441a55f0111a2caace2a609a979df8fc"
+    },
+    {
+      "path": "docs/BLENDER_PIPELINE.md",
+      "before_sha256": "4496b0a647c48840b4464a1e8a4ac2442c6b643edf23209c15c50e15d4c0cb25",
+      "after_sha256": "9c20b5fe31b6543b2ed0129e7c4f068bb51ac7ff5458adfd717fe04f4901cd5c"
+    },
+    {
+      "path": "docs/HORS_V3_CHECKPOINT_VALIDATION.json",
+      "before_sha256": null,
+      "after_sha256": "d8a9e76dbdf228df72dba8b6628cfefb98182f8593a04d8ae8231ec8d44408dc"
+    },
+    {
+      "path": "docs/HORS_V3_DEFAULTS_CHECKPOINT.md",
+      "before_sha256": null,
+      "after_sha256": "1b39c7b91df1db1b586db03bf5d88a6649cb7190b80f4610154d403a74668c8c"
+    },
+    {
+      "path": "docs/HORS_V3_PALETTES.png",
+      "before_sha256": null,
+      "after_sha256": "fc1ce0df474b55374cef7a0a87acd99cedc6eea619d2637cbe8730c804e09a3e"
+    },
+    {
+      "path": "docs/OUTPUT_COLORS.md",
+      "before_sha256": "e0ba4394e6823c3de3f9f229e8f97a5a37e9a8d419010c8c2e989602c35172b8",
+      "after_sha256": "bde6a0cf3e8170ffbea2abf3a016be3e41fe5d751afdb2b6954707c373ecbce9"
+    },
+    {
+      "path": "docs/PIPELINE_VERSIONING.md",
+      "before_sha256": "7dfa2312b9a26d58036cc5cd48e773c53e4cd8cea288eb0ada649419b1a5285a",
+      "after_sha256": "71b1a66eba32f94e2b608673cd7c1c485b0f81133e2d1ea68fd244cbecdf8ca6"
+    },
+    {
+      "path": "tests/test_comparison.py",
+      "before_sha256": "2ece7a2a5dd6b87753ad4e6e3626303e630aa004f725fecd5fa1d05015ee6fb8",
+      "after_sha256": "4c9c5898640fcfb95610bfaba2b510154d0fcd2a8562ec76168a92950b4c6217"
+    },
+    {
+      "path": "tests/test_hors_v2_stable.py",
+      "before_sha256": "9cf3da2b6c5702e07174982393e1aa321169c6c9ba44f6b37308d53c62160115",
+      "after_sha256": "abd32a48741afec572999c1e3d172cf9a4666f7d3a3c9ec73a27d17cd62e3a9b"
+    },
+    {
+      "path": "tests/test_hors_v3_defaults.py",
+      "before_sha256": null,
+      "after_sha256": "878dad051430305a061a58ba19d9879669c558684c30704aa1097f2f3953fd27"
+    },
+    {
+      "path": "tests/test_interactive_cart.py",
+      "before_sha256": "16c4db704ed77c02800e61aeea8b4fc1271215e8f21eea6458ec450905bfa2ab",
+      "after_sha256": "9bcdef4f17ac5208bf4e9fe610fcf9f76ebdd6ad2cddf36ec9a9253b4aba060e"
+    },
+    {
+      "path": "tests/test_surface_fill.py",
+      "before_sha256": "b7aabb6e3b882c0a30be6f9005cba2f463a917ba5ce4c6de1d594f36ef7d6fbc",
+      "after_sha256": "ce068551f06fdd00393fb753e31e6dfbc183ba0c68d72233df4850844f922c96"
+    },
+    {
+      "path": "tests/test_surface_palettes.py",
+      "before_sha256": "e96c902853e2e327edb59a433f6e8d3853a5cc76e11ee81de1b9a15a8b1d3833",
+      "after_sha256": "725a29d4e67e3313760867b0e43a07ea64931eceb4876e090806a60b3c77392b"
+    },
+    {
+      "path": "tests/test_v8_optimization.py",
+      "before_sha256": "fc12cb1b91818590962e5f6de3c918baeccb861ae6e05a9c41aa40d43c4993d2",
+      "after_sha256": "8f6c0303c097b1f7d18540f402f2e59238b9f69ec92f4dc3f64faa7f5fc0e9ec"
+    },
+    {
+      "path": "tests/test_v9_optimization.py",
+      "before_sha256": "6949eb9b10be62445758f54956cbb0b7a0ab45c10886794772c795b9534ad44c",
+      "after_sha256": "ce3cd1abe40d9ad37e1bb5f8ea864acf07fd28ed0a13ad4255e0b8fc24469437"
+    },
+    {
+      "path": "tools/blender_export.py",
+      "before_sha256": "75a76ae4cf860e81765b2ae95931db5e1bb78f49a1683debde148335aac5e870",
+      "after_sha256": "b93049cd31f44a3aa30e3762588a974c520894a7e6621a8dd35238a78b90c3a4"
+    },
+    {
+      "path": "tools/c643d/buildscreen.py",
+      "before_sha256": "09eda13fee0b5938c1e1420d6e60acf1e513a9448c01d09ae9b7c95ab9269075",
+      "after_sha256": "d478ec2be9ac2ec1c0f16b856a0aaf19d45d850a7c07d29a815bfefebfef1872"
+    },
+    {
+      "path": "tools/c643d/cartscene.py",
+      "before_sha256": "541a33274e44df8bf9e56e2bcbeb9bc9a9408ab0a932739fe2848f48527e08f1",
+      "after_sha256": "c6b2909e39b4a6439e46b725dfff418beef698bba47b67665a8da2416ae83d35"
+    },
+    {
+      "path": "tools/c643d/cartstream.py",
+      "before_sha256": "4c0b7ae1e10924cede29de22ff02aafb8968d913953137afc48e1bdefcc87844",
+      "after_sha256": "2675b8aca92a4621fa516aa501c10997f18c981d1b6291c45f3fe59af2e2dbec"
+    },
+    {
+      "path": "tools/c643d/cli.py",
+      "before_sha256": "e74b892e74d7e0d14c0e27c98ce3afc6ea8b29dde90226320872dcf671f25f96",
+      "after_sha256": "d93348831333181448a7ce243ca3270575d44f8b593e0fbe5c31c4e691b70fb7"
+    },
+    {
+      "path": "tools/c643d/colors.py",
+      "before_sha256": "d7cd7f7042dc9a22447042cc9fd05048cd1c45dc4151d3a515487de8ad00ec57",
+      "after_sha256": "fec6f75a5c622277cc39cf9ea31b942f230d91e7bb0b463c7f96ea505a5fd13b"
+    },
+    {
+      "path": "tools/c643d/hors_v2_stable.py",
+      "before_sha256": "4639f5b4da87e527df60132aefeba7a965def48ae6320cedc968762fbd7e2a52",
+      "after_sha256": "4c3d9206b873b45a35f248b5ef20b7cea9c2f10c0ffabfc12a049ccc7cc2b052"
+    },
+    {
+      "path": "tools/c643d/hors_v3.py",
+      "before_sha256": "f1a27ef388830c094c11a76e7999247598f0f4b807b0c1e67fb2fb36d39b9997",
+      "after_sha256": "b4f9c7f02b013dab156dd4a5b31e0a41ab22b10ba2b45a5eb5ed6002a42e4cf2"
+    },
+    {
+      "path": "tools/c643d/objio.py",
+      "before_sha256": "d0a3b5bc19214a357f782689214e2875c9a4d77b632258469e20519974b77492",
+      "after_sha256": "bf3bbca67ebc086ba86170e9088a3d574a4f61dbf037d1138b15351fdff98d62"
+    },
+    {
+      "path": "tools/c643d/renderer_names.py",
+      "before_sha256": "09b796000d2d09d5d93a705ff3044e1cef8d1cf33092a9fac67682b3c84ddfa5",
+      "after_sha256": "8e2cb6e9062f5cfb36b8b2237e60ae71dbbccb43edf9bb60480aa2f28ad0c238"
+    },
+    {
+      "path": "tools/c643d/surface_fill.py",
+      "before_sha256": "3c11d816a47d3caa6ec0c9dd4f084636dddb3c73d25fc7306b08c8d4f7c80875",
+      "after_sha256": "205b64fee75d68a3686095641c5546a1ea0c5693b0b3f5731eef87e953356aa0"
+    },
+    {
+      "path": "tools/c643d/surface_palettes.py",
+      "before_sha256": null,
+      "after_sha256": "68af04dea2a55692fdd89311d24f1257e898616ab80011c82264e552db8edb1b"
+    },
+    {
+      "path": "tools/c643d/surface_textures.py",
+      "before_sha256": "a458251c83cd04d8a49939b5f398868fcbe56ddb581d3009ea27e507bf2988f4",
+      "after_sha256": "2c3039b004a79d699ca3428c187e26a708ff13a0ec55bc3d5ce49f613e28df36"
+    },
+    {
+      "path": "tools/verify_blender_vertex_caches.py",
+      "before_sha256": null,
+      "after_sha256": "91f881d1b81c7b292a89d135d4f8eaa0c93ea5444f4defb055cd0f41a670823f"
+    },
+    {
+      "path": "tools/verify_hors_v3_checkpoint.py",
+      "before_sha256": null,
+      "after_sha256": "b7c630c1a5c943a2778382dbfff038e9a99a7548821399ef679ee205f2f2a149"
+    }
+  ]
+}

@@ -163,6 +163,17 @@ def _lab(rgb: tuple[int,int,int]) -> tuple[float,float,float]:
     return 116*fy-16,500*(fx-fy),200*(fy-fz)
 
 
+@lru_cache(maxsize=65536)
+def palette_color_distances(rgb: tuple[int,int,int]) -> tuple[float, ...]:
+    """Weighted CIELAB squared distances in native palette-index order."""
+    l, a, b = _lab(tuple(max(0, min(255, int(v))) for v in rgb))
+    distances = [0.0] * 16
+    for index, palette_rgb in C64_PALETTE.values():
+        pl, pa, pb = _lab(palette_rgb)
+        distances[index] = 0.5 * (l-pl)**2 + (a-pa)**2 + (b-pb)**2
+    return tuple(distances)
+
+
 def nearest_c64_color_index(rgb: tuple[int,int,int]) -> int:
     """Map source RGB to a hue-preserving perceptual C64 palette match.
 
@@ -170,15 +181,8 @@ def nearest_c64_color_index(rgb: tuple[int,int,int]) -> int:
     weight of chroma/hue avoids turning dark green source materials brown or
     gray merely because those entries happen to have closer luminance.
     """
-    rgb=tuple(max(0,min(255,int(v))) for v in rgb)
-    l,a,b=_lab(rgb)
-    best_index=1; best_distance=math.inf
-    for _name,(index,palette_rgb) in C64_PALETTE.items():
-        pl,pa,pb=_lab(palette_rgb)
-        distance=0.5*(l-pl)**2+(a-pa)**2+(b-pb)**2
-        if distance<best_distance:
-            best_index=index; best_distance=distance
-    return best_index
+    distances = palette_color_distances(tuple(rgb))
+    return min(range(16), key=distances.__getitem__)
 
 
 def nearest_c64_color(rgb: tuple[int,int,int]) -> str:

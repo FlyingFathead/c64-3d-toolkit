@@ -1,0 +1,7 @@
+test_default_stays_bw_and_color_uses_mtl (test_sande_variants.SandeVariantTests.test_default_stays_bw_and_color_uses_mtl) ... ok
+test_source_materials_cannot_be_silently_forced_to_interactive_bw (test_sande_variants.SandeVariantTests.test_source_materials_cannot_be_silently_forced_to_interactive_bw) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+OK

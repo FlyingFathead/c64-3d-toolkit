@@ -1,0 +1,228 @@
+{
+  "revision": "release_final_v5",
+  "cartridge_sha256": "b4e821d5e8d2bfa321a8254f7be88405eb623a323886c66eb751c4c425ee29f1",
+  "method": "Measured in this exact interactive cart in PAL VICE 3.10: 750 refreshes after warmup, normal rotation speed, HUD shown. FPS counts displayed-buffer changes, including sprite work and VIC-II DMA.",
+  "measurements": {
+    "gradient-no-stars": {
+      "mode": 1,
+      "stars": false,
+      "star_profile": "full",
+      "exhibition": false,
+      "exhibition_cycle": false,
+      "presentations_seen": [
+        1
+      ],
+      "auto_cycle": false,
+      "foreground": 0,
+      "speed_level": 3,
+      "hud_visible": true,
+      "gif_pixels_verified": false,
+      "display_fps": 18.11172194517471,
+      "elapsed_cycles": 14741956,
+      "refreshes": 750,
+      "display_flips": 271,
+      "worst_display_ms": 63.54339212056254,
+      "hold_ticks": {
+        "2": 64,
+        "3": 206
+      },
+      "orientations_seen": 30,
+      "all_three_buffers": true,
+      "visible_pixel_and_colour_match": true,
+      "visible_star_samples": 0,
+      "visible_star_pixel_samples": 0,
+      "sprite_positions_match": true,
+      "sprite_occlusion": true,
+      "cartridge_unchanged": true,
+      "density": 16,
+      "gif_source": null
+    },
+    "gradient-light-stars": {
+      "mode": 1,
+      "stars": true,
+      "star_profile": "light",
+      "exhibition": false,
+      "exhibition_cycle": false,
+      "presentations_seen": [
+        1
+      ],
+      "auto_cycle": false,
+      "foreground": 0,
+      "speed_level": 3,
+      "hud_visible": true,
+      "gif_pixels_verified": true,
+      "display_fps": 15.907979327478198,
+      "elapsed_cycles": 14740340,
+      "refreshes": 750,
+      "display_flips": 238,
+      "worst_display_ms": 82.44523206339926,
+      "hold_ticks": {
+        "2": 11,
+        "3": 180,
+        "4": 46
+      },
+      "orientations_seen": 30,
+      "all_three_buffers": true,
+      "visible_pixel_and_colour_match": true,
+      "visible_star_samples": 3034,
+      "visible_star_pixel_samples": 3034,
+      "sprite_positions_match": true,
+      "sprite_occlusion": true,
+      "cartridge_unchanged": true,
+      "density": 8,
+      "gif_source": "actual PAL VICE screenshots including hardware sprites"
+    },
+    "gradient-stars": {
+      "mode": 1,
+      "stars": true,
+      "star_profile": "full",
+      "exhibition": false,
+      "exhibition_cycle": false,
+      "presentations_seen": [
+        1
+      ],
+      "auto_cycle": false,
+      "foreground": 0,
+      "speed_level": 3,
+      "hud_visible": true,
+      "gif_pixels_verified": true,
+      "display_fps": 13.70228456617991,
+      "elapsed_cycles": 14740304,
+      "refreshes": 750,
+      "display_flips": 205,
+      "worst_display_ms": 82.58529832082887,
+      "hold_ticks": {
+        "3": 69,
+        "4": 135
+      },
+      "orientations_seen": 30,
+      "all_three_buffers": true,
+      "visible_pixel_and_colour_match": true,
+      "visible_star_samples": 8257,
+      "visible_star_pixel_samples": 11149,
+      "sprite_positions_match": true,
+      "sprite_occlusion": true,
+      "cartridge_unchanged": true,
+      "density": 16,
+      "gif_source": "actual PAL VICE screenshots including hardware sprites"
+    }
+  },
+  "instruction_costs": {
+    "stars-on": {
+      "min_cycles": 3686,
+      "max_cycles": 4219,
+      "mean_cycles": 3936.875,
+      "samples": 32,
+      "method": "VICE stopwatch between entry and final RTS, plus JSR/RTS; elapsed machine cycles"
+    },
+    "stars-off": {
+      "min_cycles": 32,
+      "max_cycles": 32,
+      "mean_cycles": 32.0,
+      "samples": 32,
+      "method": "VICE stopwatch between entry and final RTS, plus JSR/RTS; elapsed machine cycles"
+    },
+    "light-stars-on": {
+      "min_cycles": 1796,
+      "max_cycles": 1841,
+      "mean_cycles": 1818.9375,
+      "samples": 32,
+      "method": "VICE stopwatch between entry and final RTS, plus JSR/RTS; elapsed machine cycles"
+    },
+    "light-stars-off": {
+      "min_cycles": 32,
+      "max_cycles": 32,
+      "mean_cycles": 32.0,
+      "samples": 32,
+      "method": "VICE stopwatch between entry and final RTS, plus JSR/RTS; elapsed machine cycles"
+    },
+    "speed-poll-idle": {
+      "min_cycles": 218,
+      "max_cycles": 424,
+      "mean_cycles": 243.15625,
+      "samples": 32,
+      "method": "VICE stopwatch between entry and final RTS, plus JSR/RTS; elapsed machine cycles"
+    },
+    "effects-poll-idle": {
+      "min_cycles": 82,
+      "max_cycles": 125,
+      "mean_cycles": 86.03125,
+      "samples": 32,
+      "method": "VICE stopwatch between entry and final RTS, plus JSR/RTS; elapsed machine cycles"
+    }
+  },
+  "profiles": {
+    "default": "light",
+    "toggle_key": "4",
+    "light": {
+      "default_points": 8,
+      "levels": [
+        2,
+        4,
+        8
+      ],
+      "width": 1,
+      "path_samples": 64,
+      "trajectories": "original eight-point perspective field"
+    },
+    "full": {
+      "default_points": 16,
+      "levels": [
+        2,
+        4,
+        8,
+        16,
+        24,
+        32
+      ],
+      "near_width": 2
+    },
+    "independent_density": true,
+    "extra_path_RAM": [
+      32768,
+      33792
+    ],
+    "boot_staging": [
+      17408,
+      18432
+    ],
+    "additional_RAM_bytes": 1024,
+    "switch": "IRQ call operand and sprite patterns changed only on key events; both kernels already in RAM",
+    "extra_per_refresh_dispatch_cycles": 0
+  },
+  "host_keys": {
+    "passed": true,
+    "cartridge": "saku_2026-interactive.crt",
+    "sha256": "b4e821d5e8d2bfa321a8254f7be88405eb623a323886c66eb751c4c425ee29f1",
+    "method": "VICE exported host keyboard event API; symbolic and positional keymap translation; unmodified emulated CIA reads",
+    "gui_events_tested": false,
+    "number_keys": {
+      "1": "reset",
+      "2": "more",
+      "3": "less",
+      "4": "light/full"
+    },
+    "shift_u_all_hud": true,
+    "escape_help": true,
+    "escape_intro_preserves_space_wait": true,
+    "initial_profile": "light",
+    "f2_restores_initial_profile": true,
+    "outline_and_card_preserve_starfield_state": true,
+    "help_header_stripes": true,
+    "stars_off_border_pixels_clean": true,
+    "results": {
+      "sym": {
+        "passed": true,
+        "checks": 56,
+        "host_events": 134,
+        "keymap_sha256": "478f7d46bcfa0547d2c3fe1fb410a854501e2833472fa47448f29110dfa09428"
+      },
+      "pos": {
+        "passed": true,
+        "checks": 56,
+        "host_events": 134,
+        "keymap_sha256": "df7332c52430ec344c9821ead8f16650ca31dc5676d0c40c5915e5594bd3493d"
+      }
+    }
+  }
+}

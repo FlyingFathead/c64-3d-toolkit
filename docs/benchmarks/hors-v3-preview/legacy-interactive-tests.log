@@ -1,0 +1,7 @@
+test_crt_extension_normalized_and_private_runtime_enabled (test_interactive_cart.InteractiveCartTests.test_crt_extension_normalized_and_private_runtime_enabled) ... ok
+test_rejects_prg_legacy_renderers_and_scenes_before_build (test_interactive_cart.InteractiveCartTests.test_rejects_prg_legacy_renderers_and_scenes_before_build) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.040s
+
+OK

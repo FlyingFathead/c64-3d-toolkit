@@ -1,0 +1,5 @@
+Complete uncapped renderer comparison: all 28 jobs succeeded, 3 normal PLAY ALL visits.
+Input SHA-256: bdc298828d64f30f9292588ffe8921cdb347979dd3d651305aaceb0068a19358
+Chart SHA-256: 37080c8ac0c028df2345a619d387c54e4ff283da90d545e1a66bb9e8101a152b
+Comparison chart matches current source inputs.
+This is a completion summary; individual worker output is saved in canonical-worker-logs/.

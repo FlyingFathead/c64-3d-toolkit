@@ -1,5 +1,46 @@
 # Changelog
 
+## 0.7.9: The Golden Dragon & SAKU 2026 (2026-09-13)
+
+- Complete full-width 320-pixel Blender export/clipping and safe wide-row clearing; retain explicit 256-pixel compatibility. Add editable zoom and tracking-camera test cards, native VICE captures and performance evidence.
+- Add opt-in `--flip-input-horizontal` / `--flip-input-vertical`, with `--flip-*` and `--mirror-*` aliases; reflect artwork and colours during host conversion, preserving HUD/effects.
+
+- Final v5: shared paged help; exhibition on 5, sequential/random on 6, interval on 7/8; CLI defaults; manual star choices persist between styles; measured scheduler cost and actual VICE exhibition GIF.
+
+- Final v4: SAKU starts with light stars; shared RUN/STOP (Esc in VICE) help; profile CLI; Shift+O/B preserve disabled stars; refreshed native keymap tests and performance evidence.
+
+- Final v3: key 4 switches RAM-resident light/full stars, preserves densities and on/off state; immediate sprite shutdown; avoid repeated colour-register writes causing border dots; record side-by-side FPS and cycle costs in the SAKU example.
+
+- Final v2: star density on 1/2/3; Shift+U hides all HUD text including INTERACTIVE; striped help headers; padded rounded SAKU card; irregular star lifetimes and wider near stars.
+
+- Preserve mapped SVG fills/strokes by default, proportional fitting and holes;
+  add gradient style, outlines-only, white-on-black diagnostics and colour overrides.
+- Add SAKU 2026 original PDF vectors/SVG, three carts, live VICE GIF, four interactive
+  presentations, Shift+S/T/W/G/R controls, and RAM-resident forward starfield.
+- Add shared V3 + / - / 0 tempo controls with brief SPD feedback and WOW at maximum.
+- Add versioned startup keymaps and Shift+H pause/help to shared V3 interactive builds.
+  Include stars disabled unless `--starfield-default enabled` selects them;
+  `--no-starfield` / `--no-include-starfield` excludes all starfield code/data.
+  SAKU explicitly starts with stars enabled. Measure excluded/off/on builds separately.
+- Include the golden Stanford Dragon beside SAKU on the main page; preserve the
+  previous Dragon and Sande Pretzel updates.
+- Measure V3 in the canonical PLAY ALL matrix and highlight FPS maxima/ties in
+  every comparable performance table; document starfield and speed overhead.
+- Default `build`/`cart-stream` to HORS-V3, including authored Blender wireframes.
+- Integrate V3 shared colour plans with paced/paged scene playback; losslessly
+  compact fragmented clear/address metadata when the existing caches would overflow.
+- Diagnose per-frame V2 metadata limits with actual span counts and sample index.
+- Add every native hue family and 2..16-stop custom metallic gradients.
+- Use perceptual nearest-colour distance for material/texture cell reduction;
+  retain legacy RGB reduction as an explicit option and report source mappings.
+- Check external Blender cache files and improve unlinked Principled colour
+  import by converting scene-linear values to sRGB before palette matching.
+- Rebuild current release cartridges for 0.7.9 and refresh release checks and comparison evidence.
+- Retain historical renderer implementations and explicit V2 menu selection.
+
+See [release notes](docs/RELEASE_0.7.9.md) and the [pipeline guide](docs/HORS_V3_DEFAULTS_CHECKPOINT.md).
+
+
 ## 0.7.8: The Stanford Dragon Has Arrived!
 
 - Lead the main page with the Dragon release and showcase GIF, retain v0.7.7 with Sande's metallic Pretzel GIF, and collect older announcements in a release-history page.

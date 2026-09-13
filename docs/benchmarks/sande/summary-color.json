@@ -1,6 +1,6 @@
 {
   "set_id": "sande_models",
-  "version": "0.7.8",
+  "version": "0.7.9",
   "author": "Sande",
   "protocol": "standalone looping objects; normal uncapped playback; PAL; seed 1; factory defaults; sound off",
   "refreshes": 1504,
@@ -14,7 +14,7 @@
   "tool_sha256": {
     "tass": "88d6c1f97417d0ad1051435fd5702cdc6e29e92a68417a11d729d689d3380e0e",
     "cartconv": "1c23edd8dfc3387e1b959b2d621eb468f237554a301a7262d74b59b0bbadc2fa",
-    "vice": "261961614c92aa529be7bcf6394128b7b7921080cb5f3a9c623347c156b5f677"
+    "vice": "1b2d61594b6adc56095cf4d90a38ad8892a619242423267956096cd48004417a"
   },
   "results": [
     {

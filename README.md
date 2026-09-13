@@ -2,6 +2,33 @@
 
 > **ATTENTION:** [FlyingFathead/c64-3d-toolkit](https://github.com/FlyingFathead/c64-3d-toolkit/) is the one and only official, original source for `c64-3d-toolkit`. Steer clear of other sources or repositories claiming to be the official project.
 
+## v0.7.9: The Golden Dragon & SAKU 2026
+
+<table>
+<tr>
+<td width="50%" align="center"><a href="examples/stanford_dragon/README.md"><img src="examples/stanford_dragon/previews/stanford_dragon-golden-hors-v3.gif" alt="The golden Stanford Dragon rotating in PAL VICE" width="400"></a></td>
+<td width="50%" align="center"><a href="examples/saku_2026/README.md"><img src="examples/saku_2026/previews/saku_2026-light-starfield.gif" alt="SAKU 2026 rotating with source-colour gradients and a forward starfield in PAL VICE" width="400"></a></td>
+</tr>
+<tr><td align="center"><a href="examples/stanford_dragon/README.md">The Golden Dragon</a></td><td align="center"><a href="examples/saku_2026/README.md">SAKU 2026 — interactive</a></td></tr>
+</table>
+
+SAKU: [official home page](https://suomenamigakayttajat.fi/) · [Saku magazine](https://sakulehti.fi/)
+
+**HORS-V3 now powers normal object and authored-wireframe conversion.** Choose
+nearest-palette material/image colours, every native hue family, or your own
+metallic gradient with `--surface-ramp brown,orange,yellow,white`.
+SVG builds preserve mapped fills and strokes and fit proportionally; `--fill-style gradient` adds Dragon-style colour ramps. Explicit outline, diagnostic and single-colour switches are available. The SAKU interactive cart starts with gradients and stars, with speed controls and a complete key map.
+
+New interactive builds retain the original intro and wait for SPACE, with **press SHIFT+H for help** on the row above. They have **RUN/STOP (Esc in VICE) or Shift+H** help, plus `+` / `-` / `0` speed controls. Stars start disabled unless `--starfield-default enabled` is set; `--no-starfield` excludes their code and data entirely. SAKU explicitly enables the **light** field (`--starfield-profile light`); the full field remains available with `4`. `--hide-hud` starts with all HUD text hidden; Shift+I / Shift+F / Shift+U toggle the name/counts, FPS/speed feedback, or all HUD text including INTERACTIVE. Star density uses **1 = reset, 2 = more, 3 = less**; **4 switches original light / full stars**, preserving each density and the on/off state. [Latest correction notes](docs/RELEASE_FINAL_V5.md) and [interactive options and implementation](docs/STARFIELD.md) cover startup visibility and `--no-hud-toggle`.
+
+Interactive help now has **two pages**, navigated with left/right. **5** toggles exhibition, **6** selects ordered/random styles, and **7/8** adjusts the five-second interval. Exhibition starts with HUD/stars off and preserves manual star choices across scene changes. [Exhibition controls and CLI defaults](docs/EXHIBITION.md).
+
+V3 can compact fragmented clear/colour metadata without discarding geometry,
+pixels or animation samples. Blender cache diagnostics now explain missing
+files and unsupported Alembic builds.
+
+[SVG paint and gradients](docs/SVG_PIPELINE.md) · [Starfield and speed controls](docs/STARFIELD.md) · [Release notes and installation](docs/RELEASE_0.7.9.md) · [Colours, gradients and Blender cache guide](docs/HORS_V3_DEFAULTS_CHECKPOINT.md)
+
 ## v0.7.8: The Stanford Dragon Has Arrived!
 
 <p align="center">
@@ -10,7 +37,7 @@
 
 Five HORS-V3 demo carts bring Stanford's **5,205-vertex / 11,102-triangle Dragon** to the C64: **wireframe, metallic (grey), red, green and blue**. The showcase above presents one complete rotation of each, in that order, with the measured PAL playback timing.
 
-**New texture colours:** red, green and blue shading ramps join metallic (grey) for generated surfaces. Select them with `--surface-fill metallic --surface-palette red|green|blue`; `--surface-fill grey` aliases the metallic preset.
+**HORS-V3 conversion is now the default** for objects and authored wireframe scenes. Surface shading supports every native colour family plus custom gradients with `--surface-ramp brown,orange,yellow,white`. Materials and texture pixels map to the nearest C64 palette colour. [Checkpoint guide, colour mapping and cache troubleshooting](docs/HORS_V3_DEFAULTS_CHECKPOINT.md).
 
 [Download the five Dragon carts, watch individual GIFs and see performance](examples/stanford_dragon/README.md) · [v0.7.8 release notes and installation](docs/RELEASE_0.7.8.md)
 
@@ -49,7 +76,7 @@ cartridges do not share a soundtrack.
 
 ## Try the toolkit
 
-HORS-V2 wireframe is the default; select `--renderer hors-renderer-v3` for the surface and texture pipeline. The prebuilt cartridges below are ready to run. See [cartridge loading](docs/CARTRIDGE_LOADING.md) and [output colours](docs/OUTPUT_COLORS.md) for setup and controls.
+HORS-V3 is the default conversion renderer; use `--surface-fill material`, `textured` or `metallic` to select filled surfaces. The prebuilt cartridges below are ready to run. See [cartridge loading](docs/CARTRIDGE_LOADING.md) and [output colours](docs/OUTPUT_COLORS.md) for setup and controls.
 
 **Performance tables:** [Original twelve animations](docs/PERFORMANCE_COMPARISON.md#best-method-for-each-animation) · [Demo Cart 2.0: all seven scenes](docs/PERFORMANCE_COMPARISON.md#demo-cart-20) · [Sande test kit](docs/PERFORMANCE_COMPARISON.md#sandes-models)
 
@@ -57,20 +84,21 @@ HORS-V2 wireframe is the default; select `--renderer hors-renderer-v3` for the s
 
 | Prebuilt | What is inside |
 | --- | --- |
-| [Stanford Dragon: all five looks](examples/stanford_dragon/README.md) | HORS-V3 wireframe, metallic (grey), red, green and blue; carts, timed GIFs and performance |
+| [Stanford Dragon: all six looks](examples/stanford_dragon/README.md) | HORS-V3 wireframe, metallic (grey), golden, red, green and blue; carts, timed GIFs and performance |
+| [SAKU 2026 — interactive](examples/saku_2026/README.md) | SVG source/gradient colours, starfield, spin/crawl, speed controls and keyboard map |
 | [Metallic Pretzel — interactive](examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-interactive.crt) | HORS-V3 shaded surfaces, rotation and background controls |
 | [Sande's Pretzel](examples/demos_sande/sande_pretzel-hors-render-v2-interactive.crt) | Sande's 1,552-vertex knot; left/right rotation and F-key colours |
 | [Sande's TAC-2](examples/demos_sande/sande_tac2-hors-render-v2-interactive.crt) | Sande's joystick model; the same interactive controls |
 | [Color Combo Test](examples/color_combo_test/color-combo-test.crt) | Four colour pairs, ten seconds each, automatic looping, F3/F4 cycling |
-| [Twelve-demo cart — FPS](examples/cart_demos/c643d-demo-v0.7.8-hors-render-v2-all.crt) | The original twelve animations, menu styles, PLAY ALL, HiFi mode and colour controls |
-| [Twelve-demo cart — RAM](examples/cart_demos/c643d-demo-v0.7.8-hors-render-v2-all-ram.crt) | Same material and colour controls, smaller drawing kernels |
+| [Twelve-demo cart — FPS](examples/cart_demos/c643d-demo-v0.7.9-hors-render-v2-all.crt) | The original twelve animations, menu styles, PLAY ALL, HiFi mode and colour controls |
+| [Twelve-demo cart — RAM](examples/cart_demos/c643d-demo-v0.7.9-hors-render-v2-all-ram.crt) | Same material and colour controls, smaller drawing kernels |
 | [Demo Cart 2.0](examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt) | Colour cube, colour torus, twist tunnel, ribbon dance, orbital cubes, wave lattice and Ripples Lite |
-| [HiFi reel](examples/cart_hifi/c643d-hifi-v0.7.8-hors-render-v2.crt) | Horse & Sunflower followed by two HiFi spinners |
+| [HiFi reel](examples/cart_hifi/c643d-hifi-v0.7.9-hors-render-v2.crt) | Horse & Sunflower followed by two HiFi spinners |
 | [Marbles](examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt) | All 640 authored samples, original 16 FPS target, native intro and ending |
 | [Horse & Sunflower](examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt) | Authored scene, with a separate RAM build in the same folder |
 
 ```bash
-python c643d.py run-cart examples/cart_demos/c643d-demo-v0.7.8-hors-render-v2-all.crt
+python c643d.py run-cart examples/cart_demos/c643d-demo-v0.7.9-hors-render-v2-all.crt
 python c643d.py run-cart examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt
 ```
 
@@ -123,9 +151,10 @@ python c643d.py color-combo-test
 python c643d.py build --shape torus --foreground-color black --background-color white --border-color white
 ```
 
-`build`, `cart-stream` and `cart-demos` default to **hors-render-v2**.
-Scene inputs select its scene integration. Explicit `--renderer hors-render-v2-scene`
-is also accepted. The command name is **hors-render-v2**, not `hors-renderer-v2`.
+`build` and `cart-stream` default to **hors-renderer-v3**, including authored
+wireframe scenes. `hors-render-v3` is an alias. `cart-demos` retains the V2
+comparison/menu pipeline. Explicit `--renderer hors-render-v2` and
+`--renderer hors-render-v2-scene` still select the previous implementation.
 Use `--renderer yunroll` explicitly when you want resident PRG output.
 
 - [Configuration](docs/CONFIGURATION.md), [Windows setup](docs/WINDOWS_SETUP.md)
@@ -155,7 +184,7 @@ renderer throughput improvement.
 ```bash
 cd path/to/c64-3d-toolkit
 JOBS=3 VICE_DATA=/usr/local/share/vice bash COMPILE-RELEASE.sh \
-  --workspace ../c64-078-release-build
+  --workspace ../c64-079-release-build
 ```
 
 This makes an isolated source copy, builds every stable example, validates
@@ -165,11 +194,11 @@ Add `--install` to install only after all checks pass. Add `--baseline-zip PATH`
 to also generate a patch ZIP. The pipeline never commits, tags or pushes. Root `VERSION` supplies the build
 identity; an alternate-version VICE test guards startup, menu and thanks labels.
 
-To install the supplied 0.7.8 release, save the ZIP one level above your
+To install the supplied 0.7.9 release, save the ZIP one level above your
 checkout and extract it from that parent directory:
 
 ```bash
-unzip -o c64-3d-toolkit-v0.7.8-incremental.zip
+unzip -o c64-3d-toolkit-v0.7.9-incremental.zip
 cd c64-3d-toolkit
 python examples/stanford_dragon/verify.py --check
 python tools/compare_renderers.py --check
@@ -178,8 +207,8 @@ python tools/run_hors_v3_perfs.py --check
 
 The ZIP contains its own `c64-3d-toolkit/` directory. Current cartridges are
 already rebuilt. Previous versioned menu/HiFi carts remain as historical
-references; use the 0.7.8 links above for the updated builds. See the
-[release guide](docs/RELEASE_0.7.8.md) for checks and rebuilds.
+references; use the 0.7.9 links above for the updated builds. See the
+[release guide](docs/RELEASE_0.7.9.md) for checks and rebuilds.
 
 ## Earlier renderers remain available
 
@@ -189,7 +218,8 @@ references; use the 0.7.8 links above for the updated builds. See the
 | `yunroll-cart` | Original resident cartridge scaffold |
 | `yunroll-cart-v2` through `yunroll-cart-v9` | Earlier streamed generations |
 | `hors-render-v1`, `hors-render-v1-scene` | Original v1 / internal V10 implementations |
-| **`hors-render-v2`, `hors-render-v2-scene`** | **Current default, with object, scene and menu integration** |
+| `hors-render-v2`, `hors-render-v2-scene` | Previous object/scene implementation; comparison/menu default |
+| **`hors-renderer-v3`** (alias `hors-render-v3`) | **Default object and authored-wireframe conversion; selectable surface/material/texture pipeline** |
 
 A new pipeline is added incrementally. Old assembly, encoders and comparisons
 stay intact. The resident `yunroll` method still narrowly wins the canonical
@@ -216,3 +246,9 @@ A big thank you to everyone who has contributed, collaborated and given ideas fo
 **Stanford Dragon:** model data from the [Stanford University Computer Graphics Laboratory's 3D Scanning Repository](https://graphics.stanford.edu/data/3Dscanrep/#dragon). The [Dragon example](examples/stanford_dragon/README.md) includes the original source credit, provenance and usage terms.
 
 **EasyFlash / EasyAPI:** thanks to **Thomas "skoe" Giesel** for the [EasyFlash project and developer documentation](https://skoe.de/easyflash/develdocs/) and the original EasyAPI AM/M29F040 V1.4 flash driver embedded in standard toolkit cartridges. [Bundled source, original notice and attribution](tools/c643d/data/easyapi/README.md). CRT files are generated with VICE's `cartconv`; these demos do not call EasyAPI to write flash.
+
+[Final v0.7.9 refinements: original SPACE intro, adjustable stars and red SVG shadows](docs/RELEASE_FINAL_V1.md).
+
+### Blender framing and input flips
+
+New Blender exports draw across 320 pixels, with `--viewport-width 256` for legacy framing. [Zoom and tracking-camera test scenes](examples/blender_viewport_test/README.md) include editable .blend files, HORS-V3 carts, VICE screenshots and timings. [Blender FAQ](docs/BLENDER_FAQ.md) explains the right-edge cutoff, preview settings and rebuilding old scenes. [Flip controls](docs/INPUT_FLIPS.md) add optional horizontal/vertical artwork reflection to all conversion inputs; HUD and help stay normally oriented.

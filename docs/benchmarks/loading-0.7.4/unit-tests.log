@@ -1,0 +1,20 @@
+blender export: /fake/blender --background --disable-autoexec TEMP/tmpi1v8a7ek/scene.blend --python-exit-code 1 --python TEMP/tmpi1v8a7ek/tools/blender_export.py -- --output TEMP/tmpi1v8a7ek/scene.c643dscene --sample-step 1 --viewport-height 144 --max-frames 255
+..............................output colours: foreground white (1); background black (0); border black (0)
+...output colours: foreground white (1); background black (0); border black (0)
+.....output colours: foreground white (1); background black (0); border black (0)
+.............s.........output colours: foreground white (1); background black (0); border black (0)
+.output colours: foreground white (1); background black (0); border black (0)
+.......output colours: foreground yellow (7); background black (0); border black (0)
+output colours: foreground white (1); background black (0); border black (0)
+..............output colours: foreground source colours; background black (0); border black (0)
+.output colours: foreground source colours; background black (0); border black (0)
+output colours: foreground source colours; background black (0); border black (0)
+......................................................................................Packing: payload=32 bytes; sequential=1 banks; packed=1 banks; available=122; unused in allocated banks=8160 bytes
+.Packing: payload=1007616 bytes; sequential=123 banks; packed=123 banks; available=122; unused in allocated banks=0 bytes
+.Packing: payload=800000 bytes; sequential=150 banks; packed=100 banks; available=122; unused in allocated banks=19200 bytes
+..........................s......s..
+----------------------------------------------------------------------
+Ran 208 tests in 4.407s
+
+OK (skipped=3)
+fps locking: not set

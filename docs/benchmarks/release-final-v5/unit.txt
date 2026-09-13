@@ -1,0 +1,38 @@
+blender export: /fake/blender --background --disable-autoexec /tmp/tmph7ihuu2c/scene.blend --python-exit-code 1 --python /tmp/tmph7ihuu2c/tools/blender_export.py -- --output /tmp/tmph7ihuu2c/scene.c643dscene --sample-step 1 --viewport-width 320 --viewport-height 144 --max-frames 255
+..............................output colours: foreground white (1); background black (0); border black (0)
+...output colours: foreground white (1); background black (0); border black (0)
+.....output colours: foreground white (1); background black (0); border black (0)
+.............s.........output colours: foreground white (1); background black (0); border black (0)
+.output colours: foreground white (1); background black (0); border black (0)
+.......output colours: foreground yellow (7); background black (0); border black (0)
+output colours: foreground white (1); background black (0); border black (0)
+..............output colours: foreground source colours; background black (0); border black (0)
+.output colours: foreground source colours; background black (0); border black (0)
+output colours: foreground source colours; background black (0); border black (0)
+....................+ cartconv -t easy -i /tmp/tmpuf12k5ww/scene.bin -o /tmp/tmpuf12k5ww/scene.crt -n TEST
+--------------------------------------------------------------------------------
+Created: /tmp/tmpuf12k5ww/scene.crt
+ROM used: 8,192 bytes (8 KiB)
+Free ROM available on cart: 1,040,384 bytes (1016 KiB)
+Free slots: ROML 512 KiB; ROMH 504 KiB
+Allocation: 8 KiB ROM slots; free slots may be on either ROML or ROMH.
+--------------------------------------------------------------------------------
+................................................Surface-fill raster: 1/1
+Surface-fill raster: 1/1
+Surface-fill raster: 1/1
+Surface-fill raster: 1/1
+................................................Packing: payload=32 bytes; sequential=1 banks; packed=1 banks; available=122; unused in allocated banks=8160 bytes
+.Packing: payload=1007616 bytes; sequential=123 banks; packed=123 banks; available=122; unused in allocated banks=0 bytes
+.Packing: payload=800000 bytes; sequential=150 banks; packed=100 banks; available=122; unused in allocated banks=19200 bytes
+............fps locking: not set
+Surface-fill raster: 1/1
+..Surface-fill raster: 1/4
+Surface-fill raster: 4/4
+Surface-fill raster: 1/4
+Surface-fill raster: 4/4
+..............................................s......s..
+----------------------------------------------------------------------
+Ran 272 tests in 5.793s
+
+OK (skipped=3)
+fps locking: not set

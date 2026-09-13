@@ -77,8 +77,10 @@ def capture_display(cart, oracle, vice, data, output):
     transitions, ticks = [], []
     with tempfile.TemporaryDirectory(prefix='dragon-display-') as tmp:
         tmp = Path(tmp)
-        commands = ['delete', f'break ${sym["profile_published"]:04x}',
-                    *(['g'] * (len(frames) + 6)), 'delete',
+        from verify_cart_stream import startup_monitor
+        startup,go = startup_monitor(meta,sym)
+        commands = ['delete', *startup, f'break ${sym["profile_published"]:04x}',
+                    go, *(['g'] * (len(frames) + 5)), 'delete',
                     f'break ${sym["irq_no_flip"]:04x}']
         for i in range(REFRESHES + 1):
             commands += ['g', 'stopwatch', 'bank ram',
@@ -172,6 +174,24 @@ def capture_display(cart, oracle, vice, data, output):
     return display, timing
 
 
+def update_readme(results,showcase):
+    from performance_tables import highlight_fps
+    lines=['## Performance','',
+        'PAL VICE 3.10, stock timing: 985,248 cycles/s and 19,656 cycles/refresh. Each cart uses 128 orientations and a 1,504-refresh observation window after warmup. Display FPS counts actual buffer flips. Bold marks the highest rate in each column; ties use the shown precision. These different surface appearances are not identical-picture optimization candidates.','',
+        '| Surface | Average displayed FPS | High FPS | Low FPS | Longest hold (ms) | Frame ROM bytes | CRT bytes |',
+        '| --- | ---: | ---: | ---: | ---: | ---: | ---: |']
+    for row in results:
+        d=row['display']
+        lines.append(f"| {row['id']} | {d['display_fps']:.2f} | {d['fastest_display_fps']:.2f} | {d['slowest_display_fps']:.2f} | {d['worst_display_ms']:.2f} | {row['rom_frame_bytes']:,} | {row['crt_bytes']:,} |")
+    lines+=['',f"All {len(results)} carts retain the complete source mesh. Each has an 896-byte frame directory, 8,192-byte staging buffer and 3,072-byte metadata cache, in addition to graphics, code and other state. The original five-way showcase remains {showcase['frames']} pictures and {showcase['duration_ms']/1000:.2f} seconds; the golden GIF is separate.", '',
+        'The high/low rates describe individual display holds, not sustained throughput. GIF delays follow the actual PAL display sequence with cumulative centisecond rounding. All these carts start automatically and loop.','']
+    path=HERE/'README.md';text=path.read_text();a=text.index('## Performance');b=text.index('## Validation',a)
+    text=text[:a]+'\n'.join(highlight_fps(lines))+'\n'+text[b:]
+    text=text.replace('Five standalone EasyFlash demos','Six standalone EasyFlash demos').replace('wireframe and the metallic (grey), red, green and blue shaded surfaces.', 'wireframe and metallic (grey), golden, red, green and blue shaded surfaces.')
+    text=re.sub(r'259 completed pictures checked per cart:[^\n]+',f"259 completed pictures checked per cart: two full turns plus three buffer-reuse samples, **{sum(r['verification']['verified_frames'] for r in results):,} total**.",text)
+    path.write_text(text)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--run', action='store_true', help='Run VICE, save fresh evidence and GIFs')
@@ -230,6 +250,7 @@ def main():
     if args.install:
         if args.cartridge_dir.resolve() != (HERE / 'cartridges').resolve():
             parser.error('--install requires verification of the shipped cartridges')
+        update_readme(results,showcase)
         shutil.copytree(output / 'previews', HERE / 'previews', dirs_exist_ok=True)
         shutil.copy2(output / 'stanford_dragon-showcase.gif', HERE / 'stanford_dragon-showcase.gif')
         (HERE / 'evidence').mkdir(exist_ok=True)

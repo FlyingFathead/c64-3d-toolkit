@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "blender": "4.0.2",
+  "frames": 16,
+  "vertices_checked": 4976,
+  "maximum_projection_error_pixels": 4.5909881009720266e-05,
+  "centre_error_normalized": 0.0,
+  "viewport": {
+    "width": 320,
+    "height": 192
+  },
+  "source": "viewport-test.blend"
+}

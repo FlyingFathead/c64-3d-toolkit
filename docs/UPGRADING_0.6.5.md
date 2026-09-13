@@ -15,10 +15,10 @@ This fixes `JAM at $0008` when launching an animation from the flashing
 `demoscene` menu. It also makes V4 the only active demo cartridge and moves
 older bundles and reports under `examples/old/cart_demos/`.
 
-For an existing checkout, download the changed-files ZIP to `~/NeuralNetwork/`:
+For an existing checkout, download the changed-files ZIP to `~/c64-work/`:
 
 ```bash
-cd ~/NeuralNetwork/c64-3d-toolkit
+cd ~/c64-work/c64-3d-toolkit
 unzip -o ../c64-3d-toolkit-v0.6.5-corrected-changed-files.zip
 python tools/archive_old_carts.py
 python c643d.py --version

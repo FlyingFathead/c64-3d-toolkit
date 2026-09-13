@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "displayed_frames": 16,
+  "displayed_slots": [
+    0,
+    1,
+    2
+  ],
+  "sha256": "91ebb44601e83232f81b6219a601bbb879c647892891e47382e5a92167a58f2e",
+  "screenshots": {
+    "centred": 0,
+    "crossing-255": 5,
+    "full-width-zoom": 15
+  }
+}

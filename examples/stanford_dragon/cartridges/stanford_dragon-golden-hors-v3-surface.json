@@ -1,0 +1,31 @@
+{
+  "experimental": false,
+  "preset": "metallic",
+  "encoding": "native",
+  "color_mapping": "nearest VIC-II palette; weighted CIELAB (0.5 L squared + a squared + b squared)",
+  "cell_mapping": "RGB shade error",
+  "frames": 128,
+  "fit_scale": 1.0979136607330289,
+  "triangles": 11102,
+  "lighting": "flat Blinn-Phong custom ramp",
+  "native_limit": "two colours per 8x8 cell; black preserved at silhouettes",
+  "host_rasterized": true,
+  "runtime_triangle_lighting": false,
+  "uniform_material_fast_path": false,
+  "animation": {
+    "modes": [
+      "spin"
+    ],
+    "samples_per_mode": 128,
+    "total_samples": 128
+  },
+  "shade_palette": "custom",
+  "shade_palette_indices": [
+    0,
+    9,
+    8,
+    7,
+    1
+  ],
+  "custom_ramp": true
+}

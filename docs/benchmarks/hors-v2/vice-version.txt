@@ -1,4 +1,4 @@
 x64sc (VICE 3.10)
 
-Warning - log.c:564: Memory block(s) allocated here was not free'd (Memory leak with size 0x8 at 0x55f2d994ef50).
-Warning - log.c:567: Memory block(s) allocated here was not free'd (Memory leak with size 0x9 at 0x55f2d994fbf0).
+Warning - log.c:564: Memory block(s) allocated here was not free'd (Memory leak with size 0x8 at 0x560b0e803f70).
+Warning - log.c:567: Memory block(s) allocated here was not free'd (Memory leak with size 0x9 at 0x560b0e804c10).

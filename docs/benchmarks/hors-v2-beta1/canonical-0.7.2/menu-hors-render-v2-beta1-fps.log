@@ -1,0 +1,40 @@
+fps locking: not set
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /workspace/scratch/a2344c11dad9/canonical-072-full/source/c64/cart/easyflash-demo-control-v9.asm
+Output file:       /workspace/scratch/a2344c11dad9/canonical-072-full/source/build/hors-render-v2-beta1-cartridge-demo/hors-render-v2-beta1-control.bin
+Data:        256   $0200-$02ff   $0100
+Passes:            3
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /workspace/scratch/a2344c11dad9/canonical-072-full/source/c64/cart/easyflash-demo-boot.asm
+Output file:       /workspace/scratch/a2344c11dad9/canonical-072-full/source/build/hors-render-v2-beta1-cartridge-demo/hors-render-v2-beta1-romh0.bin
+Data:       8192   $e000-$ffff   $2000
+Passes:            3
+Input file: /workspace/scratch/a2344c11dad9/canonical-072-full/source/build/hors-render-v2-beta1-cartridge-demo/hors-render-v2-beta1.bin
+Output file: /workspace/scratch/a2344c11dad9/canonical-072-full/carts/hors-render-v2-beta1.crt
+Conversion from binary format to C64 EasyFlash .crt successful.
+fps locking: not set
+preflight: cartconv = /workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/cartconv (cartconv (VICE 3.10))
++ /workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/64tass -b --vice-labels -l /workspace/scratch/a2344c11dad9/canonical-072-full/source/build/hors-render-v2-beta1-cartridge-demo/hors-render-v2-beta1-control.lbl -L /workspace/scratch/a2344c11dad9/canonical-072-full/source/build/hors-render-v2-beta1-cartridge-demo/hors-render-v2-beta1-control.lst -o /workspace/scratch/a2344c11dad9/canonical-072-full/source/build/hors-render-v2-beta1-cartridge-demo/hors-render-v2-beta1-control.bin /workspace/scratch/a2344c11dad9/canonical-072-full/source/c64/cart/easyflash-demo-control-v9.asm
++ /workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/64tass -b --vice-labels -l /workspace/scratch/a2344c11dad9/canonical-072-full/source/build/hors-render-v2-beta1-cartridge-demo/hors-render-v2-beta1-boot.lbl -L /workspace/scratch/a2344c11dad9/canonical-072-full/source/build/hors-render-v2-beta1-cartridge-demo/hors-render-v2-beta1-boot.lst -o /workspace/scratch/a2344c11dad9/canonical-072-full/source/build/hors-render-v2-beta1-cartridge-demo/hors-render-v2-beta1-romh0.bin /workspace/scratch/a2344c11dad9/canonical-072-full/source/c64/cart/easyflash-demo-boot.asm
++ /workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/cartconv -t easy -i /workspace/scratch/a2344c11dad9/canonical-072-full/source/build/hors-render-v2-beta1-cartridge-demo/hors-render-v2-beta1.bin -o /workspace/scratch/a2344c11dad9/canonical-072-full/carts/hors-render-v2-beta1.crt -n C643D 0.7.2 ALL V9
+built /workspace/scratch/a2344c11dad9/canonical-072-full/carts/hors-render-v2-beta1.crt
+all 12 entries: yunroll-cart-v10; 10-row scrolling menu; 601533 frame bytes
+hors-render-v2-beta1 TORUS pixels verified
+hors-render-v2-beta1 TORUS DENSE pixels verified
+hors-render-v2-beta1 CUBE pixels verified
+hors-render-v2-beta1 SPHERE pixels verified
+hors-render-v2-beta1 HORSE HEAD pixels verified
+hors-render-v2-beta1 SUNFLOWER TORUS pixels verified
+hors-render-v2-beta1 SUNFLOWER COLOR pixels verified
+hors-render-v2-beta1 SPACE HORSE SPIN pixels verified
+hors-render-v2-beta1 SPACE HORSE CRAWL pixels verified
+hors-render-v2-beta1 FALLING CUBES pixels verified
+hors-render-v2-beta1 HORSE HEAD HIFI pixels verified
+hors-render-v2-beta1 SUNFLOWER TORUS HIFI pixels verified
+hors-render-v2-beta1 COMPLETE

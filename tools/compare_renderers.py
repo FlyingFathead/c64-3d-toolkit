@@ -21,7 +21,7 @@ class UnsupportedResident(Exception):
 
 RESIDENT=('step','bytechunk','yunroll','yunroll-cart')
 METHODS=[(m,'fps') for m in RESIDENT]+[(f'yunroll-cart-v{i}','fps') for i in range(2,11)]+[(f'yunroll-cart-v{i}','ram') for i in (7,8,9,10)]
-METHODS += [('hors-render-v2','fps'),('hors-render-v2','ram')]
+METHODS += [('hors-render-v2','fps'),('hors-render-v2','ram'),('hors-renderer-v3','fps'),('hors-renderer-v3','ram')]
 
 SHOWCASE_REPORTS=tuple(f'docs/benchmarks/hors-v2/showcase/{variant}/play-all.json' for variant in ('v1','v2'))
 SHOWCASE_CART='examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt'
@@ -29,12 +29,15 @@ SANDE_REPORT='docs/benchmarks/sande/summary.json'
 SANDE_METHODS_REPORT='docs/benchmarks/sande/methods.json'
 SANDE_COLOR_REPORT='docs/benchmarks/sande/summary-color.json'
 SANDE_COLOR_METHODS_REPORT='docs/benchmarks/sande/methods-color.json'
+# README recordings are presentation outputs, never renderer input assets.
+PROMOTIONAL_VIDEO_SUFFIXES={'.mp4','.m4v','.mov','.webm','.mkv','.avi'}
 
 def fingerprints(root):
     files={}
     for folder in ('c64','tools','assets','config','examples'):
         for p in sorted((root/folder).rglob('*')):
             if not p.is_file() or '__pycache__' in p.parts or p.suffix in ('.md','.pyc'):continue
+            if folder=='assets' and p.suffix.lower() in PROMOTIONAL_VIDEO_SUFFIXES:continue
             rel=p.relative_to(root).as_posix()
             if rel=='config/c643d.ini':continue
             if folder=='examples':
@@ -57,6 +60,10 @@ def fingerprints(root):
     if (root/rel).exists():files[rel]=hashlib.sha256((root/rel).read_bytes()).hexdigest()
     rel='examples/stanford_dragon/validation.json'
     if (root/rel).exists():files[rel]=hashlib.sha256((root/rel).read_bytes()).hexdigest()
+    rel='examples/saku_2026/validation.json'
+    if (root/rel).exists():files[rel]=hashlib.sha256((root/rel).read_bytes()).hexdigest()
+    rel='docs/benchmarks/interactive-options.json'
+    if (root/rel).exists():files[rel]=hashlib.sha256((root/rel).read_bytes()).hexdigest()
     return files,hashlib.sha256(json.dumps(files,sort_keys=True).encode()).hexdigest()
 
 
@@ -75,6 +82,69 @@ def dragon_section(root):
         assert d['pixel_match'] and d['color_match'] and d['orientations_seen']==128
         lines.append(f"| {'metallic (grey)' if row['id']=='metallic' else row['id']} | {d['display_fps']:.2f} | {d['worst_display_ms']:.2f} | {row['rom_frame_bytes']:,} | {row['crt_bytes']:,} |")
     return lines+['','[Cartridges, correctly timed GIFs, source credits and full results](../examples/stanford_dragon/README.md).','']
+
+
+def saku_section(root):
+    path=root/'examples/saku_2026/validation.json'
+    record=json.loads(path.read_text())
+    for name,digest in record['sha256'].items():
+        if hashlib.sha256((root/name).read_bytes()).hexdigest()!=digest:
+            raise ValueError('SAKU evidence is stale: '+name)
+    result=json.loads((root/'examples/saku_2026/evidence/results.json').read_text())
+    assert result['passed'] and result['pictures']['all_samples']
+    modes=result['presentation_modes']
+    lines=['','## SAKU 2026: SVG paint, interactive controls and starfield','',
+        f"{modes['samples_per_mode']} samples per presentation, {len(modes['modes'])} presentations on one HORS-V3 cart. PAL VICE; actual displayed-buffer transitions after warmup. Star motion runs independently at PAL refresh rate. Fast/slow controls change angular tempo, not CPU clock.",'',
+        '| Presentation / setting | Displayed FPS | Longest hold (ms) | Stars / density | HUD | Speed level |',
+        '| --- | ---: | ---: | --- | --- | ---: |']
+    for name,row in result['measurements'].items():
+        assert row['visible_pixel_and_colour_match'] and row['cartridge_unchanged']
+        density=f"{row.get('star_profile','full')} / {row.get('density',8)}" if row['stars'] else 'off'
+        lines.append(f"| {name} | {row['display_fps']:.2f} | {row['worst_display_ms']:.2f} | {density} | {'shown' if row.get('hud_visible',True) else 'hidden'} | {row['speed_level']} |")
+    on=result['measurements']['gradient-stars']['display_fps']
+    off=result['measurements']['gradient-no-stars']['display_fps']
+    light=result['measurements']['gradient-light-stars']['display_fps']
+    lines+=['', '### Light versus full starfield', '',
+        '| Same gradient spin, HUD shown | Displayed FPS |', '| --- | ---: |',
+        f'| Stars off | **{off:.2f}** |', f'| Original light, 8 points (SAKU default) | {light:.2f} |',
+        f'| Full, 16 points | {on:.2f} |', '',
+        f'`4` switches the two resident kernels. Light improves throughput by **{(light/on-1)*100:.2f}%** over full on this cart. Both are measured in the same binary; original light is not zero-cost. `1` resets the selected density; `2`/`3` increase/decrease it. Each mode remembers its density, and switching preserves whether stars are enabled.', '',
+        'Light trajectories reserve another 1 KiB at $8000–$83ff. Its kernel fits the existing $9c00–$9fff density reservation. Changing the IRQ call operand only on key events adds zero per-refresh dispatch instructions. The 4 key adds 13 CPU cycles per idle input poll, reusing an existing CIA row read.', '']
+    lines+=['',f'Starfield difference on this cart: **{(on/off-1)*100:+.2f}%** displayed throughput. This includes sprite setup and VIC-II DMA. Default speed is level 3; source/style, input, hue and background controls remain enabled in both rows.', '',
+            'Speed and HUD controls share a 2,048-byte reservation at $9000–$97ff. HUD switches use its second KiB without additional reserved RAM; hidden glyph rendering returns immediately. The starfield reuses the literal-only vector LUT allocation at $1700–$1fff and uses 384 bytes of sprite patterns when interactive (192 bytes for automatic stars). Interactive density controls reserve 1 KiB at $9c00–$9fff and retain separate light (8 points by default) and full (16 points by default) densities. SAKU starts light; --starfield-profile selects the initial/F2-reset profile for future interactive builds. Use 1 = reset, 2 = more, 3 = less, 4 = light/full. Extra points are checked against filled cells and opaque masks; unsafe groups are suppressed. Opaque SAKU variants reserve another 2 KiB at $8800–$8fff for bounding-box masks and relocated star paths. Toggling an already included mode/effect adds no frame-stream ROM; additional precomputed presentations do consume ROM. See the manifests for actual code extents and total cartridge capacity.', '',
+            '[Source, CRTs, keyboard map, GIF and raw measurements](../examples/saku_2026/README.md).','',
+            '| Routine / state | Mean cycles | Minimum cycles | Maximum cycles |',
+            '| --- | ---: | ---: | ---: |']
+    for name,row in result['instruction_costs'].items():
+        lines.append(f"| {name} | {row['mean_cycles']:.2f} | {row['min_cycles']} | {row['max_cycles']} |")
+    lines+=['','VICE stopwatch, 32 calls per routine, including call/return; elapsed machine cycles. '
+        'RUN/STOP (Esc in the bundled VICE keymaps) and Shift+H open/close help. RUN/STOP reuses the density row with nine extra CPU cycles per idle input poll and no extra CIA read; without stars, its short scan adds 34 cycles per poll. The HUD key-release latch adds six CPU cycles per ordinary unshifted poll when effects are included (three without them); no per-frame visibility branch is added to drawing. '
+        'Paged help uses a 1 KiB text screen, 1 KiB code reservation and 1 KiB packed text reservation at $c000–$c3ff; it pauses the producer/IRQ while open, '
+        'and restores all three picture buffers and presentation state. The startup screen is excluded from these measurements.','']
+    for name in ('gradient-stars','gradient-no-stars'):
+        shown=result['measurements'][name]['display_fps']
+        hidden=result['measurements'][name+'-hud-hidden']['display_fps']
+        lines += [f"HUD hidden versus shown, {name}: **{(hidden/shown-1)*100:+.2f}%** displayed throughput, same cartridge and default speed.",'']
+    baseline=result['measurements']['gradient-no-stars-hud-hidden']['display_fps']
+    active=result['measurements']['gradient-exhibition-active']['display_fps']
+    lines+=['### Exhibition scheduler: matched gradient, HUD and stars hidden','',
+        '| Scheduler | Displayed FPS |', '| --- | ---: |',
+        f'| Inactive | {baseline:.2f} |', f'| Active (60-second interval, no switch in measurement window) | {active:.2f} |', '',
+        f'Measured scheduler-only throughput difference: **{(active/baseline-1)*100:+.2f}%**. The separate exhibition-tour row cycles the three styles every five seconds; its mixed workload is not a scheduler-overhead comparison.', '',
+        '`5` toggles exhibition, `6` selects ordered/random, `7`/`8` adjust the interval by five seconds (5–60). Entry hides HUD and stars; manual star selections persist across scene changes. Ordinary interactive builds still start with stars disabled unless explicitly enabled. Inactive exhibition adds no IRQ instructions; its key scan adds 67 CPU cycles per idle input poll. Help expands packed text only on opening or page changes. [Shared controls and CLI settings](EXHIBITION.md).', '']
+    options=json.loads((root/'docs/benchmarks/interactive-options.json').read_text())
+    assert options['passed']
+    lines+=['### Optional starfield: matched ordinary interactive builds','',
+        options['workload']+'. '+options['measurement']+'.','',
+        '| Starfield build / startup | Displayed FPS | Frame stream bytes |',
+        '| --- | ---: | ---: |']
+    for name in ('excluded','included-disabled','included-enabled'):
+        row=options['results'][name]
+        lines.append(f"| {name} | {row['display']['display_fps']:.2f} | {row['frame_stream_bytes']:,} |")
+    lines+=['','Excluded builds retain help and speed controls but contain no starfield IRQ routine, paths or sprite setup. '
+        'The included-disabled build allows Shift+S; the enabled build starts with stars. All model picture oracles are identical. '
+        'The separate indexed4 and no-stars SVG presentation builds also pass native pixel/control checks.','']
+    return lines
 
 
 def showcase_section(root):
@@ -256,8 +326,14 @@ def menu_worker(method,pref,loops):
     if stable:
         from c643d.hors_v2_stable import prepare_menu
         cartuniform.prepare=lambda *args,**kw:prepare_menu(*args,prepare=ORIGINAL_PREPARE,**kw)
+    v3=METHOD=='hors-renderer-v3'
+    if v3:
+        from c643d.hors_v3_comparison import prepare_menu
+        cartuniform.prepare=lambda *args,**kw:prepare_menu(*args,prepare=ORIGINAL_PREPARE,**kw)
     parser=cli.make_parser(load_toolchain_settings(ROOT/'config/c643d.ini'))
-    a=parser.parse_args(['cart-demos','--stream-renderer','yunroll-cart-v9' if resident else 'yunroll-cart-v10' if beta or stable else METHOD,'--prefer',pref,'--output',name,'--output-dir',str(OUT),'--tass',TASS,'--cartconv',CARTCONV,'--overwrite-policy','allow'])
+    a=parser.parse_args(['cart-demos','--stream-renderer','yunroll-cart-v9' if resident else 'yunroll-cart-v10' if beta or stable or v3 else METHOD,'--prefer',pref,'--output',name,'--output-dir',str(OUT),'--tass',TASS,'--cartconv',CARTCONV,'--overwrite-policy','allow'])
+    if v3:
+        a.cartridge_name='C643D '+(ROOT/'VERSION').read_text().strip()+' HORS V3 '+pref.upper()
     crt=OUT/(name+'.crt')
     if not crt.exists():
         try:cartuniform.build(a,sources=SOURCES)
@@ -331,7 +407,7 @@ def paced_worker(method,pref,loops):
     cartuniform.comparison_pacer=lambda src,demo:apply_pacing(src,PACING_PLANS[demo.name])
     cartuniform.comparison_rate=lambda name:PACING_PLANS[name]
     name=key+'-paced'
-    a=cli.make_parser(load_toolchain_settings(ROOT/'config/c643d.ini')).parse_args(['cart-demos','--stream-renderer','yunroll-cart-v9' if method in RESIDENT else 'yunroll-cart-v10' if method in ('hors-render-v2-beta1','hors-render-v2') else method,'--prefer',pref,'--output',name,'--output-dir',str(OUT),'--tass',TASS,'--cartconv',CARTCONV,'--overwrite-policy','allow'])
+    a=cli.make_parser(load_toolchain_settings(ROOT/'config/c643d.ini')).parse_args(['cart-demos','--stream-renderer','yunroll-cart-v9' if method in RESIDENT else 'yunroll-cart-v10' if method in ('hors-render-v2-beta1','hors-render-v2','hors-renderer-v3') else method,'--prefer',pref,'--output',name,'--output-dir',str(OUT),'--tass',TASS,'--cartconv',CARTCONV,'--overwrite-policy','allow'])
     cartuniform.build(a,sources=SOURCES)
     crt=OUT/(name+'.crt');meta=json.loads(menu_manifest_path(crt).read_text())
     for e in meta['streamed_entries']:aliases(ROOT/e['work'],e['colors'])
@@ -421,6 +497,7 @@ def chart(a,provenance):
         win=winners(name,fpskeys);old=results['yunroll-cart-v10'][name]['display_flips'];new=results['hors-render-v2'][name]['display_flips']
         legacy=(results['yunroll-cart-v9'][name]['display_flips']/results['yunroll-cart-v8'][name]['display_flips']-1)*100
         lines.append(f"| {name} | {oracles[name][0]} | {', '.join(short(k) for k in win)} | {results[win[0]][name]['display_fps']:.2f} | {legacy:+.2f}% | {(new/old-1)*100:+.2f}% |")
+    lines+=['', '**Bold FPS values** mark the highest value within each comparable row or workload group, independently for high/average/low statistics. **(tie)** marks equal values at the displayed precision. Storage sizes are not ranked as FPS wins. The best-method summary uses actual displayed-frame counts; brief peak bursts do not establish sustained speed.', '']
     lines+=showcase_section(Path(__file__).resolve().parents[1])
     from run_sande_perfs import comparison_section
     lines+=comparison_section(Path(__file__).resolve().parents[1])
@@ -431,11 +508,12 @@ def chart(a,provenance):
     from report_hors_v3_release import comparison_section as v3_section
     lines+=v3_section(Path(__file__).resolve().parents[1])
     lines+=dragon_section(Path(__file__).resolve().parents[1])
+    lines+=saku_section(Path(__file__).resolve().parents[1])
     sizes={}
     for key in results:
         raw=json.loads((a.workspace/'results'/(key+'-sizes.json')).read_text());sizes[key]={e['name']:e for e in raw['entries']}
     lines+=['','## Per-animation lookup','',
-        'High/low are 985,248 divided by the shortest/longest **actual display-flip interval within a normal PLAY ALL window**, including VIC and IRQ stalls. Average is total displayed frames / measured time, not an arithmetic average of instantaneous FPS. Window edges are excluded from interval extrema. High FPS can include a brief queued-frame burst; it does not describe sustained throughput. Bold average marks the best frame-count result across FPS-preferred methods. RAM variants are listed separately. All values are FPS unless the header says bytes.','']
+        'High/low are 985,248 divided by the shortest/longest **actual display-flip interval within a normal PLAY ALL window**, including VIC and IRQ stalls. Average is total displayed frames / measured time, not an arithmetic average of instantaneous FPS. Window edges are excluded from interval extrema. High FPS can include a brief queued-frame burst; it does not describe sustained throughput. Bold marks each column maximum, including ties, across the shown FPS/RAM variants. The best-method summary above uses frame counts among FPS-preferred methods. All values are FPS unless the header says bytes.','']
     for name in names:
         lines += [f'### {name}','', '| Method | High | Average | Low | Resident frame-table RAM (B) | Frame data ROM (B) | Runtime PRG (B) |', '| --- | ---: | ---: | ---: | ---: | ---: | ---: |']
         win=winners(name,fpskeys)
@@ -474,6 +552,7 @@ def chart(a,provenance):
             lines.append(f"| {name} | V{v}-scene | {p['frames_per_second']:.3f} | {p['mean_render_cycles']:,.0f} | {p['worst_render_cycles']:,} | {p.get('frames_exceeding_render_budget','—')} / {p['frames']} |")
     lines+=['','## Workload and interpretation','',
         '- '+input_note,
+        '- The explicit hors-renderer-v3 comparison rows run the V3 literal colour pipeline inside the same external PLAY ALL wrapper and frozen inputs. The public menu default remains V2. V3 FPS/RAM rows are measured independently; no V2 number is relabelled.',
         '- hors-render-v2 uses gap 3 / batch budget 2048 in this canonical twelve-entry cart, retaining the v1 byte-span payload sizes to fit the same cartridge budget. Its independent pictures and guarded vector-page reuse are built in a private assembly tree. The seven-entry Demo Cart 2.0 uses separate measured encoding choices and is reported in its own section above.',
         '- The public matrix compares released renderer generations. The authored-scene diagnostic rows preserve the unchanged V4–V10 productions.',
         '- This table compares preserved renderer implementations under one **external comparison PLAY ALL wrapper**, not the exact historical release cartridges. The V9 normal PLAY ALL controller is used for every method. Its identical timer instructions live at `$0334` instead of `$c700`, because resident data occupies `$c700`; launch metadata is cached before loading and shared menu data restored between entries. Renderer code is unchanged apart from the existing cartridge IRQ-vector redirection. All these wrapper adaptations are generated outside the repo.',
@@ -492,7 +571,8 @@ def chart(a,provenance):
         f"<!-- comparison-input-sha256: {provenance['input_sha256']} -->",f"<!-- comparison-source-version: {provenance['version']} -->",'']
     if provenance['reference_sha256']:lines.append('<!-- comparison-reference-sha256: '+provenance['reference_sha256']+' -->')
     if provenance['current_demos']:lines.append('<!-- comparison-current-demos: true -->')
-    (a.workspace/'PERFORMANCE_COMPARISON.md').write_text('\n'.join(lines))
+    from performance_tables import highlight_fps
+    (a.workspace/'PERFORMANCE_COMPARISON.md').write_text('\n'.join(highlight_fps(lines)))
 
 
 def main():
@@ -516,6 +596,7 @@ def main():
         from report_hors_v3_release import comparison_section as v3_section
         v3_section(repo)
         dragon_section(repo)
+        saku_section(repo)
         from run_sande_perfs import comparison_section
         comparison_section(repo)
         comparison_section(repo, source_colors=True)

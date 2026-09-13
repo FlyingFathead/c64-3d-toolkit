@@ -1,18 +1,18 @@
 {
-  "sha256": "ff615e0ca4c7bfd038e735603b78bd38cbdcce23f5f8f1c9a0b835c688f54c19",
+  "sha256": "a36151bd86a8db86a8681f594646e4473dc746a9e2e4307eebdea986ec9e8ebb",
   "clock_hz": 985248,
   "refreshes": 1504,
   "warmup_samples": 198,
   "display_flips": 374,
-  "elapsed_cycles": 29562583,
-  "display_fps": 12.464497841748132,
-  "high_fps": 17.964554007731017,
-  "low_fps": 10.024500427333034,
-  "worst_display_ms": 99.75559453051414,
+  "elapsed_cycles": 29562654,
+  "display_fps": 12.464467906027652,
+  "high_fps": 17.857106608185013,
+  "low_fps": 9.601122610068408,
+  "worst_display_ms": 104.15448699210756,
   "hold_ticks": {
-    "5": 37,
-    "4": 305,
-    "3": 31
+    "4": 303,
+    "5": 38,
+    "3": 32
   },
   "unique_pictures_expected": 192,
   "unique_pictures_observed": 192,

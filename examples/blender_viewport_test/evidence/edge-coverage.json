@@ -1,0 +1,191 @@
+{
+  "passed": true,
+  "viewport": {
+    "width": 320,
+    "height": 192
+  },
+  "centre": [
+    160,
+    96
+  ],
+  "note": "Centre cross is hollow; its four adjacent symmetric pixels are checked.",
+  "frames": [
+    {
+      "frame": 0,
+      "bounds": [
+        31,
+        289,
+        19,
+        173
+      ],
+      "centre_outline_symmetric": true,
+      "all_four_edges": false
+    },
+    {
+      "frame": 1,
+      "bounds": [
+        23,
+        297,
+        13,
+        179
+      ],
+      "centre_outline_symmetric": true,
+      "all_four_edges": false
+    },
+    {
+      "frame": 2,
+      "bounds": [
+        14,
+        306,
+        8,
+        184
+      ],
+      "centre_outline_symmetric": true,
+      "all_four_edges": false
+    },
+    {
+      "frame": 3,
+      "bounds": [
+        6,
+        314,
+        3,
+        189
+      ],
+      "centre_outline_symmetric": true,
+      "all_four_edges": false
+    },
+    {
+      "frame": 4,
+      "bounds": [
+        0,
+        319,
+        0,
+        191
+      ],
+      "centre_outline_symmetric": true,
+      "all_four_edges": true
+    },
+    {
+      "frame": 5,
+      "bounds": [
+        0,
+        319,
+        0,
+        191
+      ],
+      "centre_outline_symmetric": true,
+      "all_four_edges": true
+    },
+    {
+      "frame": 6,
+      "bounds": [
+        0,
+        319,
+        0,
+        191
+      ],
+      "centre_outline_symmetric": true,
+      "all_four_edges": true
+    },
+    {
+      "frame": 7,
+      "bounds": [
+        0,
+        319,
+        0,
+        191
+      ],
+      "centre_outline_symmetric": true,
+      "all_four_edges": true
+    },
+    {
+      "frame": 8,
+      "bounds": [
+        0,
+        319,
+        0,
+        191
+      ],
+      "centre_outline_symmetric": true,
+      "all_four_edges": true
+    },
+    {
+      "frame": 9,
+      "bounds": [
+        0,
+        319,
+        0,
+        191
+      ],
+      "centre_outline_symmetric": true,
+      "all_four_edges": true
+    },
+    {
+      "frame": 10,
+      "bounds": [
+        0,
+        319,
+        0,
+        191
+      ],
+      "centre_outline_symmetric": true,
+      "all_four_edges": true
+    },
+    {
+      "frame": 11,
+      "bounds": [
+        0,
+        319,
+        0,
+        191
+      ],
+      "centre_outline_symmetric": true,
+      "all_four_edges": true
+    },
+    {
+      "frame": 12,
+      "bounds": [
+        0,
+        319,
+        0,
+        191
+      ],
+      "centre_outline_symmetric": true,
+      "all_four_edges": true
+    },
+    {
+      "frame": 13,
+      "bounds": [
+        0,
+        319,
+        0,
+        191
+      ],
+      "centre_outline_symmetric": true,
+      "all_four_edges": true
+    },
+    {
+      "frame": 14,
+      "bounds": [
+        0,
+        319,
+        0,
+        191
+      ],
+      "centre_outline_symmetric": true,
+      "all_four_edges": true
+    },
+    {
+      "frame": 15,
+      "bounds": [
+        0,
+        319,
+        0,
+        191
+      ],
+      "centre_outline_symmetric": true,
+      "all_four_edges": true
+    }
+  ],
+  "method": "Decoded production vector oracle; native bitmap equality is verified separately in viewport-native.json."
+}

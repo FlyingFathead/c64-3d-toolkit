@@ -7,11 +7,13 @@ def screen_codes(text):
     return [ord(c)-96 if 'a' <= c <= 'z' else ord(c) for c in text]
 
 
-def build_screen_lines(version, renderer, *, hifi_reel=False):
+def build_screen_lines(version, renderer, *, hifi_reel=False, help_handler=None):
     texts = [('toolkit', 'c64-3d-toolkit', 7), ('version', 'v. '+version, 10),
              ('renderer', renderer, 12),
              ('github', 'github.com/FlyingFathead/c64-3d-toolkit', 16),
              ('skip', 'SPACE to start', 20)]
+    if help_handler:
+        texts.insert(-1, ('help', 'press SHIFT+H for help', 19))
     lines = ['build_screen_start:', '        lda #$0b', '        sta $d011',
              '        lda #3', '        sta $dd02', '        lda $dd00', '        ora #3', '        sta $dd00',
              '        lda #8', '        sta $d016', '        lda #0', '        sta $d020', '        sta $d021', '        sta $d015',
@@ -36,7 +38,7 @@ def build_screen_lines(version, renderer, *, hifi_reel=False):
               '        dex', '        bne build_screen_leave', 'build_screen_done:',
               '        lda #$0b', '        sta $d011', '        lda #$ff', '        sta $dc00',
               '        lda #$18', '        sta $d018', '        rts']
-    if renderer.startswith(('hors-render-v1', 'yunroll-v10')):
+    if renderer.startswith(('hors-render-v1', 'yunroll-v10', 'hors-renderer-v3', 'hors-render-v3')):
         # Keep instruction lengths and labels; branch unconditionally back
         # to keyboard polling. SPACE is the only exit.
         for i in range(len(lines)-1):
@@ -68,6 +70,12 @@ def build_screen_lines(version, renderer, *, hifi_reel=False):
             '        beq build_screen_exit_release', '        jmp build_screen_exit',
             'build_screen_no_exit:', '        lda #$7f', '        sta $dc00',
             'build_screen_poll_space:']
+    if help_handler:
+        # On-demand help restores this screen and consumes its closing key.
+        # Select the SPACE column again after help's matrix scan.
+        i = lines.index('build_screen_leave:') + 1
+        lines[i:i] = [f'        jsr {help_handler}',
+                      '        lda #$7f', '        sta $dc00']
     for name, text, _ in texts:
         lines += [f'build_screen_text_{name}:']+bytes_lines(screen_codes(text))
     return lines

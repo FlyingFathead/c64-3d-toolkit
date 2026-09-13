@@ -1,0 +1,156 @@
+fps locking: not set
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/build/marbles-clean-v9-stream-scene/main.asm
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/build/marbles-clean-v9-stream-scene/generated/hud.inc
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/build/marbles-clean-v9-stream-scene/generated/cart-v9-scene-helper.inc
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/build/marbles-clean-v9-stream-scene/generated/tables.inc
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/build/marbles-clean-v9-stream-scene/generated/intro.inc
+Output file:       /tmp/c64-079-light-help/checks/canonical-verified/source/build/marbles-clean-v9-stream-scene/runtime.prg
+Data:       3799   $0801-$16d7   $0ed7
+Gap:          40   $16d8-$16ff   $0028
+Data:       2304   $1700-$1fff   $0900
+Gap:        8192   $2000-$3fff   $2000
+Data:        112   $4000-$406f   $0070
+Gap:          16   $4070-$407f   $0010
+Data:         40   $4080-$40a7   $0028
+Gap:          88   $40a8-$40ff   $0058
+Data:        504   $4100-$42f7   $01f8
+Gap:           8   $42f8-$42ff   $0008
+Data:        256   $4300-$43ff   $0100
+Gap:        1024   $4400-$47ff   $0400
+Data:       2048   $4800-$4fff   $0800
+Gap:        3072   $5000-$5bff   $0c00
+Data:        115   $5c00-$5c72   $0073
+Gap:          13   $5c73-$5c7f   $000d
+Data:        734   $5c80-$5f5d   $02de
+Gap:        8354   $5f5e-$7fff   $20a2
+Data:       6573   $8000-$99ac   $19ad
+Gap:          83   $99ad-$99ff   $0053
+Data:        272   $9a00-$9b0f   $0110
+Passes:            3
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/c64/cart/easyflash-scene-boot.asm
+Output file:       /tmp/c64-079-light-help/checks/canonical-verified/source/build/marbles-clean-v9-stream-scene/boot.bin
+Data:       8192   $e000-$ffff   $2000
+Passes:            2
+Input file: /tmp/c64-079-light-help/checks/canonical-verified/source/build/marbles-clean-v9-stream-scene/marbles-clean-v9.bin
+Output file: /tmp/c64-079-light-help/checks/canonical-verified/scenes/marbles-clean-v9.crt
+Conversion from binary format to C64 EasyFlash .crt successful.
++ /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/cartconv -t easy -i /tmp/c64-079-light-help/checks/canonical-verified/source/build/marbles-clean-v9-stream-scene/marbles-clean-v9.bin -o /tmp/c64-079-light-help/checks/canonical-verified/scenes/marbles-clean-v9.crt -n DONT LOSE YOUR MARBLES
+--------------------------------------------------------------------------------
+Created: /tmp/c64-079-light-help/checks/canonical-verified/scenes/marbles-clean-v9.crt
+ROM used: 303,104 bytes (296 KiB)
+Free ROM available on cart: 745,472 bytes (728 KiB)
+Free slots: ROML 232 KiB; ROMH 496 KiB
+Allocation: 8 KiB ROM slots; free slots may be on either ROML or ROMH.
+--------------------------------------------------------------------------------
+built /tmp/c64-079-light-help/checks/canonical-verified/scenes/marbles-clean-v9.crt
+200 frames; 242998 encoded payload bytes; target 28.00s at 7.14286 FPS
+marbles-clean-v9 verified
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/build/marbles-hud-v9-stream-scene/main.asm
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/build/marbles-hud-v9-stream-scene/generated/hud.inc
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/build/marbles-hud-v9-stream-scene/generated/cart-v9-scene-helper.inc
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/build/marbles-hud-v9-stream-scene/generated/tables.inc
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/build/marbles-hud-v9-stream-scene/generated/intro.inc
+Output file:       /tmp/c64-079-light-help/checks/canonical-verified/source/build/marbles-hud-v9-stream-scene/runtime.prg
+Data:       3808   $0801-$16e0   $0ee0
+Gap:          31   $16e1-$16ff   $001f
+Data:       2304   $1700-$1fff   $0900
+Gap:        8192   $2000-$3fff   $2000
+Data:        112   $4000-$406f   $0070
+Gap:          16   $4070-$407f   $0010
+Data:         40   $4080-$40a7   $0028
+Gap:          88   $40a8-$40ff   $0058
+Data:        504   $4100-$42f7   $01f8
+Gap:           8   $42f8-$42ff   $0008
+Data:        256   $4300-$43ff   $0100
+Gap:        1024   $4400-$47ff   $0400
+Data:       2048   $4800-$4fff   $0800
+Gap:        3072   $5000-$5bff   $0c00
+Data:        115   $5c00-$5c72   $0073
+Gap:          13   $5c73-$5c7f   $000d
+Data:        734   $5c80-$5f5d   $02de
+Gap:        8354   $5f5e-$7fff   $20a2
+Data:       6573   $8000-$99ac   $19ad
+Gap:          83   $99ad-$99ff   $0053
+Data:        272   $9a00-$9b0f   $0110
+Passes:            3
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/c64/cart/easyflash-scene-boot.asm
+Output file:       /tmp/c64-079-light-help/checks/canonical-verified/source/build/marbles-hud-v9-stream-scene/boot.bin
+Data:       8192   $e000-$ffff   $2000
+Passes:            2
+Input file: /tmp/c64-079-light-help/checks/canonical-verified/source/build/marbles-hud-v9-stream-scene/marbles-hud-v9.bin
+Output file: /tmp/c64-079-light-help/checks/canonical-verified/scenes/marbles-hud-v9.crt
+Conversion from binary format to C64 EasyFlash .crt successful.
++ /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/cartconv -t easy -i /tmp/c64-079-light-help/checks/canonical-verified/source/build/marbles-hud-v9-stream-scene/marbles-hud-v9.bin -o /tmp/c64-079-light-help/checks/canonical-verified/scenes/marbles-hud-v9.crt -n DONT LOSE YOUR MARBLES
+--------------------------------------------------------------------------------
+Created: /tmp/c64-079-light-help/checks/canonical-verified/scenes/marbles-hud-v9.crt
+ROM used: 303,104 bytes (296 KiB)
+Free ROM available on cart: 745,472 bytes (728 KiB)
+Free slots: ROML 232 KiB; ROMH 496 KiB
+Allocation: 8 KiB ROM slots; free slots may be on either ROML or ROMH.
+--------------------------------------------------------------------------------
+built /tmp/c64-079-light-help/checks/canonical-verified/scenes/marbles-hud-v9.crt
+200 frames; 242998 encoded payload bytes; target 28.00s at 7.14286 FPS
+marbles-hud-v9 verified
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/build/horse-sunflower-v9-stream-scene/main.asm
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/build/horse-sunflower-v9-stream-scene/generated/hud.inc
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/build/horse-sunflower-v9-stream-scene/generated/cart-v9-scene-helper.inc
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/build/horse-sunflower-v9-stream-scene/generated/tables.inc
+Output file:       /tmp/c64-079-light-help/checks/canonical-verified/source/build/horse-sunflower-v9-stream-scene/runtime.prg
+Data:       3765   $0801-$16b5   $0eb5
+Gap:          74   $16b6-$16ff   $004a
+Data:       2304   $1700-$1fff   $0900
+Gap:        8192   $2000-$3fff   $2000
+Data:        112   $4000-$406f   $0070
+Gap:         144   $4070-$40ff   $0090
+Data:        318   $4100-$423d   $013e
+Gap:         194   $423e-$42ff   $00c2
+Data:        256   $4300-$43ff   $0100
+Gap:        1024   $4400-$47ff   $0400
+Data:       2048   $4800-$4fff   $0800
+Gap:        3072   $5000-$5bff   $0c00
+Data:        115   $5c00-$5c72   $0073
+Gap:       15757   $5c73-$99ff   $3d8d
+Data:        416   $9a00-$9b9f   $01a0
+Passes:            3
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/c64/cart/easyflash-scene-boot.asm
+Output file:       /tmp/c64-079-light-help/checks/canonical-verified/source/build/horse-sunflower-v9-stream-scene/boot.bin
+Data:       8192   $e000-$ffff   $2000
+Passes:            2
+Input file: /tmp/c64-079-light-help/checks/canonical-verified/source/build/horse-sunflower-v9-stream-scene/horse-sunflower-v9.bin
+Output file: /tmp/c64-079-light-help/checks/canonical-verified/scenes/horse-sunflower-v9.crt
+Conversion from binary format to C64 EasyFlash .crt successful.
++ /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/cartconv -t easy -i /tmp/c64-079-light-help/checks/canonical-verified/source/build/horse-sunflower-v9-stream-scene/horse-sunflower-v9.bin -o /tmp/c64-079-light-help/checks/canonical-verified/scenes/horse-sunflower-v9.crt -n HORSE AND SUNFLOWER
+--------------------------------------------------------------------------------
+Created: /tmp/c64-079-light-help/checks/canonical-verified/scenes/horse-sunflower-v9.crt
+ROM used: 196,608 bytes (192 KiB)
+Free ROM available on cart: 851,968 bytes (832 KiB)
+Free slots: ROML 336 KiB; ROMH 496 KiB
+Allocation: 8 KiB ROM slots; free slots may be on either ROML or ROMH.
+--------------------------------------------------------------------------------
+built /tmp/c64-079-light-help/checks/canonical-verified/scenes/horse-sunflower-v9.crt
+84 frames; 151073 encoded payload bytes; target 10.08s at 8.33333 FPS
+horse-sunflower-v9 verified

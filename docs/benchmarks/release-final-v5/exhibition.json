@@ -1,0 +1,58 @@
+{
+  "passed": true,
+  "cartridge_sha256": "b4e821d5e8d2bfa321a8254f7be88405eb623a323886c66eb751c4c425ee29f1",
+  "results": {
+    "sym": {
+      "passed": true,
+      "checks": 53,
+      "random_modes": [
+        3,
+        5,
+        3,
+        7,
+        5,
+        7,
+        3,
+        7,
+        5,
+        7,
+        3,
+        5
+      ],
+      "host_events": 84,
+      "ordered_interval_cycles": [
+        4950027,
+        4882089
+      ]
+    },
+    "pos": {
+      "passed": true,
+      "checks": 53,
+      "random_modes": [
+        3,
+        5,
+        3,
+        7,
+        5,
+        7,
+        3,
+        7,
+        5,
+        7,
+        3,
+        5
+      ],
+      "host_events": 84,
+      "ordered_interval_cycles": [
+        4950027,
+        4882089
+      ]
+    }
+  },
+  "gui_events_tested": false,
+  "method": "VICE host keysym API -> symbolic/positional matrix, native 6510 code",
+  "page_headers_verified": true,
+  "space_intro_preserved": true,
+  "random_no_repeats": true,
+  "star_choices_retained": true
+}

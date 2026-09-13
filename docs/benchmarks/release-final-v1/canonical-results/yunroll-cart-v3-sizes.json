@@ -1,0 +1,77 @@
+{
+  "crt_bytes": 968608,
+  "entries": [
+    {
+      "name": "TORUS",
+      "runtime_prg_bytes": 18433,
+      "resident_frame_data_bytes": 0,
+      "rom_frame_bytes": 18664
+    },
+    {
+      "name": "TORUS DENSE",
+      "runtime_prg_bytes": 18433,
+      "resident_frame_data_bytes": 0,
+      "rom_frame_bytes": 21985
+    },
+    {
+      "name": "CUBE",
+      "runtime_prg_bytes": 18433,
+      "resident_frame_data_bytes": 0,
+      "rom_frame_bytes": 10156
+    },
+    {
+      "name": "SPHERE",
+      "runtime_prg_bytes": 18433,
+      "resident_frame_data_bytes": 0,
+      "rom_frame_bytes": 12638
+    },
+    {
+      "name": "HORSE HEAD",
+      "runtime_prg_bytes": 18433,
+      "resident_frame_data_bytes": 0,
+      "rom_frame_bytes": 22562
+    },
+    {
+      "name": "SUNFLOWER TORUS",
+      "runtime_prg_bytes": 18433,
+      "resident_frame_data_bytes": 0,
+      "rom_frame_bytes": 21668
+    },
+    {
+      "name": "SUNFLOWER COLOR",
+      "runtime_prg_bytes": 18433,
+      "resident_frame_data_bytes": 0,
+      "rom_frame_bytes": 19325
+    },
+    {
+      "name": "SPACE HORSE SPIN",
+      "runtime_prg_bytes": 18433,
+      "resident_frame_data_bytes": 0,
+      "rom_frame_bytes": 21858
+    },
+    {
+      "name": "SPACE HORSE CRAWL",
+      "runtime_prg_bytes": 18433,
+      "resident_frame_data_bytes": 0,
+      "rom_frame_bytes": 23584
+    },
+    {
+      "name": "FALLING CUBES",
+      "runtime_prg_bytes": 18433,
+      "resident_frame_data_bytes": 0,
+      "rom_frame_bytes": 12750
+    },
+    {
+      "name": "HORSE HEAD HIFI",
+      "runtime_prg_bytes": 18433,
+      "resident_frame_data_bytes": 0,
+      "rom_frame_bytes": 147346
+    },
+    {
+      "name": "SUNFLOWER TORUS HIFI",
+      "runtime_prg_bytes": 18433,
+      "resident_frame_data_bytes": 0,
+      "rom_frame_bytes": 247481
+    }
+  ]
+}

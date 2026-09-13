@@ -1,5 +1,6 @@
-# Documentation — 0.7.8
+# Documentation — 0.7.9
 
+- [0.7.9: The Golden Dragon & SAKU 2026](RELEASE_0.7.9.md).
 - [0.7.8: The Stanford Dragon Has Arrived!](RELEASE_0.7.8.md).
 - [0.7.7: Pretzel Logic - The Great Texture Update](RELEASE_0.7.7.md).
 - [Release history and older announcements](RELEASE_HISTORY.md).
@@ -15,14 +16,18 @@
 - [Output colours and COLOR COMBO TEST](OUTPUT_COLORS.md).
 - [0.7.3 colour-control regression and timing results](COLORS_0.7.3_VALIDATION.md).
 
-- [Stable hors-render-v2](HORS_RENDER_V2.md) — default renderer and supported builds.
+- [Stable hors-render-v2](HORS_RENDER_V2.md) — preserved V2 renderer and comparison/menu builds.
 - [Historical 0.7.2 release compilation and migration](RELEASE_0.7.2.md).
 - [Full historical performance comparison](PERFORMANCE_COMPARISON.md).
 - [Demo Cart 2.0 results](HORS_RENDER_V2_RESULTS.md).
 - [Current examples](../examples/README.md).
-- [Configuration](CONFIGURATION.md), [Windows](WINDOWS_SETUP.md), [Blender](BLENDER_PIPELINE.md), [OBJ](OBJ_PIPELINE.md), [SVG](SVG_PIPELINE.md).
+- [Configuration](CONFIGURATION.md), [Windows](WINDOWS_SETUP.md), [Blender](BLENDER_PIPELINE.md), [Blender FAQ](BLENDER_FAQ.md), [OBJ](OBJ_PIPELINE.md), [SVG](SVG_PIPELINE.md).
 - [Architecture](ARCHITECTURE.md), [pipeline versioning](PIPELINE_VERSIONING.md).
 
 Version-specific V2–V10 and earlier upgrade notes are historical references;
 current examples include default HORS-V2 and opt-in HORS-V3. Beta reports retain their original
 measurement identities for auditing.
+
+[SAKU 2026 SVG presentations and keyboard map](../examples/saku_2026/README.md) · [SAKU](https://suomenamigakayttajat.fi/) · [Saku magazine](https://sakulehti.fi/)
+
+[SVG paint, outlines and gradients](SVG_PIPELINE.md) · [Starfield and speed controls](STARFIELD.md)

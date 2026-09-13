@@ -36,6 +36,7 @@ class SceneAnimation:
     source_fps: float
     sample_step: int
     source: Path
+    viewport_width: int = 256
 
 
 def _number(value, where: str) -> float:
@@ -151,4 +152,9 @@ def load_scene(path: str | Path) -> SceneAnimation:
     sample_step=meta.get('sample_step',1)
     if isinstance(sample_step,bool) or not isinstance(sample_step,int) or sample_step<1:
         raise ValueError('source.sample_step must be a positive integer')
-    return SceneAnimation(mesh.name,mesh,tuple(frames),source_fps,sample_step,source.resolve())
+    viewport=data.get('viewport',{})
+    if not isinstance(viewport,dict):raise ValueError('scene viewport must be an object')
+    width=viewport.get('width',256)
+    if type(width) is not int or width not in (256,320):
+        raise ValueError('scene viewport width must be 256 or 320')
+    return SceneAnimation(mesh.name,mesh,tuple(frames),source_fps,sample_step,source.resolve(),width)

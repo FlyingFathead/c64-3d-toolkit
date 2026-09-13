@@ -1,0 +1,26 @@
+{
+  "cartridge": "tracking-test.crt",
+  "menu_entry": null,
+  "verified_frames": 51,
+  "orientations": 16,
+  "bitmap_bytes_checked": 391680,
+  "color_bytes_checked": 48960,
+  "slots": {
+    "1": 17,
+    "2": 17,
+    "0": 17
+  },
+  "average_fps": 8.06892749424343,
+  "min_frame_cycles": 85558,
+  "max_frame_cycles": 130297,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
+  "loop_seconds": 2.007327089220176,
+  "target_fps": 10.0,
+  "hud_match": true,
+  "text_overlay": true,
+  "frame_index_bits": 16
+}

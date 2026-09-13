@@ -225,7 +225,7 @@ contains no speculative host-stutter fix.
 The changed-files ZIP is flat. With it saved next to the user's main project:
 
 ```bash
-cd ~/NeuralNetwork/c64-3d-toolkit
+cd ~/c64-work/c64-3d-toolkit
 unzip -o ../c64-3d-toolkit-v0.6.7-rc3-overlay.zip
 ```
 

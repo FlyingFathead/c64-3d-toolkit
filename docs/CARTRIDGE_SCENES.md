@@ -1,11 +1,12 @@
-> Current default: **hors-render-v2**. [Release build and example migration](RELEASE_0.7.2.md).
+> Current conversion default: **hors-renderer-v3**. The comparison/menu builder retains V2. [v0.7.9 release notes](RELEASE_0.7.9.md).
 
 # Long Blender scenes on EasyFlash
 
-## Current scene path in 0.7.2
+## Current scene path in 0.7.9
 
-Authored builds default to `hors-render-v2-scene`, a separate integration using the preserved V10
-scene controller and the v2 batched direct-span helper. It inherits paged
+Authored builds default to `hors-renderer-v3`, using the preserved V10
+scene controller with the V3 colour stream and batched span helper. Explicit
+`hors-render-v2-scene` remains available. It inherits paged
 directories, sequence playback and optional fractional PAL pacing. The directory supports 1..2048 samples, subject to an 8 KiB encoded
 frame arena and the EasyFlash storage budget. Overflow is an error, not a
 request to silently remove authored samples.
@@ -38,7 +39,7 @@ without them this example loops. Tool paths can be supplied through `--blender`,
 
 The remaining implementation details, addresses, commands and measurements
 record v0.6.6's V4 extension. Preserve them for historical reproduction; do not
-apply its exact memory map or playback numbers to hors-render-v2. Old cartridges
+apply its exact memory map or playback numbers to current renderers. Old cartridges
 and reports require the corresponding release or optional external history archive.
 
 Toolkit v0.6.6 includes **Don't Lose Your Marbles, early beta**, as a standalone

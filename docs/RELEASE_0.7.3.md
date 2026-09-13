@@ -47,10 +47,10 @@ Each colour key acts once until released; either shift key works.
 ## Install the supplied release
 
 Download `c64-3d-toolkit-v0.7.3-final.zip` and its `.sha256` file into
-`~/NeuralNetwork/`, then run:
+`~/c64-work/`, then run:
 
 ```bash
-cd ~/NeuralNetwork/
+cd ~/c64-work/
 sha256sum -c c64-3d-toolkit-v0.7.3-final.zip.sha256
 unzip -o c64-3d-toolkit-v0.7.3-final.zip
 cd c64-3d-toolkit/
@@ -101,7 +101,7 @@ they do not establish physical-hardware or NTSC timing.
 The shipped package is ready to run. For a fresh, isolated full rebuild:
 
 ```bash
-cd ~/NeuralNetwork/c64-3d-toolkit/
+cd ~/c64-work/c64-3d-toolkit/
 JOBS=3 VICE_DATA=/usr/local/share/vice bash COMPILE-RELEASE.sh \
   --workspace ../c64-073-release-build
 ```
@@ -114,7 +114,7 @@ checks pass. `--baseline-zip PATH` additionally produces an overlay.
 
 The compiler's generated `c64-3d-toolkit-0.7.3-hors-v2-complete.zip` and optional
 overlay use repository-relative paths. To manually install that generated ZIP,
-use `unzip -o PATH_TO_GENERATED_ZIP -d ~/NeuralNetwork/c64-3d-toolkit/`.
+use `unzip -o PATH_TO_GENERATED_ZIP -d ~/c64-work/c64-3d-toolkit/`.
 The supplied `c64-3d-toolkit-v0.7.3-final.zip` uses the parent-directory extraction
 command in the installation section above.
 

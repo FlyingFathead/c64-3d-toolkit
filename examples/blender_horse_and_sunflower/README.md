@@ -40,8 +40,10 @@ shaders occlude the rear preview edges. The original asset files are unchanged.
 
 Blender's smooth wire render shows the composition. The C64 capture shows its
 256×192 rasterized geometry, native 8×8-cell colour choices and actual emulator
-timing. The C64 bitmap is 320×200, so this existing renderer also has an unused
-strip on the right and a blank bottom HUD row in the clean build.
+timing. The saved historical C64 bitmap uses 256×192 artwork inside 320×200, with an
+unused right strip and a blank bottom HUD row in the clean build. New v0.7.9
+Blender exports default to 320×192; rebuilding at that width uses the complete
+right-hand area. Use `--viewport-width 256` to reproduce this historical shot.
 
 ## Rebuilding with hors-render-v2
 

@@ -59,7 +59,9 @@ def main():
                         (work/'example-checks/summary.json','examples.json'),
                         (work/'color-combo-checks.json','color-combo.json'),
                         (work/'demo1-color-checks.json','demo1-colors.json'),
-                        (work/'demo2-color-checks.json','demo2-colors.json')]:
+                        (work/'demo2-color-checks.json','demo2-colors.json'),
+                        (checks/'hors-v3-defaults/validation.json','hors-v3-defaults.json'),
+                        (checks/'saku/results.json','saku.json')]:
         shutil.copy2(source,release/name)
     unit=(checks/'unit.log').read_text()
     count=re.search(r'Ran (\d+) tests?',unit)
@@ -70,7 +72,10 @@ def main():
         unit_skipped=int(skipped[1]) if skipped else 0,v2_examples=proof,
         hors_v3_cartridges=len(v3['results']),stanford_dragon_cartridges=len(dragon['results']),
         stanford_dragon_pictures=sum(r['verification']['verified_frames'] for r in dragon['results']),
-        canonical_comparison_passed=True,physical_hardware_tested=False)
+        canonical_comparison_passed=True,physical_hardware_tested=False,
+        default_renderer='hors-renderer-v3',menu_renderer='hors-render-v2',
+        saku_checks=json.loads((checks/'saku/results.json').read_text()),
+        hors_v3_default_checks=json.loads((checks/'hors-v3-defaults/validation.json').read_text()))
     (release/'validation.json').write_text(json.dumps(report,indent=2)+'\n')
     print(text)
 

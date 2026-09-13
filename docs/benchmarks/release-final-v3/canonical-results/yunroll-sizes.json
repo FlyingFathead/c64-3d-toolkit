@@ -1,0 +1,65 @@
+{
+  "crt_bytes": 500752,
+  "entries": [
+    {
+      "name": "TORUS",
+      "runtime_prg_bytes": 43546,
+      "resident_frame_data_bytes": 18760,
+      "rom_frame_bytes": 0
+    },
+    {
+      "name": "TORUS DENSE",
+      "runtime_prg_bytes": 47017,
+      "resident_frame_data_bytes": 22081,
+      "rom_frame_bytes": 0
+    },
+    {
+      "name": "CUBE",
+      "runtime_prg_bytes": 35381,
+      "resident_frame_data_bytes": 10264,
+      "rom_frame_bytes": 0
+    },
+    {
+      "name": "SPHERE",
+      "runtime_prg_bytes": 37749,
+      "resident_frame_data_bytes": 12710,
+      "rom_frame_bytes": 0
+    },
+    {
+      "name": "HORSE HEAD",
+      "runtime_prg_bytes": 49076,
+      "resident_frame_data_bytes": 22658,
+      "rom_frame_bytes": 0
+    },
+    {
+      "name": "SUNFLOWER TORUS",
+      "runtime_prg_bytes": 48971,
+      "resident_frame_data_bytes": 21752,
+      "rom_frame_bytes": 0
+    },
+    {
+      "name": "SUNFLOWER COLOR",
+      "runtime_prg_bytes": 44450,
+      "resident_frame_data_bytes": 19385,
+      "rom_frame_bytes": 0
+    },
+    {
+      "name": "SPACE HORSE SPIN",
+      "runtime_prg_bytes": 48828,
+      "resident_frame_data_bytes": 21930,
+      "rom_frame_bytes": 0
+    },
+    {
+      "name": "SPACE HORSE CRAWL",
+      "runtime_prg_bytes": 49153,
+      "resident_frame_data_bytes": 23680,
+      "rom_frame_bytes": 0
+    },
+    {
+      "name": "FALLING CUBES",
+      "runtime_prg_bytes": 38586,
+      "resident_frame_data_bytes": 12804,
+      "rom_frame_bytes": 0
+    }
+  ]
+}

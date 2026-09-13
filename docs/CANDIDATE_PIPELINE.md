@@ -33,7 +33,7 @@ From the repository root, with 64tass, cartconv and x64sc on PATH:
 ```bash
 python perf/pipeline.py plan --id v9-pilot-01
 python perf/pipeline.py run --id v9-pilot-01 --profile pilot \
-  --vice-data ~/NeuralNetwork/c64-tools/vice-data --workers 2
+  --vice-data ~/c64-work/c64-tools/vice-data --workers 2
 python perf/pipeline.py status --id v9-pilot-01
 python perf/pipeline.py bundle --id v9-pilot-01
 ```
@@ -41,9 +41,9 @@ python perf/pipeline.py bundle --id v9-pilot-01
 If executables are not on PATH, add these arguments to `run`:
 
 ```bash
---tass ~/NeuralNetwork/c64-tools/bin/64tass \
---cartconv ~/NeuralNetwork/c64-tools/bin/cartconv \
---vice ~/NeuralNetwork/c64-tools/bin/x64sc
+--tass ~/c64-work/c64-tools/bin/64tass \
+--cartconv ~/c64-work/c64-tools/bin/cartconv \
+--vice ~/c64-work/c64-tools/bin/x64sc
 ```
 
 Use your working VICE executable/data installation. The shared tool bundle may
@@ -56,7 +56,7 @@ The full profile tests every registered method/preference plus authored scenes:
 
 ```bash
 python perf/pipeline.py run --id v9-full-01 --profile full \
-  --vice-data ~/NeuralNetwork/c64-tools/vice-data --workers 2
+  --vice-data ~/c64-work/c64-tools/vice-data --workers 2
 python perf/pipeline.py bundle --id v9-full-01
 ```
 

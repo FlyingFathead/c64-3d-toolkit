@@ -17,7 +17,7 @@ Sunflower stays a separate scene cartridge. FPS is the default preference.
 Save `c64-3d-toolkit-v0.6.7-overlay.zip` beside your existing project:
 
 ```bash
-cd ~/NeuralNetwork/c64-3d-toolkit
+cd ~/c64-work/c64-3d-toolkit
 unzip -o ../c64-3d-toolkit-v0.6.7-overlay.zip
 python tools/clean_release.py
 python c643d.py --version

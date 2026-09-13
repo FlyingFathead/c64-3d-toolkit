@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build all five Stanford Dragon examples with the current HORS-V3 pipeline."""
+"""Build all six Stanford Dragon examples with the current HORS-V3 pipeline."""
 import argparse
 import gzip
 import json
@@ -15,7 +15,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--tass', default='64tass')
     parser.add_argument('--cartconv', default='cartconv')
-    parser.add_argument('--variants', nargs='+', choices=('wireframe', 'metallic', 'blue', 'red', 'green'))
+    parser.add_argument('--variants', nargs='+', choices=('wireframe', 'metallic', 'blue', 'red', 'green', 'golden'))
     parser.add_argument('--output-dir', type=Path, default=ROOT / 'build/stanford-dragon')
     args = parser.parse_args()
     recipe = json.loads((HERE / 'recipe.json').read_text())
@@ -38,6 +38,10 @@ def main():
             raise RuntimeError('Build changed the Stanford Dragon geometry counts')
         # Keep the independent host oracle compact without changing any pictures.
         oracle = out / (row['stem'] + '-oracle.json')
+        if not oracle.exists():
+            # The standalone wireframe pipeline keeps its oracle beside the
+            # staged runtime; surface builds already export it to output-dir.
+            oracle.write_bytes((ROOT / manifest['runtime_work'] / 'oracle.json').read_bytes())
         with oracle.with_suffix('.json.gz').open('wb') as raw:
             with gzip.GzipFile(filename='', fileobj=raw, mode='wb', mtime=0) as zipped:
                 zipped.write(oracle.read_bytes())

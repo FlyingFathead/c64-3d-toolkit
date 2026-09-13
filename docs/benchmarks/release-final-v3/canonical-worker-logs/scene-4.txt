@@ -1,0 +1,146 @@
+fps locking: not set
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/c64-079-star-modes/checks/canonical-final/source/build/marbles-clean-v4-stream-scene/main.asm
+Assembling file:   /tmp/c64-079-star-modes/checks/canonical-final/source/build/marbles-clean-v4-stream-scene/generated/hud.inc
+Assembling file:   /tmp/c64-079-star-modes/checks/canonical-final/source/build/marbles-clean-v4-stream-scene/generated/cart-v4-scene-helper.inc
+Assembling file:   /tmp/c64-079-star-modes/checks/canonical-final/source/build/marbles-clean-v4-stream-scene/generated/tables.inc
+Assembling file:   /tmp/c64-079-star-modes/checks/canonical-final/source/build/marbles-clean-v4-stream-scene/generated/intro.inc
+Output file:       /tmp/c64-079-star-modes/checks/canonical-final/source/build/marbles-clean-v4-stream-scene/runtime.prg
+Data:       3357   $0801-$151d   $0d1d
+Gap:         482   $151e-$16ff   $01e2
+Data:       2304   $1700-$1fff   $0900
+Gap:        8192   $2000-$3fff   $2000
+Data:        112   $4000-$406f   $0070
+Gap:         144   $4070-$40ff   $0090
+Data:        341   $4100-$4254   $0155
+Gap:         171   $4255-$42ff   $00ab
+Data:        256   $4300-$43ff   $0100
+Gap:        1024   $4400-$47ff   $0400
+Data:       2048   $4800-$4fff   $0800
+Gap:        3072   $5000-$5bff   $0c00
+Data:        115   $5c00-$5c72   $0073
+Gap:          13   $5c73-$5c7f   $000d
+Data:        734   $5c80-$5f5d   $02de
+Gap:        8354   $5f5e-$7fff   $20a2
+Data:       6289   $8000-$9890   $1891
+Passes:            3
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/c64-079-star-modes/checks/canonical-final/source/c64/cart/easyflash-scene-boot.asm
+Output file:       /tmp/c64-079-star-modes/checks/canonical-final/source/build/marbles-clean-v4-stream-scene/boot.bin
+Data:       8192   $e000-$ffff   $2000
+Passes:            2
+Input file: /tmp/c64-079-star-modes/checks/canonical-final/source/build/marbles-clean-v4-stream-scene/marbles-clean-v4.bin
+Output file: /tmp/c64-079-star-modes/checks/canonical-final/scenes/marbles-clean-v4.crt
+Conversion from binary format to C64 EasyFlash .crt successful.
++ /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/cartconv -t easy -i /tmp/c64-079-star-modes/checks/canonical-final/source/build/marbles-clean-v4-stream-scene/marbles-clean-v4.bin -o /tmp/c64-079-star-modes/checks/canonical-final/scenes/marbles-clean-v4.crt -n DONT LOSE YOUR MARBLES
+--------------------------------------------------------------------------------
+Created: /tmp/c64-079-star-modes/checks/canonical-final/scenes/marbles-clean-v4.crt
+ROM used: 524,288 bytes (512 KiB)
+Free ROM available on cart: 524,288 bytes (512 KiB)
+Free slots: ROML 16 KiB; ROMH 496 KiB
+Allocation: 8 KiB ROM slots; free slots may be on either ROML or ROMH.
+--------------------------------------------------------------------------------
+built /tmp/c64-079-star-modes/checks/canonical-final/scenes/marbles-clean-v4.crt
+200 frames; 405972 encoded payload bytes; target 28.00s at 7.14286 FPS
+marbles-clean-v4 verified
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/c64-079-star-modes/checks/canonical-final/source/build/marbles-hud-v4-stream-scene/main.asm
+Assembling file:   /tmp/c64-079-star-modes/checks/canonical-final/source/build/marbles-hud-v4-stream-scene/generated/hud.inc
+Assembling file:   /tmp/c64-079-star-modes/checks/canonical-final/source/build/marbles-hud-v4-stream-scene/generated/cart-v4-scene-helper.inc
+Assembling file:   /tmp/c64-079-star-modes/checks/canonical-final/source/build/marbles-hud-v4-stream-scene/generated/tables.inc
+Assembling file:   /tmp/c64-079-star-modes/checks/canonical-final/source/build/marbles-hud-v4-stream-scene/generated/intro.inc
+Output file:       /tmp/c64-079-star-modes/checks/canonical-final/source/build/marbles-hud-v4-stream-scene/runtime.prg
+Data:       3366   $0801-$1526   $0d26
+Gap:         473   $1527-$16ff   $01d9
+Data:       2304   $1700-$1fff   $0900
+Gap:        8192   $2000-$3fff   $2000
+Data:        112   $4000-$406f   $0070
+Gap:         144   $4070-$40ff   $0090
+Data:        341   $4100-$4254   $0155
+Gap:         171   $4255-$42ff   $00ab
+Data:        256   $4300-$43ff   $0100
+Gap:        1024   $4400-$47ff   $0400
+Data:       2048   $4800-$4fff   $0800
+Gap:        3072   $5000-$5bff   $0c00
+Data:        115   $5c00-$5c72   $0073
+Gap:          13   $5c73-$5c7f   $000d
+Data:        734   $5c80-$5f5d   $02de
+Gap:        8354   $5f5e-$7fff   $20a2
+Data:       6289   $8000-$9890   $1891
+Passes:            3
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/c64-079-star-modes/checks/canonical-final/source/c64/cart/easyflash-scene-boot.asm
+Output file:       /tmp/c64-079-star-modes/checks/canonical-final/source/build/marbles-hud-v4-stream-scene/boot.bin
+Data:       8192   $e000-$ffff   $2000
+Passes:            2
+Input file: /tmp/c64-079-star-modes/checks/canonical-final/source/build/marbles-hud-v4-stream-scene/marbles-hud-v4.bin
+Output file: /tmp/c64-079-star-modes/checks/canonical-final/scenes/marbles-hud-v4.crt
+Conversion from binary format to C64 EasyFlash .crt successful.
++ /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/cartconv -t easy -i /tmp/c64-079-star-modes/checks/canonical-final/source/build/marbles-hud-v4-stream-scene/marbles-hud-v4.bin -o /tmp/c64-079-star-modes/checks/canonical-final/scenes/marbles-hud-v4.crt -n DONT LOSE YOUR MARBLES
+--------------------------------------------------------------------------------
+Created: /tmp/c64-079-star-modes/checks/canonical-final/scenes/marbles-hud-v4.crt
+ROM used: 524,288 bytes (512 KiB)
+Free ROM available on cart: 524,288 bytes (512 KiB)
+Free slots: ROML 16 KiB; ROMH 496 KiB
+Allocation: 8 KiB ROM slots; free slots may be on either ROML or ROMH.
+--------------------------------------------------------------------------------
+built /tmp/c64-079-star-modes/checks/canonical-final/scenes/marbles-hud-v4.crt
+200 frames; 405972 encoded payload bytes; target 28.00s at 7.14286 FPS
+marbles-hud-v4 verified
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/c64-079-star-modes/checks/canonical-final/source/build/horse-sunflower-v4-stream-scene/main.asm
+Assembling file:   /tmp/c64-079-star-modes/checks/canonical-final/source/build/horse-sunflower-v4-stream-scene/generated/hud.inc
+Assembling file:   /tmp/c64-079-star-modes/checks/canonical-final/source/build/horse-sunflower-v4-stream-scene/generated/cart-v4-scene-helper.inc
+Assembling file:   /tmp/c64-079-star-modes/checks/canonical-final/source/build/horse-sunflower-v4-stream-scene/generated/tables.inc
+Output file:       /tmp/c64-079-star-modes/checks/canonical-final/source/build/horse-sunflower-v4-stream-scene/runtime.prg
+Data:       3288   $0801-$14d8   $0cd8
+Gap:         551   $14d9-$16ff   $0227
+Data:       2304   $1700-$1fff   $0900
+Gap:        8192   $2000-$3fff   $2000
+Data:        112   $4000-$406f   $0070
+Gap:         144   $4070-$40ff   $0090
+Data:        341   $4100-$4254   $0155
+Gap:         171   $4255-$42ff   $00ab
+Data:        256   $4300-$43ff   $0100
+Gap:        1024   $4400-$47ff   $0400
+Data:       2048   $4800-$4fff   $0800
+Gap:        3072   $5000-$5bff   $0c00
+Data:        115   $5c00-$5c72   $0073
+Passes:            3
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/c64-079-star-modes/checks/canonical-final/source/c64/cart/easyflash-scene-boot.asm
+Output file:       /tmp/c64-079-star-modes/checks/canonical-final/source/build/horse-sunflower-v4-stream-scene/boot.bin
+Data:       8192   $e000-$ffff   $2000
+Passes:            2
+Input file: /tmp/c64-079-star-modes/checks/canonical-final/source/build/horse-sunflower-v4-stream-scene/horse-sunflower-v4.bin
+Output file: /tmp/c64-079-star-modes/checks/canonical-final/scenes/horse-sunflower-v4.crt
+Conversion from binary format to C64 EasyFlash .crt successful.
++ /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/cartconv -t easy -i /tmp/c64-079-star-modes/checks/canonical-final/source/build/horse-sunflower-v4-stream-scene/horse-sunflower-v4.bin -o /tmp/c64-079-star-modes/checks/canonical-final/scenes/horse-sunflower-v4.crt -n HORSE AND SUNFLOWER
+--------------------------------------------------------------------------------
+Created: /tmp/c64-079-star-modes/checks/canonical-final/scenes/horse-sunflower-v4.crt
+ROM used: 270,336 bytes (264 KiB)
+Free ROM available on cart: 778,240 bytes (760 KiB)
+Free slots: ROML 264 KiB; ROMH 496 KiB
+Allocation: 8 KiB ROM slots; free slots may be on either ROML or ROMH.
+--------------------------------------------------------------------------------
+built /tmp/c64-079-star-modes/checks/canonical-final/scenes/horse-sunflower-v4.crt
+84 frames; 221600 encoded payload bytes; target 10.08s at 8.33333 FPS
+horse-sunflower-v4 verified

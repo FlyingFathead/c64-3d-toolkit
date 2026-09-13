@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Record a fresh, complete HORS-V3 measurement run and render its report section."""
+"""Record HORS-V3 measurements and explicitly verified unchanged evidence."""
 import argparse
 import hashlib
 import json
@@ -92,10 +92,22 @@ def charts(record, target):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('results',type=Path)
+    p.add_argument('--allow-unchanged',action='store_true',help='Reuse saved evidence only for omitted, byte-identical cartridges')
     a=p.parse_args();source=a.results.resolve();target=ROOT/'docs/benchmarks/hors-v3-preview'
     record=json.loads((ROOT/RECORD).read_text())
+    reused=[]
     for row in record['results']:
         stem=row['stem'];cart=ROOT/'examples/hors_v3_preview/cartridges'/(stem+'.crt')
+        if a.allow_unchanged and not (source/(stem+'-display.json')).exists():
+            assert row['sha256']==sha(cart), 'Changed cartridge requires new measurements: '+stem
+            for suffix in ('-display.json','-verification.json'):
+                saved=target/'results'/(stem+suffix)
+                assert sha(saved)==record['sha256'][saved.relative_to(ROOT).as_posix()]
+                proof=json.loads(saved.read_text())
+                assert proof['pixel_match'] and proof['color_match']
+            row['evidence_reuse']='Unchanged cartridge SHA-256; prior saved measurements and pixel proof verified'
+            reused.append(stem)
+            continue
         display=json.loads((source/(stem+'-display.json')).read_text())
         proof=json.loads((source/(stem+'-verification.json')).read_text())
         meta=json.loads(cart.with_name(stem+'-manifest.json').read_text())
@@ -118,8 +130,8 @@ def main():
             assert background['passed'] and background['sha256']==row['sha256']
             row['background_controls']=background
     record.update(experimental=False,target='HORS-V3 in '+(ROOT/'VERSION').read_text().strip(),
-                  version=(ROOT/'VERSION').read_text().strip(),evidence_origin='Fresh complete PAL VICE run on the release cartridges')
-    record['release_title']='The Stanford Dragon Has Arrived!' if record['version']=='0.7.8' else record['release_title']
+                  version=(ROOT/'VERSION').read_text().strip(),evidence_origin=('Fresh PAL VICE measurements for rebuilt cartridges; verified unchanged evidence for '+str(len(reused))+' cartridges' if reused else 'Fresh complete PAL VICE run on the release cartridges'))
+    record['release_title']={'0.7.8':'The Stanford Dragon Has Arrived!', '0.7.9':'The Golden Dragon & SAKU 2026'}.get(record['version'], record['release_title'])
     record['tests'].pop('complete_release_suite_rerun', None)
     record['tests']['release_suite_report']='docs/benchmarks/release-'+record['version']+'/validation.json'
     # Keep required evidence in tracked text files; *.log is excluded by Git.
@@ -136,6 +148,23 @@ def main():
     doc=ROOT/'docs/HORS_RENDER_V3_RESULTS.md';text=doc.read_text()
     text=re.sub(r'\| Workload \|[^\n]*\n(?:\|[^\n]*\n)+','\n'.join(table)+'\n',text,count=1)
     text=re.sub(r'\| Background mode \|[^\n]*\n(?:\|[^\n]*\n)+','\n'.join(bg)+'\n',text,count=1)
+    by_id={r['id']:r for r in record['results']}
+    direct,compact,old,wire=(by_id[k] for k in ('metallic','compact','v2-metallic-reference','v3-wire'))
+    text=re.sub(r'The direct-colour V3 metallic animation[^\n]+',
+        f"The direct-colour V3 metallic animation changes displayed throughput by **{(direct['display_fps']/old['display_fps']-1)*100:+.1f}%** against identical metallic pictures through V2, with **{(direct['rom_frame_bytes']/old['rom_frame_bytes']-1)*100:+.1f}%** frame-stream ROM. Compared with the differently rendered white wireframe, its displayed FPS changes by **{(direct['display_fps']/wire['display_fps']-1)*100:+.1f}%**.",text)
+    text=re.sub(r'`--compact-color-dictionary` makes[^\n]+',
+        f"`--compact-color-dictionary` changes metallic frame-stream size by **{(compact['rom_frame_bytes']/direct['rom_frame_bytes']-1)*100:+.1f}%** and displayed throughput by **{(compact['display_fps']/direct['display_fps']-1)*100:+.1f}%**. Direct bytes remain the speed default. Compact remains an explicit capacity option; no geometry or sample reduction is automatic.",text)
+    d,c=by_id['interactive'],by_id['compact-interactive']
+    text=re.sub(r'Direct metallic interactive measures[^\n]+',
+        f"Direct metallic interactive measures **{d['display_fps']:.2f} FPS** versus **{direct['display_fps']:.2f} FPS** automatic ({(d['display_fps']/direct['display_fps']-1)*100:+.1f}%). Compact interactive measures **{c['display_fps']:.2f} FPS** versus **{compact['display_fps']:.2f} FPS** ({(c['display_fps']/compact['display_fps']-1)*100:+.1f}%). Controls add no frame-stream payload. Background remapping uses a 256-byte lookup at $0200; shared speed controls use RAM at $9000. Border/background registers follow the displayed buffer, including queued pictures.",text)
+    text=re.sub(r'The default cycle interval is[^\n]+', 'The default cycle interval is 50 PAL ticks; the fastest setting requests one tick but performs at most one event per produced sample. Raw background reports record the observed periods. Every sampled displayed picture is checked against the original bitmap and its black-only colour remap.',text)
+    text=re.sub(r'The earlier rotation-only interactive carts[^\n]+', 'Current interactive results include help, shared + / - / 0 speed controls at normal speed, and the included-but-disabled starfield. Historical results remain in their release records; the table above comes from the current rebuilt carts.',text)
+    text=re.sub(r'The tables reuse an otherwise unused 256-byte vector dispatch page\.[^\n]+',
+        'The noninteractive colour codec reuses the vector dispatch allocation. Interactive builds reserve a 256-byte colour lookup, 2 KiB for speed controls, and 2 KiB for help code/text plus 1 KiB at $c000–$c3ff for packed help pages. Exhibition reuses spare HUD/help code space. The included starfield reuses $1700–$1fff and adds 192 sprite-pattern bytes plus 1 KiB for density controls/light kernel at $9c00–$9fff and 1 KiB for original light paths at $8000–$83ff; it starts disabled unless explicitly enabled. --no-starfield excludes it. Existing frame/cache RAM is 11,264 bytes, plus seven directory bytes per orientation. CRT size includes bootstrap code and bank padding. See [the complete memory map and controls](STARFIELD.md).',text)
+    text=text.replace('The default stays wireframe. New surface generation and colour compression require `--renderer hors-renderer-v3`.', 'HORS-V3 is the normal build default. OBJ defaults remain wireframe; SVG defaults preserve mapped fills and strokes. Surface generation and colour compression use V3.')
+    text=text.replace('F3 has no action in V3.', 'F3 has no action in these original surface carts; the SAKU presentation cart uses it for hue overlays. All new V3 interactive carts add + / - / 0 speed controls and brief SPD feedback; see [controls and RAM](STARFIELD.md).')
+    text=text.replace('docs/benchmarks/release-0.7.8/', 'docs/benchmarks/release-'+record['version']+'/')
+    text=re.sub(r'Twenty-one focused surface/texture[^.]+\.', 'Focused surface/texture, palette, SVG, speed and compatibility tests are included in the release suite.',text)
     doc.write_text(text)
     relevant=set(record['sha256'])
     for folder in ('tools','c64','tests','examples/hors_v3_preview','docs/benchmarks/hors-v3-preview'):
@@ -143,6 +172,6 @@ def main():
     record['sha256']={name:sha(ROOT/name) for name in sorted(relevant) if name!=RECORD}
     (ROOT/RECORD).write_text(json.dumps(record,indent=2)+'\n')
     check()
-    print('Recorded fresh HORS-V3 evidence for',len(record['results']),'cartridges.')
+    print('Recorded HORS-V3 evidence:',len(record['results'])-len(reused),'fresh,',len(reused),'byte-identical cartridges with saved evidence.')
 
 if __name__=='__main__':main()

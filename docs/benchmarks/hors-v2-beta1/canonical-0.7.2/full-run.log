@@ -1,0 +1,28 @@
+fps locking: not set
+menu:bytechunk:fps PASS
+menu:step:fps PASS
+menu:yunroll:fps PASS
+menu:yunroll-cart:fps PASS
+menu:yunroll-cart-v3:fps PASS
+menu:yunroll-cart-v2:fps PASS
+menu:yunroll-cart-v4:fps PASS
+menu:yunroll-cart-v5:fps PASS
+menu:yunroll-cart-v6:fps PASS
+menu:yunroll-cart-v7:fps PASS
+menu:yunroll-cart-v9:fps PASS
+menu:yunroll-cart-v8:fps PASS
+menu:yunroll-cart-v10:fps PASS
+menu:yunroll-cart-v8:ram PASS
+menu:yunroll-cart-v7:ram PASS
+menu:yunroll-cart-v9:ram PASS
+menu:yunroll-cart-v10:ram PASS
+menu:hors-render-v2-beta1:fps PASS
+scene:4 PASS
+scene:5 PASS
+menu:hors-render-v2-beta1:ram PASS
+scene:6 PASS
+scene:7 PASS
+scene:8 PASS
+scene:9 PASS
+scene:10 PASS
+/workspace/scratch/a2344c11dad9/canonical-072-full/PERFORMANCE_COMPARISON.md

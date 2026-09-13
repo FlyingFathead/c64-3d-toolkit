@@ -1,9 +1,10 @@
 # Cartridge pipeline
 
-## Current pipeline in 0.7.2
+## Current pipeline in 0.7.9
 
-`build`, `cart-stream` and `cart-demos` default to hors-render-v2 EasyFlash
-output. Authored `.blend` / `.c643dscene` builds use hors-render-v2-scene.
+`build` and `cart-stream` default to hors-renderer-v3 EasyFlash output,
+including authored `.blend` / `.c643dscene` wireframe scenes.
+`cart-demos` retains hors-render-v2 for the comparison/menu pipeline.
 The current twelve-entry menu streams precomputed pictures from ROM; it does
 not package the old resident PRGs. Use `--renderer yunroll` for resident PRG output.
 
@@ -14,7 +15,7 @@ not package the old resident PRGs. Use `--renderer yunroll` for resident PRG out
 ```
 
 The default menu output is
-`examples/cart_demos/c643d-demo-v0.7.2-hors-render-v2-all.crt` (or `-all-ram.crt`
+`examples/cart_demos/c643d-demo-v0.7.9-hors-render-v2-all.crt` (or `-all-ram.crt`
 with `--prefer ram`). See [current builds](HORS_RENDER_V2.md),
 [scene streaming](CARTRIDGE_SCENES.md), and [inventory](../examples/README.md).
 

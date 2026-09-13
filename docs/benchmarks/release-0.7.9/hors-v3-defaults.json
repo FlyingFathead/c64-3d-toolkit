@@ -1,0 +1,162 @@
+{
+  "passed": true,
+  "results": {
+    "default-cube": {
+      "cartridge": "default-cube.crt",
+      "menu_entry": null,
+      "verified_frames": 11,
+      "orientations": 8,
+      "bitmap_bytes_checked": 84480,
+      "color_bytes_checked": 10560,
+      "slots": {
+        "1": 4,
+        "2": 4,
+        "0": 3
+      },
+      "average_fps": 33.041722700489295,
+      "min_frame_cycles": 18671,
+      "max_frame_cycles": 33705,
+      "pixel_match": true,
+      "color_match": true,
+      "reused_samples": 0,
+      "border_match": true,
+      "border_color": 0
+    },
+    "deform-180": {
+      "cartridge": "deform-180.crt",
+      "menu_entry": null,
+      "verified_frames": 183,
+      "orientations": 180,
+      "bitmap_bytes_checked": 1405440,
+      "color_bytes_checked": 175680,
+      "slots": {
+        "1": 61,
+        "2": 61,
+        "0": 61
+      },
+      "average_fps": 12.633322863989699,
+      "min_frame_cycles": 19274,
+      "max_frame_cycles": 81840,
+      "pixel_match": true,
+      "color_match": true,
+      "reused_samples": 0,
+      "border_match": true,
+      "border_color": 0,
+      "loop_seconds": null,
+      "target_fps": 12.5,
+      "hud_match": true,
+      "text_overlay": true,
+      "frame_index_bits": 16
+    },
+    "textured": {
+      "cartridge": "textured.crt",
+      "menu_entry": null,
+      "verified_frames": 7,
+      "orientations": 4,
+      "bitmap_bytes_checked": 53760,
+      "color_bytes_checked": 6720,
+      "slots": {
+        "1": 3,
+        "2": 2,
+        "0": 2
+      },
+      "average_fps": 15.774315951264029,
+      "min_frame_cycles": 45187,
+      "max_frame_cycles": 70766,
+      "pixel_match": true,
+      "color_match": true,
+      "reused_samples": 0,
+      "border_match": true,
+      "border_color": 0
+    },
+    "custom-gradient": {
+      "cartridge": "custom-gradient.crt",
+      "menu_entry": null,
+      "verified_frames": 11,
+      "orientations": 8,
+      "bitmap_bytes_checked": 84480,
+      "color_bytes_checked": 10560,
+      "slots": {
+        "1": 4,
+        "2": 4,
+        "0": 3
+      },
+      "average_fps": 9.625717350653309,
+      "min_frame_cycles": 73185,
+      "max_frame_cycles": 114652,
+      "pixel_match": true,
+      "color_match": true,
+      "reused_samples": 0,
+      "border_match": true,
+      "border_color": 0,
+      "interactive_label_match": true
+    },
+    "purple-indexed": {
+      "cartridge": "purple-indexed.crt",
+      "menu_entry": null,
+      "verified_frames": 7,
+      "orientations": 4,
+      "bitmap_bytes_checked": 53760,
+      "color_bytes_checked": 6720,
+      "slots": {
+        "1": 3,
+        "2": 2,
+        "0": 2
+      },
+      "average_fps": 8.769647744720622,
+      "min_frame_cycles": 85836,
+      "max_frame_cycles": 126224,
+      "pixel_match": true,
+      "color_match": true,
+      "reused_samples": 0,
+      "border_match": true,
+      "border_color": 0
+    },
+    "fragmented": {
+      "cartridge": "fragmented.crt",
+      "menu_entry": null,
+      "verified_frames": 11,
+      "orientations": 4,
+      "bitmap_bytes_checked": 84480,
+      "color_bytes_checked": 10560,
+      "slots": {
+        "1": 4,
+        "2": 4,
+        "0": 3
+      },
+      "average_fps": 7.343768051991225,
+      "min_frame_cycles": 88900,
+      "max_frame_cycles": 145924,
+      "pixel_match": true,
+      "color_match": true,
+      "reused_samples": 0,
+      "border_match": true,
+      "border_color": 0,
+      "v2_error": "v2 metadata span count exceeds one byte: 384 clear spans, 384 colour spans (maximum 255 each per frame). This is not an animation-length limit; use --renderer hors-renderer-v3 for compact clear/shared colour metadata"
+    },
+    "custom-gradient-keys": {
+      "passed": true,
+      "input_checks": 47,
+      "f4_debounced": true,
+      "f3_unchanged": true,
+      "f5_start_stop": true,
+      "f6_f7_rates_and_clamps": true,
+      "f8_follow_black": true,
+      "ctrl_f7_custom": true,
+      "f2_reset": true
+    },
+    "custom-gradient-backgrounds": {
+      "passed": true,
+      "pictures_checked": 32,
+      "all_16_colors": true,
+      "all_three_buffers": true,
+      "nonblack_colors_preserved": true,
+      "bitmap_unchanged": true,
+      "hud_background": true,
+      "border_modes": true,
+      "visible_border_matches_buffer": true,
+      "all_256_lookup_values": true,
+      "f2_five_tick_white_flash": true
+    }
+  }
+}

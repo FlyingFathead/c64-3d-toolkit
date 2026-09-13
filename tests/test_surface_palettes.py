@@ -48,6 +48,20 @@ class SurfacePaletteTests(unittest.TestCase):
             self.assertEqual(native[8,8], 0)
             self.assertTrue(set(np.unique(native)).issubset(set(ramp)))
 
+    def test_source_red_stays_red_through_a_full_gradient_rotation(self):
+        mesh = Mesh('red face', [(-14,-12,0), (0,14,0), (14,-12,0)], [(0,1,2)])
+        seen = set()
+        for index in range(48):
+            pic = raster(mesh, Camera(cy=96), index, 48, preset='gradient',
+                         fallback=2, two_sided=True)
+            _, _, native = quantize(pic, preset='gradient')
+            seen.update(map(int, np.unique(native)))
+        self.assertTrue(seen.issubset({0, 2, 10, 1}), seen)
+        self.assertIn(2, seen)
+        self.assertIn(10, seen)
+        # Explicit metallic overlays retain their established appearance.
+        self.assertEqual(SHADE_PALETTES['red'], (0, 9, 2, 10, 1))
+
     def test_old_renderers_and_unrelated_surface_modes_reject_coloured_ramps(self):
         for extra in ([], ['--surface-fill','material'], ['--surface-fill','textured'],
                       ['--surface-fill','metallic','--surface-encoding','dither']):
@@ -55,7 +69,7 @@ class SurfacePaletteTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'require'):
                 cli.cmd_build(args)
         with self.assertRaisesRegex(ValueError,'requires --renderer hors-renderer-v3'):
-            cli.cmd_build(self.args('--surface-palette','red'))
+            cli.cmd_build(self.args('--renderer','hors-render-v2','--surface-palette','red'))
 
 
 if __name__ == '__main__':

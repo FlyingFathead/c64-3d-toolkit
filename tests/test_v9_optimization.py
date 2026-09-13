@@ -71,7 +71,7 @@ class V9Tests(unittest.TestCase):
     def test_v9_is_opt_in_and_exhibition_remains_separate(self):
         p=make_parser(load_toolchain_settings(Path('/missing/config.ini')))
         self.assertEqual(p.parse_args(['cart-demos']).stream_renderer,'hors-render-v2')
-        self.assertEqual(p.parse_args(['build']).renderer,'hors-render-v2')
+        self.assertEqual(p.parse_args(['build']).renderer,'hors-renderer-v3')
         for variant in ('yunroll-cart-v9','yunroll-cart-v9-scene'):
             self.assertEqual(p.parse_args(['build','--renderer',variant]).renderer,variant)
         self.assertEqual(p.parse_args(['cart-demos','--stream-renderer','yunroll-cart-v9']).play_all_seconds,10)

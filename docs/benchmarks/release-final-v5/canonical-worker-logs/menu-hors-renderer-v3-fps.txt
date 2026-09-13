@@ -1,0 +1,47 @@
+fps locking: not set
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   COMPARISON_WORKSPACE/source/c64/cart/easyflash-demo-control-v9.asm
+Output file:       COMPARISON_WORKSPACE/source/build/hors-renderer-v3-cartridge-demo/hors-renderer-v3-control.bin
+Data:        256   $0200-$02ff   $0100
+Passes:            3
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   COMPARISON_WORKSPACE/source/c64/cart/easyflash-menu-boot.asm
+Output file:       COMPARISON_WORKSPACE/source/build/hors-renderer-v3-cartridge-demo/hors-renderer-v3-romh0.bin
+Data:       8192   $e000-$ffff   $2000
+Passes:            3
+Input file: COMPARISON_WORKSPACE/source/build/hors-renderer-v3-cartridge-demo/hors-renderer-v3.bin
+Output file: COMPARISON_WORKSPACE/carts/hors-renderer-v3.crt
+Conversion from binary format to C64 EasyFlash .crt successful.
+fps locking: not set
+preflight: cartconv = TOOLCHAIN/c64-tools/bin/cartconv (cartconv (VICE 3.10))
++ TOOLCHAIN/c64-tools/bin/64tass -b --vice-labels -l COMPARISON_WORKSPACE/source/build/hors-renderer-v3-cartridge-demo/hors-renderer-v3-control.lbl -L COMPARISON_WORKSPACE/source/build/hors-renderer-v3-cartridge-demo/hors-renderer-v3-control.lst -o COMPARISON_WORKSPACE/source/build/hors-renderer-v3-cartridge-demo/hors-renderer-v3-control.bin COMPARISON_WORKSPACE/source/c64/cart/easyflash-demo-control-v9.asm
++ TOOLCHAIN/c64-tools/bin/64tass -b --vice-labels -l COMPARISON_WORKSPACE/source/build/hors-renderer-v3-cartridge-demo/hors-renderer-v3-boot.lbl -L COMPARISON_WORKSPACE/source/build/hors-renderer-v3-cartridge-demo/hors-renderer-v3-boot.lst -o COMPARISON_WORKSPACE/source/build/hors-renderer-v3-cartridge-demo/hors-renderer-v3-romh0.bin COMPARISON_WORKSPACE/source/c64/cart/easyflash-menu-boot.asm
++ TOOLCHAIN/c64-tools/bin/cartconv -t easy -i COMPARISON_WORKSPACE/source/build/hors-renderer-v3-cartridge-demo/hors-renderer-v3.bin -o COMPARISON_WORKSPACE/carts/hors-renderer-v3.crt -n C643D 0.7.9 HORS V3 FPS
+--------------------------------------------------------------------------------
+Created: COMPARISON_WORKSPACE/carts/hors-renderer-v3.crt
+ROM used: 1,007,616 bytes (984 KiB)
+Free ROM available on cart: 40,960 bytes (40 KiB)
+Free slots: ROML 40 KiB; ROMH 0 KiB
+Allocation: 8 KiB ROM slots; free slots may be on either ROML or ROMH.
+--------------------------------------------------------------------------------
+built COMPARISON_WORKSPACE/carts/hors-renderer-v3.crt
+all 12 entries: yunroll-cart-v10; 10-row scrolling menu; 619445 frame bytes
+hors-renderer-v3 TORUS pixels verified
+hors-renderer-v3 TORUS DENSE pixels verified
+hors-renderer-v3 CUBE pixels verified
+hors-renderer-v3 SPHERE pixels verified
+hors-renderer-v3 HORSE HEAD pixels verified
+hors-renderer-v3 SUNFLOWER TORUS pixels verified
+hors-renderer-v3 SUNFLOWER COLOR pixels verified
+hors-renderer-v3 SPACE HORSE SPIN pixels verified
+hors-renderer-v3 SPACE HORSE CRAWL pixels verified
+hors-renderer-v3 FALLING CUBES pixels verified
+hors-renderer-v3 HORSE HEAD HIFI pixels verified
+hors-renderer-v3 SUNFLOWER TORUS HIFI pixels verified
+hors-renderer-v3 COMPLETE

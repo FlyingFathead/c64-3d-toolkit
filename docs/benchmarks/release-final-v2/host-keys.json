@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "cartridge": "saku_2026-interactive.crt",
+  "sha256": "4b3b61d73e2cf3b27efafa624f6239224f7e23f4022bdf8dd563a428103b9eae",
+  "method": "VICE exported host keyboard event API; symbolic and positional keymap translation; unmodified emulated CIA reads",
+  "gui_events_tested": false,
+  "number_keys": {
+    "1": "reset",
+    "2": "more",
+    "3": "less"
+  },
+  "shift_u_all_hud": true,
+  "help_header_stripes": true,
+  "results": {
+    "sym": {
+      "passed": true,
+      "checks": 19,
+      "host_events": 40,
+      "keymap_sha256": "478f7d46bcfa0547d2c3fe1fb410a854501e2833472fa47448f29110dfa09428"
+    },
+    "pos": {
+      "passed": true,
+      "checks": 19,
+      "host_events": 40,
+      "keymap_sha256": "df7332c52430ec344c9821ead8f16650ca31dc5676d0c40c5915e5594bd3493d"
+    }
+  }
+}

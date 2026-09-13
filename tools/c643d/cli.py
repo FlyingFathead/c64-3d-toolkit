@@ -392,6 +392,20 @@ def _choose_detail(a, kind: str):
 
 def build_mesh(a):
     """Build the selected source asset and return mesh + render/animation metadata."""
+    a._svg_surface = None
+    if hasattr(a, 'max_fit_scale') and a.max_fit_scale is None:
+        source = _selected_source_path(a)
+        a.max_fit_scale = 1000.0 if source and source.suffix.lower() == '.svg' else 1.4
+    def svg_input(path, name, **options):
+        if getattr(a, 'surface_fill', 'none') not in ('none', None):
+            from .svg_surface import load_svg_surface
+            a._svg_surface = load_svg_surface(path, name, depth=options['depth'],
+                resolution=a.svg_texture_size, alpha_threshold=a.svg_alpha_threshold,
+                keep_background=a.svg_keep_background, texture_path=a.surface_texture,
+                outlines_only=a.svg_outlines_only,
+                override_color=1 if a.svg_no_colors else c64_color_index(a.svg_override_with_color) if a.svg_override_with_color is not None else None)
+            return a._svg_surface
+        return load_svg(path, name, **options)
     preset_rotate=(0.0,0.0,0.0); preset_scale=1.0; spin_axis='y'
     preset_visibility='auto'; preset_ztol=0.0008; preset_feature_angle=40.0
     preset_color='white'; preset_use_colors=True
@@ -400,7 +414,7 @@ def build_mesh(a):
 
     if getattr(a,'svg',None):
         p=Path(a.svg); label=(a.name or p.stem).upper(); is_imported=is_svg=True
-        info=load_svg(p,label,tolerance=a.svg_tolerance,curve_step=a.svg_curve_step,depth=a.svg_depth,connector_stride=a.svg_connector_stride)
+        info=svg_input(p,label,tolerance=a.svg_tolerance,curve_step=a.svg_curve_step,depth=a.svg_depth,connector_stride=a.svg_connector_stride)
         mesh=info.mesh; preset_color=info.c64_color
     elif a.obj:
         p=Path(a.obj); mesh=load_obj(p,a.name or p.stem); label=(a.name or p.stem).upper(); is_imported=True
@@ -411,7 +425,7 @@ def build_mesh(a):
         label=(a.name or preset.name).upper(); is_imported=True
         if preset.obj_path.suffix.lower()=='.svg':
             is_svg=True
-            info=load_svg(preset.obj_path,preset.name,tolerance=preset.svg_tolerance,curve_step=preset.svg_curve_step,depth=preset.svg_depth,connector_stride=preset.svg_connector_stride)
+            info=svg_input(preset.obj_path,preset.name,tolerance=preset.svg_tolerance,curve_step=preset.svg_curve_step,depth=preset.svg_depth,connector_stride=preset.svg_connector_stride)
             mesh=info.mesh
         else:
             mesh=load_obj(preset.obj_path,preset.name)
@@ -431,7 +445,7 @@ def build_mesh(a):
         mesh=torus(major,minor); label='TORUS'
 
     mesh=normalize_mesh(mesh,46.0)
-    if not a.keep_winding:
+    if not a.keep_winding and a._svg_surface is None:
         mesh=fix_winding_outward(mesh)
 
     prx,pry,prz=(math.radians(v) for v in preset_rotate)
@@ -612,14 +626,83 @@ def print_stats(mesh:Mesh,label:str,renderer:str,scale:float,stats:dict,hud:str,
 
 
 def cmd_build(a):
+    from .input_flip import options as flip_options
+    if getattr(a,'viewport_width',None) is not None and not (a.blend or a.scene):
+        raise ValueError('--viewport-width currently applies to --blend/--scene inputs')
+    if any(flip_options(a).values()):
+        print("Input artwork flip: "+", ".join(k.removeprefix("flip_") for k,v in flip_options(a).items() if v)+" (host conversion; HUD unchanged)",flush=True)
+    if getattr(a,'hud_default',None) is not None:
+        a.text_overlay=a.hud_default=='enabled'
+    a.hud_visible=getattr(a,'text_overlay',True)
+    explicit_toggle=getattr(a,'allow_hud_toggle',None)
+    if explicit_toggle and (not a.interactive_cart or a.renderer not in ('hors-renderer-v3','hors-render-v3') or a.blend or a.scene):
+        raise ValueError('--allow-hud-toggle requires a standalone HORS-V3 interactive cart')
+    a.hud_toggle_allowed=a.interactive_cart if explicit_toggle is None else explicit_toggle
+    if any(getattr(a,key,None) is not None for key in ('exhibition_default','exhibition_order','exhibition_interval')):
+        if not a.interactive_cart or a.renderer not in ('hors-renderer-v3','hors-render-v3') or a.blend or a.scene:
+            raise ValueError('Exhibition options require a standalone HORS-V3 --interactive-cart')
+    if getattr(a,'starfield_profile',None) is not None and (not a.interactive_cart or not a.include_starfield or a.renderer not in ('hors-renderer-v3','hors-render-v3') or a.blend or a.scene):
+        raise ValueError('--starfield-profile requires a standalone HORS-V3 interactive cart with included stars')
+    if a.starfield_default is not None:
+        a.background_effect = 'starfield-forward' if a.starfield_default == 'enabled' else 'none'
+    if not a.include_starfield and a.background_effect != 'none':
+        raise ValueError('--no-starfield cannot be combined with an enabled starfield')
+    if (a.starfield_default is not None or not a.include_starfield) and (a.renderer not in ('hors-renderer-v3','hors-render-v3') or a.blend or a.scene):
+        raise ValueError('Starfield inclusion/default switches require a standalone HORS-V3 build')
+    source = _selected_source_path(a)
+    is_svg = source is not None and source.suffix.lower() == '.svg'
+    if a.max_fit_scale is None:
+        a.max_fit_scale = 1000.0 if is_svg else 1.4
+    svg_switches = (a.svg_outlines_only or a.svg_no_colors or a.svg_override_with_color is not None)
+    if svg_switches and (not is_svg or a.renderer not in ('hors-renderer-v3', 'hors-render-v3')):
+        raise ValueError('SVG colour/outline switches require an SVG source and HORS-V3')
+    if a.svg_no_colors and a.svg_override_with_color is not None:
+        raise ValueError('--svg-no-colors and --svg-override-with-color are mutually exclusive')
+    if a.svg_presentation_modes and (not is_svg or not a.interactive_cart or a.surface_encoding != 'native'):
+        raise ValueError('--svg-presentation-modes requires an interactive SVG and native colour encoding')
+    if (a.svg_background_card or a.svg_outline_variant) and not a.svg_presentation_modes:
+        raise ValueError('SVG presentation variants require --svg-presentation-modes')
+    fill_style = getattr(a, 'fill_style', None)
+    if fill_style:
+        selected = {'wireframe':'none', 'solid':'material', 'gradient':'gradient',
+                    'textured':'textured', 'metallic':'metallic'}[fill_style]
+        if a.surface_fill is not None and a.surface_fill != selected:
+            raise ValueError('--fill-style and --surface-fill select different styles')
+        a.surface_fill = selected
+    if getattr(a, 'surface_fill', None) is None:
+        source = _selected_source_path(a)
+        a.surface_fill = 'material' if source and source.suffix.lower() == '.svg' and a.renderer in ('hors-renderer-v3', 'hors-render-v3') else 'none'
+    if svg_switches and a.surface_fill == 'none':
+        raise ValueError('SVG colour/outline switches use painted contours; omit --fill-style wireframe')
+    if a.svg_no_colors:
+        a.surface_fill = 'material'
+        a.color, a.background_color, a.border_color = 'white', 'black', 'black'
+        a.ignore_colors = True
+        a.include_starfield = False
+        if a.svg_presentation_modes or a.background_effect != 'none':
+            raise ValueError('--svg-no-colors requires a plain diagnostic build without presentation modes or background effects')
+    elif a.svg_override_with_color is not None:
+        # A literal override is solid unless a gradient was explicitly asked for.
+        if not fill_style and a.surface_fill == 'gradient':
+            a.surface_fill = 'material'
+    if a.svg_presentation_modes and (a.surface_fill not in ('gradient', 'material') or svg_switches):
+        raise ValueError('--svg-presentation-modes requires original solid/gradient SVG colours')
+    if getattr(a, 'surface_texture', None):
+        source = _selected_source_path(a)
+        if not source or source.suffix.lower() != '.svg' or a.surface_fill != 'textured':
+            raise ValueError('--surface-texture requires an SVG source and --surface-fill textured')
+    if getattr(a, 'background_effect', 'none') != 'none' and (a.renderer not in ('hors-renderer-v3','hors-render-v3') or a.blend or a.scene):
+        raise ValueError('--background-effect requires a standalone HORS-V3 build')
     if a.renderer in ('hors-renderer-v3', 'hors-render-v3'):
         a.renderer = 'hors-renderer-v3'
-        from .surface_fill import cmd_build as cmd_build_v3
+        from .hors_v3 import cmd_build as cmd_build_v3
         return cmd_build_v3(a)
     if getattr(a, 'surface_fill', 'none') != 'none':
         raise ValueError('--surface-fill is a new HORS-V3 feature; select --renderer hors-renderer-v3')
-    if getattr(a, 'surface_palette', 'grey') != 'grey':
+    if getattr(a, 'surface_palette', 'grey') != 'grey' or getattr(a, 'surface_ramp', None) is not None:
         raise ValueError('--surface-palette requires --renderer hors-renderer-v3 --surface-fill metallic')
+    if getattr(a, 'surface_color_metric', 'perceptual') != 'perceptual':
+        raise ValueError('--surface-color-metric requires --renderer hors-renderer-v3')
     if getattr(a, 'v3_color_encoding', 'literal') != 'literal':
         raise ValueError('--compact-color-dictionary requires --renderer hors-renderer-v3')
     from .renderer_names import implementation, public_name
@@ -692,7 +775,7 @@ def cmd_build(a):
             if n<requested_frames and n not in frame_candidates: frame_candidates.append(n)
     last_error=None
     for actual_frames in frame_candidates:
-        frames,candidate_edges=build_frames(mesh,actual_frames,cam,spin_axis=spin_axis,visibility_mode=visibility,z_tolerance=z_tolerance,feature_angle=feature_angle,animation=animation,animation_tilt=anim_tilt,animation_travel=anim_travel,animation_rise=anim_rise,enable_source_colors=per_cell_colors,fallback_color=c64_color_index(color_name),background_color=c64_color_index(getattr(a,"background_color",0)),height=viewport_height)
+        frames,candidate_edges=build_frames(mesh,actual_frames,cam,spin_axis=spin_axis,visibility_mode=visibility,z_tolerance=z_tolerance,feature_angle=feature_angle,animation=animation,animation_tilt=anim_tilt,animation_travel=anim_travel,animation_rise=anim_rise,enable_source_colors=per_cell_colors,fallback_color=c64_color_index(color_name),background_color=c64_color_index(getattr(a,"background_color",0)),height=viewport_height,**flip_options(a))
         try:
             stats=emit_tables(GENERATED/'tables.inc',frames,a.renderer,candidate_edges)
             break
@@ -755,6 +838,7 @@ def _scene_color_policy(mesh:Mesh,a):
 
 
 def cmd_build_scene(a):
+    from .input_flip import options as flip_options
     if getattr(a,'rastertime_profiler',False) and not getattr(a,'text_overlay',True):
         print('error: --rastertime-profiler and --no-text-overlay are separate ASM variants; select one',file=sys.stderr)
         return 2
@@ -795,7 +879,7 @@ def cmd_build_scene(a):
                     a.blend,exported,blender=blender_found,
                     frame_start=a.frame_start,frame_end=a.frame_end,
                     sample_step=a.sample_step,system=getattr(a,'_tool_platform',None),root=ROOT,
-                    blender_is_verified=True,viewport_height=viewport_height,
+                    blender_is_verified=True,viewport_height=viewport_height,viewport_width=getattr(a,'viewport_width',None) or 320,
                 )
                 scene=load_scene(exported)
     except (OSError,ValueError,RuntimeError) as e:
@@ -804,6 +888,8 @@ def cmd_build_scene(a):
     if len(scene.frames)>255:
         print(f'error: scene has {len(scene.frames)} frames; maximum is 255',file=sys.stderr)
         return 2
+    width=getattr(a,'viewport_width',None) or scene.viewport_width
+    print(f'Scene drawing area: {width}x{viewport_height}; stored camera projection retained',flush=True)
     mesh=scene.mesh
     if a.name:
         mesh.name=a.name.upper()
@@ -820,7 +906,7 @@ def cmd_build_scene(a):
         frames,candidate_edges=build_scene_frames(
             scene,visibility_mode=visibility,z_tolerance=z_tolerance,
             feature_angle=feature_angle,enable_source_colors=per_cell_colors,
-            fallback_color=c64_color_index(color_name),background_color=c64_color_index(getattr(a,"background_color",0)),height=viewport_height,
+            fallback_color=c64_color_index(color_name),background_color=c64_color_index(getattr(a,"background_color",0)),height=viewport_height,width=width,**flip_options(a),
         )
         stats=emit_tables(GENERATED/'tables.inc',frames,a.renderer,candidate_edges)
     except RuntimeError as e:
@@ -830,7 +916,7 @@ def cmd_build_scene(a):
             print('',file=sys.stderr)
             print(f'  scene:       {Path(a.blend or a.scene).name}',file=sys.stderr)
             print(f'  samples:     {len(scene.frames)} frames (step {scene.sample_step})',file=sys.stderr)
-            print(f'  viewport:    256x{viewport_height}',file=sys.stderr)
+            print(f'  viewport:    {width}x{viewport_height}',file=sys.stderr)
             print(f'  renderer:    {a.renderer}',file=sys.stderr)
             print(f'  colour:      {"source colours" if use_source_colors else color_name+" monochrome"}',file=sys.stderr)
             reach=re.search(r'tables reach \$(?P<end>[0-9a-fA-F]+), limit \$(?P<limit>[0-9a-fA-F]+)',message)
@@ -1210,15 +1296,29 @@ def make_parser(settings):
     p.add_argument('--version',action='version',version=__version__)
     sub=p.add_subparsers(dest='command')
     def common(q):
+        def background_boolean(value):
+            value=value.lower()
+            if value in ('true','yes','1','on'):return True
+            if value in ('false','no','0','off'):return False
+            raise argparse.ArgumentTypeError('expected true/false or yes/no')
         q.add_argument('--shape',choices=('torus','cube','sphere','horse_head'),default='torus')
         q.add_argument('--object',help='build a named OBJ/SVG preset from objects/<name> + optional .json metadata')
         q.add_argument('--obj',help='load a one-off arbitrary Wavefront OBJ instead of --shape')
-        q.add_argument('--svg',help='load a one-off SVG as a planar/extruded wire object')
+        q.add_argument('--svg',help='load an SVG; V3 preserves mapped source fills/strokes; --fill-style gradient adds hue shading')
         q.add_argument('--obj-up',choices=('y','z'),default='y',help='source up axis for one-off --obj')
         q.add_argument('--svg-tolerance',type=float,default=3.0,help='SVG polyline simplification tolerance in source units')
         q.add_argument('--svg-curve-step',type=float,default=12.0,help='approximate SVG curve sampling step in source units')
         q.add_argument('--svg-depth',type=float,default=5.0,help='SVG wire extrusion depth in normalised toolkit units; 0=flat')
         q.add_argument('--svg-connector-stride',type=int,default=4,help='connect every Nth front/back SVG contour vertex')
+        q.add_argument('--svg-texture-size',type=int,default=512,help='filled SVG raster longest side, 16..2048 pixels (default 512)')
+        q.add_argument('--svg-alpha-threshold',type=int,default=128,help='filled SVG silhouette opacity threshold, 1..255 (default 128)')
+        q.add_argument('--svg-keep-background',action='store_true',default=True,help='retain painted SVG canvas rectangles (default)')
+        q.add_argument('--svg-drop-background',dest='svg_keep_background',action='store_false',help='remove direct full-canvas rectangles when importing page artwork')
+        q.add_argument('--include-svg-background-color',dest='svg_keep_background',type=background_boolean,
+                       metavar='true|false',help='preserve painted SVG canvas backgrounds (default true); false removes recognized full-canvas rectangles; yes/no accepted')
+        q.add_argument('--svg-outlines-only',action='store_true',help='ignore fills; preserve mapped strokes, add white contours to fill-only vector shapes')
+        q.add_argument('--svg-no-colors','--no-svg-color-mapping',action='store_true',help='diagnostic solid white SVG on black; preserves holes and stroke geometry')
+        q.add_argument('--svg-override-with-color','--override-svg-color',type=_color_arg,help='replace all SVG fill/stroke colours with one C64 colour; optional --fill-style gradient shades that hue')
         q.add_argument('--name',help='display/object name for custom OBJ/SVG')
         q.add_argument('--polycount',type=int,help='approximate FACE count for procedural torus/sphere')
         q.add_argument('--vertices',type=int,help='approximate VERTEX count for procedural torus/sphere')
@@ -1243,12 +1343,34 @@ def make_parser(settings):
         q.add_argument('--visibility',choices=('auto','surface_features','surface_creases','surface','frontface'),default='auto',help='hidden-line surface mode; auto uses robust surface Z-buffer for OBJ and front-face mode for procedural closed meshes')
         q.add_argument('--z-tolerance',type=float,help='reciprocal-depth tolerance for visible wire edges; object presets may provide a default')
         q.add_argument('--feature-angle',type=float,help='surface_creases threshold in degrees; sharp manifold edges at/above this angle are preserved')
-    b=sub.add_parser('build',help='compile geometry and assemble a hors-render-v2 CRT by default'); common(b)
-    b.add_argument('--renderer',choices=('hors-renderer-v3', 'hors-render-v3', 'hors-render-v2', 'hors-render-v2-scene', 'hors-render-v2-beta1', 'hors-render-v2-beta1-scene', 'hors-render-v1', 'hors-render-v1-scene', *RENDERERS, 'yunroll-cart-v2', 'yunroll-cart-v3', 'yunroll-cart-v4', 'yunroll-cart-v4-scene', 'yunroll-cart-v5', 'yunroll-cart-v5-scene', 'yunroll-cart-v6', 'yunroll-cart-v6-scene', 'yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10', 'yunroll-cart-v7-scene', 'yunroll-cart-v8-scene', 'yunroll-cart-v9-scene', 'yunroll-cart-v10-scene'),default='hors-render-v2',help='default hors-render-v2 CRT; v1 and v2-beta1 remain explicit historical choices; step/bytechunk/yunroll=PRG; yunroll-cart-v2 through v10=streamed EasyFlash CRT')
+    from .surface_palettes import SHADE_PALETTES, palette_name, parse_ramp
+    from .renderer_names import DEFAULT_RENDERER
+    b=sub.add_parser('build',help='compile geometry and assemble a HORS-V3 CRT by default'); common(b)
+    for direction in ('horizontal','vertical'):
+        b.add_argument('--flip-input-'+direction,'--flip-'+direction,'--mirror-'+direction,
+            dest='flip_input_'+direction,action='store_true',help='flip input artwork '+direction+'ly in the viewport during conversion; HUD/effects unchanged')
+    b.add_argument('--renderer',choices=('hors-renderer-v3', 'hors-render-v3', 'hors-render-v2', 'hors-render-v2-scene', 'hors-render-v2-beta1', 'hors-render-v2-beta1-scene', 'hors-render-v1', 'hors-render-v1-scene', *RENDERERS, 'yunroll-cart-v2', 'yunroll-cart-v3', 'yunroll-cart-v4', 'yunroll-cart-v4-scene', 'yunroll-cart-v5', 'yunroll-cart-v5-scene', 'yunroll-cart-v6', 'yunroll-cart-v6-scene', 'yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10', 'yunroll-cart-v7-scene', 'yunroll-cart-v8-scene', 'yunroll-cart-v9-scene', 'yunroll-cart-v10-scene'),default=DEFAULT_RENDERER,help='default hors-renderer-v3 CRT; explicit v2 remains available; v1 and v2-beta1 remain explicit historical choices; step/bytechunk/yunroll=PRG; yunroll-cart-v2 through v10=streamed EasyFlash CRT')
     b.add_argument('--prefer',choices=('fps','ram'),default='fps',help='V7/V8: prioritize FPS (default) or smaller Y drawing kernels; geometry and pacing stay the same')
-    b.add_argument('--interactive-cart',action='store_true',help='standalone V2/V3 spins: persistent cursor/joystick direction; V2 adds uniform palette controls, V3 remaps black backgrounds and preserves surface shades')
-    b.add_argument('--surface-fill', '--surface-fills', type=lambda value: 'metallic' if value in ('grey', 'gray') else value, choices=('none', 'metallic', 'material', 'textured'), default='none', nargs='?', const='material', help='HORS-V3 surfaces: metallic lighting (grey/gray aliases), MTL Kd colours, or map_Kd image textures (default: wireframe)')
-    b.add_argument('--surface-palette', type=lambda value: 'grey' if value in ('metallic', 'gray') else value, choices=('grey', 'blue', 'red', 'green'), default='grey', help='HORS-V3 metallic lighting ramp in the fixed C64 palette (default grey; metallic/gray aliases); coloured ramps require native encoding')
+    b.add_argument('--interactive-cart',action='store_true',help='standalone spins: cursor/joystick direction; V3 adds RUN/STOP (Esc in VICE) and Shift+H help, + / - / 0 speed, background controls and a disabled-by-default starfield; V2 retains historical controls')
+    b.add_argument('--surface-fill', '--surface-fills', type=lambda value: 'metallic' if value in ('grey', 'gray') else value, choices=('none', 'metallic', 'material', 'textured', 'gradient'), default=None, nargs='?', const='material', help='HORS-V3 surfaces; SVG defaults to mapped source fills/strokes, other sources to wireframe')
+    b.add_argument('--fill-style', choices=('wireframe','solid','gradient','textured','metallic'), help='solid source colours, source-colour lighting ramps, image paint, one metallic ramp, or wireframe')
+    b.add_argument('--surface-texture',help='image mapped over an SVG silhouette; requires --surface-fill textured')
+    b.add_argument('--background-effect',type=lambda value:'starfield-forward' if value=='starfield' else value,
+                   choices=('none','starfield-forward'),default='none',help='optional RAM-resident forward-flight starfield; starfield is an alias')
+    b.add_argument('--starfield-default',type=lambda value:{'true':'enabled','false':'disabled'}.get(value.lower(),value.lower()),
+                   choices=('enabled','disabled'),help='initial starfield state; interactive defaults to disabled; overrides --background-effect state')
+    b.add_argument('--exhibition-default',choices=('enabled','disabled'),help='exhibition at startup; disabled unless selected; enabled starts with HUD/stars off')
+    b.add_argument('--exhibition-order',choices=('sequential','random'),help='auto-change order; sequential unless selected')
+    b.add_argument('--exhibition-interval',type=int,choices=range(5,61,5),metavar='SECONDS',help='auto-change interval: 5..60 seconds in steps of 5; default 5')
+    b.add_argument('--starfield-profile',choices=('light','full'),help='initial and F2-reset interactive star profile; full unless selected; independent of on/off state')
+    b.add_argument('--no-starfield','--no-include-starfield',dest='include_starfield',action='store_false',
+                   help='exclude starfield code, paths, sprites and Shift+S entirely; help/speed controls remain')
+    b.add_argument('--svg-presentation-modes',action='store_true',help='interactive SVG: solid/gradient and spin/crawl on one cart, 1..63 samples per mode; default 48')
+    b.add_argument('--svg-background-card',metavar='SVG',help='add solid spin/crawl modes from this background-painted SVG; six modes require 1..42 samples each')
+    b.add_argument('--svg-outline-variant',metavar='SVG',help='use this outlined SVG for gradient modes and add solid outlined spin/crawl; with a card, eight modes require 1..31 samples each')
+    b.add_argument('--surface-palette', type=palette_name, choices=tuple(SHADE_PALETTES), default='grey', help='metallic lighting hue in the fixed C64 palette; grey/gray/metallic aliases; requires native encoding')
+    b.add_argument('--surface-ramp', type=parse_ramp, help='custom metallic gradient: 2..16 comma-separated colours, dark to light, e.g. brown,orange,yellow,white; overrides --surface-palette')
+    b.add_argument('--surface-color-metric', choices=('perceptual', 'rgb'), default='perceptual', help='material/texture two-colour cell reduction: nearest weighted CIELAB (default), or legacy RGB error; metallic ramps keep their original shading')
     v3color=b.add_mutually_exclusive_group()
     v3color.add_argument('--v3-color-encoding', choices=('literal', 'indexed4'), default='literal', help='HORS-V3 colour plan: direct bytes (speed) or packed 4-bit pair dictionary (size)')
     v3color.add_argument('--compact-color-dictionary', '--compact-color-lookup', dest='v3_color_encoding', action='store_const', const='indexed4', help='HORS-V3: pack two colour-pair dictionary indices into each byte')
@@ -1264,7 +1386,7 @@ def make_parser(settings):
     b.add_argument('--camera',type=float,default=110.0)
     b.add_argument('--focal',type=float,default=180.0)
     b.add_argument('--margin',type=int,default=4)
-    b.add_argument('--max-fit-scale',type=float,default=1.4)
+    b.add_argument('--max-fit-scale',type=float,help='fit scale cap; SVG defaults to unrestricted fitting, other sources to 1.4')
     b.add_argument('--no-auto-fit',action='store_true')
     b.add_argument('--blend',help='evaluate an animated .blend scene through headless Blender')
     b.add_argument('--scene',help='compile an already exported .c643dscene file without launching Blender')
@@ -1275,13 +1397,18 @@ def make_parser(settings):
     b.add_argument('--output',help='output basename')
     b.add_argument('--output-dir',help='directory for PRG/LBL/LST outputs (default: build/)')
     overlay=b.add_mutually_exclusive_group()
-    overlay.add_argument('--text-overlay',dest='text_overlay',action='store_true',help='show object HUD and FPS counter')
-    overlay.add_argument('--no-text-overlay',dest='text_overlay',action='store_false',help='use separate no-overlay ASM and the full 200-line bitmap by default')
+    overlay.add_argument('--text-overlay','--show-hud',dest='text_overlay',action='store_true',help='show bottom object HUD and FPS counter (default)')
+    overlay.add_argument('--no-text-overlay','--hide-hud',dest='text_overlay',action='store_false',help='hide bottom HUD; V3 keeps its viewport; supported legacy PRG renderers use their separate 200-line no-overlay ASM')
+    b.add_argument('--hud-default','--default-info-text-mode',choices=('enabled','disabled'),help='initial bottom HUD visibility; overrides --show-hud/--hide-hud')
+    hud_toggle=b.add_mutually_exclusive_group()
+    hud_toggle.add_argument('--allow-hud-toggle',dest='allow_hud_toggle',action='store_true',default=None,help='include runtime HUD switches (default for V3 interactive carts)')
+    hud_toggle.add_argument('--no-hud-toggle','--no-allow-hud-toggle',dest='allow_hud_toggle',action='store_false',help='omit manual HUD toggle keys; exhibition still controls its own HUD visibility')
     b.set_defaults(text_overlay=settings.text_overlay)
     profiler=b.add_mutually_exclusive_group()
     profiler.add_argument('--rastertime-profiler',dest='rastertime_profiler',action='store_true',help='use derivative yunroll debug ASM that marks render CPU time in the border')
     profiler.add_argument('--no-rastertime-profiler',dest='rastertime_profiler',action='store_false',help=argparse.SUPPRESS)
     b.set_defaults(rastertime_profiler=settings.rastertime_profiler)
+    b.add_argument('--viewport-width',type=int,choices=(256,320),help='Blender/scene drawing width; .blend defaults to 320, .scene retains recorded width (legacy files: 256)')
     b.add_argument('--viewport-height',type=_viewport_height_arg,default=settings.viewport_height,metavar='LINES',help='drawable height, multiple of 8 from 8..200; default auto=192 with overlay, 200 without')
     b.add_argument('--overwrite-policy',choices=('allow','warn','error'),default=settings.overwrite_policy,help='existing output handling (built-in default: warn)')
     _add_toolchain_args(b,settings)
@@ -1375,7 +1502,7 @@ def make_parser(settings):
     launch=sub.add_parser('run-cart',help='launch an existing EasyFlash CRT with protected write-back and consistent startup options')
     _add_toolchain_args(launch,settings)
     launch.add_argument('crt',type=Path)
-    sub.add_parser('cart-stream',help='build a hors-render-v2 streamed EasyFlash CRT by default (same source flags as build)')
+    sub.add_parser('cart-stream',help='build a HORS-V3 streamed EasyFlash CRT by default (same source flags as build)')
     doc=sub.add_parser('doctor',help='check local 64tass/VICE and optional Blender/cartconv availability')
     _add_toolchain_args(doc,settings)
     sub.add_parser('list-shapes',help='list procedural/built-in shapes')

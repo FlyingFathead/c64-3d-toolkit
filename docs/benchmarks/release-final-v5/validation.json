@@ -1,0 +1,305 @@
+{
+  "passed": true,
+  "version": "0.7.9",
+  "revision": "release_final_v5",
+  "title": "The Golden Dragon & SAKU 2026",
+  "unit_tests": 272,
+  "unit_skipped": 3,
+  "startup_carts": 18,
+  "host_key_checks": 112,
+  "exhibition_checks": 106,
+  "space_intro_preserved": true,
+  "run_stop_help": true,
+  "starfield_default_saku": "light-enabled",
+  "starfield_default_other": "included-disabled-unless-overridden",
+  "exhibition": {
+    "keys": {
+      "5": "on/off",
+      "6": "sequence/random",
+      "7": "interval minus 5",
+      "8": "interval plus 5"
+    },
+    "interval_seconds": 5,
+    "interval_bounds": [
+      5,
+      60
+    ],
+    "enter_hud": false,
+    "enter_stars": false,
+    "manual_star_choice_preserved": true,
+    "additional_idle_input_cpu_cycles": 67,
+    "additional_inactive_irq_instructions": 0,
+    "packed_help_reserved_bytes": 1024
+  },
+  "input_flips": {
+    "passed": true,
+    "cases": [
+      {
+        "input": "obj",
+        "flags": [
+          "--flip-input-horizontal"
+        ],
+        "frames": 8,
+        "native_bitmap_color_and_hud_match": true,
+        "width": 256,
+        "exact_reflection": true
+      },
+      {
+        "input": "svg",
+        "flags": [
+          "--mirror-vertical"
+        ],
+        "frames": 8,
+        "native_bitmap_color_and_hud_match": true,
+        "width": 256,
+        "exact_reflection": true
+      },
+      {
+        "input": "shape",
+        "flags": [
+          "--mirror-horizontal",
+          "--flip-vertical"
+        ],
+        "frames": 8,
+        "native_bitmap_color_and_hud_match": true,
+        "width": 256,
+        "exact_reflection": true
+      },
+      {
+        "input": "preset",
+        "flags": [
+          "--flip-horizontal"
+        ],
+        "frames": 8,
+        "native_bitmap_color_and_hud_match": true,
+        "width": 256,
+        "exact_reflection": true
+      },
+      {
+        "input": "scene",
+        "flags": [
+          "--flip-input-vertical"
+        ],
+        "frames": 16,
+        "native_bitmap_color_and_hud_match": true,
+        "width": 320,
+        "exact_reflection": true
+      },
+      {
+        "input": "blend",
+        "flags": [
+          "--flip-horizontal"
+        ],
+        "width": 320,
+        "frames": 16,
+        "exact_reflection": true,
+        "native_bitmap_color_and_hud_match": true
+      },
+      {
+        "input": "interactive",
+        "flags": [
+          "--flip-horizontal"
+        ],
+        "width": 256,
+        "frames": 8,
+        "exact_reflection": true,
+        "native_bitmap_color_and_hud_match": true
+      }
+    ]
+  },
+  "blender_calibration": {
+    "viewport-test": {
+      "sha256": "91ebb44601e83232f81b6219a601bbb879c647892891e47382e5a92167a58f2e",
+      "native": {
+        "cartridge": "viewport-test.crt",
+        "menu_entry": null,
+        "verified_frames": 51,
+        "orientations": 16,
+        "bitmap_bytes_checked": 391680,
+        "color_bytes_checked": 48960,
+        "slots": {
+          "1": 17,
+          "2": 17,
+          "0": 17
+        },
+        "average_fps": 8.128895627986,
+        "min_frame_cycles": 94946,
+        "max_frame_cycles": 141937,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0,
+        "loop_seconds": 1.9788631897755693,
+        "target_fps": 10.0,
+        "hud_match": true,
+        "text_overlay": true,
+        "frame_index_bits": 16
+      },
+      "projection": {
+        "passed": true,
+        "blender": "4.0.2",
+        "frames": 16,
+        "vertices_checked": 4976,
+        "maximum_projection_error_pixels": 4.5909881009720266e-05,
+        "centre_error_normalized": 0.0,
+        "viewport": {
+          "width": 320,
+          "height": 192
+        },
+        "source": "viewport-test.blend"
+      }
+    },
+    "tracking-test": {
+      "sha256": "ebf9a6ea907451f11815503704198aee1356c95ae755a4d2a364cdaa45096a38",
+      "native": {
+        "cartridge": "tracking-test.crt",
+        "menu_entry": null,
+        "verified_frames": 51,
+        "orientations": 16,
+        "bitmap_bytes_checked": 391680,
+        "color_bytes_checked": 48960,
+        "slots": {
+          "1": 17,
+          "2": 17,
+          "0": 17
+        },
+        "average_fps": 8.06892749424343,
+        "min_frame_cycles": 85558,
+        "max_frame_cycles": 130297,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0,
+        "loop_seconds": 2.007327089220176,
+        "target_fps": 10.0,
+        "hud_match": true,
+        "text_overlay": true,
+        "frame_index_bits": 16
+      },
+      "projection": {
+        "passed": true,
+        "blender": "4.0.2",
+        "frames": 16,
+        "vertices_checked": 4976,
+        "maximum_projection_error_pixels": 2.7362385594642546e-05,
+        "centre_error_normalized": 2.9802322387695312e-08,
+        "viewport": {
+          "width": 320,
+          "height": 192
+        },
+        "source": "tracking-test.blend"
+      }
+    }
+  },
+  "viewport_default_blend": [
+    320,
+    192
+  ],
+  "legacy_scene_width": 256,
+  "canonical_comparison_passed": true,
+  "physical_hardware_tested": false,
+  "saku_cartridge": {
+    "name": "SAKU 2026",
+    "hardware_id": 32,
+    "chip_packets": 55,
+    "reset_address": 57344,
+    "roml_packets": 54,
+    "romh_packets": 1,
+    "internal_name": "73616b75203230323600000000000000",
+    "eapi_present": true
+  },
+  "rom_used_bytes": 450560,
+  "rom_free_bytes": 598016,
+  "cartridge_comparison": {
+    "changed": [
+      "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-indexed4-interactive.crt",
+      "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-interactive.crt",
+      "examples/saku_2026/cartridges/saku_2026-interactive.crt"
+    ],
+    "unchanged": [
+      "examples/blender_falling_cubes/falling_cubes_c64-hors-render-v2.crt",
+      "examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v2.crt",
+      "examples/cart_demos/c643d-demo-v0.7.2-hors-render-v2-all-ram.crt",
+      "examples/cart_demos/c643d-demo-v0.7.2-hors-render-v2-all.crt",
+      "examples/cart_demos/c643d-demo-v0.7.3-hors-render-v2-all-ram.crt",
+      "examples/cart_demos/c643d-demo-v0.7.3-hors-render-v2-all.crt",
+      "examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all-ram.crt",
+      "examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all.crt",
+      "examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all-ram.crt",
+      "examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all.crt",
+      "examples/cart_demos/c643d-demo-v0.7.6-hors-render-v2-all-ram.crt",
+      "examples/cart_demos/c643d-demo-v0.7.6-hors-render-v2-all.crt",
+      "examples/cart_demos/c643d-demo-v0.7.7-hors-render-v2-all-ram.crt",
+      "examples/cart_demos/c643d-demo-v0.7.7-hors-render-v2-all.crt",
+      "examples/cart_demos/c643d-demo-v0.7.8-hors-render-v2-all-ram.crt",
+      "examples/cart_demos/c643d-demo-v0.7.8-hors-render-v2-all.crt",
+      "examples/cart_demos/c643d-demo-v0.7.9-hors-render-v2-all-ram.crt",
+      "examples/cart_demos/c643d-demo-v0.7.9-hors-render-v2-all.crt",
+      "examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt",
+      "examples/cart_hifi/c643d-hifi-v0.7.2-hors-render-v2.crt",
+      "examples/cart_hifi/c643d-hifi-v0.7.4-hors-render-v2.crt",
+      "examples/cart_hifi/c643d-hifi-v0.7.5-hors-render-v2.crt",
+      "examples/cart_hifi/c643d-hifi-v0.7.6-hors-render-v2.crt",
+      "examples/cart_hifi/c643d-hifi-v0.7.7-hors-render-v2.crt",
+      "examples/cart_hifi/c643d-hifi-v0.7.8-hors-render-v2.crt",
+      "examples/cart_hifi/c643d-hifi-v0.7.9-hors-render-v2.crt",
+      "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-ram.crt",
+      "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt",
+      "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt",
+      "examples/color_combo_test/color-combo-test.crt",
+      "examples/cube/cube-hors-render-v2.crt",
+      "examples/demos_sande/sande_pretzel-hors-render-v2-color.crt",
+      "examples/demos_sande/sande_pretzel-hors-render-v2-interactive.crt",
+      "examples/demos_sande/sande_pretzel-hors-render-v2.crt",
+      "examples/demos_sande/sande_tac2-hors-render-v2-color.crt",
+      "examples/demos_sande/sande_tac2-hors-render-v2-interactive.crt",
+      "examples/demos_sande/sande_tac2-hors-render-v2.crt",
+      "examples/hifi_showcase/horse_head_hifi-hors-render-v2.crt",
+      "examples/hors_v3_preview/cartridges/sande_pretzel-surface-dither-128-v3.crt",
+      "examples/hors_v3_preview/cartridges/sande_pretzel-surface-material-128-v3.crt",
+      "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-indexed4.crt",
+      "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3.crt",
+      "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128.crt",
+      "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-192-v3-indexed4.crt",
+      "examples/hors_v3_preview/cartridges/sande_pretzel-surface-textured-128-v3.crt",
+      "examples/hors_v3_preview/cartridges/sande_pretzel-wire-bw-128-v3.crt",
+      "examples/hors_v3_preview/cartridges/sande_pretzel-wire-bw-128.crt",
+      "examples/horse_head/horse_head-hors-render-v2.crt",
+      "examples/saku_2026/cartridges/saku_2026-gradient.crt",
+      "examples/saku_2026/cartridges/saku_2026-solid.crt",
+      "examples/space_horse_crawl/space_horse_crawl_color-hors-render-v2.crt",
+      "examples/space_horse_spin/space_horse_spin_color-hors-render-v2.crt",
+      "examples/sphere/sphere-hors-render-v2.crt",
+      "examples/stanford_dragon/cartridges/stanford_dragon-blue-hors-v3.crt",
+      "examples/stanford_dragon/cartridges/stanford_dragon-golden-hors-v3.crt",
+      "examples/stanford_dragon/cartridges/stanford_dragon-green-hors-v3.crt",
+      "examples/stanford_dragon/cartridges/stanford_dragon-metallic-hors-v3.crt",
+      "examples/stanford_dragon/cartridges/stanford_dragon-red-hors-v3.crt",
+      "examples/stanford_dragon/cartridges/stanford_dragon-wireframe-hors-v3.crt",
+      "examples/sunflower_torus/sunflower_torus-hors-render-v2.crt",
+      "examples/sunflower_torus/sunflower_torus_color-hors-render-v2.crt",
+      "examples/torus/torus-hors-render-v2.crt",
+      "examples/torus_dense/torus_dense-hors-render-v2.crt"
+    ],
+    "baseline": "c64-3d-toolkit-v0.7.9-release_final_v4.zip",
+    "added": [
+      "examples/blender_viewport_test/cartridges/viewport-test.crt",
+      "examples/blender_viewport_test/cartridges/tracking-test.crt"
+    ]
+  },
+  "evidence": {
+    "unit": "unit.txt",
+    "startup": "startup.json",
+    "saku": "saku.json",
+    "interactive-options": "interactive-options.json",
+    "host-keys": "host-keys.json",
+    "dragon": "dragon.json",
+    "exhibition": "exhibition.json",
+    "exhibition-cli": "exhibition-cli.json",
+    "input-flips": "input-flips.json"
+  },
+  "scope": "Three rebuilt interactive carts, two new full-width Blender calibration carts, 63 prior CRTs unchanged from final v4. Native input/page/exhibition/flip/viewport checks, 18 cold boots, SAKU and Dragon validation, full uncapped renderer comparison. Historical baseline scenes retain 256-pixel framing.",
+  "media_fix_validation": "../release-final-v5-media-fix/validation.json"
+}

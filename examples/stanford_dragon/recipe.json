@@ -84,6 +84,18 @@
         "--v3-color-encoding",
         "literal"
       ]
+    },
+    {
+      "id": "golden",
+      "stem": "stanford_dragon-golden-hors-v3",
+      "arguments": [
+        "--surface-fill",
+        "metallic",
+        "--surface-ramp",
+        "brown,orange,yellow,white",
+        "--v3-color-encoding",
+        "literal"
+      ]
     }
   ]
 }

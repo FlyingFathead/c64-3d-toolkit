@@ -8,7 +8,7 @@
 > release layout; superseded outputs are now outside the checkout in
 > `../c64-3d-toolkit-history/`, when that optional archive is available.
 
-Download the changes ZIP and checksum file to `~/NeuralNetwork/`.
+Download the changes ZIP and checksum file to `~/c64-work/`.
 The changes ZIP contains paths relative to `c64-3d-toolkit/`; the full ZIP has
 its own `c64-3d-toolkit-v0.6.9/` top-level directory for a fresh unpack.
 
@@ -24,7 +24,7 @@ any local edits to files that the overlay updates:
 ```bash
 (
 set -euo pipefail
-cd ~/NeuralNetwork
+cd ~/c64-work
 sha256sum --ignore-missing -c c64-3d-toolkit-v0.6.9-final-SHA256SUMS.txt
 
 tar -czf "c64-3d-toolkit-before-v0.6.9-$(date +%Y%m%d-%H%M%S).tar.gz" \
@@ -40,7 +40,7 @@ git status --short
 )
 
 x64sc -pal +easyflashcrtwrite -cartcrt \
-  ~/NeuralNetwork/c64-3d-toolkit/examples/cart_demos/history/c643d-demo-v0.6.9-yunroll-cart-v9-all.crt
+  ~/c64-work/c64-3d-toolkit/examples/cart_demos/history/c643d-demo-v0.6.9-yunroll-cart-v9-all.crt
 ```
 
 **ONLY use normal PLAY ALL for A/B comparisons between rendering methods and
@@ -53,7 +53,7 @@ The old comparison cartridge stays at:
 
 ```bash
 x64sc -pal +easyflashcrtwrite -cartcrt \
-  ~/NeuralNetwork/c64-3d-toolkit/examples/cart_demos/history/c643d-demo-v0.6.8-yunroll-cart-v8-all.crt
+  ~/c64-work/c64-3d-toolkit/examples/cart_demos/history/c643d-demo-v0.6.8-yunroll-cart-v8-all.crt
 ```
 
 The [V9 guide](CARTRIDGE_STREAM_V9.md) includes measurements, limits and
@@ -68,7 +68,7 @@ The delivered package does not push or publish automatically. Once satisfied:
 ```bash
 (
 set -euo pipefail
-cd ~/NeuralNetwork/c64-3d-toolkit
+cd ~/c64-work/c64-3d-toolkit
 test "$(cat VERSION)" = "0.6.9"
 test "$(git branch --show-current)" = "main"
 gh auth status

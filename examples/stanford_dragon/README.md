@@ -1,10 +1,18 @@
 # Stanford Dragon: HORS-V3
 
-Five standalone EasyFlash demos in **v0.7.8: The Stanford Dragon Has Arrived!**: wireframe and the metallic (grey), red, green and blue shaded surfaces. All use Stanford's official res4 mesh: **5,205 vertices, 15,796 edges and 11,102 triangles**, with **128 orientations** and `--prefer fps`.
+Six standalone EasyFlash demos, introduced in **v0.7.8: The Stanford Dragon Has Arrived!** and rebuilt for **v0.7.9**: wireframe and metallic (grey), golden, red, green and blue shaded surfaces. All use Stanford's official res4 mesh: **5,205 vertices, 15,796 edges and 11,102 triangles**, with **128 orientations** and `--prefer fps`.
 
 Model data: **Stanford University Computer Graphics Laboratory**. [Original source, usage terms and conversion provenance](SOURCE.md).
 
-## Five-way showcase
+## Golden Dragon — new in v0.7.9
+
+[Download the golden cart](cartridges/stanford_dragon-golden-hors-v3.crt)
+
+![Stanford Dragon with golden surface shading](previews/stanford_dragon-golden-hors-v3.gif)
+
+The custom ramp runs from brown through orange and yellow to white.
+
+## Original five-way showcase
 
 One complete rotation each: **wireframe → metallic (grey) → red → green → blue**, with the measured PAL timing of each cartridge.
 
@@ -54,10 +62,18 @@ python c643d.py build --renderer hors-renderer-v3 \
   --obj examples/stanford_dragon/stanford_dragon.obj --frames 128 \
   --surface-fill grey
 
-# Shaded surface in red; substitute green or blue.
+# Shaded surface in red; any native colour family is available.
 python c643d.py build --renderer hors-renderer-v3 \
   --obj examples/stanford_dragon/stanford_dragon.obj --frames 128 \
   --surface-fill metallic --surface-palette red
+
+# Gold: custom shading with the showcase camera and all 128 orientations.
+python c643d.py build --obj examples/stanford_dragon/stanford_dragon.obj \
+  --obj-up y --spin-axis y --frames 128 --rotate-y 20 --keep-winding \
+  --visibility surface --camera 110 --focal 180 --margin 6 --max-fit-scale 1.4 \
+  --prefer fps --background-color black --border-color black --text-overlay \
+  --surface-fill metallic --surface-ramp brown,orange,yellow,white \
+  --output stanford_dragon-golden-hors-v3 --run
 ```
 
 | Palette | Darkest shade → brightest highlight |
@@ -66,34 +82,32 @@ python c643d.py build --renderer hors-renderer-v3 \
 | red | brown → red → light red → white |
 | green | dark grey → green → light green → white |
 | blue | blue → light blue → cyan → white |
+| custom gold | brown → orange → yellow → white |
+
+**v0.7.9 adds all native hue families and custom gradients.** The original five looks remain available. The golden variant is also prebuilt in v0.7.9. [All colour ramps and custom stops](../../docs/HORS_V3_DEFAULTS_CHECKPOINT.md).
 
 All ramps also preserve black silhouette pixels. They colour the generated surface shading; `--surface-fill textured` continues to use the original `map_Kd` image. Coloured ramps require native encoding; black/white dithering remains available with grey. Auto-generated filenames include a non-grey palette suffix, so the different looks have distinct output names.
 
 ## Performance
 
-PAL VICE 3.10, stock C64 timing: 985,248 CPU cycles/second and 19,656 cycles/refresh. Measurement follows 134 warmup pictures and observes 1,504 PAL refreshes, approximately 30 seconds. Emulator Warp only accelerates the offline test; the reported FPS and GIF timings use emulated PAL time.
+PAL VICE 3.10, stock timing: 985,248 cycles/s and 19,656 cycles/refresh. Each cart uses 128 orientations and a 1,504-refresh observation window after warmup. Display FPS counts actual buffer flips. Bold marks the highest rate in each column; ties use the shown precision. These different surface appearances are not identical-picture optimization candidates.
 
-| Measurement | Wireframe | Metallic (grey) | Red | Green | Blue |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Average displayed FPS | **20.00** | **15.13** | **15.10** | **15.13** | **15.13** |
-| Fastest observed interval, as FPS | 50.12 | 25.06 | 25.06 | 25.06 | 25.06 |
-| Slowest observed interval, as FPS | 16.71 | 12.53 | 12.53 | 12.53 | 12.53 |
-| Longest picture hold | 59.85 ms | 79.80 ms | 79.80 ms | 79.80 ms | 79.80 ms |
-| Observed holds (PAL refreshes) | 1–3 | 2–4 | 2–4 | 2–4 | 2–4 |
-| Display-buffer flips in the window | 600 | 454 | 453 | 454 | 454 |
-| Single-turn GIF | 6.44 s | 8.48 s | 8.48 s | 8.46 s | 8.48 s |
-| CRT file (bytes) | 303,760 | 361,216 | 353,008 | 361,216 | 361,216 |
-| Encoded frame data (bytes) | 233,306 | 279,935 | 277,791 | 279,215 | 280,945 |
+| Surface | Average displayed FPS | High FPS | Low FPS | Longest hold (ms) | Frame ROM bytes | CRT bytes |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| wireframe | **20.00** | **50.12** | **16.71** | 59.85 | 233,306 | 303,760 |
+| metallic | 15.13 | 25.06 | 12.53 | 79.80 | 279,935 | 361,216 |
+| red | 15.10 | 25.06 | 12.53 | 79.80 | 277,791 | 353,008 |
+| green | 15.13 | 25.06 | 12.53 | 79.80 | 279,215 | 361,216 |
+| blue | 15.13 | 25.06 | 12.53 | 79.80 | 280,945 | 361,216 |
+| golden | 15.13 | 25.06 | 12.53 | 79.80 | 280,195 | 361,216 |
 
-All five use 128 orientations, a 896-byte frame directory, an 8,192-byte frame staging buffer and a 3,072-byte metadata cache. The combined showcase contains 640 pictures and lasts **40.34 seconds**.
+All 6 carts retain the complete source mesh. Each has an 896-byte frame directory, 8,192-byte staging buffer and 3,072-byte metadata cache, in addition to graphics, code and other state. The original five-way showcase remains 640 pictures and 40.32 seconds; the golden GIF is separate.
 
-The fastest/slowest values describe individual picture holds, not sustained throughput. They are calculated from PAL refresh counts, avoiding interrupt-entry timing jitter. Listed staging/cache/directory RAM is only part of the runtime footprint; the renderer also uses its three bitmap/screen buffers, code and other state.
-
-HORS-V3 precomputes projection, visibility and metallic lighting on the host. The C64 executes cartridge-streamed bitmap and colour updates. All five demos start automatically and loop; these are the automatic variants without interactive direction controls.
+The high/low rates describe individual display holds, not sustained throughput. GIF delays follow the actual PAL display sequence with cumulative centisecond rounding. All these carts start automatically and loop.
 
 ## Validation
 
-- 259 completed pictures checked per cart: two full turns plus three buffer-reuse samples, **1,295 total**.
+- 259 completed pictures checked per cart: two full turns plus three buffer-reuse samples, **1,554 total**.
 - Every bitmap and colour byte matched the independent host oracle across all three buffers.
 - All 128 orientations also appeared in the actual display-buffer measurements; HUD, VIC bank selection and black border/background passed.
 - EasyFlash mapper ID 32, reset vectors, CHIP packets, PETSCII name and the exact bundled EasyAPI payload passed validation.

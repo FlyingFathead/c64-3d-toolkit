@@ -1,0 +1,185 @@
+{
+  "experimental": false,
+  "preset": "gradient",
+  "encoding": "native",
+  "color_mapping": "nearest VIC-II palette; weighted CIELAB (0.5 L squared + a squared + b squared)",
+  "cell_mapping": "weighted CIELAB error; two colours per cell",
+  "frames": 48,
+  "fit_scale": 1.3487742218351921,
+  "triangles": 4156,
+  "lighting": "flat Blinn-Phong; each nearest source colour selects its native hue ramp",
+  "native_limit": "two colours per 8x8 cell; black preserved at silhouettes",
+  "host_rasterized": true,
+  "runtime_triangle_lighting": false,
+  "uniform_material_fast_path": false,
+  "svg": {
+    "source": "saku_2026-white-outline.svg",
+    "source_sha256": "b677acfafd950ec322b76b1ab67a32f857228a37d42ad1c8683cccb024ad87dc",
+    "baker": "CairoSVG",
+    "baker_version": "2.9.1",
+    "raster_size": [
+      512,
+      95
+    ],
+    "background_rectangles_removed": 0,
+    "outlines_only": false,
+    "resources": [],
+    "warnings": [],
+    "crop": [
+      2,
+      3,
+      506,
+      93
+    ],
+    "texture_size": [
+      504,
+      90
+    ],
+    "alpha_threshold": 128,
+    "opaque_texels": 18814,
+    "cap_rectangles": 415,
+    "wall_quads": 1248,
+    "depth": 3.0,
+    "geometry": "disjoint alpha-mask rectangles and boundary walls; no hole-filling fan",
+    "opacity": "binary coverage at threshold; partial paint composited on black",
+    "source_rgb_colors": 496,
+    "override_color": null,
+    "mapped_colors": [
+      {
+        "c64_index": 0,
+        "c64_color": "black",
+        "texels": 9872
+      },
+      {
+        "c64_index": 1,
+        "c64_color": "white",
+        "texels": 3464
+      },
+      {
+        "c64_index": 2,
+        "c64_color": "red",
+        "texels": 4150
+      },
+      {
+        "c64_index": 11,
+        "c64_color": "dark_gray",
+        "texels": 297
+      },
+      {
+        "c64_index": 12,
+        "c64_color": "gray",
+        "texels": 403
+      },
+      {
+        "c64_index": 15,
+        "c64_color": "light_gray",
+        "texels": 628
+      }
+    ]
+  },
+  "source_color_ramps": {
+    "black": [
+      11,
+      11,
+      12,
+      15
+    ],
+    "white": [
+      12,
+      15,
+      1,
+      1
+    ],
+    "red": [
+      2,
+      2,
+      10,
+      1
+    ],
+    "cyan": [
+      6,
+      14,
+      3,
+      1
+    ],
+    "purple": [
+      6,
+      4,
+      10,
+      1
+    ],
+    "green": [
+      11,
+      5,
+      13,
+      1
+    ],
+    "blue": [
+      6,
+      14,
+      3,
+      1
+    ],
+    "yellow": [
+      9,
+      8,
+      7,
+      1
+    ],
+    "orange": [
+      9,
+      8,
+      7,
+      1
+    ],
+    "brown": [
+      9,
+      9,
+      8,
+      7
+    ],
+    "light_red": [
+      2,
+      10,
+      15,
+      1
+    ],
+    "dark_gray": [
+      11,
+      11,
+      12,
+      15
+    ],
+    "gray": [
+      11,
+      12,
+      15,
+      1
+    ],
+    "light_green": [
+      5,
+      13,
+      7,
+      1
+    ],
+    "light_blue": [
+      6,
+      14,
+      3,
+      1
+    ],
+    "light_gray": [
+      12,
+      15,
+      1,
+      1
+    ]
+  },
+  "animation": {
+    "modes": [
+      "spin"
+    ],
+    "samples_per_mode": 48,
+    "total_samples": 48
+  }
+}

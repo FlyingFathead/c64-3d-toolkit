@@ -9,7 +9,7 @@
 > `../c64-3d-toolkit-history/`, when that optional archive is available.
 
 Download `c64-3d-toolkit-v0.6.8-rc1-changes.zip` and the checksum file into
-`~/NeuralNetwork/`. The changes ZIP has flat paths relative to the project root.
+`~/c64-work/`. The changes ZIP has flat paths relative to the project root.
 It contains additions and updates only: no deletion list and no cleanup step.
 Every existing renderer and shipped CRT/PRG is preserved. The full ZIP contains
 a separate `c64-3d-toolkit-v0.6.8-rc1/` top-level directory for a fresh checkout.
@@ -23,7 +23,7 @@ where they are. Do not run `clean_release.py` as part of this update.
 ```bash
 (
 set -euo pipefail
-cd ~/NeuralNetwork
+cd ~/c64-work
 sha256sum --ignore-missing -c c64-3d-toolkit-v0.6.8-rc1-SHA256SUMS.txt
 
 tar -czf "c64-3d-toolkit-before-v0.6.8-rc1-$(date +%Y%m%d-%H%M%S).tar.gz" \
@@ -38,7 +38,7 @@ git status --short
 )
 
 x64sc -pal +easyflashcrtwrite -cartcrt \
-  ~/NeuralNetwork/c64-3d-toolkit/examples/cart_demos/c643d-demo-v0.6.8-rc1-yunroll-cart-v8-all.crt
+  ~/c64-work/c64-3d-toolkit/examples/cart_demos/c643d-demo-v0.6.8-rc1-yunroll-cart-v8-all.crt
 ```
 
 The packaged unit tests include byte-for-byte preservation checks against the
@@ -50,7 +50,7 @@ For direct comparison, the old cart stays at:
 
 ```bash
 x64sc -pal +easyflashcrtwrite -cartcrt \
-  ~/NeuralNetwork/c64-3d-toolkit/examples/cart_demos/history/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt
+  ~/c64-work/c64-3d-toolkit/examples/cart_demos/history/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt
 ```
 
 No automatic Git commit, tag, push or release publication is included. The

@@ -1,115 +1,109 @@
-> Current default: **hors-render-v2**. [Release build and example migration](RELEASE_0.7.2.md).
+# SVG artwork in HORS-V3
 
-# SVG pipeline
-
-`c64-3d-toolkit` can import SVG vector artwork and turn it into wire geometry that uses the same host compiler and selectable C64 backends as OBJ/procedural meshes.
-v0.7.2 defaults to hors-render-v2 EasyFlash output; `--renderer yunroll` selects
-the preserved resident PRG vector renderer.
-
-## Basic use
+`build --svg artwork.svg` uses HORS-V3 by default. It preserves the painted
+fills **and strokes**, holes, proportions and local transforms, fits the whole
+rotation inside the viewport, and maps source paint to the nearest C64 colour.
+Painted canvas rectangles are retained; transparent page margins are cropped.
+No geometry or animation samples are silently reduced to make a cart fit.
 
 ```bash
-./build.sh import-svg path/to/logo.svg --as logo
-./build.sh --object logo --run
+python c643d.py build --svg artwork.svg
+python c643d.py build --svg artwork.svg --fill-style gradient
+python c643d.py build --svg artwork.svg --svg-outlines-only
+python c643d.py build --svg artwork.svg --svg-no-colors
+python c643d.py build --svg artwork.svg --svg-override-with-color cyan
+python c643d.py build --svg artwork.svg --svg-override-with-color yellow --fill-style gradient
 ```
 
-One-off build without adding a preset:
+| Option | Behaviour |
+| --- | --- |
+| Default / `--fill-style solid` | Preserve mapped source fills and strokes |
+| `--fill-style gradient` | Nearest source colour selects its Dragon-style lighting ramp |
+| `--svg-outlines-only` | Ignore fills, retain mapped strokes; fill-only shapes receive white one-unit contours |
+| `--svg-no-colors` | Solid white artwork on black, including outlines; holes remain transparent |
+| `--svg-override-with-color COLOR` | One flat colour for all paint; combine with an explicit gradient style to shade that hue |
+| `--fill-style wireframe` | Historical simplified vector/extrusion importer |
+| `--fill-style textured --surface-texture IMAGE` | Map an image over the SVG silhouette |
+| `--fill-style metallic --surface-palette gold` | Use one lighting family throughout the artwork |
+| `--surface-ramp brown,orange,yellow,white` | Custom dark-to-light metallic ramp; use with metallic style |
+| `--include-svg-background-color true` | Keep painted canvas rectangles (default); accepts true/false, yes/no, on/off, 1/0 |
+| `--include-svg-background-color false` / `--svg-drop-background` | Remove direct, untransformed full-canvas rectangles, including 100% width/height; no guesswork on arbitrary background shapes |
+| `--svg-depth 0` | Flat, two-sided artwork; default depth is 5 toolkit units |
+| `--svg-texture-size 1024` | Host paint resolution, longest side; default 512, range 16–2048 |
+| `--svg-alpha-threshold 128` | Binary geometry coverage threshold, 1–255 |
+| `--margin 4` | Viewport fitting margin; `--max-fit-scale` optionally caps enlargement |
+
+`--no-svg-color-mapping` aliases `--svg-no-colors`.
+`--override-svg-color` aliases `--svg-override-with-color`.
+Colours accept C64 names/indices and the usual RGB notation. RGB overrides are
+also mapped to the fixed palette. Black source paint stays black in solid mode;
+choose a contrasting background when necessary. The black family's gradient
+uses neutral grey shades, making it visible against black space.
+
+The gradient style uses the same flat lighting model and hue ramps as the
+[Stanford Dragon](../examples/stanford_dragon/README.md). It changes the lighting
+of each source colour; it does not replace all source colours with one hue.
+SVG-authored gradients/patterns are painted before palette reduction, so they
+also work with solid style. Source and final cell mapping use the same weighted
+CIELAB distance (half-weighted squared L, plus squared a and b).
+
+## Host dependencies and fidelity
 
 ```bash
-./build.sh --svg path/to/logo.svg --name LOGO --run
+python -m pip install -r requirements-svg.txt
 ```
 
-The bundled reference asset is `objects/space_horse.svg`.
+CairoSVG requires the Cairo library. On Ubuntu, install `libcairo2`; on Windows,
+install a Cairo runtime as described by [CairoSVG](https://cairosvg.org/documentation/)
+and make its DLLs available to Python. The wireframe importer does not need
+CairoSVG. PyMuPDF is needed only to reproduce the supplied SAKU PDF extraction.
+
+The host paints SVG through CairoSVG, then builds disjoint rectangles and
+boundary walls from the alpha mask. This preserves concave shapes and holes
+without filling them with triangle fans. Source vector art remains included;
+the cartridge itself receives precomputed bitmap and colour spans.
+
+This is a C64 interpretation, with explicit limits: 256×192 model viewport,
+16 palette colours, two colours per 8×8 hires cell, and binary transparency.
+Partial opacity is composited on black before matching. Features smaller than a
+screen pixel can disappear as they rotate. A larger host texture can improve
+sampling but cannot remove these VIC-II limits. Antialiasing at paint boundaries
+can introduce intermediate mapped colours.
+
+CairoSVG handles common SVG paths, CSS paint, strokes, gradients, clips, and
+local/embedded images. It has [documented SVG support limits](https://cairosvg.org/svg_support/).
+Filters, scripts, foreignObject and animation are rejected by this static
+importer. Outline-only mode requires vector shapes. Text uses installed fonts;
+convert lettering to paths for portable results. Remote resources must first be
+downloaded or embedded. Missing resources fail the build. Resource hashes,
+paint resolution, warnings, crop, palette histogram and geometry counts are
+recorded in `*-surface.json`.
+
+## Interactive logo presentations
 
 ```bash
-./build.sh --object space_horse --run
-./build.sh --object space_horse_crawl --run
+python c643d.py build --svg artwork.svg --fill-style gradient \
+  --frames 48 --interactive-cart --svg-presentation-modes \
+  --background-effect starfield-forward
 ```
 
-## Geometry conversion
+This packs solid-spin, gradient-spin, solid-crawl and gradient-crawl into one
+cart, starting with gradient spin. There are 1–63 samples per mode; ROM capacity
+is checked without silently dropping samples. `--svg-background-card card.svg` adds a solid white-card spin/crawl pair, and `--svg-outline-variant outlined.svg` supplies the gradient artwork plus a solid outlined spin/crawl pair. Six modes allow up to 42 samples each; eight allow 31. SAKU explicitly uses 30, with all eight looks in one cart. Card sources retain their painted backgrounds, and only the transparent outlined source receives white contours. Shift+B selects the card and Shift+O selects solid outlines; Shift+R preserves the selected look while changing motion.
 
-SVG is not triangulated as a filled 2-D shape. Instead, the importer:
+See the complete
+[SAKU keyboard map](../examples/saku_2026/README.md) and
+[starfield implementation](STARFIELD.md). The SAKU source has transparent page
+space already removed, original black/red paint, and eight genuine vector paths.
 
-1. parses common SVG paths/primitives;
-2. applies basic SVG transforms;
-3. flattens curves/arcs into polylines;
-4. simplifies those polylines with a geometric tolerance;
-5. converts SVG Y-down coordinates to toolkit Y-up coordinates;
-6. stores contours as explicit wire edges;
-7. optionally duplicates the contours in Z and adds sparse front/back connectors for a shallow wire extrusion.
+Every new HORS-V3 interactive build waits for SPACE at the original intro,
+shows a separate `press SHIFT+H for help` row above the start prompt, and offers
+**RUN/STOP (Esc in VICE) or Shift+H** pause/help. `+`, `-` and `0` control angular speed. The starfield is
+included but disabled initially unless `--starfield-default enabled` is set;
+`--no-starfield` (alias `--no-include-starfield`) excludes its code/data and key
+binding entirely. These controls also apply to ordinary OBJ interactive builds.
 
-Keeping SVG contours as explicit wire edges is deliberate. Letter holes and concave logo shapes do not need unreliable fan triangulation merely to exist in the wireframe renderer.
-
-## Controls
-
-```text
---svg-tolerance N          simplification tolerance in SVG source units
---svg-curve-step N         curve sampling step before simplification
---svg-depth N              extrusion depth after toolkit normalisation; 0=flat
---svg-connector-stride N   connect every Nth front/back contour vertex
-```
-
-A higher simplification tolerance means fewer vertices/edges and less geometry to encode. Resident PRGs store frame
-tables in RAM; streamed cartridges store their encoded pictures in ROM. As with dense OBJ meshes, the C64 budget matters more than host-side parsing cost.
-
-## Animation transforms
-
-The generated frame table is no longer limited to a 360-degree spin. Available host-side transforms are:
-
-- `spin`: historical rotation around `--spin-axis`;
-- `recede`: keep the object front-facing and move it away from the camera;
-- `crawl`: rotate the object onto a fixed X-tilted virtual plane, then move it upward and away toward a horizon.
-
-```bash
-./build.sh --object space_horse --animation spin --run
-./build.sh --object space_horse --animation recede --run
-./build.sh --object space_horse --animation crawl \
-  --animation-tilt 62 --animation-travel 105 --animation-rise 42 --run
-```
-
-The animation is a finite precomputed orientation/pose sequence. hors-render-v2
-loops through independent pictures using batched direct-ROM byte spans. The
-preserved v1 backend has a vector fallback; v2 rejects pictures that exceed
-its literal-frame or metadata limits.
-The explicit resident PRG renderers rasterize the encoded lines on the C64.
-
-## SVG colours -> C64 hires colours
-
-`import-svg` inspects every visible contour, prefers its stroke over its fill, and maps the source RGB colour to the nearest entry in the 16-colour C64 palette. The source SPACE HORSE stroke is `#FFE81F`, which maps to C64 yellow; SVGs containing several colours retain their per-contour mappings.
-
-Override it with:
-
-```bash
-./build.sh --object space_horse --color white --run
-./build.sh --svg logo.svg --color 7 --run
-```
-
-`--color` forces a single foreground colour. Use `--no-colors` (also
-`--no-color`/`--ignore-colors`) for classic white-on-black output.
-
-VIC-II hires colours are selected per 8x8 cell. The host assigns each touched
-cell its dominant visible contour colour and emits ready-to-store screen-RAM
-bytes. This retains 320-pixel horizontal bitmap resolution; switching to VIC-II
-multicolour mode would halve it. The C64 does no RGB parsing or palette search.
-An SVG that maps to only one C64 colour uses the original global foreground byte,
-so it pays no per-frame colour-table cost.
-An SVG with no explicit usable stroke/fill colour likewise stays on the default
-white single-colour path.
-
-## Current SVG support
-
-Supported vector input includes:
-
-- paths using `M/L/H/V/C/S/Q/T/A/Z` (absolute and relative forms);
-- polyline/polygon;
-- line;
-- rectangle;
-- circle/ellipse;
-- inherited `fill`/`stroke` style for colour inference;
-- matrix/translate/scale/rotate/skew transforms.
-
-A full-canvas rectangle is treated as an exported-artwork background and ignored. Raster `<image>` content, masks, filters, gradients, text layout, clipping paths and CSS-heavy rendering are not interpreted. Convert text to paths before import when exact lettering matters.
-
-SVG geometry is currently contour/wire geometry, not a filled solid. A nonzero `--svg-depth` adds front/back contour copies and wire connectors, but the importer does not synthesize filled cap surfaces through glyph holes. The result is intentionally a see-through wire object rather than a filled extruded font solid.
-
-The importer is intentionally dependency-free and uses the Python standard library.
+Source-colour gradients keep red paint in the red family: native red for the
+two darkest levels, then light red and white. The VIC-II palette has no separate
+dark red. Explicit metallic overlays retain their established ramps, including
+the golden Dragon's yellow/orange/brown highlights and shadows.

@@ -1,0 +1,152 @@
+fps locking: not set
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   COMPARISON_WORKSPACE/source/build/marbles-clean-v5-stream-scene/main.asm
+Assembling file:   COMPARISON_WORKSPACE/source/build/marbles-clean-v5-stream-scene/generated/hud.inc
+Assembling file:   COMPARISON_WORKSPACE/source/build/marbles-clean-v5-stream-scene/generated/cart-v5-scene-helper.inc
+Assembling file:   COMPARISON_WORKSPACE/source/build/marbles-clean-v5-stream-scene/generated/tables.inc
+Assembling file:   COMPARISON_WORKSPACE/source/build/marbles-clean-v5-stream-scene/generated/intro.inc
+Output file:       COMPARISON_WORKSPACE/source/build/marbles-clean-v5-stream-scene/runtime.prg
+Data:       3643   $0801-$163b   $0e3b
+Gap:         196   $163c-$16ff   $00c4
+Data:       2304   $1700-$1fff   $0900
+Gap:        8192   $2000-$3fff   $2000
+Data:        112   $4000-$406f   $0070
+Gap:         144   $4070-$40ff   $0090
+Data:        387   $4100-$4282   $0183
+Gap:         125   $4283-$42ff   $007d
+Data:        256   $4300-$43ff   $0100
+Gap:        1024   $4400-$47ff   $0400
+Data:       2048   $4800-$4fff   $0800
+Gap:        3072   $5000-$5bff   $0c00
+Data:        115   $5c00-$5c72   $0073
+Gap:          13   $5c73-$5c7f   $000d
+Data:        734   $5c80-$5f5d   $02de
+Gap:        8354   $5f5e-$7fff   $20a2
+Data:       6573   $8000-$99ac   $19ad
+Gap:          83   $99ad-$99ff   $0053
+Data:        272   $9a00-$9b0f   $0110
+Passes:            3
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   COMPARISON_WORKSPACE/source/c64/cart/easyflash-scene-boot.asm
+Output file:       COMPARISON_WORKSPACE/source/build/marbles-clean-v5-stream-scene/boot.bin
+Data:       8192   $e000-$ffff   $2000
+Passes:            2
+Input file: COMPARISON_WORKSPACE/source/build/marbles-clean-v5-stream-scene/marbles-clean-v5.bin
+Output file: COMPARISON_WORKSPACE/scenes/marbles-clean-v5.crt
+Conversion from binary format to C64 EasyFlash .crt successful.
++ TOOLCHAIN/c64-tools/bin/cartconv -t easy -i COMPARISON_WORKSPACE/source/build/marbles-clean-v5-stream-scene/marbles-clean-v5.bin -o COMPARISON_WORKSPACE/scenes/marbles-clean-v5.crt -n DONT LOSE YOUR MARBLES
+--------------------------------------------------------------------------------
+Created: COMPARISON_WORKSPACE/scenes/marbles-clean-v5.crt
+ROM used: 417,792 bytes (408 KiB)
+Free ROM available on cart: 630,784 bytes (616 KiB)
+Free slots: ROML 120 KiB; ROMH 496 KiB
+Allocation: 8 KiB ROM slots; free slots may be on either ROML or ROMH.
+--------------------------------------------------------------------------------
+built COMPARISON_WORKSPACE/scenes/marbles-clean-v5.crt
+200 frames; 323159 encoded payload bytes; target 28.00s at 7.14286 FPS
+marbles-clean-v5 verified
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   COMPARISON_WORKSPACE/source/build/marbles-hud-v5-stream-scene/main.asm
+Assembling file:   COMPARISON_WORKSPACE/source/build/marbles-hud-v5-stream-scene/generated/hud.inc
+Assembling file:   COMPARISON_WORKSPACE/source/build/marbles-hud-v5-stream-scene/generated/cart-v5-scene-helper.inc
+Assembling file:   COMPARISON_WORKSPACE/source/build/marbles-hud-v5-stream-scene/generated/tables.inc
+Assembling file:   COMPARISON_WORKSPACE/source/build/marbles-hud-v5-stream-scene/generated/intro.inc
+Output file:       COMPARISON_WORKSPACE/source/build/marbles-hud-v5-stream-scene/runtime.prg
+Data:       3652   $0801-$1644   $0e44
+Gap:         187   $1645-$16ff   $00bb
+Data:       2304   $1700-$1fff   $0900
+Gap:        8192   $2000-$3fff   $2000
+Data:        112   $4000-$406f   $0070
+Gap:         144   $4070-$40ff   $0090
+Data:        387   $4100-$4282   $0183
+Gap:         125   $4283-$42ff   $007d
+Data:        256   $4300-$43ff   $0100
+Gap:        1024   $4400-$47ff   $0400
+Data:       2048   $4800-$4fff   $0800
+Gap:        3072   $5000-$5bff   $0c00
+Data:        115   $5c00-$5c72   $0073
+Gap:          13   $5c73-$5c7f   $000d
+Data:        734   $5c80-$5f5d   $02de
+Gap:        8354   $5f5e-$7fff   $20a2
+Data:       6573   $8000-$99ac   $19ad
+Gap:          83   $99ad-$99ff   $0053
+Data:        272   $9a00-$9b0f   $0110
+Passes:            3
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   COMPARISON_WORKSPACE/source/c64/cart/easyflash-scene-boot.asm
+Output file:       COMPARISON_WORKSPACE/source/build/marbles-hud-v5-stream-scene/boot.bin
+Data:       8192   $e000-$ffff   $2000
+Passes:            2
+Input file: COMPARISON_WORKSPACE/source/build/marbles-hud-v5-stream-scene/marbles-hud-v5.bin
+Output file: COMPARISON_WORKSPACE/scenes/marbles-hud-v5.crt
+Conversion from binary format to C64 EasyFlash .crt successful.
++ TOOLCHAIN/c64-tools/bin/cartconv -t easy -i COMPARISON_WORKSPACE/source/build/marbles-hud-v5-stream-scene/marbles-hud-v5.bin -o COMPARISON_WORKSPACE/scenes/marbles-hud-v5.crt -n DONT LOSE YOUR MARBLES
+--------------------------------------------------------------------------------
+Created: COMPARISON_WORKSPACE/scenes/marbles-hud-v5.crt
+ROM used: 417,792 bytes (408 KiB)
+Free ROM available on cart: 630,784 bytes (616 KiB)
+Free slots: ROML 120 KiB; ROMH 496 KiB
+Allocation: 8 KiB ROM slots; free slots may be on either ROML or ROMH.
+--------------------------------------------------------------------------------
+built COMPARISON_WORKSPACE/scenes/marbles-hud-v5.crt
+200 frames; 323159 encoded payload bytes; target 28.00s at 7.14286 FPS
+marbles-hud-v5 verified
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   COMPARISON_WORKSPACE/source/build/horse-sunflower-v5-stream-scene/main.asm
+Assembling file:   COMPARISON_WORKSPACE/source/build/horse-sunflower-v5-stream-scene/generated/hud.inc
+Assembling file:   COMPARISON_WORKSPACE/source/build/horse-sunflower-v5-stream-scene/generated/cart-v5-scene-helper.inc
+Assembling file:   COMPARISON_WORKSPACE/source/build/horse-sunflower-v5-stream-scene/generated/tables.inc
+Output file:       COMPARISON_WORKSPACE/source/build/horse-sunflower-v5-stream-scene/runtime.prg
+Data:       3622   $0801-$1626   $0e26
+Gap:         217   $1627-$16ff   $00d9
+Data:       2304   $1700-$1fff   $0900
+Gap:        8192   $2000-$3fff   $2000
+Data:        112   $4000-$406f   $0070
+Gap:         144   $4070-$40ff   $0090
+Data:        387   $4100-$4282   $0183
+Gap:         125   $4283-$42ff   $007d
+Data:        256   $4300-$43ff   $0100
+Gap:        1024   $4400-$47ff   $0400
+Data:       2048   $4800-$4fff   $0800
+Gap:        3072   $5000-$5bff   $0c00
+Data:        115   $5c00-$5c72   $0073
+Gap:       15757   $5c73-$99ff   $3d8d
+Data:        416   $9a00-$9b9f   $01a0
+Passes:            3
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   COMPARISON_WORKSPACE/source/c64/cart/easyflash-scene-boot.asm
+Output file:       COMPARISON_WORKSPACE/source/build/horse-sunflower-v5-stream-scene/boot.bin
+Data:       8192   $e000-$ffff   $2000
+Passes:            2
+Input file: COMPARISON_WORKSPACE/source/build/horse-sunflower-v5-stream-scene/horse-sunflower-v5.bin
+Output file: COMPARISON_WORKSPACE/scenes/horse-sunflower-v5.crt
+Conversion from binary format to C64 EasyFlash .crt successful.
++ TOOLCHAIN/c64-tools/bin/cartconv -t easy -i COMPARISON_WORKSPACE/source/build/horse-sunflower-v5-stream-scene/horse-sunflower-v5.bin -o COMPARISON_WORKSPACE/scenes/horse-sunflower-v5.crt -n HORSE AND SUNFLOWER
+--------------------------------------------------------------------------------
+Created: COMPARISON_WORKSPACE/scenes/horse-sunflower-v5.crt
+ROM used: 196,608 bytes (192 KiB)
+Free ROM available on cart: 851,968 bytes (832 KiB)
+Free slots: ROML 336 KiB; ROMH 496 KiB
+Allocation: 8 KiB ROM slots; free slots may be on either ROML or ROMH.
+--------------------------------------------------------------------------------
+built COMPARISON_WORKSPACE/scenes/horse-sunflower-v5.crt
+84 frames; 151073 encoded payload bytes; target 10.08s at 8.33333 FPS
+horse-sunflower-v5 verified

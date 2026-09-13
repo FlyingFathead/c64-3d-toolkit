@@ -17,7 +17,7 @@ class SurfaceFillTests(unittest.TestCase):
         return cli.make_parser(cli.load_toolchain_settings(None)).parse_args(['build', *args])
 
     def test_opt_in_and_spelling_alias(self):
-        self.assertEqual(self.parser().surface_fill, 'none')
+        self.assertIsNone(self.parser().surface_fill)  # source-specific default resolves at build dispatch
         self.assertEqual(self.parser('--surface-fill').surface_fill, 'material')
         self.assertEqual(self.parser('--surface-fills', 'metallic').surface_fill, 'metallic')
         self.assertEqual(self.parser('--compact-color-dictionary').v3_color_encoding, 'indexed4')
@@ -89,7 +89,7 @@ class SurfaceFillTests(unittest.TestCase):
         args=self.parser('--renderer','hors-render-v2','--surface-fill','metallic')
         with self.assertRaisesRegex(ValueError,'new HORS-V3'):
             cli.cmd_build(args)
-        args=self.parser('--compact-color-dictionary')
+        args=self.parser('--renderer','hors-render-v2','--compact-color-dictionary')
         with self.assertRaisesRegex(ValueError,'requires --renderer hors-renderer-v3'):
             cli.cmd_build(args)
 

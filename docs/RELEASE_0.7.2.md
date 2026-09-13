@@ -1,7 +1,7 @@
 # Compile, validate and install 0.7.2
 
-Linux checkout: `~/NeuralNetwork/c64-3d-toolkit`. Downloads and external results:
-`~/NeuralNetwork/`. Stable renderer name: `hors-render-v2`.
+Linux checkout: `~/c64-work/c64-3d-toolkit`. Downloads and external results:
+`~/c64-work/`. Stable renderer name: `hors-render-v2`.
 
 ## Apply the supplied complete or overlay ZIP
 
@@ -11,7 +11,7 @@ after extraction. Cleanup checks all replacement hashes first and preserves
 local old files outside the checkout.
 
 ```bash
-cd ~/NeuralNetwork
+cd ~/c64-work
 unzip -o c64-3d-toolkit-0.7.2-hors-v2-overlay.zip -d c64-3d-toolkit
 cd c64-3d-toolkit
 python3 tools/cleanup_examples.py --apply
@@ -30,7 +30,7 @@ Blender files and all historical renderer implementations remain in the repo.
 ## One-command release build
 
 ```bash
-cd ~/NeuralNetwork/c64-3d-toolkit
+cd ~/c64-work/c64-3d-toolkit
 JOBS=3 VICE_DATA=/usr/local/share/vice bash COMPILE-RELEASE.sh \
   --workspace ../c64-072-release-build
 ```

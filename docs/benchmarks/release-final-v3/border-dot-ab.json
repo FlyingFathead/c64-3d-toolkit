@@ -1,0 +1,64 @@
+{
+  "pre_fix_cartridge_sha256": "b7b5d817a9e1a862b1ecb33fb5d3976646dc4b4b52b54adf1ccfd88e9974c4c0",
+  "experiment": "In RAM, replace the four STA absolute colour-register opcodes in v3_display_colors with BIT absolute; both use four CPU cycles. Other instructions and input events unchanged.",
+  "before_observation": "Recorded from the completed pre-fix A/B run; original screenshots subsequently replaced by final host-key verification",
+  "method": "Inspect RGB pixels outside active bitmap in bottom border, y235..271 of 384x272 VIC screenshots",
+  "observations": [
+    {
+      "state": "stars-off",
+      "same_cycle_read_experiment": [],
+      "before": []
+    },
+    {
+      "state": "light-while-off",
+      "same_cycle_read_experiment": [],
+      "before": []
+    },
+    {
+      "state": "light-still-off",
+      "same_cycle_read_experiment": [],
+      "before": []
+    },
+    {
+      "state": "help-stars-off",
+      "same_cycle_read_experiment": [],
+      "before": []
+    },
+    {
+      "state": "help-closed-stars-off",
+      "same_cycle_read_experiment": [],
+      "before": [
+        [
+          296,
+          252,
+          [
+            205,
+            205,
+            205
+          ]
+        ]
+      ]
+    },
+    {
+      "state": "light-off",
+      "same_cycle_read_experiment": [],
+      "before": []
+    },
+    {
+      "state": "full-while-off",
+      "same_cycle_read_experiment": [],
+      "before": [
+        [
+          320,
+          245,
+          [
+            205,
+            205,
+            205
+          ]
+        ]
+      ]
+    }
+  ],
+  "final_fix_evidence": "host-keys.json"
+}

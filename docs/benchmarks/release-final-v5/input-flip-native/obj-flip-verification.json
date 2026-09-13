@@ -1,0 +1,21 @@
+{
+  "cartridge": "obj-flip.crt",
+  "menu_entry": null,
+  "verified_frames": 19,
+  "orientations": 8,
+  "bitmap_bytes_checked": 145920,
+  "color_bytes_checked": 18240,
+  "slots": {
+    "1": 7,
+    "2": 6,
+    "0": 6
+  },
+  "average_fps": 52.14147864589765,
+  "min_frame_cycles": 8433,
+  "max_frame_cycles": 32079,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0
+}

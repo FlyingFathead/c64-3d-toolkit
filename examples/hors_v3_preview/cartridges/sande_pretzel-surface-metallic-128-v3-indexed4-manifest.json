@@ -1341,13 +1341,51 @@
     "reused_vector_dispatch_page": [
       17152,
       17408
-    ]
+    ],
+    "clear_metadata_compacted_frames": 0
   },
   "runtime_work": "build/sande_pretzel-surface-metallic-128-v3-indexed4-stream-v10",
+  "build_screen": {
+    "version": "0.7.9",
+    "renderer": "hors-renderer-v3",
+    "wait_for_space": true,
+    "layout": "v0.7.8",
+    "screen_ram": [
+      1024,
+      2048
+    ],
+    "help_hint": null,
+    "help_row": null,
+    "start_row": 20,
+    "startup_only_ram": [
+      8192,
+      10240
+    ],
+    "extra_playback_RAM_bytes": 0,
+    "playback_cycle_cost": 0
+  },
+  "hud_visibility": {
+    "initial_info": true,
+    "initial_performance": true,
+    "toggle_allowed": false,
+    "code_ram": null,
+    "additional_reserved_RAM_bytes": 0,
+    "implementation": "fixed initial HUD state; no switching code",
+    "idle": "no toggle scanner",
+    "model_viewport_unchanged": true,
+    "measurements_continue_while_hidden": true
+  },
+  "background_effect": {
+    "name": "none",
+    "included": false,
+    "extra_reserved_RAM_bytes": 0
+  },
   "surface_fill": {
-    "experimental": true,
+    "experimental": false,
     "preset": "metallic",
     "encoding": "native",
+    "color_mapping": "nearest VIC-II palette; weighted CIELAB (0.5 L squared + a squared + b squared)",
+    "cell_mapping": "RGB shade error",
     "frames": 128,
     "fit_scale": 0.9548340649786405,
     "triangles": 3104,
@@ -1356,6 +1394,13 @@
     "host_rasterized": true,
     "runtime_triangle_lighting": false,
     "uniform_material_fast_path": false,
+    "animation": {
+      "modes": [
+        "spin"
+      ],
+      "samples_per_mode": 128,
+      "total_samples": 128
+    },
     "shade_palette": "grey",
     "shade_palette_indices": [
       0,
@@ -1363,6 +1408,7 @@
       12,
       15,
       1
-    ]
+    ],
+    "custom_ramp": false
   }
 }

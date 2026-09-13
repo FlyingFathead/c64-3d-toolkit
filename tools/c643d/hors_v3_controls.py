@@ -391,8 +391,16 @@ v3_display_colors:
         beq v3_display_normal
         dec v3_flash_ticks
         lda #1
+        cmp v3_applied_border
+        beq v3_flash_background
+        sta v3_applied_border
         sta $d020
+v3_flash_background:
+        cmp v3_applied_background
+        beq v3_flash_video
+        sta v3_applied_background
         sta $d021
+v3_flash_video:
         lda #$2b
         sta $d011
 v3_flash_done:
@@ -402,11 +410,22 @@ v3_display_normal:
         sta $d011
         ldx display_slot
         lda v3_slot_border,x
+        cmp v3_applied_border
+        beq v3_display_background
+        sta v3_applied_border
         sta $d020
+v3_display_background:
         lda v3_slot_background,x
+        cmp v3_applied_background
+        beq v3_display_colors_done
+        sta v3_applied_background
         sta $d021
 v3_display_colors_done:
         rts
+; Avoid repeated colour-register writes (8565 grey dots in the border).
+; Help saves/restores the actual registers and leaves these caches unchanged.
+v3_applied_border: .byte $ff
+v3_applied_background: .byte $ff
 
 v3_draw_label:
         ldx render_slot

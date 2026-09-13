@@ -1,5 +1,5 @@
 {
-  "sha256": "1fd50e7ba2b55e12bc2790efb8fc75bb68d0676e046ad3351935d5f1c0aaac16",
+  "sha256": "17f85dffc00705ce687b4135441407f42f8b19bf9b2de7de67cc82d3ae7f67d5",
   "keys": {
     "passed": true,
     "input_checks": 47,
@@ -26,17 +26,17 @@
   },
   "measurements": {
     "steady": {
-      "sha256": "1fd50e7ba2b55e12bc2790efb8fc75bb68d0676e046ad3351935d5f1c0aaac16",
+      "sha256": "17f85dffc00705ce687b4135441407f42f8b19bf9b2de7de67cc82d3ae7f67d5",
       "clock_hz": 985248,
       "refreshes": 1504,
-      "display_flips": 366,
-      "elapsed_cycles": 29563375,
-      "display_fps": 12.197550787080297,
-      "worst_display_ms": 104.02761538211699,
+      "display_flips": 363,
+      "elapsed_cycles": 29563729,
+      "display_fps": 12.097426004682967,
+      "worst_display_ms": 99.75559453051414,
       "hold_ticks": {
-        "4": 289,
-        "5": 57,
-        "3": 19
+        "4": 282,
+        "5": 64,
+        "3": 16
       },
       "cycle_period_pal_ticks": null,
       "initial_background": 6,
@@ -51,17 +51,17 @@
       "cycle_mean_seconds": null
     },
     "auto-50": {
-      "sha256": "1fd50e7ba2b55e12bc2790efb8fc75bb68d0676e046ad3351935d5f1c0aaac16",
+      "sha256": "17f85dffc00705ce687b4135441407f42f8b19bf9b2de7de67cc82d3ae7f67d5",
       "clock_hz": 985248,
       "refreshes": 1504,
-      "display_flips": 358,
-      "elapsed_cycles": 29562742,
-      "display_fps": 11.931193121395843,
-      "worst_display_ms": 103.70079411478125,
+      "display_flips": 356,
+      "elapsed_cycles": 29562620,
+      "display_fps": 11.864587374190785,
+      "worst_display_ms": 99.76878917795317,
       "hold_ticks": {
-        "4": 263,
-        "5": 81,
-        "3": 13
+        "5": 92,
+        "4": 251,
+        "3": 12
       },
       "cycle_period_pal_ticks": 50,
       "initial_background": 6,
@@ -73,23 +73,23 @@
       "nonblack_colors_preserved": true,
       "border_background_match": true,
       "hud_match": true,
-      "cycle_mean_seconds": 1.0352785361075152
+      "cycle_mean_seconds": 1.0345658439006509
     },
     "auto-1": {
-      "sha256": "1fd50e7ba2b55e12bc2790efb8fc75bb68d0676e046ad3351935d5f1c0aaac16",
+      "sha256": "17f85dffc00705ce687b4135441407f42f8b19bf9b2de7de67cc82d3ae7f67d5",
       "clock_hz": 985248,
       "refreshes": 1504,
-      "display_flips": 333,
-      "elapsed_cycles": 29562972,
-      "display_fps": 11.097922901662255,
+      "display_flips": 331,
+      "elapsed_cycles": 29562572,
+      "display_fps": 11.031417969992598,
       "worst_display_ms": 99.75660950339407,
       "hold_ticks": {
-        "5": 169,
-        "4": 163
+        "5": 178,
+        "4": 152
       },
       "cycle_period_pal_ticks": 1,
       "initial_background": 6,
-      "observed_palette_changes": 333,
+      "observed_palette_changes": 331,
       "unique_pictures_observed": 128,
       "picture_coverage_complete": true,
       "pixel_match": true,
@@ -97,7 +97,7 @@
       "nonblack_colors_preserved": true,
       "border_background_match": true,
       "hud_match": true,
-      "cycle_mean_seconds": 0.08995666114717078
+      "cycle_mean_seconds": 0.09056231158412538
     }
   },
   "passed": true

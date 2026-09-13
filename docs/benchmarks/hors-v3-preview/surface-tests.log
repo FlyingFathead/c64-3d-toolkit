@@ -1,0 +1,23 @@
+test_default_dispatch_does_not_call_surface_builder (test_surface_fill.SurfaceFillTests.test_default_dispatch_does_not_call_surface_builder) ... ok
+test_depth_wins_over_face_order_and_mtl_colors_survive (test_surface_fill.SurfaceFillTests.test_depth_wins_over_face_order_and_mtl_colors_survive) ... ok
+test_dither_uses_only_black_white_and_keeps_shade_order (test_surface_fill.SurfaceFillTests.test_dither_uses_only_black_white_and_keeps_shade_order) ... ok
+test_long_renderer_name_and_preview_alias_dispatch_identically (test_surface_fill.SurfaceFillTests.test_long_renderer_name_and_preview_alias_dispatch_identically) ... ok
+test_missing_material_uses_foreground_fallback (test_surface_fill.SurfaceFillTests.test_missing_material_uses_foreground_fallback) ... ok
+test_native_cell_limit_black_silhouette_and_packed_bytes (test_surface_fill.SurfaceFillTests.test_native_cell_limit_black_silhouette_and_packed_bytes) ... ok
+test_new_fill_flags_cannot_change_old_renderer_behavior (test_surface_fill.SurfaceFillTests.test_new_fill_flags_cannot_change_old_renderer_behavior) ... ok
+test_opt_in_and_spelling_alias (test_surface_fill.SurfaceFillTests.test_opt_in_and_spelling_alias) ... ok
+test_rejects_interactive_uniform_color_controls (test_surface_fill.SurfaceFillTests.test_rejects_interactive_uniform_color_controls) ... ok
+test_single_material_fast_path_has_no_color_updates (test_surface_fill.SurfaceFillTests.test_single_material_fast_path_has_no_color_updates) ... fps locking: not set
+Surface-fill raster: 1/1
+ok
+test_compact_dictionary_roundtrips_odd_cell_count (test_surface_textures.SurfaceTextureTests.test_compact_dictionary_roundtrips_odd_cell_count) ... ok
+test_compact_metadata_can_fit_when_literal_exceeds_cache (test_surface_textures.SurfaceTextureTests.test_compact_metadata_can_fit_when_literal_exceeds_cache) ... ok
+test_map_kd_uses_existing_nearest_palette_mapper_and_negative_uv_indices (test_surface_textures.SurfaceTextureTests.test_map_kd_uses_existing_nearest_palette_mapper_and_negative_uv_indices) ... ok
+test_perspective_correct_uvs (test_surface_textures.SurfaceTextureTests.test_perspective_correct_uvs) ... ok
+test_uv_origin_repeat_and_clamp (test_surface_textures.SurfaceTextureTests.test_uv_origin_repeat_and_clamp) ... ok
+test_v3_color_coverage_is_independent_of_reused_buffer_contents (test_surface_textures.SurfaceTextureTests.test_v3_color_coverage_is_independent_of_reused_buffer_contents) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.102s
+
+OK

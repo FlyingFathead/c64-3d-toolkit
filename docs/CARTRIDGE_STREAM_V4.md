@@ -148,7 +148,7 @@ The changed-files ZIP contains new/modified files and archived copies. Because
 unzip cannot remove obsolete paths, run the cleanup command afterwards:
 
 ```bash
-cd ~/NeuralNetwork/c64-3d-toolkit
+cd ~/c64-work/c64-3d-toolkit
 unzip -o ../c64-3d-toolkit-v0.6.5-corrected-changed-files.zip
 python tools/archive_old_carts.py
 ```

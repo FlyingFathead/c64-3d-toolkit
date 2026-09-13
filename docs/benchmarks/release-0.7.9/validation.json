@@ -1,0 +1,1415 @@
+{
+  "passed": true,
+  "version": "0.7.9",
+  "unit_tests": 272,
+  "unit_skipped": 3,
+  "v2_examples": {
+    "passed": true,
+    "cartridges": 25,
+    "checks": 55,
+    "verified_pictures": 10751,
+    "native_ending": {
+      "cartridge": "marbles-hors-render-v2-16fps-force-bytes.crt",
+      "finite_ending": true,
+      "greeting_correction_verified": true,
+      "basic_banner_verified": true,
+      "ghost_message_verified": true,
+      "idle_cursor_verified": true,
+      "seconds_from_reset": {
+        "0-intro_start": 0.5042507064211245,
+        "1-frame_begin": 9.645309607327292,
+        "2-outro_start": 51.14871382636656,
+        "3-greeting_oops": 53.74218673877034,
+        "4-greeting_done": 55.1786118824905,
+        "5-outro_credits_visible": 56.85870156549417,
+        "6-fake_basic_ready": 59.04353523173861,
+        "7-ghost_message_done": 63.31833609405957,
+        "8-ghost_idle": 63.318342183896846,
+        "9-ghost_idle": 64.31584332066647
+      },
+      "scene_seconds": 41.50340421903927,
+      "total_to_ghost_seconds": 63.31833609405957
+    },
+    "carts": [
+      {
+        "path": "examples/blender_falling_cubes/falling_cubes_c64-hors-render-v2.crt",
+        "sha256": "066abd40fe8111b975fcf894fae10176b82dfef8b131d02f90b322b1e66e479c"
+      },
+      {
+        "path": "examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v2.crt",
+        "sha256": "bf4cc9523be374eb6f73acc1fcf76f27bf54a41edc7f018805892ad852625f4a"
+      },
+      {
+        "path": "examples/cart_demos/c643d-demo-v0.7.9-hors-render-v2-all-ram.crt",
+        "sha256": "e3de5a70ede3ac1c86331fac4796cb69e8b3881ae4e0535a791aae615118b153"
+      },
+      {
+        "path": "examples/cart_demos/c643d-demo-v0.7.9-hors-render-v2-all.crt",
+        "sha256": "e260e0f03ab5eea398b65c0dd8ff2417ab756bec5e03cb8c78593be1fe667eb6"
+      },
+      {
+        "path": "examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt",
+        "sha256": "b36a5444541f5f04f99156cfda78210cc3dc34f7acfb0536f20275dc80b5032b"
+      },
+      {
+        "path": "examples/cart_hifi/c643d-hifi-v0.7.9-hors-render-v2.crt",
+        "sha256": "157be145a587e0c0a2ded1e0c684e9cefa5013f6db418107dd4ba3aa39ce9f2c"
+      },
+      {
+        "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-ram.crt",
+        "sha256": "08eae876f228d3be3c2a98a8f2afca8dbce299f68101b8d9656f82affa92a60c"
+      },
+      {
+        "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt",
+        "sha256": "7d5f0ebf35f821d0c9ec2b162bef73c0b4766359b9a6a0b3e88e7519d7cf045f"
+      },
+      {
+        "path": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt",
+        "sha256": "16bd2e65c5a643c477ea57ae6b4aa326d8a1bdfa63a12a70cf7e59163e95b2c3"
+      },
+      {
+        "path": "examples/cube/cube-hors-render-v2.crt",
+        "sha256": "0fbaf7d73cd7b1973d71cf4a3501ed34ed982dfd7ec8e3e718fa730979ea7cf9"
+      },
+      {
+        "path": "examples/demos_sande/sande_pretzel-hors-render-v2-color.crt",
+        "sha256": "b53b071240b63e1b59241f3074218bb56332059f5b67b095e2d960a54d0fc8b6"
+      },
+      {
+        "path": "examples/demos_sande/sande_pretzel-hors-render-v2-interactive.crt",
+        "sha256": "e2ee51c07d6b86f437470722105feb60cf4c4387e19bc9d52cd34f8c0cdacde6"
+      },
+      {
+        "path": "examples/demos_sande/sande_pretzel-hors-render-v2.crt",
+        "sha256": "ae0634a8aadb928dc4d3a9326d52b9d7b68c9d4a3327d9868c8eeaf163a49385"
+      },
+      {
+        "path": "examples/demos_sande/sande_tac2-hors-render-v2-color.crt",
+        "sha256": "99f7f82de654529f687a4cc49942d5f7108d4730184c67697d6eb864247cba27"
+      },
+      {
+        "path": "examples/demos_sande/sande_tac2-hors-render-v2-interactive.crt",
+        "sha256": "900dd2e03f3f639e87f079cc9140cba746f0689a42b36d18500be9768ab9ff94"
+      },
+      {
+        "path": "examples/demos_sande/sande_tac2-hors-render-v2.crt",
+        "sha256": "ae70cef831c58229f5e52e260c29494487282ba124a26b860c03c685537d6174"
+      },
+      {
+        "path": "examples/hifi_showcase/horse_head_hifi-hors-render-v2.crt",
+        "sha256": "869ca813d8de32a8db4d8a06f74775a616bfa5e32b344eb7a2a5df222be0d2d5"
+      },
+      {
+        "path": "examples/horse_head/horse_head-hors-render-v2.crt",
+        "sha256": "25717f9157f685c20ffcfcf331a73ee686b52daff0ef66d6d2e757614d663a3c"
+      },
+      {
+        "path": "examples/space_horse_crawl/space_horse_crawl_color-hors-render-v2.crt",
+        "sha256": "e20424401ff0f274029e7d7816545dd732237e27e797ab2af23048e15fda74df"
+      },
+      {
+        "path": "examples/space_horse_spin/space_horse_spin_color-hors-render-v2.crt",
+        "sha256": "e2ab49ea350585a9ee903abca6abb1b8b44259b3441e573a30ca25754843b38b"
+      },
+      {
+        "path": "examples/sphere/sphere-hors-render-v2.crt",
+        "sha256": "359a64bcd40935a112ef5f23978889fed9f451ad03397d55fd7b292113e5dc92"
+      },
+      {
+        "path": "examples/sunflower_torus/sunflower_torus-hors-render-v2.crt",
+        "sha256": "cb64ed7eb26c626eeb5d71ebd0efcf8068ace4b5a84cf439c294ed33ba9ff1c9"
+      },
+      {
+        "path": "examples/sunflower_torus/sunflower_torus_color-hors-render-v2.crt",
+        "sha256": "d212aa1ff56fe4972326a4b570054f59e685f0558525a7f0b7073866121042f7"
+      },
+      {
+        "path": "examples/torus/torus-hors-render-v2.crt",
+        "sha256": "d7db879b527b5846a5dbc98c0771e898272cdfc407dace5f2177c52103b5b0bc"
+      },
+      {
+        "path": "examples/torus_dense/torus_dense-hors-render-v2.crt",
+        "sha256": "94b693dcd572b56e750c6198bae8b626d27d77953a082361f5a6a493a44e6e00"
+      }
+    ]
+  },
+  "hors_v3_cartridges": 11,
+  "stanford_dragon_cartridges": 6,
+  "stanford_dragon_pictures": 1554,
+  "canonical_comparison_passed": true,
+  "physical_hardware_tested": false,
+  "default_renderer": "hors-renderer-v3",
+  "menu_renderer": "hors-render-v2",
+  "saku_checks": {
+    "keys": {
+      "passed": true,
+      "checks": 68,
+      "method": "VICE monitor injects sampled CIA row values; native scanners/handlers execute",
+      "shift_s_debounce": true,
+      "shift_t_g_r": true,
+      "foreground_hues": 16,
+      "function_keys": true,
+      "joystick_directions": true
+    },
+    "help": {
+      "passed": true,
+      "versioned_help_text": true,
+      "open_with_shift_h": true,
+      "close_with_space_and_shift_h": true,
+      "paused_machine_instructions": 20000,
+      "bitmap_buffers_preserved": 3,
+      "presentation_state_preserved": true,
+      "vic_restored": true
+    },
+    "density_keys": {
+      "passed": true,
+      "keys": 14,
+      "levels": [
+        2,
+        4,
+        8,
+        16,
+        24,
+        32
+      ],
+      "profile": "full",
+      "default": 16,
+      "number_keys_only_affect_density": true,
+      "speed_keys_only_affect_speed": true,
+      "keymap": {
+        "1": "reset",
+        "2": "more",
+        "3": "less"
+      },
+      "maximum_minimum_clamped": true,
+      "held_key_debounce": true,
+      "all_three_sprite_patterns": true
+    },
+    "hud_keys": {
+      "passed": true,
+      "checks": 11,
+      "native_key_scan": true,
+      "held_key_debounce": true,
+      "all_three_buffers": true,
+      "hidden_stays_hidden": true,
+      "hidden_speed_controls_work": true,
+      "restored_name_counts_and_fps": true,
+      "hidden_and_restored_interactive_label": true
+    },
+    "speed_keys": {
+      "passed": true,
+      "checks": 15,
+      "all_levels": true,
+      "reset": true,
+      "limit_feedback": true,
+      "held_key_debounce": true,
+      "message_pixels": true,
+      "red_minimum": true,
+      "white_red_maximum": true,
+      "expiry_all_buffers": true
+    },
+    "pictures": {
+      "pixel_match": true,
+      "color_match": true,
+      "frames": 288,
+      "all_samples": true,
+      "all_three_buffers": true,
+      "hue_and_background_combinations": 48
+    },
+    "instruction_costs": {
+      "stars-on": {
+        "min_cycles": 3686,
+        "max_cycles": 4219,
+        "mean_cycles": 3936.875,
+        "samples": 32,
+        "method": "VICE stopwatch between entry and final RTS, plus JSR/RTS; elapsed machine cycles"
+      },
+      "stars-off": {
+        "min_cycles": 32,
+        "max_cycles": 32,
+        "mean_cycles": 32.0,
+        "samples": 32,
+        "method": "VICE stopwatch between entry and final RTS, plus JSR/RTS; elapsed machine cycles"
+      },
+      "light-stars-on": {
+        "min_cycles": 1796,
+        "max_cycles": 1841,
+        "mean_cycles": 1818.9375,
+        "samples": 32,
+        "method": "VICE stopwatch between entry and final RTS, plus JSR/RTS; elapsed machine cycles"
+      },
+      "light-stars-off": {
+        "min_cycles": 32,
+        "max_cycles": 32,
+        "mean_cycles": 32.0,
+        "samples": 32,
+        "method": "VICE stopwatch between entry and final RTS, plus JSR/RTS; elapsed machine cycles"
+      },
+      "speed-poll-idle": {
+        "min_cycles": 218,
+        "max_cycles": 424,
+        "mean_cycles": 243.15625,
+        "samples": 32,
+        "method": "VICE stopwatch between entry and final RTS, plus JSR/RTS; elapsed machine cycles"
+      },
+      "effects-poll-idle": {
+        "min_cycles": 82,
+        "max_cycles": 125,
+        "mean_cycles": 86.03125,
+        "samples": 32,
+        "method": "VICE stopwatch between entry and final RTS, plus JSR/RTS; elapsed machine cycles"
+      }
+    },
+    "measurements": {
+      "gradient-stars": {
+        "mode": 1,
+        "stars": true,
+        "star_profile": "full",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          1
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": true,
+        "gif_pixels_verified": true,
+        "display_fps": 13.70228456617991,
+        "elapsed_cycles": 14740304,
+        "refreshes": 750,
+        "display_flips": 205,
+        "worst_display_ms": 82.58529832082887,
+        "hold_ticks": {
+          "3": 69,
+          "4": 135
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 8257,
+        "visible_star_pixel_samples": 11149,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 16,
+        "gif_source": "actual PAL VICE screenshots including hardware sprites"
+      },
+      "gradient-no-stars": {
+        "mode": 1,
+        "stars": false,
+        "star_profile": "full",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          1
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": true,
+        "gif_pixels_verified": false,
+        "display_fps": 18.11172194517471,
+        "elapsed_cycles": 14741956,
+        "refreshes": 750,
+        "display_flips": 271,
+        "worst_display_ms": 63.54339212056254,
+        "hold_ticks": {
+          "2": 64,
+          "3": 206
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 0,
+        "visible_star_pixel_samples": 0,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 16,
+        "gif_source": null
+      },
+      "solid-no-stars": {
+        "mode": 0,
+        "stars": false,
+        "star_profile": "full",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          0
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": true,
+        "gif_pixels_verified": false,
+        "display_fps": 18.44178586789467,
+        "elapsed_cycles": 14745234,
+        "refreshes": 750,
+        "display_flips": 276,
+        "worst_display_ms": 64.0691480723635,
+        "hold_ticks": {
+          "2": 78,
+          "3": 197
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 0,
+        "visible_star_pixel_samples": 0,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 16,
+        "gif_source": null
+      },
+      "solid-stars": {
+        "mode": 0,
+        "stars": true,
+        "star_profile": "full",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          0
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": true,
+        "gif_pixels_verified": false,
+        "display_fps": 14.37110792127531,
+        "elapsed_cycles": 14739874,
+        "refreshes": 750,
+        "display_flips": 215,
+        "worst_display_ms": 83.48760921108187,
+        "hold_ticks": {
+          "3": 110,
+          "4": 104
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 5760,
+        "visible_star_pixel_samples": 8543,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 16,
+        "gif_source": null
+      },
+      "gradient-crawl-stars": {
+        "mode": 3,
+        "stars": true,
+        "star_profile": "full",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          3
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": true,
+        "gif_pixels_verified": false,
+        "display_fps": 16.23929965193545,
+        "elapsed_cycles": 14742955,
+        "refreshes": 750,
+        "display_flips": 243,
+        "worst_display_ms": 83.81341550553769,
+        "hold_ticks": {
+          "3": 194,
+          "4": 33,
+          "2": 15
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 10811,
+        "visible_star_pixel_samples": 13781,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 16,
+        "gif_source": null
+      },
+      "solid-crawl": {
+        "mode": 2,
+        "stars": false,
+        "star_profile": "full",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          2
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": true,
+        "gif_pixels_verified": false,
+        "display_fps": 21.98592709521509,
+        "elapsed_cycles": 14743367,
+        "refreshes": 750,
+        "display_flips": 329,
+        "worst_display_ms": 63.3566371106564,
+        "hold_ticks": {
+          "2": 237,
+          "3": 91
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 0,
+        "visible_star_pixel_samples": 0,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 16,
+        "gif_source": null
+      },
+      "gradient-stars-cycle": {
+        "mode": 1,
+        "stars": true,
+        "star_profile": "full",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          1
+        ],
+        "auto_cycle": true,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": true,
+        "gif_pixels_verified": false,
+        "display_fps": 9.688964360029079,
+        "elapsed_cycles": 14744709,
+        "refreshes": 750,
+        "display_flips": 145,
+        "worst_display_ms": 142.33370684335316,
+        "hold_ticks": {
+          "4": 42,
+          "5": 52,
+          "6": 35,
+          "7": 15
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 8386,
+        "visible_star_pixel_samples": 11246,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 16,
+        "gif_source": null
+      },
+      "gradient-stars-hue": {
+        "mode": 1,
+        "stars": true,
+        "star_profile": "full",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          1
+        ],
+        "auto_cycle": false,
+        "foreground": 8,
+        "speed_level": 3,
+        "hud_visible": true,
+        "gif_pixels_verified": false,
+        "display_fps": 12.297347795201796,
+        "elapsed_cycles": 14741848,
+        "refreshes": 750,
+        "display_flips": 184,
+        "worst_display_ms": 102.82791743804606,
+        "hold_ticks": {
+          "3": 16,
+          "4": 137,
+          "5": 30
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 8320,
+        "visible_star_pixel_samples": 11191,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 16,
+        "gif_source": null
+      },
+      "card-spin": {
+        "mode": 4,
+        "stars": true,
+        "star_profile": "full",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          4
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": true,
+        "gif_pixels_verified": false,
+        "display_fps": 11.360835393527914,
+        "elapsed_cycles": 14742944,
+        "refreshes": 750,
+        "display_flips": 170,
+        "worst_display_ms": 121.37147195426938,
+        "hold_ticks": {
+          "4": 91,
+          "3": 5,
+          "5": 71,
+          "6": 2
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 2358,
+        "visible_star_pixel_samples": 4378,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 16,
+        "gif_source": null
+      },
+      "card-crawl": {
+        "mode": 5,
+        "stars": true,
+        "star_profile": "full",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          5
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": true,
+        "gif_pixels_verified": false,
+        "display_fps": 14.102135942430474,
+        "elapsed_cycles": 14741549,
+        "refreshes": 750,
+        "display_flips": 211,
+        "worst_display_ms": 101.83121406996005,
+        "hold_ticks": {
+          "4": 96,
+          "3": 105,
+          "5": 9
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 8614,
+        "visible_star_pixel_samples": 11368,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 16,
+        "gif_source": null
+      },
+      "outline-spin": {
+        "mode": 6,
+        "stars": true,
+        "star_profile": "full",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          6
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": true,
+        "gif_pixels_verified": false,
+        "display_fps": 13.699496395109264,
+        "elapsed_cycles": 14743304,
+        "refreshes": 750,
+        "display_flips": 205,
+        "worst_display_ms": 102.7020608009354,
+        "hold_ticks": {
+          "3": 78,
+          "4": 121,
+          "5": 5
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 3696,
+        "visible_star_pixel_samples": 6232,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 16,
+        "gif_source": null
+      },
+      "outline-crawl": {
+        "mode": 7,
+        "stars": true,
+        "star_profile": "full",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          7
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": true,
+        "gif_pixels_verified": false,
+        "display_fps": 15.306948764938099,
+        "elapsed_cycles": 14739828,
+        "refreshes": 750,
+        "display_flips": 229,
+        "worst_display_ms": 104.17681639546592,
+        "hold_ticks": {
+          "4": 61,
+          "3": 164,
+          "2": 2,
+          "5": 1
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 9240,
+        "visible_star_pixel_samples": 12050,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 16,
+        "gif_source": null
+      },
+      "gradient-light-stars": {
+        "mode": 1,
+        "stars": true,
+        "star_profile": "light",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          1
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": true,
+        "gif_pixels_verified": true,
+        "display_fps": 15.907979327478198,
+        "elapsed_cycles": 14740340,
+        "refreshes": 750,
+        "display_flips": 238,
+        "worst_display_ms": 82.44523206339926,
+        "hold_ticks": {
+          "2": 11,
+          "3": 180,
+          "4": 46
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 3034,
+        "visible_star_pixel_samples": 3034,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 8,
+        "gif_source": "actual PAL VICE screenshots including hardware sprites"
+      },
+      "card-light-stars": {
+        "mode": 4,
+        "stars": true,
+        "star_profile": "light",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          4
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": true,
+        "gif_pixels_verified": false,
+        "display_fps": 12.965507772801686,
+        "elapsed_cycles": 14742046,
+        "refreshes": 750,
+        "display_flips": 194,
+        "worst_display_ms": 102.24227808632953,
+        "hold_ticks": {
+          "3": 39,
+          "4": 144,
+          "5": 10
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 572,
+        "visible_star_pixel_samples": 572,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 8,
+        "gif_source": null
+      },
+      "crawl-light-stars": {
+        "mode": 3,
+        "stars": true,
+        "star_profile": "light",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          3
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": true,
+        "gif_pixels_verified": false,
+        "display_fps": 19.047377689262486,
+        "elapsed_cycles": 14741960,
+        "refreshes": 750,
+        "display_flips": 285,
+        "worst_display_ms": 81.20189028549157,
+        "hold_ticks": {
+          "3": 176,
+          "2": 107,
+          "4": 1
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 5298,
+        "visible_star_pixel_samples": 5298,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 8,
+        "gif_source": null
+      },
+      "outline-light-stars": {
+        "mode": 6,
+        "stars": true,
+        "star_profile": "light",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          6
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": true,
+        "gif_pixels_verified": false,
+        "display_fps": 16.24039461235856,
+        "elapsed_cycles": 14741961,
+        "refreshes": 750,
+        "display_flips": 243,
+        "worst_display_ms": 82.56804378187014,
+        "hold_ticks": {
+          "3": 192,
+          "2": 15,
+          "4": 35
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 844,
+        "visible_star_pixel_samples": 844,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 8,
+        "gif_source": null
+      },
+      "outline-crawl-light-stars": {
+        "mode": 7,
+        "stars": true,
+        "star_profile": "light",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          7
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": true,
+        "gif_pixels_verified": false,
+        "display_fps": 18.916448883694496,
+        "elapsed_cycles": 14739827,
+        "refreshes": 750,
+        "display_flips": 283,
+        "worst_display_ms": 79.83675176199291,
+        "hold_ticks": {
+          "3": 182,
+          "2": 99,
+          "4": 1
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 4498,
+        "visible_star_pixel_samples": 4498,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 8,
+        "gif_source": null
+      },
+      "slowest": {
+        "mode": 1,
+        "stars": true,
+        "star_profile": "full",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          1
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 0,
+        "hud_visible": true,
+        "gif_pixels_verified": false,
+        "display_fps": 2.02500904294,
+        "elapsed_cycles": 49140545,
+        "refreshes": 2500,
+        "display_flips": 101,
+        "worst_display_ms": 618.8249049985384,
+        "hold_ticks": {
+          "24": 81,
+          "25": 10,
+          "31": 9
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 27171,
+        "visible_star_pixel_samples": 36555,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 16,
+        "gif_source": null
+      },
+      "fastest": {
+        "mode": 1,
+        "stars": true,
+        "star_profile": "full",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          1
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 10,
+        "hud_visible": true,
+        "gif_pixels_verified": false,
+        "display_fps": 13.433414649979694,
+        "elapsed_cycles": 14741959,
+        "refreshes": 750,
+        "display_flips": 201,
+        "worst_display_ms": 100.32296437039203,
+        "hold_ticks": {
+          "3": 58,
+          "4": 141,
+          "5": 1
+        },
+        "orientations_seen": 15,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 8224,
+        "visible_star_pixel_samples": 11097,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 16,
+        "gif_source": null
+      },
+      "gradient-stars-hud-hidden": {
+        "mode": 1,
+        "stars": true,
+        "star_profile": "full",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          1
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": false,
+        "gif_pixels_verified": false,
+        "display_fps": 14.036928487690504,
+        "elapsed_cycles": 14739840,
+        "refreshes": 750,
+        "display_flips": 210,
+        "worst_display_ms": 83.85705933937446,
+        "hold_ticks": {
+          "3": 91,
+          "4": 118
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 8214,
+        "visible_star_pixel_samples": 11112,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 16,
+        "gif_source": null
+      },
+      "gradient-no-stars-hud-hidden": {
+        "mode": 1,
+        "stars": false,
+        "star_profile": "full",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          1
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": false,
+        "gif_pixels_verified": false,
+        "display_fps": 18.646385323630053,
+        "elapsed_cycles": 14741956,
+        "refreshes": 750,
+        "display_flips": 279,
+        "worst_display_ms": 63.32720289713859,
+        "hold_ticks": {
+          "2": 88,
+          "3": 190
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 0,
+        "visible_star_pixel_samples": 0,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 16,
+        "gif_source": null
+      },
+      "gradient-exhibition-active": {
+        "mode": 1,
+        "stars": false,
+        "star_profile": "full",
+        "exhibition": true,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          1
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": false,
+        "gif_pixels_verified": false,
+        "display_fps": 18.579546099735307,
+        "elapsed_cycles": 14741961,
+        "refreshes": 750,
+        "display_flips": 278,
+        "worst_display_ms": 63.719997401669424,
+        "hold_ticks": {
+          "2": 86,
+          "3": 191
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 0,
+        "visible_star_pixel_samples": 0,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 16,
+        "gif_source": null
+      },
+      "exhibition-tour": {
+        "mode": 1,
+        "stars": false,
+        "star_profile": "full",
+        "exhibition": true,
+        "exhibition_cycle": true,
+        "presentations_seen": [
+          1,
+          4,
+          6
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": false,
+        "gif_pixels_verified": true,
+        "display_fps": 17.2303529935779,
+        "elapsed_cycles": 15724762,
+        "refreshes": 800,
+        "display_flips": 275,
+        "worst_display_ms": 82.49090584299587,
+        "hold_ticks": {
+          "2": 59,
+          "3": 182,
+          "4": 33
+        },
+        "orientations_seen": 90,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 0,
+        "visible_star_pixel_samples": 0,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 16,
+        "gif_source": "actual PAL VICE screenshots including hardware sprites"
+      },
+      "gradient-stars-density-2": {
+        "mode": 1,
+        "stars": true,
+        "star_profile": "full",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          1
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": true,
+        "gif_pixels_verified": false,
+        "display_fps": 17.309723354948957,
+        "elapsed_cycles": 14741959,
+        "refreshes": 750,
+        "display_flips": 259,
+        "worst_display_ms": 83.35769268245153,
+        "hold_ticks": {
+          "2": 37,
+          "3": 212,
+          "4": 9
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 826,
+        "visible_star_pixel_samples": 1164,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 2,
+        "gif_source": null
+      },
+      "gradient-stars-density-8": {
+        "mode": 1,
+        "stars": true,
+        "star_profile": "full",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          1
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": true,
+        "gif_pixels_verified": false,
+        "display_fps": 14.9058427756322,
+        "elapsed_cycles": 14739878,
+        "refreshes": 750,
+        "display_flips": 223,
+        "worst_display_ms": 83.13642859462796,
+        "hold_ticks": {
+          "3": 143,
+          "4": 79
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 4314,
+        "visible_star_pixel_samples": 5786,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 8,
+        "gif_source": null
+      },
+      "gradient-stars-density-32": {
+        "mode": 1,
+        "stars": true,
+        "star_profile": "full",
+        "exhibition": false,
+        "exhibition_cycle": false,
+        "presentations_seen": [
+          1
+        ],
+        "auto_cycle": false,
+        "foreground": 0,
+        "speed_level": 3,
+        "hud_visible": true,
+        "gif_pixels_verified": false,
+        "display_fps": 12.096955056185111,
+        "elapsed_cycles": 14741717,
+        "refreshes": 750,
+        "display_flips": 181,
+        "worst_display_ms": 103.46126051511904,
+        "hold_ticks": {
+          "4": 114,
+          "3": 21,
+          "5": 45
+        },
+        "orientations_seen": 30,
+        "all_three_buffers": true,
+        "visible_pixel_and_colour_match": true,
+        "visible_star_samples": 13045,
+        "visible_star_pixel_samples": 18242,
+        "sprite_positions_match": true,
+        "sprite_occlusion": true,
+        "cartridge_unchanged": true,
+        "density": 32,
+        "gif_source": null
+      }
+    },
+    "plain": {
+      "solid": {
+        "cartridge": "saku_2026-solid.crt",
+        "menu_entry": null,
+        "verified_frames": 99,
+        "orientations": 48,
+        "bitmap_bytes_checked": 760320,
+        "color_bytes_checked": 95040,
+        "slots": {
+          "1": 33,
+          "2": 33,
+          "0": 33
+        },
+        "average_fps": 34.4280295493784,
+        "min_frame_cycles": 17912,
+        "max_frame_cycles": 33691,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 1
+      },
+      "gradient": {
+        "cartridge": "saku_2026-gradient.crt",
+        "menu_entry": null,
+        "verified_frames": 99,
+        "orientations": 48,
+        "bitmap_bytes_checked": 760320,
+        "color_bytes_checked": 95040,
+        "slots": {
+          "1": 33,
+          "2": 33,
+          "0": 33
+        },
+        "average_fps": 33.33209193654792,
+        "min_frame_cycles": 20231,
+        "max_frame_cycles": 33962,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0
+      }
+    },
+    "default_star_profile": "light",
+    "presentation_modes": {
+      "samples_per_mode": 30,
+      "initial_mode": 1,
+      "modes": [
+        "solid-spin",
+        "gradient-spin",
+        "solid-crawl",
+        "gradient-crawl",
+        "card-spin",
+        "card-crawl",
+        "outline-spin",
+        "outline-crawl"
+      ],
+      "source_backgrounds": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "variants": [
+        "card",
+        "outline"
+      ]
+    },
+    "passed": true,
+    "pal_vice": true,
+    "physical_hardware_tested": false,
+    "cartridge_sha256": "b4e821d5e8d2bfa321a8254f7be88405eb623a323886c66eb751c4c425ee29f1"
+  },
+  "hors_v3_default_checks": {
+    "passed": true,
+    "results": {
+      "default-cube": {
+        "cartridge": "default-cube.crt",
+        "menu_entry": null,
+        "verified_frames": 11,
+        "orientations": 8,
+        "bitmap_bytes_checked": 84480,
+        "color_bytes_checked": 10560,
+        "slots": {
+          "1": 4,
+          "2": 4,
+          "0": 3
+        },
+        "average_fps": 33.041722700489295,
+        "min_frame_cycles": 18671,
+        "max_frame_cycles": 33705,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0
+      },
+      "deform-180": {
+        "cartridge": "deform-180.crt",
+        "menu_entry": null,
+        "verified_frames": 183,
+        "orientations": 180,
+        "bitmap_bytes_checked": 1405440,
+        "color_bytes_checked": 175680,
+        "slots": {
+          "1": 61,
+          "2": 61,
+          "0": 61
+        },
+        "average_fps": 12.633322863989699,
+        "min_frame_cycles": 19274,
+        "max_frame_cycles": 81840,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0,
+        "loop_seconds": null,
+        "target_fps": 12.5,
+        "hud_match": true,
+        "text_overlay": true,
+        "frame_index_bits": 16
+      },
+      "textured": {
+        "cartridge": "textured.crt",
+        "menu_entry": null,
+        "verified_frames": 7,
+        "orientations": 4,
+        "bitmap_bytes_checked": 53760,
+        "color_bytes_checked": 6720,
+        "slots": {
+          "1": 3,
+          "2": 2,
+          "0": 2
+        },
+        "average_fps": 15.774315951264029,
+        "min_frame_cycles": 45187,
+        "max_frame_cycles": 70766,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0
+      },
+      "custom-gradient": {
+        "cartridge": "custom-gradient.crt",
+        "menu_entry": null,
+        "verified_frames": 11,
+        "orientations": 8,
+        "bitmap_bytes_checked": 84480,
+        "color_bytes_checked": 10560,
+        "slots": {
+          "1": 4,
+          "2": 4,
+          "0": 3
+        },
+        "average_fps": 9.625717350653309,
+        "min_frame_cycles": 73185,
+        "max_frame_cycles": 114652,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0,
+        "interactive_label_match": true
+      },
+      "purple-indexed": {
+        "cartridge": "purple-indexed.crt",
+        "menu_entry": null,
+        "verified_frames": 7,
+        "orientations": 4,
+        "bitmap_bytes_checked": 53760,
+        "color_bytes_checked": 6720,
+        "slots": {
+          "1": 3,
+          "2": 2,
+          "0": 2
+        },
+        "average_fps": 8.769647744720622,
+        "min_frame_cycles": 85836,
+        "max_frame_cycles": 126224,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0
+      },
+      "fragmented": {
+        "cartridge": "fragmented.crt",
+        "menu_entry": null,
+        "verified_frames": 11,
+        "orientations": 4,
+        "bitmap_bytes_checked": 84480,
+        "color_bytes_checked": 10560,
+        "slots": {
+          "1": 4,
+          "2": 4,
+          "0": 3
+        },
+        "average_fps": 7.343768051991225,
+        "min_frame_cycles": 88900,
+        "max_frame_cycles": 145924,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0,
+        "v2_error": "v2 metadata span count exceeds one byte: 384 clear spans, 384 colour spans (maximum 255 each per frame). This is not an animation-length limit; use --renderer hors-renderer-v3 for compact clear/shared colour metadata"
+      },
+      "custom-gradient-keys": {
+        "passed": true,
+        "input_checks": 47,
+        "f4_debounced": true,
+        "f3_unchanged": true,
+        "f5_start_stop": true,
+        "f6_f7_rates_and_clamps": true,
+        "f8_follow_black": true,
+        "ctrl_f7_custom": true,
+        "f2_reset": true
+      },
+      "custom-gradient-backgrounds": {
+        "passed": true,
+        "pictures_checked": 32,
+        "all_16_colors": true,
+        "all_three_buffers": true,
+        "nonblack_colors_preserved": true,
+        "bitmap_unchanged": true,
+        "hud_background": true,
+        "border_modes": true,
+        "visible_border_matches_buffer": true,
+        "all_256_lookup_values": true,
+        "f2_five_tick_white_flash": true
+      }
+    }
+  },
+  "revision": "release_final_v5",
+  "final_revision_validation": "../release-final-v5/validation.json",
+  "prior_legacy_evidence": "initial/validation.json",
+  "final_revision_scope": "Three rebuilt interactive carts, two new full-width Blender calibration carts, 63 prior CRTs unchanged from final v4. Native input/page/exhibition/flip/viewport checks, 18 cold boots, SAKU and Dragon validation, full uncapped renderer comparison. Historical baseline scenes retain 256-pixel framing."
+}

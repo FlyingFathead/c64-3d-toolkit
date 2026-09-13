@@ -13,7 +13,16 @@ from verify_cart_stream import labels, verify as verify_frames, render_ram
 ROOT=Path(__file__).resolve().parents[1]
 
 
-def run_monitor(crt,vice,vice_data,out,commands,limit):
+def run_monitor(crt,vice,vice_data,out,commands,limit,*,acknowledge_startup=True):
+    if acknowledge_startup:
+        from verify_cart_stream import startup_monitor
+        meta_path=Path(crt).with_name(Path(crt).stem+'-manifest.json')
+        label_path=Path(crt).with_suffix('.lbl')
+        if meta_path.exists() and label_path.exists():
+            startup,go=startup_monitor(json.loads(meta_path.read_text()),labels(label_path))
+            if startup and 'build_screen_return' in labels(label_path):
+                commands=[*startup,f'break ${labels(label_path)["build_screen_return"]:04x}',go,'delete',*commands]
+
     (out/'run.mon').write_text('\n'.join(commands+['quit'])+'\n')
     with (out/'vice.log').open('w') as log:
         p=subprocess.run([vice,'-console','-default','-pal','+sound','-warp','-seed','1',

@@ -97,6 +97,7 @@ def export_blend_scene(
     root: str | Path | None=None,
     blender_is_verified: bool=False,
     viewport_height: int=144,
+    viewport_width: int=320,
     max_frames: int=255,
     output_fps: int | None=None,
 ) -> Path:
@@ -109,6 +110,8 @@ def export_blend_scene(
         raise ValueError('--sample-step must be at least 1')
     if viewport_height<8 or viewport_height>200 or viewport_height%8:
         raise ValueError('viewport height must be a multiple of 8 from 8..200')
+    if viewport_width not in (256,320):
+        raise ValueError('viewport width must be 256 or 320')
     executable=str(blender) if blender_is_verified else require_blender(blender,system=system)[0]
     project_root=Path(root).resolve() if root else Path(__file__).resolve().parents[2]
     script=project_root/'tools'/'blender_export.py'
@@ -117,7 +120,7 @@ def export_blend_scene(
         executable,'--background','--disable-autoexec',str(source),
         '--python-exit-code','1','--python',str(script),'--',
         '--output',str(output),'--sample-step',str(sample_step),
-        '--viewport-height',str(viewport_height),'--max-frames',str(max_frames),
+        '--viewport-width',str(viewport_width),'--viewport-height',str(viewport_height),'--max-frames',str(max_frames),
     ]
     if output_fps is not None:
         if not 1 <= output_fps <= 50:

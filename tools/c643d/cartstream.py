@@ -43,7 +43,10 @@ def pack_frames(frames,colors=True,*,chip="roml",first_bank=FIRST_DATA_BANK,alia
         if aliases is not None and aliases[i] != i:
             directory.append(dict(directory[aliases[i]], frame=i, reference_frame=aliases[i]))
             continue
-        block,meta=encoder(frame,colors)
+        try:
+            block,meta=encoder(frame,colors)
+        except ValueError as exc:
+            raise ValueError(f'frame {i} (sample {i+1}/{len(frames)}): {exc}') from exc
         if offset+len(block)>FRAME_CAP:bank+=1;offset=0
         if bank>=64:raise ValueError('EasyFlash ROML capacity exceeded; reduce frame count or detail')
         start=easyflash_offset(bank,chip,offset);image[start:start+len(block)]=block
@@ -144,6 +147,7 @@ def assemble_cartridge(root,frames,mesh,*,tass,cartconv,outdir,stem,tass_args=()
     return crt,manifest
 
 def cmd_build_cart_v2(a):
+    from .input_flip import options as flip_options
     from . import cli
     from .pipeline import Camera,fit_scale,build_frames
     from .mesh import transform_mesh
@@ -165,7 +169,7 @@ def cmd_build_cart_v2(a):
     scale=fit_scale(mesh,n,cam,margin=a.margin,max_scale=a.max_fit_scale,spin_axis=axis,animation=anim,animation_tilt=tilt,animation_travel=travel,animation_rise=rise,height=height) if not a.no_auto_fit else 1
     mesh=transform_mesh(mesh,scale=scale)
     print(f'compiling {label}: {n} streamed frames, fit {scale:.4f}',flush=True)
-    frames,_=build_frames(mesh,n,cam,spin_axis=axis,visibility_mode=vis,z_tolerance=ztol,feature_angle=angle,animation=anim,animation_tilt=tilt,animation_travel=travel,animation_rise=rise,enable_source_colors=percell,fallback_color=c64_color_index(color),background_color=c64_color_index(getattr(a,"background_color",0)),height=height,max_visible_runs=65535)
+    frames,_=build_frames(mesh,n,cam,spin_axis=axis,visibility_mode=vis,z_tolerance=ztol,feature_angle=angle,animation=anim,animation_tilt=tilt,animation_travel=travel,animation_rise=rise,enable_source_colors=percell,fallback_color=c64_color_index(color),background_color=c64_color_index(getattr(a,"background_color",0)),height=height,max_visible_runs=65535,**flip_options(a))
     outdir=Path(a.output_dir).resolve() if a.output_dir else cli.BUILD
     stem=a.output or label.lower().replace(' ','_')+'-'+getattr(a,'public_renderer',a.renderer)+('-ram' if getattr(a,'prefer','fps') == 'ram' else '')
     if not a.output and getattr(a,'interactive_cart',False):stem+='-interactive'

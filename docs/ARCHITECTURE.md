@@ -28,11 +28,11 @@ interchange carries camera-space geometry into the same hidden-line, colour,
 DDA, table-emission, assembler, and C64 runtime used by legacy sources. The
 normal toolkit never imports `bpy`.
 
-OBJ data enters as polygon surfaces; `usemtl` assigns MTL `Kd` colours to faces. SVG data enters as explicit contour edges with per-contour stroke/fill colours: curves are flattened and simplified on the host, and an optional shallow Z extrusion can duplicate/connect those contours without pretending glyph holes are simple filled polygons.
+OBJ data enters as polygon surfaces; `usemtl` assigns MTL `Kd` colours to faces. SVG paint is rasterized on the host with its fills, strokes, holes and transparency, mapped to the C64 palette and projected onto the animation plane. Explicit wireframe mode retains the earlier contour/extrusion importer. [SVG fidelity and options](SVG_PIPELINE.md).
 
 ## C64 side
 
-The default hors-render-v2 backend receives host-precomputed pictures encoded
+The default hors-renderer-v3 backend receives host-precomputed pictures encoded
 as literal bitmap spans. It copies bounded groups from EasyFlash ROM into a
 hidden hires bitmap, reducing repeated mapping setup. It requires direct spans
 for every picture so it can reuse the vector-dispatch page. A frame that exceeds
@@ -49,7 +49,8 @@ about total free RAM. See [capacity](CARTRIDGE_CAPACITY.md) and
 
 Selectable backends include:
 
-- `hors-render-v2` / `hors-render-v2-scene`: current EasyFlash defaults;
+- `hors-renderer-v3` (alias `hors-render-v3`): current conversion default with surface colours and optional compact colour encoding;
+- `hors-render-v2` / `hors-render-v2-scene`: preserved conversion backends and comparison/menu default;
 - `hors-render-v1` / `hors-render-v1-scene` and beta1: preserved explicit backends;
 - `step`, `bytechunk`, `yunroll`: explicit resident PRG vector renderers;
 - preserved cartridge scaffold and V2–V9 stream/scene generations.

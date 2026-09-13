@@ -36,7 +36,10 @@ def pack_scene_frames(frames, colors=True, *, aliases=None, encoder=frame_block,
         if aliases is not None and aliases[i] != i:
             directory.append(dict(directory[aliases[i]], frame=i, reference_frame=aliases[i]))
             continue
-        block,meta=encoder(frame,colors)
+        try:
+            block,meta=encoder(frame,colors)
+        except ValueError as exc:
+            raise ValueError(f'scene frame {i} (sample {i+1}/{len(frames)}): {exc}') from exc
         if offset+len(block)>8192:
             place+=1; offset=0
         if place>=len(placements):
@@ -179,6 +182,7 @@ scene_continue:
     if optimization:
         manifest['optimization']=optimization
         if intro: manifest['build_screen']=dict(version=__version__,renderer=('hors-render-v1' if variant == 'v10' else f'yunroll-{variant}')+(' (ram)' if prefer == 'ram' else ''),ticks=None if variant == 'v10' else 150,skip_key='SPACE',wait_for_space=variant == 'v10')
+    manifest['viewport']=dict(width=getattr(scene,'viewport_width',256),height=192)
     if clearing: manifest['clearing']=clearing
     if joining: manifest['joining']=joining
     if output_fps is not None:
@@ -193,6 +197,7 @@ scene_continue:
 
 
 def cmd_build_cart_scene(a):
+    from .input_flip import options as flip_options
     from . import cli
     from .blender import export_blend_scene
     from .sceneio import load_scene
@@ -223,12 +228,16 @@ def cmd_build_cart_scene(a):
     if getattr(a,'public_renderer',None)=='hors-render-v1':a.public_renderer='hors-render-v1-scene'
     if a.blend:
         export=cli.BUILD/f'{stem}.c643dscene'
-        export_blend_scene(a.blend,export,blender=a.blender,frame_start=a.frame_start,frame_end=a.frame_end,sample_step=a.sample_step,root=cli.ROOT,viewport_height=192,max_frames=MAX_SCENE_FRAMES,output_fps=rate)
+        export_blend_scene(a.blend,export,blender=a.blender,frame_start=a.frame_start,frame_end=a.frame_end,sample_step=a.sample_step,root=cli.ROOT,viewport_height=192,viewport_width=getattr(a,'viewport_width',None) or 320,max_frames=MAX_SCENE_FRAMES,output_fps=rate)
     else:export=Path(a.scene)
     scene=load_scene(export)
+    width=getattr(a,'viewport_width',None) or scene.viewport_width
+    print(f'Scene drawing area: {width}x192; stored camera projection retained',flush=True)
+    from dataclasses import replace
+    scene=replace(scene,viewport_width=width)
     color,_,percell=cli._scene_color_policy(scene.mesh,a)
     print(f'compiling {len(scene.frames)} authored scene samples with {a.renderer} kernels...',flush=True)
-    frames,_=build_scene_frames(scene,visibility_mode='surface' if a.visibility=='auto' else a.visibility,z_tolerance=0.0008 if a.z_tolerance is None else a.z_tolerance,feature_angle=40 if a.feature_angle is None else a.feature_angle,enable_source_colors=percell,fallback_color=c64_color_index(color),background_color=c64_color_index(getattr(a,"background_color",0)),height=192,max_frames=MAX_SCENE_FRAMES,max_visible_runs=65535)
+    frames,_=build_scene_frames(scene,visibility_mode='surface' if a.visibility=='auto' else a.visibility,z_tolerance=0.0008 if a.z_tolerance is None else a.z_tolerance,feature_angle=40 if a.feature_angle is None else a.feature_angle,enable_source_colors=percell,fallback_color=c64_color_index(color),background_color=c64_color_index(getattr(a,"background_color",0)),height=192,width=width,max_frames=MAX_SCENE_FRAMES,max_visible_runs=65535,**flip_options(a))
     builder=assemble_scene
     beta_options={}
     if getattr(a,'public_renderer','').startswith('hors-render-v2-beta1'):
@@ -237,6 +246,10 @@ def cmd_build_cart_scene(a):
     if getattr(a,'public_renderer','') in ('hors-render-v2','hors-render-v2-scene'):
         from .hors_v2_stable import assemble_scene as builder
         beta_options=dict(draw_gap=getattr(a,'v2_draw_gap',6),batch_budget=getattr(a,'v2_batch_budget',2048))
+    if getattr(a, 'public_renderer', '') == 'hors-renderer-v3':
+        from .hors_v3 import assemble_scene as builder
+        beta_options = dict(draw_gap=a.v2_draw_gap, batch_budget=a.v2_batch_budget,
+                            color_encoding=a.v3_color_encoding)
     crt,_=builder(cli.ROOT,frames,scene,tass=tass,cartconv=cartconv,outdir=outdir,stem=stem,legacy_cart=getattr(a,"legacy_cart",False),hud_text=a.hud_text or scene.name[:31],frame_ticks=a.frame_ticks,tass_args=a.tass_args or (),colors=percell,color_index=c64_color_index(color),background_color=c64_color_index(getattr(a,"background_color",0)),border_color=c64_color_index(getattr(a,"border_color",0)),intro=a.intro,text_overlay=a.text_overlay,ending=a.ending,renderer=a.renderer,prefer=getattr(a,"prefer","fps"),output_fps=rate,**beta_options)
     if a.run:
         vice=cli.resolve_executable(a.vice,'vice')

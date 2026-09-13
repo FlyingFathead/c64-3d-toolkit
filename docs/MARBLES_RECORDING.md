@@ -1,4 +1,4 @@
-> Current default: **hors-render-v2**. [Release build and example migration](RELEASE_0.7.2.md).
+> Current conversion default: **hors-renderer-v3**. The comparison/menu builder retains V2. [v0.7.9 release notes](RELEASE_0.7.9.md).
 
 # Marbles recording start — 0.7.0
 

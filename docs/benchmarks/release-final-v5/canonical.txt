@@ -1,0 +1,5 @@
+Complete uncapped renderer comparison: all 28 jobs succeeded, 3 normal PLAY ALL visits.
+Refreshed for the promotional-video fingerprint correction.
+Input SHA-256: 6dde2d3bf99a5197c2a33e645196a06976974c494963aab655a52dedd94cb5c1
+Chart SHA-256: fa337336aff8d4f94c0a27a8ea5c3284dd2733d062b4504d808ee402277105cb
+Worker logs and provenance retain results/hashes; local absolute paths use symbolic roots.

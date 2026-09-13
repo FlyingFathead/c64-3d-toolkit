@@ -1322,13 +1322,51 @@
     "dynamic_screen_cells": 0,
     "color_updates": false,
     "old_color_reset_removed": false,
-    "previous_picture_dependency": false
+    "previous_picture_dependency": false,
+    "clear_metadata_compacted_frames": 0
   },
   "runtime_work": "build/sande_pretzel-surface-material-128-v3-stream-v10",
+  "build_screen": {
+    "version": "0.7.9",
+    "renderer": "hors-renderer-v3",
+    "wait_for_space": true,
+    "layout": "v0.7.8",
+    "screen_ram": [
+      1024,
+      2048
+    ],
+    "help_hint": null,
+    "help_row": null,
+    "start_row": 20,
+    "startup_only_ram": [
+      8192,
+      10240
+    ],
+    "extra_playback_RAM_bytes": 0,
+    "playback_cycle_cost": 0
+  },
+  "hud_visibility": {
+    "initial_info": true,
+    "initial_performance": true,
+    "toggle_allowed": false,
+    "code_ram": null,
+    "additional_reserved_RAM_bytes": 0,
+    "implementation": "fixed initial HUD state; no switching code",
+    "idle": "no toggle scanner",
+    "model_viewport_unchanged": true,
+    "measurements_continue_while_hidden": true
+  },
+  "background_effect": {
+    "name": "none",
+    "included": false,
+    "extra_reserved_RAM_bytes": 0
+  },
   "surface_fill": {
-    "experimental": true,
+    "experimental": false,
     "preset": "material",
     "encoding": "native",
+    "color_mapping": "nearest VIC-II palette; weighted CIELAB (0.5 L squared + a squared + b squared)",
+    "cell_mapping": "weighted CIELAB error; two colours per cell",
     "frames": 128,
     "fit_scale": 0.9548340649786405,
     "triangles": 3104,
@@ -1336,6 +1374,25 @@
     "native_limit": "two colours per 8x8 cell; black preserved at silhouettes",
     "host_rasterized": true,
     "runtime_triangle_lighting": false,
-    "uniform_material_fast_path": true
+    "uniform_material_fast_path": true,
+    "animation": {
+      "modes": [
+        "spin"
+      ],
+      "samples_per_mode": 128,
+      "total_samples": 128
+    },
+    "material_color_mapping": {
+      "Default": {
+        "source_rgb": [
+          51,
+          51,
+          51
+        ],
+        "c64_index": 11,
+        "c64_color": "dark_gray"
+      }
+    },
+    "texture_color_mapping": {}
   }
 }

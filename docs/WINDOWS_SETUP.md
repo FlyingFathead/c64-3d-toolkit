@@ -1,4 +1,4 @@
-> Current default: **hors-render-v2**. [Release notes and installation](RELEASE_0.7.3.md).
+> Current conversion default: **hors-renderer-v3**. The comparison/menu builder retains V2. [v0.7.9 release notes](RELEASE_0.7.9.md).
 
 # Windows setup
 

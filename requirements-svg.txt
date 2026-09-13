@@ -1,0 +1,4 @@
+# Optional host dependencies for filled SVG builds. Cairo must also be installed.
+CairoSVG>=2.9.1,<3
+Pillow>=10
+numpy>=1.24

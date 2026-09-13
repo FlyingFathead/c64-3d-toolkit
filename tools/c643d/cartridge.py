@@ -223,6 +223,24 @@ def convert_easyflash(*, cartconv: str, raw: Path, crt: Path, name: str, cwd: Pa
     command = [cartconv, '-t', 'easy', '-i', str(raw), '-o', str(crt), '-n', name]
     print('+', ' '.join(command))
     subprocess.run(command, cwd=cwd, check=True)
+    print_cart_summary(crt)
+
+
+def print_cart_summary(crt: Path) -> None:
+    """Report occupied 8 KiB ROM slots, excluding CRT packet/header overhead."""
+    import shutil
+    info = inspect_easyflash_crt(Path(crt))
+    used = info['chip_packets'] * EASYFLASH_CHIP_SIZE
+    free = EASYFLASH_RAW_SIZE - used
+    line = '-' * shutil.get_terminal_size(fallback=(80, 24)).columns
+    print(line)
+    print(f'Created: {Path(crt).resolve()}')
+    print(f'ROM used: {used:,} bytes ({used / 1024:g} KiB)')
+    print(f'Free ROM available on cart: {free:,} bytes ({free / 1024:g} KiB)')
+    print(f'Free slots: ROML {(64-info["roml_packets"])*8:g} KiB; '
+          f'ROMH {(64-info["romh_packets"])*8:g} KiB')
+    print('Allocation: 8 KiB ROM slots; free slots may be on either ROML or ROMH.')
+    print(line, flush=True)
 
 
 def validate_easyflash_info(info: str) -> None:
@@ -274,6 +292,8 @@ def inspect_easyflash_crt(crt: Path, *, require_metadata: bool = False) -> dict:
         raise ValueError('Generated cartridge does not contain the bundled real EasyAPI driver')
     return dict(name=data[32:64].split(b'\0')[0].decode('ascii', errors='replace'),
                 hardware_id=hardware, chip_packets=len(chips), reset_address=reset,
+                roml_packets=sum(address == 0x8000 for _, address in chips),
+                romh_packets=sum(address == 0xa000 for _, address in chips),
                 internal_name=internal_name[8:].hex() if internal_name[:8] == EASYFLASH_NAME_MAGIC else None,
                 eapi_present=romh[0x1800:0x1804] == b'eapi')
 

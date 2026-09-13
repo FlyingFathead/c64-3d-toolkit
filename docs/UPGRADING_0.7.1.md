@@ -12,14 +12,14 @@ Normal PLAY ALL and F5 keep their existing schedules. Current menus are:
 
 ## Apply the package
 
-Save `c64-3d-toolkit-v0.7.1.zip` in `~/NeuralNetwork/`, then extract from that
+Save `c64-3d-toolkit-v0.7.1.zip` in `~/c64-work/`, then extract from that
 parent directory. The ZIP contains the `c64-3d-toolkit/` tree and includes the
 previous documentation fix. Preserve any later local source edits before overlaying.
 
 ```bash
 (
 set -euo pipefail
-cd ~/NeuralNetwork
+cd ~/c64-work
 unzip -oq c64-3d-toolkit-v0.7.1.zip
 cd c64-3d-toolkit
 python perf/prune_old_examples.py

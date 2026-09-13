@@ -1,0 +1,45 @@
+fps locking: not set
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/c64-079-star-modes/checks/canonical-final/source/c64/cart/easyflash-demo-control-v9.asm
+Output file:       /tmp/c64-079-star-modes/checks/canonical-final/source/build/yunroll-cartridge-demo/yunroll-control.bin
+Data:        256   $0200-$02ff   $0100
+Passes:            3
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/c64-079-star-modes/checks/canonical-final/source/c64/cart/easyflash-menu-boot.asm
+Output file:       /tmp/c64-079-star-modes/checks/canonical-final/source/build/yunroll-cartridge-demo/yunroll-romh0.bin
+Data:       8192   $e000-$ffff   $2000
+Passes:            3
+Input file: /tmp/c64-079-star-modes/checks/canonical-final/source/build/yunroll-cartridge-demo/yunroll.bin
+Output file: /tmp/c64-079-star-modes/checks/canonical-final/carts/yunroll.crt
+Conversion from binary format to C64 EasyFlash .crt successful.
+fps locking: not set
+preflight: cartconv = /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/cartconv (cartconv (VICE 3.10))
++ /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/64tass -b --vice-labels -l /tmp/c64-079-star-modes/checks/canonical-final/source/build/yunroll-cartridge-demo/yunroll-control.lbl -L /tmp/c64-079-star-modes/checks/canonical-final/source/build/yunroll-cartridge-demo/yunroll-control.lst -o /tmp/c64-079-star-modes/checks/canonical-final/source/build/yunroll-cartridge-demo/yunroll-control.bin /tmp/c64-079-star-modes/checks/canonical-final/source/c64/cart/easyflash-demo-control-v9.asm
++ /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/64tass -b --vice-labels -l /tmp/c64-079-star-modes/checks/canonical-final/source/build/yunroll-cartridge-demo/yunroll-boot.lbl -L /tmp/c64-079-star-modes/checks/canonical-final/source/build/yunroll-cartridge-demo/yunroll-boot.lst -o /tmp/c64-079-star-modes/checks/canonical-final/source/build/yunroll-cartridge-demo/yunroll-romh0.bin /tmp/c64-079-star-modes/checks/canonical-final/source/c64/cart/easyflash-menu-boot.asm
++ /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/cartconv -t easy -i /tmp/c64-079-star-modes/checks/canonical-final/source/build/yunroll-cartridge-demo/yunroll.bin -o /tmp/c64-079-star-modes/checks/canonical-final/carts/yunroll.crt -n C643D 0.7.9 YUNROLL-CART-V9 FPS
+--------------------------------------------------------------------------------
+Created: /tmp/c64-079-star-modes/checks/canonical-final/carts/yunroll.crt
+ROM used: 499,712 bytes (488 KiB)
+Free ROM available on cart: 548,864 bytes (536 KiB)
+Free slots: ROML 48 KiB; ROMH 488 KiB
+Allocation: 8 KiB ROM slots; free slots may be on either ROML or ROMH.
+--------------------------------------------------------------------------------
+built /tmp/c64-079-star-modes/checks/canonical-final/carts/yunroll.crt
+all 10 entries: yunroll-cart-v9; 10-row scrolling menu; 0 frame bytes
+yunroll TORUS pixels verified
+yunroll TORUS DENSE pixels verified
+yunroll CUBE pixels verified
+yunroll SPHERE pixels verified
+yunroll HORSE HEAD pixels verified
+yunroll SUNFLOWER TORUS pixels verified
+yunroll SUNFLOWER COLOR pixels verified
+yunroll SPACE HORSE SPIN pixels verified
+yunroll SPACE HORSE CRAWL pixels verified
+yunroll FALLING CUBES pixels verified
+yunroll COMPLETE

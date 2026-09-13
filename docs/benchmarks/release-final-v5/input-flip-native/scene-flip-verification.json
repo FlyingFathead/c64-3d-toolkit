@@ -1,0 +1,26 @@
+{
+  "cartridge": "scene-flip.crt",
+  "menu_entry": null,
+  "verified_frames": 35,
+  "orientations": 16,
+  "bitmap_bytes_checked": 268800,
+  "color_bytes_checked": 33600,
+  "slots": {
+    "1": 12,
+    "2": 12,
+    "0": 11
+  },
+  "average_fps": 8.148376475533293,
+  "min_frame_cycles": 94957,
+  "max_frame_cycles": 141677,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
+  "loop_seconds": 1.9786135064471078,
+  "target_fps": 12.5,
+  "hud_match": true,
+  "text_overlay": true,
+  "frame_index_bits": 16
+}

@@ -1,0 +1,76 @@
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/hors-v2-9y3_59s3/build/beta-boundaries-stream-scene/main.asm
+Assembling file:   /tmp/hors-v2-9y3_59s3/build/beta-boundaries-stream-scene/generated/hud.inc
+Assembling file:   /tmp/hors-v2-9y3_59s3/build/beta-boundaries-stream-scene/generated/cart-v10-scene-helper.inc
+Assembling file:   /tmp/hors-v2-9y3_59s3/build/beta-boundaries-stream-scene/generated/tables.inc
+Output file:       /tmp/hors-v2-9y3_59s3/build/beta-boundaries-stream-scene/runtime.prg
+Data:       3698   $0801-$1672   $0e72
+Gap:         141   $1673-$16ff   $008d
+Data:       2304   $1700-$1fff   $0900
+Gap:        8192   $2000-$3fff   $2000
+Data:        112   $4000-$406f   $0070
+Gap:          16   $4070-$407f   $0010
+Data:         40   $4080-$40a7   $0028
+Gap:          88   $40a8-$40ff   $0058
+Data:        501   $4100-$42f4   $01f5
+Gap:          11   $42f5-$42ff   $000b
+Data:        256   $4300-$43ff   $0100
+Gap:        1024   $4400-$47ff   $0400
+Data:       1818   $4800-$4f19   $071a
+Gap:        3302   $4f1a-$5bff   $0ce6
+Data:        115   $5c00-$5c72   $0073
+Gap:       15757   $5c73-$99ff   $3d8d
+Data:        272   $9a00-$9b0f   $0110
+Passes:            3
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/hors-v2-9y3_59s3/c64/cart/easyflash-scene-boot.asm
+Output file:       /tmp/hors-v2-9y3_59s3/build/beta-boundaries-stream-scene/boot.bin
+Data:       8192   $e000-$ffff   $2000
+Passes:            2
+Input file: /tmp/hors-v2-9y3_59s3/build/beta-boundaries-stream-scene/beta-boundaries.bin
+Output file: /workspace/scratch/478871a3fa6c/release-0.7.9-eight/checks/boundaries/beta-boundaries.crt
+Conversion from binary format to C64 EasyFlash .crt successful.
++ /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/cartconv -t easy -i /tmp/hors-v2-9y3_59s3/build/beta-boundaries-stream-scene/beta-boundaries.bin -o /workspace/scratch/478871a3fa6c/release-0.7.9-eight/checks/boundaries/beta-boundaries.crt -n AUTOTUNE COLOUR CUBE
+built /workspace/scratch/478871a3fa6c/release-0.7.9-eight/checks/boundaries/beta-boundaries.crt
+264 frames; 166763 encoded payload bytes; target 5.28s at 50 FPS
+{
+  "passed": true,
+  "frames": 264,
+  "all_payloads_ROMH": true,
+  "crossed_frame_255": true,
+  "blank_frame_index": 25,
+  "oversize_rejected": "frame block 19204 exceeds 8192-byte staging buffer",
+  "verification": {
+    "cartridge": "beta-boundaries.crt",
+    "menu_entry": null,
+    "verified_frames": 531,
+    "orientations": 264,
+    "bitmap_bytes_checked": 4078080,
+    "color_bytes_checked": 509760,
+    "slots": {
+      "1": 177,
+      "2": 177,
+      "0": 177
+    },
+    "average_fps": 35.502035456657595,
+    "min_frame_cycles": 10579,
+    "max_frame_cycles": 52444,
+    "pixel_match": true,
+    "color_match": true,
+    "reused_samples": 0,
+    "border_match": true,
+    "border_color": 0,
+    "loop_seconds": 7.443853730228328,
+    "target_fps": 50.0,
+    "hud_match": true,
+    "text_overlay": false,
+    "frame_index_bits": 16
+  },
+  "scope": "Synthetic compiler-level edge case; the normal geometry compiler still rejects wholly invisible scene samples."
+}

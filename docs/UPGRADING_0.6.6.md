@@ -17,10 +17,10 @@ The full ZIP contains the complete source tree; the incremental ZIP contains
 changed/new files relative to the uploaded v0.6.5 source. Either also updates
 the earlier Marbles beta. Both extract under `c64-3d-toolkit/`.
 
-For downloads saved in `~/NeuralNetwork/`, apply **one** source package:
+For downloads saved in `~/c64-work/`, apply **one** source package:
 
 ```bash
-cd ~/NeuralNetwork
+cd ~/c64-work
 unzip -o c64-3d-toolkit-v0.6.6-changed.zip
 cd c64-3d-toolkit
 python3 c643d.py --version

@@ -1,0 +1,50 @@
+{
+  "scope": "Promotional video exclusion in the benchmark input fingerprint; renderer, builders, model data and cartridge bytes unchanged.",
+  "regression_tests": "tests/test_comparison.py: 9 passed",
+  "records": [
+    {
+      "path": "docs/benchmarks/hors-v3-preview/summary.json",
+      "previous_record_sha256": "a2c3d06dc92719b963edbbe01991312fae138e4a252a53b88a80acb1ab037dce",
+      "unchanged_recorded_files_verified": 386,
+      "non_rendering_file_hash_updates": [
+        {
+          "path": "tests/test_comparison.py",
+          "before": "4c9c5898640fcfb95610bfaba2b510154d0fcd2a8562ec76168a92950b4c6217",
+          "after": "b8dd750230b55a65950c3ab087e16554b09629a1730af200baaf5abad0bd09b7"
+        },
+        {
+          "path": "tools/compare_renderers.py",
+          "before": "656eb32ffea60a4202140eafc40458a74d05ffcb5dc029403fa4e9f15d1ae93b",
+          "after": "8a99187e3edf4faa31172a993b94d0e14bb09b747e79d83cfedf0845eb8949b5"
+        }
+      ],
+      "new_record_sha256": "900614c9f7bfd59dddebea292937f9aa42f773f4cfda02a130ed97537bc197e7"
+    },
+    {
+      "path": "examples/stanford_dragon/validation.json",
+      "previous_record_sha256": "cfcfa9ef8a28b5cb533bd003e41056e1927d33c1d4f1a7094a61e7db0e25c0eb",
+      "unchanged_recorded_files_verified": 281,
+      "non_rendering_file_hash_updates": [
+        {
+          "path": "tools/compare_renderers.py",
+          "before": "656eb32ffea60a4202140eafc40458a74d05ffcb5dc029403fa4e9f15d1ae93b",
+          "after": "8a99187e3edf4faa31172a993b94d0e14bb09b747e79d83cfedf0845eb8949b5"
+        }
+      ],
+      "new_record_sha256": "051906fb82dcdd2ada957607464c5bb0c2982a879b993ec3e67fbb561e3ca90e"
+    },
+    {
+      "path": "examples/saku_2026/validation.json",
+      "previous_record_sha256": "18709f2314e0908d09b22423243900ef27542f120565f22b2554d062124b2713",
+      "unchanged_recorded_files_verified": 247,
+      "non_rendering_file_hash_updates": [
+        {
+          "path": "tools/compare_renderers.py",
+          "before": "656eb32ffea60a4202140eafc40458a74d05ffcb5dc029403fa4e9f15d1ae93b",
+          "after": "8a99187e3edf4faa31172a993b94d0e14bb09b747e79d83cfedf0845eb8949b5"
+        }
+      ],
+      "new_record_sha256": "01f13962316276e1bc0d914dd3e7a0357414be151cd4d16991044396d7ac1f9c"
+    }
+  ]
+}

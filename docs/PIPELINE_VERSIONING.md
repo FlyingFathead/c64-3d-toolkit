@@ -1,3 +1,5 @@
+> Current HORS-V3 conversion, gradient and texture mapping details: [checkpoint guide](HORS_V3_DEFAULTS_CHECKPOINT.md).
+
 # Incremental pipeline versions and comparable evidence
 
 Project rule reaffirmed by the user on 10 September 2026:

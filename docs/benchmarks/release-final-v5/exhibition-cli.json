@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "name": "defaults",
+      "passed": true,
+      "sha256": "2e6634a6698b9f7d14132b4ff613f20f20fbd04c3f8662344c474ba96410b745"
+    },
+    {
+      "name": "random-start",
+      "passed": true,
+      "sha256": "6a065660950e85ce365f03cbd73f0b9728a291bb9a2230ece1f1bff7d7bf2d62"
+    },
+    {
+      "name": "excluded",
+      "passed": true,
+      "sha256": "70170166215066bebdc7a4c0bb0b65df9d1bdb5daf5b2ae3eaf0edacb72eb1c5"
+    }
+  ]
+}

@@ -9,14 +9,14 @@ cartridges. GMod backends and automatic renderer selection remain planned.
 
 ## Apply the documentation fix pack
 
-Save `c64-3d-toolkit-v0.7.0-docs-fix.zip` in `~/NeuralNetwork/`. It contains
+Save `c64-3d-toolkit-v0.7.0-docs-fix.zip` in `~/c64-work/`. It contains
 changed Markdown files beneath `c64-3d-toolkit/`, including the main README fix.
 Extract from the parent directory, not from inside the repository:
 
 ```bash
 (
 set -euo pipefail
-cd ~/NeuralNetwork
+cd ~/c64-work
 unzip -oq c64-3d-toolkit-v0.7.0-docs-fix.zip
 cd c64-3d-toolkit
 python tools/compare_renderers.py --check

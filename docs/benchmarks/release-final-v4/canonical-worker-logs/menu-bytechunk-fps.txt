@@ -1,0 +1,45 @@
+fps locking: not set
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/c64/cart/easyflash-demo-control-v9.asm
+Output file:       /tmp/c64-079-light-help/checks/canonical-verified/source/build/bytechunk-cartridge-demo/bytechunk-control.bin
+Data:        256   $0200-$02ff   $0100
+Passes:            3
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/c64/cart/easyflash-menu-boot.asm
+Output file:       /tmp/c64-079-light-help/checks/canonical-verified/source/build/bytechunk-cartridge-demo/bytechunk-romh0.bin
+Data:       8192   $e000-$ffff   $2000
+Passes:            3
+Input file: /tmp/c64-079-light-help/checks/canonical-verified/source/build/bytechunk-cartridge-demo/bytechunk.bin
+Output file: /tmp/c64-079-light-help/checks/canonical-verified/carts/bytechunk.crt
+Conversion from binary format to C64 EasyFlash .crt successful.
+fps locking: not set
+preflight: cartconv = /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/cartconv (cartconv (VICE 3.10))
++ /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/64tass -b --vice-labels -l /tmp/c64-079-light-help/checks/canonical-verified/source/build/bytechunk-cartridge-demo/bytechunk-control.lbl -L /tmp/c64-079-light-help/checks/canonical-verified/source/build/bytechunk-cartridge-demo/bytechunk-control.lst -o /tmp/c64-079-light-help/checks/canonical-verified/source/build/bytechunk-cartridge-demo/bytechunk-control.bin /tmp/c64-079-light-help/checks/canonical-verified/source/c64/cart/easyflash-demo-control-v9.asm
++ /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/64tass -b --vice-labels -l /tmp/c64-079-light-help/checks/canonical-verified/source/build/bytechunk-cartridge-demo/bytechunk-boot.lbl -L /tmp/c64-079-light-help/checks/canonical-verified/source/build/bytechunk-cartridge-demo/bytechunk-boot.lst -o /tmp/c64-079-light-help/checks/canonical-verified/source/build/bytechunk-cartridge-demo/bytechunk-romh0.bin /tmp/c64-079-light-help/checks/canonical-verified/source/c64/cart/easyflash-menu-boot.asm
++ /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/cartconv -t easy -i /tmp/c64-079-light-help/checks/canonical-verified/source/build/bytechunk-cartridge-demo/bytechunk.bin -o /tmp/c64-079-light-help/checks/canonical-verified/carts/bytechunk.crt -n C643D 0.7.9 YUNROLL-CART-V9 FPS
+--------------------------------------------------------------------------------
+Created: /tmp/c64-079-light-help/checks/canonical-verified/carts/bytechunk.crt
+ROM used: 499,712 bytes (488 KiB)
+Free ROM available on cart: 548,864 bytes (536 KiB)
+Free slots: ROML 48 KiB; ROMH 488 KiB
+Allocation: 8 KiB ROM slots; free slots may be on either ROML or ROMH.
+--------------------------------------------------------------------------------
+built /tmp/c64-079-light-help/checks/canonical-verified/carts/bytechunk.crt
+all 10 entries: yunroll-cart-v9; 10-row scrolling menu; 0 frame bytes
+bytechunk TORUS pixels verified
+bytechunk TORUS DENSE pixels verified
+bytechunk CUBE pixels verified
+bytechunk SPHERE pixels verified
+bytechunk HORSE HEAD pixels verified
+bytechunk SUNFLOWER TORUS pixels verified
+bytechunk SUNFLOWER COLOR pixels verified
+bytechunk SPACE HORSE SPIN pixels verified
+bytechunk SPACE HORSE CRAWL pixels verified
+bytechunk FALLING CUBES pixels verified
+bytechunk COMPLETE

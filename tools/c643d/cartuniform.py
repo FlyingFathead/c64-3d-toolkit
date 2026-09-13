@@ -54,7 +54,7 @@ def demos(root):
     return out
 
 
-def prepare(root,renderer,tass,tass_args=(),sources=None,prefer="fps",work_prefix="uniform",frame_encoders=None):
+def prepare(root,renderer,tass,tass_args=(),sources=None,prefer="fps",work_prefix="uniform",frame_encoders=None,frame_pipeline=None,runtime_pipeline=None):
     from .renderer_names import implementation
     renderer=implementation(renderer)
     if renderer not in ('yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'):raise ValueError('unsupported uniform renderer')
@@ -86,6 +86,8 @@ def prepare(root,renderer,tass,tass_args=(),sources=None,prefer="fps",work_prefi
             from dataclasses import replace
             frames, clearing = selective_clear_frames(demo.frames)
             demo = replace(demo, frames=frames)
+        if frame_pipeline is not None:
+            demo = frame_pipeline(demo)
         encoder = frame_block
         if variant in ("v8", "v9", "v10"):
             from .bytespan import frame_block as encoder
@@ -136,6 +138,8 @@ def prepare(root,renderer,tass,tass_args=(),sources=None,prefer="fps",work_prefi
         if demo.frame_ticks != 1 or demo.finite or not demo.show_hud:
             from .hifireel import configure_scene_runtime
             src = configure_scene_runtime(src, demo)
+        if runtime_pipeline is not None:
+            src = runtime_pipeline(src,demo)
         asm=work/'main.asm';asm.write_text(src);prg=work/'runtime.prg'
         subprocess.run([tass,*tass_args,'--cbm-prg','--vice-labels','-l',str(work/'runtime.lbl'),'-o',str(prg),str(asm)],check=True,cwd=root,stdout=subprocess.DEVNULL)
         blob=prg.read_bytes();load=int.from_bytes(blob[:2],'little')

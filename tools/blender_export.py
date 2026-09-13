@@ -22,7 +22,6 @@ from tools.c643d.colors import nearest_c64_color_index, c64_color_index
 from tools.c643d.blender import blender_frame_plan, output_frame_plan
 
 
-WIDTH=256
 def _args():
     argv=sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
     p=argparse.ArgumentParser(description='Export evaluated Blender animation for c64-3d-toolkit')
@@ -31,6 +30,7 @@ def _args():
     p.add_argument('--frame-end',type=int)
     p.add_argument('--output-fps',type=int)
     p.add_argument('--sample-step',type=int,default=1)
+    p.add_argument('--viewport-width',type=int,choices=(256,320),default=320)
     p.add_argument('--viewport-height',type=int,default=144)
     p.add_argument('--max-frames',type=int,default=255,help='explicit host export limit; legacy PRG default 255')
     return p.parse_args(argv)
@@ -50,7 +50,20 @@ def _property_color(obj,material):
                 raise RuntimeError(f'{owner.name}: invalid c643d_color: {exc}') from exc
     if material is None:
         return None
-    return _nearest_c64(material.diffuse_color)
+    rgb = material.diffuse_color
+    if material.use_nodes and material.node_tree:
+        output = next((node for node in material.node_tree.nodes
+                       if node.type == 'OUTPUT_MATERIAL' and node.is_active_output), None)
+        socket = output.inputs.get('Surface') if output else None
+        shader = socket.links[0].from_node if socket and socket.is_linked else None
+        if shader and shader.type == 'BSDF_PRINCIPLED':
+            base = shader.inputs.get('Base Color')
+            if base and not base.is_linked:
+                rgb = base.default_value
+    # Blender material values are scene-linear; the palette reference is sRGB.
+    return _nearest_c64(tuple(12.92 * max(0., v) if v <= 0.0031308
+                              else 1.055 * max(0., v) ** (1 / 2.4) - 0.055
+                              for v in rgb[:3]))
 
 
 def _export_objects():
@@ -59,6 +72,28 @@ def _export_objects():
          if obj.type=='MESH' and not obj.hide_render and obj.get('c643d_export',True)),
         key=lambda obj:obj.name,
     )
+
+
+def _validate_mesh_caches(objects):
+    """Fail clearly on unavailable external caches before exporting a static mesh."""
+    for original in objects:
+        for modifier in original.modifiers:
+            if modifier.type not in ('MESH_SEQUENCE_CACHE', 'MESH_CACHE'):
+                continue
+            if not modifier.show_viewport:
+                print(f'WARNING: {original.name}: cache modifier {modifier.name} is disabled in the viewport; evaluated export will omit it', flush=True)
+                continue
+            cache = getattr(modifier, 'cache_file', None)
+            if modifier.type == 'MESH_SEQUENCE_CACHE' and cache is None:
+                raise RuntimeError(f'{original.name}: Mesh Sequence Cache has no cache file')
+            owner = cache if cache is not None else original
+            ref = cache.filepath if cache is not None else modifier.filepath
+            path = Path(bpy.path.abspath(ref, library=getattr(owner, 'library', None)))
+            if path.suffix.lower() == '.abc' and not bpy.app.build_options.alembic:
+                raise RuntimeError(f'{original.name}: this Blender build has no Alembic support; select an Alembic-enabled Blender with --blender')
+            if not ref or not path.is_file():
+                raise RuntimeError(f'{original.name}: external vertex cache is missing: {path}. Keep the .abc/.mdd/.pc2 file accessible to headless Blender and repair its modifier path')
+            print(f'c643d: {original.name}: evaluating {modifier.type} cache {path.name}', flush=True)
 
 
 def _evaluated_parts(objects,depsgraph):
@@ -83,6 +118,7 @@ def main():
         raise RuntimeError('--sample-step must be at least 1')
     if args.viewport_height<8 or args.viewport_height>200 or args.viewport_height%8:
         raise RuntimeError('--viewport-height must be a multiple of 8 from 8..200')
+    width=args.viewport_width
     height=args.viewport_height
     scene=bpy.context.scene
     camera=scene.camera
@@ -93,6 +129,7 @@ def main():
     objects=_export_objects()
     if not objects:
         raise RuntimeError('scene has no exportable mesh objects')
+    _validate_mesh_caches(objects)
     start=scene.frame_start if args.frame_start is None else args.frame_start
     end=scene.frame_end if args.frame_end is None else args.frame_end
     if start>end:
@@ -180,11 +217,11 @@ def main():
             # calc_matrix_camera is an Object method in both Blender 4.x and
             # 5.x. Calling it on the Camera datablock fails on Blender 4.0.2.
             matrix=evaluated_camera.calc_matrix_camera(
-                depsgraph,x=WIDTH,y=height,scale_x=1.0,scale_y=1.0
+                depsgraph,x=width,y=height,scale_x=1.0,scale_y=1.0
             )
-            fx=float(matrix[0][0])*WIDTH/2.0
+            fx=float(matrix[0][0])*width/2.0
             fy=float(matrix[1][1])*height/2.0
-            cx=WIDTH/2.0*(1.0-float(matrix[0][2]))
+            cx=width/2.0*(1.0-float(matrix[0][2]))
             cy=height/2.0*(1.0+float(matrix[1][2]))
             out_frames.append({
                 'source_frame':int(source_frame),
@@ -216,11 +253,12 @@ def main():
 
     payload={
         'format':'c643dscene','version':1,
+        'viewport':{'width':width,'height':height},
         'name':str(scene.get('c643d_title') or Path(bpy.data.filepath).stem.upper() or 'BLENDER SCENE'),
         'source':{
             'output_fps':args.output_fps,
             'resampling':'nearest-integer-source-frame' if args.output_fps is not None else 'sample-step',
-            'kind':'blender','file':str(Path(bpy.data.filepath).resolve()),
+            'kind':'blender','file':Path(bpy.data.filepath).name,
             'fps':float(scene.render.fps)/float(scene.render.fps_base),
             'frame_start':start,'frame_end':end,'sample_step':args.sample_step,
         },

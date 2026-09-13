@@ -1,0 +1,45 @@
+fps locking: not set
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   COMPARISON_WORKSPACE/source/c64/cart/easyflash-demo-control-v9.asm
+Output file:       COMPARISON_WORKSPACE/source/build/yunroll-cart-cartridge-demo/yunroll-cart-control.bin
+Data:        256   $0200-$02ff   $0100
+Passes:            3
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   COMPARISON_WORKSPACE/source/c64/cart/easyflash-menu-boot.asm
+Output file:       COMPARISON_WORKSPACE/source/build/yunroll-cart-cartridge-demo/yunroll-cart-romh0.bin
+Data:       8192   $e000-$ffff   $2000
+Passes:            3
+Input file: COMPARISON_WORKSPACE/source/build/yunroll-cart-cartridge-demo/yunroll-cart.bin
+Output file: COMPARISON_WORKSPACE/carts/yunroll-cart.crt
+Conversion from binary format to C64 EasyFlash .crt successful.
+fps locking: not set
+preflight: cartconv = TOOLCHAIN/c64-tools/bin/cartconv (cartconv (VICE 3.10))
++ TOOLCHAIN/c64-tools/bin/64tass -b --vice-labels -l COMPARISON_WORKSPACE/source/build/yunroll-cart-cartridge-demo/yunroll-cart-control.lbl -L COMPARISON_WORKSPACE/source/build/yunroll-cart-cartridge-demo/yunroll-cart-control.lst -o COMPARISON_WORKSPACE/source/build/yunroll-cart-cartridge-demo/yunroll-cart-control.bin COMPARISON_WORKSPACE/source/c64/cart/easyflash-demo-control-v9.asm
++ TOOLCHAIN/c64-tools/bin/64tass -b --vice-labels -l COMPARISON_WORKSPACE/source/build/yunroll-cart-cartridge-demo/yunroll-cart-boot.lbl -L COMPARISON_WORKSPACE/source/build/yunroll-cart-cartridge-demo/yunroll-cart-boot.lst -o COMPARISON_WORKSPACE/source/build/yunroll-cart-cartridge-demo/yunroll-cart-romh0.bin COMPARISON_WORKSPACE/source/c64/cart/easyflash-menu-boot.asm
++ TOOLCHAIN/c64-tools/bin/cartconv -t easy -i COMPARISON_WORKSPACE/source/build/yunroll-cart-cartridge-demo/yunroll-cart.bin -o COMPARISON_WORKSPACE/carts/yunroll-cart.crt -n C643D 0.7.9 YUNROLL-CART-V9 FPS
+--------------------------------------------------------------------------------
+Created: COMPARISON_WORKSPACE/carts/yunroll-cart.crt
+ROM used: 499,712 bytes (488 KiB)
+Free ROM available on cart: 548,864 bytes (536 KiB)
+Free slots: ROML 48 KiB; ROMH 488 KiB
+Allocation: 8 KiB ROM slots; free slots may be on either ROML or ROMH.
+--------------------------------------------------------------------------------
+built COMPARISON_WORKSPACE/carts/yunroll-cart.crt
+all 10 entries: yunroll-cart-v9; 10-row scrolling menu; 0 frame bytes
+yunroll-cart TORUS pixels verified
+yunroll-cart TORUS DENSE pixels verified
+yunroll-cart CUBE pixels verified
+yunroll-cart SPHERE pixels verified
+yunroll-cart HORSE HEAD pixels verified
+yunroll-cart SUNFLOWER TORUS pixels verified
+yunroll-cart SUNFLOWER COLOR pixels verified
+yunroll-cart SPACE HORSE SPIN pixels verified
+yunroll-cart SPACE HORSE CRAWL pixels verified
+yunroll-cart FALLING CUBES pixels verified
+yunroll-cart COMPLETE

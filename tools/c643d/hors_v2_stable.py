@@ -25,14 +25,14 @@ def encoder(gap=6, batch_budget=2048):
     if gap<1 or batch_budget<1: raise ValueError('v2 gap and batch budget must be positive')
     def encode(frame, colors=True):
         if len(frame.clear_spans)>255 or (colors and len(frame.color_spans)>255):
-            raise ValueError('v2 metadata span count exceeds one byte')
+            raise ValueError(f'v2 metadata span count exceeds one byte: {len(frame.clear_spans)} clear spans, {len(frame.color_spans) if colors else 0} colour spans (maximum 255 each per frame). This is not an animation-length limit; use --renderer hors-renderer-v3 for compact clear/shared colour metadata')
         data=bytearray([len(frame.clear_spans)])
         for span in frame.clear_spans: data.extend(span)
         if colors:
             data.append(len(frame.color_spans))
             for span in frame.color_spans: data.extend(span)
         meta=len(data)
-        if meta>1024: raise ValueError('v2 metadata exceeds its 1 KiB cache')
+        if meta>1024: raise ValueError(f'v2 metadata is {meta} bytes and exceeds its 1 KiB cache per frame; fewer animation frames do not reduce this limit')
         bitmap=picture_bytes(frame)[:7680];runs=spans(bitmap,gap)
         data.extend((0x8000|len(runs)).to_bytes(2,'little'))
         planned=0;proof=bytearray(7680)

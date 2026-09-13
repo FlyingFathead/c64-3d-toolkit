@@ -2,7 +2,7 @@
   "cart_write_method": "standard",
   "format": "c643d-easyflash-stream-scene",
   "version": 1,
-  "toolkit_version": "0.7.8",
+  "toolkit_version": "0.7.9",
   "renderer": "hors-render-v2",
   "name": "DON'T LOSE YOUR MARBLES",
   "frames": 640,
@@ -8370,7 +8370,7 @@
     "bitmap_and_colors_preserved": true
   },
   "build_screen": {
-    "version": "0.7.8",
+    "version": "0.7.9",
     "renderer": "hors-render-v2",
     "ticks": null,
     "skip_key": "SPACE",

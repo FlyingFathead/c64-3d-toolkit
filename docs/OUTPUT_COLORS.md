@@ -1,3 +1,5 @@
+> Current HORS-V3 conversion, gradient and texture mapping details: [checkpoint guide](HORS_V3_DEFAULTS_CHECKPOINT.md).
+
 # Output colours (0.7.3)
 
 Foreground, bitmap background and border can be selected independently when

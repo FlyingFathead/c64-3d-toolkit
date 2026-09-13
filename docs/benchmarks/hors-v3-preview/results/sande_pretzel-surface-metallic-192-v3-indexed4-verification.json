@@ -10,9 +10,9 @@
     "2": 129,
     "0": 129
   },
-  "average_fps": 12.470384201733479,
-  "min_frame_cycles": 63182,
-  "max_frame_cycles": 86142,
+  "average_fps": 12.470538771298257,
+  "min_frame_cycles": 63569,
+  "max_frame_cycles": 85483,
   "pixel_match": true,
   "color_match": true,
   "reused_samples": 0,

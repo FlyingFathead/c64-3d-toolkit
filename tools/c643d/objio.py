@@ -2,7 +2,7 @@ from __future__ import annotations
 import shlex
 from pathlib import Path
 from .mesh import Mesh
-from .colors import nearest_c64_color_index
+from .colors import nearest_c64_color_index, c64_color_name
 
 
 def _words(value: str) -> list[str]:
@@ -12,7 +12,7 @@ def _words(value: str) -> list[str]:
         return value.split()
 
 
-def load_mtl(path: str | Path) -> dict[str,int]:
+def load_mtl(path: str | Path, *, report=None) -> dict[str,int]:
     """Load diffuse MTL colours as native 0..15 VIC-II palette indices."""
     path=Path(path)
     colors: dict[str,int]={}
@@ -34,6 +34,9 @@ def load_mtl(path: str | Path) -> dict[str,int]:
             except ValueError as exc:
                 raise ValueError(f'{path}:{lineno}: invalid Kd colour') from exc
             colors[current]=nearest_c64_color_index(rgb)
+            if report is not None:
+                report[current] = dict(source_rgb=list(rgb), c64_index=colors[current],
+                                       c64_color=c64_color_name(colors[current]))
     return colors
 
 
@@ -85,3 +88,17 @@ def load_obj(path: str | Path, name: str | None=None) -> Mesh:
     if not verts: raise ValueError(f'{path}: no vertices')
     if not faces: raise ValueError(f'{path}: no polygon faces')
     return Mesh(name or path.stem.upper(),verts,faces,[],face_colors,[])
+
+
+def material_color_report(obj_path):
+    """Explain the source material mapping without recording machine paths."""
+    obj_path = Path(obj_path)
+    report = {}
+    for raw in obj_path.read_text(encoding='utf-8', errors='replace').splitlines():
+        words = raw.strip().split(None, 1)
+        if len(words) == 2 and words[0].lower() == 'mtllib':
+            for ref in _words(words[1]):
+                path = obj_path.parent / ref
+                if path.is_file():
+                    load_mtl(path, report=report)
+    return report

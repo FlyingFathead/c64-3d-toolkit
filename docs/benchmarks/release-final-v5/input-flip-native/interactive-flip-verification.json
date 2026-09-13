@@ -1,0 +1,22 @@
+{
+  "cartridge": "interactive-flip.crt",
+  "menu_entry": null,
+  "verified_frames": 19,
+  "orientations": 8,
+  "bitmap_bytes_checked": 145920,
+  "color_bytes_checked": 18240,
+  "slots": {
+    "1": 7,
+    "2": 6,
+    "0": 6
+  },
+  "average_fps": 30.03001229345805,
+  "min_frame_cycles": 20686,
+  "max_frame_cycles": 35926,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
+  "interactive_label_match": true
+}

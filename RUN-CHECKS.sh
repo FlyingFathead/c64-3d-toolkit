@@ -79,8 +79,17 @@ cp -- "$results_dir/dragon-surface-tests.log" examples/stanford_dragon/evidence/
 run_check dragon "$python_bin" examples/stanford_dragon/verify.py --run --install \
   --vice "$vice_bin" --vice-data "$vice_data" --output-dir "$results_dir/dragon"
 run_check dragon-provenance "$python_bin" examples/stanford_dragon/verify.py --check
+run_check interactive-options "$python_bin" tools/verify_interactive_options.py \
+  --tass "$tass_bin" --cartconv "$cartconv_bin" --vice "$vice_bin" --vice-data "$vice_data" \
+  --output-dir "$results_dir/interactive-options"
+cp -- "$results_dir/interactive-options/results.json" docs/benchmarks/interactive-options.json
+run_check saku "$python_bin" examples/saku_2026/verify.py --install \
+  --vice "$vice_bin" --vice-data "$vice_data" --output-dir "$results_dir/saku"
 run_check hors-v3 "$python_bin" tools/run_hors_v3_perfs.py --run \
   --vice "$vice_bin" --vice-data "$vice_data" --output-dir "$results_dir/hors-v3"
+run_check hors-v3-defaults "$python_bin" tools/verify_hors_v3_checkpoint.py \
+  --output-dir "$results_dir/hors-v3-defaults" --tass "$tass_bin" \
+  --cartconv "$cartconv_bin" --vice "$vice_bin" --vice-data "$vice_data"
 run_check hors-v3-report "$python_bin" tools/report_hors_v3_release.py "$results_dir/hors-v3"
 run_check hors-v3-provenance "$python_bin" tools/run_hors_v3_perfs.py --check
 run_check canonical "$python_bin" tools/compare_renderers.py \
@@ -91,5 +100,5 @@ run_check canonical "$python_bin" tools/compare_renderers.py \
 cp -- "$results_dir/canonical/PERFORMANCE_COMPARISON.md" docs/PERFORMANCE_COMPARISON.md
 run_check provenance "$python_bin" tools/compare_renderers.py --check
 echo "Checks passed. Results: $results_dir"
-echo "hors-render-v2 is the $toolkit_version default. Review video output after local rebuilds."
+echo "HORS-V3 is the $toolkit_version conversion default; the comparison/menu builder retains V2."
 echo 'No renderer default, Git commit, tag or push was changed.'

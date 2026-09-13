@@ -1,0 +1,340 @@
+{
+  "passed": true,
+  "workload": "48-sample metallic torus; identical geometry and host pictures",
+  "pal_vice": true,
+  "results": {
+    "excluded": {
+      "pixel_check": {
+        "cartridge": "interactive-excluded.crt",
+        "menu_entry": null,
+        "verified_frames": 99,
+        "orientations": 48,
+        "bitmap_bytes_checked": 760320,
+        "color_bytes_checked": 95040,
+        "slots": {
+          "1": 33,
+          "2": 33,
+          "0": 33
+        },
+        "average_fps": 9.652059900682682,
+        "min_frame_cycles": 78824,
+        "max_frame_cycles": 110958,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0,
+        "interactive_label_match": true
+      },
+      "stars_included": false,
+      "stars_initially_enabled": false,
+      "cartridge_sha256": "0dcc8644a658435e96520191f1f2797d8ea20fea55c31426fb0f586e2442e435",
+      "frame_stream_bytes": 170815,
+      "native_run_stop_help_verified": true,
+      "native_help_without_stars_verified": true,
+      "display": {
+        "sha256": "0dcc8644a658435e96520191f1f2797d8ea20fea55c31426fb0f586e2442e435",
+        "clock_hz": 985248,
+        "refreshes": 1504,
+        "warmup_samples": 54,
+        "display_flips": 288,
+        "elapsed_cycles": 29563829,
+        "display_fps": 9.597925356691787,
+        "high_fps": 12.531773085728823,
+        "low_fps": 8.353736190128963,
+        "worst_display_ms": 119.70691643119297,
+        "hold_ticks": {
+          "6": 78,
+          "5": 194,
+          "4": 15
+        },
+        "unique_pictures_expected": 48,
+        "unique_pictures_observed": 48,
+        "picture_coverage_complete": true,
+        "pixel_match": true,
+        "color_match": true,
+        "hud_match": true,
+        "interactive_label_match": true,
+        "cycle_period_pal_ticks": null,
+        "observed_palette_changes": 0
+      },
+      "hud_keys": {
+        "passed": true,
+        "checks": 11,
+        "native_key_scan": true,
+        "held_key_debounce": true,
+        "all_three_buffers": true,
+        "hidden_stays_hidden": true,
+        "hidden_speed_controls_work": true,
+        "restored_name_counts_and_fps": true,
+        "hidden_and_restored_interactive_label": true
+      }
+    },
+    "included-disabled": {
+      "pixel_check": {
+        "cartridge": "interactive-included-disabled.crt",
+        "menu_entry": null,
+        "verified_frames": 99,
+        "orientations": 48,
+        "bitmap_bytes_checked": 760320,
+        "color_bytes_checked": 95040,
+        "slots": {
+          "1": 33,
+          "2": 33,
+          "0": 33
+        },
+        "average_fps": 9.629282084499541,
+        "min_frame_cycles": 79057,
+        "max_frame_cycles": 111345,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0,
+        "interactive_label_match": true
+      },
+      "stars_included": true,
+      "stars_initially_enabled": false,
+      "cartridge_sha256": "a79231d3a6952f2d7423145d482ffcac8d06a2f0e703ffc20facd387a2da4ff3",
+      "frame_stream_bytes": 170815,
+      "native_run_stop_help_verified": true,
+      "native_default_and_toggle_verified": true,
+      "display": {
+        "sha256": "a79231d3a6952f2d7423145d482ffcac8d06a2f0e703ffc20facd387a2da4ff3",
+        "clock_hz": 985248,
+        "refreshes": 1504,
+        "warmup_samples": 54,
+        "display_flips": 287,
+        "elapsed_cycles": 29563660,
+        "display_fps": 9.564653902798232,
+        "high_fps": 12.531932484513922,
+        "low_fps": 8.353736190128963,
+        "worst_display_ms": 119.70691643119297,
+        "hold_ticks": {
+          "6": 84,
+          "5": 184,
+          "4": 18
+        },
+        "unique_pictures_expected": 48,
+        "unique_pictures_observed": 48,
+        "picture_coverage_complete": true,
+        "pixel_match": true,
+        "color_match": true,
+        "hud_match": true,
+        "interactive_label_match": true,
+        "cycle_period_pal_ticks": null,
+        "observed_palette_changes": 0
+      }
+    },
+    "included-enabled": {
+      "pixel_check": {
+        "cartridge": "interactive-included-enabled.crt",
+        "menu_entry": null,
+        "verified_frames": 99,
+        "orientations": 48,
+        "bitmap_bytes_checked": 760320,
+        "color_bytes_checked": 95040,
+        "slots": {
+          "1": 33,
+          "2": 33,
+          "0": 33
+        },
+        "average_fps": 7.478801505577133,
+        "min_frame_cycles": 102993,
+        "max_frame_cycles": 146613,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0,
+        "interactive_label_match": true
+      },
+      "stars_included": true,
+      "stars_initially_enabled": true,
+      "cartridge_sha256": "cefeccb92ad10494be6570ab743baddef1e8b661f0078b745ce4a20e53331973",
+      "frame_stream_bytes": 170815,
+      "native_run_stop_help_verified": true,
+      "native_default_and_toggle_verified": true,
+      "display": {
+        "sha256": "cefeccb92ad10494be6570ab743baddef1e8b661f0078b745ce4a20e53331973",
+        "clock_hz": 985248,
+        "refreshes": 1504,
+        "warmup_samples": 54,
+        "display_flips": 224,
+        "elapsed_cycles": 29562583,
+        "display_fps": 7.4653676913143885,
+        "high_fps": 8.354444548083201,
+        "low_fps": 6.265408389082491,
+        "worst_display_ms": 159.60651531391082,
+        "hold_ticks": {
+          "7": 129,
+          "6": 79,
+          "8": 15
+        },
+        "unique_pictures_expected": 48,
+        "unique_pictures_observed": 48,
+        "picture_coverage_complete": true,
+        "pixel_match": true,
+        "color_match": true,
+        "hud_match": true,
+        "interactive_label_match": true,
+        "cycle_period_pal_ticks": null,
+        "observed_palette_changes": 0
+      }
+    },
+    "indexed4": {
+      "pixel_check": {
+        "cartridge": "interactive-indexed4.crt",
+        "menu_entry": null,
+        "verified_frames": 99,
+        "orientations": 48,
+        "bitmap_bytes_checked": 760320,
+        "color_bytes_checked": 95040,
+        "slots": {
+          "1": 33,
+          "2": 33,
+          "0": 33
+        },
+        "average_fps": 7.9976032280548885,
+        "min_frame_cycles": 99949,
+        "max_frame_cycles": 132490,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0,
+        "interactive_label_match": true
+      },
+      "stars_included": true,
+      "stars_initially_enabled": false,
+      "cartridge_sha256": "ceb788af7eda92bfa58e62231c4682e15645deaa4bfda9993e7142e06b96a2ef",
+      "frame_stream_bytes": 155935,
+      "native_run_stop_help_verified": true,
+      "native_default_and_toggle_verified": true
+    },
+    "modes-without-stars": {
+      "pixel_match": true,
+      "color_match": true,
+      "frames": 64,
+      "all_samples": true,
+      "all_three_buffers": true,
+      "hue_and_background_combinations": 48
+    },
+    "eight-modes-without-stars": {
+      "pixel_match": true,
+      "color_match": true,
+      "frames": 80,
+      "all_samples": true,
+      "all_three_buffers": true,
+      "hue_and_background_combinations": 48
+    },
+    "hud-hidden-toggle": {
+      "pixel_check": {
+        "cartridge": "hud-hidden-toggle.crt",
+        "menu_entry": null,
+        "verified_frames": 19,
+        "orientations": 8,
+        "bitmap_bytes_checked": 145920,
+        "color_bytes_checked": 18240,
+        "slots": {
+          "1": 7,
+          "2": 6,
+          "0": 6
+        },
+        "average_fps": 9.494983327729509,
+        "min_frame_cycles": 71252,
+        "max_frame_cycles": 113151,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0,
+        "interactive_label_match": true
+      },
+      "keys": {
+        "passed": true,
+        "checks": 12,
+        "native_key_scan": true,
+        "held_key_debounce": true,
+        "all_three_buffers": true,
+        "hidden_stays_hidden": true,
+        "hidden_speed_controls_work": true,
+        "restored_name_counts_and_fps": true,
+        "hidden_and_restored_interactive_label": true
+      }
+    },
+    "hud-visible-fixed": {
+      "pixel_check": {
+        "cartridge": "hud-visible-fixed.crt",
+        "menu_entry": null,
+        "verified_frames": 19,
+        "orientations": 8,
+        "bitmap_bytes_checked": 145920,
+        "color_bytes_checked": 18240,
+        "slots": {
+          "1": 7,
+          "2": 6,
+          "0": 6
+        },
+        "average_fps": 9.369136650359772,
+        "min_frame_cycles": 72763,
+        "max_frame_cycles": 114804,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0,
+        "interactive_label_match": true
+      }
+    },
+    "hud-hidden-fixed": {
+      "pixel_check": {
+        "cartridge": "hud-hidden-fixed.crt",
+        "menu_entry": null,
+        "verified_frames": 19,
+        "orientations": 8,
+        "bitmap_bytes_checked": 145920,
+        "color_bytes_checked": 18240,
+        "slots": {
+          "1": 7,
+          "2": 6,
+          "0": 6
+        },
+        "average_fps": 9.495344276198384,
+        "min_frame_cycles": 71242,
+        "max_frame_cycles": 113154,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0,
+        "interactive_label_match": true
+      }
+    },
+    "hud-hidden-automatic": {
+      "pixel_check": {
+        "cartridge": "hud-hidden-automatic.crt",
+        "menu_entry": null,
+        "verified_frames": 19,
+        "orientations": 8,
+        "bitmap_bytes_checked": 145920,
+        "color_bytes_checked": 18240,
+        "slots": {
+          "1": 7,
+          "2": 6,
+          "0": 6
+        },
+        "average_fps": 9.599594677544552,
+        "min_frame_cycles": 70192,
+        "max_frame_cycles": 112088,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0
+      }
+    }
+  },
+  "oracle_sha256": "5694a25d3a3995b2a2f5c1e7db58d3c3d3e2515d21fd8752f9f146a4e38e9344",
+  "measurement": "1504 PAL refreshes after warmup; actual display transitions; help/startup excluded"
+}

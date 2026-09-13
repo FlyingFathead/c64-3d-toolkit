@@ -1,0 +1,39 @@
+{
+  "reason": "Correct documentation-only opcode count from 8 to 9. No runtime instruction or test changes; the saved VICE measurements remain valid for byte-identical CRTs.",
+  "changes": {
+    "tools/c643d/hors_v3_help.py": {
+      "before_sha256": "7bbb852b63f5261847e33cedea4eac6b8678673d5cff3338790748c77ceef557",
+      "after_sha256": "c896d91539748d3007b12512873e2cff01cde9195e27f258602180c629cfbade"
+    },
+    "tools/compare_renderers.py": {
+      "before_sha256": "ed13be684a5ab0575b42661f062394658c89616aefc386d0e84b460fa3a8b8e3",
+      "after_sha256": "5ea9d8e1c75c82d91879346aedccf957fba2481e29313d33ebde1807aceaa8b3"
+    },
+    "examples/saku_2026/cartridges/saku_2026-interactive-manifest.json": {
+      "before_sha256": "887a161e4fb28fa4a12ef15b20f505e86e22ca5f77cb57f1f07ecc837a9e1fa4",
+      "after_sha256": "3fe64faf85571802e816eab2d1931cf0200a4401f1be566caafaca185200470c"
+    },
+    "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-interactive-manifest.json": {
+      "before_sha256": "f2b0d9296f170d0347f5ddf7a7624041a388332db432c1c38e51efc4411e1a89",
+      "after_sha256": "7b20687076a2d246bad5375a6f82243aa0ff3dd22da05e0ddb65a86eb2394c60"
+    },
+    "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-indexed4-interactive-manifest.json": {
+      "before_sha256": "8bd47532d8cfe9fb61fd4b9344de3147f3ea8634154b9e3d99dac9340b02ea6e",
+      "after_sha256": "29b3f58eac5a598a611024a9db9267b3609ef9a4b33dfe9aa8df7a60c0cd5f4c"
+    }
+  },
+  "byte_identical_verified_crts": [
+    {
+      "path": "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-indexed4-interactive.crt",
+      "sha256": "95a6931c13badd2e3716c44b0fc2da155b1f80316d25db5b895abe436f713d0e"
+    },
+    {
+      "path": "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-interactive.crt",
+      "sha256": "d2a05787353a911c9a1c4849aca3be8ac304d13f2932e3d492c8f52653cd131b"
+    },
+    {
+      "path": "examples/saku_2026/cartridges/saku_2026-interactive.crt",
+      "sha256": "8b8133a6872abf6fd577dcffea2933c7312d28147c01bed9c6bb8e248ad27d49"
+    }
+  ]
+}

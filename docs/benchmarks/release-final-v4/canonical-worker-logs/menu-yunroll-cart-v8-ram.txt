@@ -1,0 +1,47 @@
+fps locking: not set
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/c64/cart/easyflash-demo-control-v9.asm
+Output file:       /tmp/c64-079-light-help/checks/canonical-verified/source/build/yunroll-cart-v8-ram-cartridge-demo/yunroll-cart-v8-ram-control.bin
+Data:        256   $0200-$02ff   $0100
+Passes:            3
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/c64-079-light-help/checks/canonical-verified/source/c64/cart/easyflash-menu-boot.asm
+Output file:       /tmp/c64-079-light-help/checks/canonical-verified/source/build/yunroll-cart-v8-ram-cartridge-demo/yunroll-cart-v8-ram-romh0.bin
+Data:       8192   $e000-$ffff   $2000
+Passes:            3
+Input file: /tmp/c64-079-light-help/checks/canonical-verified/source/build/yunroll-cart-v8-ram-cartridge-demo/yunroll-cart-v8-ram.bin
+Output file: /tmp/c64-079-light-help/checks/canonical-verified/carts/yunroll-cart-v8-ram.crt
+Conversion from binary format to C64 EasyFlash .crt successful.
+fps locking: not set
+preflight: cartconv = /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/cartconv (cartconv (VICE 3.10))
++ /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/64tass -b --vice-labels -l /tmp/c64-079-light-help/checks/canonical-verified/source/build/yunroll-cart-v8-ram-cartridge-demo/yunroll-cart-v8-ram-control.lbl -L /tmp/c64-079-light-help/checks/canonical-verified/source/build/yunroll-cart-v8-ram-cartridge-demo/yunroll-cart-v8-ram-control.lst -o /tmp/c64-079-light-help/checks/canonical-verified/source/build/yunroll-cart-v8-ram-cartridge-demo/yunroll-cart-v8-ram-control.bin /tmp/c64-079-light-help/checks/canonical-verified/source/c64/cart/easyflash-demo-control-v9.asm
++ /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/64tass -b --vice-labels -l /tmp/c64-079-light-help/checks/canonical-verified/source/build/yunroll-cart-v8-ram-cartridge-demo/yunroll-cart-v8-ram-boot.lbl -L /tmp/c64-079-light-help/checks/canonical-verified/source/build/yunroll-cart-v8-ram-cartridge-demo/yunroll-cart-v8-ram-boot.lst -o /tmp/c64-079-light-help/checks/canonical-verified/source/build/yunroll-cart-v8-ram-cartridge-demo/yunroll-cart-v8-ram-romh0.bin /tmp/c64-079-light-help/checks/canonical-verified/source/c64/cart/easyflash-menu-boot.asm
++ /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/cartconv -t easy -i /tmp/c64-079-light-help/checks/canonical-verified/source/build/yunroll-cart-v8-ram-cartridge-demo/yunroll-cart-v8-ram.bin -o /tmp/c64-079-light-help/checks/canonical-verified/carts/yunroll-cart-v8-ram.crt -n C643D 0.7.9 YUNROLL-CART-V8 RAM
+--------------------------------------------------------------------------------
+Created: /tmp/c64-079-light-help/checks/canonical-verified/carts/yunroll-cart-v8-ram.crt
+ROM used: 770,048 bytes (752 KiB)
+Free ROM available on cart: 278,528 bytes (272 KiB)
+Free slots: ROML 216 KiB; ROMH 56 KiB
+Allocation: 8 KiB ROM slots; free slots may be on either ROML or ROMH.
+--------------------------------------------------------------------------------
+built /tmp/c64-079-light-help/checks/canonical-verified/carts/yunroll-cart-v8-ram.crt
+all 12 entries: yunroll-cart-v8; 10-row scrolling menu; 410676 frame bytes
+yunroll-cart-v8-ram TORUS pixels verified
+yunroll-cart-v8-ram TORUS DENSE pixels verified
+yunroll-cart-v8-ram CUBE pixels verified
+yunroll-cart-v8-ram SPHERE pixels verified
+yunroll-cart-v8-ram HORSE HEAD pixels verified
+yunroll-cart-v8-ram SUNFLOWER TORUS pixels verified
+yunroll-cart-v8-ram SUNFLOWER COLOR pixels verified
+yunroll-cart-v8-ram SPACE HORSE SPIN pixels verified
+yunroll-cart-v8-ram SPACE HORSE CRAWL pixels verified
+yunroll-cart-v8-ram FALLING CUBES pixels verified
+yunroll-cart-v8-ram HORSE HEAD HIFI pixels verified
+yunroll-cart-v8-ram SUNFLOWER TORUS HIFI pixels verified
+yunroll-cart-v8-ram COMPLETE

@@ -70,7 +70,7 @@ def _materials(path):
     return values
 
 
-def load_textures(obj_path, mesh):
+def load_textures(obj_path, mesh, *, report=None):
     """Return face/vertex UV bindings and palette-mapped texture images."""
     from PIL import Image
     obj_path = Path(obj_path)
@@ -95,6 +95,13 @@ def load_textures(obj_path, mesh):
         mapped = np.array([nearest_c64_color_index(tuple(map(int, c))) for c in unique], dtype=np.uint8)
         pixels = mapped[inverse].reshape(rgb.shape[:2])
         textures[name] = Texture(pixels, scale, offset, clamp)
+        if report is not None:
+            from .colors import c64_color_name
+            histogram = np.bincount(pixels.ravel(), minlength=16)
+            report[name] = dict(source_rgb_colors=len(unique), width=pixels.shape[1],
+                height=pixels.shape[0], kd=list(mat['kd']),
+                mapped_colors=[dict(c64_index=i, c64_color=c64_color_name(i), pixels=int(n))
+                               for i, n in enumerate(histogram) if n])
     uvs, faces, active, vertex_count = [], [], None, 0
     for raw in lines:
         words = shlex.split(raw, comments=True)

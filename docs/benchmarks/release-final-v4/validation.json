@@ -1,0 +1,419 @@
+{
+  "passed": true,
+  "version": "0.7.9",
+  "revision": "release_final_v4",
+  "title": "The Golden Dragon & SAKU 2026",
+  "unit_tests": 263,
+  "unit_skipped": 3,
+  "startup_carts": 18,
+  "star_density": {
+    "default": 8,
+    "default_profile": "light",
+    "levels": [
+      2,
+      4,
+      8,
+      16,
+      24,
+      32
+    ],
+    "keys": {
+      "1": "reset",
+      "2": "more",
+      "3": "less",
+      "4": "light/full"
+    },
+    "light_default": 8,
+    "light_levels": [
+      2,
+      4,
+      8
+    ]
+  },
+  "hud": {
+    "shift_u": "all text including INTERACTIVE",
+    "event_only_render_gate": true
+  },
+  "header_colors": [
+    14,
+    3
+  ],
+  "rounded_card": {
+    "padding_points": [
+      8,
+      6
+    ],
+    "radius_points": 5
+  },
+  "additional_idle_input_cycles_vs_v3": 9,
+  "additional_light_path_RAM_bytes": 0,
+  "run_stop_help": true,
+  "escape_help_verified": true,
+  "style_switch_preserves_stars": true,
+  "additional_per_refresh_mode_dispatch_cycles": 0,
+  "border_dots_fixed": true,
+  "unchanged_colour_comparisons_cpu_cycles": 6,
+  "immediate_sprite_disable": true,
+  "near_star_width": 2,
+  "canonical_comparison_passed": true,
+  "physical_hardware_tested": false,
+  "saku_cartridge": {
+    "name": "SAKU 2026",
+    "hardware_id": 32,
+    "chip_packets": 55,
+    "reset_address": 57344,
+    "roml_packets": 54,
+    "romh_packets": 1,
+    "internal_name": "73616b75203230323600000000000000",
+    "eapi_present": true
+  },
+  "rom_used_bytes": 450560,
+  "rom_free_bytes": 598016,
+  "cartridge_comparison": {
+    "baseline": "release_final_v3",
+    "changed": [
+      {
+        "path": "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-indexed4-interactive.crt",
+        "sha256": "95a6931c13badd2e3716c44b0fc2da155b1f80316d25db5b895abe436f713d0e",
+        "previous_sha256": "0d46a0fbfc35813b7a7edcfa8fa3a684bb8323e2a48cfc25694db47fd37e9dd4"
+      },
+      {
+        "path": "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-interactive.crt",
+        "sha256": "d2a05787353a911c9a1c4849aca3be8ac304d13f2932e3d492c8f52653cd131b",
+        "previous_sha256": "9a6281ff53186e41d6cf0b52f11cf536dc0ad311ce352f636814a5152c16074e"
+      },
+      {
+        "path": "examples/saku_2026/cartridges/saku_2026-interactive.crt",
+        "sha256": "8b8133a6872abf6fd577dcffea2933c7312d28147c01bed9c6bb8e248ad27d49",
+        "previous_sha256": "cca3934c0f2cb5511dff31612fd03a58253de2ac3117e1837977c99b8d229ed0"
+      }
+    ],
+    "unchanged": [
+      {
+        "path": "examples/blender_falling_cubes/falling_cubes_c64-hors-render-v2.crt",
+        "sha256": "066abd40fe8111b975fcf894fae10176b82dfef8b131d02f90b322b1e66e479c",
+        "previous_sha256": "066abd40fe8111b975fcf894fae10176b82dfef8b131d02f90b322b1e66e479c"
+      },
+      {
+        "path": "examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v2.crt",
+        "sha256": "bf4cc9523be374eb6f73acc1fcf76f27bf54a41edc7f018805892ad852625f4a",
+        "previous_sha256": "bf4cc9523be374eb6f73acc1fcf76f27bf54a41edc7f018805892ad852625f4a"
+      },
+      {
+        "path": "examples/cart_demos/c643d-demo-v0.7.2-hors-render-v2-all-ram.crt",
+        "sha256": "94958c25843eb0b58af3b52c055964005344e6052d91f3404e64997802defa70",
+        "previous_sha256": "94958c25843eb0b58af3b52c055964005344e6052d91f3404e64997802defa70"
+      },
+      {
+        "path": "examples/cart_demos/c643d-demo-v0.7.2-hors-render-v2-all.crt",
+        "sha256": "153073c912ac0b3b6d2c4b15297a663751346ffabedbb93e2ecc72c8b02ecac7",
+        "previous_sha256": "153073c912ac0b3b6d2c4b15297a663751346ffabedbb93e2ecc72c8b02ecac7"
+      },
+      {
+        "path": "examples/cart_demos/c643d-demo-v0.7.3-hors-render-v2-all-ram.crt",
+        "sha256": "e3f1c4a7a2d59bb0978d597f425d8643f261f7c0fbc3a7ab6e706804767b58ab",
+        "previous_sha256": "e3f1c4a7a2d59bb0978d597f425d8643f261f7c0fbc3a7ab6e706804767b58ab"
+      },
+      {
+        "path": "examples/cart_demos/c643d-demo-v0.7.3-hors-render-v2-all.crt",
+        "sha256": "384ac27ca491e0ce4c04983f0a02707fb39b0ab080568bab0d54913cd0f1c780",
+        "previous_sha256": "384ac27ca491e0ce4c04983f0a02707fb39b0ab080568bab0d54913cd0f1c780"
+      },
+      {
+        "path": "examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all-ram.crt",
+        "sha256": "420a6f0c39721346c9585c45bff10f688d48b9bc08f81f9eb1f4fe2f41b79055",
+        "previous_sha256": "420a6f0c39721346c9585c45bff10f688d48b9bc08f81f9eb1f4fe2f41b79055"
+      },
+      {
+        "path": "examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all.crt",
+        "sha256": "c1c540b938070702e40add7c2803148386c1c9499efa1f9bb1e0d7bb35c53575",
+        "previous_sha256": "c1c540b938070702e40add7c2803148386c1c9499efa1f9bb1e0d7bb35c53575"
+      },
+      {
+        "path": "examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all-ram.crt",
+        "sha256": "b33a2d0f2dce9a08aefcad80d3d4832ee3af3ab2567ede93814ee930a2c30680",
+        "previous_sha256": "b33a2d0f2dce9a08aefcad80d3d4832ee3af3ab2567ede93814ee930a2c30680"
+      },
+      {
+        "path": "examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all.crt",
+        "sha256": "dfb10bb96c1b83c368a59c849bcd51408a958190f743611c752c85bf29b37b07",
+        "previous_sha256": "dfb10bb96c1b83c368a59c849bcd51408a958190f743611c752c85bf29b37b07"
+      },
+      {
+        "path": "examples/cart_demos/c643d-demo-v0.7.6-hors-render-v2-all-ram.crt",
+        "sha256": "9eec26f24400010f77c4989b2c561be0540a28b41afc64548df8e7e9a0389962",
+        "previous_sha256": "9eec26f24400010f77c4989b2c561be0540a28b41afc64548df8e7e9a0389962"
+      },
+      {
+        "path": "examples/cart_demos/c643d-demo-v0.7.6-hors-render-v2-all.crt",
+        "sha256": "866a414e0378fcb619066b4f58df345ffcab44f1e0482734114d34a9b70d72ae",
+        "previous_sha256": "866a414e0378fcb619066b4f58df345ffcab44f1e0482734114d34a9b70d72ae"
+      },
+      {
+        "path": "examples/cart_demos/c643d-demo-v0.7.7-hors-render-v2-all-ram.crt",
+        "sha256": "9e4d316ad510b2edeb2800f453ef952e8122897aa986d0093f82d4d40a7f57b9",
+        "previous_sha256": "9e4d316ad510b2edeb2800f453ef952e8122897aa986d0093f82d4d40a7f57b9"
+      },
+      {
+        "path": "examples/cart_demos/c643d-demo-v0.7.7-hors-render-v2-all.crt",
+        "sha256": "db028851e4078b7938853fff19183f893a80aa182ccd7a24755bb9faafd8be59",
+        "previous_sha256": "db028851e4078b7938853fff19183f893a80aa182ccd7a24755bb9faafd8be59"
+      },
+      {
+        "path": "examples/cart_demos/c643d-demo-v0.7.8-hors-render-v2-all-ram.crt",
+        "sha256": "edb9ad16ad38c924a691db07dd4c05dc16f4db2ef0329e10a30c81ed50ebfb1b",
+        "previous_sha256": "edb9ad16ad38c924a691db07dd4c05dc16f4db2ef0329e10a30c81ed50ebfb1b"
+      },
+      {
+        "path": "examples/cart_demos/c643d-demo-v0.7.8-hors-render-v2-all.crt",
+        "sha256": "8eaa0e3408895a930806f075be6bac736e06f929d0bd7d4ac1f51112e6cfb638",
+        "previous_sha256": "8eaa0e3408895a930806f075be6bac736e06f929d0bd7d4ac1f51112e6cfb638"
+      },
+      {
+        "path": "examples/cart_demos/c643d-demo-v0.7.9-hors-render-v2-all-ram.crt",
+        "sha256": "e3de5a70ede3ac1c86331fac4796cb69e8b3881ae4e0535a791aae615118b153",
+        "previous_sha256": "e3de5a70ede3ac1c86331fac4796cb69e8b3881ae4e0535a791aae615118b153"
+      },
+      {
+        "path": "examples/cart_demos/c643d-demo-v0.7.9-hors-render-v2-all.crt",
+        "sha256": "e260e0f03ab5eea398b65c0dd8ff2417ab756bec5e03cb8c78593be1fe667eb6",
+        "previous_sha256": "e260e0f03ab5eea398b65c0dd8ff2417ab756bec5e03cb8c78593be1fe667eb6"
+      },
+      {
+        "path": "examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt",
+        "sha256": "b36a5444541f5f04f99156cfda78210cc3dc34f7acfb0536f20275dc80b5032b",
+        "previous_sha256": "b36a5444541f5f04f99156cfda78210cc3dc34f7acfb0536f20275dc80b5032b"
+      },
+      {
+        "path": "examples/cart_hifi/c643d-hifi-v0.7.2-hors-render-v2.crt",
+        "sha256": "eeb46660e4b8f75fadceaba6819ea7b23b2a7d40252eb76b1a51d57619f52939",
+        "previous_sha256": "eeb46660e4b8f75fadceaba6819ea7b23b2a7d40252eb76b1a51d57619f52939"
+      },
+      {
+        "path": "examples/cart_hifi/c643d-hifi-v0.7.4-hors-render-v2.crt",
+        "sha256": "523754d8f6b22555846aa8d09107195bca74f7d3d0d315b94e1abaf790b3bad1",
+        "previous_sha256": "523754d8f6b22555846aa8d09107195bca74f7d3d0d315b94e1abaf790b3bad1"
+      },
+      {
+        "path": "examples/cart_hifi/c643d-hifi-v0.7.5-hors-render-v2.crt",
+        "sha256": "b8e4ef03ec7f4c946e8c066ef150216e605ff7a01562bed08e5899702740e239",
+        "previous_sha256": "b8e4ef03ec7f4c946e8c066ef150216e605ff7a01562bed08e5899702740e239"
+      },
+      {
+        "path": "examples/cart_hifi/c643d-hifi-v0.7.6-hors-render-v2.crt",
+        "sha256": "a132fb2c21f4b9cf64c7422d80bebbdf393bfa843bcca1e4d8dc9838dd0c4995",
+        "previous_sha256": "a132fb2c21f4b9cf64c7422d80bebbdf393bfa843bcca1e4d8dc9838dd0c4995"
+      },
+      {
+        "path": "examples/cart_hifi/c643d-hifi-v0.7.7-hors-render-v2.crt",
+        "sha256": "b73a7dc49b974e36b56d12efcf280d78fc9c3737e313c406d424b205f319ef30",
+        "previous_sha256": "b73a7dc49b974e36b56d12efcf280d78fc9c3737e313c406d424b205f319ef30"
+      },
+      {
+        "path": "examples/cart_hifi/c643d-hifi-v0.7.8-hors-render-v2.crt",
+        "sha256": "0fffa20073616c72edb47e5fcecd2d2bf7efa3f4ab582063ee10a4acb020359d",
+        "previous_sha256": "0fffa20073616c72edb47e5fcecd2d2bf7efa3f4ab582063ee10a4acb020359d"
+      },
+      {
+        "path": "examples/cart_hifi/c643d-hifi-v0.7.9-hors-render-v2.crt",
+        "sha256": "157be145a587e0c0a2ded1e0c684e9cefa5013f6db418107dd4ba3aa39ce9f2c",
+        "previous_sha256": "157be145a587e0c0a2ded1e0c684e9cefa5013f6db418107dd4ba3aa39ce9f2c"
+      },
+      {
+        "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-ram.crt",
+        "sha256": "08eae876f228d3be3c2a98a8f2afca8dbce299f68101b8d9656f82affa92a60c",
+        "previous_sha256": "08eae876f228d3be3c2a98a8f2afca8dbce299f68101b8d9656f82affa92a60c"
+      },
+      {
+        "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt",
+        "sha256": "7d5f0ebf35f821d0c9ec2b162bef73c0b4766359b9a6a0b3e88e7519d7cf045f",
+        "previous_sha256": "7d5f0ebf35f821d0c9ec2b162bef73c0b4766359b9a6a0b3e88e7519d7cf045f"
+      },
+      {
+        "path": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt",
+        "sha256": "16bd2e65c5a643c477ea57ae6b4aa326d8a1bdfa63a12a70cf7e59163e95b2c3",
+        "previous_sha256": "16bd2e65c5a643c477ea57ae6b4aa326d8a1bdfa63a12a70cf7e59163e95b2c3"
+      },
+      {
+        "path": "examples/color_combo_test/color-combo-test.crt",
+        "sha256": "0c542cfb88cab387b89de79aeeb68a025e4f383551b9ea7884a612729bf7d1e8",
+        "previous_sha256": "0c542cfb88cab387b89de79aeeb68a025e4f383551b9ea7884a612729bf7d1e8"
+      },
+      {
+        "path": "examples/cube/cube-hors-render-v2.crt",
+        "sha256": "0fbaf7d73cd7b1973d71cf4a3501ed34ed982dfd7ec8e3e718fa730979ea7cf9",
+        "previous_sha256": "0fbaf7d73cd7b1973d71cf4a3501ed34ed982dfd7ec8e3e718fa730979ea7cf9"
+      },
+      {
+        "path": "examples/demos_sande/sande_pretzel-hors-render-v2-color.crt",
+        "sha256": "b53b071240b63e1b59241f3074218bb56332059f5b67b095e2d960a54d0fc8b6",
+        "previous_sha256": "b53b071240b63e1b59241f3074218bb56332059f5b67b095e2d960a54d0fc8b6"
+      },
+      {
+        "path": "examples/demos_sande/sande_pretzel-hors-render-v2-interactive.crt",
+        "sha256": "e2ee51c07d6b86f437470722105feb60cf4c4387e19bc9d52cd34f8c0cdacde6",
+        "previous_sha256": "e2ee51c07d6b86f437470722105feb60cf4c4387e19bc9d52cd34f8c0cdacde6"
+      },
+      {
+        "path": "examples/demos_sande/sande_pretzel-hors-render-v2.crt",
+        "sha256": "ae0634a8aadb928dc4d3a9326d52b9d7b68c9d4a3327d9868c8eeaf163a49385",
+        "previous_sha256": "ae0634a8aadb928dc4d3a9326d52b9d7b68c9d4a3327d9868c8eeaf163a49385"
+      },
+      {
+        "path": "examples/demos_sande/sande_tac2-hors-render-v2-color.crt",
+        "sha256": "99f7f82de654529f687a4cc49942d5f7108d4730184c67697d6eb864247cba27",
+        "previous_sha256": "99f7f82de654529f687a4cc49942d5f7108d4730184c67697d6eb864247cba27"
+      },
+      {
+        "path": "examples/demos_sande/sande_tac2-hors-render-v2-interactive.crt",
+        "sha256": "900dd2e03f3f639e87f079cc9140cba746f0689a42b36d18500be9768ab9ff94",
+        "previous_sha256": "900dd2e03f3f639e87f079cc9140cba746f0689a42b36d18500be9768ab9ff94"
+      },
+      {
+        "path": "examples/demos_sande/sande_tac2-hors-render-v2.crt",
+        "sha256": "ae70cef831c58229f5e52e260c29494487282ba124a26b860c03c685537d6174",
+        "previous_sha256": "ae70cef831c58229f5e52e260c29494487282ba124a26b860c03c685537d6174"
+      },
+      {
+        "path": "examples/hifi_showcase/horse_head_hifi-hors-render-v2.crt",
+        "sha256": "869ca813d8de32a8db4d8a06f74775a616bfa5e32b344eb7a2a5df222be0d2d5",
+        "previous_sha256": "869ca813d8de32a8db4d8a06f74775a616bfa5e32b344eb7a2a5df222be0d2d5"
+      },
+      {
+        "path": "examples/hors_v3_preview/cartridges/sande_pretzel-surface-dither-128-v3.crt",
+        "sha256": "d492127e86e34e08630002ec8e71a2a60a1538d962e013a5d3a77416326b0ad2",
+        "previous_sha256": "d492127e86e34e08630002ec8e71a2a60a1538d962e013a5d3a77416326b0ad2"
+      },
+      {
+        "path": "examples/hors_v3_preview/cartridges/sande_pretzel-surface-material-128-v3.crt",
+        "sha256": "2d946eb35cee184d65888475e7dd781f7a9e4ddadc68e26dced48f049b3894b4",
+        "previous_sha256": "2d946eb35cee184d65888475e7dd781f7a9e4ddadc68e26dced48f049b3894b4"
+      },
+      {
+        "path": "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-indexed4.crt",
+        "sha256": "ce0e0c36de2b603a7862c5916ee5022c60afc3e53fc62b99fed6735be7f92cc4",
+        "previous_sha256": "ce0e0c36de2b603a7862c5916ee5022c60afc3e53fc62b99fed6735be7f92cc4"
+      },
+      {
+        "path": "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3.crt",
+        "sha256": "a20285b465010ef17b37f36325c056797a9f8e9cbd5e7273de89066ccff58dcb",
+        "previous_sha256": "a20285b465010ef17b37f36325c056797a9f8e9cbd5e7273de89066ccff58dcb"
+      },
+      {
+        "path": "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128.crt",
+        "sha256": "8df20f6b4a385ca752a4dddc4ef14b1366bdb0b2e4bdcce049f33891a89d981d",
+        "previous_sha256": "8df20f6b4a385ca752a4dddc4ef14b1366bdb0b2e4bdcce049f33891a89d981d"
+      },
+      {
+        "path": "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-192-v3-indexed4.crt",
+        "sha256": "a36151bd86a8db86a8681f594646e4473dc746a9e2e4307eebdea986ec9e8ebb",
+        "previous_sha256": "a36151bd86a8db86a8681f594646e4473dc746a9e2e4307eebdea986ec9e8ebb"
+      },
+      {
+        "path": "examples/hors_v3_preview/cartridges/sande_pretzel-surface-textured-128-v3.crt",
+        "sha256": "10f78f626365474ce95a2219c808d70171fe10beb396b3896431972d7718568f",
+        "previous_sha256": "10f78f626365474ce95a2219c808d70171fe10beb396b3896431972d7718568f"
+      },
+      {
+        "path": "examples/hors_v3_preview/cartridges/sande_pretzel-wire-bw-128-v3.crt",
+        "sha256": "1b812c13a7c8e823ea6939c09cae6f8106657babfd9c3344d5e99a82aafcdb70",
+        "previous_sha256": "1b812c13a7c8e823ea6939c09cae6f8106657babfd9c3344d5e99a82aafcdb70"
+      },
+      {
+        "path": "examples/hors_v3_preview/cartridges/sande_pretzel-wire-bw-128.crt",
+        "sha256": "8089c6f30ae29c2b967d7a2a9e7b836ff039d014b4f173ed0108989db4ebdee0",
+        "previous_sha256": "8089c6f30ae29c2b967d7a2a9e7b836ff039d014b4f173ed0108989db4ebdee0"
+      },
+      {
+        "path": "examples/horse_head/horse_head-hors-render-v2.crt",
+        "sha256": "25717f9157f685c20ffcfcf331a73ee686b52daff0ef66d6d2e757614d663a3c",
+        "previous_sha256": "25717f9157f685c20ffcfcf331a73ee686b52daff0ef66d6d2e757614d663a3c"
+      },
+      {
+        "path": "examples/saku_2026/cartridges/saku_2026-gradient.crt",
+        "sha256": "95e9f6fdab2a1c7578cebc75912a4814708123ec46b05787cf4acdf6107df847",
+        "previous_sha256": "95e9f6fdab2a1c7578cebc75912a4814708123ec46b05787cf4acdf6107df847"
+      },
+      {
+        "path": "examples/saku_2026/cartridges/saku_2026-solid.crt",
+        "sha256": "b69e574b8018c27ce2a72fe10434f23778ba803d42197efa84acb3d435869d61",
+        "previous_sha256": "b69e574b8018c27ce2a72fe10434f23778ba803d42197efa84acb3d435869d61"
+      },
+      {
+        "path": "examples/space_horse_crawl/space_horse_crawl_color-hors-render-v2.crt",
+        "sha256": "e20424401ff0f274029e7d7816545dd732237e27e797ab2af23048e15fda74df",
+        "previous_sha256": "e20424401ff0f274029e7d7816545dd732237e27e797ab2af23048e15fda74df"
+      },
+      {
+        "path": "examples/space_horse_spin/space_horse_spin_color-hors-render-v2.crt",
+        "sha256": "e2ab49ea350585a9ee903abca6abb1b8b44259b3441e573a30ca25754843b38b",
+        "previous_sha256": "e2ab49ea350585a9ee903abca6abb1b8b44259b3441e573a30ca25754843b38b"
+      },
+      {
+        "path": "examples/sphere/sphere-hors-render-v2.crt",
+        "sha256": "359a64bcd40935a112ef5f23978889fed9f451ad03397d55fd7b292113e5dc92",
+        "previous_sha256": "359a64bcd40935a112ef5f23978889fed9f451ad03397d55fd7b292113e5dc92"
+      },
+      {
+        "path": "examples/stanford_dragon/cartridges/stanford_dragon-blue-hors-v3.crt",
+        "sha256": "8433b3b71a6e81e0a22d6f8939fd4d41680b7444d9d58ce2e9b39895c6981209",
+        "previous_sha256": "8433b3b71a6e81e0a22d6f8939fd4d41680b7444d9d58ce2e9b39895c6981209"
+      },
+      {
+        "path": "examples/stanford_dragon/cartridges/stanford_dragon-golden-hors-v3.crt",
+        "sha256": "64f9c74bb51a4b36364b5495c888d80ef1cc88b7db887ab014a1e44e73e643cd",
+        "previous_sha256": "64f9c74bb51a4b36364b5495c888d80ef1cc88b7db887ab014a1e44e73e643cd"
+      },
+      {
+        "path": "examples/stanford_dragon/cartridges/stanford_dragon-green-hors-v3.crt",
+        "sha256": "32d073f9b288ff21c0041ce0fc7c35139f0b81bcb14d4a93e26ac142c2bc1444",
+        "previous_sha256": "32d073f9b288ff21c0041ce0fc7c35139f0b81bcb14d4a93e26ac142c2bc1444"
+      },
+      {
+        "path": "examples/stanford_dragon/cartridges/stanford_dragon-metallic-hors-v3.crt",
+        "sha256": "12ac2b59e103031fa6865007101e21e76f81a7bd4a99d51294c90cd8262f943e",
+        "previous_sha256": "12ac2b59e103031fa6865007101e21e76f81a7bd4a99d51294c90cd8262f943e"
+      },
+      {
+        "path": "examples/stanford_dragon/cartridges/stanford_dragon-red-hors-v3.crt",
+        "sha256": "40ef5463b83e657fb94514e5f6c9f3f45f0ba35f0c4608c8fe3cca62ff6cba7c",
+        "previous_sha256": "40ef5463b83e657fb94514e5f6c9f3f45f0ba35f0c4608c8fe3cca62ff6cba7c"
+      },
+      {
+        "path": "examples/stanford_dragon/cartridges/stanford_dragon-wireframe-hors-v3.crt",
+        "sha256": "61a28ce0b136200c1473c47b1eb464af2ba0916dc6db708bd3ae1d347ea9edfe",
+        "previous_sha256": "61a28ce0b136200c1473c47b1eb464af2ba0916dc6db708bd3ae1d347ea9edfe"
+      },
+      {
+        "path": "examples/sunflower_torus/sunflower_torus-hors-render-v2.crt",
+        "sha256": "cb64ed7eb26c626eeb5d71ebd0efcf8068ace4b5a84cf439c294ed33ba9ff1c9",
+        "previous_sha256": "cb64ed7eb26c626eeb5d71ebd0efcf8068ace4b5a84cf439c294ed33ba9ff1c9"
+      },
+      {
+        "path": "examples/sunflower_torus/sunflower_torus_color-hors-render-v2.crt",
+        "sha256": "d212aa1ff56fe4972326a4b570054f59e685f0558525a7f0b7073866121042f7",
+        "previous_sha256": "d212aa1ff56fe4972326a4b570054f59e685f0558525a7f0b7073866121042f7"
+      },
+      {
+        "path": "examples/torus/torus-hors-render-v2.crt",
+        "sha256": "d7db879b527b5846a5dbc98c0771e898272cdfc407dace5f2177c52103b5b0bc",
+        "previous_sha256": "d7db879b527b5846a5dbc98c0771e898272cdfc407dace5f2177c52103b5b0bc"
+      },
+      {
+        "path": "examples/torus_dense/torus_dense-hors-render-v2.crt",
+        "sha256": "94b693dcd572b56e750c6198bae8b626d27d77953a082361f5a6a493a44e6e00",
+        "previous_sha256": "94b693dcd572b56e750c6198bae8b626d27d77953a082361f5a6a493a44e6e00"
+      }
+    ]
+  },
+  "evidence": {
+    "startup": "startup.json",
+    "saku": "saku.json",
+    "unit": "unit.txt",
+    "canonical": "canonical.txt",
+    "options": "interactive-options.json",
+    "host_keys": "host-keys.json",
+    "dragon": "dragon.json"
+  },
+  "scope": "Three rebuilt interactive carts; all 18 V3 cold-boot checks; full SAKU and Dragon verification; shared V3 interactive tests; fresh option matrix and complete canonical renderer comparison. Other 63 CRTs byte-identical to final_v3."
+}

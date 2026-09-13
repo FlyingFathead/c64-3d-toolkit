@@ -1,12 +1,12 @@
 {
-  "sha256": "74a26d6a1ddf92e788164ff41c35a46bef029c576836356a187e8ca4898680a6",
+  "sha256": "ce0e0c36de2b603a7862c5916ee5022c60afc3e53fc62b99fed6735be7f92cc4",
   "clock_hz": 985248,
   "refreshes": 1504,
   "warmup_samples": 134,
   "display_flips": 374,
   "elapsed_cycles": 29562582,
   "display_fps": 12.464498263379024,
-  "high_fps": 18.000657726458872,
+  "high_fps": 17.95015303891561,
   "low_fps": 10.024398433128148,
   "worst_display_ms": 99.75660950339407,
   "hold_ticks": {

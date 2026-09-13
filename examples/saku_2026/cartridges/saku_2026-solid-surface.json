@@ -1,0 +1,67 @@
+{
+  "experimental": false,
+  "preset": "material",
+  "encoding": "native",
+  "color_mapping": "nearest VIC-II palette; weighted CIELAB (0.5 L squared + a squared + b squared)",
+  "cell_mapping": "weighted CIELAB error; two colours per cell",
+  "frames": 48,
+  "fit_scale": 1.3487742218351921,
+  "triangles": 4248,
+  "lighting": "unlit SVG paint or mapped image",
+  "native_limit": "two colours per 8x8 cell; black preserved at silhouettes",
+  "host_rasterized": true,
+  "runtime_triangle_lighting": false,
+  "uniform_material_fast_path": false,
+  "svg": {
+    "source": "saku_2026.svg",
+    "source_sha256": "55da1297202648f60a1e62b5a2e1aaa850c66d6eb4be8a3da7f7a9cd9c5507cb",
+    "baker": "CairoSVG",
+    "baker_version": "2.9.1",
+    "raster_size": [
+      512,
+      92
+    ],
+    "background_rectangles_removed": 0,
+    "outlines_only": false,
+    "resources": [],
+    "warnings": [],
+    "crop": [
+      1,
+      1,
+      508,
+      91
+    ],
+    "texture_size": [
+      507,
+      90
+    ],
+    "alpha_threshold": 128,
+    "opaque_texels": 16908,
+    "cap_rectangles": 416,
+    "wall_quads": 1292,
+    "depth": 3.0,
+    "geometry": "disjoint alpha-mask rectangles and boundary walls; no hole-filling fan",
+    "opacity": "binary coverage at threshold; partial paint composited on black",
+    "source_rgb_colors": 243,
+    "override_color": null,
+    "mapped_colors": [
+      {
+        "c64_index": 0,
+        "c64_color": "black",
+        "texels": 12643
+      },
+      {
+        "c64_index": 2,
+        "c64_color": "red",
+        "texels": 4265
+      }
+    ]
+  },
+  "animation": {
+    "modes": [
+      "spin"
+    ],
+    "samples_per_mode": 48,
+    "total_samples": 48
+  }
+}

@@ -35,7 +35,7 @@ def expected_frame(f,screen):
 
 def apply_interactive_overlay(bitmap, manifest):
     """Composite the documented UI separately from the unchanged model oracle."""
-    if manifest.get('interactive_overlay') and manifest.get('text_overlay', True):
+    if manifest.get('interactive_overlay') and manifest.get('text_overlay', True) and manifest.get('hud_visibility',{}).get('initial_label',True):
         from c643d.font import bitmap_text
         assert manifest['interactive_overlay'] == dict(text='INTERACTIVE', x=232, y=0, width=88, height=8, font='HUD 5x7')
         bitmap[232:320] = bitmap_text('INTERACTIVE')
@@ -134,10 +134,14 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None,oracle_
             if reel_hud is not None:
                 assert ram[baddr+7680:baddr+7680+len(reel_hud)] == reel_hud, ('reel caption mismatch',i,slot)
                 if not reel_hud:assert not any(ram[baddr+7680:baddr+8000]), ('scene HUD must be blank',i)
-            if manifest.get('hud_text') and manifest.get('text_overlay',True):
+            if manifest.get('hud_text') and manifest.get('text_overlay',True) and manifest.get('hud_visibility',{}).get('initial_info',True):
                 from c643d.font import bitmap_text
                 hud=bitmap_text(manifest['hud_text'])
                 assert ram[baddr+7680:baddr+7680+len(hud)]==hud, ('HUD mismatch',i,slot)
+            if not manifest.get('hud_visibility',{}).get('initial_info',True):
+                assert not any(ram[baddr+7680:baddr+7928]), ('hidden info row is not blank',i,slot)
+            if not manifest.get('hud_visibility',{}).get('initial_performance',True):
+                assert not any(ram[baddr+7936:baddr+8000]), ('hidden FPS is not blank',i,slot)
             if not manifest.get('text_overlay',True):
                 assert not any(ram[baddr+7680:baddr+8000]), ('clean HUD row is not blank',i,slot)
             if capture and ((finite and i<n) or (not finite and n<=i<2*n)):images.append(render_ram(ram,slot))

@@ -1,6 +1,6 @@
 import struct
 import io
-from contextlib import redirect_stderr
+from contextlib import redirect_stderr, redirect_stdout
 import tempfile
 import unittest
 from pathlib import Path
@@ -112,7 +112,9 @@ class CartridgeLoadingTests(unittest.TestCase):
             install_scene_extension(image, bootstrap(), bytes(0x1BFA), legacy_cart=True)
             raw.write_bytes(image)
             warning = io.StringIO()
-            with patch('tools.c643d.cartridge.subprocess.run'), redirect_stderr(warning):
+            def convert(*args, **kwargs):
+                crt.write_bytes(crt_bytes(image[8192:16384]))
+            with patch('tools.c643d.cartridge.subprocess.run', side_effect=convert), redirect_stderr(warning):
                 convert_easyflash(cartconv='cartconv',raw=raw,crt=crt,name='TEST',cwd=root,legacy_cart=True)
             self.assertEqual(raw.read_bytes(), image)
             self.assertIn('discontinued since v0.7.4', warning.getvalue())
@@ -167,6 +169,24 @@ class CartridgeLoadingTests(unittest.TestCase):
                 p.write_bytes(case)
                 with self.assertRaises(ValueError):
                     inspect_easyflash_crt(p)
+
+    def test_created_cart_summary_counts_rom_not_container_overhead(self):
+        from tools.c643d.cartridge import print_cart_summary
+        with tempfile.TemporaryDirectory() as td:
+            p = Path(td) / 'cart with spaces.crt'
+            # One ROMH bootstrap plus one ROML slot, including an erased tail.
+            p.write_bytes(crt_bytes(bootstrap()) +
+                struct.pack('>4sIHHHH', b'CHIP', 8208, 2, 3, 0x8000, 8192) + bytes(8192))
+            output = io.StringIO()
+            with patch.dict('os.environ', {'COLUMNS': '72'}), redirect_stdout(output):
+                print_cart_summary(p)
+            lines = output.getvalue().splitlines()
+            self.assertEqual(lines[0], '-' * 72)
+            self.assertEqual(lines[-1], '-' * 72)
+            self.assertEqual(lines[1], f'Created: {p.resolve()}')
+            self.assertIn('ROM used: 16,384 bytes (16 KiB)', lines)
+            self.assertIn('Free ROM available on cart: 1,032,192 bytes (1008 KiB)', lines)
+            self.assertIn('Free slots: ROML 504 KiB; ROMH 504 KiB', lines)
 
     def test_launcher_options_preserve_preferences_but_protect_files(self):
         with tempfile.TemporaryDirectory() as td:

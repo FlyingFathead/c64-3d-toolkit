@@ -1,10 +1,10 @@
 # HORS-V3: measured results
 
-HORS-V3 was introduced in v0.7.7: **Pretzel Logic - The Great Texture Update**. These measurements were rerun for **v0.7.8: The Stanford Dragon Has Arrived!**. The complete release gates rebuild the examples and repeat the PAL VICE measurements.
+HORS-V3 was introduced in v0.7.7: **Pretzel Logic - The Great Texture Update**. These measurements were rerun for **v0.7.9: The Golden Dragon & SAKU 2026**. The complete release gates rebuild the examples and repeat the PAL VICE measurements.
 
-The new [Stanford Dragon example](../examples/stanford_dragon/README.md) demonstrates wireframe, metallic (grey), red, green and blue shaded surfaces, with its own measured performance and timed GIFs. Select coloured shading with `--surface-fill metallic --surface-palette red|green|blue`; `--surface-fill grey` aliases metallic.
+The new [Stanford Dragon example](../examples/stanford_dragon/README.md) demonstrates wireframe, metallic (grey), golden, red, green and blue shaded surfaces, with its own measured performance and timed GIFs. Select coloured shading with `--surface-fill metallic --surface-palette red|green|blue`; `--surface-fill grey` aliases metallic.
 
-The default stays wireframe. New surface generation and colour compression require `--renderer hors-renderer-v3`. The shared CLI adds an opt-in dispatch; older renderer implementations retain their functionality. Current example builds carry the new toolkit version; historical versioned cartridges remain available.
+HORS-V3 is the normal build default. OBJ defaults remain wireframe; SVG defaults preserve mapped fills and strokes. Surface generation and colour compression use V3. The shared CLI selects V3 by default; older renderer implementations retain their functionality. Current example builds carry the new toolkit version; historical versioned cartridges remain available.
 
 ## Results
 
@@ -16,17 +16,17 @@ The default stays wireframe. New surface generation and colour compression requi
 | V3 metallic, B/W dither | 128 | 18.46 | 252,089 | 328,384 |
 | V2 kernel, same metallic pictures | 128 | 10.73 | 332,248 | 451,504 |
 | V3 metallic, direct colours | 128 | 14.70 | 296,092 | 377,632 |
-| V3 MTL image texture | 128 | 14.70 | 295,932 | 377,632 |
+| V3 MTL image texture | 128 | 14.70 | 296,344 | 377,632 |
 | V3 metallic, compact dictionary | 128 | 12.46 | 274,460 | 361,216 |
-| V3 metallic, interactive | 128 | 14.30 | 296,092 | 377,632 |
-| V3 compact, interactive | 128 | 12.20 | 274,460 | 361,216 |
+| V3 metallic, interactive | 128 | 14.16 | 296,092 | 377,632 |
+| V3 compact, interactive | 128 | 12.10 | 274,460 | 361,216 |
 | V3 metallic, compact / 192 | 192 | 12.46 | 411,701 | 517,168 |
 
 ![Measured FPS and frame-stream storage](benchmarks/hors-v3-preview/performance.png)
 
-The direct-colour V3 metallic animation is **37.0% faster** than replaying identical metallic pictures through the original V2 kernel, and uses **10.9% less frame-stream ROM**. Against the white wireframe, native metallic fill is **18.2% slower** on this workload.
+The direct-colour V3 metallic animation changes displayed throughput by **+37.0%** against identical metallic pictures through V2, with **-10.9%** frame-stream ROM. Compared with the differently rendered white wireframe, its displayed FPS changes by **-18.2%**.
 
-`--compact-color-dictionary` makes the V3 metallic frame stream **7.3% smaller**, but displayed FPS is **15.2% lower**. Direct colour bytes therefore remain the speed default. Compact is an explicit capacity option; it fits **192 orientations**, where the direct version exceeds current bank-contained packing capacity. There is no automatic geometry simplification or orientation reduction.
+`--compact-color-dictionary` changes metallic frame-stream size by **-7.3%** and displayed throughput by **-15.2%**. Direct bytes remain the speed default. Compact remains an explicit capacity option; no geometry or sample reduction is automatic.
 
 Plain MTL fill is one uniform dark grey and needs no per-frame colour stream. The dither preset uses only black and white. Both happen to be slightly faster than this wireframe because their packed bitmap drawing streams are favourable. This result is specific to this mesh, projection and encoder; it does not establish that filled meshes are generally faster.
 
@@ -40,15 +40,15 @@ The 128-orientation comparisons use the same full 1,552-vertex, 1,552-quad mesh,
 
 Every variant passed independent expected-bitmap and colour checks across all three buffers: **259 completed pictures per 128-orientation cartridge**, and **387 for the 192-orientation cartridge**. The display windows also covered every orientation and checked bitmap, colours and HUD. Release measurements are repeated against the rebuilt cartridges and recorded with their SHA-256 hashes.
 
-The public compact CLI was rebuilt end to end and exactly matched the benchmarked CRT SHA256. Twenty-one focused surface/texture and colour-palette tests and four existing Sande/interactive compatibility tests passed. The complete release suite additionally checks the historical renderers; see `docs/benchmarks/release-0.7.8/`. Real hardware is not tested.
+The public compact CLI was rebuilt end to end and exactly matched the benchmarked CRT SHA256. Focused surface/texture, palette, SVG, speed and compatibility tests are included in the release suite. The complete release suite additionally checks the historical renderers; see `docs/benchmarks/release-0.7.9/`. Real hardware is not tested.
 
 ## Interactive metallic cartridges
 
 Both direct and compact metallic variants have separate `-interactive` cartridges. They retain the full precomputed surface colours, use cursor left/right or either joystick port to select persistent rotation direction, and show `INTERACTIVE` at the top right in the HUD font. Both C64 Shift keys work for left. Releasing a direction keeps it; opposed joystick directions leave it unchanged. Input is polled once per produced picture, so a queued picture may display before the new direction takes effect.
 
-F4 cycles the background, F5 toggles automatic background cycling, and F6/F7 decrease/increase its speed. Only original black colour nibbles are replaced; the metallic greys and white remain unchanged. Black pixels inside an imported texture are also replaced. F8 toggles a persistent black border versus following the background; Ctrl+F7 advances an independent border colour. F2 briefly flashes white, resets the background to black, restores border following, stops cycling and restores the default rate. F3 has no action in V3. The original V2 controls are unchanged.
+F4 cycles the background, F5 toggles automatic background cycling, and F6/F7 decrease/increase its speed. Only original black colour nibbles are replaced; the metallic greys and white remain unchanged. Black pixels inside an imported texture are also replaced. F8 toggles a persistent black border versus following the background; Ctrl+F7 advances an independent border colour. F2 briefly flashes white, resets the background to black, restores border following, stops cycling and restores the default rate. F3 has no action in these original surface carts; the SAKU presentation cart uses it for hue overlays. All new V3 interactive carts add + / - / 0 speed controls and brief SPD feedback; see [controls and RAM](STARFIELD.md). The original V2 controls are unchanged.
 
-Direct metallic interactive measures **14.30 FPS** versus **14.70 FPS** automatic, a **2.7%** reduction. Compact interactive measures **12.20 FPS** versus **12.46 FPS**, a **2.1%** reduction. Input, cycling and display synchronization add no frame-stream payload. Their code remains inside the existing bootstrap allocation, with an additional **256-byte RAM lookup at $0200**. Only the 31 colour-pair entries containing black are updated per colour event. Direct mode remaps incoming colour bytes; compact mode updates its ten-entry dictionary once per event. A producer buffer is reset only when its background changes; surface colours are then restored before publication. Border/background registers follow the displayed buffer, including queued pictures.
+Direct metallic interactive measures **14.16 FPS** versus **14.70 FPS** automatic (-3.6%). Compact interactive measures **12.10 FPS** versus **12.46 FPS** (-2.9%). Controls add no frame-stream payload. Background remapping uses a 256-byte lookup at $0200; shared speed controls use RAM at $9000. Border/background registers follow the displayed buffer, including queued pictures.
 
 Each interactive variant additionally passed **562 completed pictures** with reverse traversal, forward/reverse wraparound and repeated direction changes, plus **20 direction input-path checks**, **47 background-control input checks** and **272 palette-changing pictures**. Every palette colour, all 256 lookup values, the bottom HUD background, persistent border modes and the five-tick reset flash were checked. Bitmap and colour data were checked in all three buffers. Input tests inject CIA read results in the VICE monitor; physical controllers and host key mappings were not tested.
 
@@ -57,16 +57,16 @@ Each interactive variant additionally passed **562 completed pictures** with rev
 
 | Background mode | Direct FPS | Compact FPS |
 | --- | ---: | ---: |
-| Black, cycling off | 14.30 | 12.20 |
-| Blue, cycling off | 13.80 | 12.20 |
-| Automatic, 50 ticks | 13.53 | 11.93 |
-| Automatic, 1 tick | 12.50 | 11.10 |
+| Black, cycling off | 14.16 | 12.10 |
+| Blue, cycling off | 13.70 | 12.10 |
+| Automatic, 50 ticks | 13.43 | 11.86 |
+| Automatic, 1 tick | 12.40 | 11.03 |
 
 ![Background-control performance](benchmarks/hors-v3-preview/background-performance.png)
 
-The default cycle interval is 50 PAL ticks, observed at about 1.02 seconds per change in direct mode and 1.04 seconds in compact mode. The fastest setting requests one tick but performs at most one colour event per produced sample, measured at about 0.080 / 0.090 seconds per visible change. Every sampled displayed picture was checked against its original bitmap and a black-only colour remap; the border matched that buffer. No geometry, orientation count or surface shades are reduced.
+The default cycle interval is 50 PAL ticks; the fastest setting requests one tick but performs at most one event per produced sample. Raw background reports record the observed periods. Every sampled displayed picture is checked against the original bitmap and its black-only colour remap.
 
-The earlier rotation-only interactive carts measured 14.40 / 12.26 FPS. With the new controls idle on black, the additional cost is about 0.7% / 0.5%. All new windows use 1,504 PAL refreshes and actual displayed-buffer flips. The fastest background setting costs more because each produced buffer changes colour.
+Current interactive results include help, shared + / - / 0 speed controls at normal speed, HUD switches, and the included-but-disabled starfield. Shift+I / Shift+F / Shift+U toggle the name/counts, FPS/speed messages, or both; `--hide-hud` selects a hidden startup and `--no-hud-toggle` omits switches. Historical results remain in their release records; the table above comes from the current rebuilt carts.
 
 ## What the colour dictionary does
 
@@ -74,7 +74,7 @@ The metallic animation needs only ten distinct **colour-pair bytes**. One byte n
 
 V3 identifies the union of cells whose colour can differ from the global base. This example has **338 cells** in **22 address runs**. Addresses are shared across the animation in a 66-byte table. Direct mode sends 338 ready-to-store colour bytes per picture; compact sends 169 bytes of indices. Both write the complete union, including values that return to the base, so the renderer never depends on which old picture occupied a reused buffer. The old colour erase pass can be omitted.
 
-The tables reuse an otherwise unused 256-byte vector dispatch page. The noninteractive codec reserves no additional RAM; interactive background controls add the separate 256-byte lookup described above. Existing frame/cache RAM is 11,264 bytes, plus 896 directory bytes for 128 orientations or 1,344 for 192. CRT file size also includes code and bank padding, so it differs from the frame-stream payload in the table.
+The noninteractive colour codec reuses the vector dispatch allocation. Interactive builds reserve a 256-byte colour lookup, 2 KiB for speed controls, and 2 KiB for help code/text plus 1 KiB at $c000–$c3ff for the packed help pages. Exhibition reuses spare HUD/help code space. The included starfield reuses $1700–$1fff and adds 192 sprite-pattern bytes; it starts disabled unless explicitly enabled. --no-starfield excludes it. Existing frame/cache RAM is 11,264 bytes, plus seven directory bytes per orientation. CRT size includes bootstrap code and bank padding. See [the complete memory map and controls](STARFIELD.md).
 
 Indexed mode requires at most 16 distinct pair bytes and a fitting shared address plan. It rejects inputs which exceed those limits. Direct mode has an absolute-colour-run fallback when a shared address plan will not fit. These are picture-independent absolute encodings, not temporal delta compression.
 

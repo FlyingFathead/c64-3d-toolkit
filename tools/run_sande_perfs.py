@@ -39,6 +39,7 @@ def measure(crt, oracle, vice, vice_data, refreshes, cycle_ticks=None):
         wanted.add(hashlib.sha256(bitmap if cycle_ticks else bitmap + colors).digest())
     hud = bitmap_text(f"{manifest['name'].upper().replace('_', ' ')} "
                       f"V:{manifest['vertices']:03d} E:{manifest['edges']:03d}", 31)
+    if not manifest.get('hud_visibility',{}).get('initial_info',True):hud=bytes(len(hud))
     identity = sha(crt)
     with tempfile.TemporaryDirectory(prefix='c643d-sande-display-') as tmp:
         tmp = Path(tmp)

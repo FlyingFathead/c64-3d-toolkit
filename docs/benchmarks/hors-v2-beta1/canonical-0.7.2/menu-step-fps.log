@@ -1,0 +1,38 @@
+fps locking: not set
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /workspace/scratch/a2344c11dad9/canonical-072-full/source/c64/cart/easyflash-demo-control-v9.asm
+Output file:       /workspace/scratch/a2344c11dad9/canonical-072-full/source/build/step-cartridge-demo/step-control.bin
+Data:        256   $0200-$02ff   $0100
+Passes:            3
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /workspace/scratch/a2344c11dad9/canonical-072-full/source/c64/cart/easyflash-demo-boot.asm
+Output file:       /workspace/scratch/a2344c11dad9/canonical-072-full/source/build/step-cartridge-demo/step-romh0.bin
+Data:       8192   $e000-$ffff   $2000
+Passes:            3
+Input file: /workspace/scratch/a2344c11dad9/canonical-072-full/source/build/step-cartridge-demo/step.bin
+Output file: /workspace/scratch/a2344c11dad9/canonical-072-full/carts/step.crt
+Conversion from binary format to C64 EasyFlash .crt successful.
+fps locking: not set
+preflight: cartconv = /workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/cartconv (cartconv (VICE 3.10))
++ /workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/64tass -b --vice-labels -l /workspace/scratch/a2344c11dad9/canonical-072-full/source/build/step-cartridge-demo/step-control.lbl -L /workspace/scratch/a2344c11dad9/canonical-072-full/source/build/step-cartridge-demo/step-control.lst -o /workspace/scratch/a2344c11dad9/canonical-072-full/source/build/step-cartridge-demo/step-control.bin /workspace/scratch/a2344c11dad9/canonical-072-full/source/c64/cart/easyflash-demo-control-v9.asm
++ /workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/64tass -b --vice-labels -l /workspace/scratch/a2344c11dad9/canonical-072-full/source/build/step-cartridge-demo/step-boot.lbl -L /workspace/scratch/a2344c11dad9/canonical-072-full/source/build/step-cartridge-demo/step-boot.lst -o /workspace/scratch/a2344c11dad9/canonical-072-full/source/build/step-cartridge-demo/step-romh0.bin /workspace/scratch/a2344c11dad9/canonical-072-full/source/c64/cart/easyflash-demo-boot.asm
++ /workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/cartconv -t easy -i /workspace/scratch/a2344c11dad9/canonical-072-full/source/build/step-cartridge-demo/step.bin -o /workspace/scratch/a2344c11dad9/canonical-072-full/carts/step.crt -n C643D 0.7.2 ALL V9
+built /workspace/scratch/a2344c11dad9/canonical-072-full/carts/step.crt
+all 10 entries: yunroll-cart-v9; 10-row scrolling menu; 0 frame bytes
+step TORUS pixels verified
+step TORUS DENSE pixels verified
+step CUBE pixels verified
+step SPHERE pixels verified
+step HORSE HEAD pixels verified
+step SUNFLOWER TORUS pixels verified
+step SUNFLOWER COLOR pixels verified
+step SPACE HORSE SPIN pixels verified
+step SPACE HORSE CRAWL pixels verified
+step FALLING CUBES pixels verified
+step COMPLETE

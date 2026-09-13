@@ -2179,7 +2179,7 @@
   ],
   "batch_budget_is_host_cost_model_not_hard_measured_bound": true,
   "runtime_work": "build/sande_pretzel-hors-render-v2-stream-v10",
-  "toolkit_version": "0.7.8",
+  "toolkit_version": "0.7.9",
   "source_recipe": {
     "path": "examples/demos_sande/recipe.json",
     "author": "Sande",

@@ -1,0 +1,76 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "input": "obj",
+      "flags": [
+        "--flip-input-horizontal"
+      ],
+      "frames": 8,
+      "native_bitmap_color_and_hud_match": true,
+      "width": 256,
+      "exact_reflection": true
+    },
+    {
+      "input": "svg",
+      "flags": [
+        "--mirror-vertical"
+      ],
+      "frames": 8,
+      "native_bitmap_color_and_hud_match": true,
+      "width": 256,
+      "exact_reflection": true
+    },
+    {
+      "input": "shape",
+      "flags": [
+        "--mirror-horizontal",
+        "--flip-vertical"
+      ],
+      "frames": 8,
+      "native_bitmap_color_and_hud_match": true,
+      "width": 256,
+      "exact_reflection": true
+    },
+    {
+      "input": "preset",
+      "flags": [
+        "--flip-horizontal"
+      ],
+      "frames": 8,
+      "native_bitmap_color_and_hud_match": true,
+      "width": 256,
+      "exact_reflection": true
+    },
+    {
+      "input": "scene",
+      "flags": [
+        "--flip-input-vertical"
+      ],
+      "frames": 16,
+      "native_bitmap_color_and_hud_match": true,
+      "width": 320,
+      "exact_reflection": true
+    },
+    {
+      "input": "blend",
+      "flags": [
+        "--flip-horizontal"
+      ],
+      "width": 320,
+      "frames": 16,
+      "exact_reflection": true,
+      "native_bitmap_color_and_hud_match": true
+    },
+    {
+      "input": "interactive",
+      "flags": [
+        "--flip-horizontal"
+      ],
+      "width": 256,
+      "frames": 8,
+      "exact_reflection": true,
+      "native_bitmap_color_and_hud_match": true
+    }
+  ]
+}

@@ -1341,9 +1341,29 @@
     "reused_vector_dispatch_page": [
       17152,
       17408
-    ]
+    ],
+    "clear_metadata_compacted_frames": 0
   },
   "runtime_work": "build/sande_pretzel-surface-metallic-128-v3-indexed4-interactive-stream-v10",
+  "build_screen": {
+    "version": "0.7.9",
+    "renderer": "hors-renderer-v3",
+    "wait_for_space": true,
+    "layout": "v0.7.8",
+    "screen_ram": [
+      1024,
+      2048
+    ],
+    "help_hint": "press SHIFT+H for help",
+    "help_row": 19,
+    "start_row": 20,
+    "startup_only_ram": [
+      8192,
+      9216
+    ],
+    "extra_playback_RAM_bytes": 0,
+    "playback_cycle_cost": 0
+  },
   "interactive_cart": {
     "rotation": "cursor left/right and joystick ports 1/2 left/right",
     "direction_persists": true,
@@ -1358,7 +1378,24 @@
       "F6": "slower cycling",
       "F7": "faster cycling",
       "F8": "toggle black border / follow background",
-      "Ctrl+F7": "next independent border colour"
+      "Ctrl+F7": "next independent border colour",
+      "+": "increase rotation speed",
+      "-": "decrease rotation speed",
+      "0": "reset rotation speed",
+      "Shift+H": "pause/open or close help; Space also closes; return to intro until SPACE starts playback",
+      "RUN/STOP (Esc in VICE)": "pause/open or close help; Space also closes; return to intro until SPACE starts playback",
+      "Shift+I": "toggle bottom-left name and vertex/edge counts",
+      "Shift+F": "toggle FPS and speed feedback; speed controls remain active",
+      "Shift+U": "hide all HUD text, or show all when hidden (including INTERACTIVE)",
+      "Shift+S": "toggle forward starfield",
+      "1": "reset density for current starfield (light 8 / full 16)",
+      "2": "increase starfield density",
+      "3": "decrease starfield density",
+      "4": "switch light / full starfield; preserve each density and on/off state",
+      "5": "exhibition on/off; hide HUD/stars on entry, restore previous on/off states on exit",
+      "6": "exhibition order: sequential/random (no immediate repeats)",
+      "7": "auto-change interval -5 seconds (minimum 5)",
+      "8": "auto-change interval +5 seconds (maximum 60)"
     },
     "cycle_intervals_pal_ticks": [
       200,
@@ -1378,7 +1415,218 @@
     "black_remap_RAM": [
       512,
       768
-    ]
+    ],
+    "speed": {
+      "default_level": 3,
+      "levels": [
+        {
+          "skip": 1,
+          "hold_factor": 8
+        },
+        {
+          "skip": 1,
+          "hold_factor": 4
+        },
+        {
+          "skip": 1,
+          "hold_factor": 2
+        },
+        {
+          "skip": 1,
+          "hold_factor": 1
+        },
+        {
+          "skip": 2,
+          "hold_factor": 1
+        },
+        {
+          "skip": 3,
+          "hold_factor": 1
+        },
+        {
+          "skip": 4,
+          "hold_factor": 1
+        },
+        {
+          "skip": 6,
+          "hold_factor": 1
+        },
+        {
+          "skip": 8,
+          "hold_factor": 1
+        },
+        {
+          "skip": 12,
+          "hold_factor": 1
+        },
+        {
+          "skip": 16,
+          "hold_factor": 1
+        },
+        {
+          "skip": 24,
+          "hold_factor": 1
+        },
+        {
+          "skip": 32,
+          "hold_factor": 1
+        },
+        {
+          "skip": 48,
+          "hold_factor": 1
+        },
+        {
+          "skip": 63,
+          "hold_factor": 1
+        }
+      ],
+      "maximum_step": 63,
+      "hold": "extra wait proportional to just-completed production time; starfield IRQ continues",
+      "feedback": [
+        "SPD.INC",
+        "SPD.DEC",
+        "SPD.RST",
+        "SPD.MAX",
+        "SPD.MIN"
+      ],
+      "max_feedback": "WOW! then white/red SPD.MAX text flash",
+      "message_position": [
+        256,
+        184
+      ],
+      "message_pal_ticks": 50,
+      "ram": [
+        36864,
+        38912
+      ],
+      "boot_staging": [
+        12288,
+        16384
+      ]
+    },
+    "help": {
+      "version": "0.7.9",
+      "lines": [
+        "c64-3d-toolkit v0.7.9         pg 1/2 >",
+        "interactive mode help",
+        "STOP/ESC / SHIFT+H  open / close help",
+        "SPACE         close help / start",
+        "CURSOR / JOY1/2 L/R  direction",
+        "+ / - / 0     speed up / down / reset",
+        "F2            reset presentation",
+        "F4            next background colour",
+        "F5            background cycle on/off",
+        "F6 / F7       slower / faster cycle",
+        "F8            border black / follow",
+        "CTRL+F7       next border colour",
+        "SHIFT+S       starfield on / off",
+        "1 / 2 / 3     stars reset / more / less",
+        "4             light / full starfield",
+        "SHIFT+I       name and V/E counts on/off",
+        "SHIFT+F       FPS/speed messages on/off",
+        "SHIFT+U       all HUD text on/off",
+        "F2/4/6/8 = SHIFT + F1/3/5/7"
+      ],
+      "startup": "original build screen waits for SPACE; press SHIFT+H for help on the row above",
+      "screen_ram": [
+        33792,
+        34816
+      ],
+      "pages": [
+        [
+          "c64-3d-toolkit v0.7.9         pg 1/2 >",
+          "interactive mode help",
+          "STOP/ESC / SHIFT+H  open / close help",
+          "SPACE         close help / start",
+          "CURSOR / JOY1/2 L/R  direction",
+          "+ / - / 0     speed up / down / reset",
+          "F2            reset presentation",
+          "F4            next background colour",
+          "F5            background cycle on/off",
+          "F6 / F7       slower / faster cycle",
+          "F8            border black / follow",
+          "CTRL+F7       next border colour",
+          "SHIFT+S       starfield on / off",
+          "1 / 2 / 3     stars reset / more / less",
+          "4             light / full starfield",
+          "SHIFT+I       name and V/E counts on/off",
+          "SHIFT+F       FPS/speed messages on/off",
+          "SHIFT+U       all HUD text on/off",
+          "F2/4/6/8 = SHIFT + F1/3/5/7"
+        ],
+        [
+          "c64-3d-toolkit v0.7.9         pg 2/2 <",
+          "interactive mode help",
+          "5   exhibition on / off",
+          "6   ordered / random selection",
+          "7/8 interval -/+5s (5..60s)",
+          "Default: 5s. HUD/stars off on entry.",
+          "Star keys still work. Help pauses timer.",
+          "LEFT/RIGHT: page. STOP/ESC: close."
+        ]
+      ],
+      "packed_text_ram": [
+        49152,
+        50176
+      ],
+      "navigation": "C64 cursor right / Shift+cursor right (left); host arrows in VICE",
+      "code_ram": [
+        38912,
+        39936
+      ],
+      "extra_reserved_RAM_bytes": 3072,
+      "header": {
+        "rows": 2,
+        "width": 40,
+        "background_colors": [
+          14,
+          3
+        ],
+        "text_color": 0,
+        "implementation": "reverse ROM glyphs; event-only color RAM writes"
+      },
+      "pause": "producer and raster IRQ pause; bitmap buffers and presentation settings preserved",
+      "idle": "RUN/STOP reuses density row7: 9 extra CPU cycles per idle input poll, no new CIA read"
+    },
+    "hud_visibility": {
+      "initial_info": true,
+      "initial_performance": true,
+      "initial_label": true,
+      "toggle_allowed": true,
+      "code_ram": [
+        37888,
+        38912
+      ],
+      "additional_reserved_RAM_bytes": 0,
+      "implementation": "key-event bitmap clear/restore across three slots; patch drawing entry points to RTS",
+      "idle": "no added rendering branch; small release-latch update in existing unshifted input scan",
+      "model_viewport_unchanged": true,
+      "measurements_continue_while_hidden": true
+    },
+    "exhibition": {
+      "default_enabled": false,
+      "default_interval_seconds": 5,
+      "interval_seconds": [
+        5,
+        60
+      ],
+      "interval_step_seconds": 5,
+      "default_order": "sequential",
+      "loops": [
+        {
+          "name": "current loop",
+          "spin": 0,
+          "crawl": 0
+        }
+      ],
+      "clock": "PAL raster clock; scene selection deferred to safe producer/input boundary; help pauses clock",
+      "stars": "on/off defaults to off on entry; manual choices persist across scene switches; profile and density retained",
+      "hud": "off on entry; previous visibility restored on exit",
+      "single_loop": "continues the existing animation if only one loop was compiled",
+      "ram": "reuses spare HUD/help RAM; 1 KiB additional packed help storage at $c000",
+      "new_animation_frames": 0,
+      "random": "8-bit LFSR, modulo selection excludes current style; not uniform cryptographic randomness"
+    }
   },
   "interactive_overlay": {
     "text": "INTERACTIVE",
@@ -1388,10 +1636,148 @@
     "height": 8,
     "font": "HUD 5x7"
   },
+  "hud_visibility": {
+    "initial_info": true,
+    "initial_performance": true,
+    "initial_label": true,
+    "toggle_allowed": true,
+    "code_ram": [
+      37888,
+      38912
+    ],
+    "additional_reserved_RAM_bytes": 0,
+    "implementation": "key-event bitmap clear/restore across three slots; patch drawing entry points to RTS",
+    "idle": "no added rendering branch; small release-latch update in existing unshifted input scan",
+    "model_viewport_unchanged": true,
+    "measurements_continue_while_hidden": true
+  },
+  "background_effect": {
+    "name": "none",
+    "implementation": "eight hardware sprites; precomputed perspective paths in RAM",
+    "star_count": 8,
+    "path_samples": 64,
+    "clock": "PAL raster IRQ; independent of object rotation",
+    "bitmap_modified": false,
+    "sprites_behind_bitmap": true,
+    "occlusion": "sprite priority plus suppress stars in cells whose low colour is not background",
+    "reclaimed_vector_lut_ram": [
+      5888,
+      8192
+    ],
+    "sprite_ram": [
+      16256,
+      32640,
+      65408
+    ],
+    "sprite_bytes": 192,
+    "private_zero_page": [
+      248,
+      250
+    ],
+    "included": true,
+    "density": {
+      "default": 16,
+      "levels": [
+        2,
+        4,
+        8,
+        16,
+        24,
+        32
+      ],
+      "hardware_sprites": 8,
+      "point_offsets": [
+        [
+          0,
+          0
+        ],
+        [
+          13,
+          3
+        ],
+        [
+          5,
+          15
+        ],
+        [
+          21,
+          19
+        ]
+      ],
+      "trajectory_periods": [
+        64,
+        59,
+        53,
+        47,
+        61,
+        57,
+        51,
+        43
+      ],
+      "near_star_width": 2,
+      "near_sprite_ram": [
+        16192,
+        32576,
+        65344
+      ],
+      "additional_sprite_RAM_bytes": 192,
+      "motion": "Points share up to eight sprite trajectories; denser settings form small groups.",
+      "masking": "The whole sprite group is suppressed if an extra point crosses opaque paint, a filled colour cell or the viewport edge.",
+      "code_ram": [
+        39936,
+        40960
+      ],
+      "boot_staging": [
+        9216,
+        10240
+      ]
+    },
+    "profiles": {
+      "default": "full",
+      "toggle_key": "4",
+      "light": {
+        "default_points": 8,
+        "levels": [
+          2,
+          4,
+          8
+        ],
+        "width": 1,
+        "path_samples": 64,
+        "trajectories": "original eight-point perspective field"
+      },
+      "full": {
+        "default_points": 16,
+        "levels": [
+          2,
+          4,
+          8,
+          16,
+          24,
+          32
+        ],
+        "near_width": 2
+      },
+      "independent_density": true,
+      "extra_path_RAM": [
+        32768,
+        33792
+      ],
+      "boot_staging": [
+        17408,
+        18432
+      ],
+      "additional_RAM_bytes": 1024,
+      "switch": "IRQ call operand and sprite patterns changed only on key events; both kernels already in RAM",
+      "extra_per_refresh_dispatch_cycles": 0
+    }
+  },
   "surface_fill": {
-    "experimental": true,
+    "experimental": false,
     "preset": "metallic",
     "encoding": "native",
+    "color_mapping": "nearest VIC-II palette; weighted CIELAB (0.5 L squared + a squared + b squared)",
+    "cell_mapping": "RGB shade error",
     "frames": 128,
     "fit_scale": 0.9548340649786405,
     "triangles": 3104,
@@ -1400,6 +1786,13 @@
     "host_rasterized": true,
     "runtime_triangle_lighting": false,
     "uniform_material_fast_path": false,
+    "animation": {
+      "modes": [
+        "spin"
+      ],
+      "samples_per_mode": 128,
+      "total_samples": 128
+    },
     "shade_palette": "grey",
     "shade_palette_indices": [
       0,
@@ -1407,6 +1800,7 @@
       12,
       15,
       1
-    ]
+    ],
+    "custom_ramp": false
   }
 }

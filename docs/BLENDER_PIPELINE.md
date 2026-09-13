@@ -1,8 +1,11 @@
-> Current default: **hors-render-v2**. [Release build and example migration](RELEASE_0.7.2.md).
+> Current conversion default: **hors-renderer-v3**, including authored wireframe scenes. [Checkpoint and cache troubleshooting](HORS_V3_DEFAULTS_CHECKPOINT.md).
 
 # Blender animated-scene pipeline
 
-v0.7.2 Blender builds default to hors-render-v2-scene EasyFlash output. See
+[Blender FAQ and troubleshooting](BLENDER_FAQ.md) covers the old right-edge
+cutoff, full-width rebuilding, camera framing, mirroring and calibration scenes.
+
+The v0.7.2 release used hors-render-v2-scene EasyFlash output; the current checkpoint defaults to HORS-V3. See
 [current scene streaming](CARTRIDGE_SCENES.md) and [build targets](HORS_RENDER_V2.md).
 Use `--renderer yunroll` explicitly for the preserved resident PRG path. Its
 255-sample/table-RAM limits differ from the streamed scene directory's 2048
@@ -20,14 +23,13 @@ scene.blend
     -> evaluated objects + active camera for each sampled frame
     -> temporary .c643dscene interchange data
     -> existing hidden-line / colour / DDA compiler
-    -> hors-render-v2-scene batched byte-span stream, or explicit resident PRG
+    -> HORS-V3 scene stream by default, or an explicitly selected renderer
 ```
 
 Blender exports geometry, motion, deformation, materials and camera state.
-The host projects/clips that geometry, then hors-render-v2 encodes independent literal bitmap spans for batched
-ROM-to-bitmap copying. The explicit v1 backend retains its vector fallback;
-v2 rejects inputs that exceed its final literal-frame or metadata limits.
-Explicit resident PRG renderers rasterize the encoded vectors on the C64.
+The host projects/clips that geometry and encodes it for the selected renderer.
+HORS-V3 is the current default; older stream formats and explicit resident PRG
+renderers retain their own frame, metadata and memory limits.
 
 ## Install and verify Blender
 
@@ -117,11 +119,29 @@ requires:
 - geometry in front of the camera. Projected edges may cross the viewport and
   are clipped to the C64 frame; near-plane crossings are not yet supported.
 
-For a matching camera frame, set Blender's output aspect to the target viewport
-and use square pixels: for a 256×192 cartridge scene, 768×576 is a convenient
-preview size. C64 export evaluates that perspective camera at 256×192. Source
-lighting, antialiasing and arbitrary material shaders are not part of the
-wireframe renderer; the C64 preview additionally resolves native 8×8-cell colours.
+New `.blend` builds now use the full **320×192** artwork area by default. The
+bottom eight pixels remain the cartridge HUD row. The earlier 256-pixel width
+left an unused 64-pixel strip on the right; a Blender camera adjustment could
+not make that renderer draw into it. Full-width clipping now reaches x=319,
+and host-generated clear spans are split safely so reused buffers clear it too.
+
+For a matching preview, use **320×192 or 960×576**, square pixels, and frame the
+shot through Blender's active perspective camera. Projection is calculated for
+the selected output width/height; source lighting, antialiasing and arbitrary
+material shaders are not included in the wireframe renderer. Native 8×8-cell
+colour limits still apply.
+
+`--viewport-width 256` explicitly retains the old width (preview at 256×192 or
+768×576). New `.c643dscene` exports record their viewport width; `--scene`
+retains it. Interchange files without width metadata retain the legacy 256
+width. An explicit width override on an existing interchange file changes only
+clipping, not its stored camera projection. Re-export the `.blend` to calculate
+a new full-width camera projection. Existing CRT binaries and historical
+benchmark vectors are unchanged; rebuild the source to use the new width.
+
+See the [zoom and tracking-camera test cards](../examples/blender_viewport_test/README.md)
+for editable scenes, actual VICE screenshots, edge/centre checks and measured
+costs. Optional [input flips](INPUT_FLIPS.md) affect the artwork only.
 
 In **0.6.7**, the exporter preserves outward face orientation when converting
 Blender's negative-forward camera Z to the toolkit's positive-forward Z. It

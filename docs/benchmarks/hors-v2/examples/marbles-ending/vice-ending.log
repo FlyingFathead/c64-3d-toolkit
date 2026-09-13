@@ -1,0 +1,2422 @@
+VICE batch executable: /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/x64sc
+VICE batch arguments: -default -console +easyflashcrtwrite +sound -warp -seed 1 -cartcrt /workspace/scratch/478871a3fa6c/release-0.7.9-final/source/examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt -initbreak reset -moncommands /tmp/tmp1todkufa/run.mon -monlog -monlogname /tmp/tmp1todkufa/monitor.log -limitcycles 160000000 -directory /workspace/scratch/478871a3fa6c/toolchain/c64-tools/vice-data +saveres -jamaction 5
+Keymap: Error - Default keymap not found, this should be fixed. Going on anyway...
+Keymap: Error - Default keymap not found, this should be fixed. Going on anyway...
+[USBSID] Error initializing libusb: -99 LIBUSB_ERROR_OTHER: Other error
+Keymap: Error - Default keymap not found, this should be fixed. Going on anyway...
+Keymap: Error - Default keymap not found, this should be fixed. Going on anyway...
+Keymap: Error - Default keymap not found, this should be fixed. Going on anyway...
+ALSA lib seq_hw.c:528:(snd_seq_hw_open) open /dev/snd/seq failed: No such file or directory
+ALSA MIDI: Error - could not init ALSA sequencer
+EF: EAPI found (AM/M29F040 V1.4)
+CART: attached '/workspace/scratch/478871a3fa6c/release-0.7.9-final/source/examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt' as ID 32.
+Opening monitor command playback file: /tmp/tmp1todkufa/run.mon
+ 
+*** VICE Version 3.10 ***
+ 
+This is the condensed log, for the full log use --verbose or --debug.
+ 
+Main: random seed was: 0x1
+Main: command line was: /workspace/scratch/478871a3fa6c/toolchain/c64-tools/bin/x64sc -default -console +easyflashcrtwrite +sound -warp -seed 1 -cartcrt /workspace/scratch/478871a3fa6c/release-0.7.9-final/source/examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt -initbreak reset -moncommands /tmp/tmp1todkufa/run.mon -monlog -monlogname /tmp/tmp1todkufa/monitor.log -limitcycles 160000000 -directory /workspace/scratch/478871a3fa6c/toolchain/c64-tools/vice-data +saveres -jamaction 5
+Main: VICE system file directory: '/usr/local/share/vice'.
+Main: VICE system file search path: '/workspace/scratch/478871a3fa6c/toolchain/c64-tools/vice-data'.
+Sysfile: Loading `/workspace/scratch/478871a3fa6c/toolchain/c64-tools/vice-data/C64/kernal-901227-03.bin'.
+C64MEM: Kernal rev #3 ($03) Sum: 50954 ($C70A) SHA1: 1d503e56df85a62fee696e7618dc5b4e781df1bb.
+Sysfile: Loading `/workspace/scratch/478871a3fa6c/toolchain/c64-tools/vice-data/C64/basic-901226-01.bin'.
+Sysfile: Loading `/workspace/scratch/478871a3fa6c/toolchain/c64-tools/vice-data/C64/chargen-901225-01.bin'.
+DriveROM: Error - 2000 ROM image not found. Hardware-level 2000 emulation is not available.
+DriveROM: Error - 4000 ROM image not found. Hardware-level 4000 emulation is not available.
+DriveROM: Error - CMDHD ROM image not found. Hardware-level CMDHD emulation is not available.
+Sysfile: Loading `/workspace/scratch/478871a3fa6c/toolchain/c64-tools/vice-data/DRIVES/dos1541ii-251968-03.bin'.
+VIC-II: Initializing chip model "MOS8565" (63 cycles per line, 312 raster lines).
+Sound: Available sound devices: pulse alsa sdl dummy dump fs wav voc iff aiff mp3 flac ogg soundmovie
+evdev Joystick: Initializing Linux evdev joystick driver.
+Error - scandir() failed on /dev/input: No such file or directory
+Joystick: Warning - using minimal default mapping.
+ALSA lib seq_hw.c:528:(snd_seq_hw_open) open /dev/snd/seq failed: No such file or directory
+ALSA MIDI: Error - could not init ALSA sequencer
+Keymap: Loading keymap `/workspace/scratch/478871a3fa6c/toolchain/c64-tools/vice-data/C64/gtk3_sym.vkm'.
+
+Main CPU: starting at ($FFFC).
+Main CPU: RESET.
+VIC-II: VSP Bug: safe channels are: 2567. Emulation of memory corruption is disabled.
+Monitor playback command: delete
+yydebug[<# of symbols on state stack>]
+yydebug: stack size increased to 200
+yydebug[0]: state 0, reading token 311 (CMD_DELETE)
+yydebug[0]: state 0, shifting to state 33
+yydebug[1]: state 33, reading token 276 (TRAIL)
+yydebug[1]: state 33, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 33 to state 213
+yydebug[2]: state 213, reducing by rule 116 (checkpoint_control_rules : CMD_DELETE end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 114
+yydebug[1]: state 114, reducing by rule 14 (command : checkpoint_control_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: break $8000
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 303 (CMD_BREAK)
+yydebug[0]: state 0, shifting to state 26
+yydebug[1]: state 26, reading token 257 (H_NUMBER)
+yydebug[1]: state 26, reducing by rule 213 (opt_mem_op :)
+yydebug[1]: after reduction, shifting from state 26 to state 201
+yydebug[2]: state 201, shifting to state 122
+yydebug[3]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[2]: after reduction, shifting from state 201 to state 178
+yydebug[3]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[2]: after reduction, shifting from state 201 to state 181
+yydebug[3]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[2]: after reduction, shifting from state 201 to state 180
+yydebug[3]: state 180, reducing by rule 230 (address : memloc)
+yydebug[2]: after reduction, shifting from state 201 to state 197
+yydebug[3]: state 197, reading token 276 (TRAIL)
+yydebug[3]: state 197, reducing by rule 224 (address_opt_range : address)
+yydebug[2]: after reduction, shifting from state 201 to state 392
+yydebug[3]: state 392, reducing by rule 250 (opt_if_cond_expr :)
+yydebug[3]: after reduction, shifting from state 392 to state 540
+yydebug[4]: state 540, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 540 to state 635
+yydebug[5]: state 635, reducing by rule 101 (checkpoint_rules : CMD_BREAK opt_mem_op address_opt_range opt_if_cond_expr end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 113
+yydebug[1]: state 113, reducing by rule 13 (command : checkpoint_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: g
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 297 (CMD_GOTO)
+yydebug[0]: state 0, shifting to state 22
+yydebug[1]: state 22, reading token 276 (TRAIL)
+yydebug[1]: state 22, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 22 to state 186
+yydebug[2]: state 186, reducing by rule 27 (machine_state_rules : CMD_GOTO end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+VSync: Sync reset
+Unit 8: RESET.
+Monitor playback command: bank ram
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 325 (CMD_BANK)
+yydebug[0]: state 0, shifting to state 47
+yydebug[1]: state 47, reading token 428 (BANKNAME)
+yydebug[1]: state 47, shifting to state 235
+yydebug[2]: state 235, reading token 276 (TRAIL)
+yydebug[2]: state 235, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 235 to state 413
+yydebug[3]: state 413, reducing by rule 24 (machine_state_rules : CMD_BANK BANKNAME end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bsave "/tmp/tmp1todkufa/0.ram" 0 $0000 $ffff
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 343 (CMD_BSAVE)
+yydebug[0]: state 0, shifting to state 65
+yydebug[1]: state 65, reading token 423 (FILENAME)
+yydebug[1]: state 65, shifting to state 148
+yydebug[2]: state 148, reducing by rule 206 (filename : FILENAME)
+yydebug[1]: after reduction, shifting from state 65 to state 264
+yydebug[2]: state 264, reading token 265 (O_NUMBER_GUESS)
+yydebug[2]: state 264, shifting to state 170
+yydebug[3]: state 170, reducing by rule 274 (d_number : O_NUMBER_GUESS)
+yydebug[2]: after reduction, shifting from state 264 to state 301
+yydebug[3]: state 301, reducing by rule 208 (device_num : d_number)
+yydebug[2]: after reduction, shifting from state 264 to state 437
+yydebug[3]: state 437, reading token 257 (H_NUMBER)
+yydebug[3]: state 437, shifting to state 122
+yydebug[4]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[3]: after reduction, shifting from state 437 to state 178
+yydebug[4]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[3]: after reduction, shifting from state 437 to state 181
+yydebug[4]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[3]: after reduction, shifting from state 437 to state 180
+yydebug[4]: state 180, reducing by rule 230 (address : memloc)
+yydebug[3]: after reduction, shifting from state 437 to state 177
+yydebug[4]: state 177, reading token 257 (H_NUMBER)
+yydebug[4]: state 177, reducing by rule 234 (opt_sep :)
+yydebug[4]: after reduction, shifting from state 177 to state 378
+yydebug[5]: state 378, shifting to state 122
+yydebug[6]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[5]: after reduction, shifting from state 378 to state 178
+yydebug[6]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[5]: after reduction, shifting from state 378 to state 181
+yydebug[6]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[5]: after reduction, shifting from state 378 to state 180
+yydebug[6]: state 180, reducing by rule 230 (address : memloc)
+yydebug[5]: after reduction, shifting from state 378 to state 531
+yydebug[6]: state 531, reducing by rule 225 (address_range : address opt_sep address)
+yydebug[3]: after reduction, shifting from state 437 to state 567
+yydebug[4]: state 567, reading token 276 (TRAIL)
+yydebug[4]: state 567, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 567 to state 654
+yydebug[5]: state 654, reducing by rule 181 (disk_rules : CMD_BSAVE filename device_num address_range end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 117
+yydebug[1]: state 117, reducing by rule 17 (command : disk_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bank cpu
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 325 (CMD_BANK)
+yydebug[0]: state 0, shifting to state 47
+yydebug[1]: state 47, reading token 428 (BANKNAME)
+yydebug[1]: state 47, shifting to state 235
+yydebug[2]: state 235, reading token 276 (TRAIL)
+yydebug[2]: state 235, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 235 to state 413
+yydebug[3]: state 413, reducing by rule 24 (machine_state_rules : CMD_BANK BANKNAME end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bsave "/tmp/tmp1todkufa/0.io" 0 $d000 $dbff
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 343 (CMD_BSAVE)
+yydebug[0]: state 0, shifting to state 65
+yydebug[1]: state 65, reading token 423 (FILENAME)
+yydebug[1]: state 65, shifting to state 148
+yydebug[2]: state 148, reducing by rule 206 (filename : FILENAME)
+yydebug[1]: after reduction, shifting from state 65 to state 264
+yydebug[2]: state 264, reading token 265 (O_NUMBER_GUESS)
+yydebug[2]: state 264, shifting to state 170
+yydebug[3]: state 170, reducing by rule 274 (d_number : O_NUMBER_GUESS)
+yydebug[2]: after reduction, shifting from state 264 to state 301
+yydebug[3]: state 301, reducing by rule 208 (device_num : d_number)
+yydebug[2]: after reduction, shifting from state 264 to state 437
+yydebug[3]: state 437, reading token 257 (H_NUMBER)
+yydebug[3]: state 437, shifting to state 122
+yydebug[4]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[3]: after reduction, shifting from state 437 to state 178
+yydebug[4]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[3]: after reduction, shifting from state 437 to state 181
+yydebug[4]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[3]: after reduction, shifting from state 437 to state 180
+yydebug[4]: state 180, reducing by rule 230 (address : memloc)
+yydebug[3]: after reduction, shifting from state 437 to state 177
+yydebug[4]: state 177, reading token 257 (H_NUMBER)
+yydebug[4]: state 177, reducing by rule 234 (opt_sep :)
+yydebug[4]: after reduction, shifting from state 177 to state 378
+yydebug[5]: state 378, shifting to state 122
+yydebug[6]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[5]: after reduction, shifting from state 378 to state 178
+yydebug[6]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[5]: after reduction, shifting from state 378 to state 181
+yydebug[6]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[5]: after reduction, shifting from state 378 to state 180
+yydebug[6]: state 180, reducing by rule 230 (address : memloc)
+yydebug[5]: after reduction, shifting from state 378 to state 531
+yydebug[6]: state 531, reducing by rule 225 (address_range : address opt_sep address)
+yydebug[3]: after reduction, shifting from state 437 to state 567
+yydebug[4]: state 567, reading token 276 (TRAIL)
+yydebug[4]: state 567, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 567 to state 654
+yydebug[5]: state 654, reducing by rule 181 (disk_rules : CMD_BSAVE filename device_num address_range end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 117
+yydebug[1]: state 117, reducing by rule 17 (command : disk_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: stopwatch
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 372 (CMD_STOPWATCH)
+yydebug[0]: state 0, shifting to state 94
+yydebug[1]: state 94, reading token 276 (TRAIL)
+yydebug[1]: state 94, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 94 to state 305
+yydebug[2]: state 305, reducing by rule 164 (monitor_misc_rules : CMD_STOPWATCH end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 116
+yydebug[1]: state 116, reducing by rule 16 (command : monitor_misc_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: delete
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 311 (CMD_DELETE)
+yydebug[0]: state 0, shifting to state 33
+yydebug[1]: state 33, reading token 276 (TRAIL)
+yydebug[1]: state 33, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 33 to state 213
+yydebug[2]: state 213, reducing by rule 116 (checkpoint_control_rules : CMD_DELETE end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 114
+yydebug[1]: state 114, reducing by rule 14 (command : checkpoint_control_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: break $9927
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 303 (CMD_BREAK)
+yydebug[0]: state 0, shifting to state 26
+yydebug[1]: state 26, reading token 257 (H_NUMBER)
+yydebug[1]: state 26, reducing by rule 213 (opt_mem_op :)
+yydebug[1]: after reduction, shifting from state 26 to state 201
+yydebug[2]: state 201, shifting to state 122
+yydebug[3]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[2]: after reduction, shifting from state 201 to state 178
+yydebug[3]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[2]: after reduction, shifting from state 201 to state 181
+yydebug[3]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[2]: after reduction, shifting from state 201 to state 180
+yydebug[3]: state 180, reducing by rule 230 (address : memloc)
+yydebug[2]: after reduction, shifting from state 201 to state 197
+yydebug[3]: state 197, reading token 276 (TRAIL)
+yydebug[3]: state 197, reducing by rule 224 (address_opt_range : address)
+yydebug[2]: after reduction, shifting from state 201 to state 392
+yydebug[3]: state 392, reducing by rule 250 (opt_if_cond_expr :)
+yydebug[3]: after reduction, shifting from state 392 to state 540
+yydebug[4]: state 540, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 540 to state 635
+yydebug[5]: state 635, reducing by rule 101 (checkpoint_rules : CMD_BREAK opt_mem_op address_opt_range opt_if_cond_expr end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 113
+yydebug[1]: state 113, reducing by rule 13 (command : checkpoint_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: g
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 297 (CMD_GOTO)
+yydebug[0]: state 0, shifting to state 22
+yydebug[1]: state 22, reading token 276 (TRAIL)
+yydebug[1]: state 22, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 22 to state 186
+yydebug[2]: state 186, reducing by rule 27 (machine_state_rules : CMD_GOTO end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+VSync: Sync reset
+Monitor playback command: delete
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 311 (CMD_DELETE)
+yydebug[0]: state 0, shifting to state 33
+yydebug[1]: state 33, reading token 276 (TRAIL)
+yydebug[1]: state 33, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 33 to state 213
+yydebug[2]: state 213, reducing by rule 116 (checkpoint_control_rules : CMD_DELETE end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 114
+yydebug[1]: state 114, reducing by rule 14 (command : checkpoint_control_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: break $08db
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 303 (CMD_BREAK)
+yydebug[0]: state 0, shifting to state 26
+yydebug[1]: state 26, reading token 257 (H_NUMBER)
+yydebug[1]: state 26, reducing by rule 213 (opt_mem_op :)
+yydebug[1]: after reduction, shifting from state 26 to state 201
+yydebug[2]: state 201, shifting to state 122
+yydebug[3]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[2]: after reduction, shifting from state 201 to state 178
+yydebug[3]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[2]: after reduction, shifting from state 201 to state 181
+yydebug[3]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[2]: after reduction, shifting from state 201 to state 180
+yydebug[3]: state 180, reducing by rule 230 (address : memloc)
+yydebug[2]: after reduction, shifting from state 201 to state 197
+yydebug[3]: state 197, reading token 276 (TRAIL)
+yydebug[3]: state 197, reducing by rule 224 (address_opt_range : address)
+yydebug[2]: after reduction, shifting from state 201 to state 392
+yydebug[3]: state 392, reducing by rule 250 (opt_if_cond_expr :)
+yydebug[3]: after reduction, shifting from state 392 to state 540
+yydebug[4]: state 540, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 540 to state 635
+yydebug[5]: state 635, reducing by rule 101 (checkpoint_rules : CMD_BREAK opt_mem_op address_opt_range opt_if_cond_expr end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 113
+yydebug[1]: state 113, reducing by rule 13 (command : checkpoint_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: g $9948
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 297 (CMD_GOTO)
+yydebug[0]: state 0, shifting to state 22
+yydebug[1]: state 22, reading token 257 (H_NUMBER)
+yydebug[1]: state 22, shifting to state 122
+yydebug[2]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[1]: after reduction, shifting from state 22 to state 178
+yydebug[2]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[1]: after reduction, shifting from state 22 to state 181
+yydebug[2]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[1]: after reduction, shifting from state 22 to state 180
+yydebug[2]: state 180, reducing by rule 230 (address : memloc)
+yydebug[1]: after reduction, shifting from state 22 to state 184
+yydebug[2]: state 184, reading token 276 (TRAIL)
+yydebug[2]: state 184, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 184 to state 382
+yydebug[3]: state 382, reducing by rule 26 (machine_state_rules : CMD_GOTO address end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+VSync: Sync reset
+Monitor playback command: bank ram
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 325 (CMD_BANK)
+yydebug[0]: state 0, shifting to state 47
+yydebug[1]: state 47, reading token 428 (BANKNAME)
+yydebug[1]: state 47, shifting to state 235
+yydebug[2]: state 235, reading token 276 (TRAIL)
+yydebug[2]: state 235, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 235 to state 413
+yydebug[3]: state 413, reducing by rule 24 (machine_state_rules : CMD_BANK BANKNAME end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bsave "/tmp/tmp1todkufa/1.ram" 0 $0000 $ffff
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 343 (CMD_BSAVE)
+yydebug[0]: state 0, shifting to state 65
+yydebug[1]: state 65, reading token 423 (FILENAME)
+yydebug[1]: state 65, shifting to state 148
+yydebug[2]: state 148, reducing by rule 206 (filename : FILENAME)
+yydebug[1]: after reduction, shifting from state 65 to state 264
+yydebug[2]: state 264, reading token 265 (O_NUMBER_GUESS)
+yydebug[2]: state 264, shifting to state 170
+yydebug[3]: state 170, reducing by rule 274 (d_number : O_NUMBER_GUESS)
+yydebug[2]: after reduction, shifting from state 264 to state 301
+yydebug[3]: state 301, reducing by rule 208 (device_num : d_number)
+yydebug[2]: after reduction, shifting from state 264 to state 437
+yydebug[3]: state 437, reading token 257 (H_NUMBER)
+yydebug[3]: state 437, shifting to state 122
+yydebug[4]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[3]: after reduction, shifting from state 437 to state 178
+yydebug[4]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[3]: after reduction, shifting from state 437 to state 181
+yydebug[4]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[3]: after reduction, shifting from state 437 to state 180
+yydebug[4]: state 180, reducing by rule 230 (address : memloc)
+yydebug[3]: after reduction, shifting from state 437 to state 177
+yydebug[4]: state 177, reading token 257 (H_NUMBER)
+yydebug[4]: state 177, reducing by rule 234 (opt_sep :)
+yydebug[4]: after reduction, shifting from state 177 to state 378
+yydebug[5]: state 378, shifting to state 122
+yydebug[6]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[5]: after reduction, shifting from state 378 to state 178
+yydebug[6]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[5]: after reduction, shifting from state 378 to state 181
+yydebug[6]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[5]: after reduction, shifting from state 378 to state 180
+yydebug[6]: state 180, reducing by rule 230 (address : memloc)
+yydebug[5]: after reduction, shifting from state 378 to state 531
+yydebug[6]: state 531, reducing by rule 225 (address_range : address opt_sep address)
+yydebug[3]: after reduction, shifting from state 437 to state 567
+yydebug[4]: state 567, reading token 276 (TRAIL)
+yydebug[4]: state 567, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 567 to state 654
+yydebug[5]: state 654, reducing by rule 181 (disk_rules : CMD_BSAVE filename device_num address_range end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 117
+yydebug[1]: state 117, reducing by rule 17 (command : disk_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bank cpu
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 325 (CMD_BANK)
+yydebug[0]: state 0, shifting to state 47
+yydebug[1]: state 47, reading token 428 (BANKNAME)
+yydebug[1]: state 47, shifting to state 235
+yydebug[2]: state 235, reading token 276 (TRAIL)
+yydebug[2]: state 235, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 235 to state 413
+yydebug[3]: state 413, reducing by rule 24 (machine_state_rules : CMD_BANK BANKNAME end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bsave "/tmp/tmp1todkufa/1.io" 0 $d000 $dbff
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 343 (CMD_BSAVE)
+yydebug[0]: state 0, shifting to state 65
+yydebug[1]: state 65, reading token 423 (FILENAME)
+yydebug[1]: state 65, shifting to state 148
+yydebug[2]: state 148, reducing by rule 206 (filename : FILENAME)
+yydebug[1]: after reduction, shifting from state 65 to state 264
+yydebug[2]: state 264, reading token 265 (O_NUMBER_GUESS)
+yydebug[2]: state 264, shifting to state 170
+yydebug[3]: state 170, reducing by rule 274 (d_number : O_NUMBER_GUESS)
+yydebug[2]: after reduction, shifting from state 264 to state 301
+yydebug[3]: state 301, reducing by rule 208 (device_num : d_number)
+yydebug[2]: after reduction, shifting from state 264 to state 437
+yydebug[3]: state 437, reading token 257 (H_NUMBER)
+yydebug[3]: state 437, shifting to state 122
+yydebug[4]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[3]: after reduction, shifting from state 437 to state 178
+yydebug[4]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[3]: after reduction, shifting from state 437 to state 181
+yydebug[4]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[3]: after reduction, shifting from state 437 to state 180
+yydebug[4]: state 180, reducing by rule 230 (address : memloc)
+yydebug[3]: after reduction, shifting from state 437 to state 177
+yydebug[4]: state 177, reading token 257 (H_NUMBER)
+yydebug[4]: state 177, reducing by rule 234 (opt_sep :)
+yydebug[4]: after reduction, shifting from state 177 to state 378
+yydebug[5]: state 378, shifting to state 122
+yydebug[6]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[5]: after reduction, shifting from state 378 to state 178
+yydebug[6]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[5]: after reduction, shifting from state 378 to state 181
+yydebug[6]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[5]: after reduction, shifting from state 378 to state 180
+yydebug[6]: state 180, reducing by rule 230 (address : memloc)
+yydebug[5]: after reduction, shifting from state 378 to state 531
+yydebug[6]: state 531, reducing by rule 225 (address_range : address opt_sep address)
+yydebug[3]: after reduction, shifting from state 437 to state 567
+yydebug[4]: state 567, reading token 276 (TRAIL)
+yydebug[4]: state 567, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 567 to state 654
+yydebug[5]: state 654, reducing by rule 181 (disk_rules : CMD_BSAVE filename device_num address_range end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 117
+yydebug[1]: state 117, reducing by rule 17 (command : disk_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: stopwatch
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 372 (CMD_STOPWATCH)
+yydebug[0]: state 0, shifting to state 94
+yydebug[1]: state 94, reading token 276 (TRAIL)
+yydebug[1]: state 94, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 94 to state 305
+yydebug[2]: state 305, reducing by rule 164 (monitor_misc_rules : CMD_STOPWATCH end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 116
+yydebug[1]: state 116, reducing by rule 16 (command : monitor_misc_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: delete
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 311 (CMD_DELETE)
+yydebug[0]: state 0, shifting to state 33
+yydebug[1]: state 33, reading token 276 (TRAIL)
+yydebug[1]: state 33, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 33 to state 213
+yydebug[2]: state 213, reducing by rule 116 (checkpoint_control_rules : CMD_DELETE end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 114
+yydebug[1]: state 114, reducing by rule 14 (command : checkpoint_control_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: break $5c80
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 303 (CMD_BREAK)
+yydebug[0]: state 0, shifting to state 26
+yydebug[1]: state 26, reading token 257 (H_NUMBER)
+yydebug[1]: state 26, reducing by rule 213 (opt_mem_op :)
+yydebug[1]: after reduction, shifting from state 26 to state 201
+yydebug[2]: state 201, shifting to state 122
+yydebug[3]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[2]: after reduction, shifting from state 201 to state 178
+yydebug[3]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[2]: after reduction, shifting from state 201 to state 181
+yydebug[3]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[2]: after reduction, shifting from state 201 to state 180
+yydebug[3]: state 180, reducing by rule 230 (address : memloc)
+yydebug[2]: after reduction, shifting from state 201 to state 197
+yydebug[3]: state 197, reading token 276 (TRAIL)
+yydebug[3]: state 197, reducing by rule 224 (address_opt_range : address)
+yydebug[2]: after reduction, shifting from state 201 to state 392
+yydebug[3]: state 392, reducing by rule 250 (opt_if_cond_expr :)
+yydebug[3]: after reduction, shifting from state 392 to state 540
+yydebug[4]: state 540, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 540 to state 635
+yydebug[5]: state 635, reducing by rule 101 (checkpoint_rules : CMD_BREAK opt_mem_op address_opt_range opt_if_cond_expr end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 113
+yydebug[1]: state 113, reducing by rule 13 (command : checkpoint_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: g
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 297 (CMD_GOTO)
+yydebug[0]: state 0, shifting to state 22
+yydebug[1]: state 22, reading token 276 (TRAIL)
+yydebug[1]: state 22, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 22 to state 186
+yydebug[2]: state 186, reducing by rule 27 (machine_state_rules : CMD_GOTO end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+VSync: Sync reset
+Monitor playback command: bank ram
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 325 (CMD_BANK)
+yydebug[0]: state 0, shifting to state 47
+yydebug[1]: state 47, reading token 428 (BANKNAME)
+yydebug[1]: state 47, shifting to state 235
+yydebug[2]: state 235, reading token 276 (TRAIL)
+yydebug[2]: state 235, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 235 to state 413
+yydebug[3]: state 413, reducing by rule 24 (machine_state_rules : CMD_BANK BANKNAME end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bsave "/tmp/tmp1todkufa/2.ram" 0 $0000 $ffff
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 343 (CMD_BSAVE)
+yydebug[0]: state 0, shifting to state 65
+yydebug[1]: state 65, reading token 423 (FILENAME)
+yydebug[1]: state 65, shifting to state 148
+yydebug[2]: state 148, reducing by rule 206 (filename : FILENAME)
+yydebug[1]: after reduction, shifting from state 65 to state 264
+yydebug[2]: state 264, reading token 265 (O_NUMBER_GUESS)
+yydebug[2]: state 264, shifting to state 170
+yydebug[3]: state 170, reducing by rule 274 (d_number : O_NUMBER_GUESS)
+yydebug[2]: after reduction, shifting from state 264 to state 301
+yydebug[3]: state 301, reducing by rule 208 (device_num : d_number)
+yydebug[2]: after reduction, shifting from state 264 to state 437
+yydebug[3]: state 437, reading token 257 (H_NUMBER)
+yydebug[3]: state 437, shifting to state 122
+yydebug[4]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[3]: after reduction, shifting from state 437 to state 178
+yydebug[4]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[3]: after reduction, shifting from state 437 to state 181
+yydebug[4]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[3]: after reduction, shifting from state 437 to state 180
+yydebug[4]: state 180, reducing by rule 230 (address : memloc)
+yydebug[3]: after reduction, shifting from state 437 to state 177
+yydebug[4]: state 177, reading token 257 (H_NUMBER)
+yydebug[4]: state 177, reducing by rule 234 (opt_sep :)
+yydebug[4]: after reduction, shifting from state 177 to state 378
+yydebug[5]: state 378, shifting to state 122
+yydebug[6]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[5]: after reduction, shifting from state 378 to state 178
+yydebug[6]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[5]: after reduction, shifting from state 378 to state 181
+yydebug[6]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[5]: after reduction, shifting from state 378 to state 180
+yydebug[6]: state 180, reducing by rule 230 (address : memloc)
+yydebug[5]: after reduction, shifting from state 378 to state 531
+yydebug[6]: state 531, reducing by rule 225 (address_range : address opt_sep address)
+yydebug[3]: after reduction, shifting from state 437 to state 567
+yydebug[4]: state 567, reading token 276 (TRAIL)
+yydebug[4]: state 567, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 567 to state 654
+yydebug[5]: state 654, reducing by rule 181 (disk_rules : CMD_BSAVE filename device_num address_range end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 117
+yydebug[1]: state 117, reducing by rule 17 (command : disk_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bank cpu
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 325 (CMD_BANK)
+yydebug[0]: state 0, shifting to state 47
+yydebug[1]: state 47, reading token 428 (BANKNAME)
+yydebug[1]: state 47, shifting to state 235
+yydebug[2]: state 235, reading token 276 (TRAIL)
+yydebug[2]: state 235, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 235 to state 413
+yydebug[3]: state 413, reducing by rule 24 (machine_state_rules : CMD_BANK BANKNAME end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bsave "/tmp/tmp1todkufa/2.io" 0 $d000 $dbff
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 343 (CMD_BSAVE)
+yydebug[0]: state 0, shifting to state 65
+yydebug[1]: state 65, reading token 423 (FILENAME)
+yydebug[1]: state 65, shifting to state 148
+yydebug[2]: state 148, reducing by rule 206 (filename : FILENAME)
+yydebug[1]: after reduction, shifting from state 65 to state 264
+yydebug[2]: state 264, reading token 265 (O_NUMBER_GUESS)
+yydebug[2]: state 264, shifting to state 170
+yydebug[3]: state 170, reducing by rule 274 (d_number : O_NUMBER_GUESS)
+yydebug[2]: after reduction, shifting from state 264 to state 301
+yydebug[3]: state 301, reducing by rule 208 (device_num : d_number)
+yydebug[2]: after reduction, shifting from state 264 to state 437
+yydebug[3]: state 437, reading token 257 (H_NUMBER)
+yydebug[3]: state 437, shifting to state 122
+yydebug[4]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[3]: after reduction, shifting from state 437 to state 178
+yydebug[4]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[3]: after reduction, shifting from state 437 to state 181
+yydebug[4]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[3]: after reduction, shifting from state 437 to state 180
+yydebug[4]: state 180, reducing by rule 230 (address : memloc)
+yydebug[3]: after reduction, shifting from state 437 to state 177
+yydebug[4]: state 177, reading token 257 (H_NUMBER)
+yydebug[4]: state 177, reducing by rule 234 (opt_sep :)
+yydebug[4]: after reduction, shifting from state 177 to state 378
+yydebug[5]: state 378, shifting to state 122
+yydebug[6]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[5]: after reduction, shifting from state 378 to state 178
+yydebug[6]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[5]: after reduction, shifting from state 378 to state 181
+yydebug[6]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[5]: after reduction, shifting from state 378 to state 180
+yydebug[6]: state 180, reducing by rule 230 (address : memloc)
+yydebug[5]: after reduction, shifting from state 378 to state 531
+yydebug[6]: state 531, reducing by rule 225 (address_range : address opt_sep address)
+yydebug[3]: after reduction, shifting from state 437 to state 567
+yydebug[4]: state 567, reading token 276 (TRAIL)
+yydebug[4]: state 567, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 567 to state 654
+yydebug[5]: state 654, reducing by rule 181 (disk_rules : CMD_BSAVE filename device_num address_range end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 117
+yydebug[1]: state 117, reducing by rule 17 (command : disk_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: stopwatch
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 372 (CMD_STOPWATCH)
+yydebug[0]: state 0, shifting to state 94
+yydebug[1]: state 94, reading token 276 (TRAIL)
+yydebug[1]: state 94, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 94 to state 305
+yydebug[2]: state 305, reducing by rule 164 (monitor_misc_rules : CMD_STOPWATCH end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 116
+yydebug[1]: state 116, reducing by rule 16 (command : monitor_misc_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: delete
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 311 (CMD_DELETE)
+yydebug[0]: state 0, shifting to state 33
+yydebug[1]: state 33, reading token 276 (TRAIL)
+yydebug[1]: state 33, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 33 to state 213
+yydebug[2]: state 213, reducing by rule 116 (checkpoint_control_rules : CMD_DELETE end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 114
+yydebug[1]: state 114, reducing by rule 14 (command : checkpoint_control_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: break $5d19
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 303 (CMD_BREAK)
+yydebug[0]: state 0, shifting to state 26
+yydebug[1]: state 26, reading token 257 (H_NUMBER)
+yydebug[1]: state 26, reducing by rule 213 (opt_mem_op :)
+yydebug[1]: after reduction, shifting from state 26 to state 201
+yydebug[2]: state 201, shifting to state 122
+yydebug[3]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[2]: after reduction, shifting from state 201 to state 178
+yydebug[3]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[2]: after reduction, shifting from state 201 to state 181
+yydebug[3]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[2]: after reduction, shifting from state 201 to state 180
+yydebug[3]: state 180, reducing by rule 230 (address : memloc)
+yydebug[2]: after reduction, shifting from state 201 to state 197
+yydebug[3]: state 197, reading token 276 (TRAIL)
+yydebug[3]: state 197, reducing by rule 224 (address_opt_range : address)
+yydebug[2]: after reduction, shifting from state 201 to state 392
+yydebug[3]: state 392, reducing by rule 250 (opt_if_cond_expr :)
+yydebug[3]: after reduction, shifting from state 392 to state 540
+yydebug[4]: state 540, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 540 to state 635
+yydebug[5]: state 635, reducing by rule 101 (checkpoint_rules : CMD_BREAK opt_mem_op address_opt_range opt_if_cond_expr end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 113
+yydebug[1]: state 113, reducing by rule 13 (command : checkpoint_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: g
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 297 (CMD_GOTO)
+yydebug[0]: state 0, shifting to state 22
+yydebug[1]: state 22, reading token 276 (TRAIL)
+yydebug[1]: state 22, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 22 to state 186
+yydebug[2]: state 186, reducing by rule 27 (machine_state_rules : CMD_GOTO end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+VSync: Sync reset
+Monitor playback command: bank ram
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 325 (CMD_BANK)
+yydebug[0]: state 0, shifting to state 47
+yydebug[1]: state 47, reading token 428 (BANKNAME)
+yydebug[1]: state 47, shifting to state 235
+yydebug[2]: state 235, reading token 276 (TRAIL)
+yydebug[2]: state 235, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 235 to state 413
+yydebug[3]: state 413, reducing by rule 24 (machine_state_rules : CMD_BANK BANKNAME end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bsave "/tmp/tmp1todkufa/3.ram" 0 $0000 $ffff
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 343 (CMD_BSAVE)
+yydebug[0]: state 0, shifting to state 65
+yydebug[1]: state 65, reading token 423 (FILENAME)
+yydebug[1]: state 65, shifting to state 148
+yydebug[2]: state 148, reducing by rule 206 (filename : FILENAME)
+yydebug[1]: after reduction, shifting from state 65 to state 264
+yydebug[2]: state 264, reading token 265 (O_NUMBER_GUESS)
+yydebug[2]: state 264, shifting to state 170
+yydebug[3]: state 170, reducing by rule 274 (d_number : O_NUMBER_GUESS)
+yydebug[2]: after reduction, shifting from state 264 to state 301
+yydebug[3]: state 301, reducing by rule 208 (device_num : d_number)
+yydebug[2]: after reduction, shifting from state 264 to state 437
+yydebug[3]: state 437, reading token 257 (H_NUMBER)
+yydebug[3]: state 437, shifting to state 122
+yydebug[4]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[3]: after reduction, shifting from state 437 to state 178
+yydebug[4]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[3]: after reduction, shifting from state 437 to state 181
+yydebug[4]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[3]: after reduction, shifting from state 437 to state 180
+yydebug[4]: state 180, reducing by rule 230 (address : memloc)
+yydebug[3]: after reduction, shifting from state 437 to state 177
+yydebug[4]: state 177, reading token 257 (H_NUMBER)
+yydebug[4]: state 177, reducing by rule 234 (opt_sep :)
+yydebug[4]: after reduction, shifting from state 177 to state 378
+yydebug[5]: state 378, shifting to state 122
+yydebug[6]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[5]: after reduction, shifting from state 378 to state 178
+yydebug[6]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[5]: after reduction, shifting from state 378 to state 181
+yydebug[6]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[5]: after reduction, shifting from state 378 to state 180
+yydebug[6]: state 180, reducing by rule 230 (address : memloc)
+yydebug[5]: after reduction, shifting from state 378 to state 531
+yydebug[6]: state 531, reducing by rule 225 (address_range : address opt_sep address)
+yydebug[3]: after reduction, shifting from state 437 to state 567
+yydebug[4]: state 567, reading token 276 (TRAIL)
+yydebug[4]: state 567, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 567 to state 654
+yydebug[5]: state 654, reducing by rule 181 (disk_rules : CMD_BSAVE filename device_num address_range end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 117
+yydebug[1]: state 117, reducing by rule 17 (command : disk_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bank cpu
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 325 (CMD_BANK)
+yydebug[0]: state 0, shifting to state 47
+yydebug[1]: state 47, reading token 428 (BANKNAME)
+yydebug[1]: state 47, shifting to state 235
+yydebug[2]: state 235, reading token 276 (TRAIL)
+yydebug[2]: state 235, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 235 to state 413
+yydebug[3]: state 413, reducing by rule 24 (machine_state_rules : CMD_BANK BANKNAME end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bsave "/tmp/tmp1todkufa/3.io" 0 $d000 $dbff
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 343 (CMD_BSAVE)
+yydebug[0]: state 0, shifting to state 65
+yydebug[1]: state 65, reading token 423 (FILENAME)
+yydebug[1]: state 65, shifting to state 148
+yydebug[2]: state 148, reducing by rule 206 (filename : FILENAME)
+yydebug[1]: after reduction, shifting from state 65 to state 264
+yydebug[2]: state 264, reading token 265 (O_NUMBER_GUESS)
+yydebug[2]: state 264, shifting to state 170
+yydebug[3]: state 170, reducing by rule 274 (d_number : O_NUMBER_GUESS)
+yydebug[2]: after reduction, shifting from state 264 to state 301
+yydebug[3]: state 301, reducing by rule 208 (device_num : d_number)
+yydebug[2]: after reduction, shifting from state 264 to state 437
+yydebug[3]: state 437, reading token 257 (H_NUMBER)
+yydebug[3]: state 437, shifting to state 122
+yydebug[4]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[3]: after reduction, shifting from state 437 to state 178
+yydebug[4]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[3]: after reduction, shifting from state 437 to state 181
+yydebug[4]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[3]: after reduction, shifting from state 437 to state 180
+yydebug[4]: state 180, reducing by rule 230 (address : memloc)
+yydebug[3]: after reduction, shifting from state 437 to state 177
+yydebug[4]: state 177, reading token 257 (H_NUMBER)
+yydebug[4]: state 177, reducing by rule 234 (opt_sep :)
+yydebug[4]: after reduction, shifting from state 177 to state 378
+yydebug[5]: state 378, shifting to state 122
+yydebug[6]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[5]: after reduction, shifting from state 378 to state 178
+yydebug[6]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[5]: after reduction, shifting from state 378 to state 181
+yydebug[6]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[5]: after reduction, shifting from state 378 to state 180
+yydebug[6]: state 180, reducing by rule 230 (address : memloc)
+yydebug[5]: after reduction, shifting from state 378 to state 531
+yydebug[6]: state 531, reducing by rule 225 (address_range : address opt_sep address)
+yydebug[3]: after reduction, shifting from state 437 to state 567
+yydebug[4]: state 567, reading token 276 (TRAIL)
+yydebug[4]: state 567, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 567 to state 654
+yydebug[5]: state 654, reducing by rule 181 (disk_rules : CMD_BSAVE filename device_num address_range end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 117
+yydebug[1]: state 117, reducing by rule 17 (command : disk_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: stopwatch
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 372 (CMD_STOPWATCH)
+yydebug[0]: state 0, shifting to state 94
+yydebug[1]: state 94, reading token 276 (TRAIL)
+yydebug[1]: state 94, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 94 to state 305
+yydebug[2]: state 305, reducing by rule 164 (monitor_misc_rules : CMD_STOPWATCH end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 116
+yydebug[1]: state 116, reducing by rule 16 (command : monitor_misc_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: delete
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 311 (CMD_DELETE)
+yydebug[0]: state 0, shifting to state 33
+yydebug[1]: state 33, reading token 276 (TRAIL)
+yydebug[1]: state 33, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 33 to state 213
+yydebug[2]: state 213, reducing by rule 116 (checkpoint_control_rules : CMD_DELETE end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 114
+yydebug[1]: state 114, reducing by rule 14 (command : checkpoint_control_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: break $5d49
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 303 (CMD_BREAK)
+yydebug[0]: state 0, shifting to state 26
+yydebug[1]: state 26, reading token 257 (H_NUMBER)
+yydebug[1]: state 26, reducing by rule 213 (opt_mem_op :)
+yydebug[1]: after reduction, shifting from state 26 to state 201
+yydebug[2]: state 201, shifting to state 122
+yydebug[3]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[2]: after reduction, shifting from state 201 to state 178
+yydebug[3]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[2]: after reduction, shifting from state 201 to state 181
+yydebug[3]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[2]: after reduction, shifting from state 201 to state 180
+yydebug[3]: state 180, reducing by rule 230 (address : memloc)
+yydebug[2]: after reduction, shifting from state 201 to state 197
+yydebug[3]: state 197, reading token 276 (TRAIL)
+yydebug[3]: state 197, reducing by rule 224 (address_opt_range : address)
+yydebug[2]: after reduction, shifting from state 201 to state 392
+yydebug[3]: state 392, reducing by rule 250 (opt_if_cond_expr :)
+yydebug[3]: after reduction, shifting from state 392 to state 540
+yydebug[4]: state 540, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 540 to state 635
+yydebug[5]: state 635, reducing by rule 101 (checkpoint_rules : CMD_BREAK opt_mem_op address_opt_range opt_if_cond_expr end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 113
+yydebug[1]: state 113, reducing by rule 13 (command : checkpoint_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: g
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 297 (CMD_GOTO)
+yydebug[0]: state 0, shifting to state 22
+yydebug[1]: state 22, reading token 276 (TRAIL)
+yydebug[1]: state 22, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 22 to state 186
+yydebug[2]: state 186, reducing by rule 27 (machine_state_rules : CMD_GOTO end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+VSync: Sync reset
+Monitor playback command: bank ram
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 325 (CMD_BANK)
+yydebug[0]: state 0, shifting to state 47
+yydebug[1]: state 47, reading token 428 (BANKNAME)
+yydebug[1]: state 47, shifting to state 235
+yydebug[2]: state 235, reading token 276 (TRAIL)
+yydebug[2]: state 235, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 235 to state 413
+yydebug[3]: state 413, reducing by rule 24 (machine_state_rules : CMD_BANK BANKNAME end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bsave "/tmp/tmp1todkufa/4.ram" 0 $0000 $ffff
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 343 (CMD_BSAVE)
+yydebug[0]: state 0, shifting to state 65
+yydebug[1]: state 65, reading token 423 (FILENAME)
+yydebug[1]: state 65, shifting to state 148
+yydebug[2]: state 148, reducing by rule 206 (filename : FILENAME)
+yydebug[1]: after reduction, shifting from state 65 to state 264
+yydebug[2]: state 264, reading token 265 (O_NUMBER_GUESS)
+yydebug[2]: state 264, shifting to state 170
+yydebug[3]: state 170, reducing by rule 274 (d_number : O_NUMBER_GUESS)
+yydebug[2]: after reduction, shifting from state 264 to state 301
+yydebug[3]: state 301, reducing by rule 208 (device_num : d_number)
+yydebug[2]: after reduction, shifting from state 264 to state 437
+yydebug[3]: state 437, reading token 257 (H_NUMBER)
+yydebug[3]: state 437, shifting to state 122
+yydebug[4]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[3]: after reduction, shifting from state 437 to state 178
+yydebug[4]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[3]: after reduction, shifting from state 437 to state 181
+yydebug[4]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[3]: after reduction, shifting from state 437 to state 180
+yydebug[4]: state 180, reducing by rule 230 (address : memloc)
+yydebug[3]: after reduction, shifting from state 437 to state 177
+yydebug[4]: state 177, reading token 257 (H_NUMBER)
+yydebug[4]: state 177, reducing by rule 234 (opt_sep :)
+yydebug[4]: after reduction, shifting from state 177 to state 378
+yydebug[5]: state 378, shifting to state 122
+yydebug[6]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[5]: after reduction, shifting from state 378 to state 178
+yydebug[6]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[5]: after reduction, shifting from state 378 to state 181
+yydebug[6]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[5]: after reduction, shifting from state 378 to state 180
+yydebug[6]: state 180, reducing by rule 230 (address : memloc)
+yydebug[5]: after reduction, shifting from state 378 to state 531
+yydebug[6]: state 531, reducing by rule 225 (address_range : address opt_sep address)
+yydebug[3]: after reduction, shifting from state 437 to state 567
+yydebug[4]: state 567, reading token 276 (TRAIL)
+yydebug[4]: state 567, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 567 to state 654
+yydebug[5]: state 654, reducing by rule 181 (disk_rules : CMD_BSAVE filename device_num address_range end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 117
+yydebug[1]: state 117, reducing by rule 17 (command : disk_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bank cpu
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 325 (CMD_BANK)
+yydebug[0]: state 0, shifting to state 47
+yydebug[1]: state 47, reading token 428 (BANKNAME)
+yydebug[1]: state 47, shifting to state 235
+yydebug[2]: state 235, reading token 276 (TRAIL)
+yydebug[2]: state 235, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 235 to state 413
+yydebug[3]: state 413, reducing by rule 24 (machine_state_rules : CMD_BANK BANKNAME end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bsave "/tmp/tmp1todkufa/4.io" 0 $d000 $dbff
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 343 (CMD_BSAVE)
+yydebug[0]: state 0, shifting to state 65
+yydebug[1]: state 65, reading token 423 (FILENAME)
+yydebug[1]: state 65, shifting to state 148
+yydebug[2]: state 148, reducing by rule 206 (filename : FILENAME)
+yydebug[1]: after reduction, shifting from state 65 to state 264
+yydebug[2]: state 264, reading token 265 (O_NUMBER_GUESS)
+yydebug[2]: state 264, shifting to state 170
+yydebug[3]: state 170, reducing by rule 274 (d_number : O_NUMBER_GUESS)
+yydebug[2]: after reduction, shifting from state 264 to state 301
+yydebug[3]: state 301, reducing by rule 208 (device_num : d_number)
+yydebug[2]: after reduction, shifting from state 264 to state 437
+yydebug[3]: state 437, reading token 257 (H_NUMBER)
+yydebug[3]: state 437, shifting to state 122
+yydebug[4]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[3]: after reduction, shifting from state 437 to state 178
+yydebug[4]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[3]: after reduction, shifting from state 437 to state 181
+yydebug[4]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[3]: after reduction, shifting from state 437 to state 180
+yydebug[4]: state 180, reducing by rule 230 (address : memloc)
+yydebug[3]: after reduction, shifting from state 437 to state 177
+yydebug[4]: state 177, reading token 257 (H_NUMBER)
+yydebug[4]: state 177, reducing by rule 234 (opt_sep :)
+yydebug[4]: after reduction, shifting from state 177 to state 378
+yydebug[5]: state 378, shifting to state 122
+yydebug[6]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[5]: after reduction, shifting from state 378 to state 178
+yydebug[6]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[5]: after reduction, shifting from state 378 to state 181
+yydebug[6]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[5]: after reduction, shifting from state 378 to state 180
+yydebug[6]: state 180, reducing by rule 230 (address : memloc)
+yydebug[5]: after reduction, shifting from state 378 to state 531
+yydebug[6]: state 531, reducing by rule 225 (address_range : address opt_sep address)
+yydebug[3]: after reduction, shifting from state 437 to state 567
+yydebug[4]: state 567, reading token 276 (TRAIL)
+yydebug[4]: state 567, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 567 to state 654
+yydebug[5]: state 654, reducing by rule 181 (disk_rules : CMD_BSAVE filename device_num address_range end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 117
+yydebug[1]: state 117, reducing by rule 17 (command : disk_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: stopwatch
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 372 (CMD_STOPWATCH)
+yydebug[0]: state 0, shifting to state 94
+yydebug[1]: state 94, reading token 276 (TRAIL)
+yydebug[1]: state 94, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 94 to state 305
+yydebug[2]: state 305, reducing by rule 164 (monitor_misc_rules : CMD_STOPWATCH end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 116
+yydebug[1]: state 116, reducing by rule 16 (command : monitor_misc_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: delete
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 311 (CMD_DELETE)
+yydebug[0]: state 0, shifting to state 33
+yydebug[1]: state 33, reading token 276 (TRAIL)
+yydebug[1]: state 33, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 33 to state 213
+yydebug[2]: state 213, reducing by rule 116 (checkpoint_control_rules : CMD_DELETE end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 114
+yydebug[1]: state 114, reducing by rule 14 (command : checkpoint_control_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: break $5e2c
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 303 (CMD_BREAK)
+yydebug[0]: state 0, shifting to state 26
+yydebug[1]: state 26, reading token 257 (H_NUMBER)
+yydebug[1]: state 26, reducing by rule 213 (opt_mem_op :)
+yydebug[1]: after reduction, shifting from state 26 to state 201
+yydebug[2]: state 201, shifting to state 122
+yydebug[3]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[2]: after reduction, shifting from state 201 to state 178
+yydebug[3]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[2]: after reduction, shifting from state 201 to state 181
+yydebug[3]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[2]: after reduction, shifting from state 201 to state 180
+yydebug[3]: state 180, reducing by rule 230 (address : memloc)
+yydebug[2]: after reduction, shifting from state 201 to state 197
+yydebug[3]: state 197, reading token 276 (TRAIL)
+yydebug[3]: state 197, reducing by rule 224 (address_opt_range : address)
+yydebug[2]: after reduction, shifting from state 201 to state 392
+yydebug[3]: state 392, reducing by rule 250 (opt_if_cond_expr :)
+yydebug[3]: after reduction, shifting from state 392 to state 540
+yydebug[4]: state 540, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 540 to state 635
+yydebug[5]: state 635, reducing by rule 101 (checkpoint_rules : CMD_BREAK opt_mem_op address_opt_range opt_if_cond_expr end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 113
+yydebug[1]: state 113, reducing by rule 13 (command : checkpoint_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: g
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 297 (CMD_GOTO)
+yydebug[0]: state 0, shifting to state 22
+yydebug[1]: state 22, reading token 276 (TRAIL)
+yydebug[1]: state 22, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 22 to state 186
+yydebug[2]: state 186, reducing by rule 27 (machine_state_rules : CMD_GOTO end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+VSync: Sync reset
+Monitor playback command: bank ram
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 325 (CMD_BANK)
+yydebug[0]: state 0, shifting to state 47
+yydebug[1]: state 47, reading token 428 (BANKNAME)
+yydebug[1]: state 47, shifting to state 235
+yydebug[2]: state 235, reading token 276 (TRAIL)
+yydebug[2]: state 235, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 235 to state 413
+yydebug[3]: state 413, reducing by rule 24 (machine_state_rules : CMD_BANK BANKNAME end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bsave "/tmp/tmp1todkufa/5.ram" 0 $0000 $ffff
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 343 (CMD_BSAVE)
+yydebug[0]: state 0, shifting to state 65
+yydebug[1]: state 65, reading token 423 (FILENAME)
+yydebug[1]: state 65, shifting to state 148
+yydebug[2]: state 148, reducing by rule 206 (filename : FILENAME)
+yydebug[1]: after reduction, shifting from state 65 to state 264
+yydebug[2]: state 264, reading token 265 (O_NUMBER_GUESS)
+yydebug[2]: state 264, shifting to state 170
+yydebug[3]: state 170, reducing by rule 274 (d_number : O_NUMBER_GUESS)
+yydebug[2]: after reduction, shifting from state 264 to state 301
+yydebug[3]: state 301, reducing by rule 208 (device_num : d_number)
+yydebug[2]: after reduction, shifting from state 264 to state 437
+yydebug[3]: state 437, reading token 257 (H_NUMBER)
+yydebug[3]: state 437, shifting to state 122
+yydebug[4]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[3]: after reduction, shifting from state 437 to state 178
+yydebug[4]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[3]: after reduction, shifting from state 437 to state 181
+yydebug[4]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[3]: after reduction, shifting from state 437 to state 180
+yydebug[4]: state 180, reducing by rule 230 (address : memloc)
+yydebug[3]: after reduction, shifting from state 437 to state 177
+yydebug[4]: state 177, reading token 257 (H_NUMBER)
+yydebug[4]: state 177, reducing by rule 234 (opt_sep :)
+yydebug[4]: after reduction, shifting from state 177 to state 378
+yydebug[5]: state 378, shifting to state 122
+yydebug[6]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[5]: after reduction, shifting from state 378 to state 178
+yydebug[6]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[5]: after reduction, shifting from state 378 to state 181
+yydebug[6]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[5]: after reduction, shifting from state 378 to state 180
+yydebug[6]: state 180, reducing by rule 230 (address : memloc)
+yydebug[5]: after reduction, shifting from state 378 to state 531
+yydebug[6]: state 531, reducing by rule 225 (address_range : address opt_sep address)
+yydebug[3]: after reduction, shifting from state 437 to state 567
+yydebug[4]: state 567, reading token 276 (TRAIL)
+yydebug[4]: state 567, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 567 to state 654
+yydebug[5]: state 654, reducing by rule 181 (disk_rules : CMD_BSAVE filename device_num address_range end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 117
+yydebug[1]: state 117, reducing by rule 17 (command : disk_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bank cpu
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 325 (CMD_BANK)
+yydebug[0]: state 0, shifting to state 47
+yydebug[1]: state 47, reading token 428 (BANKNAME)
+yydebug[1]: state 47, shifting to state 235
+yydebug[2]: state 235, reading token 276 (TRAIL)
+yydebug[2]: state 235, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 235 to state 413
+yydebug[3]: state 413, reducing by rule 24 (machine_state_rules : CMD_BANK BANKNAME end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bsave "/tmp/tmp1todkufa/5.io" 0 $d000 $dbff
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 343 (CMD_BSAVE)
+yydebug[0]: state 0, shifting to state 65
+yydebug[1]: state 65, reading token 423 (FILENAME)
+yydebug[1]: state 65, shifting to state 148
+yydebug[2]: state 148, reducing by rule 206 (filename : FILENAME)
+yydebug[1]: after reduction, shifting from state 65 to state 264
+yydebug[2]: state 264, reading token 265 (O_NUMBER_GUESS)
+yydebug[2]: state 264, shifting to state 170
+yydebug[3]: state 170, reducing by rule 274 (d_number : O_NUMBER_GUESS)
+yydebug[2]: after reduction, shifting from state 264 to state 301
+yydebug[3]: state 301, reducing by rule 208 (device_num : d_number)
+yydebug[2]: after reduction, shifting from state 264 to state 437
+yydebug[3]: state 437, reading token 257 (H_NUMBER)
+yydebug[3]: state 437, shifting to state 122
+yydebug[4]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[3]: after reduction, shifting from state 437 to state 178
+yydebug[4]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[3]: after reduction, shifting from state 437 to state 181
+yydebug[4]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[3]: after reduction, shifting from state 437 to state 180
+yydebug[4]: state 180, reducing by rule 230 (address : memloc)
+yydebug[3]: after reduction, shifting from state 437 to state 177
+yydebug[4]: state 177, reading token 257 (H_NUMBER)
+yydebug[4]: state 177, reducing by rule 234 (opt_sep :)
+yydebug[4]: after reduction, shifting from state 177 to state 378
+yydebug[5]: state 378, shifting to state 122
+yydebug[6]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[5]: after reduction, shifting from state 378 to state 178
+yydebug[6]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[5]: after reduction, shifting from state 378 to state 181
+yydebug[6]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[5]: after reduction, shifting from state 378 to state 180
+yydebug[6]: state 180, reducing by rule 230 (address : memloc)
+yydebug[5]: after reduction, shifting from state 378 to state 531
+yydebug[6]: state 531, reducing by rule 225 (address_range : address opt_sep address)
+yydebug[3]: after reduction, shifting from state 437 to state 567
+yydebug[4]: state 567, reading token 276 (TRAIL)
+yydebug[4]: state 567, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 567 to state 654
+yydebug[5]: state 654, reducing by rule 181 (disk_rules : CMD_BSAVE filename device_num address_range end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 117
+yydebug[1]: state 117, reducing by rule 17 (command : disk_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: stopwatch
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 372 (CMD_STOPWATCH)
+yydebug[0]: state 0, shifting to state 94
+yydebug[1]: state 94, reading token 276 (TRAIL)
+yydebug[1]: state 94, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 94 to state 305
+yydebug[2]: state 305, reducing by rule 164 (monitor_misc_rules : CMD_STOPWATCH end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 116
+yydebug[1]: state 116, reducing by rule 16 (command : monitor_misc_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: delete
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 311 (CMD_DELETE)
+yydebug[0]: state 0, shifting to state 33
+yydebug[1]: state 33, reading token 276 (TRAIL)
+yydebug[1]: state 33, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 33 to state 213
+yydebug[2]: state 213, reducing by rule 116 (checkpoint_control_rules : CMD_DELETE end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 114
+yydebug[1]: state 114, reducing by rule 14 (command : checkpoint_control_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: break $5eef
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 303 (CMD_BREAK)
+yydebug[0]: state 0, shifting to state 26
+yydebug[1]: state 26, reading token 257 (H_NUMBER)
+yydebug[1]: state 26, reducing by rule 213 (opt_mem_op :)
+yydebug[1]: after reduction, shifting from state 26 to state 201
+yydebug[2]: state 201, shifting to state 122
+yydebug[3]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[2]: after reduction, shifting from state 201 to state 178
+yydebug[3]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[2]: after reduction, shifting from state 201 to state 181
+yydebug[3]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[2]: after reduction, shifting from state 201 to state 180
+yydebug[3]: state 180, reducing by rule 230 (address : memloc)
+yydebug[2]: after reduction, shifting from state 201 to state 197
+yydebug[3]: state 197, reading token 276 (TRAIL)
+yydebug[3]: state 197, reducing by rule 224 (address_opt_range : address)
+yydebug[2]: after reduction, shifting from state 201 to state 392
+yydebug[3]: state 392, reducing by rule 250 (opt_if_cond_expr :)
+yydebug[3]: after reduction, shifting from state 392 to state 540
+yydebug[4]: state 540, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 540 to state 635
+yydebug[5]: state 635, reducing by rule 101 (checkpoint_rules : CMD_BREAK opt_mem_op address_opt_range opt_if_cond_expr end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 113
+yydebug[1]: state 113, reducing by rule 13 (command : checkpoint_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: g
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 297 (CMD_GOTO)
+yydebug[0]: state 0, shifting to state 22
+yydebug[1]: state 22, reading token 276 (TRAIL)
+yydebug[1]: state 22, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 22 to state 186
+yydebug[2]: state 186, reducing by rule 27 (machine_state_rules : CMD_GOTO end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+VSync: Sync reset
+Monitor playback command: bank ram
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 325 (CMD_BANK)
+yydebug[0]: state 0, shifting to state 47
+yydebug[1]: state 47, reading token 428 (BANKNAME)
+yydebug[1]: state 47, shifting to state 235
+yydebug[2]: state 235, reading token 276 (TRAIL)
+yydebug[2]: state 235, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 235 to state 413
+yydebug[3]: state 413, reducing by rule 24 (machine_state_rules : CMD_BANK BANKNAME end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bsave "/tmp/tmp1todkufa/6.ram" 0 $0000 $ffff
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 343 (CMD_BSAVE)
+yydebug[0]: state 0, shifting to state 65
+yydebug[1]: state 65, reading token 423 (FILENAME)
+yydebug[1]: state 65, shifting to state 148
+yydebug[2]: state 148, reducing by rule 206 (filename : FILENAME)
+yydebug[1]: after reduction, shifting from state 65 to state 264
+yydebug[2]: state 264, reading token 265 (O_NUMBER_GUESS)
+yydebug[2]: state 264, shifting to state 170
+yydebug[3]: state 170, reducing by rule 274 (d_number : O_NUMBER_GUESS)
+yydebug[2]: after reduction, shifting from state 264 to state 301
+yydebug[3]: state 301, reducing by rule 208 (device_num : d_number)
+yydebug[2]: after reduction, shifting from state 264 to state 437
+yydebug[3]: state 437, reading token 257 (H_NUMBER)
+yydebug[3]: state 437, shifting to state 122
+yydebug[4]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[3]: after reduction, shifting from state 437 to state 178
+yydebug[4]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[3]: after reduction, shifting from state 437 to state 181
+yydebug[4]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[3]: after reduction, shifting from state 437 to state 180
+yydebug[4]: state 180, reducing by rule 230 (address : memloc)
+yydebug[3]: after reduction, shifting from state 437 to state 177
+yydebug[4]: state 177, reading token 257 (H_NUMBER)
+yydebug[4]: state 177, reducing by rule 234 (opt_sep :)
+yydebug[4]: after reduction, shifting from state 177 to state 378
+yydebug[5]: state 378, shifting to state 122
+yydebug[6]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[5]: after reduction, shifting from state 378 to state 178
+yydebug[6]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[5]: after reduction, shifting from state 378 to state 181
+yydebug[6]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[5]: after reduction, shifting from state 378 to state 180
+yydebug[6]: state 180, reducing by rule 230 (address : memloc)
+yydebug[5]: after reduction, shifting from state 378 to state 531
+yydebug[6]: state 531, reducing by rule 225 (address_range : address opt_sep address)
+yydebug[3]: after reduction, shifting from state 437 to state 567
+yydebug[4]: state 567, reading token 276 (TRAIL)
+yydebug[4]: state 567, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 567 to state 654
+yydebug[5]: state 654, reducing by rule 181 (disk_rules : CMD_BSAVE filename device_num address_range end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 117
+yydebug[1]: state 117, reducing by rule 17 (command : disk_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bank cpu
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 325 (CMD_BANK)
+yydebug[0]: state 0, shifting to state 47
+yydebug[1]: state 47, reading token 428 (BANKNAME)
+yydebug[1]: state 47, shifting to state 235
+yydebug[2]: state 235, reading token 276 (TRAIL)
+yydebug[2]: state 235, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 235 to state 413
+yydebug[3]: state 413, reducing by rule 24 (machine_state_rules : CMD_BANK BANKNAME end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bsave "/tmp/tmp1todkufa/6.io" 0 $d000 $dbff
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 343 (CMD_BSAVE)
+yydebug[0]: state 0, shifting to state 65
+yydebug[1]: state 65, reading token 423 (FILENAME)
+yydebug[1]: state 65, shifting to state 148
+yydebug[2]: state 148, reducing by rule 206 (filename : FILENAME)
+yydebug[1]: after reduction, shifting from state 65 to state 264
+yydebug[2]: state 264, reading token 265 (O_NUMBER_GUESS)
+yydebug[2]: state 264, shifting to state 170
+yydebug[3]: state 170, reducing by rule 274 (d_number : O_NUMBER_GUESS)
+yydebug[2]: after reduction, shifting from state 264 to state 301
+yydebug[3]: state 301, reducing by rule 208 (device_num : d_number)
+yydebug[2]: after reduction, shifting from state 264 to state 437
+yydebug[3]: state 437, reading token 257 (H_NUMBER)
+yydebug[3]: state 437, shifting to state 122
+yydebug[4]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[3]: after reduction, shifting from state 437 to state 178
+yydebug[4]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[3]: after reduction, shifting from state 437 to state 181
+yydebug[4]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[3]: after reduction, shifting from state 437 to state 180
+yydebug[4]: state 180, reducing by rule 230 (address : memloc)
+yydebug[3]: after reduction, shifting from state 437 to state 177
+yydebug[4]: state 177, reading token 257 (H_NUMBER)
+yydebug[4]: state 177, reducing by rule 234 (opt_sep :)
+yydebug[4]: after reduction, shifting from state 177 to state 378
+yydebug[5]: state 378, shifting to state 122
+yydebug[6]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[5]: after reduction, shifting from state 378 to state 178
+yydebug[6]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[5]: after reduction, shifting from state 378 to state 181
+yydebug[6]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[5]: after reduction, shifting from state 378 to state 180
+yydebug[6]: state 180, reducing by rule 230 (address : memloc)
+yydebug[5]: after reduction, shifting from state 378 to state 531
+yydebug[6]: state 531, reducing by rule 225 (address_range : address opt_sep address)
+yydebug[3]: after reduction, shifting from state 437 to state 567
+yydebug[4]: state 567, reading token 276 (TRAIL)
+yydebug[4]: state 567, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 567 to state 654
+yydebug[5]: state 654, reducing by rule 181 (disk_rules : CMD_BSAVE filename device_num address_range end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 117
+yydebug[1]: state 117, reducing by rule 17 (command : disk_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: stopwatch
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 372 (CMD_STOPWATCH)
+yydebug[0]: state 0, shifting to state 94
+yydebug[1]: state 94, reading token 276 (TRAIL)
+yydebug[1]: state 94, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 94 to state 305
+yydebug[2]: state 305, reducing by rule 164 (monitor_misc_rules : CMD_STOPWATCH end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 116
+yydebug[1]: state 116, reducing by rule 16 (command : monitor_misc_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: delete
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 311 (CMD_DELETE)
+yydebug[0]: state 0, shifting to state 33
+yydebug[1]: state 33, reading token 276 (TRAIL)
+yydebug[1]: state 33, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 33 to state 213
+yydebug[2]: state 213, reducing by rule 116 (checkpoint_control_rules : CMD_DELETE end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 114
+yydebug[1]: state 114, reducing by rule 14 (command : checkpoint_control_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: break $5f24
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 303 (CMD_BREAK)
+yydebug[0]: state 0, shifting to state 26
+yydebug[1]: state 26, reading token 257 (H_NUMBER)
+yydebug[1]: state 26, reducing by rule 213 (opt_mem_op :)
+yydebug[1]: after reduction, shifting from state 26 to state 201
+yydebug[2]: state 201, shifting to state 122
+yydebug[3]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[2]: after reduction, shifting from state 201 to state 178
+yydebug[3]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[2]: after reduction, shifting from state 201 to state 181
+yydebug[3]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[2]: after reduction, shifting from state 201 to state 180
+yydebug[3]: state 180, reducing by rule 230 (address : memloc)
+yydebug[2]: after reduction, shifting from state 201 to state 197
+yydebug[3]: state 197, reading token 276 (TRAIL)
+yydebug[3]: state 197, reducing by rule 224 (address_opt_range : address)
+yydebug[2]: after reduction, shifting from state 201 to state 392
+yydebug[3]: state 392, reducing by rule 250 (opt_if_cond_expr :)
+yydebug[3]: after reduction, shifting from state 392 to state 540
+yydebug[4]: state 540, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 540 to state 635
+yydebug[5]: state 635, reducing by rule 101 (checkpoint_rules : CMD_BREAK opt_mem_op address_opt_range opt_if_cond_expr end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 113
+yydebug[1]: state 113, reducing by rule 13 (command : checkpoint_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: g
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 297 (CMD_GOTO)
+yydebug[0]: state 0, shifting to state 22
+yydebug[1]: state 22, reading token 276 (TRAIL)
+yydebug[1]: state 22, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 22 to state 186
+yydebug[2]: state 186, reducing by rule 27 (machine_state_rules : CMD_GOTO end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+VSync: Sync reset
+Monitor playback command: bank ram
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 325 (CMD_BANK)
+yydebug[0]: state 0, shifting to state 47
+yydebug[1]: state 47, reading token 428 (BANKNAME)
+yydebug[1]: state 47, shifting to state 235
+yydebug[2]: state 235, reading token 276 (TRAIL)
+yydebug[2]: state 235, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 235 to state 413
+yydebug[3]: state 413, reducing by rule 24 (machine_state_rules : CMD_BANK BANKNAME end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bsave "/tmp/tmp1todkufa/7.ram" 0 $0000 $ffff
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 343 (CMD_BSAVE)
+yydebug[0]: state 0, shifting to state 65
+yydebug[1]: state 65, reading token 423 (FILENAME)
+yydebug[1]: state 65, shifting to state 148
+yydebug[2]: state 148, reducing by rule 206 (filename : FILENAME)
+yydebug[1]: after reduction, shifting from state 65 to state 264
+yydebug[2]: state 264, reading token 265 (O_NUMBER_GUESS)
+yydebug[2]: state 264, shifting to state 170
+yydebug[3]: state 170, reducing by rule 274 (d_number : O_NUMBER_GUESS)
+yydebug[2]: after reduction, shifting from state 264 to state 301
+yydebug[3]: state 301, reducing by rule 208 (device_num : d_number)
+yydebug[2]: after reduction, shifting from state 264 to state 437
+yydebug[3]: state 437, reading token 257 (H_NUMBER)
+yydebug[3]: state 437, shifting to state 122
+yydebug[4]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[3]: after reduction, shifting from state 437 to state 178
+yydebug[4]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[3]: after reduction, shifting from state 437 to state 181
+yydebug[4]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[3]: after reduction, shifting from state 437 to state 180
+yydebug[4]: state 180, reducing by rule 230 (address : memloc)
+yydebug[3]: after reduction, shifting from state 437 to state 177
+yydebug[4]: state 177, reading token 257 (H_NUMBER)
+yydebug[4]: state 177, reducing by rule 234 (opt_sep :)
+yydebug[4]: after reduction, shifting from state 177 to state 378
+yydebug[5]: state 378, shifting to state 122
+yydebug[6]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[5]: after reduction, shifting from state 378 to state 178
+yydebug[6]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[5]: after reduction, shifting from state 378 to state 181
+yydebug[6]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[5]: after reduction, shifting from state 378 to state 180
+yydebug[6]: state 180, reducing by rule 230 (address : memloc)
+yydebug[5]: after reduction, shifting from state 378 to state 531
+yydebug[6]: state 531, reducing by rule 225 (address_range : address opt_sep address)
+yydebug[3]: after reduction, shifting from state 437 to state 567
+yydebug[4]: state 567, reading token 276 (TRAIL)
+yydebug[4]: state 567, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 567 to state 654
+yydebug[5]: state 654, reducing by rule 181 (disk_rules : CMD_BSAVE filename device_num address_range end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 117
+yydebug[1]: state 117, reducing by rule 17 (command : disk_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bank cpu
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 325 (CMD_BANK)
+yydebug[0]: state 0, shifting to state 47
+yydebug[1]: state 47, reading token 428 (BANKNAME)
+yydebug[1]: state 47, shifting to state 235
+yydebug[2]: state 235, reading token 276 (TRAIL)
+yydebug[2]: state 235, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 235 to state 413
+yydebug[3]: state 413, reducing by rule 24 (machine_state_rules : CMD_BANK BANKNAME end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bsave "/tmp/tmp1todkufa/7.io" 0 $d000 $dbff
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 343 (CMD_BSAVE)
+yydebug[0]: state 0, shifting to state 65
+yydebug[1]: state 65, reading token 423 (FILENAME)
+yydebug[1]: state 65, shifting to state 148
+yydebug[2]: state 148, reducing by rule 206 (filename : FILENAME)
+yydebug[1]: after reduction, shifting from state 65 to state 264
+yydebug[2]: state 264, reading token 265 (O_NUMBER_GUESS)
+yydebug[2]: state 264, shifting to state 170
+yydebug[3]: state 170, reducing by rule 274 (d_number : O_NUMBER_GUESS)
+yydebug[2]: after reduction, shifting from state 264 to state 301
+yydebug[3]: state 301, reducing by rule 208 (device_num : d_number)
+yydebug[2]: after reduction, shifting from state 264 to state 437
+yydebug[3]: state 437, reading token 257 (H_NUMBER)
+yydebug[3]: state 437, shifting to state 122
+yydebug[4]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[3]: after reduction, shifting from state 437 to state 178
+yydebug[4]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[3]: after reduction, shifting from state 437 to state 181
+yydebug[4]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[3]: after reduction, shifting from state 437 to state 180
+yydebug[4]: state 180, reducing by rule 230 (address : memloc)
+yydebug[3]: after reduction, shifting from state 437 to state 177
+yydebug[4]: state 177, reading token 257 (H_NUMBER)
+yydebug[4]: state 177, reducing by rule 234 (opt_sep :)
+yydebug[4]: after reduction, shifting from state 177 to state 378
+yydebug[5]: state 378, shifting to state 122
+yydebug[6]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[5]: after reduction, shifting from state 378 to state 178
+yydebug[6]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[5]: after reduction, shifting from state 378 to state 181
+yydebug[6]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[5]: after reduction, shifting from state 378 to state 180
+yydebug[6]: state 180, reducing by rule 230 (address : memloc)
+yydebug[5]: after reduction, shifting from state 378 to state 531
+yydebug[6]: state 531, reducing by rule 225 (address_range : address opt_sep address)
+yydebug[3]: after reduction, shifting from state 437 to state 567
+yydebug[4]: state 567, reading token 276 (TRAIL)
+yydebug[4]: state 567, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 567 to state 654
+yydebug[5]: state 654, reducing by rule 181 (disk_rules : CMD_BSAVE filename device_num address_range end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 117
+yydebug[1]: state 117, reducing by rule 17 (command : disk_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: stopwatch
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 372 (CMD_STOPWATCH)
+yydebug[0]: state 0, shifting to state 94
+yydebug[1]: state 94, reading token 276 (TRAIL)
+yydebug[1]: state 94, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 94 to state 305
+yydebug[2]: state 305, reducing by rule 164 (monitor_misc_rules : CMD_STOPWATCH end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 116
+yydebug[1]: state 116, reducing by rule 16 (command : monitor_misc_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: delete
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 311 (CMD_DELETE)
+yydebug[0]: state 0, shifting to state 33
+yydebug[1]: state 33, reading token 276 (TRAIL)
+yydebug[1]: state 33, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 33 to state 213
+yydebug[2]: state 213, reducing by rule 116 (checkpoint_control_rules : CMD_DELETE end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 114
+yydebug[1]: state 114, reducing by rule 14 (command : checkpoint_control_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: break $5f29
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 303 (CMD_BREAK)
+yydebug[0]: state 0, shifting to state 26
+yydebug[1]: state 26, reading token 257 (H_NUMBER)
+yydebug[1]: state 26, reducing by rule 213 (opt_mem_op :)
+yydebug[1]: after reduction, shifting from state 26 to state 201
+yydebug[2]: state 201, shifting to state 122
+yydebug[3]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[2]: after reduction, shifting from state 201 to state 178
+yydebug[3]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[2]: after reduction, shifting from state 201 to state 181
+yydebug[3]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[2]: after reduction, shifting from state 201 to state 180
+yydebug[3]: state 180, reducing by rule 230 (address : memloc)
+yydebug[2]: after reduction, shifting from state 201 to state 197
+yydebug[3]: state 197, reading token 276 (TRAIL)
+yydebug[3]: state 197, reducing by rule 224 (address_opt_range : address)
+yydebug[2]: after reduction, shifting from state 201 to state 392
+yydebug[3]: state 392, reducing by rule 250 (opt_if_cond_expr :)
+yydebug[3]: after reduction, shifting from state 392 to state 540
+yydebug[4]: state 540, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 540 to state 635
+yydebug[5]: state 635, reducing by rule 101 (checkpoint_rules : CMD_BREAK opt_mem_op address_opt_range opt_if_cond_expr end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 113
+yydebug[1]: state 113, reducing by rule 13 (command : checkpoint_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: g
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 297 (CMD_GOTO)
+yydebug[0]: state 0, shifting to state 22
+yydebug[1]: state 22, reading token 276 (TRAIL)
+yydebug[1]: state 22, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 22 to state 186
+yydebug[2]: state 186, reducing by rule 27 (machine_state_rules : CMD_GOTO end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bank ram
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 325 (CMD_BANK)
+yydebug[0]: state 0, shifting to state 47
+yydebug[1]: state 47, reading token 428 (BANKNAME)
+yydebug[1]: state 47, shifting to state 235
+yydebug[2]: state 235, reading token 276 (TRAIL)
+yydebug[2]: state 235, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 235 to state 413
+yydebug[3]: state 413, reducing by rule 24 (machine_state_rules : CMD_BANK BANKNAME end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bsave "/tmp/tmp1todkufa/8.ram" 0 $0000 $ffff
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 343 (CMD_BSAVE)
+yydebug[0]: state 0, shifting to state 65
+yydebug[1]: state 65, reading token 423 (FILENAME)
+yydebug[1]: state 65, shifting to state 148
+yydebug[2]: state 148, reducing by rule 206 (filename : FILENAME)
+yydebug[1]: after reduction, shifting from state 65 to state 264
+yydebug[2]: state 264, reading token 265 (O_NUMBER_GUESS)
+yydebug[2]: state 264, shifting to state 170
+yydebug[3]: state 170, reducing by rule 274 (d_number : O_NUMBER_GUESS)
+yydebug[2]: after reduction, shifting from state 264 to state 301
+yydebug[3]: state 301, reducing by rule 208 (device_num : d_number)
+yydebug[2]: after reduction, shifting from state 264 to state 437
+yydebug[3]: state 437, reading token 257 (H_NUMBER)
+yydebug[3]: state 437, shifting to state 122
+yydebug[4]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[3]: after reduction, shifting from state 437 to state 178
+yydebug[4]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[3]: after reduction, shifting from state 437 to state 181
+yydebug[4]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[3]: after reduction, shifting from state 437 to state 180
+yydebug[4]: state 180, reducing by rule 230 (address : memloc)
+yydebug[3]: after reduction, shifting from state 437 to state 177
+yydebug[4]: state 177, reading token 257 (H_NUMBER)
+yydebug[4]: state 177, reducing by rule 234 (opt_sep :)
+yydebug[4]: after reduction, shifting from state 177 to state 378
+yydebug[5]: state 378, shifting to state 122
+yydebug[6]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[5]: after reduction, shifting from state 378 to state 178
+yydebug[6]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[5]: after reduction, shifting from state 378 to state 181
+yydebug[6]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[5]: after reduction, shifting from state 378 to state 180
+yydebug[6]: state 180, reducing by rule 230 (address : memloc)
+yydebug[5]: after reduction, shifting from state 378 to state 531
+yydebug[6]: state 531, reducing by rule 225 (address_range : address opt_sep address)
+yydebug[3]: after reduction, shifting from state 437 to state 567
+yydebug[4]: state 567, reading token 276 (TRAIL)
+yydebug[4]: state 567, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 567 to state 654
+yydebug[5]: state 654, reducing by rule 181 (disk_rules : CMD_BSAVE filename device_num address_range end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 117
+yydebug[1]: state 117, reducing by rule 17 (command : disk_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bank cpu
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 325 (CMD_BANK)
+yydebug[0]: state 0, shifting to state 47
+yydebug[1]: state 47, reading token 428 (BANKNAME)
+yydebug[1]: state 47, shifting to state 235
+yydebug[2]: state 235, reading token 276 (TRAIL)
+yydebug[2]: state 235, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 235 to state 413
+yydebug[3]: state 413, reducing by rule 24 (machine_state_rules : CMD_BANK BANKNAME end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bsave "/tmp/tmp1todkufa/8.io" 0 $d000 $dbff
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 343 (CMD_BSAVE)
+yydebug[0]: state 0, shifting to state 65
+yydebug[1]: state 65, reading token 423 (FILENAME)
+yydebug[1]: state 65, shifting to state 148
+yydebug[2]: state 148, reducing by rule 206 (filename : FILENAME)
+yydebug[1]: after reduction, shifting from state 65 to state 264
+yydebug[2]: state 264, reading token 265 (O_NUMBER_GUESS)
+yydebug[2]: state 264, shifting to state 170
+yydebug[3]: state 170, reducing by rule 274 (d_number : O_NUMBER_GUESS)
+yydebug[2]: after reduction, shifting from state 264 to state 301
+yydebug[3]: state 301, reducing by rule 208 (device_num : d_number)
+yydebug[2]: after reduction, shifting from state 264 to state 437
+yydebug[3]: state 437, reading token 257 (H_NUMBER)
+yydebug[3]: state 437, shifting to state 122
+yydebug[4]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[3]: after reduction, shifting from state 437 to state 178
+yydebug[4]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[3]: after reduction, shifting from state 437 to state 181
+yydebug[4]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[3]: after reduction, shifting from state 437 to state 180
+yydebug[4]: state 180, reducing by rule 230 (address : memloc)
+yydebug[3]: after reduction, shifting from state 437 to state 177
+yydebug[4]: state 177, reading token 257 (H_NUMBER)
+yydebug[4]: state 177, reducing by rule 234 (opt_sep :)
+yydebug[4]: after reduction, shifting from state 177 to state 378
+yydebug[5]: state 378, shifting to state 122
+yydebug[6]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[5]: after reduction, shifting from state 378 to state 178
+yydebug[6]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[5]: after reduction, shifting from state 378 to state 181
+yydebug[6]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[5]: after reduction, shifting from state 378 to state 180
+yydebug[6]: state 180, reducing by rule 230 (address : memloc)
+yydebug[5]: after reduction, shifting from state 378 to state 531
+yydebug[6]: state 531, reducing by rule 225 (address_range : address opt_sep address)
+yydebug[3]: after reduction, shifting from state 437 to state 567
+yydebug[4]: state 567, reading token 276 (TRAIL)
+yydebug[4]: state 567, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 567 to state 654
+yydebug[5]: state 654, reducing by rule 181 (disk_rules : CMD_BSAVE filename device_num address_range end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 117
+yydebug[1]: state 117, reducing by rule 17 (command : disk_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: stopwatch
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 372 (CMD_STOPWATCH)
+yydebug[0]: state 0, shifting to state 94
+yydebug[1]: state 94, reading token 276 (TRAIL)
+yydebug[1]: state 94, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 94 to state 305
+yydebug[2]: state 305, reducing by rule 164 (monitor_misc_rules : CMD_STOPWATCH end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 116
+yydebug[1]: state 116, reducing by rule 16 (command : monitor_misc_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: delete
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 311 (CMD_DELETE)
+yydebug[0]: state 0, shifting to state 33
+yydebug[1]: state 33, reading token 276 (TRAIL)
+yydebug[1]: state 33, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 33 to state 213
+yydebug[2]: state 213, reducing by rule 116 (checkpoint_control_rules : CMD_DELETE end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 114
+yydebug[1]: state 114, reducing by rule 14 (command : checkpoint_control_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: break $5f29
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 303 (CMD_BREAK)
+yydebug[0]: state 0, shifting to state 26
+yydebug[1]: state 26, reading token 257 (H_NUMBER)
+yydebug[1]: state 26, reducing by rule 213 (opt_mem_op :)
+yydebug[1]: after reduction, shifting from state 26 to state 201
+yydebug[2]: state 201, shifting to state 122
+yydebug[3]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[2]: after reduction, shifting from state 201 to state 178
+yydebug[3]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[2]: after reduction, shifting from state 201 to state 181
+yydebug[3]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[2]: after reduction, shifting from state 201 to state 180
+yydebug[3]: state 180, reducing by rule 230 (address : memloc)
+yydebug[2]: after reduction, shifting from state 201 to state 197
+yydebug[3]: state 197, reading token 276 (TRAIL)
+yydebug[3]: state 197, reducing by rule 224 (address_opt_range : address)
+yydebug[2]: after reduction, shifting from state 201 to state 392
+yydebug[3]: state 392, reducing by rule 250 (opt_if_cond_expr :)
+yydebug[3]: after reduction, shifting from state 392 to state 540
+yydebug[4]: state 540, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 540 to state 635
+yydebug[5]: state 635, reducing by rule 101 (checkpoint_rules : CMD_BREAK opt_mem_op address_opt_range opt_if_cond_expr end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 113
+yydebug[1]: state 113, reducing by rule 13 (command : checkpoint_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: g
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 297 (CMD_GOTO)
+yydebug[0]: state 0, shifting to state 22
+yydebug[1]: state 22, reading token 276 (TRAIL)
+yydebug[1]: state 22, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 22 to state 186
+yydebug[2]: state 186, reducing by rule 27 (machine_state_rules : CMD_GOTO end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+VSync: Sync reset
+Monitor playback command: bank ram
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 325 (CMD_BANK)
+yydebug[0]: state 0, shifting to state 47
+yydebug[1]: state 47, reading token 428 (BANKNAME)
+yydebug[1]: state 47, shifting to state 235
+yydebug[2]: state 235, reading token 276 (TRAIL)
+yydebug[2]: state 235, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 235 to state 413
+yydebug[3]: state 413, reducing by rule 24 (machine_state_rules : CMD_BANK BANKNAME end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bsave "/tmp/tmp1todkufa/9.ram" 0 $0000 $ffff
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 343 (CMD_BSAVE)
+yydebug[0]: state 0, shifting to state 65
+yydebug[1]: state 65, reading token 423 (FILENAME)
+yydebug[1]: state 65, shifting to state 148
+yydebug[2]: state 148, reducing by rule 206 (filename : FILENAME)
+yydebug[1]: after reduction, shifting from state 65 to state 264
+yydebug[2]: state 264, reading token 265 (O_NUMBER_GUESS)
+yydebug[2]: state 264, shifting to state 170
+yydebug[3]: state 170, reducing by rule 274 (d_number : O_NUMBER_GUESS)
+yydebug[2]: after reduction, shifting from state 264 to state 301
+yydebug[3]: state 301, reducing by rule 208 (device_num : d_number)
+yydebug[2]: after reduction, shifting from state 264 to state 437
+yydebug[3]: state 437, reading token 257 (H_NUMBER)
+yydebug[3]: state 437, shifting to state 122
+yydebug[4]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[3]: after reduction, shifting from state 437 to state 178
+yydebug[4]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[3]: after reduction, shifting from state 437 to state 181
+yydebug[4]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[3]: after reduction, shifting from state 437 to state 180
+yydebug[4]: state 180, reducing by rule 230 (address : memloc)
+yydebug[3]: after reduction, shifting from state 437 to state 177
+yydebug[4]: state 177, reading token 257 (H_NUMBER)
+yydebug[4]: state 177, reducing by rule 234 (opt_sep :)
+yydebug[4]: after reduction, shifting from state 177 to state 378
+yydebug[5]: state 378, shifting to state 122
+yydebug[6]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[5]: after reduction, shifting from state 378 to state 178
+yydebug[6]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[5]: after reduction, shifting from state 378 to state 181
+yydebug[6]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[5]: after reduction, shifting from state 378 to state 180
+yydebug[6]: state 180, reducing by rule 230 (address : memloc)
+yydebug[5]: after reduction, shifting from state 378 to state 531
+yydebug[6]: state 531, reducing by rule 225 (address_range : address opt_sep address)
+yydebug[3]: after reduction, shifting from state 437 to state 567
+yydebug[4]: state 567, reading token 276 (TRAIL)
+yydebug[4]: state 567, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 567 to state 654
+yydebug[5]: state 654, reducing by rule 181 (disk_rules : CMD_BSAVE filename device_num address_range end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 117
+yydebug[1]: state 117, reducing by rule 17 (command : disk_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bank cpu
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 325 (CMD_BANK)
+yydebug[0]: state 0, shifting to state 47
+yydebug[1]: state 47, reading token 428 (BANKNAME)
+yydebug[1]: state 47, shifting to state 235
+yydebug[2]: state 235, reading token 276 (TRAIL)
+yydebug[2]: state 235, shifting to state 143
+yydebug[3]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[2]: after reduction, shifting from state 235 to state 413
+yydebug[3]: state 413, reducing by rule 24 (machine_state_rules : CMD_BANK BANKNAME end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 109
+yydebug[1]: state 109, reducing by rule 9 (command : machine_state_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: bsave "/tmp/tmp1todkufa/9.io" 0 $d000 $dbff
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 343 (CMD_BSAVE)
+yydebug[0]: state 0, shifting to state 65
+yydebug[1]: state 65, reading token 423 (FILENAME)
+yydebug[1]: state 65, shifting to state 148
+yydebug[2]: state 148, reducing by rule 206 (filename : FILENAME)
+yydebug[1]: after reduction, shifting from state 65 to state 264
+yydebug[2]: state 264, reading token 265 (O_NUMBER_GUESS)
+yydebug[2]: state 264, shifting to state 170
+yydebug[3]: state 170, reducing by rule 274 (d_number : O_NUMBER_GUESS)
+yydebug[2]: after reduction, shifting from state 264 to state 301
+yydebug[3]: state 301, reducing by rule 208 (device_num : d_number)
+yydebug[2]: after reduction, shifting from state 264 to state 437
+yydebug[3]: state 437, reading token 257 (H_NUMBER)
+yydebug[3]: state 437, shifting to state 122
+yydebug[4]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[3]: after reduction, shifting from state 437 to state 178
+yydebug[4]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[3]: after reduction, shifting from state 437 to state 181
+yydebug[4]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[3]: after reduction, shifting from state 437 to state 180
+yydebug[4]: state 180, reducing by rule 230 (address : memloc)
+yydebug[3]: after reduction, shifting from state 437 to state 177
+yydebug[4]: state 177, reading token 257 (H_NUMBER)
+yydebug[4]: state 177, reducing by rule 234 (opt_sep :)
+yydebug[4]: after reduction, shifting from state 177 to state 378
+yydebug[5]: state 378, shifting to state 122
+yydebug[6]: state 122, reducing by rule 280 (number : H_NUMBER)
+yydebug[5]: after reduction, shifting from state 378 to state 178
+yydebug[6]: state 178, reducing by rule 241 (memaddr : number)
+yydebug[5]: after reduction, shifting from state 378 to state 181
+yydebug[6]: state 181, reducing by rule 240 (memloc : memaddr)
+yydebug[5]: after reduction, shifting from state 378 to state 180
+yydebug[6]: state 180, reducing by rule 230 (address : memloc)
+yydebug[5]: after reduction, shifting from state 378 to state 531
+yydebug[6]: state 531, reducing by rule 225 (address_range : address opt_sep address)
+yydebug[3]: after reduction, shifting from state 437 to state 567
+yydebug[4]: state 567, reading token 276 (TRAIL)
+yydebug[4]: state 567, shifting to state 143
+yydebug[5]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[4]: after reduction, shifting from state 567 to state 654
+yydebug[5]: state 654, reducing by rule 181 (disk_rules : CMD_BSAVE filename device_num address_range end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 117
+yydebug[1]: state 117, reducing by rule 17 (command : disk_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: stopwatch
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 372 (CMD_STOPWATCH)
+yydebug[0]: state 0, shifting to state 94
+yydebug[1]: state 94, reading token 276 (TRAIL)
+yydebug[1]: state 94, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 94 to state 305
+yydebug[2]: state 305, reducing by rule 164 (monitor_misc_rules : CMD_STOPWATCH end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 116
+yydebug[1]: state 116, reducing by rule 16 (command : monitor_misc_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: delete
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 311 (CMD_DELETE)
+yydebug[0]: state 0, shifting to state 33
+yydebug[1]: state 33, reading token 276 (TRAIL)
+yydebug[1]: state 33, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 33 to state 213
+yydebug[2]: state 213, reducing by rule 116 (checkpoint_control_rules : CMD_DELETE end_cmd)
+yydebug[0]: after reduction, shifting from state 0 to state 114
+yydebug[1]: state 114, reducing by rule 14 (command : checkpoint_control_rules)
+yydebug[0]: after reduction, shifting from state 0 to state 108
+yydebug[1]: state 108, reducing by rule 4 (command_list : command)
+yydebug[0]: after reduction, shifting from state 0 to state 107
+yydebug[1]: state 107, reading token 0 ($end)
+yydebug[1]: state 107, reducing by rule 1 (top_level : command_list)
+yydebug[0]: after reduction, shifting from state 0 to final state 105
+Monitor playback command: quit
+yydebug[<# of symbols on state stack>]
+yydebug[0]: state 0, reading token 323 (CMD_QUIT)
+yydebug[0]: state 0, shifting to state 45
+yydebug[1]: state 45, reading token 276 (TRAIL)
+yydebug[1]: state 45, shifting to state 143
+yydebug[2]: state 143, reducing by rule 7 (end_cmd : TRAIL)
+yydebug[1]: after reduction, shifting from state 45 to state 232
+yydebug[2]: state 232, reducing by rule 132 (monitor_state_rules : CMD_QUIT end_cmd)
+
+Configure Flags:
+--enable-gtk3ui --with-fastsid --with-resid --enable-midi --with-portaudio --with-lame --with-mpg123 --with-flac --with-vorbis --with-gif --with-libieee1284 --with-sdlsound --enable-ethernet --enable-experimental-devices --enable-cpuhistory --enable-debug --enable-x64-image
+
+Resources with non default values:
+Directory="/workspace/scratch/478871a3fa6c/toolchain/c64-tools/vice-data"
+JAMAction=5
+Sound=0
+EasyFlashWriteCRT=0
+MonitorLogFileName="/tmp/tmp1todkufa/monitor.log"
+MonitorLogEnabled=1
+
+reconstructed commandline options (might be incomplete):
+-default -directory "/workspace/scratch/478871a3fa6c/toolchain/c64-tools/vice-data" -monlogname "/tmp/tmp1todkufa/monitor.log" -monlog -jamaction "5" +sound +easyflashcrtwrite
+
+VIC-II: VSP Bug: safe channels are: 147. Emulation of memory corruption is disabled.
+VIC-II: VSP Bug: safe channels are: 01247. Emulation of memory corruption is disabled.
+Closed monitor command playback file: /tmp/tmp1todkufa/run.mon
+Warning - util.c:242: Memory block(s) allocated here was not free'd (Memory leak with size 0x2 at 0x561e2a12e2d0).
+Warning - mon_breakpoint.c:661: Memory block(s) allocated here was not free'd (Memory leak with size 0x240 at 0x561e2a3a5940).
+Warning - mon_util.c:112: Memory block(s) allocated here was not free'd (Memory leak with size 0x2711 at 0x7f8f24002000).
+Warning - uimon.c:188: Memory block(s) allocated here was not free'd (Memory leak with size 0x102a at 0x7f8f24018010).
+Warning - mon_lex.l:382: Memory block(s) allocated here was not free'd (Memory leak with size 0x50 at 0x7f8f240012c0).
+Warning - mon_lex.l:379: Memory block(s) allocated here was not free'd (Memory leak with size 0x1c2 at 0x7f8f240010a0).
+Warning - mon_lex.l:628: Memory block(s) allocated here was not free'd (Memory leak with size 0x28 at 0x7f8f24006b90).

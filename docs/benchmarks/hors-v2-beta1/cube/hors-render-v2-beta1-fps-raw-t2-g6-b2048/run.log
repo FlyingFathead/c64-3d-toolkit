@@ -1,0 +1,41 @@
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/hors-v2-bcupxozy/build/candidate-stream-scene/main.asm
+Assembling file:   /tmp/hors-v2-bcupxozy/build/candidate-stream-scene/generated/hud.inc
+Assembling file:   /tmp/hors-v2-bcupxozy/build/candidate-stream-scene/generated/cart-v10-scene-helper.inc
+Assembling file:   /tmp/hors-v2-bcupxozy/build/candidate-stream-scene/generated/tables.inc
+Output file:       /tmp/hors-v2-bcupxozy/build/candidate-stream-scene/runtime.prg
+Data:       3642   $0801-$163a   $0e3a
+Gap:         197   $163b-$16ff   $00c5
+Data:       2304   $1700-$1fff   $0900
+Gap:        8192   $2000-$3fff   $2000
+Data:        112   $4000-$406f   $0070
+Gap:          16   $4070-$407f   $0010
+Data:         40   $4080-$40a7   $0028
+Gap:          88   $40a8-$40ff   $0058
+Data:        501   $4100-$42f4   $01f5
+Gap:          11   $42f5-$42ff   $000b
+Data:        256   $4300-$43ff   $0100
+Gap:        1024   $4400-$47ff   $0400
+Data:       1818   $4800-$4f19   $071a
+Gap:        3302   $4f1a-$5bff   $0ce6
+Data:        115   $5c00-$5c72   $0073
+Gap:       15757   $5c73-$99ff   $3d8d
+Data:        272   $9a00-$9b0f   $0110
+Passes:            3
+64tass Turbo Assembler Macro V1.59.3120
+64TASS comes with ABSOLUTELY NO WARRANTY; This is free software, and you
+are welcome to redistribute it under certain conditions; See LICENSE!
+
+Assembling file:   /tmp/hors-v2-bcupxozy/c64/cart/easyflash-stream-v10-scene-boot.asm
+Output file:       /tmp/hors-v2-bcupxozy/build/candidate-stream-scene/boot.bin
+Data:       8192   $e000-$ffff   $2000
+Passes:            2
+Input file: /tmp/hors-v2-bcupxozy/build/candidate-stream-scene/candidate.bin
+Output file: /workspace/scratch/a2344c11dad9/toolkit-beta-tests/cube-final/hors-render-v2-beta1-fps-raw-t2-g6-b2048/artifacts/candidate.crt
+Conversion from binary format to C64 EasyFlash .crt successful.
++ /workspace/scratch/a2344c11dad9/restored-tools/c64-tools/bin/cartconv -t easy -i /tmp/hors-v2-bcupxozy/build/candidate-stream-scene/candidate.bin -o /workspace/scratch/a2344c11dad9/toolkit-beta-tests/cube-final/hors-render-v2-beta1-fps-raw-t2-g6-b2048/artifacts/candidate.crt -n AUTOTUNE COLOUR CUBE
+built /workspace/scratch/a2344c11dad9/toolkit-beta-tests/cube-final/hors-render-v2-beta1-fps-raw-t2-g6-b2048/artifacts/candidate.crt
+24 frames; 15224 encoded payload bytes; target 0.96s at 25 FPS

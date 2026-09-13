@@ -1,0 +1,77 @@
+#1 (Stop on  exec e000)    0/$000,   6/$06
+.C:e000  78          SEI            - A:00 X:00 Y:00 SP:00 ..-..IZ.          6
+Deleting all checkpoints
+BREAK: 1  C:$8000  (Stop on exec)
+#1 (Stop on  exec 8000)   85/$055,  57/$39
+.C:8000  20 94 98    JSR $9894      - A:08 X:00 Y:00 SP:fd ..-..I..     496812
+Saving file 'TEMP/tmpkfnnvwrx/0.ram' from $0000 to $ffff
+Saving file 'TEMP/tmpkfnnvwrx/0.io' from $d000 to $dbff
+Stopwatch:     496812
+Deleting all checkpoints
+BREAK: 1  C:$9927  (Stop on exec)
+#1 (Stop on  exec 9927)  306/$132,  46/$2e
+.C:9927  A2 96       LDX #$96       - A:1B X:FF Y:00 SP:fb ..-..I..     510724
+Deleting all checkpoints
+BREAK: 1  C:$08db  (Stop on exec)
+#1 (Stop on  exec 08db)  145/$091,  39/$27
+.C:08db  20 2B 5C    JSR $5C2B      - A:01 X:00 Y:00 SP:ff ..-....C    9503022
+Saving file 'TEMP/tmpkfnnvwrx/1.ram' from $0000 to $ffff
+Saving file 'TEMP/tmpkfnnvwrx/1.io' from $d000 to $dbff
+Stopwatch:    9503022
+Deleting all checkpoints
+BREAK: 1  C:$5c80  (Stop on exec)
+#1 (Stop on  exec 5c80)  251/$0fb,  27/$1b
+.C:5c80  78          SEI            - A:00 X:02 Y:02 SP:ff ..-...ZC   50394168
+Saving file 'TEMP/tmpkfnnvwrx/2.ram' from $0000 to $ffff
+Saving file 'TEMP/tmpkfnnvwrx/2.io' from $d000 to $dbff
+Stopwatch:   50394168
+Deleting all checkpoints
+BREAK: 1  C:$5d19  (Stop on exec)
+#1 (Stop on  exec 5d19)  250/$0fa,  24/$18
+.C:5d19  A2 1E       LDX #$1E       - A:FA X:00 Y:24 SP:ff ..-..IZC   52949382
+Saving file 'TEMP/tmpkfnnvwrx/3.ram' from $0000 to $ffff
+Saving file 'TEMP/tmpkfnnvwrx/3.io' from $d000 to $dbff
+Stopwatch:   52949382
+Deleting all checkpoints
+BREAK: 1  C:$5d49  (Stop on exec)
+#1 (Stop on  exec 5d49)  250/$0fa,  27/$1b
+.C:5d49  A9 20       LDA #$20       - A:FA X:00 Y:09 SP:ff ..-..IZC   54364617
+Saving file 'TEMP/tmpkfnnvwrx/4.ram' from $0000 to $ffff
+Saving file 'TEMP/tmpkfnnvwrx/4.io' from $d000 to $dbff
+Stopwatch:   54364617
+Deleting all checkpoints
+BREAK: 1  C:$5e2c  (Stop on exec)
+#1 (Stop on  exec 5e2c)    5/$005,   7/$07
+.C:5e2c  A2 46       LDX #$46       - A:36 X:00 Y:C0 SP:ff ..-..IZ.   56019922
+Saving file 'TEMP/tmpkfnnvwrx/5.ram' from $0000 to $ffff
+Saving file 'TEMP/tmpkfnnvwrx/5.io' from $d000 to $dbff
+Stopwatch:   56019922
+Deleting all checkpoints
+BREAK: 1  C:$5eef  (Stop on exec)
+#1 (Stop on  exec 5eef)  165/$0a5,  26/$1a
+.C:5eef  A9 A0       LDA #$A0       - A:2E X:06 Y:C0 SP:ff ..-..IZC   58172525
+Saving file 'TEMP/tmpkfnnvwrx/6.ram' from $0000 to $ffff
+Saving file 'TEMP/tmpkfnnvwrx/6.io' from $d000 to $dbff
+Stopwatch:   58172525
+Deleting all checkpoints
+BREAK: 1  C:$5f24  (Stop on exec)
+#1 (Stop on  exec 5f24)  250/$0fa,  26/$1a
+.C:5f24  A9 20       LDA #$20       - A:FA X:00 Y:23 SP:ff ..-..IZC   62384264
+Saving file 'TEMP/tmpkfnnvwrx/7.ram' from $0000 to $ffff
+Saving file 'TEMP/tmpkfnnvwrx/7.io' from $d000 to $dbff
+Stopwatch:   62384264
+Deleting all checkpoints
+BREAK: 1  C:$5f29  (Stop on exec)
+#1 (Stop on  exec 5f29)  250/$0fa,  32/$20
+.C:5f29  A9 A0       LDA #$A0       - A:20 X:00 Y:23 SP:ff ..-..I.C   62384270
+Saving file 'TEMP/tmpkfnnvwrx/8.ram' from $0000 to $ffff
+Saving file 'TEMP/tmpkfnnvwrx/8.io' from $d000 to $dbff
+Stopwatch:   62384270
+Deleting all checkpoints
+BREAK: 1  C:$5f29  (Stop on exec)
+#1 (Stop on  exec 5f29)  250/$0fa,  18/$12
+.C:5f29  A9 A0       LDA #$A0       - A:FA X:00 Y:23 SP:ff ..-..IZC   63367056
+Saving file 'TEMP/tmpkfnnvwrx/9.ram' from $0000 to $ffff
+Saving file 'TEMP/tmpkfnnvwrx/9.io' from $d000 to $dbff
+Stopwatch:   63367056
+Deleting all checkpoints

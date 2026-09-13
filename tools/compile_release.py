@@ -79,6 +79,7 @@ def main():
         '--output-dir',str(stage/'examples/hors_v3_preview/cartridges')])
     run('build-dragon',[sys.executable,'examples/stanford_dragon/build.py','--tass',a.tass,'--cartconv',a.cartconv,
         '--output-dir',str(stage/'examples/stanford_dragon/cartridges')])
+    run('build-saku',[sys.executable,'examples/saku_2026/build.py','--tass',a.tass,'--cartconv',a.cartconv])
     run('index-examples',[sys.executable,'tools/index_release_examples.py'])
     run('verify-release',[sys.executable,'tools/verify_hors_v2_release.py','--out',str(work/'example-checks'),
         '--vice',wrapper,'--vice-data',env['VICE_DATA'],'--jobs',str(a.jobs)])
@@ -97,7 +98,7 @@ def main():
     version=(stage/'VERSION').read_text().strip()
     run('final-index',[sys.executable,'tools/index_release_examples.py'])
     outputs=package(stage,work/f'c64-3d-toolkit-v{version}.zip',a.baseline_zip)
-    report=dict(passed=True,version=version,renderer='hors-render-v2',installed=a.install,
+    report=dict(passed=True,version=version,renderer='hors-renderer-v3',menu_renderer='hors-render-v2',installed=a.install,
         packages=[dict(file=x.name,sha256=hashlib.sha256(x.read_bytes()).hexdigest()) for x in outputs])
     if a.install:
         for path in source_files(stage):

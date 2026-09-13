@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "version": "0.7.9",
+  "correction": "showreel-fingerprint",
+  "unit_tests": 272,
+  "unit_skipped": 3,
+  "canonical_jobs": 28,
+  "canonical_loops": 3,
+  "input_sha256": "6dde2d3bf99a5197c2a33e645196a06976974c494963aab655a52dedd94cb5c1",
+  "canonical_provenance": "../release-final-v5/canonical-provenance.json",
+  "canonical_results": "../release-final-v5/canonical-results",
+  "unchanged_cartridges": 68,
+  "scope": "Only comparison fingerprint code, its tests, documentation and associated verification inventories changed. No renderer or cartridge bytes changed.",
+  "video_fixture_test": "Package verification uses synthetic video bytes under the exact README-linked filename; no original user MP4 is available or included in this patch.",
+  "physical_hardware_tested": false,
+  "package_checks": {
+    "clean_overlay_passed": true,
+    "video_present_passed": true,
+    "video_changed_passed": true,
+    "actual_reference_change_rejected": true,
+    "video_preserved": true
+  }
+}

@@ -266,7 +266,7 @@ def classify_feature_edges(mesh:Mesh, feature_angle:float=40.0):
     return out, {'boundary':boundary,'nonmanifold':nonmanifold,'crease':crease,'features':sum(out.values()),'edges':len(out)}
 
 
-def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibility_mode:str="surface", z_tolerance:float=Z_TOL, feature_angle:float=40.0, animation:str='spin', animation_tilt:float=62.0, animation_travel:float=120.0, animation_rise:float=54.0, enable_source_colors:bool=False, fallback_color:int=1, clip_viewport:bool=False, *, width:int=W, height:int=H, max_visible_runs:int=255, background_color:int=0) -> tuple[list[FrameBuild],int]:
+def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibility_mode:str="surface", z_tolerance:float=Z_TOL, feature_angle:float=40.0, animation:str='spin', animation_tilt:float=62.0, animation_travel:float=120.0, animation_rise:float=54.0, enable_source_colors:bool=False, fallback_color:int=1, clip_viewport:bool=False, *, width:int=W, height:int=H, max_visible_runs:int=255, background_color:int=0, flip_horizontal:bool=False, flip_vertical:bool=False) -> tuple[list[FrameBuild],int]:
     if not 1<=frames<=255: raise ValueError('frames must be 1..255')
     if not 0<=fallback_color<=15: raise ValueError('fallback colour must be 0..15')
     if not 0<=background_color<=15: raise ValueError('background colour must be 0..15')
@@ -416,7 +416,10 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
             for cx in row[1:]+[None]:
                 if cx is not None and cx==prev+1:prev=cx;continue
                 off=cy*320+run0*8; count=prev-run0+1
-                spans.append((off&255,(off>>8)&255,count))
+                while count:
+                    part=min(count,32)
+                    spans.append((off&255,(off>>8)&255,part))
+                    off+=part*8;count-=part
                 if cx is not None:run0=prev=cx
         color_spans=[]; color_conflicts=0; palette=set()
         if enable_source_colors:
@@ -443,13 +446,16 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
             records,spans,raw,len(touched),mism,color_spans,
             len(cell_color_counts),color_conflicts,tuple(sorted(palette)),
         ))
+    if flip_horizontal or flip_vertical:
+        from .input_flip import frame as flip_frame
+        all_frames=[flip_frame(f,width=width,height=height,flip_horizontal=flip_horizontal,flip_vertical=flip_vertical) for f in all_frames]
     return all_frames,len(edges)
 
 
 def build_scene_frames(scene, *, visibility_mode:str='surface', z_tolerance:float=Z_TOL,
                        feature_angle:float=40.0, enable_source_colors:bool=False,
-                       fallback_color:int=1, width:int=W, height:int=H,
-                       max_frames:int=255, max_visible_runs:int=255, background_color:int=0) -> tuple[list[FrameBuild],int]:
+                       fallback_color:int=1, width:int|None=None, height:int=H,
+                       max_frames:int=255, max_visible_runs:int=255, background_color:int=0, flip_horizontal:bool=False, flip_vertical:bool=False) -> tuple[list[FrameBuild],int]:
     """Render camera-space frames loaded from a ``.c643dscene`` source.
 
     Each authored frame is fed through the same hidden-line/DDA implementation
@@ -458,6 +464,8 @@ def build_scene_frames(scene, *, visibility_mode:str='surface', z_tolerance:floa
     Blender supplies evaluated vertices and projection, while the C64 tables
     remain exactly the format the existing runtime already consumes.
     """
+    width=scene.viewport_width if width is None else width
+    if width not in (256,320):raise ValueError('scene viewport width must be 256 or 320')
     if not 1<=len(scene.frames)<=max_frames:
         raise ValueError(f'scene frames must be 1..{max_frames}')
     all_frames=[]; candidate_edges=None
@@ -476,7 +484,7 @@ def build_scene_frames(scene, *, visibility_mode:str='surface', z_tolerance:floa
                 visibility_mode=visibility_mode,z_tolerance=z_tolerance,
                 feature_angle=feature_angle,enable_source_colors=enable_source_colors,
                 fallback_color=fallback_color,background_color=background_color,clip_viewport=True,width=width,height=height,
-                max_visible_runs=max_visible_runs,
+                max_visible_runs=max_visible_runs,flip_horizontal=flip_horizontal,flip_vertical=flip_vertical,
             )
         except RuntimeError as e:
             raise RuntimeError(

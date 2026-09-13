@@ -1,0 +1,48 @@
+{
+  "source_pdf": "source/Saku_2026_logo.pdf",
+  "source_sha256": "40102e0870414d1517af1ab83404b2df954f1350069486764f98dcb5a400de2a",
+  "page": 1,
+  "crop_points": [
+    199.4211,
+    18.6317,
+    406.4158,
+    55.7758
+  ],
+  "output": "saku_2026.svg",
+  "svg_sha256": "55da1297202648f60a1e62b5a2e1aaa850c66d6eb4be8a3da7f7a9cd9c5507cb",
+  "vector_paths": 8,
+  "raster_images": 0,
+  "font_dependencies": 0,
+  "colours": [
+    "#000000",
+    "#fe0000"
+  ],
+  "background": "transparent; page artwork omitted",
+  "credit": "Suomen Amiga-k\u00e4ytt\u00e4j\u00e4t ry (Saku); supplied for this example",
+  "variants": [
+    {
+      "output": "saku_2026-white-outline.svg",
+      "sha256": "b677acfafd950ec322b76b1ab67a32f857228a37d42ad1c8683cccb024ad87dc",
+      "modification": "White 1.2-point rounded stroke on the four original black letter paths; original red year retained",
+      "traced_from_raster": false,
+      "background": "transparent"
+    },
+    {
+      "output": "saku_2026-white-background.svg",
+      "sha256": "e8ccf39742ce7f79ae64d27f5355ff83a90a615d57104b73f58abe3a9bcd4871",
+      "modification": "Explicit white canvas rectangle behind the original eight logo/year paths",
+      "background": "#ffffff"
+    },
+    {
+      "output": "saku_2026-rounded-card.svg",
+      "sha256": "7e67da6e56e4e6b61bdbf5a77cb51bc4b351ee56cdb123031cbb2bd404362436",
+      "modification": "Padded rounded white card for Shift+B; original rectangular reference retained",
+      "background": "#ffffff",
+      "padding_points": [
+        8,
+        6
+      ],
+      "corner_radius_points": 5
+    }
+  ]
+}

@@ -2,12 +2,13 @@
 
 [Back to the main page](../README.md)
 
-The main page features **v0.7.8: The Stanford Dragon Has Arrived!** and the previous release, **v0.7.7: Pretzel Logic - The Great Texture Update**. Earlier releases and announcements are collected here.
+The main page features **v0.7.9: The Golden Dragon & SAKU 2026**, alongside the v0.7.8 Stanford Dragon and v0.7.7 Pretzel updates. Earlier releases and announcements are collected here.
 
 ## Release notes
 
 | Version | Release notes and highlights |
 | --- | --- |
+| [v0.7.9](RELEASE_0.7.9.md) | The Golden Dragon & SAKU 2026: V3 default, SVG paint/gradients and shared interactive controls |
 | [v0.7.8](RELEASE_0.7.8.md) | The Stanford Dragon Has Arrived! Five Dragon carts and red, green and blue surface-shading ramps |
 | [v0.7.7](RELEASE_0.7.7.md) | Pretzel Logic - The Great Texture Update: HORS-V3 surfaces, textures and interactive metallic Pretzel |
 | [v0.7.6](RELEASE_0.7.6.md) | Sande's Pretzel and TAC-2 model kit, controls and performance comparisons |
@@ -45,7 +46,7 @@ See [output colours](OUTPUT_COLORS.md) for options and inversion examples.
 
 ## v0.7.2: HORS-V2 becomes the default
 
-**Since version 0.7.2, `hors-render-v2` is the default.** Prebuilt cartridges,
+**Version 0.7.2 made `hors-render-v2` the default.** Prebuilt cartridges,
 measured multi-pass optimization, and a complete release build/check pipeline.
 
 The biggest measured gain is **Ripples Lite: 12.46 → 16.88 display FPS,

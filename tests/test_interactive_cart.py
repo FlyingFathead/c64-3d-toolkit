@@ -22,7 +22,7 @@ class InteractiveCartTests(unittest.TestCase):
 
     def test_crt_extension_normalized_and_private_runtime_enabled(self):
         from tools.c643d import hors_v2_stable, sande_controls
-        a = self.args('--output', 'demo.crt', '--border-color', 'blue')
+        a = self.args('--renderer', 'hors-render-v2', '--output', 'demo.crt', '--border-color', 'blue')
         with contextlib.redirect_stdout(io.StringIO()), \
              patch.object(sande_controls, 'enabled') as enabled, \
              patch.object(hors_v2_stable, 'cmd_build_object', return_value=0) as build:

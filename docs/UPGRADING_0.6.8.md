@@ -9,7 +9,7 @@
 > `../c64-3d-toolkit-history/`, when that optional archive is available.
 
 Download `c64-3d-toolkit-v0.6.8-changes.zip` and the checksum file into
-`~/NeuralNetwork/`. The changes ZIP has flat paths relative to the project root.
+`~/c64-work/`. The changes ZIP has flat paths relative to the project root.
 It contains additions and updates. After extraction, run the updated cleanup
 script below to archive and remove superseded 0.6.8-rc1 V8 menu examples.
 Earlier rendering methods and pre-V8 comparison CRT/PRG files are preserved.
@@ -23,13 +23,13 @@ files with those same names are overwritten by unzip, but remain in the backup.
 Files not present in the overlay, including older local comparison carts, stay
 where they are. The default `clean_release.py` scope touches only rc1 V8 menu artifacts;
 older renderer comparisons remain intact. The archive is written to
-`~/NeuralNetwork/c64-3d-toolkit-v0.6.8-rc1-oldies.zip` (an existing archive
+`~/c64-work/c64-3d-toolkit-v0.6.8-rc1-oldies.zip` (an existing archive
 is never overwritten).
 
 ```bash
 (
 set -euo pipefail
-cd ~/NeuralNetwork
+cd ~/c64-work
 sha256sum --ignore-missing -c c64-3d-toolkit-v0.6.8-SHA256SUMS.txt
 
 tar -czf "c64-3d-toolkit-before-v0.6.8-$(date +%Y%m%d-%H%M%S).tar.gz" \
@@ -45,7 +45,7 @@ git status --short
 )
 
 x64sc -pal +easyflashcrtwrite -cartcrt \
-  ~/NeuralNetwork/c64-3d-toolkit/examples/cart_demos/history/c643d-demo-v0.6.8-yunroll-cart-v8-all.crt
+  ~/c64-work/c64-3d-toolkit/examples/cart_demos/history/c643d-demo-v0.6.8-yunroll-cart-v8-all.crt
 ```
 
 The packaged unit tests include byte-for-byte preservation checks against the
@@ -57,7 +57,7 @@ For direct comparison, the old cart stays at:
 
 ```bash
 x64sc -pal +easyflashcrtwrite -cartcrt \
-  ~/NeuralNetwork/c64-3d-toolkit/examples/cart_demos/history/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt
+  ~/c64-work/c64-3d-toolkit/examples/cart_demos/history/c643d-demo-v0.6.7-yunroll-cart-v7-all.crt
 ```
 
 No automatic Git commit, tag, push or release publication is included. The package prepares the final 0.6.8 release locally; GitHub publication is a separate step.

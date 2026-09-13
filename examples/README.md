@@ -1,18 +1,23 @@
-# Examples: toolkit 0.7.8
+# Examples: toolkit 0.7.9
 
-The 26 HORS-V2 and colour-test cartridges are rebuilt for 0.7.8 with the new loader, real EAPI
+The 26 HORS-V2 and colour-test cartridges are rebuilt for 0.7.9 with the new loader, real EAPI
 and PETSCII name metadata. The 0.7.3 colour controls remain available in Demo
 Cart 1, Demo Cart 2.0 and [COLOR COMBO TEST](color_combo_test/README.md).
 Older versioned menu and HiFi CRTs remain unchanged as historical references;
 use the current links below for the updated builds.
 
-HORS-V2 remains the default. The additional [HORS-V3 collection](hors_v3_preview/README.md) contains 11 surface, texture, interactive and comparison cartridges. Historical versioned menu and HiFi cartridges, original renderer code and frozen test inputs remain available.
+HORS-V3 is the conversion default; the comparison/menu builder retains V2. The additional [HORS-V3 collection](hors_v3_preview/README.md) contains 11 surface, texture, interactive and comparison cartridges. Historical versioned menu and HiFi cartridges, original renderer code and frozen test inputs remain available.
 
-The [Stanford Dragon example](stanford_dragon/README.md) adds five standalone HORS-V3 cartridges: wireframe, metallic (grey), red, green and blue, with PAL-timed GIFs, performance results and a reproducible source mesh. It uses the HORS-V3 surface palette options introduced in 0.7.8.
+The [Stanford Dragon example](stanford_dragon/README.md) adds six standalone HORS-V3 cartridges: wireframe, metallic (grey), golden, red, green and blue, with PAL-timed GIFs, performance results and a reproducible source mesh. It uses the HORS-V3 surface palette options introduced in 0.7.8.
+
+The [SAKU 2026 example](saku_2026/README.md) includes the original vector logo,
+solid and gradient carts, and all eight spin/crawl looks in one interactive
+starfield cart, with help, speed and HUD controls.
 
 | Folder | Stable cartridges |
 | --- | ---: |
-| [stanford_dragon](stanford_dragon/README.md) | 5 |
+| [saku_2026](saku_2026/README.md) | 3 |
+| [stanford_dragon](stanford_dragon/README.md) | 6 |
 | [hors_v3_preview](hors_v3_preview/README.md) | 11 |
 | [demos_sande](demos_sande/README.md) | 6 |
 | [color_combo_test](color_combo_test/README.md) | 1 |
@@ -32,6 +37,8 @@ The [Stanford Dragon example](stanford_dragon/README.md) adds five standalone HO
 | [torus](torus/README.md) | 1 |
 | [torus_dense](torus_dense/README.md) | 1 |
 
-Sources remain in the Blender and autotune folders. Use [COMPILE-RELEASE.sh](../COMPILE-RELEASE.sh) to rebuild and verify the complete release; see the [release guide](../docs/RELEASE_0.7.8.md).
+Sources remain in the Blender and autotune folders. Use [COMPILE-RELEASE.sh](../COMPILE-RELEASE.sh) to rebuild and verify the complete release; see the [release guide](../docs/RELEASE_0.7.9.md).
 
 `examples.json` remains the explicit resident regression recipe used by `generate-examples` / `test-examples`. For current v2 artifacts use `tools/build_current_examples.py` or the complete release compiler above.
+
+[SAKU 2026 SVG presentations and keyboard map](saku_2026/README.md) · [SAKU](https://suomenamigakayttajat.fi/) · [Saku magazine](https://sakulehti.fi/)

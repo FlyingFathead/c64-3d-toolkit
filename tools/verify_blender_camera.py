@@ -21,12 +21,13 @@ from mathutils.geometry import normal
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--viewport-width',type=int,choices=(256,320),default=320)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:])
     bpy.ops.wm.read_factory_settings(use_empty=True)
     scene = bpy.context.scene
     scene.frame_start, scene.frame_end = 1, 2
-    scene.render.resolution_x, scene.render.resolution_y = 768, 576
+    scene.render.resolution_x, scene.render.resolution_y = args.viewport_width * 3, 576
     scene.render.resolution_percentage = 100
     objects = []
     for index in range(2):
@@ -57,7 +58,7 @@ def main():
     with tempfile.TemporaryDirectory(prefix='c643d-camera-') as td:
         output = Path(td) / 'camera.c643dscene'
         original_argv = sys.argv[:]
-        sys.argv = ['blender_export.py', '--', '--output', str(output), '--viewport-height', '192']
+        sys.argv = ['blender_export.py', '--', '--output', str(output), '--viewport-width',str(args.viewport_width),'--viewport-height', '192']
         try:
             runpy.run_path(str(Path(__file__).with_name('blender_export.py')), run_name='__main__')
         finally:
@@ -79,7 +80,7 @@ def main():
                 projection = frame['projection']
                 pixel = (projection['cx'] + projection['fx'] * p[0] / p[2],
                          projection['cy'] - projection['fy'] * p[1] / p[2])
-                error = max(abs(pixel[0] - blender_view.x * 256), abs(pixel[1] - (1 - blender_view.y) * 192))
+                error = max(abs(pixel[0] - blender_view.x * args.viewport_width), abs(pixel[1] - (1 - blender_view.y) * 192))
                 max_projection_error = max(max_projection_error, error)
                 assert error < .0001, (original.name, vertex.index, pixel, blender_view)
             for polygon in obj.data.polygons:
@@ -94,7 +95,7 @@ def main():
                 assert exported['topology']['face_colors'][fi] == expected_color
             vertex_offset += len(obj.data.vertices)
             face_offset += len(obj.data.polygons)
-    result = dict(blender=bpy.app.version_string, frames=2, objects=2,
+    result = dict(viewport_width=args.viewport_width,blender=bpy.app.version_string, frames=2, objects=2,
                   mirrored_object=True, shifted_rotated_camera=True, scaled_camera=True,
                   max_projection_error_pixels=max_projection_error,
                   min_outward_normal_dot=min_normal_dot, face_material_ids_preserved=True)

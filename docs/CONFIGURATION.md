@@ -1,4 +1,4 @@
-> Current default: **hors-render-v2**. [Release build and example migration](RELEASE_0.7.2.md).
+> Current conversion default: **hors-renderer-v3**. The comparison/menu builder retains V2. [v0.7.9 release notes](RELEASE_0.7.9.md).
 
 # Toolchain configuration
 
@@ -175,7 +175,7 @@ For cartridge builds, `cartconv.exe` is part of the VICE tool set. If it is not
 on `PATH`, configure its exact path (or the containing VICE directory) in the
 `[windows]` section, or pass `--cartconv` to the cartridge command.
 
-## Render/build defaults (v0.7.2)
+## Render/build defaults (v0.7.9)
 
 Since 0.7.3, `[render_defaults]` also accepts `foreground_color = auto`,
 `background_color = black` and `border_color = black`. Each colour accepts the
@@ -183,8 +183,8 @@ same names, indices and RGB formats as the CLI. Border selection is independent
 of the background. CLI overrides: `--foreground-color` (also `--color`),
 `--background-color`, `--border-color`. See [Output colours](OUTPUT_COLORS.md).
 
-The default renderer is hors-render-v2 for `build`, `cart-stream` and
-`cart-demos`; authored inputs select hors-render-v2-scene. Explicit
+The default renderer is hors-renderer-v3 for `build` and `cart-stream`, including
+authored inputs. `cart-demos` retains hors-render-v2. Explicit
 `--renderer step|bytechunk|yunroll` selects resident PRG output. The following
 settings originated with the PRG path and remain available in `[render_defaults]`:
 
@@ -229,8 +229,7 @@ Command-line options always override `[render_defaults]` for that invocation.
 | `--play-all-seconds N` | `10` | V7–V10 multi-demo menus; integer 1..255, 50 PAL ticks per second |
 
 `cart-demos` / `cartridge-demo` accept both; individual `build` and
-`cart-stream` accept `--prefer`. The general CLI default is hors-render-v2,
-not V7. The generated menu's RAM name gains `-ram` unless `--output` is supplied.
+`cart-stream` accept `--prefer`. The conversion CLI default is hors-renderer-v3; the menu default is hors-render-v2. The generated menu's RAM name gains `-ram` unless `--output` is supplied.
 Fixed bitmap/staging allocations do not shrink with RAM preference.
 
 ```bash
@@ -248,3 +247,12 @@ For authored scenes, `--frame-ticks N` specifies integer PAL holds. The optional
 samples and fractional PAL holds. It requires the default sample step of 1;
 do not combine it with custom frame ticks. Requested pacing is not a guarantee
 of achieved throughput. See [current scene builds](HORS_RENDER_V2.md).
+
+## Bottom HUD visibility
+
+`--show-hud` / `--hide-hud` alias `--text-overlay` / `--no-text-overlay`.
+`--hud-default enabled|disabled` (also `--default-info-text-mode`) overrides
+the initial visibility. New standalone V3 interactive builds include Shift+I,
+Shift+F and Shift+U to toggle name/counts, FPS/speed feedback, or both.
+Use `--no-hud-toggle` to omit these switches; `--allow-hud-toggle` explicitly
+includes them. [Interactive controls, RAM and costs](STARFIELD.md).
