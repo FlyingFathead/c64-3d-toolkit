@@ -68,7 +68,7 @@ class StableV2Tests(unittest.TestCase):
 
     def test_defaults_and_old_names(self):
         parser=make_parser(load_toolchain_settings(Path('/missing/config.ini')))
-        self.assertEqual(parser.parse_args(['build']).renderer,'hors-renderer-v3')
+        self.assertEqual(parser.parse_args(['build']).renderer,'hors-v4')
         self.assertEqual(parser.parse_args(['cart-demos']).stream_renderer,'hors-render-v2')
         for name in ('hors-render-v1','yunroll-cart-v9','hors-render-v2-beta1'):
             self.assertEqual(parser.parse_args(['build','--renderer',name]).renderer,name)

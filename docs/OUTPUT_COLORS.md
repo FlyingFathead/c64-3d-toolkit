@@ -1,5 +1,8 @@
 > Current HORS-V3 conversion, gradient and texture mapping details: [checkpoint guide](HORS_V3_DEFAULTS_CHECKPOINT.md).
 
+HORS-V4 / GMod3 retains these V3 controls. The [All-in-One collection](../examples/gmod3_cart_demos/README.md) starts with stars off and adds F1 menu, N/P entry selection and C Dragon shading. Older EasyFlash cartridges retain their original keymaps.
+
+
 # Output colours (0.7.3)
 
 Foreground, bitmap background and border can be selected independently when

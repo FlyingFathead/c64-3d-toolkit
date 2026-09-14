@@ -1,0 +1,23 @@
+{
+  "cartridge": "svg-v4.crt",
+  "menu_entry": null,
+  "verified_frames": 19,
+  "orientations": 8,
+  "bitmap_bytes_checked": 145920,
+  "color_bytes_checked": 18240,
+  "slots": {
+    "1": 7,
+    "2": 6,
+    "0": 6
+  },
+  "average_fps": 33.411891488612106,
+  "min_frame_cycles": 17670,
+  "max_frame_cycles": 35411,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
+  "interactive_label_match": true,
+  "crt_sha256": "38c579d5f81c4c05b506cc444f6f590f03c875e63b3537a1c5ce8ae88ccb287b"
+}

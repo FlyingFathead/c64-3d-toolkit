@@ -1,0 +1,22 @@
+{
+  "cartridge": "cube-gmod3.crt",
+  "menu_entry": null,
+  "verified_frames": 27,
+  "orientations": 12,
+  "bitmap_bytes_checked": 207360,
+  "color_bytes_checked": 25920,
+  "slots": {
+    "1": 9,
+    "2": 9,
+    "0": 9
+  },
+  "average_fps": 28.506620195100453,
+  "min_frame_cycles": 26602,
+  "max_frame_cycles": 38668,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
+  "interactive_label_match": true
+}

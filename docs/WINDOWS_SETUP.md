@@ -1,4 +1,4 @@
-> Current conversion default: **hors-renderer-v3**. The comparison/menu builder retains V2. [v0.7.9 release notes](RELEASE_0.7.9.md).
+> Current conversion default: **hors-renderer-v4 / GMod3**. Explicit HORS-V3 retains EasyFlash. [v0.8.0 release notes](RELEASE_0.8.0.md).
 
 # Windows setup
 

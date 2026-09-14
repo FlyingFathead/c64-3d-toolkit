@@ -1,0 +1,25 @@
+{
+  "index": 55,
+  "name": "SUNFLOWER TORUS",
+  "passed": true,
+  "frames": 192,
+  "stored_frames": 192,
+  "pictures_checked": 387,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 1060,
+  "observed_refreshes": 2400,
+  "average_fps": 22.138339438339436,
+  "high_fps": 50.124542124542124,
+  "low_fps": 16.70818070818071,
+  "mean_render_cycles": 44330.81025641026,
+  "max_render_cycles": 54480,
+  "picture_sha256": "b7a91afd8b4fcdad1a0982ed2891c34bc02bbefd9a2ead1095481bdf8f4c0fc5",
+  "allocated_kib": 288,
+  "bank_range": [
+    1559,
+    1594
+  ],
+  "target_fps": null,
+  "crt_sha256": "86ab08c0e3484215d4548c28a17968111d7f44fd65b7c23a6be20d9557aa63a3"
+}

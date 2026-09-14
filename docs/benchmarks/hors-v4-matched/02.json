@@ -1,0 +1,67 @@
+{
+  "case": 2,
+  "name": "SAKU SOLID CRAWL",
+  "source_id": 43,
+  "frames": 30,
+  "slice": [
+    60,
+    90
+  ],
+  "color_encoding": "literal",
+  "easyflash": {
+    "index": 2,
+    "name": "SAKU SOLID CRAWL",
+    "passed": true,
+    "frames": 30,
+    "stored_frames": 30,
+    "pictures_checked": 63,
+    "all_three_buffers": true,
+    "stars_off": false,
+    "display_frames": 4800,
+    "observed_refreshes": 4800,
+    "average_fps": 50.124542124542124,
+    "high_fps": 50.124542124542124,
+    "low_fps": 50.124542124542124,
+    "mean_render_cycles": 12863.242424242424,
+    "max_render_cycles": 19571,
+    "picture_sha256": "22efd71f646907b46b76c42724a8245e7215c2a7638d2deaeed694a16b0d983e",
+    "allocated_kib": 40,
+    "bank_range": [
+      15,
+      19
+    ],
+    "target_fps": null,
+    "crt_sha256": "ee88562912ca8d56be05e8ad946a678071d5b8bc3ab0caf727a212fe5e7fb089",
+    "renderer": "hors-renderer-v3",
+    "toolkit_version": "0.8.0"
+  },
+  "gmod3": {
+    "index": 2,
+    "name": "SAKU SOLID CRAWL",
+    "passed": true,
+    "frames": 30,
+    "stored_frames": 30,
+    "pictures_checked": 63,
+    "all_three_buffers": true,
+    "stars_off": false,
+    "display_frames": 4800,
+    "observed_refreshes": 4800,
+    "average_fps": 50.124542124542124,
+    "high_fps": 50.124542124542124,
+    "low_fps": 50.124542124542124,
+    "mean_render_cycles": 12728.969696969696,
+    "max_render_cycles": 19312,
+    "picture_sha256": "22efd71f646907b46b76c42724a8245e7215c2a7638d2deaeed694a16b0d983e",
+    "allocated_kib": 40,
+    "bank_range": [
+      15,
+      19
+    ],
+    "target_fps": null,
+    "crt_sha256": "40f23aa9be1b00195de99c4df38771232fcfc72dfde1fb9999ceffe48bcab242",
+    "renderer": "hors-renderer-v4",
+    "toolkit_version": "0.8.0"
+  },
+  "encoded_payloads_identical": true,
+  "difference_fps": 0.0
+}

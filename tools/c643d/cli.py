@@ -626,6 +626,16 @@ def print_stats(mesh:Mesh,label:str,renderer:str,scale:float,stats:dict,hud:str,
 
 
 def cmd_build(a):
+    from .renderer_names import canonical_selector, selector_cartridge
+    implied=selector_cartridge(a.renderer)
+    if implied:
+        if getattr(a,"cart_type",None) not in (None,implied):
+            raise ValueError("Renderer suffix conflicts with --cart-type")
+        a.cart_type=implied
+    a.renderer=canonical_selector(a.renderer)
+    if a.renderer == 'hors-renderer-v4':
+        from .hors_v4 import build
+        return build(a)
     from .input_flip import options as flip_options
     if getattr(a,'viewport_width',None) is not None and not (a.blend or a.scene):
         raise ValueError('--viewport-width currently applies to --blend/--scene inputs')
@@ -1344,12 +1354,14 @@ def make_parser(settings):
         q.add_argument('--z-tolerance',type=float,help='reciprocal-depth tolerance for visible wire edges; object presets may provide a default')
         q.add_argument('--feature-angle',type=float,help='surface_creases threshold in degrees; sharp manifold edges at/above this angle are preserved')
     from .surface_palettes import SHADE_PALETTES, palette_name, parse_ramp
-    from .renderer_names import DEFAULT_RENDERER
+    from .renderer_names import DEFAULT_RENDERER, SHORT_ALIASES
     b=sub.add_parser('build',help='compile geometry and assemble a HORS-V3 CRT by default'); common(b)
+    from .gmod3_cli import add_flags as add_cart_type_flags
+    add_cart_type_flags(b, build=True, settings=settings)
     for direction in ('horizontal','vertical'):
         b.add_argument('--flip-input-'+direction,'--flip-'+direction,'--mirror-'+direction,
             dest='flip_input_'+direction,action='store_true',help='flip input artwork '+direction+'ly in the viewport during conversion; HUD/effects unchanged')
-    b.add_argument('--renderer',choices=('hors-renderer-v3', 'hors-render-v3', 'hors-render-v2', 'hors-render-v2-scene', 'hors-render-v2-beta1', 'hors-render-v2-beta1-scene', 'hors-render-v1', 'hors-render-v1-scene', *RENDERERS, 'yunroll-cart-v2', 'yunroll-cart-v3', 'yunroll-cart-v4', 'yunroll-cart-v4-scene', 'yunroll-cart-v5', 'yunroll-cart-v5-scene', 'yunroll-cart-v6', 'yunroll-cart-v6-scene', 'yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10', 'yunroll-cart-v7-scene', 'yunroll-cart-v8-scene', 'yunroll-cart-v9-scene', 'yunroll-cart-v10-scene'),default=DEFAULT_RENDERER,help='default hors-renderer-v3 CRT; explicit v2 remains available; v1 and v2-beta1 remain explicit historical choices; step/bytechunk/yunroll=PRG; yunroll-cart-v2 through v10=streamed EasyFlash CRT')
+    b.add_argument('--renderer',choices=(*SHORT_ALIASES, 'hors-renderer-v4', 'hors-render-v4', 'hors-renderer-v3', 'hors-render-v3', 'hors-render-v2', 'hors-render-v2-scene', 'hors-render-v2-beta1', 'hors-render-v2-beta1-scene', 'hors-render-v1', 'hors-render-v1-scene', *RENDERERS, 'yunroll-cart-v2', 'yunroll-cart-v3', 'yunroll-cart-v4', 'yunroll-cart-v4-scene', 'yunroll-cart-v5', 'yunroll-cart-v5-scene', 'yunroll-cart-v6', 'yunroll-cart-v6-scene', 'yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10', 'yunroll-cart-v7-scene', 'yunroll-cart-v8-scene', 'yunroll-cart-v9-scene', 'yunroll-cart-v10-scene'),default=DEFAULT_RENDERER,help='default HORS-V4 GMod3 CRT; V3 and earlier default to EasyFlash; explicit v2 remains available; v1 and v2-beta1 remain explicit historical choices; step/bytechunk/yunroll=PRG; yunroll-cart-v2 through v10=streamed EasyFlash CRT')
     b.add_argument('--prefer',choices=('fps','ram'),default='fps',help='V7/V8: prioritize FPS (default) or smaller Y drawing kernels; geometry and pacing stay the same')
     b.add_argument('--interactive-cart',action='store_true',help='standalone spins: cursor/joystick direction; V3 adds RUN/STOP (Esc in VICE) and Shift+H help, + / - / 0 speed, background controls and a disabled-by-default starfield; V2 retains historical controls')
     b.add_argument('--surface-fill', '--surface-fills', type=lambda value: 'metallic' if value in ('grey', 'gray') else value, choices=('none', 'metallic', 'material', 'textured', 'gradient'), default=None, nargs='?', const='material', help='HORS-V3 surfaces; SVG defaults to mapped source fills/strokes, other sources to wireframe')
@@ -1460,6 +1472,7 @@ def make_parser(settings):
     te.add_argument('--reference-set',help='checksum reference set from tests/data/golden_prg_checksums.json (default: manifest default)')
     te.add_argument('--reproduce-reference',action='store_true',help='apply the selected reference set build_overrides (for example the legacy 144-line viewport); requires --variants normal')
     cs=sub.add_parser('cartridge-smoke',help='build a minimal EasyFlash bank-switch .crt diagnostic')
+    add_cart_type_flags(cs, build=True, settings=settings)
     _add_toolchain_args(cs,settings)
     add_legacy_cart_argument(cs)
     cs.add_argument('--output',help='output basename (default: easyflash-smoke)')
@@ -1477,7 +1490,7 @@ def make_parser(settings):
     cd.add_argument('--color-controls',action=argparse.BooleanOptionalAction,default=True,help='stable v2: F3/F4 monochrome colours, F7 independent border, F8 reset; no extra idle scan cycles')
     cd.add_argument('--prefer',choices=('fps','ram'),default='fps',help='V7/V8: prioritize FPS (default) or smaller Y drawing kernels')
     cd.add_argument('--play-all-seconds',type=int,default=10,help='V7/V8 PLAY ALL duration per animation, 1..255 seconds (default 10; PAL)')
-    cd.add_argument('--stream-renderer',choices=('hors-render-v2', 'hors-render-v1', 'yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'),default='hors-render-v2',help='one renderer for every demo; writes a separate version-labelled comparison cart')
+    cd.add_argument('--stream-renderer',choices=('hors-v2', 'hors-v1', 'hors-renderer-v2', 'hors-renderer-v1', 'hors-render-v2', 'hors-render-v1', 'yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'),default='hors-render-v2',help='one renderer for every demo; writes a separate version-labelled comparison cart')
     cda=sub.add_parser('cartridge-demo',help=argparse.SUPPRESS)
     _add_toolchain_args(cda,settings)
     add_legacy_cart_argument(cda)
@@ -1489,7 +1502,7 @@ def make_parser(settings):
     cda.add_argument('--color-controls',action=argparse.BooleanOptionalAction,default=True,help='stable v2 playback colour controls')
     cda.add_argument('--prefer',choices=('fps','ram'),default='fps',help='V7/V8: prioritize FPS (default) or smaller Y drawing kernels')
     cda.add_argument('--play-all-seconds',type=int,default=10,help='V7/V8 PLAY ALL duration per animation, 1..255 seconds (default 10; PAL)')
-    cda.add_argument('--stream-renderer',choices=('hors-render-v2', 'hors-render-v1', 'yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'),default='hors-render-v2',help='one renderer for every demo; writes a separate version-labelled comparison cart')
+    cda.add_argument('--stream-renderer',choices=('hors-v2', 'hors-v1', 'hors-renderer-v2', 'hors-renderer-v1', 'hors-render-v2', 'hors-render-v1', 'yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'),default='hors-render-v2',help='one renderer for every demo; writes a separate version-labelled comparison cart')
     combo=sub.add_parser('color-combo-test',help='build COLOR COMBO TEST: four monochrome colour pairs with F3/F4 cycling, automatic 10-second looping playback')
     _add_toolchain_args(combo,settings)
     add_legacy_cart_argument(combo)
@@ -1499,7 +1512,8 @@ def make_parser(settings):
     combo.add_argument('--prefer',choices=('fps','ram'),default='fps')
     combo.add_argument('--overwrite-policy',choices=('allow','warn','error'),default=settings.overwrite_policy)
     combo.add_argument('--run',action='store_true',help='launch the generated cartridge in VICE')
-    launch=sub.add_parser('run-cart',help='launch an existing EasyFlash CRT with protected write-back and consistent startup options')
+    launch=sub.add_parser('run-cart',help='launch a CRT with protected write-back; select GMod3 with --cart-type gmod3')
+    add_cart_type_flags(launch, settings=settings)
     _add_toolchain_args(launch,settings)
     launch.add_argument('crt',type=Path)
     sub.add_parser('cart-stream',help='build a HORS-V3 streamed EasyFlash CRT by default (same source flags as build)')
@@ -1530,6 +1544,17 @@ def main(argv=None):
     elif argv[0].startswith('-') and argv[0] not in ('-h','--help','--version'):
         argv=['build']+argv
     a=p.parse_args(argv)
+    from .renderer_names import canonical_selector, selector_cartridge
+    for key in ('renderer','stream_renderer'):
+        if hasattr(a,key):
+            selected=getattr(a,key)
+            if key=='renderer':
+                a.renderer_selector=selected
+                implied=selector_cartridge(selected)
+                if implied and getattr(a,'cart_type',None) not in (None,implied):
+                    p.error(selected+' conflicts with --cart-type '+a.cart_type)
+                if implied:a.cart_type=implied
+            setattr(a,key,canonical_selector(selected))
     if hasattr(a,'tass_args') and a.tass_args is None:
         a.tass_args=[] if getattr(a,'no_tass_default_args',False) else list(settings.tass_args)
     if hasattr(a,'vice_args') and a.vice_args is None:
@@ -1537,6 +1562,34 @@ def main(argv=None):
     a._tool_config_path=settings.config_path
     a._tool_platform=settings.platform_key
     a._config_disabled=config_disabled
+    from .cartridge_defaults import resolve as resolve_cart_type
+    try:
+        a.cart_type=resolve_cart_type(a,settings)
+    except (OSError,ValueError) as e:
+        p.error(str(e))
+    a.requested_renderer=getattr(a,'renderer',None)
+    if a.requested_renderer in ('hors-renderer-v4','hors-render-v4'):
+        # V4 owns GMod3 assembly. Explicit EasyFlash uses the preserved V3 core.
+        a.renderer='hors-renderer-v3'
+    if getattr(a, 'cart_type', 'easyflash') == 'gmod3':
+        from . import gmod3_cli
+        try:
+            from .hors_v4 import build as build_v4
+            selected_builder=build_v4 if a.requested_renderer in ('hors-renderer-v4','hors-render-v4') else gmod3_cli.build
+            return {'build': selected_builder, 'cartridge-smoke': gmod3_cli.smoke,
+                    'run-cart': gmod3_cli.run}[a.command](a)
+        except (OSError, ValueError, subprocess.SubprocessError) as e:
+            print(f'error: GMod3: {e}', file=sys.stderr)
+            return 2
+    if getattr(a, 'gmod3_size_mib', None) is not None or getattr(a, 'gmod3_first_bank', None) is not None:
+        p.error('--gmod3-* options require --cart-type gmod3')
+    if a.command=='build' and a.requested_renderer=='hors-renderer-v4':
+        from .hors_v4_easyflash import build
+        try:
+            return build(a)
+        except (OSError, ValueError, subprocess.SubprocessError) as e:
+            print(f'error: HORS-V4 EasyFlash: {e}', file=sys.stderr)
+            return 2
     if a.command=='list-shapes':
         print('torus       procedural; --major-segments/--minor-segments, --polycount or --vertices')
         print('cube        built-in 8-vertex cube')

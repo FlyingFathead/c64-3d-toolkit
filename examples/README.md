@@ -1,12 +1,15 @@
-# Examples: toolkit 0.7.9
+# Examples: toolkit 0.8.0
 
-The 26 HORS-V2 and colour-test cartridges are rebuilt for 0.7.9 with the new loader, real EAPI
+[Demo Cart v3.0: GMod3 All-in-One](gmod3_cart_demos/README.md) combines all 58 distinct released entries in one interactive 16 MiB cartridge, with an automatic benchmark companion.
+
+
+The 26 preserved HORS-V2 and colour-test cartridges were rebuilt for 0.7.9 with the new loader, real EAPI
 and PETSCII name metadata. The 0.7.3 colour controls remain available in Demo
 Cart 1, Demo Cart 2.0 and [COLOR COMBO TEST](color_combo_test/README.md).
 Older versioned menu and HiFi CRTs remain unchanged as historical references;
 use the current links below for the updated builds.
 
-HORS-V3 is the conversion default; the comparison/menu builder retains V2. The additional [HORS-V3 collection](hors_v3_preview/README.md) contains 11 surface, texture, interactive and comparison cartridges. Historical versioned menu and HiFi cartridges, original renderer code and frozen test inputs remain available.
+HORS-V4 / GMod3 is the conversion default; the comparison/menu builder retains V2. The additional [HORS-V3 collection](hors_v3_preview/README.md) contains 11 surface, texture, interactive and comparison cartridges. Historical versioned menu and HiFi cartridges, original renderer code and frozen test inputs remain available.
 
 The [Stanford Dragon example](stanford_dragon/README.md) adds six standalone HORS-V3 cartridges: wireframe, metallic (grey), golden, red, green and blue, with PAL-timed GIFs, performance results and a reproducible source mesh. It uses the HORS-V3 surface palette options introduced in 0.7.8.
 

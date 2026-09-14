@@ -1,0 +1,25 @@
+{
+  "index": 19,
+  "name": "SPACE HORSE CRAWL",
+  "passed": true,
+  "frames": 32,
+  "stored_frames": 32,
+  "pictures_checked": 67,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 1967,
+  "observed_refreshes": 2400,
+  "average_fps": 41.08123931623931,
+  "high_fps": 50.124542124542124,
+  "low_fps": 25.062271062271062,
+  "mean_render_cycles": 22909.085714285713,
+  "max_render_cycles": 38351,
+  "picture_sha256": "a74f5a64d3a5faa6a4d7818cd932cbb6784b62da07abc8bb768621e01ad65740",
+  "allocated_kib": 48,
+  "bank_range": [
+    404,
+    409
+  ],
+  "target_fps": null,
+  "crt_sha256": "86ab08c0e3484215d4548c28a17968111d7f44fd65b7c23a6be20d9557aa63a3"
+}

@@ -1,0 +1,102 @@
+[
+  {
+    "command": "python c643d.py build --renderer hors-v4-ef --shape cube --interactive-cart --frames 12 --output cube-ef --output-dir build/short-names",
+    "renderer": "hors-renderer-v4",
+    "renderer_label": "hors-v4-ef",
+    "cartridge": "EasyFlash",
+    "crt_sha256": "4a85e0050f7ad8794bee7cca8f023e118808b229cfb1ac7fffa240257258fb8b",
+    "title_change": {
+      "original_crt_sha256": "bb4e8e86e2e029cc344c441f9f5f3349b54a2ce2a82028c4485d38d0ae38a40e",
+      "crt_sha256": "4a85e0050f7ad8794bee7cca8f023e118808b229cfb1ac7fffa240257258fb8b",
+      "offset": 6471,
+      "bytes": 16,
+      "change": "fixed-width startup renderer text only; same instruction/data addresses"
+    },
+    "startup_layout": {
+      "version": "0.8.0",
+      "renderer": "hors-v4-ef",
+      "wait_for_space": true,
+      "layout": "v0.7.8",
+      "screen_ram": [
+        1024,
+        2048
+      ],
+      "help_hint": "press SHIFT+H for help",
+      "help_row": 19,
+      "start_row": 20,
+      "startup_only_ram": [
+        8192,
+        9216
+      ],
+      "extra_playback_RAM_bytes": 0,
+      "playback_cycle_cost": 0
+    }
+  },
+  {
+    "command": "python c643d.py build --renderer hors-v4 --shape cube --interactive-cart --frames 12 --output cube-gmod3 --output-dir build/short-names",
+    "renderer": "hors-renderer-v4",
+    "renderer_label": "hors-v4-gmod3",
+    "cartridge": "GMod3",
+    "crt_sha256": "ae383e0e9ab09e253ebeed131dbca59b405e47c4117184d254c6a1254281d2f0",
+    "title_change": null,
+    "startup_layout": {
+      "version": "0.8.0",
+      "renderer": "hors-v4-gmod3",
+      "wait_for_space": true,
+      "layout": "v0.7.8",
+      "screen_ram": [
+        1024,
+        2048
+      ],
+      "help_hint": "press SHIFT+H for help",
+      "help_row": 19,
+      "start_row": 20,
+      "startup_only_ram": [
+        8192,
+        9216
+      ],
+      "extra_playback_RAM_bytes": 0,
+      "playback_cycle_cost": 0,
+      "cartridge": "GMod3",
+      "capacity": {
+        "units": "KiB",
+        "used_kib": 48,
+        "free_kib": 2000,
+        "capacity_kib": 2048,
+        "accounting": "allocated 8 KiB banks including boot/runtime and bank padding; not CRT container size",
+        "used_bytes": 49152,
+        "free_bytes": 2048000,
+        "lines": [
+          {
+            "text": "cart type: GMod3",
+            "row": 22,
+            "column": 12
+          },
+          {
+            "text": "used: 48 KiB | free: 2000 KiB",
+            "row": 23,
+            "column": 5
+          }
+        ]
+      },
+      "capacity_rows": [
+        22,
+        23
+      ]
+    }
+  },
+  {
+    "command": "python c643d.py build --renderer hors-v4-ef --scene examples/autotune/colour-cube.c643dscene --output scene-ef --output-dir build/short-names",
+    "renderer": "hors-renderer-v4",
+    "renderer_label": "hors-v4-ef",
+    "cartridge": "EasyFlash",
+    "crt_sha256": "0f3ba81792db23a0647f6e0a756b170785fa5d4ffa543fe1ef9bb6a5a21b0a61",
+    "title_change": {
+      "original_crt_sha256": "0f3ba81792db23a0647f6e0a756b170785fa5d4ffa543fe1ef9bb6a5a21b0a61",
+      "crt_sha256": "0f3ba81792db23a0647f6e0a756b170785fa5d4ffa543fe1ef9bb6a5a21b0a61",
+      "bytes": 0,
+      "change": "no standard startup renderer field; preserved authored-scene image"
+    },
+    "startup_layout": null
+  }
+]

@@ -1,4 +1,4 @@
-> Current HORS-V3 conversion, gradient and texture mapping details: [checkpoint guide](HORS_V3_DEFAULTS_CHECKPOINT.md).
+> Current default: HORS-V4 / GMod3. It retains the V3 picture core and adds independent cartridge processing/runtime modules. [0.8.0 release and matched evidence](RELEASE_0.8.0.md).
 
 # Incremental pipeline versions and comparable evidence
 
@@ -42,6 +42,14 @@ payload sizes fit the same full-cart allocation as v1. The separate seven-entry
 showcase has room for measured per-scene choices (including Ripples Lite gap
 10). Both policies are recorded, rather than silently treating them as the
 same benchmark build.
+
+## Public short names
+
+HORS means **Hyper Optimized Rendering Setup**. `hors-v1` through `hors-v4`
+are concise selectors; the established `hors-render-v1/v2` and
+`hors-renderer-v3/v4` names remain valid aliases. The V4 screen/chart identity
+includes hardware: `hors-v4-gmod3` or `hors-v4-ef`.
+[Full alias map and hardware defaults](GMOD3.md#names-and-aliases).
 
 ## Stable v2 adoption
 

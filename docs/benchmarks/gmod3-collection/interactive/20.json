@@ -1,0 +1,25 @@
+{
+  "index": 20,
+  "name": "HORSE HEAD HIFI",
+  "passed": true,
+  "frames": 128,
+  "stored_frames": 128,
+  "pictures_checked": 259,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 1092,
+  "observed_refreshes": 2400,
+  "average_fps": 22.806666666666665,
+  "high_fps": 50.124542124542124,
+  "low_fps": 16.70818070818071,
+  "mean_render_cycles": 43084.87786259542,
+  "max_render_cycles": 48374,
+  "picture_sha256": "6f72273f6b4303f26047376cd61f522fc11ac196c9b2ee5f400e7bb9c7090a57",
+  "allocated_kib": 208,
+  "bank_range": [
+    410,
+    435
+  ],
+  "target_fps": null,
+  "crt_sha256": "86ab08c0e3484215d4548c28a17968111d7f44fd65b7c23a6be20d9557aa63a3"
+}

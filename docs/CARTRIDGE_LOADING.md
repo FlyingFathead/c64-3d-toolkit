@@ -1,5 +1,11 @@
 # Cartridge loading patch
 
+HORS-V4 defaults to GMod3; explicit older renderers retain EasyFlash. The
+launcher recognizes existing CRT headers unless a hardware preference overrides
+them. To explicitly select the independent GMod3 launcher, use `python c643d.py run-cart --cart-type gmod3 path/to/demo.crt`.
+That path validates GMod3 CRT type 62 and disables GMod3 flash writeback.
+[GMod3 examples and compatibility](../examples/gmod3_cart_demos/README.md).
+
 Introduced in 0.7.4. The supplied release includes rebuilt current cartridges.
 Older versioned cartridges remain unchanged as historical references; rebuilding
 an old output is necessary to incorporate the new loader and metadata.

@@ -1,0 +1,67 @@
+{
+  "case": 1,
+  "name": "SAKU GRADIENT SPIN",
+  "source_id": 43,
+  "frames": 30,
+  "slice": [
+    30,
+    60
+  ],
+  "color_encoding": "literal",
+  "easyflash": {
+    "index": 1,
+    "name": "SAKU GRADIENT SPIN",
+    "passed": true,
+    "frames": 30,
+    "stored_frames": 30,
+    "pictures_checked": 63,
+    "all_three_buffers": true,
+    "stars_off": false,
+    "display_frames": 3214,
+    "observed_refreshes": 4800,
+    "average_fps": 33.562557997557995,
+    "high_fps": 50.124542124542124,
+    "low_fps": 25.062271062271062,
+    "mean_render_cycles": 29522.454545454544,
+    "max_render_cycles": 33329,
+    "picture_sha256": "22efd71f646907b46b76c42724a8245e7215c2a7638d2deaeed694a16b0d983e",
+    "allocated_kib": 56,
+    "bank_range": [
+      8,
+      14
+    ],
+    "target_fps": null,
+    "crt_sha256": "9f369bd5e4d240557e3d4671b4b86bc4d42228f20ea4341bf8363d9c27621a1e",
+    "renderer": "hors-renderer-v3",
+    "toolkit_version": "0.8.0"
+  },
+  "gmod3": {
+    "index": 1,
+    "name": "SAKU GRADIENT SPIN",
+    "passed": true,
+    "frames": 30,
+    "stored_frames": 30,
+    "pictures_checked": 63,
+    "all_three_buffers": true,
+    "stars_off": false,
+    "display_frames": 3237,
+    "observed_refreshes": 4800,
+    "average_fps": 33.80273809523809,
+    "high_fps": 50.124542124542124,
+    "low_fps": 25.062271062271062,
+    "mean_render_cycles": 29320.575757575756,
+    "max_render_cycles": 33267,
+    "picture_sha256": "22efd71f646907b46b76c42724a8245e7215c2a7638d2deaeed694a16b0d983e",
+    "allocated_kib": 56,
+    "bank_range": [
+      8,
+      14
+    ],
+    "target_fps": null,
+    "crt_sha256": "e1cf405aab9cfb2d198260cc1b1b7063c387953d49f4a254229daee4fddd8cb2",
+    "renderer": "hors-renderer-v4",
+    "toolkit_version": "0.8.0"
+  },
+  "encoded_payloads_identical": true,
+  "difference_fps": 0.24018009768009563
+}

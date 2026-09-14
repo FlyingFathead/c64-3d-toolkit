@@ -1,3 +1,5 @@
+> Historical HORS-V3 / 0.7.9 checkpoint. Current defaults are HORS-V4 / GMod3; see [0.8.0](RELEASE_0.8.0.md).
+
 # HORS-V3 defaults and source-colour checkpoint
 
 Based on the supplied 0.7.8 snapshot. Public GitHub `VERSION` also reported

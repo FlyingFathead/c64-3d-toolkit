@@ -490,14 +490,14 @@ def chart(a,provenance):
     lines=['# Renderer performance comparison','',
         'Canonical lookup table for comparing methods and toolkit releases. **Historical method matrices use normal PLAY ALL. F5 is an exhibition mode and MUST NOT be used for benchmarking.** The separately labelled Sande standalone tests measure ordinary object playback and interactive idle cost; compare results within each protocol.','',
         'Measured on PAL VICE 3.10, 985,248 cycles/s, default machine settings, sound disabled, seed 1; 64tass 1.59.3120. This is emulated C64 time, not host wall time or the HUD FPS counter. Physical C64 and NTSC are not measured.','',
-        f'Each cell is actual display flips / elapsed emulated time across {a.loops} normal PLAY ALL visits. Every visit uses the unchanged 10-second setting. Observation starts on the first timer-count IRQ and ends at automatic-next: 499 PAL refresh intervals (about 9.955 s). The first visible picture is outside that window. Rates are rounded to two decimals; **bold** marks the highest displayed-frame count among FPS-preferred methods for that animation, including ties. Tiny timer-phase differences are not ranked as wins.','',
-        '## Best method for each animation','',
+        f'In the historical PLAY ALL matrices, each cell is actual display flips / elapsed emulated time across {a.loops} normal PLAY ALL visits. Every visit uses the unchanged 10-second setting. Observation starts on the first timer-count IRQ and ends at automatic-next: 499 PAL refresh intervals (about 9.955 s). The first visible picture is outside that window. Rates are rounded to two decimals; **bold** marks the highest displayed-frame count among FPS-preferred methods for that animation, including ties. Tiny timer-phase differences are not ranked as wins.','',
+        '## Best method for each animation (historical PLAY ALL)','',
         '| Animation | Source samples | Best method(s), FPS preference | Display FPS | V9 vs V8 displayed frames | HORS v2 vs v1 displayed frames |','| --- | ---: | --- | ---: | ---: | ---: |']
     for name in names:
         win=winners(name,fpskeys);old=results['yunroll-cart-v10'][name]['display_flips'];new=results['hors-render-v2'][name]['display_flips']
         legacy=(results['yunroll-cart-v9'][name]['display_flips']/results['yunroll-cart-v8'][name]['display_flips']-1)*100
         lines.append(f"| {name} | {oracles[name][0]} | {', '.join(short(k) for k in win)} | {results[win[0]][name]['display_fps']:.2f} | {legacy:+.2f}% | {(new/old-1)*100:+.2f}% |")
-    lines+=['', '**Bold FPS values** mark the highest value within each comparable row or workload group, independently for high/average/low statistics. **(tie)** marks equal values at the displayed precision. Storage sizes are not ranked as FPS wins. The best-method summary uses actual displayed-frame counts; brief peak bursts do not establish sustained speed.', '']
+    lines+=['', '**Bold FPS values** mark the highest value within each comparable row or workload group, using average FPS only. **(tie)** marks equal values at the displayed precision. Storage sizes are not ranked as FPS wins. The best-method summary uses actual displayed-frame counts; brief peak bursts do not establish sustained speed.', '']
     lines+=showcase_section(Path(__file__).resolve().parents[1])
     from run_sande_perfs import comparison_section
     lines+=comparison_section(Path(__file__).resolve().parents[1])
@@ -513,7 +513,7 @@ def chart(a,provenance):
     for key in results:
         raw=json.loads((a.workspace/'results'/(key+'-sizes.json')).read_text());sizes[key]={e['name']:e for e in raw['entries']}
     lines+=['','## Per-animation lookup','',
-        'High/low are 985,248 divided by the shortest/longest **actual display-flip interval within a normal PLAY ALL window**, including VIC and IRQ stalls. Average is total displayed frames / measured time, not an arithmetic average of instantaneous FPS. Window edges are excluded from interval extrema. High FPS can include a brief queued-frame burst; it does not describe sustained throughput. Bold marks each column maximum, including ties, across the shown FPS/RAM variants. The best-method summary above uses frame counts among FPS-preferred methods. All values are FPS unless the header says bytes.','']
+        'High/low are 985,248 divided by the shortest/longest **actual display-flip interval within a normal PLAY ALL window**, including VIC and IRQ stalls. Average is total displayed frames / measured time, not an arithmetic average of instantaneous FPS. Window edges are excluded from interval extrema. High FPS can include a brief queued-frame burst; it does not describe sustained throughput. Only the highest average FPS is bolded, including ties, across the shown FPS/RAM variants. The best-method summary above uses frame counts among FPS-preferred methods. All values are FPS unless the header says bytes.','']
     for name in names:
         lines += [f'### {name}','', '| Method | High | Average | Low | Resident frame-table RAM (B) | Frame data ROM (B) | Runtime PRG (B) |', '| --- | ---: | ---: | ---: | ---: | ---: | ---: |']
         win=winners(name,fpskeys)
@@ -560,17 +560,21 @@ def chart(a,provenance):
         '- A frame count tie is reported as a tie; a few extra samples over roughly 30 seconds are a small gain. Compare individual animations before quoting a suite total.',
         f'- Full bitmap and colour verification covered **{checks:,} completed pictures**. Raw traces, cartridge hashes, per-entry oracle hashes, unsupported-build reasons and individual results remain in the external workspace.',
         '- These measurements do not establish a universal performance floor or guarantee behavior for untested inputs.','',
-        '## Reproduce and keep this chart current','',
+        '## Reproduce the historical renderer matrix','',
         'Run from the repository root. The tool defaults to ignored `comparison-tests/`; an external `--workspace` is also supported. It creates an isolated source snapshot and never writes old test cartridges into `examples` or `build` in this checkout. Python, 64tass, cartconv and PAL VICE with its data files are required.','',
         '```bash','python tools/compare_renderers.py \\','  --workspace ../c64-renderer-comparison \\','  --tass 64tass --cartconv cartconv --vice x64sc \\','  --vice-data /usr/local/share/vice','',
         '# Only after the complete run succeeds:','cp ../c64-renderer-comparison/PERFORMANCE_COMPARISON.md docs/PERFORMANCE_COMPARISON.md','python tools/compare_renderers.py --check','```','',
         'Future demos: `--current-demos` compiles the current registry once and tests every resulting named entry across methods. Alternatively pass `--reference-json dataset.json.gz` in the `c643d-vector-reference-v1` format. Dataset files are saved outside tracked source and frozen for all methods. RAM-limited resident combinations are reported as N/A without dropping frames; bank capacity/build failures stop the comparison rather than silently simplify it. New renderer generations must be added to `METHODS` and the supported builders; chart rows themselves come from the data, not a twelve-row constant.','',
         'Optional pacing: `--max-fps 10` creates separate paced comparison carts after the uncapped pass. Integer rates 1–50 are supported; 10 FPS holds five PAL refreshes, while 12 FPS alternates four/five. `--lock-to-min-fps` measures two complete uncapped animation cycles, chooses a fixed per-demo refresh interval from the worst frame plus one refresh guard, then builds and verifies the paced copy. These options are mutually exclusive and **off by default** (`fps locking: not set`). A fixed cap cannot make an overloaded renderer meet a deadline; reports include observed hold intervals and missed deadlines. Pacing applies to these experimental menu reels, not the unchanged authored-scene timing or normal shipped cartridges. Paced/subset runs do not generate the release chart.','',
         'Use `--resume` only with the same source/tool fingerprint and options. Logs and JSON reports stay outside the repo. Archive that workspace with the release if long-term raw evidence is needed.','',
-        '**Release gate:** run `--check` before publishing. If renderer code, builders, input assets, examples, version or this tester changes, rerun the complete uncapped matrix and replace this chart before tagging. Preserve old method rows; add new generations to the tester and regenerate. Never silently copy old numbers into a changed workload. Capped runs are separate experiments and must not replace this uncapped baseline.','',
+        '**Historical matrix gate:** the following fingerprint belongs to the recorded matrix version. Use `report_gmod3_performance.py --check` for the current HORS-V4 section. To replace the historical matrix with a fresh run, run its `--check` before publishing. If renderer code, builders, input assets, examples, version or this tester changes, rerun the complete uncapped matrix and replace this chart before tagging. Preserve old method rows; add new generations to the tester and regenerate. Never silently copy old numbers into a changed workload. Capped runs are separate experiments and must not replace this uncapped baseline.','',
         f"<!-- comparison-input-sha256: {provenance['input_sha256']} -->",f"<!-- comparison-source-version: {provenance['version']} -->",'']
     if provenance['reference_sha256']:lines.append('<!-- comparison-reference-sha256: '+provenance['reference_sha256']+' -->')
     if provenance['current_demos']:lines.append('<!-- comparison-current-demos: true -->')
+    report_root=Path(__file__).resolve().parents[1]
+    if (report_root/'docs/benchmarks/hors-v4-matched/results.json').exists():
+        from report_gmod3_performance import section
+        lines.extend(['',*section(report_root)])
     from performance_tables import highlight_fps
     (a.workspace/'PERFORMANCE_COMPARISON.md').write_text('\n'.join(highlight_fps(lines)))
 

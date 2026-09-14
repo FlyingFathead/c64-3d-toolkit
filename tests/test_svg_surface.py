@@ -83,7 +83,7 @@ class PaintTests(unittest.TestCase):
 
 class SwitchTests(unittest.TestCase):
     def args(self,*args):
-        return cli.make_parser(ToolchainSettings()).parse_args(['build','--svg','example.svg',*args])
+        return cli.make_parser(ToolchainSettings()).parse_args(['build','--renderer','hors-renderer-v3','--svg','example.svg',*args])
 
     def selected(self,*args):
         a=self.args(*args)

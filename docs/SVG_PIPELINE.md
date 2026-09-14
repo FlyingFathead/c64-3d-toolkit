@@ -1,6 +1,6 @@
 # SVG artwork in HORS-V3
 
-`build --svg artwork.svg` uses HORS-V3 by default. It preserves the painted
+`build --svg artwork.svg` uses HORS-V4 / GMod3 by default. Its picture generation retains the V3 pipeline. It preserves the painted
 fills **and strokes**, holes, proportions and local transforms, fits the whole
 rotation inside the viewport, and maps source paint to the nearest C64 colour.
 Painted canvas rectangles are retained; transparent page margins are cropped.

@@ -1,3 +1,5 @@
+> Historical HORS-V3 / 0.7.9 checkpoint. Current defaults are HORS-V4 / GMod3; see [0.8.0](RELEASE_0.8.0.md).
+
 # HORS-V3: measured results
 
 HORS-V3 was introduced in v0.7.7: **Pretzel Logic - The Great Texture Update**. These measurements were rerun for **v0.7.9: The Golden Dragon & SAKU 2026**. The complete release gates rebuild the examples and repeat the PAL VICE measurements.

@@ -1,6 +1,10 @@
 # GMod cartridge backend plan
 
-Status: design only. No GMod renderer or production target is implemented by this documentation change.
+Status at 0.8.0: HORS-V4 defaults to GMod3, with independent object/SVG/scene
+processing and an All-in-One collection. [Implementation and measurements](GMOD3.md)
+supersede the earlier GMod3 plan below. Explicit older renderers retain
+EasyFlash defaults. GMod4, audio coexistence and physical-hardware validation
+remain future work.
 
 ## Targets and validation
 
@@ -99,6 +103,6 @@ The linked repositories and patch are implementation references to inspect, not 
 
 The GMod4 reference repository was inspected at commit `d36b978fcd70e9c269f6c8468d5145d775540067`. Its README explicitly targets the 2026 prototype. `include/gmod4.inc` defines context B at $DE08 and B bank registers at $DE09–$DE0B, agreeing with the specification table rather than the conflicting prose. This is source corroboration, not physical-hardware verification.
 
-The supplied VICE tool bundle's `cartconv --types` lists GMod3 as CRT type 62 and does not list GMod4. Its x64sc binary contains GMod3 emulation symbols/options. No GMod4 support was established in that supplied build; no GMod3 functional cartridge probe has yet been run here.
+The supplied VICE tool bundle's `cartconv --types` lists GMod3 as CRT type 62 and does not list GMod4. Its x64sc binary contains GMod3 emulation symbols/options. No GMod4 support was established in that supplied build. GMod3 functional boot/banking, IRQ/NMI and rendering probes are now recorded in [checkpoint 1](GMOD3.md).
 
 The reference repository supplies `vice/gmod4-r46196.diff`. Its accompanying readme reports missing snapshot support, nonworking AGR, incomplete intrusive-mode behavior and unverified C128 behavior. Treat it as a separate experimental emulator build, with an exact recorded patch revision. Do not replace the existing benchmark emulator or assume feature completeness. Some patch comments also differ from the register include; audit executable register decoding before testing.

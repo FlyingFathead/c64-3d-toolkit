@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.8.0: GMod3 cartridge support added, switch to HORS-V4 (2026-09-14)
+
+- Default conversion to `hors-v4` / GMod3; retain explicit older renderer
+  EasyFlash defaults and add CLI/config/renderer cartridge-choice precedence.
+- Add short `hors-v1` through `hors-v4` aliases while retaining long spellings;
+  `hors-v4-gmod3` / `hors-v4-ef` make hardware explicit on new V4 title screens.
+- Add independent GMod3 source-processing, image, allocator, boot, bank reader,
+  paged scene and collection modules. Preserve all EasyFlash backend and shipped
+  cartridge bytes.
+- Add Demo Cart v3.0: GMod3 All-in-One: 58 interactive entries, 6,474 pictures,
+  full Marbles sequence, SAKU modes and six Dragon variants, with a 65-entry
+  automatic companion. Stars start off; retain help, HUD, speed, colours,
+  star density/profile and exhibition controls, plus menu/entry/shading navigation.
+  RUN/STOP (Esc in VICE) and F1 return to the collection menu; Shift+H opens help.
+- Show cartridge type and allocated used/free KiB on the SPACE screen and during
+  builds. Validate standard type-62 CRTs, all supported capacities and full
+  11-bit banks, including mapping, IRQ/NMI and reset diagnostics.
+- Measure every entry and 69 matched workloads. Retain high/low FPS, bold only
+  winning averages, separate Sande's models and independently audit table output.
+- Document measured limits and manufacturer/VICE specifications. Physical
+  hardware, NTSC, audio streaming and flash programming are not validated here.
+
+See [release notes and measured results](docs/RELEASE_0.8.0.md).
+
 ## 0.7.9: The Golden Dragon & SAKU 2026 (2026-09-13)
 
 - Complete full-width 320-pixel Blender export/clipping and safe wide-row clearing; retain explicit 256-pixel compatibility. Add editable zoom and tracking-camera test cards, native VICE captures and performance evidence.

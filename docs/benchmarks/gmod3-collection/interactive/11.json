@@ -1,0 +1,25 @@
+{
+  "index": 11,
+  "name": "TORUS",
+  "passed": true,
+  "frames": 32,
+  "stored_frames": 32,
+  "pictures_checked": 67,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 851,
+  "observed_refreshes": 2400,
+  "average_fps": 17.77332722832723,
+  "high_fps": 25.062271062271062,
+  "low_fps": 12.531135531135531,
+  "mean_render_cycles": 55820.74285714285,
+  "max_render_cycles": 64696,
+  "picture_sha256": "68c11d497d398ec694254c43e6097b45ad28ae3a2201a69fe5d9889ea658ac8a",
+  "allocated_kib": 80,
+  "bank_range": [
+    340,
+    349
+  ],
+  "target_fps": null,
+  "crt_sha256": "86ab08c0e3484215d4548c28a17968111d7f44fd65b7c23a6be20d9557aa63a3"
+}

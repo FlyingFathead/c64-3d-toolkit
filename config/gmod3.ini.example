@@ -1,0 +1,5 @@
+# Copy settings into your own config, or pass --config config/gmod3.ini.example.
+# CLI --cart-type easyflash overrides this universal preference.
+# Tool paths may be added in [toolchain], [linux], [macos], or [windows].
+[cartridge_defaults]
+cart_type = gmod3

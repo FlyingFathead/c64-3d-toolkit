@@ -1,15 +1,17 @@
-> Current conversion default: **hors-renderer-v3**, including authored wireframe scenes. [Checkpoint and cache troubleshooting](HORS_V3_DEFAULTS_CHECKPOINT.md).
+> Current conversion default: **hors-renderer-v4 / GMod3**. Explicit HORS-V3 retains EasyFlash. [v0.8.0 release notes](RELEASE_0.8.0.md).
 
 # Blender animated-scene pipeline
 
 [Blender FAQ and troubleshooting](BLENDER_FAQ.md) covers the old right-edge
 cutoff, full-width rebuilding, camera framing, mirroring and calibration scenes.
 
-The v0.7.2 release used hors-render-v2-scene EasyFlash output; the current checkpoint defaults to HORS-V3. See
+The v0.7.2 release used hors-render-v2-scene EasyFlash output; v0.8.0 defaults to HORS-V4 / GMod3. See
 [current scene streaming](CARTRIDGE_SCENES.md) and [build targets](HORS_RENDER_V2.md).
 Use `--renderer yunroll` explicitly for the preserved resident PRG path. Its
-255-sample/table-RAM limits differ from the streamed scene directory's 2048
-sample maximum; per-frame and total cartridge capacity can limit either earlier.
+255-sample/table-RAM limits differ from streamed scene limits. GMod3 currently
+supports up to 255 samples directly or complete 128-picture pages up to 1,024;
+the older EasyFlash scene directory supports up to 2,048. Per-frame and total
+cartridge capacity can limit either earlier. No samples are silently removed.
 
 Blender is an optional authoring front end. The classic procedural, OBJ, MTL,
 and SVG commands do not import `bpy`, launch Blender, or require Blender to be
@@ -23,12 +25,12 @@ scene.blend
     -> evaluated objects + active camera for each sampled frame
     -> temporary .c643dscene interchange data
     -> existing hidden-line / colour / DDA compiler
-    -> HORS-V3 scene stream by default, or an explicitly selected renderer
+    -> HORS-V4 / GMod3 scene stream by default, or an explicitly selected renderer
 ```
 
 Blender exports geometry, motion, deformation, materials and camera state.
 The host projects/clips that geometry and encodes it for the selected renderer.
-HORS-V3 is the current default; older stream formats and explicit resident PRG
+HORS-V4 / GMod3 is the current default; older stream formats and explicit resident PRG
 renderers retain their own frame, metadata and memory limits.
 
 ## Install and verify Blender

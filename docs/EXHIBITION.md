@@ -1,5 +1,8 @@
 # Interactive exhibition mode
 
+HORS-V4 / GMod3 retains these V3 controls. The [All-in-One collection](../examples/gmod3_cart_demos/README.md) starts with stars off and adds F1 menu, N/P entry selection and C Dragon shading. Older EasyFlash cartridges retain their original keymaps.
+
+
 HORS-V3 interactive cartridges include two-page help and exhibition controls. Use RUN/STOP (Esc in the supplied VICE keymaps) or Shift+H to open help. Cursor right selects page 2; cursor left selects page 1. On a C64, left is Shift+cursor-right. The top-right page indicator shows the available direction. Help pauses playback and the exhibition timer; closing it restores the display. Opening help from the original intro returns to the intro, which still requires SPACE to start.
 
 | Key | Action |

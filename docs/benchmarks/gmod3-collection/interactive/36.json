@@ -1,0 +1,25 @@
+{
+  "index": 36,
+  "name": "CUBE",
+  "passed": true,
+  "frames": 192,
+  "stored_frames": 192,
+  "pictures_checked": 387,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 1386,
+  "observed_refreshes": 2400,
+  "average_fps": 28.946923076923074,
+  "high_fps": 50.124542124542124,
+  "low_fps": 25.062271062271062,
+  "mean_render_cycles": 33689.958974358975,
+  "max_render_cycles": 39027,
+  "picture_sha256": "e370f9a7498d0bdc633292355a2718eefdce1be905b659bf9ca0108d0f34300a",
+  "allocated_kib": 200,
+  "bank_range": [
+    842,
+    866
+  ],
+  "target_fps": null,
+  "crt_sha256": "86ab08c0e3484215d4548c28a17968111d7f44fd65b7c23a6be20d9557aa63a3"
+}

@@ -2,6 +2,10 @@
 
 `c64-3d-toolkit` is split deliberately into a host compiler and a small C64 runtime.
 
+Version 0.8.0 defaults to HORS-V4 / GMod3. Cartridge processing and runtime
+modules are independent; explicit older renderers retain their EasyFlash
+paths. [GMod3 architecture, RAM ownership and image format](GMOD3.md).
+
 ## Host side
 
 Python owns the expensive/general operations:

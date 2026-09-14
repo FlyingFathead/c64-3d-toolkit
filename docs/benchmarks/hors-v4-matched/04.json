@@ -1,0 +1,67 @@
+{
+  "case": 4,
+  "name": "SAKU CARD SPIN",
+  "source_id": 43,
+  "frames": 30,
+  "slice": [
+    120,
+    150
+  ],
+  "color_encoding": "literal",
+  "easyflash": {
+    "index": 4,
+    "name": "SAKU CARD SPIN",
+    "passed": true,
+    "frames": 30,
+    "stored_frames": 30,
+    "pictures_checked": 63,
+    "all_three_buffers": true,
+    "stars_off": false,
+    "display_frames": 2170,
+    "observed_refreshes": 4800,
+    "average_fps": 22.660470085470084,
+    "high_fps": 50.124542124542124,
+    "low_fps": 16.70818070818071,
+    "mean_render_cycles": 43701.57575757576,
+    "max_render_cycles": 49041,
+    "picture_sha256": "22efd71f646907b46b76c42724a8245e7215c2a7638d2deaeed694a16b0d983e",
+    "allocated_kib": 72,
+    "bank_range": [
+      25,
+      33
+    ],
+    "target_fps": null,
+    "crt_sha256": "3905851261a9843c58d06b02b05532893e0601ed48318682f1da9f4668eff656",
+    "renderer": "hors-renderer-v3",
+    "toolkit_version": "0.8.0"
+  },
+  "gmod3": {
+    "index": 4,
+    "name": "SAKU CARD SPIN",
+    "passed": true,
+    "frames": 30,
+    "stored_frames": 30,
+    "pictures_checked": 63,
+    "all_three_buffers": true,
+    "stars_off": false,
+    "display_frames": 2183,
+    "observed_refreshes": 4800,
+    "average_fps": 22.796224053724053,
+    "high_fps": 50.124542124542124,
+    "low_fps": 16.70818070818071,
+    "mean_render_cycles": 43439.90909090909,
+    "max_render_cycles": 48646,
+    "picture_sha256": "22efd71f646907b46b76c42724a8245e7215c2a7638d2deaeed694a16b0d983e",
+    "allocated_kib": 72,
+    "bank_range": [
+      25,
+      33
+    ],
+    "target_fps": null,
+    "crt_sha256": "fd89c4a62bd0169b2030c004c4e92bb7a068b52ed532fd0572958e8bc87472b6",
+    "renderer": "hors-renderer-v4",
+    "toolkit_version": "0.8.0"
+  },
+  "encoded_payloads_identical": true,
+  "difference_fps": 0.1357539682539688
+}

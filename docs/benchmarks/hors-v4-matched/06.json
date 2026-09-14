@@ -1,0 +1,67 @@
+{
+  "case": 6,
+  "name": "SAKU OUTLINE SPIN",
+  "source_id": 43,
+  "frames": 30,
+  "slice": [
+    180,
+    210
+  ],
+  "color_encoding": "literal",
+  "easyflash": {
+    "index": 6,
+    "name": "SAKU OUTLINE SPIN",
+    "passed": true,
+    "frames": 30,
+    "stored_frames": 30,
+    "pictures_checked": 63,
+    "all_three_buffers": true,
+    "stars_off": false,
+    "display_frames": 3201,
+    "observed_refreshes": 4800,
+    "average_fps": 33.42680402930403,
+    "high_fps": 50.124542124542124,
+    "low_fps": 25.062271062271062,
+    "mean_render_cycles": 29657.18181818182,
+    "max_render_cycles": 33746,
+    "picture_sha256": "22efd71f646907b46b76c42724a8245e7215c2a7638d2deaeed694a16b0d983e",
+    "allocated_kib": 56,
+    "bank_range": [
+      39,
+      45
+    ],
+    "target_fps": null,
+    "crt_sha256": "b6b5ea146b972576db575569ac8ec4df5e7c55b269b1226505b94cc9a67eccb9",
+    "renderer": "hors-renderer-v3",
+    "toolkit_version": "0.8.0"
+  },
+  "gmod3": {
+    "index": 6,
+    "name": "SAKU OUTLINE SPIN",
+    "passed": true,
+    "frames": 30,
+    "stored_frames": 30,
+    "pictures_checked": 63,
+    "all_three_buffers": true,
+    "stars_off": false,
+    "display_frames": 3223,
+    "observed_refreshes": 4800,
+    "average_fps": 33.656541514041514,
+    "high_fps": 50.124542124542124,
+    "low_fps": 25.062271062271062,
+    "mean_render_cycles": 29438.121212121212,
+    "max_render_cycles": 33493,
+    "picture_sha256": "22efd71f646907b46b76c42724a8245e7215c2a7638d2deaeed694a16b0d983e",
+    "allocated_kib": 56,
+    "bank_range": [
+      39,
+      45
+    ],
+    "target_fps": null,
+    "crt_sha256": "7fde12036567901eb340be741e3ca3ba9818a95ba1e7c9f85b885aa992df6de0",
+    "renderer": "hors-renderer-v4",
+    "toolkit_version": "0.8.0"
+  },
+  "encoded_payloads_identical": true,
+  "difference_fps": 0.229737484737484
+}

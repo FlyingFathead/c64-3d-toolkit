@@ -141,3 +141,14 @@ See [capacity limits](CARTRIDGE_CAPACITY.md) and the [larger-backend implementat
 ## hors-render-v1 status
 
 hors-render-v1 byte-first EasyFlash builds are integrated in 0.7.1. Dense 25/20 FPS exports and recovery runs exposed capacity/timing limits; the 640-sample, 16 FPS Marbles compromise is accepted. Next: improve packing and worst-frame cost, resolve general timing selection, then test music coexistence. Automatic mixed-renderer selection remains planned. GMod3/GMod4 remain separate backend work; see [GMod details](GMOD_BACKENDS.md).
+
+## After v0.8.0: optimizer and profiler workflow
+
+- Provide a repeatable local profiling command and machine-readable results
+  so users can run their own material and share measurements for analysis.
+- Attribute time to mapping, ROM reads, drawing, clearing, colour updates and
+  interactive effects; report capacity alongside FPS and worst frame times.
+- Explore packing and rendering choices using matched pictures and a fixed
+  benchmark protocol, retaining the existing renderers as regression baselines.
+
+This work is planned after GMod3 support; it is not part of the v0.8.0 release.

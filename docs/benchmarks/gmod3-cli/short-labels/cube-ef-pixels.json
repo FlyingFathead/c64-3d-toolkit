@@ -1,0 +1,22 @@
+{
+  "cartridge": "cube-ef.crt",
+  "menu_entry": null,
+  "verified_frames": 27,
+  "orientations": 12,
+  "bitmap_bytes_checked": 207360,
+  "color_bytes_checked": 25920,
+  "slots": {
+    "1": 9,
+    "2": 9,
+    "0": 9
+  },
+  "average_fps": 28.255076581654375,
+  "min_frame_cycles": 27167,
+  "max_frame_cycles": 38977,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
+  "interactive_label_match": true
+}

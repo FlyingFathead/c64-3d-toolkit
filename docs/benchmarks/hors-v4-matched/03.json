@@ -1,0 +1,67 @@
+{
+  "case": 3,
+  "name": "SAKU GRADIENT CRAWL",
+  "source_id": 43,
+  "frames": 30,
+  "slice": [
+    90,
+    120
+  ],
+  "color_encoding": "literal",
+  "easyflash": {
+    "index": 3,
+    "name": "SAKU GRADIENT CRAWL",
+    "passed": true,
+    "frames": 30,
+    "stored_frames": 30,
+    "pictures_checked": 63,
+    "all_three_buffers": true,
+    "stars_off": false,
+    "display_frames": 4645,
+    "observed_refreshes": 4800,
+    "average_fps": 48.50593711843712,
+    "high_fps": 50.124542124542124,
+    "low_fps": 25.062271062271062,
+    "mean_render_cycles": 18554.090909090908,
+    "max_render_cycles": 25999,
+    "picture_sha256": "22efd71f646907b46b76c42724a8245e7215c2a7638d2deaeed694a16b0d983e",
+    "allocated_kib": 40,
+    "bank_range": [
+      20,
+      24
+    ],
+    "target_fps": null,
+    "crt_sha256": "2f390ddd4e756f82d238225604b0c8120f3293cee19f0c7a7577244f56bcd27d",
+    "renderer": "hors-renderer-v3",
+    "toolkit_version": "0.8.0"
+  },
+  "gmod3": {
+    "index": 3,
+    "name": "SAKU GRADIENT CRAWL",
+    "passed": true,
+    "frames": 30,
+    "stored_frames": 30,
+    "pictures_checked": 63,
+    "all_three_buffers": true,
+    "stars_off": false,
+    "display_frames": 4645,
+    "observed_refreshes": 4800,
+    "average_fps": 48.50593711843712,
+    "high_fps": 50.124542124542124,
+    "low_fps": 25.062271062271062,
+    "mean_render_cycles": 18428.21212121212,
+    "max_render_cycles": 25779,
+    "picture_sha256": "22efd71f646907b46b76c42724a8245e7215c2a7638d2deaeed694a16b0d983e",
+    "allocated_kib": 40,
+    "bank_range": [
+      20,
+      24
+    ],
+    "target_fps": null,
+    "crt_sha256": "22356903cbbc7b3d9b716492993fec218c17b2168bd08e354612d3cebce1043b",
+    "renderer": "hors-renderer-v4",
+    "toolkit_version": "0.8.0"
+  },
+  "encoded_payloads_identical": true,
+  "difference_fps": 0.0
+}

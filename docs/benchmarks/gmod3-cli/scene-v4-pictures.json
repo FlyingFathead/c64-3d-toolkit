@@ -1,0 +1,22 @@
+{
+  "cartridge": "scene-v4.crt",
+  "menu_entry": null,
+  "verified_frames": 51,
+  "orientations": 24,
+  "bitmap_bytes_checked": 391680,
+  "color_bytes_checked": 48960,
+  "slots": {
+    "1": 17,
+    "2": 17,
+    "0": 17
+  },
+  "average_fps": 38.78926079585764,
+  "min_frame_cycles": 19826,
+  "max_frame_cycles": 27318,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
+  "crt_sha256": "43463a27531d729da84677e984adc37d73c2b25469d30172ebfe38ddaaa533fe"
+}

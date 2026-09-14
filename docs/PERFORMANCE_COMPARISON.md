@@ -4,31 +4,304 @@ Canonical lookup table for comparing methods and toolkit releases. **Historical 
 
 Measured on PAL VICE 3.10, 985,248 cycles/s, default machine settings, sound disabled, seed 1; 64tass 1.59.3120. This is emulated C64 time, not host wall time or the HUD FPS counter. Physical C64 and NTSC are not measured.
 
-Each cell is actual display flips / elapsed emulated time across 3 normal PLAY ALL visits. Every visit uses the unchanged 10-second setting. Observation starts on the first timer-count IRQ and ends at automatic-next: 499 PAL refresh intervals (about 9.955 s). The first visible picture is outside that window. Rates are rounded to two decimals; **bold** marks the highest displayed-frame count among FPS-preferred methods for that animation, including ties. Tiny timer-phase differences are not ranked as wins.
+In the historical PLAY ALL matrices, each cell is actual display flips / elapsed emulated time across 3 normal PLAY ALL visits. Every visit uses the unchanged 10-second setting. Observation starts on the first timer-count IRQ and ends at automatic-next: 499 PAL refresh intervals (about 9.955 s). The first visible picture is outside that window. Rates are rounded to two decimals; **bold** marks the highest reported average FPS for each comparable workload, including ties. Tiny timer-phase differences are not ranked as wins.
 
-## Best method for each animation
+<!-- BEGIN HORS-V4 GMOD3 -->
+## HORS-V4 / GMod3: current matched comparison
+
+`hors-v4-gmod3` identifies HORS-V4 using its default GMod3 backend. The baseline is `hors-v3` on EasyFlash. Both receive identical pictures, colours, sample order, encoding policy and HUD settings. These are automatic standalone tests: no input polling, stars, exhibition or authored frame-rate cap.
+
+Across 69 matched workloads: **65 GMod3 wins, 4 ties, 0 lower averages**. The observed change ranges from +0.000 to +0.397 FPS. This supports modest throughput gains and the larger collection capacity; it does not support a universal +1 FPS claim.
+
+Each test verifies two complete picture loops plus warm-up in all three buffers, then counts actual displayed-slot transitions for 4,800 PAL refreshes (95.761 seconds). High/low FPS are reciprocals of the shortest/longest observed display hold; they are listed as diagnostics. Only the highest average in each matched pair is bold. Ties are explicit.
+
+The 640-picture Marbles sequence is compared as five matching 128-picture segments, with no dropped pictures; uninterrupted five-page playback is checked separately in the collection. The 192-picture metallic Pretzel uses its released `indexed4` colour policy on both backends to fit the preserved EasyFlash ROML allocator. All other pairs use literal colour bytes. These settings are recorded per case in the raw report.
+
+[Raw matched results](benchmarks/hors-v4-matched/results.json) · [Actual interactive collection results](benchmarks/gmod3-collection/interactive/results.json) · [Bank/copy diagnostics](benchmarks/gmod3-checkpoint1/results.json)
+
+### SAKU presentations
+
+| Scene | Method | High FPS | Average FPS | Low FPS |
+| --- | --- | ---: | ---: | ---: |
+| SAKU SOLID SPIN / 30 | hors-v3 | 50.125 | 38.053 | 25.062 |
+| SAKU SOLID SPIN / 30 | hors-v4-gmod3 | 50.125 | **38.335** | 25.062 |
+| SAKU GRADIENT SPIN / 30 | hors-v3 | 50.125 | 33.563 | 25.062 |
+| SAKU GRADIENT SPIN / 30 | hors-v4-gmod3 | 50.125 | **33.803** | 25.062 |
+| SAKU SOLID CRAWL / 30 | hors-v3 | 50.125 | **50.125 (tie)** | 50.125 |
+| SAKU SOLID CRAWL / 30 | hors-v4-gmod3 | 50.125 | **50.125 (tie)** | 50.125 |
+| SAKU GRADIENT CRAWL / 30 | hors-v3 | 50.125 | **48.506 (tie)** | 25.062 |
+| SAKU GRADIENT CRAWL / 30 | hors-v4-gmod3 | 50.125 | **48.506 (tie)** | 25.062 |
+| SAKU CARD SPIN / 30 | hors-v3 | 50.125 | 22.660 | 16.708 |
+| SAKU CARD SPIN / 30 | hors-v4-gmod3 | 50.125 | **22.796** | 16.708 |
+| SAKU CARD CRAWL / 30 | hors-v3 | 50.125 | **46.992 (tie)** | 25.062 |
+| SAKU CARD CRAWL / 30 | hors-v4-gmod3 | 50.125 | **46.992 (tie)** | 25.062 |
+| SAKU OUTLINE SPIN / 30 | hors-v3 | 50.125 | 33.427 | 25.062 |
+| SAKU OUTLINE SPIN / 30 | hors-v4-gmod3 | 50.125 | **33.657** | 25.062 |
+| SAKU OUTLINE CRAWL / 30 | hors-v3 | 50.125 | **48.506 (tie)** | 25.062 |
+| SAKU OUTLINE CRAWL / 30 | hors-v4-gmod3 | 50.125 | **48.506 (tie)** | 25.062 |
+| SAKU GRADIENT / 48 | hors-v3 | 50.125 | 33.228 | 25.062 |
+| SAKU GRADIENT / 48 | hors-v4-gmod3 | 50.125 | **33.458** | 25.062 |
+| SAKU SOLID / 48 | hors-v3 | 50.125 | 34.325 | 25.062 |
+| SAKU SOLID / 48 | hors-v4-gmod3 | 50.125 | **34.575** | 25.062 |
+
+### Stanford Dragon
+
+| Scene | Method | High FPS | Average FPS | Low FPS |
+| --- | --- | ---: | ---: | ---: |
+| DRAGON BLUE / 128 | hors-v3 | 25.062 | 15.152 | 12.531 |
+| DRAGON BLUE / 128 | hors-v4-gmod3 | 25.062 | **15.246** | 12.531 |
+| DRAGON GOLDEN / 128 | hors-v3 | 25.062 | 15.152 | 12.531 |
+| DRAGON GOLDEN / 128 | hors-v4-gmod3 | 25.062 | **15.246** | 12.531 |
+| DRAGON GREEN / 128 | hors-v3 | 25.062 | 15.142 | 12.531 |
+| DRAGON GREEN / 128 | hors-v4-gmod3 | 25.062 | **15.246** | 12.531 |
+| DRAGON METALLIC / 128 | hors-v3 | 25.062 | 15.152 | 12.531 |
+| DRAGON METALLIC / 128 | hors-v4-gmod3 | 25.062 | **15.246** | 12.531 |
+| DRAGON RED / 128 | hors-v3 | 25.062 | 15.121 | 12.531 |
+| DRAGON RED / 128 | hors-v4-gmod3 | 25.062 | **15.215** | 12.531 |
+| DRAGON WIREFRAME / 128 | hors-v3 | 50.125 | 19.904 | 16.708 |
+| DRAGON WIREFRAME / 128 | hors-v4-gmod3 | 50.125 | **20.050** | 16.708 |
+
+### Original demos and HiFi variants
+
+| Scene | Method | High FPS | Average FPS | Low FPS |
+| --- | --- | ---: | ---: | ---: |
+| FALLING CUBES (mono) / 18 | hors-v3 | 50.125 | 28.999 | 16.708 |
+| FALLING CUBES (mono) / 18 | hors-v4-gmod3 | 50.125 | **29.250** | 16.708 |
+| FALLING CUBES (colour) / 18 | hors-v3 | 50.125 | 21.846 | 16.708 |
+| FALLING CUBES (colour) / 18 | hors-v4-gmod3 | 50.125 | **22.003** | 16.708 |
+| TORUS / 32 | hors-v3 | 25.062 | 18.421 | 12.531 |
+| TORUS / 32 | hors-v4-gmod3 | 25.062 | **18.567** | 12.531 |
+| TORUS DENSE / 32 | hors-v3 | 25.062 | 18.024 | 12.531 |
+| TORUS DENSE / 32 | hors-v4-gmod3 | 25.062 | **18.170** | 12.531 |
+| CUBE / 36 | hors-v3 | 50.125 | 30.795 | 25.062 |
+| CUBE / 36 | hors-v4-gmod3 | 50.125 | **31.067** | 25.062 |
+| SPHERE / 24 | hors-v3 | 25.062 | 17.867 | 16.708 |
+| SPHERE / 24 | hors-v4-gmod3 | 25.062 | **18.014** | 16.708 |
+| HORSE HEAD / 32 | hors-v3 | 50.125 | 30.837 | 25.062 |
+| HORSE HEAD / 32 | hors-v4-gmod3 | 50.125 | **31.119** | 25.062 |
+| SUNFLOWER TORUS / 28 | hors-v3 | 50.125 | 30.064 | 16.708 |
+| SUNFLOWER TORUS / 28 | hors-v4-gmod3 | 50.125 | **30.336** | 16.708 |
+| SUNFLOWER COLOR / 20 | hors-v3 | 50.125 | 23.485 | 16.708 |
+| SUNFLOWER COLOR / 20 | hors-v4-gmod3 | 50.125 | **23.663** | 16.708 |
+| SPACE HORSE SPIN / 24 | hors-v3 | 50.125 | 20.227 | 12.531 |
+| SPACE HORSE SPIN / 24 | hors-v4-gmod3 | 50.125 | **20.405** | 12.531 |
+| SPACE HORSE CRAWL / 32 | hors-v3 | 50.125 | 42.178 | 25.062 |
+| SPACE HORSE CRAWL / 32 | hors-v4-gmod3 | 50.125 | **42.188** | 25.062 |
+| HORSE HEAD HIFI / 128 | hors-v3 | 50.125 | 23.934 | 16.708 |
+| HORSE HEAD HIFI / 128 | hors-v4-gmod3 | 50.125 | **24.112** | 16.708 |
+| SUNFLOWER TORUS HIFI / 128 | hors-v3 | 50.125 | 23.590 | 16.708 |
+| SUNFLOWER TORUS HIFI / 128 | hors-v4-gmod3 | 50.125 | **23.799** | 16.708 |
+| TORUS BLACK ON WHITE / 32 | hors-v3 | 25.062 | 18.421 | 12.531 |
+| TORUS BLACK ON WHITE / 32 | hors-v4-gmod3 | 25.062 | **18.567** | 12.531 |
+| DENSE TORUS CYAN ON BLUE / 32 | hors-v3 | 25.062 | 18.024 | 12.531 |
+| DENSE TORUS CYAN ON BLUE / 32 | hors-v4-gmod3 | 25.062 | **18.170** | 12.531 |
+| SPHERE LIGHT GREEN ON BLACK / 24 | hors-v3 | 25.062 | 17.867 | 16.708 |
+| SPHERE LIGHT GREEN ON BLACK / 24 | hors-v4-gmod3 | 25.062 | **18.014** | 16.708 |
+| CUBE WHITE ON PURPLE / 36 | hors-v3 | 50.125 | 30.795 | 25.062 |
+| CUBE WHITE ON PURPLE / 36 | hors-v4-gmod3 | 50.125 | **31.077** | 25.062 |
+| CUBE / 192 | hors-v3 | 50.125 | 30.733 | 25.062 |
+| CUBE / 192 | hors-v4-gmod3 | 50.125 | **30.994** | 25.062 |
+| HORSE HEAD HIFI / 192 | hors-v3 | 50.125 | 23.924 | 16.708 |
+| HORSE HEAD HIFI / 192 | hors-v4-gmod3 | 50.125 | **24.102** | 16.708 |
+| HORSE HEAD / 192 | hors-v3 | 50.125 | 30.670 | 16.708 |
+| HORSE HEAD / 192 | hors-v4-gmod3 | 50.125 | **31.025** | 16.708 |
+| SPACE HORSE CRAWL / 192 | hors-v3 | 50.125 | 41.593 | 16.708 |
+| SPACE HORSE CRAWL / 192 | hors-v4-gmod3 | 50.125 | **41.812** | 16.708 |
+| SPACE HORSE / 192 | hors-v3 | 50.125 | 19.914 | 12.531 |
+| SPACE HORSE / 192 | hors-v4-gmod3 | 50.125 | **20.050** | 12.531 |
+| SPHERE / 192 | hors-v3 | 25.062 | 17.857 | 16.708 |
+| SPHERE / 192 | hors-v4-gmod3 | 25.062 | **18.003** | 16.708 |
+| SUNFLOWER TORUS (mono) / 192 | hors-v3 | 50.125 | 30.002 | 16.708 |
+| SUNFLOWER TORUS (mono) / 192 | hors-v4-gmod3 | 50.125 | **30.221** | 16.708 |
+| SUNFLOWER TORUS (colour) / 192 | hors-v3 | 50.125 | 23.256 | 16.708 |
+| SUNFLOWER TORUS (colour) / 192 | hors-v4-gmod3 | 50.125 | **23.444** | 16.708 |
+| TORUS / 192 | hors-v3 | 25.062 | 18.337 | 12.531 |
+| TORUS / 192 | hors-v4-gmod3 | 25.062 | **18.515** | 12.531 |
+| DENSE TORUS / 192 | hors-v3 | 50.125 | 18.014 | 12.531 |
+| DENSE TORUS / 192 | hors-v4-gmod3 | 50.125 | **18.139** | 12.531 |
+
+### Blender scenes
+
+| Scene | Method | High FPS | Average FPS | Low FPS |
+| --- | --- | ---: | ---: | ---: |
+| BLENDER TRACKING TEST / 16 | hors-v3 | 8.354 | 7.968 | 7.161 |
+| BLENDER TRACKING TEST / 16 | hors-v4-gmod3 | 10.025 | **8.030** | 7.161 |
+| BLENDER VIEWPORT TEST / 16 | hors-v3 | 12.531 | 8.083 | 6.266 |
+| BLENDER VIEWPORT TEST / 16 | hors-v4-gmod3 | 12.531 | **8.156** | 6.266 |
+| HORSE AND SUNFLOWER (HiFi reel) / 84 | hors-v3 | 10.025 | 8.740 | 8.354 |
+| HORSE AND SUNFLOWER (HiFi reel) / 84 | hors-v4-gmod3 | 10.025 | **8.803** | 8.354 |
+| HORSE AND SUNFLOWER (authored scene) / 84 | hors-v3 | 10.025 | 8.740 | 8.354 |
+| HORSE AND SUNFLOWER (authored scene) / 84 | hors-v4-gmod3 | 10.025 | **8.803** | 8.354 |
+
+### Demo Cart 2.0
+
+| Scene | Method | High FPS | Average FPS | Low FPS |
+| --- | --- | ---: | ---: | ---: |
+| COLOUR CUBE 24 / 24 | hors-v3 | 50.125 | 38.053 | 25.062 |
+| COLOUR CUBE 24 / 24 | hors-v4-gmod3 | 50.125 | **38.335** | 25.062 |
+| COLOUR TORUS 18 / 18 | hors-v3 | 50.125 | 23.559 | 16.708 |
+| COLOUR TORUS 18 / 18 | hors-v4-gmod3 | 50.125 | **23.736** | 16.708 |
+| TWIST TUNNEL / 48 | hors-v3 | 12.531 | 12.134 | 10.025 |
+| TWIST TUNNEL / 48 | hors-v4-gmod3 | 12.531 | **12.228** | 10.025 |
+| RIBBON DANCE / 48 | hors-v3 | 50.125 | 47.545 | 25.062 |
+| RIBBON DANCE / 48 | hors-v4-gmod3 | 50.125 | **47.942** | 25.062 |
+| ORBITAL CUBES / 48 | hors-v3 | 50.125 | 35.045 | 25.062 |
+| ORBITAL CUBES / 48 | hors-v4-gmod3 | 50.125 | **35.317** | 25.062 |
+| WAVE LATTICE / 48 | hors-v3 | 50.125 | 28.989 | 16.708 |
+| WAVE LATTICE / 48 | hors-v4-gmod3 | 50.125 | **29.198** | 16.708 |
+| RIPPLES LITE / 100 | hors-v3 | 25.062 | 15.768 | 12.531 |
+| RIPPLES LITE / 100 | hors-v4-gmod3 | 25.062 | **15.915** | 12.531 |
+
+### Marbles: all five segments
+
+| Scene | Method | High FPS | Average FPS | Low FPS |
+| --- | --- | ---: | ---: | ---: |
+| DON'T LOSE YOUR MARBLES [1..128] / 128 | hors-v3 | 50.125 | 19.998 | 16.708 |
+| DON'T LOSE YOUR MARBLES [1..128] / 128 | hors-v4-gmod3 | 50.125 | **20.154** | 16.708 |
+| DON'T LOSE YOUR MARBLES [129..256] / 128 | hors-v3 | 25.062 | 19.194 | 16.708 |
+| DON'T LOSE YOUR MARBLES [129..256] / 128 | hors-v4-gmod3 | 25.062 | **19.329** | 16.708 |
+| DON'T LOSE YOUR MARBLES [257..384] / 128 | hors-v3 | 25.062 | 18.557 | 16.708 |
+| DON'T LOSE YOUR MARBLES [257..384] / 128 | hors-v4-gmod3 | 25.062 | **18.682** | 16.708 |
+| DON'T LOSE YOUR MARBLES [385..512] / 128 | hors-v3 | 25.062 | 18.828 | 16.708 |
+| DON'T LOSE YOUR MARBLES [385..512] / 128 | hors-v4-gmod3 | 25.062 | **18.953** | 16.708 |
+| DON'T LOSE YOUR MARBLES [513..640] / 128 | hors-v3 | 50.125 | 14.390 | 8.354 |
+| DON'T LOSE YOUR MARBLES [513..640] / 128 | hors-v4-gmod3 | 50.125 | **14.505** | 8.354 |
+
+### Sande's Pretzel
+
+| Scene | Method | High FPS | Average FPS | Low FPS |
+| --- | --- | ---: | ---: | ---: |
+| PRETZEL WIRE-COLOR / 192 | hors-v3 | 25.062 | 17.961 | 12.531 |
+| PRETZEL WIRE-COLOR / 192 | hors-v4-gmod3 | 25.062 | **18.097** | 12.531 |
+| PRETZEL WIRE-INTERACTIVE / 192 | hors-v3 | 25.062 | 17.961 | 12.531 |
+| PRETZEL WIRE-INTERACTIVE / 192 | hors-v4-gmod3 | 25.062 | **18.097** | 12.531 |
+| PRETZEL DITHER / 128 | hors-v3 | 25.062 | 18.452 | 12.531 |
+| PRETZEL DITHER / 128 | hors-v4-gmod3 | 25.062 | **18.609** | 16.708 |
+| PRETZEL MATERIAL / 128 | hors-v3 | 25.062 | 18.222 | 12.531 |
+| PRETZEL MATERIAL / 128 | hors-v4-gmod3 | 25.062 | **18.389** | 12.531 |
+| PRETZEL METALLIC / 128 | hors-v3 | 16.708 | 14.682 | 12.531 |
+| PRETZEL METALLIC / 128 | hors-v4-gmod3 | 25.062 | **14.787** | 12.531 |
+| PRETZEL METALLIC / 192 / indexed4 | hors-v3 | 16.708 | 12.448 | 10.025 |
+| PRETZEL METALLIC / 192 / indexed4 | hors-v4-gmod3 | 16.708 | **12.531** | 10.025 |
+| PRETZEL TEXTURED / 128 | hors-v3 | 16.708 | 14.703 | 12.531 |
+| PRETZEL TEXTURED / 128 | hors-v4-gmod3 | 16.708 | **14.808** | 12.531 |
+| PRETZEL WIRE-BW / 128 | hors-v3 | 25.062 | 17.972 | 12.531 |
+| PRETZEL WIRE-BW / 128 | hors-v4-gmod3 | 25.062 | **18.118** | 12.531 |
+
+### Sande's TAC-2 joystick
+
+| Scene | Method | High FPS | Average FPS | Low FPS |
+| --- | --- | ---: | ---: | ---: |
+| TAC-2 COLOUR / 192 | hors-v3 | 25.062 | 20.551 | 16.708 |
+| TAC-2 COLOUR / 192 | hors-v4-gmod3 | 25.062 | **20.708** | 16.708 |
+| TAC-2 WIRE / 192 | hors-v3 | 50.125 | 24.582 | 16.708 |
+| TAC-2 WIRE / 192 | hors-v4-gmod3 | 50.125 | **24.801** | 16.708 |
+
+### Actual All-in-One interactive defaults
+
+These figures include the collection navigation, the complete interactive runtime, HUD and disabled-but-available starfield. Authored pacing remains enabled where supplied. They are not mixed into the automatic A/B ranking above. Each entry is individually checked with the final cartridge hash; SAKU starts in gradient-spin mode with stars off.
+
+| Entry | Scene / stored samples | High FPS | Average FPS | Low FPS | Allocated KiB |
+| ---: | --- | ---: | ---: | ---: | ---: |
+| 1 | SAKU 2026 INTERACTIVE / 240 | 25.062 | 18.191 | 16.708 | 432 |
+| 2 | DRAGON BLUE / 128 | 25.062 | 14.661 | 12.531 | 344 |
+| 3 | DRAGON GOLDEN / 128 | 25.062 | 14.661 | 12.531 | 344 |
+| 4 | DRAGON GREEN / 128 | 25.062 | 14.661 | 12.531 | 344 |
+| 5 | DRAGON METALLIC / 128 | 25.062 | 14.661 | 12.531 | 344 |
+| 6 | DRAGON RED / 128 | 25.062 | 14.641 | 12.531 | 336 |
+| 7 | DRAGON WIREFRAME / 128 | 50.125 | 19.173 | 12.531 | 288 |
+| 8 | FALLING CUBES / 18 | 50.125 | 27.422 | 16.708 | 48 |
+| 9 | FALLING CUBES / 18 | 25.062 | 20.802 | 16.708 | 48 |
+| 10 | BLENDER TRACKING TEST / 16 | 8.354 | 7.811 | 7.161 | 88 |
+| 11 | BLENDER VIEWPORT TEST / 16 | 10.025 | 7.936 | 6.266 | 96 |
+| 12 | TORUS / 32 | 25.062 | 17.773 | 12.531 | 80 |
+| 13 | TORUS DENSE / 32 | 25.062 | 17.397 | 12.531 | 80 |
+| 14 | CUBE / 36 | 50.125 | 29.030 | 25.062 | 56 |
+| 15 | SPHERE / 24 | 25.062 | 17.272 | 16.708 | 64 |
+| 16 | HORSE HEAD / 32 | 50.125 | 29.093 | 16.708 | 56 |
+| 17 | SUNFLOWER TORUS / 28 | 50.125 | 28.383 | 16.708 | 56 |
+| 18 | SUNFLOWER COLOR / 20 | 50.125 | 22.347 | 16.708 | 56 |
+| 19 | SPACE HORSE SPIN / 24 | 50.125 | 19.465 | 12.531 | 64 |
+| 20 | SPACE HORSE CRAWL / 32 | 50.125 | 41.081 | 25.062 | 48 |
+| 21 | HORSE HEAD HIFI / 128 | 50.125 | 22.807 | 16.708 | 208 |
+| 22 | SUNFLOWER TORUS HIFI / 128 | 50.125 | 22.473 | 16.708 | 200 |
+| 23 | COLOUR CUBE 24 / 24 | 50.125 | 34.983 | 25.062 | 40 |
+| 24 | COLOUR TORUS 18 / 18 | 25.062 | 22.431 | 16.708 | 48 |
+| 25 | TWIST TUNNEL / 48 | 12.531 | 11.821 | 10.025 | 152 |
+| 26 | RIBBON DANCE / 48 | 50.125 | 43.295 | 25.062 | 56 |
+| 27 | ORBITAL CUBES / 48 | 50.125 | 32.602 | 25.062 | 64 |
+| 28 | WAVE LATTICE / 48 | 50.125 | 27.297 | 16.708 | 80 |
+| 29 | RIPPLES LITE / 100 | 16.708 | 15.330 | 12.531 | 224 |
+| 30 | HORSE AND SUNFLOWER / 84 | 10.025 | 8.563 | 7.161 | 360 |
+| 31 | HORSE AND SUNFLOWER / 84 | 10.025 | 8.354 | 8.354 | 360 |
+| 32 | DON'T LOSE YOUR MARBLES / 640 | 25.062 | 15.100 | 8.354 | 1384 |
+| 33 | TORUS BLACK ON WHITE / 32 | 25.062 | 17.752 | 12.531 | 80 |
+| 34 | DENSE TORUS CYAN ON BLUE / 32 | 25.062 | 17.377 | 12.531 | 80 |
+| 35 | SPHERE LIGHT GREEN ON BLACK / 24 | 25.062 | 17.272 | 16.708 | 64 |
+| 36 | CUBE WHITE ON PURPLE / 36 | 50.125 | 28.947 | 25.062 | 56 |
+| 37 | CUBE / 192 | 50.125 | 28.947 | 25.062 | 200 |
+| 38 | PRETZEL WIRE-COLOR / 192 | 25.062 | 17.377 | 12.531 | 480 |
+| 39 | PRETZEL WIRE-INTERACTIVE / 192 | 25.062 | 17.377 | 12.531 | 480 |
+| 40 | TAC-2 COLOUR / 192 | 25.062 | 19.695 | 16.708 | 336 |
+| 41 | TAC-2 WIRE / 192 | 25.062 | 23.454 | 16.708 | 280 |
+| 42 | HORSE HEAD HIFI / 192 | 50.125 | 22.828 | 16.708 | 304 |
+| 43 | PRETZEL DITHER / 128 | 25.062 | 17.794 | 12.531 | 312 |
+| 44 | PRETZEL MATERIAL / 128 | 25.062 | 17.585 | 12.531 | 320 |
+| 45 | PRETZEL METALLIC / 128 | 16.708 | 14.244 | 12.531 | 360 |
+| 46 | PRETZEL METALLIC / 192 | 16.708 | 14.223 | 12.531 | 528 |
+| 47 | PRETZEL TEXTURED / 128 | 16.708 | 14.265 | 12.531 | 360 |
+| 48 | PRETZEL WIRE-BW / 128 | 25.062 | 17.356 | 12.531 | 328 |
+| 49 | HORSE HEAD / 192 | 50.125 | 28.905 | 16.708 | 224 |
+| 50 | SAKU GRADIENT / 48 | 50.125 | 30.994 | 25.062 | 72 |
+| 51 | SAKU SOLID / 48 | 50.125 | 31.892 | 25.062 | 72 |
+| 52 | SPACE HORSE CRAWL / 192 | 50.125 | 40.100 | 16.708 | 160 |
+| 53 | SPACE HORSE / 192 | 50.125 | 19.277 | 12.531 | 344 |
+| 54 | SPHERE / 192 | 25.062 | 17.251 | 16.708 | 336 |
+| 55 | SUNFLOWER TORUS / 192 | 50.125 | 28.320 | 16.708 | 240 |
+| 56 | SUNFLOWER TORUS / 192 | 50.125 | 22.138 | 16.708 | 288 |
+| 57 | TORUS / 192 | 25.062 | 17.732 | 12.531 | 336 |
+| 58 | DENSE TORUS / 192 | 25.062 | 17.418 | 12.531 | 352 |
+
+There is one method in this inventory table, so no cross-scene “winner” is highlighted. Different scenes contain different work. The interactive cart uses 13,448 KiB and leaves 2,936 KiB free; its automatic companion uses 13,416 KiB and leaves 2,968 KiB.
+
+### Reproduce these results
+
+```sh
+python examples/gmod3_cart_demos/build.py --tass 64tass --cartconv cartconv
+python tools/compare_gmod3_catalog.py --tass 64tass --cartconv cartconv --vice x64sc --vice-data /path/to/vice/data
+python tools/verify_gmod3_collection.py examples/gmod3_cart_demos/demo-cart-v3.0-gmod3-all-in-one.crt --vice x64sc --vice-data /path/to/vice/data --output docs/benchmarks/gmod3-collection/interactive
+python tools/report_gmod3_performance.py
+python tools/report_gmod3_performance.py --check
+```
+
+Historical matrices elsewhere on this page retain their original protocols and measured cartridge versions. Their figures are not relabelled as new HORS-V4 measurements.
+<!-- hors-v4-results-sha256: 4982a4d3a215ea04920b8b8be6030f3ff45f00d151cf1f3a96651d4e9998bc38 -->
+<!-- END HORS-V4 GMOD3 -->
+
+
+## Best method for each animation (historical PLAY ALL)
 
 | Animation | Source samples | Best method(s), FPS preference | Display FPS | V9 vs V8 displayed frames | HORS v2 vs v1 displayed frames |
 | --- | ---: | --- | ---: | ---: | ---: |
-| TORUS | 32 | hors-render-v2, hors-renderer-v3 | **17.68** | +0.00% | +10.00% |
-| TORUS DENSE | 32 | hors-render-v2, hors-renderer-v3 | **17.18** | +0.00% | +8.92% |
+| TORUS | 32 | hors-v2, hors-v3 | **17.68** | +0.00% | +10.00% |
+| TORUS DENSE | 32 | hors-v2, hors-v3 | **17.18** | +0.00% | +8.92% |
 | CUBE | 36 | yunroll, cart scaffold | **30.27** | +0.00% | +9.52% |
-| SPHERE | 24 | hors-render-v2, hors-renderer-v3 | **17.38** | +0.00% | +9.49% |
-| HORSE HEAD | 32 | hors-render-v2, hors-renderer-v3 | **29.34** | +0.73% | +6.96% |
-| SUNFLOWER TORUS | 28 | hors-render-v2, hors-renderer-v3 | **28.73** | +0.00% | +5.93% |
-| SUNFLOWER COLOR | 20 | hors-renderer-v3 | **22.70** | +0.96% | +4.52% |
-| SPACE HORSE SPIN | 24 | hors-render-v2, hors-renderer-v3 | **19.08** | +0.94% | +8.57% |
-| SPACE HORSE CRAWL | 32 | hors-render-v2, hors-renderer-v3 | **38.27** | +2.63% | +7.63% |
-| FALLING CUBES | 18 | hors-renderer-v3 | **21.30** | +0.00% | +6.12% |
-| HORSE HEAD HIFI | 128 | hors-renderer-v3 | **23.10** | +0.99% | +3.88% |
-| SUNFLOWER TORUS HIFI | 128 | hors-renderer-v3 | **22.70** | +16.13% | +2.53% |
+| SPHERE | 24 | hors-v2, hors-v3 | **17.38** | +0.00% | +9.49% |
+| HORSE HEAD | 32 | hors-v2, hors-v3 | **29.34** | +0.73% | +6.96% |
+| SUNFLOWER TORUS | 28 | hors-v2, hors-v3 | **28.73** | +0.00% | +5.93% |
+| SUNFLOWER COLOR | 20 | hors-v3 | **22.70** | +0.96% | +4.52% |
+| SPACE HORSE SPIN | 24 | hors-v2, hors-v3 | **19.08** | +0.94% | +8.57% |
+| SPACE HORSE CRAWL | 32 | hors-v2, hors-v3 | **38.27** | +2.63% | +7.63% |
+| FALLING CUBES | 18 | hors-v3 | **21.30** | +0.00% | +6.12% |
+| HORSE HEAD HIFI | 128 | hors-v3 | **23.10** | +0.99% | +3.88% |
+| SUNFLOWER TORUS HIFI | 128 | hors-v3 | **22.70** | +16.13% | +2.53% |
 
-**Bold FPS values** mark the highest value within each comparable row or workload group, independently for high/average/low statistics. **(tie)** marks equal values at the displayed precision. Storage sizes are not ranked as FPS wins. The best-method summary uses actual displayed-frame counts; brief peak bursts do not establish sustained speed.
+**Bold FPS values** mark the highest value within each comparable row or workload group, using average FPS only. **(tie)** marks equal values at the displayed precision. Storage sizes are not ranked as FPS wins. The best-method summary uses actual displayed-frame counts; brief peak bursts do not establish sustained speed.
 
 
 ## Demo Cart 2.0
 
-The seven-scene showcase has its own **hors-render-v1 vs hors-render-v2** comparison. Both methods use identical complete source pictures, colours and sample order. PAL VICE, FPS preference, normal PLAY ALL, three ten-second visits per entry. F5 is excluded.
+The seven-scene showcase has its own **hors-v1 vs hors-v2** comparison. Both methods use identical complete source pictures, colours and sample order. PAL VICE, FPS preference, normal PLAY ALL, three ten-second visits per entry. F5 is excluded.
 
 These are the measured shipped showcase cartridges, with their per-scene encoding policy. This is a separate workload from the original twelve-animation matrix; the COLOUR CUBE 24 here is not its CUBE or FALLING CUBES entry. Gains rank displayed-frame counts rather than tiny timer-phase differences.
 
@@ -55,40 +328,67 @@ Models contributed by **Sande**: **Sande's Pretzel** and **Sande's TAC-2 joystic
 
 Each standalone cart uses the complete OBJ topology, white-on-black output, 192 Y-axis orientations, automatic surface visibility, the normal HUD and uncapped playback. V1/V2 and FPS/RAM builds use identical picture oracles. PAL VICE measures actual display-slot changes after each raster IRQ; every observed bitmap, colour matrix and Sande HUD is checked. The initial full-loop warmup is excluded.
 
-| Model | V / E | Renderer | Preference | High FPS | Average FPS | Low FPS | CRT bytes | Frame data ROM bytes |
-| --- | ---: | --- | --- | ---: | ---: | ---: | ---: | ---: |
-| Sande's Pretzel | 1552 / 3104 | hors-render-v1 | fps | **25.82 (tie)** | 17.30 | **12.53 (tie)** | 492,544 | 389,676 |
-| Sande's TAC-2 joystick | 178 / 344 | hors-render-v1 | fps | 26.50 | 21.86 | 16.13 | 287,344 | 235,981 |
-| Sande's Pretzel | 1552 / 3104 | hors-render-v1 | ram | **25.82 (tie)** | 17.30 | **12.53 (tie)** | 492,544 | 389,676 |
-| Sande's TAC-2 joystick | 178 / 344 | hors-render-v1 | ram | 26.50 | 21.86 | 16.13 | 287,344 | 235,981 |
-| Sande's Pretzel | 1552 / 3104 | hors-render-v2 | fps | 25.71 | **18.00 (tie)** | **12.53 (tie)** | 500,752 | 392,010 |
-| Sande's TAC-2 joystick | 178 / 344 | hors-render-v2 | fps | **54.49 (tie)** | **24.60 (tie)** | **16.29 (tie)** | 295,552 | 240,004 |
-| Sande's Pretzel | 1552 / 3104 | hors-render-v2 | ram | 25.71 | **18.00 (tie)** | **12.53 (tie)** | 500,752 | 392,010 |
-| Sande's TAC-2 joystick | 178 / 344 | hors-render-v2 | ram | **54.49 (tie)** | **24.60 (tie)** | **16.29 (tie)** | 295,552 | 240,004 |
+
+#### Sande's Pretzel
+
+| V / E | Renderer | Preference | High FPS | Average FPS | Low FPS | CRT bytes | Frame data ROM bytes |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1552 / 3104 | hors-v1 | fps | 25.82 | 17.30 | 12.53 | 492,544 | 389,676 |
+| 1552 / 3104 | hors-v1 | ram | 25.82 | 17.30 | 12.53 | 492,544 | 389,676 |
+| 1552 / 3104 | hors-v2 | fps | 25.71 | **18.00 (tie)** | 12.53 | 500,752 | 392,010 |
+| 1552 / 3104 | hors-v2 | ram | 25.71 | **18.00 (tie)** | 12.53 | 500,752 | 392,010 |
+
+#### Sande's TAC-2 joystick
+
+| V / E | Renderer | Preference | High FPS | Average FPS | Low FPS | CRT bytes | Frame data ROM bytes |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 178 / 344 | hors-v1 | fps | 26.50 | 21.86 | 16.13 | 287,344 | 235,981 |
+| 178 / 344 | hors-v1 | ram | 26.50 | 21.86 | 16.13 | 287,344 | 235,981 |
+| 178 / 344 | hors-v2 | fps | 54.49 | **24.60 (tie)** | 16.29 | 295,552 | 240,004 |
+| 178 / 344 | hors-v2 | ram | 54.49 | **24.60 (tie)** | 16.29 | 295,552 | 240,004 |
+
 
 ### Interactive path, no input
 
 The separate interactive v2/FPS builds poll the keyboard and both joystick ports once per produced sample. These rows include the top-right INTERACTIVE label and measure their cost with no control held, using the same source pictures and observation window. The label is checked separately over the model oracle.
 
-| Model | Automatic FPS | Interactive idle FPS | Change |
-| --- | ---: | ---: | ---: |
-| Sande's Pretzel | **18.00** | 17.50 | -2.77% |
-| Sande's TAC-2 joystick | **24.60** | 23.73 | -3.53% |
+
+#### Sande's Pretzel
+
+| Automatic FPS | Interactive idle FPS | Change |
+| --- | --- | --- |
+| **18.00** | 17.50 | -2.77% |
+
+#### Sande's TAC-2 joystick
+
+| Automatic FPS | Interactive idle FPS | Change |
+| --- | --- | --- |
+| **24.60** | 23.73 | -3.53% |
+
 
 ### Interactive palette cycling
 
 F5 toggles sequential colour changes, alternating foreground and background. F6 slows the rate; F7 speeds it up. F8 toggles a persistent black border or background-follow mode (the default); Ctrl+F7 selects an independent border colour. F2 flashes white briefly and resets. Cycling uses the existing PAL tick counter; palette writes run only on a change event. The fastest setting requests one change per PAL tick but is limited to one event per produced frame.
 
-| Model | Cycle setting | High FPS | Average FPS | Low FPS | Change versus interactive idle |
-| --- | --- | ---: | ---: | ---: | ---: |
-| Sande's Pretzel | Default: about 1 s per change | **26.20** | **17.14** | 10.02 | -2.07% |
-| Sande's Pretzel | Fastest: at most once per produced frame | 20.18 | 13.26 | **10.48** | -24.21% |
-| Sande's TAC-2 joystick | Default: about 1 s per change | **26.48** | **23.30** | 12.37 | -1.79% |
-| Sande's TAC-2 joystick | Fastest: at most once per produced frame | 25.06 | 16.60 | **12.53** | -30.03% |
+
+#### Sande's Pretzel
+
+| Cycle setting | High FPS | Average FPS | Low FPS | Change versus interactive idle |
+| --- | --- | --- | --- | --- |
+| Default: about 1 s per change | 26.20 | **17.14** | 10.02 | -2.07% |
+| Fastest: at most once per produced frame | 20.18 | 13.26 | 10.48 | -24.21% |
+
+#### Sande's TAC-2 joystick
+
+| Cycle setting | High FPS | Average FPS | Low FPS | Change versus interactive idle |
+| --- | --- | --- | --- | --- |
+| Default: about 1 s per change | 26.48 | **23.30** | 12.37 | -1.79% |
+| Fastest: at most once per produced frame | 25.06 | 16.60 | 12.53 | -30.03% |
+
 
 All cases use 1,504 PAL refresh intervals per observation window (approximately 30.01 seconds). Average FPS is displayed frames divided by emulated elapsed time. High/low are interval extrema, not sustained rates. A difference below one flip per window is within measurement granularity.
 
-**V/E are source-mesh totals, not runtime transformations or a count of visible lines drawn each frame.** Projection and visibility are computed offline; hors-render-v2 draws precomputed bitmap spans. No mesh simplification or orientation reduction is used. These are emulator measurements, not physical-hardware results.
+**V/E are source-mesh totals, not runtime transformations or a count of visible lines drawn each frame.** Projection and visibility are computed offline; hors-v2 draws precomputed bitmap spans. No mesh simplification or orientation reduction is used. These are emulator measurements, not physical-hardware results.
 
 [Sande models, carts and reproduction](../examples/demos_sande/README.md) · [Raw Sande measurements](benchmarks/sande/summary.json)
 
@@ -102,16 +402,25 @@ The Sande benchmark is also part of `RUN-CHECKS.sh`. Its checked report, source 
 
 These separate `-color` carts use the original MTL diffuse colours with the same 192 Y-axis orientations, visibility and gap-6 encoding recipe as the bw defaults. Pretzel maps to dark grey; TAC-2 retains red, white and greys. The measurements use the same PAL display-slot and complete-picture checks as the bw table.
 
-| Model | Renderer | Preference | High FPS | Average FPS | Low FPS | CRT bytes | Frame data ROM bytes |
-| --- | --- | --- | ---: | ---: | ---: | ---: | ---: |
-| Sande's Pretzel | hors-render-v1 | fps | **25.82 (tie)** | 17.30 | **12.53 (tie)** | 492,544 | 389,676 |
-| Sande's TAC-2 joystick | hors-render-v1 | fps | **28.19 (tie)** | 16.93 | 12.53 | 328,384 | 270,153 |
-| Sande's Pretzel | hors-render-v1 | ram | **25.82 (tie)** | 17.30 | **12.53 (tie)** | 492,544 | 389,676 |
-| Sande's TAC-2 joystick | hors-render-v1 | ram | **28.19 (tie)** | 16.93 | 12.53 | 328,384 | 270,153 |
-| Sande's Pretzel | hors-render-v2 | fps | 25.71 | **18.00 (tie)** | **12.53 (tie)** | 500,752 | 392,010 |
-| Sande's TAC-2 joystick | hors-render-v2 | fps | 28.02 | **18.53 (tie)** | **15.61 (tie)** | 336,592 | 274,176 |
-| Sande's Pretzel | hors-render-v2 | ram | 25.71 | **18.00 (tie)** | **12.53 (tie)** | 500,752 | 392,010 |
-| Sande's TAC-2 joystick | hors-render-v2 | ram | 28.02 | **18.53 (tie)** | **15.61 (tie)** | 336,592 | 274,176 |
+
+#### Sande's Pretzel
+
+| Renderer | Preference | High FPS | Average FPS | Low FPS | CRT bytes | Frame data ROM bytes |
+| --- | --- | --- | --- | --- | --- | --- |
+| hors-v1 | fps | 25.82 | 17.30 | 12.53 | 492,544 | 389,676 |
+| hors-v1 | ram | 25.82 | 17.30 | 12.53 | 492,544 | 389,676 |
+| hors-v2 | fps | 25.71 | **18.00 (tie)** | 12.53 | 500,752 | 392,010 |
+| hors-v2 | ram | 25.71 | **18.00 (tie)** | 12.53 | 500,752 | 392,010 |
+
+#### Sande's TAC-2 joystick
+
+| Renderer | Preference | High FPS | Average FPS | Low FPS | CRT bytes | Frame data ROM bytes |
+| --- | --- | --- | --- | --- | --- | --- |
+| hors-v1 | fps | 28.19 | 16.93 | 12.53 | 328,384 | 270,153 |
+| hors-v1 | ram | 28.19 | 16.93 | 12.53 | 328,384 | 270,153 |
+| hors-v2 | fps | 28.02 | **18.53 (tie)** | 15.61 | 336,592 | 274,176 |
+| hors-v2 | ram | 28.02 | **18.53 (tie)** | 15.61 | 336,592 | 274,176 |
+
 
 Shared colour-test window: 1,504 PAL refresh intervals; high/low are interval extrema, not sustained rates.
 
@@ -126,7 +435,7 @@ python tools/run_sande_perfs.py --source-colors --workspace ../c64-sande-color-p
 
 This matrix uses the same isolated **normal PLAY ALL** harness as the original renderer comparison: three ten-second visits per model, all 192 orientations, no controls and no FPS cap. Each model gets its own comparison cart so another model cannot consume its cartridge budget. V2 uses the canonical comparison encoder settings (gap 3, batch budget 2048); the standalone carts above use gap 6. Menu/controller cost and encoding settings mean these rates should be compared within this matrix.
 
-`hors-render-v1` is the public name for `yunroll-cart-v10`. N/A is a recorded capacity failure with the original data, never a simplified substitute.
+`hors-v1` is the public name for `yunroll-cart-v10`. N/A is a recorded capacity failure with the original data, never a simplified substitute.
 
 #### Sande's Pretzel
 
@@ -143,16 +452,16 @@ This matrix uses the same isolated **normal PLAY ALL** harness as the original r
 | yunroll-cart-v6 | fps | N/A | N/A | N/A | N/A | N/A |
 | yunroll-cart-v7 | fps | 3.15 | 2.91 | 2.78 | 0 | 504,239 |
 | yunroll-cart-v8 | fps | 17.53 | 10.95 | 9.76 | 0 | 389,676 |
-| yunroll-cart-v9 | fps | **26.26 (tie)** | 17.38 | **12.53 (tie)** | 0 | 389,676 |
-| hors-render-v1 (v10) | fps | **26.26 (tie)** | 17.38 | **12.53 (tie)** | 0 | 389,676 |
+| yunroll-cart-v9 | fps | 26.26 | 17.38 | 12.53 | 0 | 389,676 |
+| hors-v1 (v10) | fps | 26.26 | 17.38 | 12.53 | 0 | 389,676 |
 | yunroll-cart-v7 | ram | 2.96 | 2.71 | 2.64 | 0 | 504,239 |
 | yunroll-cart-v8 | ram | 17.53 | 10.95 | 9.91 | 0 | 389,676 |
-| yunroll-cart-v9 | ram | 25.79 | 17.38 | **12.53 (tie)** | 0 | 389,676 |
-| hors-render-v1 (v10) | ram | 25.79 | 17.38 | **12.53 (tie)** | 0 | 389,676 |
-| hors-render-v2 | fps | 26.02 | **17.58 (tie)** | **12.53 (tie)** | 0 | 389,676 |
-| hors-render-v2 | ram | 25.74 | 17.48 | **12.53 (tie)** | 0 | 389,676 |
-| hors-renderer-v3 | fps | 26.02 | **17.58 (tie)** | **12.53 (tie)** | 0 | 389,676 |
-| hors-renderer-v3 | ram | 25.74 | 17.48 | **12.53 (tie)** | 0 | 389,676 |
+| yunroll-cart-v9 | ram | 25.79 | 17.38 | 12.53 | 0 | 389,676 |
+| hors-v1 (v10) | ram | 25.79 | 17.38 | 12.53 | 0 | 389,676 |
+| hors-v2 | fps | 26.02 | **17.58 (tie)** | 12.53 | 0 | 389,676 |
+| hors-v2 | ram | 25.74 | 17.48 | 12.53 | 0 | 389,676 |
+| hors-v3 | fps | 26.02 | **17.58 (tie)** | 12.53 | 0 | 389,676 |
+| hors-v3 | ram | 25.74 | 17.48 | 12.53 | 0 | 389,676 |
 
 Recorded capacity limits:
 
@@ -182,15 +491,15 @@ Recorded capacity limits:
 | yunroll-cart-v7 | fps | 10.32 | 9.04 | 8.16 | 0 | 180,514 |
 | yunroll-cart-v8 | fps | 10.32 | 9.04 | 8.16 | 0 | 180,514 |
 | yunroll-cart-v9 | fps | 10.31 | 9.14 | 8.17 | 0 | 180,514 |
-| hors-render-v1 (v10) | fps | 51.63 | 21.69 | 16.14 | 0 | 235,981 |
+| hors-v1 (v10) | fps | 51.63 | 21.69 | 16.14 | 0 | 235,981 |
 | yunroll-cart-v7 | ram | 10.31 | 8.54 | 7.06 | 0 | 180,514 |
 | yunroll-cart-v8 | ram | 10.31 | 8.54 | 7.06 | 0 | 180,514 |
 | yunroll-cart-v9 | ram | 10.30 | 8.54 | 7.05 | 0 | 180,514 |
-| hors-render-v1 (v10) | ram | 50.32 | 21.63 | **16.17** | 0 | 235,981 |
-| hors-render-v2 | fps | **54.44 (tie)** | **23.20 (tie)** | 16.16 | 0 | 235,981 |
-| hors-render-v2 | ram | 50.85 | **23.20 (tie)** | 16.15 | 0 | 235,981 |
-| hors-renderer-v3 | fps | **54.44 (tie)** | **23.20 (tie)** | 16.16 | 0 | 235,981 |
-| hors-renderer-v3 | ram | 50.85 | **23.20 (tie)** | 16.15 | 0 | 235,981 |
+| hors-v1 (v10) | ram | 50.32 | 21.63 | 16.17 | 0 | 235,981 |
+| hors-v2 | fps | 54.44 | **23.20 (tie)** | 16.16 | 0 | 235,981 |
+| hors-v2 | ram | 50.85 | **23.20 (tie)** | 16.15 | 0 | 235,981 |
+| hors-v3 | fps | 54.44 | **23.20 (tie)** | 16.16 | 0 | 235,981 |
+| hors-v3 | ram | 50.85 | **23.20 (tie)** | 16.15 | 0 | 235,981 |
 
 Recorded capacity limits:
 
@@ -210,7 +519,7 @@ python tools/run_sande_methods.py --workspace ../c64-sande-methods --vice-data /
 
 This matrix uses the same isolated **normal PLAY ALL** harness as the original renderer comparison: three ten-second visits per model, all 192 orientations, no controls and no FPS cap. Each model gets its own comparison cart so another model cannot consume its cartridge budget. V2 uses the canonical comparison encoder settings (gap 3, batch budget 2048); the standalone carts above use gap 6. Menu/controller cost and encoding settings mean these rates should be compared within this matrix.
 
-`hors-render-v1` is the public name for `yunroll-cart-v10`. N/A is a recorded capacity failure with the original data, never a simplified substitute.
+`hors-v1` is the public name for `yunroll-cart-v10`. N/A is a recorded capacity failure with the original data, never a simplified substitute.
 
 #### Sande's Pretzel
 
@@ -227,16 +536,16 @@ This matrix uses the same isolated **normal PLAY ALL** harness as the original r
 | yunroll-cart-v6 | fps | N/A | N/A | N/A | N/A | N/A |
 | yunroll-cart-v7 | fps | 3.15 | 2.91 | 2.78 | 0 | 504,239 |
 | yunroll-cart-v8 | fps | 17.53 | 10.95 | 9.76 | 0 | 389,676 |
-| yunroll-cart-v9 | fps | **26.26 (tie)** | 17.38 | **12.53 (tie)** | 0 | 389,676 |
-| hors-render-v1 (v10) | fps | **26.26 (tie)** | 17.38 | **12.53 (tie)** | 0 | 389,676 |
+| yunroll-cart-v9 | fps | 26.26 | 17.38 | 12.53 | 0 | 389,676 |
+| hors-v1 (v10) | fps | 26.26 | 17.38 | 12.53 | 0 | 389,676 |
 | yunroll-cart-v7 | ram | 2.96 | 2.71 | 2.64 | 0 | 504,239 |
 | yunroll-cart-v8 | ram | 17.53 | 10.95 | 9.91 | 0 | 389,676 |
-| yunroll-cart-v9 | ram | 25.79 | 17.38 | **12.53 (tie)** | 0 | 389,676 |
-| hors-render-v1 (v10) | ram | 25.79 | 17.38 | **12.53 (tie)** | 0 | 389,676 |
-| hors-render-v2 | fps | 26.02 | **17.58 (tie)** | **12.53 (tie)** | 0 | 389,676 |
-| hors-render-v2 | ram | 25.74 | 17.48 | **12.53 (tie)** | 0 | 389,676 |
-| hors-renderer-v3 | fps | 26.02 | **17.58 (tie)** | **12.53 (tie)** | 0 | 389,676 |
-| hors-renderer-v3 | ram | 25.74 | 17.48 | **12.53 (tie)** | 0 | 389,676 |
+| yunroll-cart-v9 | ram | 25.79 | 17.38 | 12.53 | 0 | 389,676 |
+| hors-v1 (v10) | ram | 25.79 | 17.38 | 12.53 | 0 | 389,676 |
+| hors-v2 | fps | 26.02 | **17.58 (tie)** | 12.53 | 0 | 389,676 |
+| hors-v2 | ram | 25.74 | 17.48 | 12.53 | 0 | 389,676 |
+| hors-v3 | fps | 26.02 | **17.58 (tie)** | 12.53 | 0 | 389,676 |
+| hors-v3 | ram | 25.74 | 17.48 | 12.53 | 0 | 389,676 |
 
 Recorded capacity limits:
 
@@ -266,15 +575,15 @@ Recorded capacity limits:
 | yunroll-cart-v7 | fps | 10.03 | 8.04 | 6.96 | 0 | 214,686 |
 | yunroll-cart-v8 | fps | 10.03 | 8.04 | 6.96 | 0 | 214,686 |
 | yunroll-cart-v9 | fps | 10.44 | 8.14 | 6.96 | 0 | 214,686 |
-| hors-render-v1 (v10) | fps | 27.69 | 16.88 | 12.53 | 0 | 270,153 |
+| hors-v1 (v10) | fps | 27.69 | 16.88 | 12.53 | 0 | 270,153 |
 | yunroll-cart-v7 | ram | 8.64 | 7.63 | 6.97 | 0 | 214,686 |
 | yunroll-cart-v8 | ram | 8.64 | 7.63 | 6.97 | 0 | 214,686 |
 | yunroll-cart-v9 | ram | 8.65 | 7.63 | 6.96 | 0 | 214,686 |
-| hors-render-v1 (v10) | ram | 27.83 | 16.88 | 12.53 | 0 | 270,153 |
-| hors-render-v2 | fps | 50.14 | 17.78 | 15.66 | 0 | 270,153 |
-| hors-render-v2 | ram | 27.29 | 17.78 | 15.84 | 0 | 270,153 |
-| hors-renderer-v3 | fps | **50.27** | **19.59 (tie)** | 15.97 | 0 | 278,221 |
-| hors-renderer-v3 | ram | 26.90 | **19.59 (tie)** | **15.98** | 0 | 278,221 |
+| hors-v1 (v10) | ram | 27.83 | 16.88 | 12.53 | 0 | 270,153 |
+| hors-v2 | fps | 50.14 | 17.78 | 15.66 | 0 | 270,153 |
+| hors-v2 | ram | 27.29 | 17.78 | 15.84 | 0 | 270,153 |
+| hors-v3 | fps | 50.27 | **19.59 (tie)** | 15.97 | 0 | 278,221 |
+| hors-v3 | ram | 26.90 | **19.59 (tie)** | 15.98 | 0 | 278,221 |
 
 Recorded capacity limits:
 
@@ -435,7 +744,7 @@ Excluded builds retain help and speed controls but contain no starfield IRQ rout
 
 ## Per-animation lookup
 
-High/low are 985,248 divided by the shortest/longest **actual display-flip interval within a normal PLAY ALL window**, including VIC and IRQ stalls. Average is total displayed frames / measured time, not an arithmetic average of instantaneous FPS. Window edges are excluded from interval extrema. High FPS can include a brief queued-frame burst; it does not describe sustained throughput. Bold marks each column maximum, including ties, across the shown FPS/RAM variants. The best-method summary above uses frame counts among FPS-preferred methods. All values are FPS unless the header says bytes.
+High/low are 985,248 divided by the shortest/longest **actual display-flip interval within a normal PLAY ALL window**, including VIC and IRQ stalls. Average is total displayed frames / measured time, not an arithmetic average of instantaneous FPS. Window edges are excluded from interval extrema. High FPS can include a brief queued-frame burst; it does not describe sustained throughput. Only the highest average FPS is bolded, including ties, across the shown FPS/RAM variants. The best-method summary above uses frame counts among FPS-preferred methods. All values are FPS unless the header says bytes.
 
 ### TORUS
 
@@ -450,18 +759,18 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V4 | 23.52 | 12.05 | 9.86 | 0 | 18,664 | 18,433 |
 | V5 | 24.47 | 12.36 | 9.88 | 0 | 18,500 | 21,777 |
 | V6 | 25.87 | 12.76 | 9.68 | 0 | 18,500 | 21,777 |
-| V7 | **27.31 (tie)** | 13.46 | 9.77 | 0 | 16,505 | 21,777 |
-| V8 | **27.31 (tie)** | 13.46 | 9.77 | 0 | 16,505 | 21,777 |
+| V7 | 27.31 | 13.46 | 9.77 | 0 | 16,505 | 21,777 |
+| V8 | 27.31 | 13.46 | 9.77 | 0 | 16,505 | 21,777 |
 | V9 | 27.06 | 13.46 | 9.72 | 0 | 16,505 | 21,777 |
-| hors-render-v1 | 27.00 | 16.07 | **12.10** | 0 | 46,217 | 21,777 |
+| hors-v1 | 27.00 | 16.07 | 12.10 | 0 | 46,217 | 21,777 |
 | V7-ram | 27.01 | 12.86 | 9.74 | 0 | 16,505 | 18,433 |
 | V8-ram | 27.01 | 12.86 | 9.74 | 0 | 16,505 | 18,433 |
 | V9-ram | 26.80 | 12.86 | 9.72 | 0 | 16,505 | 18,433 |
-| hors-render-v1-ram | 27.04 | 16.07 | 12.04 | 0 | 46,217 | 18,433 |
-| hors-render-v2 | 27.18 | **17.68 (tie)** | 12.09 | 0 | 46,217 | 21,777 |
-| hors-render-v2-ram | 27.20 | **17.68 (tie)** | 12.00 | 0 | 46,217 | 18,203 |
-| hors-renderer-v3 | 27.18 | **17.68 (tie)** | 12.09 | 0 | 46,217 | 21,777 |
-| hors-renderer-v3-ram | 27.20 | **17.68 (tie)** | 12.00 | 0 | 46,217 | 18,203 |
+| hors-v1-ram | 27.04 | 16.07 | 12.04 | 0 | 46,217 | 18,433 |
+| hors-v2 | 27.18 | **17.68 (tie)** | 12.09 | 0 | 46,217 | 21,777 |
+| hors-v2-ram | 27.20 | **17.68 (tie)** | 12.00 | 0 | 46,217 | 18,203 |
+| hors-v3 | 27.18 | **17.68 (tie)** | 12.09 | 0 | 46,217 | 21,777 |
+| hors-v3-ram | 27.20 | **17.68 (tie)** | 12.00 | 0 | 46,217 | 18,203 |
 
 ### TORUS DENSE
 
@@ -475,45 +784,45 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V3 | 23.55 | 10.65 | 8.35 | 0 | 21,985 | 18,433 |
 | V4 | 17.17 | 10.75 | 8.35 | 0 | 21,985 | 18,433 |
 | V5 | 16.71 | 10.95 | 8.35 | 0 | 21,767 | 21,777 |
-| V6 | **27.60** | 11.25 | 8.35 | 0 | 21,767 | 21,777 |
+| V6 | 27.60 | 11.25 | 8.35 | 0 | 21,767 | 21,777 |
 | V7 | 27.21 | 12.15 | 9.71 | 0 | 18,302 | 21,777 |
 | V8 | 27.21 | 12.15 | 9.71 | 0 | 18,302 | 21,777 |
 | V9 | 27.29 | 12.15 | 9.94 | 0 | 18,302 | 21,777 |
-| hors-render-v1 | 27.04 | 15.77 | 12.20 | 0 | 48,568 | 21,777 |
+| hors-v1 | 27.04 | 15.77 | 12.20 | 0 | 48,568 | 21,777 |
 | V7-ram | 26.82 | 11.55 | 8.35 | 0 | 18,302 | 18,433 |
 | V8-ram | 26.82 | 11.55 | 8.35 | 0 | 18,302 | 18,433 |
 | V9-ram | 26.73 | 11.55 | 8.35 | 0 | 18,302 | 18,433 |
-| hors-render-v1-ram | 26.78 | 15.77 | 12.04 | 0 | 48,568 | 18,433 |
-| hors-render-v2 | 27.12 | **17.18 (tie)** | **12.53 (tie)** | 0 | 48,568 | 21,777 |
-| hors-render-v2-ram | 25.54 | **17.18 (tie)** | **12.53 (tie)** | 0 | 48,568 | 18,203 |
-| hors-renderer-v3 | 27.12 | **17.18 (tie)** | **12.53 (tie)** | 0 | 48,568 | 21,777 |
-| hors-renderer-v3-ram | 25.54 | **17.18 (tie)** | **12.53 (tie)** | 0 | 48,568 | 18,203 |
+| hors-v1-ram | 26.78 | 15.77 | 12.04 | 0 | 48,568 | 18,433 |
+| hors-v2 | 27.12 | **17.18 (tie)** | 12.53 | 0 | 48,568 | 21,777 |
+| hors-v2-ram | 25.54 | **17.18 (tie)** | 12.53 | 0 | 48,568 | 18,203 |
+| hors-v3 | 27.12 | **17.18 (tie)** | 12.53 | 0 | 48,568 | 21,777 |
+| hors-v3-ram | 25.54 | **17.18 (tie)** | 12.53 | 0 | 48,568 | 18,203 |
 
 ### CUBE
 
 | Method | High | Average | Low | Resident frame-table RAM (B) | Frame data ROM (B) | Runtime PRG (B) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | step | 50.14 | 26.45 | 16.71 | 10,264 | 0 | 35,381 |
-| bytechunk | 50.17 | 29.40 | **25.05 (tie)** | 10,264 | 0 | 35,381 |
-| yunroll | 50.16 | **30.27 (tie)** | **25.05 (tie)** | 10,264 | 0 | 35,381 |
-| cart scaffold | 50.16 | **30.27 (tie)** | **25.05 (tie)** | 10,264 | 0 | 35,381 |
+| bytechunk | 50.17 | 29.40 | 25.05 | 10,264 | 0 | 35,381 |
+| yunroll | 50.16 | **30.27 (tie)** | 25.05 | 10,264 | 0 | 35,381 |
+| cart scaffold | 50.16 | **30.27 (tie)** | 25.05 | 10,264 | 0 | 35,381 |
 | V2 | 46.05 | 23.00 | 16.71 | 0 | 10,156 | 16,637 |
 | V3 | 50.17 | 24.72 | 16.71 | 0 | 10,156 | 18,433 |
 | V4 | 50.13 | 24.72 | 16.70 | 0 | 10,156 | 18,433 |
 | V5 | 50.13 | 25.51 | 16.71 | 0 | 2,539 | 21,919 |
-| V6 | **55.98** | 26.82 | 16.71 | 0 | 2,539 | 21,919 |
+| V6 | 55.98 | 26.82 | 16.71 | 0 | 2,539 | 21,919 |
 | V7 | 55.55 | 26.82 | 16.71 | 0 | 2,539 | 21,919 |
 | V8 | 55.55 | 26.82 | 16.71 | 0 | 2,539 | 21,919 |
 | V9 | 55.84 | 26.82 | 16.71 | 0 | 2,539 | 21,919 |
-| hors-render-v1 | 50.82 | 27.42 | 16.64 | 0 | 7,824 | 21,919 |
+| hors-v1 | 50.82 | 27.42 | 16.64 | 0 | 7,824 | 21,919 |
 | V7-ram | 53.31 | 24.61 | 16.05 | 0 | 2,539 | 21,647 |
 | V8-ram | 53.31 | 24.61 | 16.05 | 0 | 2,539 | 21,647 |
 | V9-ram | 53.40 | 24.61 | 16.18 | 0 | 2,539 | 21,647 |
-| hors-render-v1-ram | 50.85 | 27.42 | 16.68 | 0 | 7,824 | 21,647 |
-| hors-render-v2 | 55.93 | 30.03 | 23.16 | 0 | 7,824 | 21,919 |
-| hors-render-v2-ram | 55.54 | 30.04 | 23.13 | 0 | 7,824 | 21,647 |
-| hors-renderer-v3 | 55.93 | 30.03 | 23.16 | 0 | 7,824 | 21,919 |
-| hors-renderer-v3-ram | 55.54 | 30.04 | 23.13 | 0 | 7,824 | 21,647 |
+| hors-v1-ram | 50.85 | 27.42 | 16.68 | 0 | 7,824 | 21,647 |
+| hors-v2 | 55.93 | 30.03 | 23.16 | 0 | 7,824 | 21,919 |
+| hors-v2-ram | 55.54 | 30.04 | 23.13 | 0 | 7,824 | 21,647 |
+| hors-v3 | 55.93 | 30.03 | 23.16 | 0 | 7,824 | 21,919 |
+| hors-v3-ram | 55.54 | 30.04 | 23.13 | 0 | 7,824 | 21,647 |
 
 ### SPHERE
 
@@ -531,15 +840,15 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V7 | 18.00 | 14.67 | 11.89 | 0 | 5,824 | 21,919 |
 | V8 | 18.00 | 14.67 | 11.89 | 0 | 5,824 | 21,919 |
 | V9 | 18.01 | 14.67 | 11.89 | 0 | 5,824 | 21,919 |
-| hors-render-v1 | 25.11 | 15.87 | 11.88 | 0 | 18,108 | 21,919 |
+| hors-v1 | 25.11 | 15.87 | 11.88 | 0 | 18,108 | 21,919 |
 | V7-ram | 17.90 | 13.46 | 11.91 | 0 | 5,824 | 21,647 |
 | V8-ram | 17.90 | 13.46 | 11.91 | 0 | 5,824 | 21,647 |
 | V9-ram | 18.02 | 13.46 | 11.93 | 0 | 5,824 | 21,647 |
-| hors-render-v1-ram | 25.16 | 15.87 | 11.87 | 0 | 18,108 | 21,647 |
-| hors-render-v2 | 28.08 | **17.38 (tie)** | 15.53 | 0 | 18,108 | 21,919 |
-| hors-render-v2-ram | **28.17 (tie)** | **17.38 (tie)** | **15.56 (tie)** | 0 | 18,108 | 21,647 |
-| hors-renderer-v3 | 28.08 | **17.38 (tie)** | 15.53 | 0 | 18,108 | 21,919 |
-| hors-renderer-v3-ram | **28.17 (tie)** | **17.38 (tie)** | **15.56 (tie)** | 0 | 18,108 | 21,647 |
+| hors-v1-ram | 25.16 | 15.87 | 11.87 | 0 | 18,108 | 21,647 |
+| hors-v2 | 28.08 | **17.38 (tie)** | 15.53 | 0 | 18,108 | 21,919 |
+| hors-v2-ram | 28.17 | **17.38 (tie)** | 15.56 | 0 | 18,108 | 21,647 |
+| hors-v3 | 28.08 | **17.38 (tie)** | 15.53 | 0 | 18,108 | 21,919 |
+| hors-v3-ram | 28.17 | **17.38 (tie)** | 15.56 | 0 | 18,108 | 21,647 |
 
 ### HORSE HEAD
 
@@ -557,15 +866,15 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V7 | 17.75 | 13.76 | 9.87 | 0 | 18,245 | 21,777 |
 | V8 | 17.75 | 13.76 | 9.87 | 0 | 18,245 | 21,777 |
 | V9 | 25.90 | 13.86 | 9.77 | 0 | 18,245 | 21,777 |
-| hors-render-v1 | 52.46 | 27.42 | 16.55 | 0 | 30,840 | 21,777 |
+| hors-v1 | 52.46 | 27.42 | 16.55 | 0 | 30,840 | 21,777 |
 | V7-ram | 25.06 | 12.76 | 9.75 | 0 | 18,245 | 18,433 |
 | V8-ram | 25.06 | 12.76 | 9.75 | 0 | 18,245 | 18,433 |
 | V9-ram | 17.51 | 12.76 | 9.62 | 0 | 18,245 | 18,433 |
-| hors-render-v1-ram | 52.58 | 27.42 | 16.60 | 0 | 30,840 | 18,433 |
-| hors-render-v2 | 54.55 | **29.34 (tie)** | **23.89 (tie)** | 0 | 30,840 | 21,777 |
-| hors-render-v2-ram | **54.76 (tie)** | 29.33 | 23.66 | 0 | 30,840 | 18,203 |
-| hors-renderer-v3 | 54.55 | **29.34 (tie)** | **23.89 (tie)** | 0 | 30,840 | 21,777 |
-| hors-renderer-v3-ram | **54.76 (tie)** | 29.33 | 23.66 | 0 | 30,840 | 18,203 |
+| hors-v1-ram | 52.58 | 27.42 | 16.60 | 0 | 30,840 | 18,433 |
+| hors-v2 | 54.55 | **29.34 (tie)** | 23.89 | 0 | 30,840 | 21,777 |
+| hors-v2-ram | 54.76 | 29.33 | 23.66 | 0 | 30,840 | 18,203 |
+| hors-v3 | 54.55 | **29.34 (tie)** | 23.89 | 0 | 30,840 | 21,777 |
+| hors-v3-ram | 54.76 | 29.33 | 23.66 | 0 | 30,840 | 18,203 |
 
 ### SUNFLOWER TORUS
 
@@ -583,15 +892,15 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V7 | 25.55 | 12.15 | 9.75 | 0 | 17,168 | 21,777 |
 | V8 | 25.55 | 12.15 | 9.75 | 0 | 17,168 | 21,777 |
 | V9 | 25.46 | 12.15 | 9.74 | 0 | 17,168 | 21,777 |
-| hors-render-v1 | 53.22 | 27.12 | 16.25 | 0 | 29,308 | 21,777 |
+| hors-v1 | 53.22 | 27.12 | 16.25 | 0 | 29,308 | 21,777 |
 | V7-ram | 16.89 | 11.15 | 8.31 | 0 | 17,168 | 18,433 |
 | V8-ram | 16.89 | 11.15 | 8.31 | 0 | 17,168 | 18,433 |
 | V9-ram | 25.06 | 11.15 | 9.71 | 0 | 17,168 | 18,433 |
-| hors-render-v1-ram | 53.28 | 27.12 | **16.35** | 0 | 29,308 | 18,433 |
-| hors-render-v2 | 54.33 | **28.73 (tie)** | 16.30 | 0 | 29,308 | 21,777 |
-| hors-render-v2-ram | **54.78 (tie)** | **28.73 (tie)** | 16.28 | 0 | 29,308 | 18,203 |
-| hors-renderer-v3 | 54.33 | **28.73 (tie)** | 16.30 | 0 | 29,308 | 21,777 |
-| hors-renderer-v3-ram | **54.78 (tie)** | **28.73 (tie)** | 16.28 | 0 | 29,308 | 18,203 |
+| hors-v1-ram | 53.28 | 27.12 | 16.35 | 0 | 29,308 | 18,433 |
+| hors-v2 | 54.33 | **28.73 (tie)** | 16.30 | 0 | 29,308 | 21,777 |
+| hors-v2-ram | 54.78 | **28.73 (tie)** | 16.28 | 0 | 29,308 | 18,203 |
+| hors-v3 | 54.33 | **28.73 (tie)** | 16.30 | 0 | 29,308 | 21,777 |
+| hors-v3-ram | 54.78 | **28.73 (tie)** | 16.28 | 0 | 29,308 | 18,203 |
 
 ### SUNFLOWER COLOR
 
@@ -609,15 +918,15 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V7 | 17.60 | 10.45 | 8.35 | 0 | 16,028 | 21,777 |
 | V8 | 17.60 | 10.45 | 8.35 | 0 | 16,028 | 21,777 |
 | V9 | 16.71 | 10.55 | 8.35 | 0 | 16,028 | 21,777 |
-| hors-render-v1 | 53.04 | 19.99 | 12.53 | 0 | 24,790 | 21,777 |
+| hors-v1 | 53.04 | 19.99 | 12.53 | 0 | 24,790 | 21,777 |
 | V7-ram | 17.64 | 9.74 | 8.14 | 0 | 16,028 | 18,433 |
 | V8-ram | 17.64 | 9.74 | 8.14 | 0 | 16,028 | 18,433 |
 | V9-ram | 16.71 | 9.74 | 8.18 | 0 | 16,028 | 18,433 |
-| hors-render-v1-ram | 52.91 | 19.99 | 12.53 | 0 | 24,790 | 18,433 |
-| hors-render-v2 | **60.16** | 20.89 | 15.83 | 0 | 24,790 | 21,777 |
-| hors-render-v2-ram | 51.25 | 20.89 | **16.15** | 0 | 24,790 | 18,203 |
-| hors-renderer-v3 | 53.37 | **22.70 (tie)** | 16.01 | 0 | 25,898 | 21,777 |
-| hors-renderer-v3-ram | 52.94 | **22.70 (tie)** | 15.99 | 0 | 25,898 | 18,203 |
+| hors-v1-ram | 52.91 | 19.99 | 12.53 | 0 | 24,790 | 18,433 |
+| hors-v2 | 60.16 | 20.89 | 15.83 | 0 | 24,790 | 21,777 |
+| hors-v2-ram | 51.25 | 20.89 | 16.15 | 0 | 24,790 | 18,203 |
+| hors-v3 | 53.37 | **22.70 (tie)** | 16.01 | 0 | 25,898 | 21,777 |
+| hors-v3-ram | 52.94 | **22.70 (tie)** | 15.99 | 0 | 25,898 | 18,203 |
 
 ### SPACE HORSE SPIN
 
@@ -635,15 +944,15 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V7 | 50.13 | 10.65 | 8.19 | 0 | 20,119 | 21,777 |
 | V8 | 50.13 | 10.65 | 8.19 | 0 | 20,119 | 21,777 |
 | V9 | 52.80 | 10.75 | 8.23 | 0 | 20,119 | 21,777 |
-| hors-render-v1 | 52.06 | 17.58 | 12.17 | 0 | 34,107 | 21,777 |
+| hors-v1 | 52.06 | 17.58 | 12.17 | 0 | 34,107 | 21,777 |
 | V7-ram | 50.12 | 9.94 | 8.35 | 0 | 20,119 | 18,433 |
 | V8-ram | 50.12 | 9.94 | 8.35 | 0 | 20,119 | 18,433 |
 | V9-ram | 50.48 | 10.04 | 8.21 | 0 | 20,119 | 18,433 |
-| hors-render-v1-ram | 50.13 | 17.58 | 12.52 | 0 | 34,107 | 18,433 |
-| hors-render-v2 | 50.13 | 19.08 | **12.53 (tie)** | 0 | 34,107 | 21,777 |
-| hors-render-v2-ram | 51.64 | **19.09 (tie)** | 12.21 | 0 | 34,107 | 18,203 |
-| hors-renderer-v3 | **53.54** | **19.09 (tie)** | **12.53 (tie)** | 0 | 34,107 | 21,777 |
-| hors-renderer-v3-ram | 50.14 | **19.09 (tie)** | **12.53 (tie)** | 0 | 34,107 | 18,203 |
+| hors-v1-ram | 50.13 | 17.58 | 12.52 | 0 | 34,107 | 18,433 |
+| hors-v2 | 50.13 | 19.08 | 12.53 | 0 | 34,107 | 21,777 |
+| hors-v2-ram | 51.64 | **19.09 (tie)** | 12.21 | 0 | 34,107 | 18,203 |
+| hors-v3 | 53.54 | **19.09 (tie)** | 12.53 | 0 | 34,107 | 21,777 |
+| hors-v3-ram | 50.14 | **19.09 (tie)** | 12.53 | 0 | 34,107 | 18,203 |
 
 ### SPACE HORSE CRAWL
 
@@ -659,17 +968,17 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V5 | 25.06 | 14.67 | 10.04 | 0 | 22,981 | 21,777 |
 | V6 | 25.95 | 15.47 | 9.69 | 0 | 22,981 | 21,777 |
 | V7 | 26.93 | 16.57 | 10.01 | 0 | 20,603 | 21,777 |
-| V8 | **59.03** | 22.90 | 12.13 | 0 | 17,765 | 21,777 |
+| V8 | 59.03 | 22.90 | 12.13 | 0 | 17,765 | 21,777 |
 | V9 | 52.42 | 23.51 | 12.18 | 0 | 17,765 | 21,777 |
-| hors-render-v1 | 52.44 | 35.56 | 16.60 | 0 | 20,292 | 21,777 |
+| hors-v1 | 52.44 | 35.56 | 16.60 | 0 | 20,292 | 21,777 |
 | V7-ram | 25.65 | 16.27 | 12.20 | 0 | 20,603 | 18,433 |
 | V8-ram | 58.38 | 22.70 | 12.12 | 0 | 17,765 | 18,433 |
 | V9-ram | 53.29 | 23.30 | 12.13 | 0 | 17,765 | 18,433 |
-| hors-render-v1-ram | 54.09 | 35.66 | 16.60 | 0 | 20,292 | 18,433 |
-| hors-render-v2 | 54.67 | 38.27 | **24.07 (tie)** | 0 | 20,292 | 21,777 |
-| hors-render-v2-ram | 54.67 | 38.27 | **24.07 (tie)** | 0 | 20,292 | 18,203 |
-| hors-renderer-v3 | 54.69 | 38.27 | **24.07 (tie)** | 0 | 20,292 | 21,777 |
-| hors-renderer-v3-ram | 54.73 | **38.28** | **24.07 (tie)** | 0 | 20,292 | 18,203 |
+| hors-v1-ram | 54.09 | 35.66 | 16.60 | 0 | 20,292 | 18,433 |
+| hors-v2 | 54.67 | 38.27 | 24.07 | 0 | 20,292 | 21,777 |
+| hors-v2-ram | 54.67 | 38.27 | 24.07 | 0 | 20,292 | 18,203 |
+| hors-v3 | 54.69 | 38.27 | 24.07 | 0 | 20,292 | 21,777 |
+| hors-v3-ram | 54.73 | **38.28** | 24.07 | 0 | 20,292 | 18,203 |
 
 ### FALLING CUBES
 
@@ -687,15 +996,15 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V7 | 26.97 | 13.86 | 9.81 | 0 | 12,007 | 21,777 |
 | V8 | 27.06 | 13.86 | 9.83 | 0 | 12,007 | 21,777 |
 | V9 | 28.15 | 13.86 | 9.83 | 0 | 12,007 | 21,777 |
-| hors-render-v1 | **50.15** | 19.69 | 12.28 | 0 | 19,518 | 21,777 |
+| hors-v1 | 50.15 | 19.69 | 12.28 | 0 | 19,518 | 21,777 |
 | V7-ram | 26.82 | 13.46 | 9.76 | 0 | 12,007 | 18,433 |
 | V8-ram | 26.68 | 13.46 | 9.76 | 0 | 12,007 | 18,433 |
 | V9-ram | 27.26 | 13.56 | 9.78 | 0 | 12,007 | 18,433 |
-| hors-render-v1-ram | 27.46 | 19.59 | 12.13 | 0 | 19,518 | 18,433 |
-| hors-render-v2 | 50.13 | 20.89 | 15.98 | 0 | 19,518 | 21,777 |
-| hors-render-v2-ram | 50.13 | 20.89 | 15.98 | 0 | 19,518 | 18,203 |
-| hors-renderer-v3 | 50.13 | **21.30 (tie)** | 15.98 | 0 | 21,374 | 21,777 |
-| hors-renderer-v3-ram | 50.12 | **21.30 (tie)** | **16.03** | 0 | 21,374 | 18,203 |
+| hors-v1-ram | 27.46 | 19.59 | 12.13 | 0 | 19,518 | 18,433 |
+| hors-v2 | 50.13 | 20.89 | 15.98 | 0 | 19,518 | 21,777 |
+| hors-v2-ram | 50.13 | 20.89 | 15.98 | 0 | 19,518 | 18,203 |
+| hors-v3 | 50.13 | **21.30 (tie)** | 15.98 | 0 | 21,374 | 21,777 |
+| hors-v3-ram | 50.12 | **21.30 (tie)** | 16.03 | 0 | 21,374 | 18,203 |
 
 ### HORSE HEAD HIFI
 
@@ -713,15 +1022,15 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V7 | 13.00 | 10.14 | 8.11 | 0 | 105,831 | 21,777 |
 | V8 | 25.06 | 10.15 | 8.10 | 0 | 105,759 | 21,777 |
 | V9 | 50.17 | 10.25 | 8.08 | 0 | 105,759 | 21,777 |
-| hors-render-v1 | 51.01 | 20.69 | 15.67 | 0 | 158,181 | 21,777 |
+| hors-v1 | 51.01 | 20.69 | 15.67 | 0 | 158,181 | 21,777 |
 | V7-ram | 12.98 | 9.34 | 8.09 | 0 | 105,831 | 18,433 |
 | V8-ram | 27.19 | 9.44 | 8.07 | 0 | 105,759 | 18,433 |
 | V9-ram | 50.13 | 9.54 | 8.10 | 0 | 105,759 | 18,433 |
-| hors-render-v1-ram | 51.33 | 20.79 | 15.72 | 0 | 158,181 | 18,433 |
-| hors-render-v2 | 50.16 | 21.50 | 15.64 | 0 | 158,181 | 21,777 |
-| hors-render-v2-ram | **56.72** | 21.60 | 15.56 | 0 | 158,181 | 18,203 |
-| hors-renderer-v3 | 53.60 | 23.10 | **16.03 (tie)** | 0 | 168,425 | 21,777 |
-| hors-renderer-v3-ram | 51.85 | **23.21** | **16.03 (tie)** | 0 | 168,425 | 18,203 |
+| hors-v1-ram | 51.33 | 20.79 | 15.72 | 0 | 158,181 | 18,433 |
+| hors-v2 | 50.16 | 21.50 | 15.64 | 0 | 158,181 | 21,777 |
+| hors-v2-ram | 56.72 | 21.60 | 15.56 | 0 | 158,181 | 18,203 |
+| hors-v3 | 53.60 | 23.10 | 16.03 | 0 | 168,425 | 21,777 |
+| hors-v3-ram | 51.85 | **23.21** | 16.03 | 0 | 168,425 | 18,203 |
 
 ### SUNFLOWER TORUS HIFI
 
@@ -739,15 +1048,15 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V7 | 16.85 | 6.83 | 5.01 | 0 | 181,152 | 21,777 |
 | V8 | 50.16 | 12.46 | 6.27 | 0 | 160,415 | 21,777 |
 | V9 | 56.34 | 14.46 | 6.27 | 0 | 160,415 | 21,777 |
-| hors-render-v1 | 57.46 | 19.89 | 12.53 | 0 | 163,780 | 21,777 |
+| hors-v1 | 57.46 | 19.89 | 12.53 | 0 | 163,780 | 21,777 |
 | V7-ram | 12.84 | 6.43 | 5.01 | 0 | 181,152 | 18,433 |
 | V8-ram | 60.30 | 12.05 | 6.27 | 0 | 160,415 | 18,433 |
 | V9-ram | 56.71 | 14.06 | 6.19 | 0 | 160,415 | 18,433 |
-| hors-render-v1-ram | **60.62** | 19.89 | 12.53 | 0 | 163,780 | 18,433 |
-| hors-render-v2 | 58.80 | 20.39 | 15.98 | 0 | 163,780 | 21,777 |
-| hors-render-v2-ram | 60.00 | 20.39 | 15.98 | 0 | 163,780 | 18,203 |
-| hors-renderer-v3 | 53.24 | **22.70 (tie)** | **16.12** | 0 | 168,484 | 21,777 |
-| hors-renderer-v3-ram | 52.94 | **22.70 (tie)** | 15.99 | 0 | 168,484 | 18,203 |
+| hors-v1-ram | 60.62 | 19.89 | 12.53 | 0 | 163,780 | 18,433 |
+| hors-v2 | 58.80 | 20.39 | 15.98 | 0 | 163,780 | 21,777 |
+| hors-v2-ram | 60.00 | 20.39 | 15.98 | 0 | 163,780 | 18,203 |
+| hors-v3 | 53.24 | **22.70 (tie)** | 16.12 | 0 | 168,484 | 21,777 |
+| hors-v3-ram | 52.94 | **22.70 (tie)** | 15.99 | 0 | 168,484 | 18,203 |
 
 
 ## Storage and fixed RAM allocations
@@ -766,15 +1075,15 @@ High/low are 985,248 divided by the shortest/longest **actual display-flip inter
 | V7 | 804,448 | 12 | 21,777–21,919 | 27,000 B | 11,264 B |
 | V8 | 771,616 | 12 | 21,777–21,919 | 27,000 B | 11,264 B |
 | V9 | 771,616 | 12 | 21,777–21,919 | 27,000 B | 11,264 B |
-| hors-render-v1 | 985,024 | 12 | 21,777–21,919 | 27,000 B | 11,264 B |
+| hors-v1 | 985,024 | 12 | 21,777–21,919 | 27,000 B | 11,264 B |
 | V7-ram | 804,448 | 12 | 18,433–21,647 | 27,000 B | 11,264 B |
 | V8-ram | 771,616 | 12 | 18,433–21,647 | 27,000 B | 11,264 B |
 | V9-ram | 771,616 | 12 | 18,433–21,647 | 27,000 B | 11,264 B |
-| hors-render-v1-ram | 985,024 | 12 | 18,433–21,647 | 27,000 B | 11,264 B |
-| hors-render-v2 | 985,024 | 12 | 21,777–21,919 | 27,000 B | 11,264 B |
-| hors-render-v2-ram | 985,024 | 12 | 18,203–21,647 | 27,000 B | 11,264 B |
-| hors-renderer-v3 | 1,009,648 | 12 | 21,777–21,919 | 27,000 B | 11,264 B |
-| hors-renderer-v3-ram | 1,009,648 | 12 | 18,203–21,647 | 27,000 B | 11,264 B |
+| hors-v1-ram | 985,024 | 12 | 18,433–21,647 | 27,000 B | 11,264 B |
+| hors-v2 | 985,024 | 12 | 21,777–21,919 | 27,000 B | 11,264 B |
+| hors-v2-ram | 985,024 | 12 | 18,203–21,647 | 27,000 B | 11,264 B |
+| hors-v3 | 1,009,648 | 12 | 21,777–21,919 | 27,000 B | 11,264 B |
+| hors-v3-ram | 1,009,648 | 12 | 18,203–21,647 | 27,000 B | 11,264 B |
 
 Fixed graphics storage counts three 8,000-byte bitmaps and three 1,000-byte screen-colour matrices. Streamed methods also reserve 8,192 bytes staging and three 1,024-byte metadata caches. These are allocation components, **not total used or free RAM**: renderer code, LUTs, state, directories, menu/control storage and padding also occupy address space. RAM preference saves code but does not reclaim those fixed buffers. PRG length includes load address and gaps; it must not be added to these figures as if it were a disjoint allocation. The resident comparison CRT has fewer entries because HiFi does not fit, so its whole-cart size is not directly comparable to twelve-entry streamed carts.
 
@@ -828,8 +1137,8 @@ These are **not PLAY ALL A/B FPS results** and must not be mixed into the menu t
 ## Workload and interpretation
 
 - All menu builds use the exact released V4 vector reference (`assets/v4-menu-vector-reference.json.gz`), including colours, HUD and animation sample order. Native method-specific lossless encoding is retained.
-- The explicit hors-renderer-v3 comparison rows run the V3 literal colour pipeline inside the same external PLAY ALL wrapper and frozen inputs. The public menu default remains V2. V3 FPS/RAM rows are measured independently; no V2 number is relabelled.
-- hors-render-v2 uses gap 3 / batch budget 2048 in this canonical twelve-entry cart, retaining the v1 byte-span payload sizes to fit the same cartridge budget. Its independent pictures and guarded vector-page reuse are built in a private assembly tree. The seven-entry Demo Cart 2.0 uses separate measured encoding choices and is reported in its own section above.
+- The explicit hors-v3 comparison rows run the V3 literal colour pipeline inside the same external PLAY ALL wrapper and frozen inputs. The public menu default remains V2. V3 FPS/RAM rows are measured independently; no V2 number is relabelled.
+- hors-v2 uses gap 3 / batch budget 2048 in this canonical twelve-entry cart, retaining the v1 byte-span payload sizes to fit the same cartridge budget. Its independent pictures and guarded vector-page reuse are built in a private assembly tree. The seven-entry Demo Cart 2.0 uses separate measured encoding choices and is reported in its own section above.
 - The public matrix compares released renderer generations. The authored-scene diagnostic rows preserve the unchanged V4–V10 productions.
 - This table compares preserved renderer implementations under one **external comparison PLAY ALL wrapper**, not the exact historical release cartridges. The V9 normal PLAY ALL controller is used for every method. Its identical timer instructions live at `$0334` instead of `$c700`, because resident data occupies `$c700`; launch metadata is cached before loading and shared menu data restored between entries. Renderer code is unchanged apart from the existing cartridge IRQ-vector redirection. All these wrapper adaptations are generated outside the repo.
 - Resident and streamed methods have different memory/ROM costs. A faster resident method does not imply it can hold the larger HiFi datasets. Compare the same named animation and sample count.
@@ -837,7 +1146,7 @@ These are **not PLAY ALL A/B FPS results** and must not be mixed into the menu t
 - Full bitmap and colour verification covered **25,109 completed pictures**. Raw traces, cartridge hashes, per-entry oracle hashes, unsupported-build reasons and individual results remain in the external workspace.
 - These measurements do not establish a universal performance floor or guarantee behavior for untested inputs.
 
-## Reproduce and keep this chart current
+## Reproduce the historical renderer matrix
 
 Run from the repository root. The tool defaults to ignored `comparison-tests/`; an external `--workspace` is also supported. It creates an isolated source snapshot and never writes old test cartridges into `examples` or `build` in this checkout. Python, 64tass, cartconv and PAL VICE with its data files are required.
 
@@ -858,7 +1167,7 @@ Optional pacing: `--max-fps 10` creates separate paced comparison carts after th
 
 Use `--resume` only with the same source/tool fingerprint and options. Logs and JSON reports stay outside the repo. Archive that workspace with the release if long-term raw evidence is needed.
 
-**Release gate:** run `--check` before publishing. If renderer code, builders, input assets, examples, version or this tester changes, rerun the complete uncapped matrix and replace this chart before tagging. Preserve old method rows; add new generations to the tester and regenerate. Never silently copy old numbers into a changed workload. Capped runs are separate experiments and must not replace this uncapped baseline.
+**Historical matrix gate:** the following fingerprint belongs to the recorded matrix version. Use `report_gmod3_performance.py --check` for the current HORS-V4 section. To replace the historical matrix with a fresh run, run its `--check` before publishing. If renderer code, builders, input assets, examples, version or this tester changes, rerun the complete uncapped matrix and replace this chart before tagging. Preserve old method rows; add new generations to the tester and regenerate. Never silently copy old numbers into a changed workload. Capped runs are separate experiments and must not replace this uncapped baseline.
 
 <!-- comparison-input-sha256: 6dde2d3bf99a5197c2a33e645196a06976974c494963aab655a52dedd94cb5c1 -->
 <!-- comparison-source-version: 0.7.9 -->

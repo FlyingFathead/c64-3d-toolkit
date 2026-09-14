@@ -2,7 +2,7 @@
 
 Practical notes from the Blender-to-C64 pipeline. Start with the
 [Blender guide](BLENDER_PIPELINE.md) for setup and build commands. The current
-default renderer is **HORS-V3**.
+default renderer is **HORS-V4 / GMod3**.
 
 ## Why did the picture stop before the right edge?
 

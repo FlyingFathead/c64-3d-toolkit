@@ -103,14 +103,14 @@ class ComparisonTests(unittest.TestCase):
 
     def test_cart_stream_default_and_explicit_old_method(self):
         with patch.object(cli,'cmd_build',return_value=0) as build,contextlib.redirect_stdout(io.StringIO()):
-            self.assertEqual(cli.main(['cart-stream','--no-config']),0)
+            self.assertEqual(cli.main(['cart-stream','--no-config','--renderer','hors-renderer-v3']),0)
             self.assertEqual(build.call_args.args[0].renderer,'hors-renderer-v3')
             self.assertEqual(cli.main(['cart-stream','--no-config','--renderer','yunroll-cart-v2']),0)
             self.assertEqual(build.call_args.args[0].renderer,'yunroll-cart-v2')
 
     def test_default_authored_input_selects_v9_scene(self):
         parser=cli.make_parser(load_toolchain_settings(Path('/missing/config.ini')))
-        args=parser.parse_args(['build','--scene','example.c643dscene'])
+        args=parser.parse_args(['build','--renderer','hors-renderer-v3','--scene','example.c643dscene'])
         with patch('c643d.cartscene.cmd_build_cart_scene',return_value=0) as build,contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(cli.cmd_build(args),0)
             self.assertEqual(build.call_args.args[0].renderer,'yunroll-cart-v10-scene')

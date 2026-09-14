@@ -80,3 +80,9 @@ overwrite_policy = warn
 # Debug-only derivative of yunroll. This never instruments/bloats the normal
 # production renderer. Leave false for ordinary builds.
 rastertime_profiler = false
+
+# Universal hardware default for supported cartridge build/smoke/run commands.
+# Explicit --cart-type always takes precedence. "auto" keeps renderer defaults.
+# HORS-V4 defaults to GMod3; explicit older renderers default to EasyFlash.
+[cartridge_defaults]
+cart_type = auto

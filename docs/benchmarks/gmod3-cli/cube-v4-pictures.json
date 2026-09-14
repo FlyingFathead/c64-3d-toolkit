@@ -1,0 +1,23 @@
+{
+  "cartridge": "cube-v4.crt",
+  "menu_entry": null,
+  "verified_frames": 51,
+  "orientations": 24,
+  "bitmap_bytes_checked": 391680,
+  "color_bytes_checked": 48960,
+  "slots": {
+    "1": 17,
+    "2": 17,
+    "0": 17
+  },
+  "average_fps": 29.745077900411374,
+  "min_frame_cycles": 20763,
+  "max_frame_cycles": 35527,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
+  "interactive_label_match": true,
+  "crt_sha256": "b99ee1349c2a17de573a5e494d08b75a15bd30f275fc6b1bd10556ec04c5869d"
+}

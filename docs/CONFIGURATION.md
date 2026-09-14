@@ -1,4 +1,30 @@
-> Current conversion default: **hors-renderer-v3**. The comparison/menu builder retains V2. [v0.7.9 release notes](RELEASE_0.7.9.md).
+> Current conversion default: **hors-v4 / GMod3**. Explicit HORS-V3 retains EasyFlash. [v0.8.0 release notes](RELEASE_0.8.0.md).
+
+## Universal cartridge default
+
+`build` and `cart-stream` default to HORS-V4 / GMod3. Explicit older renderers
+retain EasyFlash. Cartridge choice follows **CLI > universal config > renderer
+default**. To choose a preference for your own builds, copy
+[`config/gmod3.ini.example`](../config/gmod3.ini.example) or add this to your config:
+
+```ini
+[cartridge_defaults]
+cart_type = gmod3
+```
+
+Use `easyflash` for a universal EasyFlash preference, or `auto` to follow each
+renderer. An explicit `--cart-type easyflash` or `--cart-type gmod3` wins over
+config. HORS-V4 with EasyFlash dispatches to the preserved V3 implementation;
+older engines that have no GMod3 backend reject that combination explicitly.
+`cart-demos` remains the historical EasyFlash comparison builder. Resident PRG
+renderers do not consume a universal cartridge preference. `run-cart`
+recognizes an existing GMod3 CRT header when no hardware preference is set.
+
+`--gmod3-size-mib 2|4|8|16` selects build capacity; `--gmod3-first-bank N` is an
+explicit boundary-test placement option. GMod3 uses its own image, boot, reader,
+allocator and processing modules. Use `--interactive-cart` for interactive
+object/SVG output; authored scenes use automatic playback. See
+[supported inputs, image verification and limits](GMOD3.md).
 
 # Toolchain configuration
 
@@ -175,7 +201,7 @@ For cartridge builds, `cartconv.exe` is part of the VICE tool set. If it is not
 on `PATH`, configure its exact path (or the containing VICE directory) in the
 `[windows]` section, or pass `--cartconv` to the cartridge command.
 
-## Render/build defaults (v0.7.9)
+## Render/build defaults (v0.8.0)
 
 Since 0.7.3, `[render_defaults]` also accepts `foreground_color = auto`,
 `background_color = black` and `border_color = black`. Each colour accepts the
@@ -183,7 +209,7 @@ same names, indices and RGB formats as the CLI. Border selection is independent
 of the background. CLI overrides: `--foreground-color` (also `--color`),
 `--background-color`, `--border-color`. See [Output colours](OUTPUT_COLORS.md).
 
-The default renderer is hors-renderer-v3 for `build` and `cart-stream`, including
+The default renderer is hors-v4 / GMod3 for `build` and `cart-stream`, including
 authored inputs. `cart-demos` retains hors-render-v2. Explicit
 `--renderer step|bytechunk|yunroll` selects resident PRG output. The following
 settings originated with the PRG path and remain available in `[render_defaults]`:
@@ -229,7 +255,7 @@ Command-line options always override `[render_defaults]` for that invocation.
 | `--play-all-seconds N` | `10` | V7–V10 multi-demo menus; integer 1..255, 50 PAL ticks per second |
 
 `cart-demos` / `cartridge-demo` accept both; individual `build` and
-`cart-stream` accept `--prefer`. The conversion CLI default is hors-renderer-v3; the menu default is hors-render-v2. The generated menu's RAM name gains `-ram` unless `--output` is supplied.
+`cart-stream` accept `--prefer`. The conversion CLI default is hors-v4 / GMod3; the menu default is hors-render-v2. The generated menu's RAM name gains `-ram` unless `--output` is supplied.
 Fixed bitmap/staging allocations do not shrink with RAM preference.
 
 ```bash
@@ -256,3 +282,12 @@ the initial visibility. New standalone V3 interactive builds include Shift+I,
 Shift+F and Shift+U to toggle name/counts, FPS/speed feedback, or both.
 Use `--no-hud-toggle` to omit these switches; `--allow-hud-toggle` explicitly
 includes them. [Interactive controls, RAM and costs](STARFIELD.md).
+
+### Short renderer selectors and explicit hardware
+
+`hors-v1`, `hors-v2`, `hors-v3` and `hors-v4` accept the same pipelines as their
+long names. `hors-renderer-v4` remains supported. The current default is
+`hors-v4` / GMod3; explicit older versions default to EasyFlash.
+`--renderer hors-v4-ef` and `--renderer hors-v4-gmod3` select hardware explicitly,
+overriding `[cartridge_defaults]`. A suffix conflicting with `--cart-type`
+is an error. See [renderer names and compatibility](GMOD3.md#names-and-aliases).

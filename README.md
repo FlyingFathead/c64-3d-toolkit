@@ -2,6 +2,38 @@
 
 > **ATTENTION:** [FlyingFathead/c64-3d-toolkit](https://github.com/FlyingFathead/c64-3d-toolkit/) is the one and only official, original source for `c64-3d-toolkit`. Steer clear of other sources or repositories claiming to be the official project.
 
+## v0.8.0: GMod3 cartridge support added, switch to HORS-V4
+
+[Demo Cart v3.0: GMod3 All-in-One](examples/gmod3_cart_demos/README.md) fits
+**58 selectable demo entries and 6,474 pictures** in one 16 MiB cartridge, with
+**2,936 KiB free**. Includes SAKU, all six Dragon variants, Sande's models,
+the original demos, Demo Cart 2.0 and the complete 640-picture Marbles sequence.
+**Includes all demos from the previous examples through v0.7.9.**
+Stars start off; help, HUD, speed, colour, starfield and exhibition controls
+remain available. An automatic benchmark companion is included. RUN/STOP (Esc in VICE)
+returns to the collection menu; Shift+H opens help.
+
+![GMod3 All-in-One menu captured in PAL VICE](docs/benchmarks/gmod3-features/menu.png)
+
+HORS-V4 (`hors-v4`, also `hors-renderer-v4`) is the new default, using independent GMod3
+processing and runtime modules. Explicit older renderers retain EasyFlash
+defaults; a CLI switch or universal config preference chooses your cartridge.
+The V3 picture core and all existing EasyFlash backend/cartridge bytes are preserved.
+Use `--renderer hors-v4-ef` for the new pipeline with EasyFlash. VICE 3.10
+playback is verified; physical devices must support the GMod3 mapper and the
+16 MiB image. [Compatibility and EasyFlash fallback](docs/GMOD3.md#compatibility).
+
+Across **69 matched PAL VICE workloads: 65 higher average frame rates, four
+ties, zero lower averages**. Gains reach **+0.397 FPS**, with no increase in
+mean active rendering cycles. The four SAKU crawl variants tie; solid crawl
+reaches the PAL display limit. These measurements support a modest speed improvement and much larger
+collections, not a universal +1 FPS claim or a physical-hardware guarantee.
+
+[Performance tables and raw evidence](docs/PERFORMANCE_COMPARISON.md) ·
+[Release, install and reproduce](docs/RELEASE_0.8.0.md) ·
+[GMod3 specification and limits](docs/GMOD3.md) ·
+[Set your cartridge default](docs/CONFIGURATION.md#universal-cartridge-default)
+
 ## v0.7.9: The Golden Dragon & SAKU 2026
 
 <table>
@@ -14,7 +46,7 @@
 
 SAKU: [official home page](https://suomenamigakayttajat.fi/) · [Saku magazine](https://sakulehti.fi/)
 
-**HORS-V3 now powers normal object and authored-wireframe conversion.** Choose
+**The 0.7.9 release introduced HORS-V3 as the normal conversion path.** Choose
 nearest-palette material/image colours, every native hue family, or your own
 metallic gradient with `--surface-ramp brown,orange,yellow,white`.
 SVG builds preserve mapped fills and strokes and fit proportionally; `--fill-style gradient` adds Dragon-style colour ramps. Explicit outline, diagnostic and single-colour switches are available. The SAKU interactive cart starts with gradients and stars, with speed controls and a complete key map.
@@ -37,7 +69,7 @@ files and unsupported Alembic builds.
 
 Five HORS-V3 demo carts bring Stanford's **5,205-vertex / 11,102-triangle Dragon** to the C64: **wireframe, metallic (grey), red, green and blue**. The showcase above presents one complete rotation of each, in that order, with the measured PAL playback timing.
 
-**HORS-V3 conversion is now the default** for objects and authored wireframe scenes. Surface shading supports every native colour family plus custom gradients with `--surface-ramp brown,orange,yellow,white`. Materials and texture pixels map to the nearest C64 palette colour. [Checkpoint guide, colour mapping and cache troubleshooting](docs/HORS_V3_DEFAULTS_CHECKPOINT.md).
+**At v0.7.9, HORS-V3 became the conversion default** for objects and authored wireframe scenes. Surface shading supports every native colour family plus custom gradients with `--surface-ramp brown,orange,yellow,white`. Materials and texture pixels map to the nearest C64 palette colour. [Checkpoint guide, colour mapping and cache troubleshooting](docs/HORS_V3_DEFAULTS_CHECKPOINT.md).
 
 [Download the five Dragon carts, watch individual GIFs and see performance](examples/stanford_dragon/README.md) · [v0.7.8 release notes and installation](docs/RELEASE_0.7.8.md)
 
@@ -76,7 +108,7 @@ cartridges do not share a soundtrack.
 
 ## Try the toolkit
 
-HORS-V3 is the default conversion renderer; use `--surface-fill material`, `textured` or `metallic` to select filled surfaces. The prebuilt cartridges below are ready to run. See [cartridge loading](docs/CARTRIDGE_LOADING.md) and [output colours](docs/OUTPUT_COLORS.md) for setup and controls.
+HORS-V4 / GMod3 is the default conversion renderer; use `--surface-fill material`, `textured` or `metallic` to select filled surfaces. The prebuilt cartridges below are ready to run. See [cartridge loading](docs/CARTRIDGE_LOADING.md) and [output colours](docs/OUTPUT_COLORS.md) for setup and controls.
 
 **Performance tables:** [Original twelve animations](docs/PERFORMANCE_COMPARISON.md#best-method-for-each-animation) · [Demo Cart 2.0: all seven scenes](docs/PERFORMANCE_COMPARISON.md#demo-cart-20) · [Sande test kit](docs/PERFORMANCE_COMPARISON.md#sandes-models)
 
@@ -84,6 +116,7 @@ HORS-V3 is the default conversion renderer; use `--surface-fill material`, `text
 
 | Prebuilt | What is inside |
 | --- | --- |
+| [Demo Cart v3.0: GMod3 All-in-One](examples/gmod3_cart_demos/demo-cart-v3.0-gmod3-all-in-one.crt) | **Includes all demos from the previous examples through v0.7.9.** 58 interactive entries, stars off, 16 MiB GMod3. [Controls and benchmark edition](examples/gmod3_cart_demos/README.md) |
 | [Stanford Dragon: all six looks](examples/stanford_dragon/README.md) | HORS-V3 wireframe, metallic (grey), golden, red, green and blue; carts, timed GIFs and performance |
 | [SAKU 2026 — interactive](examples/saku_2026/README.md) | SVG source/gradient colours, starfield, spin/crawl, speed controls and keyboard map |
 | [Metallic Pretzel — interactive](examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-interactive.crt) | HORS-V3 shaded surfaces, rotation and background controls |
@@ -98,6 +131,7 @@ HORS-V3 is the default conversion renderer; use `--surface-fill material`, `text
 | [Horse & Sunflower](examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt) | Authored scene, with a separate RAM build in the same folder |
 
 ```bash
+python c643d.py run-cart examples/gmod3_cart_demos/demo-cart-v3.0-gmod3-all-in-one.crt
 python c643d.py run-cart examples/cart_demos/c643d-demo-v0.7.9-hors-render-v2-all.crt
 python c643d.py run-cart examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt
 ```
@@ -106,9 +140,11 @@ Use `--vice-clean-settings` to try temporary VICE defaults when diagnosing a
 loading failure. See [cartridge loading](docs/CARTRIDGE_LOADING.md) for the
 standalone VICE command, write-back protection and the loader changes.
 
-Press **SPACE** on the identification screen. In the menu, use the cursor keys
-and RETURN; F1 changes styles or returns from playback. Normal PLAY ALL is the
-benchmark path. **F5 is an exhibition mode and must not be used to compare FPS.**
+For the GMod3 collection, use **CURSOR** to select and **SPACE** to start;
+**RUN/STOP (Esc in VICE) or F1** returns to the menu. **Shift+H** opens help.
+Use the separate automatic edition for benchmarks. The older EasyFlash menus
+use cursor keys and RETURN; F1 changes styles or returns from playback. Their
+normal PLAY ALL is the benchmark path; F5 exhibition is excluded from FPS comparisons.
 
 [Browse all current examples](examples/README.md).
 
@@ -120,7 +156,7 @@ benchmark path. **F5 is an exhibition mode and must not be used to compare FPS.*
 
 A host-assisted 3D compiler and native C64 renderer: import OBJ, SVG or baked
 Blender scenes; compute projection and visibility on the host; pack drawing
-data into EasyFlash; let the 6510 update VIC-II bitmaps and colours at runtime.
+data into a GMod3 or EasyFlash cartridge; let the 6510 update VIC-II bitmaps and colours at runtime.
 It is not a general live-geometry engine. No cartridge coprocessor is required.
 
 V2 groups literal bitmap spans into bounded cartridge-mapping batches, reducing
@@ -151,11 +187,19 @@ python c643d.py color-combo-test
 python c643d.py build --shape torus --foreground-color black --background-color white --border-color white
 ```
 
-`build` and `cart-stream` default to **hors-renderer-v3**, including authored
-wireframe scenes. `hors-render-v3` is an alias. `cart-demos` retains the V2
-comparison/menu pipeline. Explicit `--renderer hors-render-v2` and
-`--renderer hors-render-v2-scene` still select the previous implementation.
-Use `--renderer yunroll` explicitly when you want resident PRG output.
+`build` and `cart-stream` default to **hors-v4 / GMod3**.
+`hors-renderer-v4` and `hors-render-v4` remain aliases. Explicit HORS-V3 and older renderers retain
+EasyFlash defaults. Set `--cart-type` or a universal config preference to choose
+hardware. `cart-demos` retains the preserved V2 EasyFlash comparison/menu path.
+Use `--renderer yunroll` explicitly for resident PRG output.
+
+```bash
+python c643d.py build --shape torus --surface-fill metallic --interactive-cart
+python c643d.py build --renderer hors-renderer-v3 --shape torus --surface-fill metallic
+python c643d.py run-cart examples/gmod3_cart_demos/demo-cart-v3.0-gmod3-all-in-one.crt
+```
+
+[GMod3 architecture, image specification, bank timings and limits](docs/GMOD3.md).
 
 - [Configuration](docs/CONFIGURATION.md), [Windows setup](docs/WINDOWS_SETUP.md)
 - [OBJ](docs/OBJ_PIPELINE.md), [SVG](docs/SVG_PIPELINE.md), [Blender](docs/BLENDER_PIPELINE.md)
@@ -184,31 +228,31 @@ renderer throughput improvement.
 ```bash
 cd path/to/c64-3d-toolkit
 JOBS=3 VICE_DATA=/usr/local/share/vice bash COMPILE-RELEASE.sh \
-  --workspace ../c64-079-release-build
+  --workspace ../c64-080-release-build
 ```
 
-This makes an isolated source copy, builds every stable example, validates
+This historical full rebuild workflow makes an isolated source copy, builds the older example set, validates
 pictures, endings and menus, runs the original renderer matrix, updates the
-chart and produces a complete ZIP. Results and logs stay beside the checkout.
+chart and produces a ZIP. For the GMod3 release, use the
+[0.8.0 rebuild and verification commands](docs/RELEASE_0.8.0.md#rebuild-and-check). Results and logs stay beside the checkout.
 Add `--install` to install only after all checks pass. Add `--baseline-zip PATH`
 to also generate a patch ZIP. The pipeline never commits, tags or pushes. Root `VERSION` supplies the build
 identity; an alternate-version VICE test guards startup, menu and thanks labels.
 
-To install the supplied 0.7.9 release, save the ZIP one level above your
+To install the supplied 0.8.0 release, save the ZIP one level above your
 checkout and extract it from that parent directory:
 
 ```bash
-unzip -o c64-3d-toolkit-v0.7.9-incremental.zip
+unzip -o c64-3d-toolkit-v0.8.0-incremental.zip
 cd c64-3d-toolkit
-python examples/stanford_dragon/verify.py --check
-python tools/compare_renderers.py --check
-python tools/run_hors_v3_perfs.py --check
+python tools/report_gmod3_performance.py --check
+python tools/verify_gmod3_release.py
 ```
 
 The ZIP contains its own `c64-3d-toolkit/` directory. Current cartridges are
 already rebuilt. Previous versioned menu/HiFi carts remain as historical
-references; use the 0.7.9 links above for the updated builds. See the
-[release guide](docs/RELEASE_0.7.9.md) for checks and rebuilds.
+references; older EasyFlash cartridges remain byte-for-byte preserved. See the
+[release guide](docs/RELEASE_0.8.0.md) for checks and rebuilds.
 
 ## Earlier renderers remain available
 
@@ -217,9 +261,10 @@ references; use the 0.7.9 links above for the updated builds. See the
 | `step`, `bytechunk`, `yunroll` | Resident PRG renderers |
 | `yunroll-cart` | Original resident cartridge scaffold |
 | `yunroll-cart-v2` through `yunroll-cart-v9` | Earlier streamed generations |
-| `hors-render-v1`, `hors-render-v1-scene` | Original v1 / internal V10 implementations |
-| `hors-render-v2`, `hors-render-v2-scene` | Previous object/scene implementation; comparison/menu default |
-| **`hors-renderer-v3`** (alias `hors-render-v3`) | **Default object and authored-wireframe conversion; selectable surface/material/texture pipeline** |
+| `hors-v1`, `hors-v1-scene` | Original v1 / internal V10 implementations |
+| `hors-v2`, `hors-v2-scene` | Previous object/scene implementation; comparison/menu default |
+| `hors-v3` (also `hors-renderer-v3`) | Previous surface/material/texture pipeline; EasyFlash default |
+| `hors-v4` (also `hors-renderer-v4`) | Current default; `hors-v4-gmod3` or `hors-v4-ef` selects hardware explicitly |
 
 A new pipeline is added incrementally. Old assembly, encoders and comparisons
 stay intact. The resident `yunroll` method still narrowly wins the canonical
@@ -246,9 +291,3 @@ A big thank you to everyone who has contributed, collaborated and given ideas fo
 **Stanford Dragon:** model data from the [Stanford University Computer Graphics Laboratory's 3D Scanning Repository](https://graphics.stanford.edu/data/3Dscanrep/#dragon). The [Dragon example](examples/stanford_dragon/README.md) includes the original source credit, provenance and usage terms.
 
 **EasyFlash / EasyAPI:** thanks to **Thomas "skoe" Giesel** for the [EasyFlash project and developer documentation](https://skoe.de/easyflash/develdocs/) and the original EasyAPI AM/M29F040 V1.4 flash driver embedded in standard toolkit cartridges. [Bundled source, original notice and attribution](tools/c643d/data/easyapi/README.md). CRT files are generated with VICE's `cartconv`; these demos do not call EasyAPI to write flash.
-
-[Final v0.7.9 refinements: original SPACE intro, adjustable stars and red SVG shadows](docs/RELEASE_FINAL_V1.md).
-
-### Blender framing and input flips
-
-New Blender exports draw across 320 pixels, with `--viewport-width 256` for legacy framing. [Zoom and tracking-camera test scenes](examples/blender_viewport_test/README.md) include editable .blend files, HORS-V3 carts, VICE screenshots and timings. [Blender FAQ](docs/BLENDER_FAQ.md) explains the right-edge cutoff, preview settings and rebuilding old scenes. [Flip controls](docs/INPUT_FLIPS.md) add optional horizontal/vertical artwork reflection to all conversion inputs; HUD and help stay normally oriented.

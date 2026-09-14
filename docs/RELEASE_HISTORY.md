@@ -2,12 +2,13 @@
 
 [Back to the main page](../README.md)
 
-The main page features **v0.7.9: The Golden Dragon & SAKU 2026**, alongside the v0.7.8 Stanford Dragon and v0.7.7 Pretzel updates. Earlier releases and announcements are collected here.
+The main page features **v0.8.0: GMod3 cartridge support added, switch to HORS-V4**, followed by the earlier Dragon, SAKU and Pretzel updates. Earlier releases and announcements are collected here.
 
 ## Release notes
 
 | Version | Release notes and highlights |
 | --- | --- |
+| [v0.8.0](RELEASE_0.8.0.md) | HORS-V4 / GMod3 default, All-in-One collection, measured per-scene comparisons and universal cartridge config |
 | [v0.7.9](RELEASE_0.7.9.md) | The Golden Dragon & SAKU 2026: V3 default, SVG paint/gradients and shared interactive controls |
 | [v0.7.8](RELEASE_0.7.8.md) | The Stanford Dragon Has Arrived! Five Dragon carts and red, green and blue surface-shading ramps |
 | [v0.7.7](RELEASE_0.7.7.md) | Pretzel Logic - The Great Texture Update: HORS-V3 surfaces, textures and interactive metallic Pretzel |

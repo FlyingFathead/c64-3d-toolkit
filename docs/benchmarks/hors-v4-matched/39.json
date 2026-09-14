@@ -1,0 +1,67 @@
+{
+  "case": 39,
+  "name": "DON'T LOSE YOUR MARBLES [129..256]",
+  "source_id": 24,
+  "frames": 128,
+  "slice": [
+    128,
+    256
+  ],
+  "color_encoding": "literal",
+  "easyflash": {
+    "index": 39,
+    "name": "DON'T LOSE YOUR MARBLES [129..256]",
+    "passed": true,
+    "frames": 128,
+    "stored_frames": 128,
+    "pictures_checked": 259,
+    "all_three_buffers": true,
+    "stars_off": false,
+    "display_frames": 1838,
+    "observed_refreshes": 4800,
+    "average_fps": 19.193522588522587,
+    "high_fps": 25.062271062271062,
+    "low_fps": 16.70818070818071,
+    "mean_render_cycles": 51209.63358778626,
+    "max_render_cycles": 57819,
+    "picture_sha256": "920d037baae6fc1368b73fc95d34cc338c302de6d320908888c3da1a6b05365d",
+    "allocated_kib": 1384,
+    "bank_range": [
+      630,
+      802
+    ],
+    "target_fps": null,
+    "crt_sha256": "2e176b535effcb1a43d637c92210d3bb1c41fae5d2266e4d255b9f2a80377efd",
+    "renderer": "hors-renderer-v3",
+    "toolkit_version": "0.8.0"
+  },
+  "gmod3": {
+    "index": 39,
+    "name": "DON'T LOSE YOUR MARBLES [129..256]",
+    "passed": true,
+    "frames": 128,
+    "stored_frames": 128,
+    "pictures_checked": 259,
+    "all_three_buffers": true,
+    "stars_off": false,
+    "display_frames": 1851,
+    "observed_refreshes": 4800,
+    "average_fps": 19.329276556776556,
+    "high_fps": 25.062271062271062,
+    "low_fps": 16.70818070818071,
+    "mean_render_cycles": 50862.12213740458,
+    "max_render_cycles": 57530,
+    "picture_sha256": "920d037baae6fc1368b73fc95d34cc338c302de6d320908888c3da1a6b05365d",
+    "allocated_kib": 1384,
+    "bank_range": [
+      630,
+      802
+    ],
+    "target_fps": null,
+    "crt_sha256": "bd0e96dd43c8c9b811f756323afde74bc2367551fa2af84f00b3bfd92849f4c1",
+    "renderer": "hors-renderer-v4",
+    "toolkit_version": "0.8.0"
+  },
+  "encoded_payloads_identical": true,
+  "difference_fps": 0.1357539682539688
+}

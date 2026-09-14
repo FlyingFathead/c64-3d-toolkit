@@ -1,0 +1,25 @@
+{
+  "index": 32,
+  "name": "TORUS BLACK ON WHITE",
+  "passed": true,
+  "frames": 32,
+  "stored_frames": 32,
+  "pictures_checked": 67,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 850,
+  "observed_refreshes": 2400,
+  "average_fps": 17.752442002442002,
+  "high_fps": 25.062271062271062,
+  "low_fps": 12.531135531135531,
+  "mean_render_cycles": 55918.0,
+  "max_render_cycles": 64872,
+  "picture_sha256": "e3c789b7fb9035c0196ca3122959a09d6bca29cb248576b2a0f86c536f854c72",
+  "allocated_kib": 80,
+  "bank_range": [
+    807,
+    816
+  ],
+  "target_fps": null,
+  "crt_sha256": "86ab08c0e3484215d4548c28a17968111d7f44fd65b7c23a6be20d9557aa63a3"
+}

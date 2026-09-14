@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "cartridge": "cube-v4.crt",
+  "sha256": "b99ee1349c2a17de573a5e494d08b75a15bd30f275fc6b1bd10556ec04c5869d",
+  "layout": "hors-renderer-v4 plus centered GMod3 capacity rows 22/23",
+  "capacity": {
+    "units": "KiB",
+    "used_kib": 56,
+    "free_kib": 1992,
+    "capacity_kib": 2048,
+    "accounting": "allocated 8 KiB banks including boot/runtime and bank padding; not CRT container size",
+    "used_bytes": 57344,
+    "free_bytes": 2039808,
+    "lines": [
+      {
+        "text": "cart type: GMod3",
+        "row": 22,
+        "column": 12
+      },
+      {
+        "text": "used: 56 KiB | free: 1992 KiB",
+        "row": 23,
+        "column": 5
+      }
+    ]
+  },
+  "no_key_wait_seconds": 6.384727500081198,
+  "timeout": false,
+  "explicit_space_starts": true,
+  "playback_reached": true,
+  "startup_help_open_and_both_exit_keys": true,
+  "run_stop_help": true,
+  "closing_help_returns_to_space_wait": true,
+  "input_method": "PAL VICE cold boot; CIA read results injected only for deliberate key presses"
+}

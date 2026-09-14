@@ -1,0 +1,25 @@
+{
+  "index": 27,
+  "name": "WAVE LATTICE",
+  "passed": true,
+  "frames": 48,
+  "stored_frames": 48,
+  "pictures_checked": 99,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 1307,
+  "observed_refreshes": 2400,
+  "average_fps": 27.29699023199023,
+  "high_fps": 50.124542124542124,
+  "low_fps": 16.70818070818071,
+  "mean_render_cycles": 35756.78431372549,
+  "max_render_cycles": 44225,
+  "picture_sha256": "6e8df3621beb5ece4923597c2a50da69c9d95ba499291a543bfa2eb5fc9fcd64",
+  "allocated_kib": 80,
+  "bank_range": [
+    506,
+    515
+  ],
+  "target_fps": null,
+  "crt_sha256": "86ab08c0e3484215d4548c28a17968111d7f44fd65b7c23a6be20d9557aa63a3"
+}

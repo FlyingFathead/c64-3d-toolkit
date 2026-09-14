@@ -1,0 +1,67 @@
+{
+  "case": 0,
+  "name": "SAKU SOLID SPIN",
+  "source_id": 43,
+  "frames": 30,
+  "slice": [
+    0,
+    30
+  ],
+  "color_encoding": "literal",
+  "easyflash": {
+    "index": 0,
+    "name": "SAKU SOLID SPIN",
+    "passed": true,
+    "frames": 30,
+    "stored_frames": 30,
+    "pictures_checked": 63,
+    "all_three_buffers": true,
+    "stars_off": false,
+    "display_frames": 3644,
+    "observed_refreshes": 4800,
+    "average_fps": 38.05288156288156,
+    "high_fps": 50.124542124542124,
+    "low_fps": 25.062271062271062,
+    "mean_render_cycles": 26119.484848484848,
+    "max_render_cycles": 30421,
+    "picture_sha256": "22efd71f646907b46b76c42724a8245e7215c2a7638d2deaeed694a16b0d983e",
+    "allocated_kib": 56,
+    "bank_range": [
+      1,
+      7
+    ],
+    "target_fps": null,
+    "crt_sha256": "2c01fca831e9c9b0e8d7e6cb70e9bc8ff0284e8f5db5bc71ef65e1d42017a1a1",
+    "renderer": "hors-renderer-v3",
+    "toolkit_version": "0.8.0"
+  },
+  "gmod3": {
+    "index": 0,
+    "name": "SAKU SOLID SPIN",
+    "passed": true,
+    "frames": 30,
+    "stored_frames": 30,
+    "pictures_checked": 63,
+    "all_three_buffers": true,
+    "stars_off": false,
+    "display_frames": 3671,
+    "observed_refreshes": 4800,
+    "average_fps": 38.33483211233211,
+    "high_fps": 50.124542124542124,
+    "low_fps": 25.062271062271062,
+    "mean_render_cycles": 25929.39393939394,
+    "max_render_cycles": 30251,
+    "picture_sha256": "22efd71f646907b46b76c42724a8245e7215c2a7638d2deaeed694a16b0d983e",
+    "allocated_kib": 56,
+    "bank_range": [
+      1,
+      7
+    ],
+    "target_fps": null,
+    "crt_sha256": "a42aa6997745147bd3af296393b46fc75303a72dacd5fe839c3cd7d703c28389",
+    "renderer": "hors-renderer-v4",
+    "toolkit_version": "0.8.0"
+  },
+  "encoded_payloads_identical": true,
+  "difference_fps": 0.2819505494505492
+}

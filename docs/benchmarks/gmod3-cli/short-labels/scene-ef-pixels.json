@@ -1,0 +1,26 @@
+{
+  "cartridge": "scene-ef.crt",
+  "menu_entry": null,
+  "verified_frames": 51,
+  "orientations": 24,
+  "bitmap_bytes_checked": 391680,
+  "color_bytes_checked": 48960,
+  "slots": {
+    "1": 17,
+    "2": 17,
+    "0": 17
+  },
+  "average_fps": 12.913532045940155,
+  "min_frame_cycles": 20011,
+  "max_frame_cycles": 80358,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
+  "loop_seconds": 1.9152294650686934,
+  "target_fps": 12.5,
+  "hud_match": true,
+  "text_overlay": true,
+  "frame_index_bits": 16
+}

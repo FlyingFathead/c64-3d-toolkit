@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "cartridge": "cube-ef.crt",
+  "sha256": "4a85e0050f7ad8794bee7cca8f023e118808b229cfb1ac7fffa240257258fb8b",
+  "layout": "hors-v4-ef centered startup text",
+  "capacity": null,
+  "no_key_wait_seconds": 6.385513089090259,
+  "timeout": false,
+  "explicit_space_starts": true,
+  "playback_reached": true,
+  "startup_help_open_and_both_exit_keys": true,
+  "run_stop_help": true,
+  "closing_help_returns_to_space_wait": true,
+  "input_method": "PAL VICE cold boot; CIA read results injected only for deliberate key presses"
+}
