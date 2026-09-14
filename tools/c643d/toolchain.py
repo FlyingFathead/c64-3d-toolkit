@@ -29,6 +29,7 @@ class ToolchainSettings:
     foreground_color: Optional[str] = None
     background_color: str = "black"
     border_color: str = "black"
+    blender_color_space: str = "linear"
 
 
 def platform_key(system: Optional[str] = None) -> str:
@@ -62,6 +63,7 @@ def load_toolchain_settings(path: Optional[Path], *, system: Optional[str] = Non
     """
     pkey=platform_key(system)
     values={
+        'blender_color_space':'linear',
         'tass':'64tass',
         'vice':'x64sc',
         'blender':'blender',
@@ -92,6 +94,11 @@ def load_toolchain_settings(path: Optional[Path], *, system: Optional[str] = Non
                         values[key]=split_args(raw,windows=(pkey=='windows'))
             if cfg.has_section('render_defaults'):
                 section=cfg['render_defaults']
+                if 'blender_color_space' in section:
+                    value=section.get('blender_color_space',raw=True).strip().lower()
+                    if value not in ('linear','srgb'):
+                        raise ValueError('render_defaults.blender_color_space must be linear or srgb')
+                    values['blender_color_space']=value
                 from .colors import c64_color_index, c64_color_name
                 for key in ('foreground_color','background_color','border_color'):
                     if key in section:
@@ -125,6 +132,7 @@ def load_toolchain_settings(path: Optional[Path], *, system: Optional[str] = Non
         tass=values['tass'], vice=values['vice'], blender=values['blender'], cartconv=values['cartconv'],
         tass_args=tuple(values['tass_args']), vice_args=tuple(values['vice_args']),
         config_path=loaded, platform_key=pkey,
+        blender_color_space=values['blender_color_space'],
         text_overlay=bool(values['text_overlay']), viewport_height=values['viewport_height'],
         overwrite_policy=str(values['overwrite_policy']), rastertime_profiler=bool(values['rastertime_profiler']),
         foreground_color=values['foreground_color'],background_color=values['background_color'],border_color=values['border_color'],

@@ -1,5 +1,7 @@
 # Interactive exhibition mode
 
+[Shared interactive baseline](INTERACTIVE_CART_BASELINE.md) defines current HUD, help, star and collection-menu controls. Stars start disabled.
+
 HORS-V4 / GMod3 retains these V3 controls. The [All-in-One collection](../examples/gmod3_cart_demos/README.md) starts with stars off and adds F1 menu, N/P entry selection and C Dragon shading. Older EasyFlash cartridges retain their original keymaps.
 
 

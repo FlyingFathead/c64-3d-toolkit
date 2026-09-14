@@ -1,5 +1,7 @@
 # SAKU 2026
 
+This cartridge defines the [shared interactive baseline](../../docs/INTERACTIVE_CART_BASELINE.md). Its explicitly enabled light stars are an example preset; new interactive builds and Demo Cart v3.1 start with stars disabled.
+
 The 2026 logo of Suomen Amiga-käyttäjät ry (Saku), supplied for this example.
 
 [SAKU official home page](https://suomenamigakayttajat.fi/) · [Saku magazine](https://sakulehti.fi/)

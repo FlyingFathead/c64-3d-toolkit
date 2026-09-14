@@ -1,0 +1,25 @@
+{
+  "index": 0,
+  "name": "SAKU 2026 INTERACTIVE",
+  "passed": true,
+  "frames": 30,
+  "stored_frames": 240,
+  "pictures_checked": 63,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 869,
+  "observed_refreshes": 2400,
+  "average_fps": 18.149261294261294,
+  "high_fps": 25.062271062271062,
+  "low_fps": 16.70818070818071,
+  "mean_render_cycles": 54324.51515151515,
+  "max_render_cycles": 58325,
+  "picture_sha256": "22efd71f646907b46b76c42724a8245e7215c2a7638d2deaeed694a16b0d983e",
+  "allocated_kib": 432,
+  "bank_range": [
+    1,
+    54
+  ],
+  "target_fps": null,
+  "crt_sha256": "d1c23418a83cde9d43adb5e2dd2808303000cb8e7e0864a617ea0fd95ac6cb77"
+}

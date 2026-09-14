@@ -1,0 +1,334 @@
+{
+  "format": "c643d-gmod3-stream-v1",
+  "version": 1,
+  "experimental": true,
+  "renderer": "hors-renderer-v4",
+  "cartridge": "GMod3",
+  "name": "CAMERA CROSSING ROAD",
+  "hud_name": "CAMERA CRO",
+  "frames": 17,
+  "vertices": 56,
+  "edges": 84,
+  "colors": true,
+  "screen_color": 16,
+  "border_color": 0,
+  "wire_format": "hors-v3-color-literals-v1",
+  "frame_data": [
+    {
+      "frame": 0,
+      "bank": 4,
+      "address": 32768,
+      "bytes": 992,
+      "metadata_bytes": 331,
+      "runs": 26,
+      "encoding": "byte-spans",
+      "sha256": "660c8f221bf3b9100d92fc33ecbbd4c8afc45f07d60a1bd7c4cb2b9536b82957"
+    },
+    {
+      "frame": 1,
+      "bank": 4,
+      "address": 33760,
+      "bytes": 1075,
+      "metadata_bytes": 349,
+      "runs": 20,
+      "encoding": "byte-spans",
+      "sha256": "d0fa373fe8427aa27450ce7624c6bd537699765d274831f36b689935c7951062"
+    },
+    {
+      "frame": 2,
+      "bank": 4,
+      "address": 34835,
+      "bytes": 975,
+      "metadata_bytes": 325,
+      "runs": 16,
+      "encoding": "byte-spans",
+      "sha256": "c3ceab10658bbc5f776d3f81de1e9762858ee155f8815e58f627935de7a147e7"
+    },
+    {
+      "frame": 3,
+      "bank": 4,
+      "address": 35810,
+      "bytes": 497,
+      "metadata_bytes": 226,
+      "runs": 8,
+      "encoding": "byte-spans",
+      "sha256": "67f18cfc07702938352e4afd34792b8c6e2844663d6aa6779816cf126662050a"
+    },
+    {
+      "frame": 4,
+      "bank": 4,
+      "address": 36307,
+      "bytes": 198,
+      "metadata_bytes": 196,
+      "runs": 0,
+      "encoding": "byte-spans",
+      "sha256": "de012ba8507c3d18c36c14cf9aac316f6c19e599eeb6bc17dbd2f2222be99ec5"
+    },
+    {
+      "frame": 5,
+      "bank": 4,
+      "address": 36505,
+      "bytes": 198,
+      "metadata_bytes": 196,
+      "runs": 0,
+      "encoding": "byte-spans",
+      "sha256": "de012ba8507c3d18c36c14cf9aac316f6c19e599eeb6bc17dbd2f2222be99ec5"
+    },
+    {
+      "frame": 6,
+      "bank": 4,
+      "address": 36703,
+      "bytes": 198,
+      "metadata_bytes": 196,
+      "runs": 0,
+      "encoding": "byte-spans",
+      "sha256": "de012ba8507c3d18c36c14cf9aac316f6c19e599eeb6bc17dbd2f2222be99ec5"
+    },
+    {
+      "frame": 7,
+      "bank": 4,
+      "address": 36901,
+      "bytes": 198,
+      "metadata_bytes": 196,
+      "runs": 0,
+      "encoding": "byte-spans",
+      "sha256": "de012ba8507c3d18c36c14cf9aac316f6c19e599eeb6bc17dbd2f2222be99ec5"
+    },
+    {
+      "frame": 8,
+      "bank": 4,
+      "address": 37099,
+      "bytes": 198,
+      "metadata_bytes": 196,
+      "runs": 0,
+      "encoding": "byte-spans",
+      "sha256": "de012ba8507c3d18c36c14cf9aac316f6c19e599eeb6bc17dbd2f2222be99ec5"
+    },
+    {
+      "frame": 9,
+      "bank": 4,
+      "address": 37297,
+      "bytes": 198,
+      "metadata_bytes": 196,
+      "runs": 0,
+      "encoding": "byte-spans",
+      "sha256": "de012ba8507c3d18c36c14cf9aac316f6c19e599eeb6bc17dbd2f2222be99ec5"
+    },
+    {
+      "frame": 10,
+      "bank": 4,
+      "address": 37495,
+      "bytes": 198,
+      "metadata_bytes": 196,
+      "runs": 0,
+      "encoding": "byte-spans",
+      "sha256": "de012ba8507c3d18c36c14cf9aac316f6c19e599eeb6bc17dbd2f2222be99ec5"
+    },
+    {
+      "frame": 11,
+      "bank": 4,
+      "address": 37693,
+      "bytes": 198,
+      "metadata_bytes": 196,
+      "runs": 0,
+      "encoding": "byte-spans",
+      "sha256": "de012ba8507c3d18c36c14cf9aac316f6c19e599eeb6bc17dbd2f2222be99ec5"
+    },
+    {
+      "frame": 12,
+      "bank": 4,
+      "address": 37891,
+      "bytes": 198,
+      "metadata_bytes": 196,
+      "runs": 0,
+      "encoding": "byte-spans",
+      "sha256": "de012ba8507c3d18c36c14cf9aac316f6c19e599eeb6bc17dbd2f2222be99ec5"
+    },
+    {
+      "frame": 13,
+      "bank": 4,
+      "address": 38089,
+      "bytes": 497,
+      "metadata_bytes": 226,
+      "runs": 8,
+      "encoding": "byte-spans",
+      "sha256": "67f18cfc07702938352e4afd34792b8c6e2844663d6aa6779816cf126662050a"
+    },
+    {
+      "frame": 14,
+      "bank": 4,
+      "address": 38586,
+      "bytes": 975,
+      "metadata_bytes": 325,
+      "runs": 16,
+      "encoding": "byte-spans",
+      "sha256": "c3ceab10658bbc5f776d3f81de1e9762858ee155f8815e58f627935de7a147e7"
+    },
+    {
+      "frame": 15,
+      "bank": 4,
+      "address": 39561,
+      "bytes": 1075,
+      "metadata_bytes": 349,
+      "runs": 20,
+      "encoding": "byte-spans",
+      "sha256": "d0fa373fe8427aa27450ce7624c6bd537699765d274831f36b689935c7951062"
+    },
+    {
+      "frame": 16,
+      "bank": 5,
+      "address": 32768,
+      "bytes": 992,
+      "metadata_bytes": 331,
+      "runs": 26,
+      "encoding": "byte-spans",
+      "sha256": "660c8f221bf3b9100d92fc33ecbbd4c8afc45f07d60a1bd7c4cb2b9536b82957"
+    }
+  ],
+  "directory_ram_bytes": 136,
+  "paged_directory_rom_bytes": 0,
+  "metadata_cache_bytes": 3072,
+  "rom_frame_bytes": 8860,
+  "highest_bank": 5,
+  "runtime_work": "build/camera-crossing-gmod3-gmod3",
+  "capacity_mib": 2,
+  "preference": "fps",
+  "mapping": "one bank select per fetch; $37 ROM reads / $35 RAM reads; bounded SEI sections",
+  "vector_override": false,
+  "audio": false,
+  "picture_reuse": false,
+  "encoding_choice": {
+    "gap": 6,
+    "batch_budget": 2048
+  },
+  "container": {
+    "cartridge": "GMod3",
+    "hardware_type": 62,
+    "bank_count": 256,
+    "header_bytes": 64,
+    "version": "1.0",
+    "exrom": 0,
+    "game": 1,
+    "reserved_bytes_zero": true,
+    "chip_packet_bytes": 8208,
+    "chip_payload_bytes": 8192,
+    "load_address": "0x8000",
+    "cold_start": "0x800c",
+    "warm_start": "0x800c",
+    "cbm80": true,
+    "capacity_bytes": 2097152,
+    "crt_sha256": "6091bb6d6a56dc570fd3e383909f8b44d2ce401d9f729ab7ff259269fa44cb50",
+    "raw_sha256": "bddeddde74414048ac5a1a49099828ce63e53ab5ae70286364e0cb1c9c951203"
+  },
+  "build_evidence": {
+    "generated_asm_sha256": "a4fed752bdc46f02da650fac6c60411387158ac13902ce85fa9f5dc9c9e086d1",
+    "runtime_prg_sha256": "ea2e2801998bb70207fd6eccf73fa2581a406f0fbe4d0a5c39fa173a1fa290cf",
+    "symbols_sha256": "0bdf14f8f3aa88ad3472ef076951cfc0d76e6aa2e03f8e31caeca71fbeef64d0",
+    "boot_sha256": "a8c9a5726a725715cbf12cafc4c592f71069eb8023e08063b41aca94337b981b",
+    "helper_sha256": "257016001777529cbd7522b9342ea2f748d48a98fa850664ee7cf374f5346a24"
+  },
+  "renderer_label": "hors-v4-gmod3",
+  "implementation": "HORS-V3 picture core / independent GMod3 backend",
+  "color_policy": {
+    "dynamic_screen_cells": 195,
+    "old_color_reset_removed": true,
+    "previous_picture_dependency": false,
+    "color_encoding": "shared addresses plus absolute colour bytes",
+    "color_pair_dictionary": null,
+    "shared_address_bytes": 249,
+    "color_bytes_per_frame": 195,
+    "extra_reserved_RAM_bytes": 0,
+    "reused_vector_dispatch_page": [
+      17152,
+      17408
+    ],
+    "clear_metadata_compacted_frames": 0
+  },
+  "cartridge_capacity": {
+    "units": "KiB",
+    "used_kib": 48,
+    "free_kib": 2000,
+    "capacity_kib": 2048,
+    "accounting": "allocated 8 KiB banks including boot/runtime and bank padding; not CRT container size",
+    "used_bytes": 49152,
+    "free_bytes": 2048000,
+    "lines": [
+      {
+        "text": "cart type: GMod3",
+        "row": 22,
+        "column": 12
+      },
+      {
+        "text": "used: 48 KiB | free: 2000 KiB",
+        "row": 23,
+        "column": 5
+      }
+    ]
+  },
+  "interactive": false,
+  "hud_visibility": {
+    "initial_info": true,
+    "initial_performance": true,
+    "initial_label": true,
+    "toggle_allowed": false,
+    "code_ram": null,
+    "additional_reserved_RAM_bytes": 0,
+    "implementation": "fixed initial HUD state; no switching code",
+    "idle": "no toggle scanner",
+    "model_viewport_unchanged": true,
+    "measurements_continue_while_hidden": true
+  },
+  "background_effect": {
+    "name": "none",
+    "included": false,
+    "extra_reserved_RAM_bytes": 0
+  },
+  "build_screen": {
+    "version": "0.8.1",
+    "renderer": "hors-v4-gmod3",
+    "wait_for_space": true,
+    "layout": "v0.7.8",
+    "screen_ram": [
+      1024,
+      2048
+    ],
+    "help_hint": null,
+    "help_row": null,
+    "start_row": 20,
+    "startup_only_ram": [
+      8192,
+      9216
+    ],
+    "extra_playback_RAM_bytes": 0,
+    "playback_cycle_cost": 0,
+    "cartridge": "GMod3",
+    "capacity": {
+      "units": "KiB",
+      "used_kib": 48,
+      "free_kib": 2000,
+      "capacity_kib": 2048,
+      "accounting": "allocated 8 KiB banks including boot/runtime and bank padding; not CRT container size",
+      "used_bytes": 49152,
+      "free_bytes": 2048000,
+      "lines": [
+        {
+          "text": "cart type: GMod3",
+          "row": 22,
+          "column": 12
+        },
+        {
+          "text": "used: 48 KiB | free: 2000 KiB",
+          "row": 23,
+          "column": 5
+        }
+      ]
+    },
+    "capacity_rows": [
+      22,
+      23
+    ]
+  },
+  "authored_scene": true,
+  "output_fps": 25.0,
+  "authored_frames": 17
+}

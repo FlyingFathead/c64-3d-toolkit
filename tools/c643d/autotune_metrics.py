@@ -27,7 +27,7 @@ def measure_display(crt, oracle, vice, vice_data, refreshes=501):
         for i in range(refreshes+1):
             cmd+=['g','stopwatch','bank ram',f'bsave "{td/f"{i}.ram"}" 0 $0000 $ffff','bank cpu',f'bsave "{td/f"{i}.io"}" 0 $d000 $dd03']
         cmd+=['quit'];(td/'run.mon').write_text('\n'.join(cmd)+'\n')
-        argv=[str(vice),'-console','+easyflashcrtwrite','-pal','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(td/'run.mon'),'-monlog','-monlogname',str(td/'monitor.log'),'-limitcycles',str(warm*1000000+(refreshes+1)*PAL_TICKS+20000000)]
+        argv=[str(vice),'-console','+easyflashcrtwrite','-pal','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(td/'run.mon'),'-monlogname', str(td/'monitor.log'), '-monlog','-limitcycles',str(warm*1000000+(refreshes+1)*PAL_TICKS+20000000)]
         if vice_data:argv+=['-directory',str(vice_data)]
         with (td/'vice.log').open('w') as log:subprocess.run(argv,stdout=log,stderr=log,check=True,timeout=240)
         ticks=[int(v) for v in re.findall(r'Stopwatch:\s*(\d+)',(td/'monitor.log').read_text())]

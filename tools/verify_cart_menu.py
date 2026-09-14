@@ -38,7 +38,7 @@ for style in styles:
   expected_selection=([255,*range(entry_count-1,-1,-1)] if has_play_all else [*range(entry_count-1,-1,-1)])[i]
   mon += [f'g ${s["menu_up"]:04x}'];dump(style,f'up-{i}')
 mon+=['quit'];(out/'run.mon').write_text('\n'.join(mon)+'\n')
-cmd=[a.vice,'-console','+easyflashcrtwrite','+sound','-warp','-seed','1','-directory',str(a.vice_data),'-cartcrt',str(a.crt.resolve()),'-initbreak','reset','-moncommands',str(out/'run.mon'),'-limitcycles','12000000']
+cmd=[a.vice,'-console','+easyflashcrtwrite','+sound','-warp','-seed','1','-directory',str(a.vice_data),'-cartcrt',str(a.crt.resolve()),'-initbreak','reset','-monlogname',str(out/'monitor.log'),'-moncommands',str(out/'run.mon'),'-limitcycles','12000000']
 with (out/'vice.log').open('w') as f:subprocess.run(cmd,stdout=f,stderr=subprocess.STDOUT,check=True,timeout=60)
 rom=(a.vice_data/'C64/chargen-901225-01.bin').read_bytes();pal={v[0]:v[1] for v in C64_PALETTE.values()};reports=[]
 if startup:

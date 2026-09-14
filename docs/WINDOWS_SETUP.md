@@ -1,5 +1,7 @@
 > Current conversion default: **hors-renderer-v4 / GMod3**. Explicit HORS-V3 retains EasyFlash. [v0.8.0 release notes](RELEASE_0.8.0.md).
 
+[Current Windows/Linux installation and dependency repair](INSTALLATION.md). Python libraries are now checked and installed through the root setup scripts.
+
 # Windows setup
 
 `c64-3d-toolkit` v0.7.3 includes a Windows 11 setup helper with optional Blender support. Cartridge `.crt` builds also use the `cartconv` utility supplied with VICE; its path can be set in `config/c643d.ini` or with `--cartconv` when automatic discovery is not sufficient.

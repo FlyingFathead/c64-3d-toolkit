@@ -11,43 +11,15 @@ from .gmod3_catalog import frames_for, mesh_for, read_json
 from .gmod3_v3 import assemble_cartridge
 from .gmod3_paging import configure as paging
 from .hors_v3 import encoding_plan
-from .hors_v3_help import help_pages, packed_help
+from .hors_v3_help import packed_help
+from . import interactive_cart_baseline as baseline
 from .buildscreen import screen_codes
 from .emit import bytes_lines
 from .demo_colors import once
 
-TITLE = 'Demo Cart v3.0: GMod3 All-in-One'
-STEM = 'demo-cart-v3.0-gmod3-all-in-one'
+TITLE = 'Demo Cart v3.1: GMod3 All-in-One'
+STEM = 'demo-cart-v3.1-gmod3-all-in-one'
 
-
-def collection_help(source, row):
-    pages=[[
-        'Demo Cart v3.0                 pg 1/2 >', 'GMod3 All-in-One help',
-        'STOP / F1  collection menu', 'N / P    next / previous demo',
-        'C        next Dragon shade / wire', 'SHIFT+H  open / close help',
-        'SPACE    close help', 'CURSOR / JOY1/2 L/R  direction',
-        '+ / - / 0   speed up / down / reset', 'F2       reset presentation',
-        'F3       foreground / source palette', 'F4       next background',
-        'F5       background cycle on / off', 'F6 / F7  slower / faster cycle',
-        'F8       border black / follow', 'CTRL+F7  independent border',
-        'Even F-keys = SHIFT + odd F-key',
-    ],[
-        'Demo Cart v3.0                 pg 2/2 <', 'GMod3 All-in-One help',
-        'SHIFT+S  stars on / off', '1/2/3    stars reset / more / less',
-        '4        light / full stars', 'SHIFT+I  model info on / off',
-        'SHIFT+F  FPS and speed text on / off', 'SHIFT+U  all HUD text on / off',
-        '5        exhibition on / off', '6        sequential / random',
-        '7/8      interval -/+5s (5..60s)',
-    ]]
-    if row['mode_frames']:
-        pages[1] += ['SAKU PRESENTATIONS:', 'SHIFT+T/W solid on white, stars off',
-            'SHIFT+G  gradient + stars', 'SHIFT+R  spin / crawl',
-            'SHIFT+B  white card / gradient', 'SHIFT+O  outline / gradient']
-    pages[1] += ['LEFT/RIGHT pages. STOP returns to menu.']
-    packed,offsets=packed_help(pages)
-    start=source.index('hp_packed:\n')+len('hp_packed:\n');end=source.index('.if * > $c400',start)
-    source=source[:start]+'\n'.join(bytes_lines(packed))+f'\nhp_page_lo: .byte <hp_packed,<({offsets[1]}+hp_packed)\nhp_page_hi: .byte >hp_packed,>({offsets[1]}+hp_packed)\n'+source[end:]
-    return source
 
 
 def runtime_hook(row, interactive, directory_bank):
@@ -64,7 +36,8 @@ def runtime_hook(row, interactive, directory_bank):
                 '        bne sd_stop_released\n        jmp $a600')
             source=once(source, 'hp_space_read:\n        and #$90',
                 'hp_space_read:\n        cmp #$80\n        bcs collection_help_space\n        jmp $a600\ncollection_help_space:\n        and #$90')
-            source=collection_help(source,row)
+            source=baseline.configure_collection_help(source,modes=bool(row['mode_frames']))
+            source=baseline.configure_collection_exit(source)
         if interactive and row['screen_color']&15:
             # Map the source background colour, preserving black foregrounds
             # in the original colour-combination demos.
@@ -204,13 +177,13 @@ def menu_sources(root, rows, occupied, interactive, work, tass):
         def center(row,s):
             if len(s)>40:raise ValueError('Menu label exceeds 40 columns')
             text[row]=s.center(40)
-        center(0,'Demo Cart v3.0')
+        center(0,'Demo Cart v3.1' if interactive else 'Demo Cart v3.0')
         center(1,'GMod3 All-in-One'+(' / benchmark' if not interactive else ''))
         center(2,f'HORS-V4-GMOD3 | {len(rows)} entries | page {page+1}/{pages}')
         for i,r in enumerate(rows[page*15:page*15+15]):
             name=r['name'][:30]
             text[4+i]=f'{r["index"]+1:02d} {name:<30} {r["frames"]:4d}  '[:40].ljust(40)
-        center(19,'CURSOR: choose | SPACE: start')
+        center(19,'CURSOR: choose | SPACE/ENTER: start' if interactive else 'CURSOR: choose | SPACE: start')
         center(20,'STOP/F1 menu | N/P demos | C shades' if interactive else 'Automatic full-loop benchmark sequence')
         center(21,'SHIFT+H help | stars initially off' if interactive else 'No input polling or starfield')
         center(22,'cart type: GMod3')
@@ -218,6 +191,10 @@ def menu_sources(root, rows, occupied, interactive, work, tass):
         codes=screen_codes(''.join(text))+[32]*24
         lines += [f'screen_{page}:',*bytes_lines(codes)]
     (gen/'collection-screens.inc').write_text('\n'.join(lines)+'\n')
+    if interactive:
+        packed,offsets=packed_help(baseline.collection_help_pages(modes=True))
+        (gen/'collection-help-data.inc').write_text('menu_help_packed:\n'+'\n'.join(bytes_lines(packed))+f'\nmenu_help_lo: .byte <menu_help_packed,<(menu_help_packed+{offsets[1]})\nmenu_help_hi: .byte >menu_help_packed,>(menu_help_packed+{offsets[1]})\n')
+        shutil.copyfile(Path(root)/'c64/gmod3/collection-help.asm',gen/'collection-help.asm')
     shutil.copyfile(Path(root)/'c64/gmod3/collection.asm',gen/'collection.asm')
     subprocess.run([str(tass),'--nostart','--vice-labels','-l',str(gen/'collection.lbl'),'-o',str(gen/'collection.bin'),str(gen/'collection.asm')],check=True)
     return (gen/'collection.bin').read_bytes()
@@ -228,7 +205,8 @@ def build(root, *, tass, cartconv, outdir, interactive=True, only=None):
     cache=root/'build/gmod3-catalog';rows=read_json(cache/'catalog.json')
     if only is not None:rows=[r for r in rows if r['id'] in only]
     rows,occupied=layout(rows,cache,interactive)
-    stem=STEM+('' if interactive else '-benchmark')
+    stem=STEM if interactive else 'demo-cart-v3.0-gmod3-all-in-one-benchmark'
+    title=TITLE if interactive else 'Demo Cart v3.0: GMod3 All-in-One'
     work=root/'build'/stem;work.mkdir(parents=True,exist_ok=True)
     cart=image.new_image(16)
     boot=menu_sources(root,rows,occupied,interactive,work,tass);image.put_bank(cart,0,boot)
@@ -252,20 +230,22 @@ def build(root, *, tass, cartconv, outdir, interactive=True, only=None):
         if row['directory_bank'] is not None:
             bank=row['directory_bank'];image.put_bank(cart,bank,raw[bank*8192:(bank+1)*8192])
         if manifest['highest_bank']!=row['last_bank']:raise ValueError('Collection preflight/assembly mismatch')
-        labels=outdir/'metadata'/('interactive' if interactive else 'benchmark')/f'{row["index"]:02d}.lbl'
+        labels=outdir/'metadata'/('interactive-v3.1' if interactive else 'benchmark')/f'{row["index"]:02d}.lbl'
         labels.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(crt.with_suffix('.lbl'),labels)
-        manifest.update(collection_entry=row['index'],collection_name=TITLE,cartridge_capacity=None)
+        if interactive: baseline.describe_collection(manifest,modes=bool(row['mode_frames']))
+        manifest.update(collection_entry=row['index'],collection_name=title,cartridge_capacity=None)
         row['runtime']=manifest;row['labels']=labels.relative_to(outdir).as_posix()
         entries.append(row)
         # Standalone intermediate CRTs are not deliverables.
         crt.unlink(); (root/manifest['runtime_work']/(entry_stem+'.bin')).unlink()
         print(f'Entry used: {row["allocated_kib"]} KiB | collection used: {(row["last_bank"]+1)*8} KiB | remaining: {16384-(row["last_bank"]+1)*8} KiB',flush=True)
-    crt=outdir/(stem+'.crt');container=image.convert(image=cart,raw=work/(stem+'.bin'),crt=crt,cartconv=cartconv,name='DEMO CART V3.0 GMOD3 ALL-IN-ONE',cwd=root)
-    report=dict(title=TITLE,renderer='hors-renderer-v4',renderer_label='hors-v4-gmod3',cartridge='GMod3',interactive=interactive,
+    crt=outdir/(stem+'.crt');container=image.convert(image=cart,raw=work/(stem+'.bin'),crt=crt,cartconv=cartconv,name='DEMO CART V3.1 GMOD3 ALL-IN-ONE' if interactive else 'DEMO CART V3.0 GMOD3 ALL-IN-ONE',cwd=root)
+    report=dict(title=title,renderer='hors-renderer-v4',renderer_label='hors-v4-gmod3',cartridge='GMod3',interactive=interactive,
         capacity_kib=16384,used_kib=occupied*8,free_kib=16384-occupied*8,allocated_banks=occupied,
         accounting='allocated 8 KiB banks including bootstrap, each runtime, paging and data padding',
         entries=entries,container=container,starfield_default='disabled',
-        keymap={'RUN/STOP (Esc in VICE)':'collection menu','F1':'collection menu','N/P':'next/previous entry','C':'next Dragon shade or wireframe','Shift+H':'help'} if interactive else {},
+        keymap=entries[0]['runtime']['interactive_cart']['keys'] if interactive else {},
+        help_pages=baseline.collection_help_pages(modes=True) if interactive else [],
         collection_labels='metadata/'+stem+'.lbl')
     shutil.copyfile(work/'collection.lbl',outdir/'metadata'/(stem+'.lbl'))
     (outdir/(stem+'-manifest.json')).write_text(json.dumps(report,indent=2)+'\n')

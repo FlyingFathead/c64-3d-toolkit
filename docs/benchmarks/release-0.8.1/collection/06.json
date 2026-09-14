@@ -1,0 +1,25 @@
+{
+  "index": 6,
+  "name": "DRAGON WIREFRAME",
+  "passed": true,
+  "frames": 128,
+  "stored_frames": 128,
+  "pictures_checked": 259,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 915,
+  "observed_refreshes": 2400,
+  "average_fps": 19.109981684981683,
+  "high_fps": 50.124542124542124,
+  "low_fps": 12.531135531135531,
+  "mean_render_cycles": 51470.20610687023,
+  "max_render_cycles": 59162,
+  "picture_sha256": "665e70fac756b5bf5751e5e44cebea7e0d462cf189ed9aef3d1208385983396b",
+  "allocated_kib": 288,
+  "bank_range": [
+    269,
+    304
+  ],
+  "target_fps": null,
+  "crt_sha256": "d1c23418a83cde9d43adb5e2dd2808303000cb8e7e0864a617ea0fd95ac6cb77"
+}

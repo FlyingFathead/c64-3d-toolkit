@@ -1,9 +1,11 @@
 from __future__ import annotations
 import math
+import sys
 from functools import lru_cache
 from dataclasses import dataclass, field
 from .mesh import Mesh, face_center, face_normal, rotate_xyz, dot
 from .colors import hires_screen_byte
+from .clipping import NEAR_PLANE, clip_line_near, project_clipped_triangle
 
 W,H=256,144
 Z_TOL=0.0008
@@ -266,7 +268,7 @@ def classify_feature_edges(mesh:Mesh, feature_angle:float=40.0):
     return out, {'boundary':boundary,'nonmanifold':nonmanifold,'crease':crease,'features':sum(out.values()),'edges':len(out)}
 
 
-def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibility_mode:str="surface", z_tolerance:float=Z_TOL, feature_angle:float=40.0, animation:str='spin', animation_tilt:float=62.0, animation_travel:float=120.0, animation_rise:float=54.0, enable_source_colors:bool=False, fallback_color:int=1, clip_viewport:bool=False, *, width:int=W, height:int=H, max_visible_runs:int=255, background_color:int=0, flip_horizontal:bool=False, flip_vertical:bool=False) -> tuple[list[FrameBuild],int]:
+def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibility_mode:str="surface", z_tolerance:float=Z_TOL, feature_angle:float=40.0, animation:str='spin', animation_tilt:float=62.0, animation_travel:float=120.0, animation_rise:float=54.0, enable_source_colors:bool=False, fallback_color:int=1, clip_viewport:bool=False, *, width:int=W, height:int=H, max_visible_runs:int=255, background_color:int=0, flip_horizontal:bool=False, flip_vertical:bool=False, clip_near:bool=False, allow_empty:bool=False, clipping_stats:dict|None=None) -> tuple[list[FrameBuild],int]:
     if not 1<=frames<=255: raise ValueError('frames must be 1..255')
     if not 0<=fallback_color<=15: raise ValueError('fallback colour must be 0..15')
     if not 0<=background_color<=15: raise ValueError('background colour must be 0..15')
@@ -281,11 +283,24 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
         feature_edges,_feature_stats=classify_feature_edges(mesh,feature_angle)
     all_frames=[]
     focal_y=camera.focal if camera.focal_y is None else camera.focal_y
+    def project(p):
+        x,y,z=p
+        return camera.cx+camera.focal*x/z,camera.cy-focal_y*y/z,1.0/z
+    def count(key):
+        if clipping_stats is not None:
+            clipping_stats[key]=clipping_stats.get(key,0)+1
     for fi in range(frames):
-        projected=[]
+        projected=[]; camera_vertices=[]
         for p0 in mesh.vertices:
             x,y,z0=_frame_transform(p0,fi,frames,spin_axis=spin_axis,animation=animation,animation_tilt=animation_tilt,animation_travel=animation_travel,animation_rise=animation_rise); z=camera.distance+z0
-            if z<=1.0e-6:
+            if not all(math.isfinite(v) for v in (x,y,z)):
+                raise ValueError(f'frame {fi}: non-finite camera-space vertex')
+            camera_vertices.append((x,y,z))
+            if clip_near and z<NEAR_PLANE:
+                projected.append(None)
+                count('near_vertices')
+                continue
+            if not clip_near and z<=NEAR_PLANE:
                 raise RuntimeError(f'frame {fi}: vertex lies on or behind the camera near plane (z={z:g})')
             sx=camera.cx+camera.focal*x/z; sy=camera.cy-focal_y*y/z
             projected.append((sx,sy,1.0/z))
@@ -305,7 +320,14 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
         # the historical Elite-style fast host-side cull for comparison.
         for facei,a,b,c in tris:
             if visibility_mode in ("surface", "surface_features", "surface_creases") or front[facei]:
-                raster_triangle(zbuf,zowner,facei,projected[a],projected[b],projected[c],width=width,height=height)
+                if clip_near and any(projected[v] is None for v in (a,b,c)):
+                    count('near_triangles')
+                    triangles=project_clipped_triangle(
+                        [camera_vertices[v] for v in (a,b,c)],project,width=width,height=height)
+                    for triangle in triangles:
+                        raster_triangle(zbuf,zowner,facei,*triangle,width=width,height=height)
+                else:
+                    raster_triangle(zbuf,zowner,facei,projected[a],projected[b],projected[c],width=width,height=height)
         records=[]; touched=set(); raw=0; mism=[]
         cell_color_counts: dict[tuple[int,int],dict[int,int]]={}
         for v0,v1 in edges:
@@ -338,12 +360,23 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
                 # sharp manifold creases survive back-face pre-culling and go
                 # through the full surface Z-buffer visibility test.
                 continue
-            sx0,sy0=projected[v0][0],projected[v0][1]
-            sx1,sy1=projected[v1][0],projected[v1][1]
+            p0,p1=projected[v0],projected[v1]
+            if clip_near and (p0 is None or p1 is None):
+                segment=clip_line_near(camera_vertices[v0],camera_vertices[v1])
+                if segment is None:
+                    count('behind_edges')
+                    continue
+                count('near_edges')
+                p0,p1=map(project,segment)
+            sx0,sy0,q0=p0
+            sx1,sy1,q1=p1
             if clip_viewport:
                 clipped=clip_line_to_viewport(sx0,sy0,sx1,sy1,width=width,height=height)
                 if clipped is None:
+                    count('outside_edges')
                     continue
+                if not (0<=sx0<=width-1 and 0<=sx1<=width-1 and 0<=sy0<=height-1 and 0<=sy1<=height-1):
+                    count('viewport_edges')
                 cx0,cy0,cx1,cy1=clipped
                 x0=max(0,min(width-1,int(round(cx0)))); y0=max(0,min(height-1,int(round(cy0))))
                 x1=max(0,min(width-1,int(round(cx1)))); y1=max(0,min(height-1,int(round(cy1))))
@@ -354,8 +387,6 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
                 if not (0<=x0<width and 0<=x1<width and 0<=y0<height and 0<=y1<height):
                     raise RuntimeError(f'frame {fi}: projected edge outside viewport: {(x0,y0)} {(x1,y1)}')
             dda=oriented_dda(x0,y0,x1,y1); mism.append(dda['mismatch']); pts=dda['points']
-            q0=projected[v0][2]; q1=projected[v1][2]
-            if pts[0]!=(x0,y0):q0,q1=q1,q0
             # Compare the edge against the surface buffer at the same screen-space
             # sample location. More importantly, an edge must never disappear merely
             # because one of *its own adjacent faces* won the Z-buffer pixel. That
@@ -375,7 +406,7 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
                     t=max(0.0,min(1.0,t))
                 else:
                     t=0.0
-                q=projected[v0][2]+(projected[v1][2]-projected[v0][2])*t
+                q=q0+(q1-q0)*t
                 pi=y*width+x
                 own_surface=(zowner[pi] in adjacent_set)
                 vis.append(own_surface or q>=zbuf[pi]-z_tolerance)
@@ -406,7 +437,7 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
                             seg_start=seg_end+1
                     start=None
         if len(records)>max_visible_runs: raise RuntimeError(f'frame {fi}: {len(records)} visible runs >{max_visible_runs}')
-        if not touched: raise RuntimeError(f'frame {fi}: no visible pixels')
+        if not touched and not allow_empty: raise RuntimeError(f'frame {fi}: no visible pixels')
         # clear touched character-cell runs, as in v0.8
         cells={(x>>3,y>>3) for x,y in touched}; spans=[]
         for cy in range(height//8):
@@ -455,7 +486,7 @@ def build_frames(mesh:Mesh, frames:int, camera:Camera, spin_axis:str="y", visibi
 def build_scene_frames(scene, *, visibility_mode:str='surface', z_tolerance:float=Z_TOL,
                        feature_angle:float=40.0, enable_source_colors:bool=False,
                        fallback_color:int=1, width:int|None=None, height:int=H,
-                       max_frames:int=255, max_visible_runs:int=255, background_color:int=0, flip_horizontal:bool=False, flip_vertical:bool=False) -> tuple[list[FrameBuild],int]:
+                       max_frames:int=255, max_visible_runs:int=255, background_color:int=0, flip_horizontal:bool=False, flip_vertical:bool=False, ignore_warnings:bool=False, clipping_stats:dict|None=None) -> tuple[list[FrameBuild],int]:
     """Render camera-space frames loaded from a ``.c643dscene`` source.
 
     Each authored frame is fed through the same hidden-line/DDA implementation
@@ -469,6 +500,7 @@ def build_scene_frames(scene, *, visibility_mode:str='surface', z_tolerance:floa
     if not 1<=len(scene.frames)<=max_frames:
         raise ValueError(f'scene frames must be 1..{max_frames}')
     all_frames=[]; candidate_edges=None
+    summary={}; affected_frames=0
     for scene_index,frame in enumerate(scene.frames):
         current=Mesh(
             scene.mesh.name,list(frame.vertices),list(scene.mesh.faces),
@@ -478,6 +510,7 @@ def build_scene_frames(scene, *, visibility_mode:str='surface', z_tolerance:floa
             distance=0.0,focal=frame.projection.fx,cx=frame.projection.cx,
             cy=frame.projection.cy,focal_y=frame.projection.fy,
         )
+        frame_stats={}
         try:
             built,edges=build_frames(
                 current,1,camera,animation='recede',animation_travel=0.0,
@@ -485,6 +518,7 @@ def build_scene_frames(scene, *, visibility_mode:str='surface', z_tolerance:floa
                 feature_angle=feature_angle,enable_source_colors=enable_source_colors,
                 fallback_color=fallback_color,background_color=background_color,clip_viewport=True,width=width,height=height,
                 max_visible_runs=max_visible_runs,flip_horizontal=flip_horizontal,flip_vertical=flip_vertical,
+                clip_near=True,allow_empty=True,clipping_stats=frame_stats,
             )
         except RuntimeError as e:
             raise RuntimeError(
@@ -494,7 +528,25 @@ def build_scene_frames(scene, *, visibility_mode:str='surface', z_tolerance:floa
             candidate_edges=edges
         elif edges!=candidate_edges:
             raise RuntimeError('scene topology changed while rendering')
+        if frame_stats or not built[0].unique_pixels:
+            affected_frames+=1
+        for key,value in frame_stats.items():
+            summary[key]=summary.get(key,0)+value
+        if not built[0].unique_pixels:
+            summary['empty_frames']=summary.get('empty_frames',0)+1
         all_frames.append(built[0])
+    summary['affected_frames']=affected_frames
+    summary['total_frames']=len(all_frames)
+    if clipping_stats is not None:
+        clipping_stats.update(summary)
+    if affected_frames and not ignore_warnings:
+        print(f"WARNING: scene clipping: {affected_frames}/{len(all_frames)} frames affected; "
+              f"{summary.get('near_edges',0)} near-plane edge clips, "
+              f"{summary.get('behind_edges',0)} behind-camera edges discarded, "
+              f"{summary.get('viewport_edges',0)} viewport edge clips, "
+              f"{summary.get('outside_edges',0)} off-screen edges discarded; "
+              f"{summary.get('empty_frames',0)} invisible frames retained. "
+              "All authored samples preserved. Use --ignore-warnings to hide this summary.",file=sys.stderr)
     return all_frames,int(candidate_edges or 0)
 
 

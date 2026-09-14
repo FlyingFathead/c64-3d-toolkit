@@ -1,0 +1,21 @@
+{
+  "cartridge": "camera-crossing-gmod3.crt",
+  "menu_entry": null,
+  "verified_frames": 54,
+  "orientations": 17,
+  "bitmap_bytes_checked": 414720,
+  "color_bytes_checked": 51840,
+  "slots": {
+    "1": 18,
+    "2": 18,
+    "0": 18
+  },
+  "average_fps": 25.333167738505068,
+  "min_frame_cycles": 23273,
+  "max_frame_cycles": 48451,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0
+}

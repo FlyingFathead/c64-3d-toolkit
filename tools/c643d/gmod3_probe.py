@@ -7,6 +7,7 @@ import subprocess
 
 from . import gmod3_image as cart
 from .gmod3_stream import install_runtime
+from .monitor_logs import vice_monitor_args
 
 BENCHES = ('empty', 'fixed', 'indexed', 'read', 'ram_read', 'copy', 'ram_copy', 'mapping')
 
@@ -70,7 +71,7 @@ def labels(path):
 def vice_command(vice, crt, vice_data=None):
     command = [str(vice), '-console', '-default', '-pal', '+sound', '-warp', '-seed', '1',
         '+saveres', '+easyflashcrtwrite', '+gmod3flashwrite', '-jamaction', '5',
-        '-cartcrt', str(Path(crt).resolve())]
+        '-cartcrt', str(Path(crt).resolve()), *vice_monitor_args()]
     if vice_data:
         command += ['-directory', str(vice_data)]
     return command
@@ -97,7 +98,7 @@ def measure(crt, *, vice, vice_data=None):
     # A unique log per run prevents the stale-monitor-log failure seen earlier.
     log.unlink(missing_ok=True)
     command = vice_command(vice, crt, vice_data) + ['-initbreak', 'reset', '-moncommands', str(script),
-        '-monlog', '-monlogname', str(log), '-limitcycles', '10000000']
+        '-monlogname', str(log), '-monlog', '-limitcycles', '10000000']
     with (work/'vice.log').open('w') as output:
         result = subprocess.run(command, stdout=output, stderr=subprocess.STDOUT, timeout=60)
     trace = log.read_text() if log.exists() else ''

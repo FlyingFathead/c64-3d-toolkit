@@ -1,5 +1,7 @@
 # Forward starfield and interactive controls
 
+[Shared SAKU interactive baseline and complete controls](INTERACTIVE_CART_BASELINE.md). New builds and the v3.1 collection start with stars disabled; the original SAKU example explicitly enables them.
+
 HORS-V4 / GMod3 retains these V3 controls. The [All-in-One collection](../examples/gmod3_cart_demos/README.md) starts with stars off and adds F1 menu, N/P entry selection and C Dragon shading. Older EasyFlash cartridges retain their original keymaps.
 
 

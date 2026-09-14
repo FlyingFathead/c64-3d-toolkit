@@ -23,6 +23,7 @@ def source_files(root):
             if name in SKIP or name=='monitor.log':continue
             if (Path(parent)/name).relative_to(root).as_posix()=='config/c643d.ini':continue
             path=Path(parent)/name
+            if path.parent==root and name.startswith('RELEASE-') and name.endswith('.sh'):continue
             if path.suffix not in ('.pyc','.zip') and not path.is_symlink():yield path
 
 

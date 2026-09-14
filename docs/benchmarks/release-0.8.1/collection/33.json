@@ -1,0 +1,25 @@
+{
+  "index": 33,
+  "name": "DENSE TORUS CYAN ON BLUE",
+  "passed": true,
+  "frames": 32,
+  "stored_frames": 32,
+  "pictures_checked": 67,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 830,
+  "observed_refreshes": 2400,
+  "average_fps": 17.334737484737484,
+  "high_fps": 25.062271062271062,
+  "low_fps": 12.531135531135531,
+  "mean_render_cycles": 57316.91428571429,
+  "max_render_cycles": 66531,
+  "picture_sha256": "46f892b66d1e8fb0d9abe6b6de8b2fb29f63f88b22abcf70123a11b74f046167",
+  "allocated_kib": 80,
+  "bank_range": [
+    817,
+    826
+  ],
+  "target_fps": null,
+  "crt_sha256": "d1c23418a83cde9d43adb5e2dd2808303000cb8e7e0864a617ea0fd95ac6cb77"
+}

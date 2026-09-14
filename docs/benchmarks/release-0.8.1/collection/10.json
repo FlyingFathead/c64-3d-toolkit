@@ -1,0 +1,25 @@
+{
+  "index": 10,
+  "name": "BLENDER VIEWPORT TEST",
+  "passed": true,
+  "frames": 16,
+  "stored_frames": 16,
+  "pictures_checked": 35,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 379,
+  "observed_refreshes": 2400,
+  "average_fps": 7.91550061050061,
+  "high_fps": 10.024908424908425,
+  "low_fps": 6.2655677655677655,
+  "mean_render_cycles": 124844.0,
+  "max_render_cycles": 143525,
+  "picture_sha256": "af4bb5ba31b6f8684ad0c02ec86a475a0a55e1b6f4f7d6733d4bcc4396e50d05",
+  "allocated_kib": 96,
+  "bank_range": [
+    328,
+    339
+  ],
+  "target_fps": 10.0,
+  "crt_sha256": "d1c23418a83cde9d43adb5e2dd2808303000cb8e7e0864a617ea0fd95ac6cb77"
+}

@@ -81,7 +81,7 @@ def verify(crt, vice, vice_data, *, exhibition=False):
         cmd = [vice, '-console', '+easyflashcrtwrite', '-pal', '+sound', '-warp', '-seed', '1',
                '-jamaction', '2', '-directory', str(vice_data), '-cartcrt', str(crt),
                '-initbreak', 'reset', '-moncommands', str(out / 'run.mon'),
-               '-monlog', '-monlogname', str(out / 'monitor.log'),
+               '-monlogname', str(out / 'monitor.log'), '-monlog',
                '-limitcycles', str((count + 2) * (seconds + 3) * 1000000)]
         with (out / 'vice.log').open('w') as log:
             subprocess.run(cmd, stdout=log, stderr=subprocess.STDOUT, check=True, timeout=120)

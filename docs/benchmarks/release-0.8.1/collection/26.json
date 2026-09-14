@@ -1,0 +1,25 @@
+{
+  "index": 26,
+  "name": "ORBITAL CUBES",
+  "passed": true,
+  "frames": 48,
+  "stored_frames": 48,
+  "pictures_checked": 99,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 1557,
+  "observed_refreshes": 2400,
+  "average_fps": 32.5182967032967,
+  "high_fps": 50.124542124542124,
+  "low_fps": 25.062271062271062,
+  "mean_render_cycles": 30071.07843137255,
+  "max_render_cycles": 32764,
+  "picture_sha256": "cec071b274c7f2b73b966e948fda5b87bc1f3596f040ce4aceca56afa9d8c589",
+  "allocated_kib": 64,
+  "bank_range": [
+    498,
+    505
+  ],
+  "target_fps": null,
+  "crt_sha256": "d1c23418a83cde9d43adb5e2dd2808303000cb8e7e0864a617ea0fd95ac6cb77"
+}

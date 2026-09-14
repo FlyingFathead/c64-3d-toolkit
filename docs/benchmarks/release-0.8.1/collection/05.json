@@ -1,0 +1,25 @@
+{
+  "index": 5,
+  "name": "DRAGON RED",
+  "passed": true,
+  "frames": 128,
+  "stored_frames": 128,
+  "pictures_checked": 259,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 699,
+  "observed_refreshes": 2400,
+  "average_fps": 14.598772893772892,
+  "high_fps": 25.062271062271062,
+  "low_fps": 12.531135531135531,
+  "mean_render_cycles": 67455.40458015267,
+  "max_render_cycles": 75800,
+  "picture_sha256": "acb58ecf58b072d0060615a31860e899bad5f99ef97714d40927fa7b2a255ee0",
+  "allocated_kib": 336,
+  "bank_range": [
+    227,
+    268
+  ],
+  "target_fps": null,
+  "crt_sha256": "d1c23418a83cde9d43adb5e2dd2808303000cb8e7e0864a617ea0fd95ac6cb77"
+}

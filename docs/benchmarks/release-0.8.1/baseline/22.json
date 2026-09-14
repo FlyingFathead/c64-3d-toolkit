@@ -1,0 +1,25 @@
+{
+  "index": 22,
+  "name": "COLOUR CUBE 24",
+  "passed": true,
+  "frames": 24,
+  "stored_frames": 24,
+  "pictures_checked": 51,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 1675,
+  "observed_refreshes": 2400,
+  "average_fps": 34.98275335775335,
+  "high_fps": 50.124542124542124,
+  "low_fps": 25.062271062271062,
+  "mean_render_cycles": 27906.925925925927,
+  "max_render_cycles": 29616,
+  "picture_sha256": "ccec56b258922f75b188de3bedcd9a4af1240c767aa423476aa394a157a625c8",
+  "allocated_kib": 40,
+  "bank_range": [
+    461,
+    465
+  ],
+  "target_fps": null,
+  "crt_sha256": "86ab08c0e3484215d4548c28a17968111d7f44fd65b7c23a6be20d9557aa63a3"
+}

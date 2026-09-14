@@ -1,0 +1,4 @@
+# Full host Python dependencies, including filled SVG conversion.
+-r requirements-core.txt
+CairoSVG>=2.9.1,<3
+defusedxml>=0.7

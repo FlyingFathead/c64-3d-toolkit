@@ -1,0 +1,12 @@
+{
+  "entries": 58,
+  "baseline_sha256": "86ab08c0e3484215d4548c28a17968111d7f44fd65b7c23a6be20d9557aa63a3",
+  "patched_sha256": "d1c23418a83cde9d43adb5e2dd2808303000cb8e7e0864a617ea0fd95ac6cb77",
+  "higher": 0,
+  "ties": 3,
+  "lower": 55,
+  "largest_drop_fps": -0.14619658119658396,
+  "largest_drop_percent": -0.392927308447943,
+  "median_change_percent": -0.24038461538460537,
+  "largest_render_cycle_increase_percent": 0.36566901715850975
+}

@@ -1,5 +1,7 @@
 # GMod3: implementation, capacity and measured behavior
 
+[v0.8.1 interactive collection fixes](RELEASE_0.8.1.md) · [SAKU baseline and menu/help commands](INTERACTIVE_CART_BASELINE.md) · [Installation](INSTALLATION.md).
+
 GMod3 has an independent, read-only cartridge backend and a complete collection:
 [Demo Cart v3.0: GMod3 All-in-One](../examples/gmod3_cart_demos/README.md).
 It contains 58 entries and 6,474 stored pictures drawn from 48 released source

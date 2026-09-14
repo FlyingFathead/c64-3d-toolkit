@@ -1,6 +1,6 @@
 <#
  c64-3d-toolkit Windows installer / configuration assistant
- Installer revision: r25 (2026-09-10)
+ Installer revision: r26 (2026-09-14)
  Target toolkit release: read from VERSION
 
  Security model:
@@ -16,7 +16,7 @@
  - No MSYS2, pacman, Scoop, Chocolatey or other third-party package manager is
    installed or invoked automatically.
  - No proactive Internet connectivity probes are made. Network access occurs
-   only if WinGet actually needs to install Python, Git, VICE or user-approved Blender.
+   when WinGet installs tools, or pip installs Python requirements after confirmation.
  - User-supplied/configured .exe paths are validated without execution: the expected
    filename must exist and the file must have a recognizable Windows PE executable header. This
    does not prove publisher identity, authenticity or runtime correctness.
@@ -37,7 +37,7 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-$InstallerRevision = 'r25'
+$InstallerRevision = 'r26'
 $ToolkitRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $TargetRelease = (Get-Content -LiteralPath (Join-Path $ToolkitRoot 'VERSION') -Raw).Trim()
 if ($TargetRelease -notmatch '^[0-9]+\.[0-9]+\.[0-9]+(?:[-+][0-9A-Za-z.-]+)?$') {
@@ -2423,8 +2423,27 @@ try {
         Write-Host 'Config: not created'
     }
 
+    Write-Section 'Python libraries (NumPy, Pillow and SVG support)'
+    $c643dPythonReady = $false
+    if ($python) {
+        $c643dPythonArgs = @()
+        if ([IO.Path]::GetFileName($python) -ieq 'py.exe') { $c643dPythonArgs = @('-3') }
+        $c643dDependencySetup = Join-Path $ToolkitRoot 'setup-python.py'
+        & $python @c643dPythonArgs $c643dDependencySetup --check
+        $c643dPythonReady = ($LASTEXITCODE -eq 0)
+        if (-not $c643dPythonReady) {
+            $c643dInstallAnswer = Read-Host 'Install required Python libraries from requirements.txt with pip? [Y/n]'
+            if ([string]::IsNullOrWhiteSpace($c643dInstallAnswer) -or $c643dInstallAnswer.Trim() -match '^(?i:y|yes)$') {
+                & $python @c643dPythonArgs $c643dDependencySetup
+                $c643dPythonReady = ($LASTEXITCODE -eq 0)
+            }
+        }
+        Write-Host 'Python library repair: py -3 .\setup-python.py --repair'
+        Write-Host 'Full Python installation includes SVG. Native Cairo is also required; see docs/INSTALLATION.md.'
+    }
+
     Write-Host ''
-    if (-not $python -or -not $tass) {
+    if (-not $python -or -not $tass -or -not $c643dPythonReady) {
         Write-Host 'Setup finished, but the build toolchain is not complete yet.' -ForegroundColor Yellow
         Write-Host 'Install/configure the missing component(s) and rerun:'
         Write-Host '  .\setup-windows.cmd'
@@ -2437,10 +2456,11 @@ try {
         Write-Host 'c64-3d-toolkit Windows setup/configuration complete.'
     }
 
-    Write-Host 'No configured third-party tool was executed, and doctor/build was not run automatically.'
+    Write-Host 'Python dependency checks ran; configured C64 tools and doctor/build were not run automatically.'
     Write-Host ''
     Write-Host 'Optional manual validation (this WILL execute the configured toolchain):'
     Write-Host '  py -3 .\c643d.py doctor'
+    if (-not $c643dPythonReady) { exit 2 }
     exit 0
 }
 catch {

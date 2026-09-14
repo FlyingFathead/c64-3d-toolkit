@@ -1,0 +1,3 @@
+# Minimal host requirements for object, surface and image conversion.
+numpy>=1.24
+Pillow>=10

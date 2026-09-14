@@ -62,3 +62,22 @@ not a released generation and is excluded from the public comparison matrix.
 All 67 existing C64 assembly files and older encoders remain intact. Old
 prebuilt examples are archived outside the checkout; they are not active
 release outputs. The complete comparison includes stable v2 and every older released method. Publication requires a current passing chart.
+
+## Where the current renderer code lives
+
+`c64/variants/` holds alternate resident PRG assembly (for example no-overlay
+builds); it is not a complete catalog of cartridge renderer generations.
+`c64/renderer-yunroll-cart-v10.asm` and its scene counterpart exist at the
+`c64/` root. HORS versions also compose/generate assembly in Python modules:
+
+| Selection | Source entry points |
+| --- | --- |
+| HORS-V1 | `c64/renderer-yunroll-cart-v10.asm`, `c64/renderer-yunroll-cart-v10-scene.asm` |
+| HORS-V2 | `tools/c643d/hors_v2.py`, `hors_v2_stable.py`; staged assembly copies |
+| HORS-V3 | `tools/c643d/hors_v3.py`; V2 bitmap core plus V3 colour/control modules |
+| HORS-V4/GMod3 | `tools/c643d/hors_v4.py`, `gmod3_*.py`, `c64/gmod3/` |
+| Interactive baseline | `tools/c643d/interactive_cart_baseline.py`; existing SAKU control modules |
+
+Generated build assembly is retained under `build/` when that pipeline emits
+it. The short selector names identify these composed implementations; they do
+not imply one matching standalone `.asm` file under `variants/`.

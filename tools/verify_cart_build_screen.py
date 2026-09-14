@@ -35,8 +35,7 @@ def verify(crt, vice, vice_data, output):
             mon += [f'break ${sym[next_label]:04x}','g','stopwatch','quit']
             (tmp/'run.mon').write_text('\n'.join(mon)+'\n')
             cmd=[str(vice),'-console', '+easyflashcrtwrite','-pal','+sound','-warp','-seed','1','-cartcrt',str(crt),
-                 '-initbreak','reset','-moncommands',str(tmp/'run.mon'),'-monlog',
-                 '-monlogname',str(tmp/'monitor.log'),'-directory',str(vice_data),'-limitcycles','20000000']
+                 '-initbreak','reset','-moncommands',str(tmp/'run.mon'),'-monlogname', str(tmp/'monitor.log'), '-monlog','-directory',str(vice_data),'-limitcycles','20000000']
             with (tmp/'vice.log').open('w') as log:
                 subprocess.run(cmd,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=60)
             text=(tmp/'monitor.log').read_text();ticks=[int(t) for t in re.findall(r'Stopwatch:\s*(\d+)',text)]

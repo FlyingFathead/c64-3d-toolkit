@@ -28,16 +28,16 @@ def build(a):
     from .renderer_names import display_name
     stem=(a.output or Path(a.blend or a.scene).stem+'-'+display_name(renderer,'gmod3')).removesuffix('.crt')
     if not cli._check_overwrite([out/(stem+s) for s in ('.crt','.lbl','-manifest.json')],a.overwrite_policy):return 2
-    export=Path(a.scene) if a.scene else cli.BUILD/(stem+'.c643dscene')
+    export=Path(a.scene) if a.scene else out/(stem+'.c643dscene')
     if a.blend:
         from .blender import export_blend_scene
-        export_blend_scene(a.blend,export,blender=a.blender,frame_start=a.frame_start,frame_end=a.frame_end,
+        export_blend_scene(a.blend,export,blender=a.blender,blender_color_space=getattr(a,'blender_color_space','linear'),ignore_warnings=getattr(a,'ignore_warnings',False),frame_start=a.frame_start,frame_end=a.frame_end,
             sample_step=a.sample_step,root=cli.ROOT,viewport_height=192,viewport_width=a.viewport_width or 320,
             max_frames=1024,output_fps=rate)
     scene=load_scene(export);scene=replace(scene,viewport_width=a.viewport_width or scene.viewport_width)
     color,_,percell=cli._scene_color_policy(scene.mesh,a)
     foreground=c64_color_index(color);background=c64_color_index(a.background_color)
-    frames,_=build_scene_frames(scene,visibility_mode='surface' if a.visibility=='auto' else a.visibility,
+    frames,_=build_scene_frames(scene,ignore_warnings=getattr(a,'ignore_warnings',False),visibility_mode='surface' if a.visibility=='auto' else a.visibility,
         z_tolerance=0.0008 if a.z_tolerance is None else a.z_tolerance,
         feature_angle=40 if a.feature_angle is None else a.feature_angle,enable_source_colors=percell,
         fallback_color=foreground,background_color=background,height=192,width=scene.viewport_width,

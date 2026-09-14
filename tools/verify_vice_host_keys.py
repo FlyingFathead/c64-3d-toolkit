@@ -120,7 +120,7 @@ def verify(crt, vice, data, out, compiler='cc'):
         with (dest/'vice.log').open('w') as log:
             subprocess.run([str(vice),'-console','-default','-pal','+sound','-warp','-seed','1',
                 '+easyflashcrtwrite','-directory',str(data),'-keymap',str(index),f'-{mode}keymap',str(keymap),
-                '-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(dest/'run.mon'),
+                '-cartcrt',str(crt),'-initbreak','reset','-monlogname',str(dest/'monitor.log'),'-moncommands',str(dest/'run.mon'),
                 '-limitcycles','180000000'],env=env,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=120)
         actual=[line for line in (dest/'vice.log').read_text().splitlines() if line.startswith('HOSTKEY ')]
         assert actual==[f'HOSTKEY {k} {m} {d}' for k,m,d in events], 'Host events were not all dispatched'

@@ -1,6 +1,6 @@
 @echo off
 rem c64-3d-toolkit Windows installer / configuration assistant
-rem Installer revision: r25 (2026-09-10)
+rem Installer revision: r26 (2026-09-14)
 rem Target toolkit release: read from VERSION by setup-windows.ps1
 
 setlocal

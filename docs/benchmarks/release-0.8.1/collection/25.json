@@ -1,0 +1,25 @@
+{
+  "index": 25,
+  "name": "RIBBON DANCE",
+  "passed": true,
+  "frames": 48,
+  "stored_frames": 48,
+  "pictures_checked": 99,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 2066,
+  "observed_refreshes": 2400,
+  "average_fps": 43.148876678876675,
+  "high_fps": 50.124542124542124,
+  "low_fps": 25.062271062271062,
+  "mean_render_cycles": 22619.50980392157,
+  "max_render_cycles": 23348,
+  "picture_sha256": "4fd6a8d4da74410345bd7e0bf398074b423999f9fb0b13ee063a4d3769fa1589",
+  "allocated_kib": 56,
+  "bank_range": [
+    491,
+    497
+  ],
+  "target_fps": null,
+  "crt_sha256": "d1c23418a83cde9d43adb5e2dd2808303000cb8e7e0864a617ea0fd95ac6cb77"
+}

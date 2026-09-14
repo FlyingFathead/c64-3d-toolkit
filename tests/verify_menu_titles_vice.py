@@ -17,7 +17,7 @@ def verify(cart,vice,data):
             stop(s['menu_wait_key'],syms[0]['build_screen_done'] if i==0 else syms[i-1]['menu_cycle_style'])
             cmds.extend(['bank ram',f'bsave "{out / str(i)}.ram" 0 $0400 $07e7'])
         cmds.append('quit');(out/'run.mon').write_text('\n'.join(cmds)+'\n')
-        args=[vice,'-console','-default','-pal','+sound','-warp','+easyflashcrtwrite','-directory',data,'-cartcrt',str(cart),'-initbreak','reset','-moncommands',str(out/'run.mon'),'-limitcycles','10000000']
+        args=[vice,'-console','-default','-pal','+sound','-warp','+easyflashcrtwrite','-directory',data,'-cartcrt',str(cart),'-initbreak','reset','-monlogname',str(out/'monitor.log'),'-moncommands',str(out/'run.mon'),'-limitcycles','10000000']
         with (out/'vice.log').open('w') as log:subprocess.run(args,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=30)
         rows=[]
         for i,style in enumerate(styles):

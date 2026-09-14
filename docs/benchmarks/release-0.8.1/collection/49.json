@@ -1,0 +1,25 @@
+{
+  "index": 49,
+  "name": "SAKU GRADIENT",
+  "passed": true,
+  "frames": 48,
+  "stored_frames": 48,
+  "pictures_checked": 99,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 1480,
+  "observed_refreshes": 2400,
+  "average_fps": 30.910134310134307,
+  "high_fps": 50.124542124542124,
+  "low_fps": 25.062271062271062,
+  "mean_render_cycles": 31858.176470588234,
+  "max_render_cycles": 35933,
+  "picture_sha256": "0fc821e0a75767e2d6a5f3f6ff552e00875403af7f40d1c984d026d0cb70fd3b",
+  "allocated_kib": 72,
+  "bank_range": [
+    1406,
+    1414
+  ],
+  "target_fps": null,
+  "crt_sha256": "d1c23418a83cde9d43adb5e2dd2808303000cb8e7e0864a617ea0fd95ac6cb77"
+}

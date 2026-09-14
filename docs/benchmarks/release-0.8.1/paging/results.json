@@ -1,0 +1,53 @@
+{
+  "passed": true,
+  "collection_sha256": "d1c23418a83cde9d43adb5e2dd2808303000cb8e7e0864a617ea0fd95ac6cb77",
+  "reverse_pictures_checked": 643,
+  "reverse_all_three_buffers": true,
+  "reverse_wraps": true,
+  "standalone_paced_long_scene": {
+    "index": 31,
+    "name": "DON'T LOSE YOUR MARBLES",
+    "passed": true,
+    "frames": 640,
+    "stored_frames": 640,
+    "pictures_checked": 1283,
+    "all_three_buffers": true,
+    "stars_off": false,
+    "display_frames": 739,
+    "observed_refreshes": 2400,
+    "average_fps": 15.434181929181928,
+    "high_fps": 25.062271062271062,
+    "low_fps": 8.354090354090355,
+    "mean_render_cycles": 61882.60653188181,
+    "max_render_cycles": 102166,
+    "picture_sha256": "920d037baae6fc1368b73fc95d34cc338c302de6d320908888c3da1a6b05365d",
+    "allocated_kib": 1384,
+    "bank_range": [
+      634,
+      806
+    ],
+    "target_fps": 16,
+    "crt_sha256": "8f2c549b07e6d6b6fb23e6eff78d026d86ca9f571dcb6f8f0b64509458699420"
+  },
+  "standalone_capacity": {
+    "units": "KiB",
+    "used_kib": 1392,
+    "free_kib": 2704,
+    "capacity_kib": 4096,
+    "accounting": "allocated 8 KiB banks including boot/runtime and bank padding; not CRT container size",
+    "used_bytes": 1425408,
+    "free_bytes": 2768896,
+    "lines": [
+      {
+        "text": "cart type: GMod3",
+        "row": 22,
+        "column": 12
+      },
+      {
+        "text": "used: 1392 KiB | free: 2704 KiB",
+        "row": 23,
+        "column": 4
+      }
+    ]
+  }
+}

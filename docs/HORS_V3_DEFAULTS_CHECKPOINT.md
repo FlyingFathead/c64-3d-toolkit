@@ -65,7 +65,9 @@ texture's mapped colour histogram. Those histograms describe the source image
 after `Kd`, before visibility and per-cell reduction.
 
 Blender unlinked Principled BSDF Base Color is now preferred over the viewport
-swatch. Scene-linear Blender RGB is converted to sRGB before palette matching.
+swatch. Scene-linear Blender RGB is converted to sRGB before palette matching
+by default. The recovery update adds `--blender-color-space srgb` for imported
+material numbers already in sRGB; see [the current FAQ](BLENDER_FAQ.md#why-can-red-become-orange).
 Explicit material/object `c643d_color` overrides still take precedence. Linked
 Base Color graphs fall back to the material viewport swatch; they are not baked.
 
@@ -107,7 +109,7 @@ between them; custom stops let you change that artistic choice.
 | All vertices animate | Supported when evaluated vertex order and polygon connectivity remain stable. Deformation may increase visible detail/fragmentation, but is not itself forbidden. |
 | Alembic cannot be read by the exporter | The exporter already uses `evaluated_get(depsgraph).to_mesh(...)` every sample. Blender evaluates its cache modifier. A readable cache does not inherently need conversion to shape keys. The original .blend/.abc files are needed to diagnose that specific failure. |
 | MDD requires an add-on | An add-on can import it as shape keys. Blender also has a native Mesh Cache modifier for MDD/PC2; the exporter can sample that evaluated mesh. Matching topology and vertex order remain essential. |
-| Flicker is culling or Z depth | Plausible, but unconfirmed without the Testarossa mesh, settings and output. Hidden-line visibility, edge-on faces, intersecting/near-coplanar surfaces, coarse pixel sampling and material selection can all change lines between frames. |
+| Flicker is culling or Z depth | Plausible, but unconfirmed without the imported scene mesh, settings and output. Hidden-line visibility, edge-on faces, intersecting/near-coplanar surfaces, coarse pixel sampling and material selection can all change lines between frames. |
 | Subpixel details disappear | Correct as a possibility: the standard geometry viewport is 256x192. Details below a pixel cannot stay distinct; filled texture colours additionally share the 8x8 two-colour restriction. |
 
 V3 now handles the demonstrated fragmentation class by compacting clear spans
@@ -131,7 +133,7 @@ A Blender binary compiled without Alembic also receives an explicit diagnostic; 
 perspective. Materials and camera conversions lost between LightWave and
 Blender cannot be recovered by the C64 exporter.
 
-For the Testarossa, hold the camera, scale, sample range and colours fixed and
+For an imported scene, hold the camera, scale, sample range and colours fixed and
 compare `--visibility surface` against `--visibility frontface`. The latter
 removes surface-depth clipping but still culls back-facing edges, so it is a
 diagnostic comparison, not a correct hidden-line replacement. If needed,
@@ -141,7 +143,7 @@ also leak hidden lines through foreground faces. The horse-head preset's
 threshold is not a universal value for imported scene scales.
 
 Try `--no-color --color white` to distinguish wire geometry changes from
-per-cell material-colour changes. Frame the car larger in Blender to test the
+per-cell material-colour changes. Frame the object larger in Blender to test the
 subpixel-detail hypothesis. Recalculate outward normals and check duplicate,
 intersecting and near-coplanar faces. Do not alter mesh geometry before saving
 a reproducible failing example.

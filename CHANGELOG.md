@@ -1,5 +1,44 @@
 # Changelog
 
+## 0.8.1: Camera crossings, Blender colours and Demo Cart v3.1 (2026-09-14)
+
+- Clip authored edges and occluding triangles at the camera near plane; preserve
+  visible segments, source colours, frame order and consecutive invisible samples.
+- Retain legacy object-rendering guards and existing cartridge binaries.
+- Report clipping once per scene; add `--ignore-warnings` for scene/export warnings.
+- Add `--blender-color-space linear|srgb`, INI defaults, an interactive chooser,
+  and direct `--configure-blender-color-space srgb` configuration. Standard linear
+  conversion remains the default; explicit C64 material indices are unchanged.
+- Honour `--output-dir` for authored-scene export files as well as cartridge outputs.
+- Add original camera-crossing road assets and regression tests.
+- Add a version/author CLI help banner and numbered cumulative/full checkpoint
+  archives with SHA-256 records, completed/pending checklists and test results.
+- Refresh Blender/colour FAQ, README, CLI, configuration and release documentation.
+- Archive stale root `monitor.log` into ignored `logs/` at CLI startup using
+  unique UTC filenames; verify each copy before removing the original.
+- Select VICE monitor filenames before enabling logging, including after
+  resource resets; preserve explicit diagnostic destinations.
+- Add `tools/maintenance.py` for manual archival and safe cleanup of previously
+  tracked monitor logs. The external publisher runs this before release checks.
+
+See [verification and recovery status](docs/RECOVERY_CHECKPOINT.md).
+
+### Interactive collection and setup
+
+- Expose the complete SAKU interactive baseline in two-page collection help,
+  including HUD, effects, colours, speed and exhibition. Stars remain off at startup/reset.
+- Add main-menu help and SPACE/Enter launch; prioritize and latch RUN/STOP
+  for menu return through held speed input, playback, help and exhibition.
+- Preserve the v3.0 automatic benchmark image; verify both native VICE keymaps
+  and compare all 58 interactive entries against the old v3.0 image.
+  Median average-FPS reduction 0.24%, worst relative reduction 0.39%,
+  largest absolute reduction 0.146 FPS; three ties.
+- Install all Python build requirements through Windows/Linux/root Python
+  setup; report absent, outdated or unloadable dependencies with repair commands.
+- Show all build flags in top-level help and add --help-all; correct stale default descriptions.
+- Add a Blender palette calibration card and diagnostics; preserve existing
+  mapping until source material/palette evidence supports a change.
+
 ## 0.8.0: GMod3 cartridge support added, switch to HORS-V4 (2026-09-14)
 
 - Default conversion to `hors-v4` / GMod3; retain explicit older renderer

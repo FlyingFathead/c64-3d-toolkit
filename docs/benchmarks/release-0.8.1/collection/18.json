@@ -1,0 +1,25 @@
+{
+  "index": 18,
+  "name": "SPACE HORSE SPIN",
+  "passed": true,
+  "frames": 24,
+  "stored_frames": 24,
+  "pictures_checked": 51,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 931,
+  "observed_refreshes": 2400,
+  "average_fps": 19.444145299145298,
+  "high_fps": 50.124542124542124,
+  "low_fps": 12.531135531135531,
+  "mean_render_cycles": 51764.0,
+  "max_render_cycles": 63905,
+  "picture_sha256": "91d4040c370d3c305752497b72257d473c6083ec0e9a523f865532e650eece8e",
+  "allocated_kib": 64,
+  "bank_range": [
+    396,
+    403
+  ],
+  "target_fps": null,
+  "crt_sha256": "d1c23418a83cde9d43adb5e2dd2808303000cb8e7e0864a617ea0fd95ac6cb77"
+}

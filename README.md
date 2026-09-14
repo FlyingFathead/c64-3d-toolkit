@@ -2,6 +2,59 @@
 
 > **ATTENTION:** [FlyingFathead/c64-3d-toolkit](https://github.com/FlyingFathead/c64-3d-toolkit/) is the one and only official, original source for `c64-3d-toolkit`. Steer clear of other sources or repositories claiming to be the official project.
 
+## v0.8.1: Camera crossings, Blender colours and Demo Cart v3.1
+
+Authored scenes now clip geometry at the camera near plane and viewport.
+Objects can pass behind the camera and reappear; fully invisible frames stay
+in the timeline. Hidden-line occlusion and source colours follow the clipped
+geometry. One summary reports clipping; `--ignore-warnings` suppresses it.
+
+`--blender-color-space linear|srgb` selects how material numbers are interpreted.
+The default remains `linear`. For imported numbers already stored as sRGB:
+
+```sh
+python c643d.py build --blend scene.blend --blender-color-space srgb
+python c643d.py --configure-blender-color-space srgb
+```
+
+Omit the configuration value for an interactive chooser. Explicit C64 material
+indices and the shared palette mapper are preserved.
+
+Stale root `monitor.log` files are automatically copied, verified and archived
+under `logs/` with unique timestamps. VICE launchers select log destinations
+before enabling logging. [Log maintenance and tracked-log cleanup](docs/MAINTENANCE.md).
+
+[Camera-crossing example](examples/camera_crossing/README.md) ·
+[Colour-space details](docs/BLENDER_FAQ.md#why-can-red-become-orange) ·
+[Recovery verification](docs/RECOVERY_CHECKPOINT.md) ·
+[Numbered checkpoint workflow](docs/CHECKPOINTING.md)
+
+### Demo Cart v3.1 and installation fixes
+
+[Download Demo Cart v3.1: GMod3 All-in-One](examples/gmod3_cart_demos/demo-cart-v3.1-gmod3-all-in-one.crt).
+**Includes all demos from the previous examples through v0.7.9: 58 selectable entries and 6,474 pictures.**
+The full [SAKU interactive baseline](docs/INTERACTIVE_CART_BASELINE.md) is now
+visible in two-page help, including **Shift+I / Shift+F / Shift+U HUD controls**.
+**SPACE or Enter** starts the selected demo; **Shift+H** works from the main
+menu too. **RUN/STOP (Esc in VICE) or F1** returns to the menu from playback,
+help, exhibition and slow playback, including while a speed key is held.
+Stars start **disabled**, including after reset.
+
+Matched PAL VICE A/B across all 58 entries measures a median **0.24%** reduction
+in average FPS, with a maximum **0.39%** reduction; the largest absolute loss
+is **0.146 FPS**. Three entries tie. [All highs, averages, lows and method](docs/INTERACTIVE_BASELINE_PERFORMANCE.md).
+The automatic v3.0 benchmark cartridge remains byte-identical and its menus
+were checked separately.
+
+Root Windows/Linux installers now install the full Python build requirement
+set. Missing libraries produce a short explanation and repair commands.
+`python c643d.py --help` lists all build options; `--help-all` covers every command.
+Normal builds remain **automatic, non-interactive HORS-V4/GMod3 playback**;
+`--interactive-cart` enables controls for supported object/SVG spins.
+
+[Install or repair](docs/INSTALLATION.md) · [Release and verification](docs/RELEASE_0.8.1.md) ·
+[CLI guide](docs/CLI.md) · [Blender colour calibration](examples/blender_color_calibration/README.md)
+
 ## v0.8.0: GMod3 cartridge support added, switch to HORS-V4
 
 [Demo Cart v3.0: GMod3 All-in-One](examples/gmod3_cart_demos/README.md) fits
@@ -116,7 +169,7 @@ HORS-V4 / GMod3 is the default conversion renderer; use `--surface-fill material
 
 | Prebuilt | What is inside |
 | --- | --- |
-| [Demo Cart v3.0: GMod3 All-in-One](examples/gmod3_cart_demos/demo-cart-v3.0-gmod3-all-in-one.crt) | **Includes all demos from the previous examples through v0.7.9.** 58 interactive entries, stars off, 16 MiB GMod3. [Controls and benchmark edition](examples/gmod3_cart_demos/README.md) |
+| [Demo Cart v3.1: GMod3 All-in-One](examples/gmod3_cart_demos/demo-cart-v3.1-gmod3-all-in-one.crt) | **Includes all demos from the previous examples through v0.7.9.** 58 interactive entries, stars off, 16 MiB GMod3. [Controls and benchmark edition](examples/gmod3_cart_demos/README.md) |
 | [Stanford Dragon: all six looks](examples/stanford_dragon/README.md) | HORS-V3 wireframe, metallic (grey), golden, red, green and blue; carts, timed GIFs and performance |
 | [SAKU 2026 — interactive](examples/saku_2026/README.md) | SVG source/gradient colours, starfield, spin/crawl, speed controls and keyboard map |
 | [Metallic Pretzel — interactive](examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-interactive.crt) | HORS-V3 shaded surfaces, rotation and background controls |
@@ -131,7 +184,7 @@ HORS-V4 / GMod3 is the default conversion renderer; use `--surface-fill material
 | [Horse & Sunflower](examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt) | Authored scene, with a separate RAM build in the same folder |
 
 ```bash
-python c643d.py run-cart examples/gmod3_cart_demos/demo-cart-v3.0-gmod3-all-in-one.crt
+python c643d.py run-cart examples/gmod3_cart_demos/demo-cart-v3.1-gmod3-all-in-one.crt
 python c643d.py run-cart examples/cart_demos/c643d-demo-v0.7.9-hors-render-v2-all.crt
 python c643d.py run-cart examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt
 ```
@@ -140,8 +193,8 @@ Use `--vice-clean-settings` to try temporary VICE defaults when diagnosing a
 loading failure. See [cartridge loading](docs/CARTRIDGE_LOADING.md) for the
 standalone VICE command, write-back protection and the loader changes.
 
-For the GMod3 collection, use **CURSOR** to select and **SPACE** to start;
-**RUN/STOP (Esc in VICE) or F1** returns to the menu. **Shift+H** opens help.
+For the interactive GMod3 collection, use **CURSOR** to select and **SPACE or Enter** to start;
+**RUN/STOP (Esc in VICE) or F1** returns to the menu. **Shift+H** opens help from the menu or playback.
 Use the separate automatic edition for benchmarks. The older EasyFlash menus
 use cursor keys and RETURN; F1 changes styles or returns from playback. Their
 normal PLAY ALL is the benchmark path; F5 exhibition is excluded from FPS comparisons.
@@ -170,6 +223,29 @@ to obtain metadata. A large intermediate vector representation therefore does
 not reject a valid literal picture. Final metadata, frame-bank and cartridge
 capacity limits still apply; inputs are never silently simplified to fit.
 
+## Installation and repair
+
+Windows: run `setup-windows.cmd`; it configures tools and offers to install
+all Python build dependencies. To install/repair Python packages only:
+
+```powershell
+py -3 .\setup-python.py
+py -3 .\c643d.py dependencies
+```
+
+Linux: use the root installer, then activate its environment:
+
+```sh
+bash setup-linux.sh
+source .venv/bin/activate
+python c643d.py dependencies
+```
+
+On Debian/Ubuntu, `bash setup-linux.sh --system-deps` also installs the external
+C64 tools and native Cairo. `--repair` reinstalls Python packages in the chosen
+environment. Use that same Python for builds. [Full installation, native Cairo,
+Windows/Linux repair and dependency inventory](docs/INSTALLATION.md).
+
 ## Build your own
 
 Python 3, 64tass and VICE/cartconv are required for cartridge builds and tests.
@@ -187,7 +263,10 @@ python c643d.py color-combo-test
 python c643d.py build --shape torus --foreground-color black --background-color white --border-color white
 ```
 
-`build` and `cart-stream` default to **hors-v4 / GMod3**.
+`build` and `cart-stream` default to **hors-v4 / GMod3**, with non-interactive automatic playback.
+Object/SVG spins opt into controls with `--interactive-cart`; authored Blender/scene animation remains automatic.
+Stars default to disabled; `--starfield-default enabled` opts in for interactive builds.
+Use `python c643d.py --help` for all build flags or `--help-all` for every command.
 `hors-renderer-v4` and `hors-render-v4` remain aliases. Explicit HORS-V3 and older renderers retain
 EasyFlash defaults. Set `--cart-type` or a universal config preference to choose
 hardware. `cart-demos` retains the preserved V2 EasyFlash comparison/menu path.
@@ -196,7 +275,7 @@ Use `--renderer yunroll` explicitly for resident PRG output.
 ```bash
 python c643d.py build --shape torus --surface-fill metallic --interactive-cart
 python c643d.py build --renderer hors-renderer-v3 --shape torus --surface-fill metallic
-python c643d.py run-cart examples/gmod3_cart_demos/demo-cart-v3.0-gmod3-all-in-one.crt
+python c643d.py run-cart examples/gmod3_cart_demos/demo-cart-v3.1-gmod3-all-in-one.crt
 ```
 
 [GMod3 architecture, image specification, bank timings and limits](docs/GMOD3.md).
@@ -239,11 +318,11 @@ Add `--install` to install only after all checks pass. Add `--baseline-zip PATH`
 to also generate a patch ZIP. The pipeline never commits, tags or pushes. Root `VERSION` supplies the build
 identity; an alternate-version VICE test guards startup, menu and thanks labels.
 
-To install the supplied 0.8.0 release, save the ZIP one level above your
+To apply the supplied 0.8.1 hotfix to the complete 0.8.0 release, save the ZIP one level above your
 checkout and extract it from that parent directory:
 
 ```bash
-unzip -o c64-3d-toolkit-v0.8.0-incremental.zip
+unzip -o c64-3d-toolkit-v0.8.1-incremental.zip
 cd c64-3d-toolkit
 python tools/report_gmod3_performance.py --check
 python tools/verify_gmod3_release.py
@@ -252,7 +331,7 @@ python tools/verify_gmod3_release.py
 The ZIP contains its own `c64-3d-toolkit/` directory. Current cartridges are
 already rebuilt. Previous versioned menu/HiFi carts remain as historical
 references; older EasyFlash cartridges remain byte-for-byte preserved. See the
-[release guide](docs/RELEASE_0.8.0.md) for checks and rebuilds.
+[release guide](docs/RELEASE_0.8.1.md) for checks and rebuilds.
 
 ## Earlier renderers remain available
 

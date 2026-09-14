@@ -1,0 +1,25 @@
+{
+  "index": 9,
+  "name": "BLENDER TRACKING TEST",
+  "passed": true,
+  "frames": 16,
+  "stored_frames": 16,
+  "pictures_checked": 35,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 374,
+  "observed_refreshes": 2400,
+  "average_fps": 7.81107448107448,
+  "high_fps": 8.354090354090355,
+  "low_fps": 7.160648874934589,
+  "mean_render_cycles": 124992.1052631579,
+  "max_render_cycles": 132282,
+  "picture_sha256": "d27268f65b972a3d78411bd09b281f5ce6ed57a7e4beebf9824042c023051540",
+  "allocated_kib": 88,
+  "bank_range": [
+    317,
+    327
+  ],
+  "target_fps": 10.0,
+  "crt_sha256": "86ab08c0e3484215d4548c28a17968111d7f44fd65b7c23a6be20d9557aa63a3"
+}

@@ -1,0 +1,25 @@
+{
+  "index": 53,
+  "name": "SPHERE",
+  "passed": true,
+  "frames": 192,
+  "stored_frames": 192,
+  "pictures_checked": 387,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 826,
+  "observed_refreshes": 2400,
+  "average_fps": 17.25119658119658,
+  "high_fps": 25.062271062271062,
+  "low_fps": 16.70818070818071,
+  "mean_render_cycles": 56823.18974358974,
+  "max_render_cycles": 58429,
+  "picture_sha256": "52469daf165802d64600e6e4ca3d4757ffcdcb52e1b96a2d80b14dd679a14de4",
+  "allocated_kib": 336,
+  "bank_range": [
+    1487,
+    1528
+  ],
+  "target_fps": null,
+  "crt_sha256": "86ab08c0e3484215d4548c28a17968111d7f44fd65b7c23a6be20d9557aa63a3"
+}

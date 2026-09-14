@@ -1,0 +1,25 @@
+{
+  "index": 8,
+  "name": "FALLING CUBES",
+  "passed": true,
+  "frames": 18,
+  "stored_frames": 18,
+  "pictures_checked": 39,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 996,
+  "observed_refreshes": 2400,
+  "average_fps": 20.801684981684982,
+  "high_fps": 25.062271062271062,
+  "low_fps": 16.70818070818071,
+  "mean_render_cycles": 46401.90476190476,
+  "max_render_cycles": 53894,
+  "picture_sha256": "5a7187e82950a18e70c4ed0713acc7ba4fcb119af1f71ceb3e6096851223552a",
+  "allocated_kib": 48,
+  "bank_range": [
+    311,
+    316
+  ],
+  "target_fps": null,
+  "crt_sha256": "86ab08c0e3484215d4548c28a17968111d7f44fd65b7c23a6be20d9557aa63a3"
+}

@@ -1,0 +1,602 @@
+{
+  "passed": true,
+  "baseline_sha256": "f4d222286278fd25902096bfddcade2cb10211a52905afb035192df81022b2de",
+  "protected_files": 148,
+  "unchanged_cartridges": 71,
+  "missing_original_files": 0,
+  "all_assembly_and_cartridges_identical": true,
+  "files": [
+    {
+      "path": "c64/gmod3/collection-help.asm",
+      "sha256": "2a5c1318e3d53d23b8dfff64f7783bdcfe11fcc943e73cf787c81766434a03c7"
+    },
+    {
+      "path": "examples/gmod3_cart_demos/demo-cart-v3.1-gmod3-all-in-one.crt",
+      "sha256": "d1c23418a83cde9d43adb5e2dd2808303000cb8e7e0864a617ea0fd95ac6cb77"
+    },
+    {
+      "path": "c64/cart/easyflash-demo-boot.asm",
+      "sha256": "e712c6a0602f71e530c2a372a2bf920bb524deada2f75a6fe0811a4fae554bd8"
+    },
+    {
+      "path": "c64/cart/easyflash-demo-control-v10.asm",
+      "sha256": "b69e2f58c899ff3de49b7994c4adb970bfe6567b00cbb73f87de866bc11d8f72"
+    },
+    {
+      "path": "c64/cart/easyflash-demo-control-v7.asm",
+      "sha256": "adab2b343705a9e181d441091662d3968204f82b9c59e17fb69a9dd7c01caeb0"
+    },
+    {
+      "path": "c64/cart/easyflash-demo-control-v8.asm",
+      "sha256": "3ff3e182010c8774b892b25887a94a8c22ec94aa5ad6c295fe04e3f2ea89b354"
+    },
+    {
+      "path": "c64/cart/easyflash-demo-control-v9.asm",
+      "sha256": "b69e2f58c899ff3de49b7994c4adb970bfe6567b00cbb73f87de866bc11d8f72"
+    },
+    {
+      "path": "c64/cart/easyflash-demo-control.asm",
+      "sha256": "53a32adad6d1ffa0b8557626bde303ae8fdcf732758238194bcdae1759f876b7"
+    },
+    {
+      "path": "c64/cart/easyflash-demo-runtime.asm",
+      "sha256": "04e6ef8c1534f8e3d7e8ed1c5a7b156d733edb8f07cc884a837723383259ec6c"
+    },
+    {
+      "path": "c64/cart/easyflash-demo-scroll-runtime-v10.asm",
+      "sha256": "b73fdeb10fa192f029fe5074f6bda53dc558647a33725c9475762cc7cde432aa"
+    },
+    {
+      "path": "c64/cart/easyflash-demo-scroll-runtime-v8.asm",
+      "sha256": "8bbf7c35132a2f35a2a72c93332370ca2d2f76cf14f939b163ae3227443eab2a"
+    },
+    {
+      "path": "c64/cart/easyflash-demo-scroll-runtime-v9.asm",
+      "sha256": "c4a84987fa88e01913616121a900405c60c3d60a12755c16857e8209f72e7032"
+    },
+    {
+      "path": "c64/cart/easyflash-demo-scroll-runtime.asm",
+      "sha256": "e5e36c55bf848607aa46adfc057664484ab01f5e0d3249f47aea61ea6dc3bd10"
+    },
+    {
+      "path": "c64/cart/easyflash-hifi-reel-runtime.asm",
+      "sha256": "3ce821d27eef2a734e1a3f81afb7ca04e6061e78bc4567e7ec3374f7143fb8c8"
+    },
+    {
+      "path": "c64/cart/easyflash-menu-boot.asm",
+      "sha256": "53bfeaf31e245cf578e0828a109885d9bcffc73bcfd25699f944fcaf895c092b"
+    },
+    {
+      "path": "c64/cart/easyflash-object-boot.asm",
+      "sha256": "e11a763199fb7e15b6cd64f7affd246f79d8138275e5d79489c524255020bed7"
+    },
+    {
+      "path": "c64/cart/easyflash-scene-boot.asm",
+      "sha256": "f246c66afb4417f4f4029b73e794a0f3756e2597deb35676b1f6492f14c6681d"
+    },
+    {
+      "path": "c64/cart/easyflash-smoke-loading.asm",
+      "sha256": "8e47fdd27695a1e70dcb50ce5c7ee1a553281195668821367eed521f5e7aa7be"
+    },
+    {
+      "path": "c64/cart/easyflash-smoke.asm",
+      "sha256": "1a50323c34b62ecbe0d3b9061cd14ed38e0afa72a55b09510f90f97ac6516843"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v10-boot.asm",
+      "sha256": "0ef24ac3da0c3660e3175bcc32d0a1648343dd2839cf9ae59cb1d2d5a27a279d"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v10-helper.asm",
+      "sha256": "23325fcc66f55c29e828dc0dc856dbc1f78d58a65aa3c1a7e90630661eb6cbe6"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v10-scene-boot.asm",
+      "sha256": "09aa728dda290b7cfdcd5449237293cfd9956f0296d60dc4ddbcdce430e5c1ae"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v10-scene-helper.asm",
+      "sha256": "0c67fa3f2f09cd4be7bbec9be7400ec0db93c1835b535b1f312839f6af381afe"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v2-boot.asm",
+      "sha256": "77e1380619f9469118ac72988e1223cf1bbb9e930a7cdfe7409854a8d79f5b6d"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v2-helper.asm",
+      "sha256": "ed6fa416e2d1b2e15921a2fb1b5d608a355bba5232227e748167a5751b4de769"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v3-helper.asm",
+      "sha256": "52a947cba0684aeb1a53f9544cc0e0a4a8ffd0d62441c1969d63953e820101f2"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v4-helper.asm",
+      "sha256": "6a3c32ccdd624edd207d3000015ec2b1442345c5aecf603e7bee9c69b786d1cb"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v4-scene-boot.asm",
+      "sha256": "e231f06f4026888dde25ff2ae0b13c352e206b66d2609d702c08f9d16eb6c58a"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v4-scene-helper.asm",
+      "sha256": "30aeb86f9295a49c17b9ef7a05219cfda67a6a752734bdea2687d3a600d98dee"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v5-boot.asm",
+      "sha256": "0ef24ac3da0c3660e3175bcc32d0a1648343dd2839cf9ae59cb1d2d5a27a279d"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v5-helper.asm",
+      "sha256": "54225c90c193f5f91fc2aa3a923f9f35c8ef12a13db24b98a7214db39500948e"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v5-scene-boot.asm",
+      "sha256": "09aa728dda290b7cfdcd5449237293cfd9956f0296d60dc4ddbcdce430e5c1ae"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v5-scene-helper.asm",
+      "sha256": "57859f9af3ac505c1352418089331dd6b797bf8ec94de065a1fbc2a5628e3688"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v6-boot.asm",
+      "sha256": "0ef24ac3da0c3660e3175bcc32d0a1648343dd2839cf9ae59cb1d2d5a27a279d"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v6-helper.asm",
+      "sha256": "d6056f8b208dc401b713db682cd62bbafec98a2a9b1078afd9eb265ceeb38248"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v6-scene-boot.asm",
+      "sha256": "09aa728dda290b7cfdcd5449237293cfd9956f0296d60dc4ddbcdce430e5c1ae"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v6-scene-helper.asm",
+      "sha256": "3f928eb43f79f1b1b8ade7227bfdd6238ce0540e274341c0325b5cf78ae59318"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v7-boot.asm",
+      "sha256": "0ef24ac3da0c3660e3175bcc32d0a1648343dd2839cf9ae59cb1d2d5a27a279d"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v7-helper.asm",
+      "sha256": "f3e36c6b289e1b965a003f32c934dc3ccc7c8863a914d02eca6d41a15740029e"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v7-scene-boot.asm",
+      "sha256": "09aa728dda290b7cfdcd5449237293cfd9956f0296d60dc4ddbcdce430e5c1ae"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v7-scene-helper.asm",
+      "sha256": "ea72336df44555f6b5573cd38df1ce020973a4b63a6d754476c92bb58a9b272a"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v8-boot.asm",
+      "sha256": "0ef24ac3da0c3660e3175bcc32d0a1648343dd2839cf9ae59cb1d2d5a27a279d"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v8-helper.asm",
+      "sha256": "aebf5ed133a040e6e540ccf9096872621c3186c49df4ecc6c71f30e928009e49"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v8-scene-boot.asm",
+      "sha256": "09aa728dda290b7cfdcd5449237293cfd9956f0296d60dc4ddbcdce430e5c1ae"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v8-scene-helper.asm",
+      "sha256": "d84e3b126aafb5e1657cacf62a06857ef8a7f589d2e930f770d07289846a73ea"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v9-boot.asm",
+      "sha256": "0ef24ac3da0c3660e3175bcc32d0a1648343dd2839cf9ae59cb1d2d5a27a279d"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v9-helper.asm",
+      "sha256": "2132ac8290218b6209f68c25e8612e7ab9c605ac8c3f68c742bcb52be62948df"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v9-scene-boot.asm",
+      "sha256": "09aa728dda290b7cfdcd5449237293cfd9956f0296d60dc4ddbcdce430e5c1ae"
+    },
+    {
+      "path": "c64/cart/easyflash-stream-v9-scene-helper.asm",
+      "sha256": "bfc8a9ecbd9f818b3be106734f532107bc1601460747006b0074e2605fa1e4b0"
+    },
+    {
+      "path": "c64/debug/renderer-yunroll-rastertime.asm",
+      "sha256": "2eacf99af1b81ae33afcc908ab985765265b0ed64ab73a494281d2d4fdac5f10"
+    },
+    {
+      "path": "c64/gmod3/boot.asm",
+      "sha256": "a3de08afb750690d1ec7852b58978db439904ec6cdd76e2e5bdb32b77f089b5b"
+    },
+    {
+      "path": "c64/gmod3/collection.asm",
+      "sha256": "ea074c82496dc7d8866eedb8495ebbd56b2ad1357dacb8fd7bdc7e1d0511c018"
+    },
+    {
+      "path": "c64/gmod3/diagnostic.asm",
+      "sha256": "75e75c90fb466707bc03c8ebacb4caf8a003d7ce494299d894e529dfb9f11f3a"
+    },
+    {
+      "path": "c64/gmod3/renderer.asm",
+      "sha256": "ec98f60867f64fa9db5666d9f5bdda515cc8f12c487c8bec8d6b9bee2ac60984"
+    },
+    {
+      "path": "c64/gmod3/stream-helper.asm",
+      "sha256": "257016001777529cbd7522b9342ea2f748d48a98fa850664ee7cf374f5346a24"
+    },
+    {
+      "path": "c64/renderer-bytechunk.asm",
+      "sha256": "ec857e3d805c311b986e1fe208aa6138d8c4020e11f710b601e2a0dcaf1fe78c"
+    },
+    {
+      "path": "c64/renderer-step.asm",
+      "sha256": "00e5fcac2bcd7228766a7e44c94f024cec66a9da25feb74358dc00764c3967bb"
+    },
+    {
+      "path": "c64/renderer-yunroll-cart-v10-scene.asm",
+      "sha256": "76ef9d8f5534436014d21865d456c9fc18d6573c7628b641a8847418af1d3967"
+    },
+    {
+      "path": "c64/renderer-yunroll-cart-v10.asm",
+      "sha256": "4e204782fb53d7ce8f6c21058a5c217a2d14ebb36673d3c35267f8a6137a0637"
+    },
+    {
+      "path": "c64/renderer-yunroll-cart-v2.asm",
+      "sha256": "5c2512c99e53dc85df60e90d00cae76e2ae9c9f49090ce36d21fe524fe51bd6d"
+    },
+    {
+      "path": "c64/renderer-yunroll-cart-v3.asm",
+      "sha256": "551a59cce4d295a0db715b5d9dae5a11c52774afbf5ec1962147e0fd60562a6b"
+    },
+    {
+      "path": "c64/renderer-yunroll-cart-v4-scene.asm",
+      "sha256": "2e1395a79c6a3c69fce308b25da516e9a3b5beae7bc07837eebb6ed03cbb5a54"
+    },
+    {
+      "path": "c64/renderer-yunroll-cart-v4.asm",
+      "sha256": "7875a8d99c3d208764e62295cfb18a6221cecc74595ce932dd290882b37ef7cd"
+    },
+    {
+      "path": "c64/renderer-yunroll-cart-v5-scene.asm",
+      "sha256": "28d6544062c1e637c338b3303701596a49737554b66fbe834cb5cd0c002d6cc4"
+    },
+    {
+      "path": "c64/renderer-yunroll-cart-v5.asm",
+      "sha256": "874ffb8f7596b7bbab6fc3cf4d8516567d682e4ae5a1c5e20984647a06dc7ed0"
+    },
+    {
+      "path": "c64/renderer-yunroll-cart-v6-scene.asm",
+      "sha256": "367449d31e0cfd5cc31c098a4bcfb8d5494d4ebecb3497aa786425395cdfdc7c"
+    },
+    {
+      "path": "c64/renderer-yunroll-cart-v6.asm",
+      "sha256": "31d14d8af665ee0cf09b7c39020bb9b889d20d9085fc39ce8e1a6fc30c8ae798"
+    },
+    {
+      "path": "c64/renderer-yunroll-cart-v7-scene.asm",
+      "sha256": "6cf3acc44b0a6a8d4295d51a1c94190b3362c67b544df359e16672889d3dacf6"
+    },
+    {
+      "path": "c64/renderer-yunroll-cart-v7.asm",
+      "sha256": "75895298900ccfce7e49805db6867cd6aad6cd3662cc77966bff560d40335baf"
+    },
+    {
+      "path": "c64/renderer-yunroll-cart-v8-scene.asm",
+      "sha256": "c4caf79f51101bd643ec7004522866461e82e086cc5d52aca78a0f861248a4c6"
+    },
+    {
+      "path": "c64/renderer-yunroll-cart-v8.asm",
+      "sha256": "8091c911a776b4dc3fc734d69500fa0040012c74ac0eda09e552a3a50cd22156"
+    },
+    {
+      "path": "c64/renderer-yunroll-cart-v9-scene.asm",
+      "sha256": "cfb76f403eff6c550a30678ad2a0fb2e95556e728b76858802440744af2843b4"
+    },
+    {
+      "path": "c64/renderer-yunroll-cart-v9.asm",
+      "sha256": "3f69b2ebd46f67499223be26f149c4581477f6ed3230c3422b64577031a9535e"
+    },
+    {
+      "path": "c64/renderer-yunroll-cart.asm",
+      "sha256": "4748861858aec219790ce071943950755dbf71fc014592a3c7fed408a3f38acb"
+    },
+    {
+      "path": "c64/renderer-yunroll.asm",
+      "sha256": "9e7f81c7e4edf9c02623568c6d27e9df2443a0b4a1fa635c6fc5d65d5e105253"
+    },
+    {
+      "path": "c64/variants/renderer-bytechunk-no-overlay.asm",
+      "sha256": "c13394ae63750ac026fb872b20b316818bb20895837a0feb69301c223dba3b50"
+    },
+    {
+      "path": "c64/variants/renderer-step-no-overlay.asm",
+      "sha256": "148fa52a152aeb102f0b74d9e87b4a5dbe6c326f0b0a4fa6cd87c672aaf78dd7"
+    },
+    {
+      "path": "c64/variants/renderer-yunroll-no-overlay.asm",
+      "sha256": "60cafe4da937dac3c8bb868485bfdf102a4cac753f0856b5ea79b9bd2c5902c2"
+    },
+    {
+      "path": "examples/blender_falling_cubes/falling_cubes_c64-hors-render-v2.crt",
+      "sha256": "066abd40fe8111b975fcf894fae10176b82dfef8b131d02f90b322b1e66e479c"
+    },
+    {
+      "path": "examples/blender_falling_cubes/falling_cubes_c64_color-hors-render-v2.crt",
+      "sha256": "bf4cc9523be374eb6f73acc1fcf76f27bf54a41edc7f018805892ad852625f4a"
+    },
+    {
+      "path": "examples/blender_viewport_test/cartridges/tracking-test.crt",
+      "sha256": "ebf9a6ea907451f11815503704198aee1356c95ae755a4d2a364cdaa45096a38"
+    },
+    {
+      "path": "examples/blender_viewport_test/cartridges/viewport-test.crt",
+      "sha256": "91ebb44601e83232f81b6219a601bbb879c647892891e47382e5a92167a58f2e"
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.2-hors-render-v2-all-ram.crt",
+      "sha256": "94958c25843eb0b58af3b52c055964005344e6052d91f3404e64997802defa70"
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.2-hors-render-v2-all.crt",
+      "sha256": "153073c912ac0b3b6d2c4b15297a663751346ffabedbb93e2ecc72c8b02ecac7"
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.3-hors-render-v2-all-ram.crt",
+      "sha256": "e3f1c4a7a2d59bb0978d597f425d8643f261f7c0fbc3a7ab6e706804767b58ab"
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.3-hors-render-v2-all.crt",
+      "sha256": "384ac27ca491e0ce4c04983f0a02707fb39b0ab080568bab0d54913cd0f1c780"
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all-ram.crt",
+      "sha256": "420a6f0c39721346c9585c45bff10f688d48b9bc08f81f9eb1f4fe2f41b79055"
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.4-hors-render-v2-all.crt",
+      "sha256": "c1c540b938070702e40add7c2803148386c1c9499efa1f9bb1e0d7bb35c53575"
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all-ram.crt",
+      "sha256": "b33a2d0f2dce9a08aefcad80d3d4832ee3af3ab2567ede93814ee930a2c30680"
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.5-hors-render-v2-all.crt",
+      "sha256": "dfb10bb96c1b83c368a59c849bcd51408a958190f743611c752c85bf29b37b07"
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.6-hors-render-v2-all-ram.crt",
+      "sha256": "9eec26f24400010f77c4989b2c561be0540a28b41afc64548df8e7e9a0389962"
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.6-hors-render-v2-all.crt",
+      "sha256": "866a414e0378fcb619066b4f58df345ffcab44f1e0482734114d34a9b70d72ae"
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.7-hors-render-v2-all-ram.crt",
+      "sha256": "9e4d316ad510b2edeb2800f453ef952e8122897aa986d0093f82d4d40a7f57b9"
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.7-hors-render-v2-all.crt",
+      "sha256": "db028851e4078b7938853fff19183f893a80aa182ccd7a24755bb9faafd8be59"
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.8-hors-render-v2-all-ram.crt",
+      "sha256": "edb9ad16ad38c924a691db07dd4c05dc16f4db2ef0329e10a30c81ed50ebfb1b"
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.8-hors-render-v2-all.crt",
+      "sha256": "8eaa0e3408895a930806f075be6bac736e06f929d0bd7d4ac1f51112e6cfb638"
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.9-hors-render-v2-all-ram.crt",
+      "sha256": "e3de5a70ede3ac1c86331fac4796cb69e8b3881ae4e0535a791aae615118b153"
+    },
+    {
+      "path": "examples/cart_demos/c643d-demo-v0.7.9-hors-render-v2-all.crt",
+      "sha256": "e260e0f03ab5eea398b65c0dd8ff2417ab756bec5e03cb8c78593be1fe667eb6"
+    },
+    {
+      "path": "examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt",
+      "sha256": "b36a5444541f5f04f99156cfda78210cc3dc34f7acfb0536f20275dc80b5032b"
+    },
+    {
+      "path": "examples/cart_hifi/c643d-hifi-v0.7.2-hors-render-v2.crt",
+      "sha256": "eeb46660e4b8f75fadceaba6819ea7b23b2a7d40252eb76b1a51d57619f52939"
+    },
+    {
+      "path": "examples/cart_hifi/c643d-hifi-v0.7.4-hors-render-v2.crt",
+      "sha256": "523754d8f6b22555846aa8d09107195bca74f7d3d0d315b94e1abaf790b3bad1"
+    },
+    {
+      "path": "examples/cart_hifi/c643d-hifi-v0.7.5-hors-render-v2.crt",
+      "sha256": "b8e4ef03ec7f4c946e8c066ef150216e605ff7a01562bed08e5899702740e239"
+    },
+    {
+      "path": "examples/cart_hifi/c643d-hifi-v0.7.6-hors-render-v2.crt",
+      "sha256": "a132fb2c21f4b9cf64c7422d80bebbdf393bfa843bcca1e4d8dc9838dd0c4995"
+    },
+    {
+      "path": "examples/cart_hifi/c643d-hifi-v0.7.7-hors-render-v2.crt",
+      "sha256": "b73a7dc49b974e36b56d12efcf280d78fc9c3737e313c406d424b205f319ef30"
+    },
+    {
+      "path": "examples/cart_hifi/c643d-hifi-v0.7.8-hors-render-v2.crt",
+      "sha256": "0fffa20073616c72edb47e5fcecd2d2bf7efa3f4ab582063ee10a4acb020359d"
+    },
+    {
+      "path": "examples/cart_hifi/c643d-hifi-v0.7.9-hors-render-v2.crt",
+      "sha256": "157be145a587e0c0a2ded1e0c684e9cefa5013f6db418107dd4ba3aa39ce9f2c"
+    },
+    {
+      "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene-ram.crt",
+      "sha256": "08eae876f228d3be3c2a98a8f2afca8dbce299f68101b8d9656f82affa92a60c"
+    },
+    {
+      "path": "examples/cart_horse_and_sunflower/horse_and_sunflower-hors-render-v2-scene.crt",
+      "sha256": "7d5f0ebf35f821d0c9ec2b162bef73c0b4766359b9a6a0b3e88e7519d7cf045f"
+    },
+    {
+      "path": "examples/cart_marbles/marbles-hors-render-v2-16fps-force-bytes.crt",
+      "sha256": "16bd2e65c5a643c477ea57ae6b4aa326d8a1bdfa63a12a70cf7e59163e95b2c3"
+    },
+    {
+      "path": "examples/color_combo_test/color-combo-test.crt",
+      "sha256": "0c542cfb88cab387b89de79aeeb68a025e4f383551b9ea7884a612729bf7d1e8"
+    },
+    {
+      "path": "examples/cube/cube-hors-render-v2.crt",
+      "sha256": "0fbaf7d73cd7b1973d71cf4a3501ed34ed982dfd7ec8e3e718fa730979ea7cf9"
+    },
+    {
+      "path": "examples/demos_sande/sande_pretzel-hors-render-v2-color.crt",
+      "sha256": "b53b071240b63e1b59241f3074218bb56332059f5b67b095e2d960a54d0fc8b6"
+    },
+    {
+      "path": "examples/demos_sande/sande_pretzel-hors-render-v2-interactive.crt",
+      "sha256": "e2ee51c07d6b86f437470722105feb60cf4c4387e19bc9d52cd34f8c0cdacde6"
+    },
+    {
+      "path": "examples/demos_sande/sande_pretzel-hors-render-v2.crt",
+      "sha256": "ae0634a8aadb928dc4d3a9326d52b9d7b68c9d4a3327d9868c8eeaf163a49385"
+    },
+    {
+      "path": "examples/demos_sande/sande_tac2-hors-render-v2-color.crt",
+      "sha256": "99f7f82de654529f687a4cc49942d5f7108d4730184c67697d6eb864247cba27"
+    },
+    {
+      "path": "examples/demos_sande/sande_tac2-hors-render-v2-interactive.crt",
+      "sha256": "900dd2e03f3f639e87f079cc9140cba746f0689a42b36d18500be9768ab9ff94"
+    },
+    {
+      "path": "examples/demos_sande/sande_tac2-hors-render-v2.crt",
+      "sha256": "ae70cef831c58229f5e52e260c29494487282ba124a26b860c03c685537d6174"
+    },
+    {
+      "path": "examples/gmod3_cart_demos/demo-cart-v3.0-gmod3-all-in-one-benchmark.crt",
+      "sha256": "952704768c86994cbec5a4eaa83430876b60ba4d8055a82ca5f8fd744031af84"
+    },
+    {
+      "path": "examples/gmod3_cart_demos/demo-cart-v3.0-gmod3-all-in-one.crt",
+      "sha256": "86ab08c0e3484215d4548c28a17968111d7f44fd65b7c23a6be20d9557aa63a3"
+    },
+    {
+      "path": "examples/hifi_showcase/horse_head_hifi-hors-render-v2.crt",
+      "sha256": "869ca813d8de32a8db4d8a06f74775a616bfa5e32b344eb7a2a5df222be0d2d5"
+    },
+    {
+      "path": "examples/hors_v3_preview/cartridges/sande_pretzel-surface-dither-128-v3.crt",
+      "sha256": "d492127e86e34e08630002ec8e71a2a60a1538d962e013a5d3a77416326b0ad2"
+    },
+    {
+      "path": "examples/hors_v3_preview/cartridges/sande_pretzel-surface-material-128-v3.crt",
+      "sha256": "2d946eb35cee184d65888475e7dd781f7a9e4ddadc68e26dced48f049b3894b4"
+    },
+    {
+      "path": "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-indexed4-interactive.crt",
+      "sha256": "17f85dffc00705ce687b4135441407f42f8b19bf9b2de7de67cc82d3ae7f67d5"
+    },
+    {
+      "path": "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-indexed4.crt",
+      "sha256": "ce0e0c36de2b603a7862c5916ee5022c60afc3e53fc62b99fed6735be7f92cc4"
+    },
+    {
+      "path": "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3-interactive.crt",
+      "sha256": "f4820bf4b64f2eb73e90f75af40f6e84b08d2daa9500b7f1d5d02e7a7972dc1a"
+    },
+    {
+      "path": "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128-v3.crt",
+      "sha256": "a20285b465010ef17b37f36325c056797a9f8e9cbd5e7273de89066ccff58dcb"
+    },
+    {
+      "path": "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-128.crt",
+      "sha256": "8df20f6b4a385ca752a4dddc4ef14b1366bdb0b2e4bdcce049f33891a89d981d"
+    },
+    {
+      "path": "examples/hors_v3_preview/cartridges/sande_pretzel-surface-metallic-192-v3-indexed4.crt",
+      "sha256": "a36151bd86a8db86a8681f594646e4473dc746a9e2e4307eebdea986ec9e8ebb"
+    },
+    {
+      "path": "examples/hors_v3_preview/cartridges/sande_pretzel-surface-textured-128-v3.crt",
+      "sha256": "10f78f626365474ce95a2219c808d70171fe10beb396b3896431972d7718568f"
+    },
+    {
+      "path": "examples/hors_v3_preview/cartridges/sande_pretzel-wire-bw-128-v3.crt",
+      "sha256": "1b812c13a7c8e823ea6939c09cae6f8106657babfd9c3344d5e99a82aafcdb70"
+    },
+    {
+      "path": "examples/hors_v3_preview/cartridges/sande_pretzel-wire-bw-128.crt",
+      "sha256": "8089c6f30ae29c2b967d7a2a9e7b836ff039d014b4f173ed0108989db4ebdee0"
+    },
+    {
+      "path": "examples/horse_head/horse_head-hors-render-v2.crt",
+      "sha256": "25717f9157f685c20ffcfcf331a73ee686b52daff0ef66d6d2e757614d663a3c"
+    },
+    {
+      "path": "examples/saku_2026/cartridges/saku_2026-gradient.crt",
+      "sha256": "95e9f6fdab2a1c7578cebc75912a4814708123ec46b05787cf4acdf6107df847"
+    },
+    {
+      "path": "examples/saku_2026/cartridges/saku_2026-interactive.crt",
+      "sha256": "b4e821d5e8d2bfa321a8254f7be88405eb623a323886c66eb751c4c425ee29f1"
+    },
+    {
+      "path": "examples/saku_2026/cartridges/saku_2026-solid.crt",
+      "sha256": "b69e574b8018c27ce2a72fe10434f23778ba803d42197efa84acb3d435869d61"
+    },
+    {
+      "path": "examples/space_horse_crawl/space_horse_crawl_color-hors-render-v2.crt",
+      "sha256": "e20424401ff0f274029e7d7816545dd732237e27e797ab2af23048e15fda74df"
+    },
+    {
+      "path": "examples/space_horse_spin/space_horse_spin_color-hors-render-v2.crt",
+      "sha256": "e2ab49ea350585a9ee903abca6abb1b8b44259b3441e573a30ca25754843b38b"
+    },
+    {
+      "path": "examples/sphere/sphere-hors-render-v2.crt",
+      "sha256": "359a64bcd40935a112ef5f23978889fed9f451ad03397d55fd7b292113e5dc92"
+    },
+    {
+      "path": "examples/stanford_dragon/cartridges/stanford_dragon-blue-hors-v3.crt",
+      "sha256": "8433b3b71a6e81e0a22d6f8939fd4d41680b7444d9d58ce2e9b39895c6981209"
+    },
+    {
+      "path": "examples/stanford_dragon/cartridges/stanford_dragon-golden-hors-v3.crt",
+      "sha256": "64f9c74bb51a4b36364b5495c888d80ef1cc88b7db887ab014a1e44e73e643cd"
+    },
+    {
+      "path": "examples/stanford_dragon/cartridges/stanford_dragon-green-hors-v3.crt",
+      "sha256": "32d073f9b288ff21c0041ce0fc7c35139f0b81bcb14d4a93e26ac142c2bc1444"
+    },
+    {
+      "path": "examples/stanford_dragon/cartridges/stanford_dragon-metallic-hors-v3.crt",
+      "sha256": "12ac2b59e103031fa6865007101e21e76f81a7bd4a99d51294c90cd8262f943e"
+    },
+    {
+      "path": "examples/stanford_dragon/cartridges/stanford_dragon-red-hors-v3.crt",
+      "sha256": "40ef5463b83e657fb94514e5f6c9f3f45f0ba35f0c4608c8fe3cca62ff6cba7c"
+    },
+    {
+      "path": "examples/stanford_dragon/cartridges/stanford_dragon-wireframe-hors-v3.crt",
+      "sha256": "61a28ce0b136200c1473c47b1eb464af2ba0916dc6db708bd3ae1d347ea9edfe"
+    },
+    {
+      "path": "examples/sunflower_torus/sunflower_torus-hors-render-v2.crt",
+      "sha256": "cb64ed7eb26c626eeb5d71ebd0efcf8068ace4b5a84cf439c294ed33ba9ff1c9"
+    },
+    {
+      "path": "examples/sunflower_torus/sunflower_torus_color-hors-render-v2.crt",
+      "sha256": "d212aa1ff56fe4972326a4b570054f59e685f0558525a7f0b7073866121042f7"
+    },
+    {
+      "path": "examples/torus/torus-hors-render-v2.crt",
+      "sha256": "d7db879b527b5846a5dbc98c0771e898272cdfc407dace5f2177c52103b5b0bc"
+    },
+    {
+      "path": "examples/torus_dense/torus_dense-hors-render-v2.crt",
+      "sha256": "94b693dcd572b56e750c6198bae8b626d27d77953a082361f5a6a493a44e6e00"
+    }
+  ]
+}

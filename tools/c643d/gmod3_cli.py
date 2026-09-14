@@ -4,6 +4,7 @@ from pathlib import Path
 import subprocess
 
 from .gmod3_image import CAPACITIES_MIB, inspect_crt
+from .monitor_logs import vice_monitor_args
 
 
 def add_flags(parser, *, build=False, settings=None):
@@ -25,7 +26,7 @@ def command(vice, crt, args=(), *, clean_settings=False):
     path = Path(crt).expanduser().resolve()
     inspect_crt(path)
     console = ['-console'] if '-console' in args else []
-    options = [a for a in args if a != '-console']
+    options = vice_monitor_args([a for a in args if a != '-console'])
     return [str(vice), *console, *(['-default'] if clean_settings else []), '-pal',
         *([] if console else ['+VICIIfull']), '+warp', *options,
         '+saveres', '+gmod3flashwrite', '+cart', '-cartcrt', str(path)]
@@ -41,7 +42,6 @@ def run(a):
 
 
 def build(a):
-    from . import gmod3_surface
     if a.renderer not in ('hors-renderer-v3','hors-render-v3'):
         raise ValueError('GMod3 requires HORS-V3 or HORS-V4; older renderer backends remain EasyFlash')
     from .gmod3_options import normalize
@@ -56,6 +56,7 @@ def build(a):
         return build(a)
     if a.gmod3_first_bank is not None and a.gmod3_first_bank<4:
         raise ValueError('GMod3 banks 0..3 are reserved for boot/runtime')
+    from . import gmod3_surface
     return gmod3_surface.cmd_build(a)
 
 

@@ -1,0 +1,25 @@
+{
+  "index": 34,
+  "name": "SPHERE LIGHT GREEN ON BLACK",
+  "passed": true,
+  "frames": 24,
+  "stored_frames": 24,
+  "pictures_checked": 51,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 827,
+  "observed_refreshes": 2400,
+  "average_fps": 17.272081807081808,
+  "high_fps": 25.062271062271062,
+  "low_fps": 16.70818070818071,
+  "mean_render_cycles": 56768.81481481482,
+  "max_render_cycles": 57682,
+  "picture_sha256": "c1f8f2209240480c1f3bdc17ada946875076c039e09b51b818fac7a720699441",
+  "allocated_kib": 64,
+  "bank_range": [
+    827,
+    834
+  ],
+  "target_fps": null,
+  "crt_sha256": "86ab08c0e3484215d4548c28a17968111d7f44fd65b7c23a6be20d9557aa63a3"
+}

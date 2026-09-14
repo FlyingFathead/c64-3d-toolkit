@@ -1,0 +1,25 @@
+{
+  "index": 2,
+  "name": "DRAGON GOLDEN",
+  "passed": true,
+  "frames": 128,
+  "stored_frames": 128,
+  "pictures_checked": 259,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 701,
+  "observed_refreshes": 2400,
+  "average_fps": 14.640543345543344,
+  "high_fps": 25.062271062271062,
+  "low_fps": 12.531135531135531,
+  "mean_render_cycles": 67309.23664122137,
+  "max_render_cycles": 75312,
+  "picture_sha256": "bb213cf13383422b74a5918f99ced9f6163101c4ab4669f86ada737531ee1a3d",
+  "allocated_kib": 344,
+  "bank_range": [
+    98,
+    140
+  ],
+  "target_fps": null,
+  "crt_sha256": "d1c23418a83cde9d43adb5e2dd2808303000cb8e7e0864a617ea0fd95ac6cb77"
+}

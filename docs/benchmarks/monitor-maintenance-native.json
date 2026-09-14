@@ -1,0 +1,36 @@
+{
+  "emulator": "VICE 3.10",
+  "checks": [
+    {
+      "case": "raw-default-reproduces",
+      "passed": true,
+      "root_monitor_created": true
+    },
+    {
+      "case": "easyflash-launch",
+      "passed": true,
+      "root_monitor_created": false
+    },
+    {
+      "case": "gmod3-launch",
+      "passed": true,
+      "root_monitor_created": false
+    },
+    {
+      "case": "gmod3-probe",
+      "passed": true,
+      "root_monitor_created": false
+    },
+    {
+      "case": "batch-launch",
+      "passed": true,
+      "root_monitor_created": false
+    },
+    {
+      "case": "batch-explicit",
+      "passed": true,
+      "root_monitor_created": false
+    }
+  ],
+  "explicit_monitor_preserved": true
+}

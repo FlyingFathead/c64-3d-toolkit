@@ -18,7 +18,7 @@ def capture(crt,vice,data,out):
         for i in range(2000):
             mon+=['g','bank ram',f'bsave "{tmp}/{i}.ram" 0 $0000 $ffff','bank cpu',f'bsave "{tmp}/{i}.io" 0 $d000 $ddff','stopwatch']
         mon+=['quit'];(tmp/'run.mon').write_text('\n'.join(mon)+'\n')
-        cmd=[vice,'-console','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(tmp/'run.mon'),'-monlog','-monlogname',str(tmp/'monitor.log'),'-limitcycles','100000000','-directory',str(data)]
+        cmd=[vice,'-console','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(tmp/'run.mon'),'-monlogname', str(tmp/'monitor.log'), '-monlog','-limitcycles','100000000','-directory',str(data)]
         with (tmp/'vice.log').open('w') as f:subprocess.run(cmd,stdout=f,stderr=subprocess.STDOUT,check=True,timeout=180)
         log=(tmp/'monitor.log').read_text();events=[];pc=None
         for line in log.splitlines():

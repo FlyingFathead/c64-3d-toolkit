@@ -1,0 +1,582 @@
+{
+  "mapper_sha256": "fec6f75a5c622277cc39cf9ea31b942f230d91e7bb0b463c7f96ea505a5fd13b",
+  "rows": [
+    {
+      "palette": "toolkit",
+      "expected_index": 0,
+      "source_rgb": [
+        0,
+        0,
+        0
+      ],
+      "mapped_index": 0,
+      "mapped_name": "black",
+      "matches": true
+    },
+    {
+      "palette": "toolkit",
+      "expected_index": 1,
+      "source_rgb": [
+        255,
+        255,
+        255
+      ],
+      "mapped_index": 1,
+      "mapped_name": "white",
+      "matches": true
+    },
+    {
+      "palette": "toolkit",
+      "expected_index": 2,
+      "source_rgb": [
+        136,
+        0,
+        0
+      ],
+      "mapped_index": 2,
+      "mapped_name": "red",
+      "matches": true
+    },
+    {
+      "palette": "toolkit",
+      "expected_index": 3,
+      "source_rgb": [
+        170,
+        255,
+        238
+      ],
+      "mapped_index": 3,
+      "mapped_name": "cyan",
+      "matches": true
+    },
+    {
+      "palette": "toolkit",
+      "expected_index": 4,
+      "source_rgb": [
+        204,
+        68,
+        204
+      ],
+      "mapped_index": 4,
+      "mapped_name": "purple",
+      "matches": true
+    },
+    {
+      "palette": "toolkit",
+      "expected_index": 5,
+      "source_rgb": [
+        0,
+        204,
+        85
+      ],
+      "mapped_index": 5,
+      "mapped_name": "green",
+      "matches": true
+    },
+    {
+      "palette": "toolkit",
+      "expected_index": 6,
+      "source_rgb": [
+        0,
+        0,
+        170
+      ],
+      "mapped_index": 6,
+      "mapped_name": "blue",
+      "matches": true
+    },
+    {
+      "palette": "toolkit",
+      "expected_index": 7,
+      "source_rgb": [
+        238,
+        238,
+        119
+      ],
+      "mapped_index": 7,
+      "mapped_name": "yellow",
+      "matches": true
+    },
+    {
+      "palette": "toolkit",
+      "expected_index": 8,
+      "source_rgb": [
+        221,
+        136,
+        85
+      ],
+      "mapped_index": 8,
+      "mapped_name": "orange",
+      "matches": true
+    },
+    {
+      "palette": "toolkit",
+      "expected_index": 9,
+      "source_rgb": [
+        102,
+        68,
+        0
+      ],
+      "mapped_index": 9,
+      "mapped_name": "brown",
+      "matches": true
+    },
+    {
+      "palette": "toolkit",
+      "expected_index": 10,
+      "source_rgb": [
+        255,
+        119,
+        119
+      ],
+      "mapped_index": 10,
+      "mapped_name": "light_red",
+      "matches": true
+    },
+    {
+      "palette": "toolkit",
+      "expected_index": 11,
+      "source_rgb": [
+        51,
+        51,
+        51
+      ],
+      "mapped_index": 11,
+      "mapped_name": "dark_gray",
+      "matches": true
+    },
+    {
+      "palette": "toolkit",
+      "expected_index": 12,
+      "source_rgb": [
+        119,
+        119,
+        119
+      ],
+      "mapped_index": 12,
+      "mapped_name": "gray",
+      "matches": true
+    },
+    {
+      "palette": "toolkit",
+      "expected_index": 13,
+      "source_rgb": [
+        170,
+        255,
+        102
+      ],
+      "mapped_index": 13,
+      "mapped_name": "light_green",
+      "matches": true
+    },
+    {
+      "palette": "toolkit",
+      "expected_index": 14,
+      "source_rgb": [
+        0,
+        136,
+        255
+      ],
+      "mapped_index": 14,
+      "mapped_name": "light_blue",
+      "matches": true
+    },
+    {
+      "palette": "toolkit",
+      "expected_index": 15,
+      "source_rgb": [
+        187,
+        187,
+        187
+      ],
+      "mapped_index": 15,
+      "mapped_name": "light_gray",
+      "matches": true
+    },
+    {
+      "palette": "pepto-pal",
+      "expected_index": 0,
+      "source_rgb": [
+        0,
+        0,
+        0
+      ],
+      "mapped_index": 0,
+      "mapped_name": "black",
+      "matches": true
+    },
+    {
+      "palette": "pepto-pal",
+      "expected_index": 1,
+      "source_rgb": [
+        255,
+        255,
+        255
+      ],
+      "mapped_index": 1,
+      "mapped_name": "white",
+      "matches": true
+    },
+    {
+      "palette": "pepto-pal",
+      "expected_index": 2,
+      "source_rgb": [
+        104,
+        55,
+        43
+      ],
+      "mapped_index": 9,
+      "mapped_name": "brown",
+      "matches": false
+    },
+    {
+      "palette": "pepto-pal",
+      "expected_index": 3,
+      "source_rgb": [
+        112,
+        164,
+        178
+      ],
+      "mapped_index": 15,
+      "mapped_name": "light_gray",
+      "matches": false
+    },
+    {
+      "palette": "pepto-pal",
+      "expected_index": 4,
+      "source_rgb": [
+        111,
+        61,
+        134
+      ],
+      "mapped_index": 4,
+      "mapped_name": "purple",
+      "matches": true
+    },
+    {
+      "palette": "pepto-pal",
+      "expected_index": 5,
+      "source_rgb": [
+        88,
+        141,
+        67
+      ],
+      "mapped_index": 7,
+      "mapped_name": "yellow",
+      "matches": false
+    },
+    {
+      "palette": "pepto-pal",
+      "expected_index": 6,
+      "source_rgb": [
+        53,
+        40,
+        121
+      ],
+      "mapped_index": 14,
+      "mapped_name": "light_blue",
+      "matches": false
+    },
+    {
+      "palette": "pepto-pal",
+      "expected_index": 7,
+      "source_rgb": [
+        184,
+        199,
+        111
+      ],
+      "mapped_index": 7,
+      "mapped_name": "yellow",
+      "matches": true
+    },
+    {
+      "palette": "pepto-pal",
+      "expected_index": 8,
+      "source_rgb": [
+        111,
+        79,
+        37
+      ],
+      "mapped_index": 9,
+      "mapped_name": "brown",
+      "matches": false
+    },
+    {
+      "palette": "pepto-pal",
+      "expected_index": 9,
+      "source_rgb": [
+        67,
+        57,
+        0
+      ],
+      "mapped_index": 9,
+      "mapped_name": "brown",
+      "matches": true
+    },
+    {
+      "palette": "pepto-pal",
+      "expected_index": 10,
+      "source_rgb": [
+        154,
+        103,
+        89
+      ],
+      "mapped_index": 12,
+      "mapped_name": "gray",
+      "matches": false
+    },
+    {
+      "palette": "pepto-pal",
+      "expected_index": 11,
+      "source_rgb": [
+        68,
+        68,
+        68
+      ],
+      "mapped_index": 11,
+      "mapped_name": "dark_gray",
+      "matches": true
+    },
+    {
+      "palette": "pepto-pal",
+      "expected_index": 12,
+      "source_rgb": [
+        108,
+        108,
+        108
+      ],
+      "mapped_index": 12,
+      "mapped_name": "gray",
+      "matches": true
+    },
+    {
+      "palette": "pepto-pal",
+      "expected_index": 13,
+      "source_rgb": [
+        154,
+        210,
+        132
+      ],
+      "mapped_index": 7,
+      "mapped_name": "yellow",
+      "matches": false
+    },
+    {
+      "palette": "pepto-pal",
+      "expected_index": 14,
+      "source_rgb": [
+        108,
+        94,
+        181
+      ],
+      "mapped_index": 14,
+      "mapped_name": "light_blue",
+      "matches": true
+    },
+    {
+      "palette": "pepto-pal",
+      "expected_index": 15,
+      "source_rgb": [
+        149,
+        149,
+        149
+      ],
+      "mapped_index": 12,
+      "mapped_name": "gray",
+      "matches": false
+    },
+    {
+      "palette": "colodore",
+      "expected_index": 0,
+      "source_rgb": [
+        0,
+        0,
+        0
+      ],
+      "mapped_index": 0,
+      "mapped_name": "black",
+      "matches": true
+    },
+    {
+      "palette": "colodore",
+      "expected_index": 1,
+      "source_rgb": [
+        255,
+        255,
+        255
+      ],
+      "mapped_index": 1,
+      "mapped_name": "white",
+      "matches": true
+    },
+    {
+      "palette": "colodore",
+      "expected_index": 2,
+      "source_rgb": [
+        150,
+        40,
+        46
+      ],
+      "mapped_index": 2,
+      "mapped_name": "red",
+      "matches": true
+    },
+    {
+      "palette": "colodore",
+      "expected_index": 3,
+      "source_rgb": [
+        91,
+        214,
+        206
+      ],
+      "mapped_index": 3,
+      "mapped_name": "cyan",
+      "matches": true
+    },
+    {
+      "palette": "colodore",
+      "expected_index": 4,
+      "source_rgb": [
+        159,
+        45,
+        173
+      ],
+      "mapped_index": 4,
+      "mapped_name": "purple",
+      "matches": true
+    },
+    {
+      "palette": "colodore",
+      "expected_index": 5,
+      "source_rgb": [
+        65,
+        185,
+        54
+      ],
+      "mapped_index": 5,
+      "mapped_name": "green",
+      "matches": true
+    },
+    {
+      "palette": "colodore",
+      "expected_index": 6,
+      "source_rgb": [
+        39,
+        36,
+        196
+      ],
+      "mapped_index": 6,
+      "mapped_name": "blue",
+      "matches": true
+    },
+    {
+      "palette": "colodore",
+      "expected_index": 7,
+      "source_rgb": [
+        239,
+        243,
+        71
+      ],
+      "mapped_index": 7,
+      "mapped_name": "yellow",
+      "matches": true
+    },
+    {
+      "palette": "colodore",
+      "expected_index": 8,
+      "source_rgb": [
+        159,
+        72,
+        21
+      ],
+      "mapped_index": 8,
+      "mapped_name": "orange",
+      "matches": true
+    },
+    {
+      "palette": "colodore",
+      "expected_index": 9,
+      "source_rgb": [
+        94,
+        53,
+        0
+      ],
+      "mapped_index": 9,
+      "mapped_name": "brown",
+      "matches": true
+    },
+    {
+      "palette": "colodore",
+      "expected_index": 10,
+      "source_rgb": [
+        218,
+        95,
+        102
+      ],
+      "mapped_index": 10,
+      "mapped_name": "light_red",
+      "matches": true
+    },
+    {
+      "palette": "colodore",
+      "expected_index": 11,
+      "source_rgb": [
+        71,
+        71,
+        71
+      ],
+      "mapped_index": 11,
+      "mapped_name": "dark_gray",
+      "matches": true
+    },
+    {
+      "palette": "colodore",
+      "expected_index": 12,
+      "source_rgb": [
+        120,
+        120,
+        120
+      ],
+      "mapped_index": 12,
+      "mapped_name": "gray",
+      "matches": true
+    },
+    {
+      "palette": "colodore",
+      "expected_index": 13,
+      "source_rgb": [
+        145,
+        255,
+        132
+      ],
+      "mapped_index": 13,
+      "mapped_name": "light_green",
+      "matches": true
+    },
+    {
+      "palette": "colodore",
+      "expected_index": 14,
+      "source_rgb": [
+        104,
+        100,
+        255
+      ],
+      "mapped_index": 6,
+      "mapped_name": "blue",
+      "matches": false
+    },
+    {
+      "palette": "colodore",
+      "expected_index": 15,
+      "source_rgb": [
+        174,
+        174,
+        174
+      ],
+      "mapped_index": 15,
+      "mapped_name": "light_gray",
+      "matches": true
+    }
+  ],
+  "note": "Cross-palette nearest-RGB mapping is not palette-index preservation."
+}

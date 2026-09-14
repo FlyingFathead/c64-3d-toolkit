@@ -1,0 +1,25 @@
+{
+  "index": 45,
+  "name": "PRETZEL METALLIC",
+  "passed": true,
+  "frames": 192,
+  "stored_frames": 192,
+  "pictures_checked": 387,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 680,
+  "observed_refreshes": 2400,
+  "average_fps": 14.201953601953601,
+  "high_fps": 16.70818070818071,
+  "low_fps": 12.531135531135531,
+  "mean_render_cycles": 69104.9641025641,
+  "max_render_cycles": 74908,
+  "picture_sha256": "3ca323bce14bbeee646c5f978c4317f515e8bbc197a509da2ca908ea795b3b4b",
+  "allocated_kib": 528,
+  "bank_range": [
+    1226,
+    1291
+  ],
+  "target_fps": null,
+  "crt_sha256": "d1c23418a83cde9d43adb5e2dd2808303000cb8e7e0864a617ea0fd95ac6cb77"
+}

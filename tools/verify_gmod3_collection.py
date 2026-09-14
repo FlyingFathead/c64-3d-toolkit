@@ -23,7 +23,7 @@ def run_monitor(crt,vice,data,tmp,commands,limit=600_000_000):
     (tmp/'run.mon').write_text('\n'.join(commands+['quit'])+'\n')
     with (tmp/'vice.log').open('w') as log:
         p=subprocess.run(vice_command(vice,crt,data)+['-initbreak','reset','-moncommands',str(tmp/'run.mon'),
-            '-monlog','-monlogname',str(tmp/'monitor.log'),'-limitcycles',str(limit)],
+            '-monlogname', str(tmp/'monitor.log'), '-monlog','-limitcycles',str(limit)],
             stdout=log,stderr=subprocess.STDOUT,timeout=240)
     if p.returncode:raise RuntimeError((tmp/'monitor.log').read_text()[-1800:]+'\n'+(tmp/'vice.log').read_text()[-800:])
     return [int(x) for x in re.findall(r'Stopwatch:\s*(\d+)',(tmp/'monitor.log').read_text())]

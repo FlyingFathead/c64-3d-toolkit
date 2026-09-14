@@ -1,0 +1,44 @@
+blender export: /fake/blender --background --disable-autoexec /tmp/tmpvcxa9nz0/scene.blend --python-exit-code 1 --python /tmp/tmpvcxa9nz0/tools/blender_export.py -- --output /tmp/tmpvcxa9nz0/scene.c643dscene --sample-step 1 --blender-color-space linear --viewport-width 320 --viewport-height 144 --max-frames 255
+.............WARNING: scene clipping: 2/2 frames affected; 0 near-plane edge clips, 0 behind-camera edges discarded, 8 viewport edge clips, 8 off-screen edges discarded; 0 invisible frames retained. All authored samples preserved. Use --ignore-warnings to hide this summary.
+.................output colours: foreground white (1); background black (0); border black (0)
+...output colours: foreground white (1); background black (0); border black (0)
+.....output colours: foreground white (1); background black (0); border black (0)
+.............s.........output colours: foreground white (1); background black (0); border black (0)
+.output colours: foreground white (1); background black (0); border black (0)
+.......output colours: foreground yellow (7); background black (0); border black (0)
+output colours: foreground white (1); background black (0); border black (0)
+..............output colours: foreground source colours; background black (0); border black (0)
+.output colours: foreground source colours; background black (0); border black (0)
+output colours: foreground source colours; background black (0); border black (0)
+........................................+ cartconv -t easy -i /tmp/tmpkqcpnejx/scene.bin -o /tmp/tmpkqcpnejx/scene.crt -n TEST
+--------------------------------------------------------------------------------
+Created: /tmp/tmpkqcpnejx/scene.crt
+ROM used: 8,192 bytes (8 KiB)
+Free ROM available on cart: 1,040,384 bytes (1016 KiB)
+Free slots: ROML 512 KiB; ROMH 504 KiB
+Allocation: 8 KiB ROM slots; free slots may be on either ROML or ROMH.
+--------------------------------------------------------------------------------
+...............................Installing for Python: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3
+..................................Surface-fill raster: 1/1
+Surface-fill raster: 1/1
+Surface-fill raster: 1/1
+Surface-fill raster: 1/1
+....................................................Packing: payload=32 bytes; sequential=1 banks; packed=1 banks; available=122; unused in allocated banks=8160 bytes
+.Packing: payload=1007616 bytes; sequential=123 banks; packed=123 banks; available=122; unused in allocated banks=0 bytes
+.Packing: payload=800000 bytes; sequential=150 banks; packed=100 banks; available=122; unused in allocated banks=19200 bytes
+..WARNING: scene clipping: 1/1 frames affected; 0 near-plane edge clips, 0 behind-camera edges discarded, 2 viewport edge clips, 0 off-screen edges discarded; 0 invisible frames retained. All authored samples preserved. Use --ignore-warnings to hide this summary.
+WARNING: scene clipping: 1/1 frames affected; 0 near-plane edge clips, 0 behind-camera edges discarded, 2 viewport edge clips, 0 off-screen edges discarded; 0 invisible frames retained. All authored samples preserved. Use --ignore-warnings to hide this summary.
+WARNING: scene clipping: 1/1 frames affected; 0 near-plane edge clips, 0 behind-camera edges discarded, 2 viewport edge clips, 0 off-screen edges discarded; 0 invisible frames retained. All authored samples preserved. Use --ignore-warnings to hide this summary.
+WARNING: scene clipping: 1/1 frames affected; 0 near-plane edge clips, 0 behind-camera edges discarded, 2 viewport edge clips, 0 off-screen edges discarded; 0 invisible frames retained. All authored samples preserved. Use --ignore-warnings to hide this summary.
+..........fps locking: not set
+Surface-fill raster: 1/1
+..Surface-fill raster: 1/4
+Surface-fill raster: 4/4
+Surface-fill raster: 1/4
+Surface-fill raster: 4/4
+..............................................s......s..
+----------------------------------------------------------------------
+Ran 313 tests in 7.453s
+
+OK (skipped=3)
+fps locking: not set

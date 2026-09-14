@@ -227,8 +227,8 @@ def cmd_build_cart_scene(a):
     if not cli._check_overwrite([outdir/f'{stem}{suffix}' for suffix in ('.crt','.lbl','-manifest.json')],a.overwrite_policy):return 2
     if getattr(a,'public_renderer',None)=='hors-render-v1':a.public_renderer='hors-render-v1-scene'
     if a.blend:
-        export=cli.BUILD/f'{stem}.c643dscene'
-        export_blend_scene(a.blend,export,blender=a.blender,frame_start=a.frame_start,frame_end=a.frame_end,sample_step=a.sample_step,root=cli.ROOT,viewport_height=192,viewport_width=getattr(a,'viewport_width',None) or 320,max_frames=MAX_SCENE_FRAMES,output_fps=rate)
+        export=outdir/f'{stem}.c643dscene'
+        export_blend_scene(a.blend,export,blender=a.blender,blender_color_space=getattr(a,'blender_color_space','linear'),ignore_warnings=getattr(a,'ignore_warnings',False),frame_start=a.frame_start,frame_end=a.frame_end,sample_step=a.sample_step,root=cli.ROOT,viewport_height=192,viewport_width=getattr(a,'viewport_width',None) or 320,max_frames=MAX_SCENE_FRAMES,output_fps=rate)
     else:export=Path(a.scene)
     scene=load_scene(export)
     width=getattr(a,'viewport_width',None) or scene.viewport_width
@@ -237,7 +237,7 @@ def cmd_build_cart_scene(a):
     scene=replace(scene,viewport_width=width)
     color,_,percell=cli._scene_color_policy(scene.mesh,a)
     print(f'compiling {len(scene.frames)} authored scene samples with {a.renderer} kernels...',flush=True)
-    frames,_=build_scene_frames(scene,visibility_mode='surface' if a.visibility=='auto' else a.visibility,z_tolerance=0.0008 if a.z_tolerance is None else a.z_tolerance,feature_angle=40 if a.feature_angle is None else a.feature_angle,enable_source_colors=percell,fallback_color=c64_color_index(color),background_color=c64_color_index(getattr(a,"background_color",0)),height=192,width=width,max_frames=MAX_SCENE_FRAMES,max_visible_runs=65535,**flip_options(a))
+    frames,_=build_scene_frames(scene,ignore_warnings=getattr(a,'ignore_warnings',False),visibility_mode='surface' if a.visibility=='auto' else a.visibility,z_tolerance=0.0008 if a.z_tolerance is None else a.z_tolerance,feature_angle=40 if a.feature_angle is None else a.feature_angle,enable_source_colors=percell,fallback_color=c64_color_index(color),background_color=c64_color_index(getattr(a,"background_color",0)),height=192,width=width,max_frames=MAX_SCENE_FRAMES,max_visible_runs=65535,**flip_options(a))
     builder=assemble_scene
     beta_options={}
     if getattr(a,'public_renderer','').startswith('hors-render-v2-beta1'):

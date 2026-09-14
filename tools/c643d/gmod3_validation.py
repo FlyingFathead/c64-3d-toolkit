@@ -39,8 +39,7 @@ def display_capture(crt, oracle, *, vice, vice_data, out, refreshes=1600):
         (tmp/'run.mon').write_text('\n'.join(commands)+'\n')
         with (tmp/'vice.log').open('w') as output:
             proc = subprocess.run(vice_command(vice, crt, vice_data)+[
-                '-initbreak', 'reset', '-moncommands', str(tmp/'run.mon'), '-monlog',
-                '-monlogname', str(tmp/'monitor.log'), '-limitcycles', str(refreshes*19656+100000000)],
+                '-initbreak', 'reset', '-moncommands', str(tmp/'run.mon'), '-monlogname', str(tmp/'monitor.log'), '-monlog', '-limitcycles', str(refreshes*19656+100000000)],
                 stdout=output, stderr=subprocess.STDOUT, timeout=120)
         trace = (tmp/'monitor.log').read_text() if (tmp/'monitor.log').exists() else ''
         ticks = [int(t) for t in re.findall(r'Stopwatch:\s*(\d+)', trace)]

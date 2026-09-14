@@ -1,0 +1,85 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "source": "examples/autotune/colour-cube.c643dscene",
+      "samples": [
+        0,
+        12,
+        23
+      ],
+      "colors": false,
+      "frame_records_identical": true
+    },
+    {
+      "source": "examples/autotune/colour-cube.c643dscene",
+      "samples": [
+        0,
+        12,
+        23
+      ],
+      "colors": true,
+      "frame_records_identical": true
+    },
+    {
+      "source": "examples/autotune/colour-torus.c643dscene",
+      "samples": [
+        0,
+        9,
+        17
+      ],
+      "colors": false,
+      "frame_records_identical": true
+    },
+    {
+      "source": "examples/autotune/colour-torus.c643dscene",
+      "samples": [
+        0,
+        9,
+        17
+      ],
+      "colors": true,
+      "frame_records_identical": true
+    },
+    {
+      "source": "examples/blender_viewport_test/viewport-test.c643dscene",
+      "samples": [
+        0,
+        8,
+        15
+      ],
+      "colors": false,
+      "frame_records_identical": true
+    },
+    {
+      "source": "examples/blender_viewport_test/viewport-test.c643dscene",
+      "samples": [
+        0,
+        8,
+        15
+      ],
+      "colors": true,
+      "frame_records_identical": true
+    },
+    {
+      "source": "examples/blender_viewport_test/tracking-test.c643dscene",
+      "samples": [
+        0,
+        8,
+        15
+      ],
+      "colors": false,
+      "frame_records_identical": true
+    },
+    {
+      "source": "examples/blender_viewport_test/tracking-test.c643dscene",
+      "samples": [
+        0,
+        8,
+        15
+      ],
+      "colors": true,
+      "frame_records_identical": true
+    }
+  ]
+}

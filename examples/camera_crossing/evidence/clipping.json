@@ -1,0 +1,100 @@
+{
+  "statistics": {
+    "outside_edges": 318,
+    "viewport_edges": 56,
+    "near_vertices": 528,
+    "near_triangles": 848,
+    "near_edges": 56,
+    "behind_edges": 764,
+    "empty_frames": 9,
+    "affected_frames": 17,
+    "total_frames": 17
+  },
+  "frames": [
+    {
+      "source_frame": 1,
+      "visible_pixels": 773,
+      "runs": 40
+    },
+    {
+      "source_frame": 2,
+      "visible_pixels": 766,
+      "runs": 31
+    },
+    {
+      "source_frame": 3,
+      "visible_pixels": 673,
+      "runs": 24
+    },
+    {
+      "source_frame": 4,
+      "visible_pixels": 380,
+      "runs": 10
+    },
+    {
+      "source_frame": 5,
+      "visible_pixels": 0,
+      "runs": 0
+    },
+    {
+      "source_frame": 6,
+      "visible_pixels": 0,
+      "runs": 0
+    },
+    {
+      "source_frame": 7,
+      "visible_pixels": 0,
+      "runs": 0
+    },
+    {
+      "source_frame": 8,
+      "visible_pixels": 0,
+      "runs": 0
+    },
+    {
+      "source_frame": 9,
+      "visible_pixels": 0,
+      "runs": 0
+    },
+    {
+      "source_frame": 10,
+      "visible_pixels": 0,
+      "runs": 0
+    },
+    {
+      "source_frame": 11,
+      "visible_pixels": 0,
+      "runs": 0
+    },
+    {
+      "source_frame": 12,
+      "visible_pixels": 0,
+      "runs": 0
+    },
+    {
+      "source_frame": 13,
+      "visible_pixels": 0,
+      "runs": 0
+    },
+    {
+      "source_frame": 14,
+      "visible_pixels": 380,
+      "runs": 10
+    },
+    {
+      "source_frame": 15,
+      "visible_pixels": 673,
+      "runs": 24
+    },
+    {
+      "source_frame": 16,
+      "visible_pixels": 766,
+      "runs": 31
+    },
+    {
+      "source_frame": 17,
+      "visible_pixels": 773,
+      "runs": 40
+    }
+  ]
+}

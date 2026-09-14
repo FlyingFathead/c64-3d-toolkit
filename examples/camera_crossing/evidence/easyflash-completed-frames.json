@@ -1,0 +1,26 @@
+{
+  "cartridge": "camera-crossing-easyflash.crt",
+  "menu_entry": null,
+  "verified_frames": 54,
+  "orientations": 17,
+  "bitmap_bytes_checked": 414720,
+  "color_bytes_checked": 51840,
+  "slots": {
+    "1": 18,
+    "2": 18,
+    "0": 18
+  },
+  "average_fps": 25.46226676841533,
+  "min_frame_cycles": 22647,
+  "max_frame_cycles": 48569,
+  "pixel_match": true,
+  "color_match": true,
+  "reused_samples": 0,
+  "border_match": true,
+  "border_color": 0,
+  "loop_seconds": 0.6783104355451622,
+  "target_fps": 25.0,
+  "hud_match": true,
+  "text_overlay": true,
+  "frame_index_bits": 16
+}

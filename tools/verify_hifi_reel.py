@@ -47,7 +47,7 @@ def verify(crt,vice,vice_data):
         commands.append('quit');(out/'run.mon').write_text('\n'.join(commands)+'\n')
         cmd=[vice,'-console','-default','-pal','+sound','-warp','-seed','1','+easyflashcrtwrite',
              '-directory',str(vice_data),'-cartcrt',str(crt),'-initbreak','reset',
-             '-moncommands',str(out/'run.mon'),'-monlog','-monlogname',str(out/'monitor.log'),
+             '-moncommands',str(out/'run.mon'),'-monlogname', str(out/'monitor.log'), '-monlog',
              '-limitcycles','100000000']
         with (out/'vice.log').open('w') as log:
             subprocess.run(cmd,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=120)

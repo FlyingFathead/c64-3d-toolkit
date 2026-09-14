@@ -1,0 +1,25 @@
+{
+  "index": 40,
+  "name": "TAC-2 WIRE",
+  "passed": true,
+  "frames": 192,
+  "stored_frames": 192,
+  "pictures_checked": 387,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 1123,
+  "observed_refreshes": 2400,
+  "average_fps": 23.454108669108667,
+  "high_fps": 25.062271062271062,
+  "low_fps": 16.70818070818071,
+  "mean_render_cycles": 41729.29743589744,
+  "max_render_cycles": 43908,
+  "picture_sha256": "edd62a48e9a44172de6361ea56c3d266c4a1511d06a0a6d493bfccb68e7c6e90",
+  "allocated_kib": 280,
+  "bank_range": [
+    1029,
+    1063
+  ],
+  "target_fps": null,
+  "crt_sha256": "86ab08c0e3484215d4548c28a17968111d7f44fd65b7c23a6be20d9557aa63a3"
+}

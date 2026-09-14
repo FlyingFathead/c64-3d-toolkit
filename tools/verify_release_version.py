@@ -57,7 +57,7 @@ def main():
         with (a.out/(renderer+'-thanks.log')).open('w') as log:
             subprocess.run([a.vice,'-console','-pal','+sound','-warp','-seed','1','+easyflashcrtwrite',
                 '-directory',a.vice_data,'-cartcrt',str(crt),'-initbreak','reset',
-                '-moncommands',str(work/'version.mon'),'-limitcycles','10000000'],stdout=log,stderr=subprocess.STDOUT,check=True,timeout=60)
+                '-monlogname',str(work/'monitor.log'),'-moncommands',str(work/'version.mon'),'-limitcycles','10000000'],stdout=log,stderr=subprocess.STDOUT,check=True,timeout=60)
         assert __version__.encode() in (work/'thanks.ram').read_bytes()[0x400:0x800]
         reports.append(dict(renderer=renderer,version=__version__,all_menu_styles=True,build_screen=True,thanks_screen=True))
     (a.out/'validation.json').write_text(json.dumps(dict(passed=True,checks=reports),indent=2)+'\n')

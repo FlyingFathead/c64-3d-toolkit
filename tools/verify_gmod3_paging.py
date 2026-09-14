@@ -16,9 +16,10 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     for key,default in [('tass','64tass'),('cartconv','cartconv'),('vice','x64sc')]:p.add_argument('--'+key,default=default)
     p.add_argument('--vice-data',required=True)
+    p.add_argument('--crt',type=Path,default=ROOT/'examples/gmod3_cart_demos/demo-cart-v3.1-gmod3-all-in-one.crt')
     p.add_argument('--output',type=Path,default=ROOT/'docs/benchmarks/gmod3-paging')
     a=p.parse_args();a.output.mkdir(parents=True,exist_ok=True)
-    crt=ROOT/'examples/gmod3_cart_demos/demo-cart-v3.0-gmod3-all-in-one.crt'
+    crt=a.crt.resolve()
     meta=json.loads(crt.with_name(crt.stem+'-manifest.json').read_text())
     entry=next(r for r in meta['entries'] if r['frames']==640)
     sym=labels(crt.parent/entry['labels']);menu=labels(crt.parent/meta['collection_labels'])

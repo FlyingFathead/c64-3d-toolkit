@@ -1,5 +1,8 @@
 # Renderer performance comparison
 
+For the v0.8.1 interactive hotfix, see the [matched v3.0/v3.1 A/B tables](INTERACTIVE_BASELINE_PERFORMANCE.md): all 58 entries, high/average/low FPS, and measured input-service overhead. The v0.8.0 renderer comparison below remains a historical measurement; the benchmark cartridge is unchanged.
+
+
 Canonical lookup table for comparing methods and toolkit releases. **Historical method matrices use normal PLAY ALL. F5 is an exhibition mode and MUST NOT be used for benchmarking.** The separately labelled Sande standalone tests measure ordinary object playback and interactive idle cost; compare results within each protocol.
 
 Measured on PAL VICE 3.10, 985,248 cycles/s, default machine settings, sound disabled, seed 1; 64tass 1.59.3120. This is emulated C64 time, not host wall time or the HUD FPS counter. Physical C64 and NTSC are not measured.
@@ -7,7 +10,7 @@ Measured on PAL VICE 3.10, 985,248 cycles/s, default machine settings, sound dis
 In the historical PLAY ALL matrices, each cell is actual display flips / elapsed emulated time across 3 normal PLAY ALL visits. Every visit uses the unchanged 10-second setting. Observation starts on the first timer-count IRQ and ends at automatic-next: 499 PAL refresh intervals (about 9.955 s). The first visible picture is outside that window. Rates are rounded to two decimals; **bold** marks the highest reported average FPS for each comparable workload, including ties. Tiny timer-phase differences are not ranked as wins.
 
 <!-- BEGIN HORS-V4 GMOD3 -->
-## HORS-V4 / GMod3: current matched comparison
+## HORS-V4 / GMod3: v0.8.0 matched comparison
 
 `hors-v4-gmod3` identifies HORS-V4 using its default GMod3 backend. The baseline is `hors-v3` on EasyFlash. Both receive identical pictures, colours, sample order, encoding policy and HUD settings. These are automatic standalone tests: no input polling, stars, exhibition or authored frame-rate cap.
 
@@ -199,6 +202,8 @@ The 640-picture Marbles sequence is compared as five matching 128-picture segmen
 
 ### Actual All-in-One interactive defaults
 
+Historical v0.8.0 / Demo Cart v3.0 measurements. For the v0.8.1 / v3.1 interactive hotfix, see [the fresh A/B tables](INTERACTIVE_BASELINE_PERFORMANCE.md).
+
 These figures include the collection navigation, the complete interactive runtime, HUD and disabled-but-available starfield. Authored pacing remains enabled where supplied. They are not mixed into the automatic A/B ranking above. Each entry is individually checked with the final cartridge hash; SAKU starts in gradient-spin mode with stars off.
 
 | Entry | Scene / stored samples | High FPS | Average FPS | Low FPS | Allocated KiB |
@@ -267,7 +272,7 @@ There is one method in this inventory table, so no cross-scene “winner” is h
 ### Reproduce these results
 
 ```sh
-python examples/gmod3_cart_demos/build.py --tass 64tass --cartconv cartconv
+# These historical interactive measurements use the preserved v3.0 CRT.
 python tools/compare_gmod3_catalog.py --tass 64tass --cartconv cartconv --vice x64sc --vice-data /path/to/vice/data
 python tools/verify_gmod3_collection.py examples/gmod3_cart_demos/demo-cart-v3.0-gmod3-all-in-one.crt --vice x64sc --vice-data /path/to/vice/data --output docs/benchmarks/gmod3-collection/interactive
 python tools/report_gmod3_performance.py

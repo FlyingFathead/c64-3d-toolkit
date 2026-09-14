@@ -1,0 +1,25 @@
+{
+  "index": 47,
+  "name": "PRETZEL WIRE-BW",
+  "passed": true,
+  "frames": 128,
+  "stored_frames": 128,
+  "pictures_checked": 259,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 831,
+  "observed_refreshes": 2400,
+  "average_fps": 17.35562271062271,
+  "high_fps": 25.062271062271062,
+  "low_fps": 12.531135531135531,
+  "mean_render_cycles": 56578.81679389313,
+  "max_render_cycles": 62484,
+  "picture_sha256": "ee6ccc95abfcd6e312407de749a3dc1f3a9876fc195cd620ec59b1aa608403ad",
+  "allocated_kib": 328,
+  "bank_range": [
+    1337,
+    1377
+  ],
+  "target_fps": null,
+  "crt_sha256": "86ab08c0e3484215d4548c28a17968111d7f44fd65b7c23a6be20d9557aa63a3"
+}

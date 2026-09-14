@@ -1,5 +1,7 @@
 > Current conversion default: **hors-renderer-v4 / GMod3**. Explicit HORS-V3 retains EasyFlash. [v0.8.0 release notes](RELEASE_0.8.0.md).
 
+[Colour calibration and material diagnostics](../examples/blender_color_calibration/README.md) · [Installation/repair](INSTALLATION.md). Authored Blender animations use automatic playback, not the interactive object-spin mode.
+
 # Blender animated-scene pipeline
 
 [Blender FAQ and troubleshooting](BLENDER_FAQ.md) covers the old right-edge
@@ -118,8 +120,18 @@ requires:
 
 - a perspective camera;
 - stable vertex and polygon topology across sampled frames;
-- geometry in front of the camera. Projected edges may cross the viewport and
-  are clipped to the C64 frame; near-plane crossings are not yet supported.
+- finite camera-space coordinates. Geometry may cross the camera near plane
+  and all four viewport edges; clipping is automatic.
+
+The host clips edges and occluding triangles at a small positive camera-space
+near plane (`z = 1e-6`). Original topology and frame counts stay intact. Geometry
+behind the camera disappears, crossing edges retain their visible portions, and
+fully invisible frames remain timed samples. The near plane is a numeric guard,
+not Blender camera `clip_start`/`clip_end` emulation. A single clipping summary
+reports affected frames and discarded geometry; `--ignore-warnings` suppresses
+toolkit scene/export warnings without suppressing fatal errors.
+
+See the [camera-crossing road diagnostic](../examples/camera_crossing/README.md).
 
 New `.blend` builds now use the full **320×192** artwork area by default. The
 bottom eight pixels remain the cartridge HUD row. The earlier 256-pixel width
@@ -172,6 +184,18 @@ Blender material diffuse colours are mapped to the nearest VIC-II palette
 entry during export. For exact selection, add a custom integer property named
 `c643d_color` with a value from 0 through 15 to a material or mesh object.
 Material properties take precedence over object properties.
+
+`--blender-color-space linear` (default) converts scene-linear material numbers
+to sRGB before matching. Use `--blender-color-space srgb` for imports whose
+numbers already encode sRGB. This does not change Blender colour management,
+lighting, the shared palette, or explicit `c643d_color` indices. The exporter
+uses unlinked Principled Base Color connected to the active material output,
+otherwise diffuse/viewport colour. The interpretation is recorded in exported
+scene metadata. Existing `.c643dscene` colours are already mapped; re-export
+the `.blend` to change interpretation.
+
+Save a default with `python c643d.py --configure-blender-color-space srgb`,
+or omit `srgb` for the interactive chooser. See [configuration](CONFIGURATION.md).
 
 Existing colour options remain available:
 

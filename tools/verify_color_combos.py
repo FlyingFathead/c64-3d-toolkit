@@ -27,8 +27,7 @@ def run_monitor(crt,vice,vice_data,out,commands,limit,*,acknowledge_startup=True
     with (out/'vice.log').open('w') as log:
         p=subprocess.run([vice,'-console','-default','-pal','+sound','-warp','-seed','1',
             '+easyflashcrtwrite','-directory',str(vice_data),'-cartcrt',str(crt),
-            '-initbreak','reset','-moncommands',str(out/'run.mon'),'-monlog',
-            '-monlogname',str(out/'monitor.log'),'-limitcycles',str(limit)],
+            '-initbreak','reset','-moncommands',str(out/'run.mon'),'-monlogname', str(out/'monitor.log'), '-monlog','-limitcycles',str(limit)],
             stdout=log,stderr=subprocess.STDOUT,timeout=120)
     if p.returncode:raise RuntimeError((out/'vice.log').read_text()[-2500:])
 

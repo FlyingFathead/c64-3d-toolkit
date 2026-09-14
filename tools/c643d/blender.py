@@ -100,7 +100,11 @@ def export_blend_scene(
     viewport_width: int=320,
     max_frames: int=255,
     output_fps: int | None=None,
+    blender_color_space: str='linear',
+    ignore_warnings: bool=False,
 ) -> Path:
+    if blender_color_space not in ('linear','srgb'):
+        raise ValueError('--blender-color-space must be linear or srgb')
     source=Path(blend_path).expanduser().resolve()
     if not source.is_file():
         raise FileNotFoundError(f'Blender scene not found: {source}')
@@ -120,8 +124,10 @@ def export_blend_scene(
         executable,'--background','--disable-autoexec',str(source),
         '--python-exit-code','1','--python',str(script),'--',
         '--output',str(output),'--sample-step',str(sample_step),
+        '--blender-color-space',blender_color_space,
         '--viewport-width',str(viewport_width),'--viewport-height',str(viewport_height),'--max-frames',str(max_frames),
     ]
+    if ignore_warnings:cmd.append('--ignore-warnings')
     if output_fps is not None:
         if not 1 <= output_fps <= 50:
             raise ValueError('--blender-output-fps must be 1..50')

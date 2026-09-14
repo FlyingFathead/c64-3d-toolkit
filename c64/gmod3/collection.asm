@@ -5,6 +5,7 @@
 selected = $0330
 held = $0331
 page = $0332
+stop_pending = $0333 ; $80 idle / $00 RUN/STOP latched by the raster IRQ
 * = $8000
 .word reset,reset
 .byte $c3,$c2,$cd,$38,$30
@@ -155,10 +156,18 @@ menu_space_read:
         lda #$fe
         sta $dc00
         lda $dc01
+.if INTERACTIVE
+        and #2
+        beq menu_enter
+        lda $dc01
+.endif
 menu_cursor_read:
         and #$84
         cmp #$84
         bne menu_move
+.if INTERACTIVE
+        jsr menu_help_poll
+.endif
         lda #0
         sta held
         jmp menu_poll
@@ -170,6 +179,16 @@ menu_space_release:
         and #$10
         beq menu_space_release
         jmp collection_start
+.if INTERACTIVE
+menu_enter:
+        lda held
+        bne menu_poll
+menu_enter_release:
+        lda $dc01
+        and #2
+        beq menu_enter_release
+        jmp collection_start
+.endif
 menu_move:
         lda held
         bne menu_poll
@@ -207,10 +226,20 @@ row_hi: .byte >($0400+160),>($0400+200),>($0400+240),>($0400+280),>($0400+320),>
 .if * > $a400
 .error "Collection menu exceeds RAM region"
 .endif
+.if INTERACTIVE
+.include "collection-help.asm"
+.if * > $a400
+.error "Collection menu help exceeds RAM region"
+.endif
+.endif
 .here
 * = $8400
 .logical $a400
 collection_start:
+.if INTERACTIVE
+        lda #$80
+        sta stop_pending
+.endif
         ldx selected
         lda runtime_lo,x
         sta $f4
@@ -313,6 +342,10 @@ collection_count: .word 0
 .logical $a500
 collection_poll:
 .if INTERACTIVE
+        lda stop_pending
+        bne collection_poll_keys
+        jmp collection_return
+collection_poll_keys:
         lda #$ff
         sta $dc02
         lda #0
@@ -409,6 +442,51 @@ collection_return:
 collection_bench_next:
         jmp collection_start
 .endif
+.if * > $a640
+.error "Collection return overlaps priority input service"
+.endif
+.here
+* = $8640
+.logical $a640
+.if INTERACTIVE
+collection_input_service:
+        lda stop_pending
+        beq collection_stop_now
+        lda #$7f
+        sta $dc00
+        lda $dc01
+        and #$80
+        beq collection_stop_now
+        jmp $9000 ; baseline sp_poll; every generated runtime asserts this ABI
+collection_stop_now:
+        jmp collection_return
+.if * > $a680
+.error "Collection priority input service overlaps IRQ latch"
+.endif
+.endif
+.here
+* = $8680
+.logical $a680
+.if INTERACTIVE
+collection_irq_inputs:
+        ; The caller saves A/X/Y. Restore the CIA column so an interrupted
+        ; foreground keyboard scan sees exactly the column it selected.
+        lda $dc00
+        pha
+        lda #$7f
+        sta $dc00
+        lda $dc01
+        and #$80
+        bne collection_irq_no_stop
+        sta stop_pending
+collection_irq_no_stop:
+        pla
+        sta $dc00
+        jmp $9094 ; baseline sp_tick; menu reload is deferred to foreground
+.if * > $a700
+.error "Collection IRQ latch overlaps tables"
+.endif
+.endif
 .here
 * = $8700
 .logical $a700
@@ -420,6 +498,9 @@ collection_bench_next:
 * = $8900
 .logical $a900
 .include "collection-screens.inc"
+.if INTERACTIVE
+.include "collection-help-data.inc"
+.endif
 .if * > $c000
 .error "Collection screens exceed RAM region"
 .endif

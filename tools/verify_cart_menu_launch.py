@@ -83,7 +83,7 @@ def verify(crt, vice='x64sc', vice_data=None):
         commands.append('quit')
         (out / 'run.mon').write_text('\n'.join(commands) + '\n')
         cmd = [vice, '-console', '+easyflashcrtwrite', '+sound', '-warp', '-seed', '1', '-jamaction', '2',
-               '-cartcrt', str(crt), '-initbreak', 'reset', '-moncommands',
+               '-cartcrt', str(crt), '-initbreak', 'reset', '-monlogname', str(out / 'monitor.log'), '-moncommands',
                str(out / 'run.mon'), '-limitcycles', '180000000']
         if vice_data:
             cmd.extend(['-directory', str(vice_data)])

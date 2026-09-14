@@ -58,6 +58,8 @@ vice_args = +VICIIfull
 # Optional user defaults for generated C64 output.
 # Command-line switches always override these values.
 [render_defaults]
+# Standard Blender values are linear; use srgb for imports with raw sRGB material numbers.
+blender_color_space = linear
 
 # Output colours: C64 names, palette indices 0..15, 0x/$/0b/% indices,
 # #RGB/#RRGGBB or rgb(r,g,b). RGB values map to the nearest C64 colour.

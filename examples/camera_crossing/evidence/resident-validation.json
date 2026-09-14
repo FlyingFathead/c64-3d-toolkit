@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "verified_frames": 54,
+  "all_three_buffers": true,
+  "bitmap_match": true,
+  "color_match": true,
+  "prg_sha256": "f5f7d9671fb0d5a034b25b5f2f37246298e77fc141f07cf1a3e328ec01105dc1"
+}

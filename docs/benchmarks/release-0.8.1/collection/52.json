@@ -1,0 +1,25 @@
+{
+  "index": 52,
+  "name": "SPACE HORSE",
+  "passed": true,
+  "frames": 192,
+  "stored_frames": 192,
+  "pictures_checked": 387,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 921,
+  "observed_refreshes": 2400,
+  "average_fps": 19.23529304029304,
+  "high_fps": 50.124542124542124,
+  "low_fps": 12.531135531135531,
+  "mean_render_cycles": 51373.43076923077,
+  "max_render_cycles": 65813,
+  "picture_sha256": "a424e1eed1ab3812eb84af3c5d670ae7ff0aa4f92082005b8bc1473d34934826",
+  "allocated_kib": 344,
+  "bank_range": [
+    1444,
+    1486
+  ],
+  "target_fps": null,
+  "crt_sha256": "d1c23418a83cde9d43adb5e2dd2808303000cb8e7e0864a617ea0fd95ac6cb77"
+}

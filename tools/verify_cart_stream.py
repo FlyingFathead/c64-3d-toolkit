@@ -103,7 +103,7 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None,oracle_
             if border is not None:
                 mon += ['bank cpu',f'bsave "{td/f"frame-{i:04d}.vic"}" 0 $d020 $d021','bank ram']
         mon += ['quit'];(td/'run.mon').write_text('\n'.join(mon)+'\n')
-        cmd=[vice,'-console', '+easyflashcrtwrite','-pal','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(td/'run.mon'),'-monlog','-monlogname',str(td/'monitor.log'),'-limitcycles',str(count*1000000+2000000)]
+        cmd=[vice,'-console', '+easyflashcrtwrite','-pal','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(td/'run.mon'),'-monlogname', str(td/'monitor.log'), '-monlog','-limitcycles',str(count*1000000+2000000)]
         if vice_data:cmd+=['-directory',str(vice_data)]
         try:
             with (td/'vice.log').open('w') as log:

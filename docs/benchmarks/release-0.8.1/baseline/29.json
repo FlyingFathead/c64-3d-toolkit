@@ -1,0 +1,25 @@
+{
+  "index": 29,
+  "name": "HORSE AND SUNFLOWER",
+  "passed": true,
+  "frames": 84,
+  "stored_frames": 84,
+  "pictures_checked": 171,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 410,
+  "observed_refreshes": 2400,
+  "average_fps": 8.562942612942612,
+  "high_fps": 10.024908424908425,
+  "low_fps": 7.160648874934589,
+  "mean_render_cycles": 114442.89655172414,
+  "max_render_cycles": 118640,
+  "picture_sha256": "f452c33e5b356d1919e93705164b7973a02faa254876bd2ea7c2149d06b48f02",
+  "allocated_kib": 360,
+  "bank_range": [
+    544,
+    588
+  ],
+  "target_fps": null,
+  "crt_sha256": "86ab08c0e3484215d4548c28a17968111d7f44fd65b7c23a6be20d9557aa63a3"
+}

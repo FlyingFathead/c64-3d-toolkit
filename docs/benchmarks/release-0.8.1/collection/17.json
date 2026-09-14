@@ -1,0 +1,25 @@
+{
+  "index": 17,
+  "name": "SUNFLOWER COLOR",
+  "passed": true,
+  "frames": 20,
+  "stored_frames": 20,
+  "pictures_checked": 43,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 1067,
+  "observed_refreshes": 2400,
+  "average_fps": 22.28453601953602,
+  "high_fps": 50.124542124542124,
+  "low_fps": 16.70818070818071,
+  "mean_render_cycles": 44845.260869565216,
+  "max_render_cycles": 52089,
+  "picture_sha256": "953a9b1839033d8507da0038304b14cd9a7ba262247753b733f7dc1bf24881ec",
+  "allocated_kib": 56,
+  "bank_range": [
+    389,
+    395
+  ],
+  "target_fps": null,
+  "crt_sha256": "d1c23418a83cde9d43adb5e2dd2808303000cb8e7e0864a617ea0fd95ac6cb77"
+}

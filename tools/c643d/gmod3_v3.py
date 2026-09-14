@@ -48,10 +48,7 @@ def assemble_cartridge(root, frames, mesh, *, color_encoding='literal', interact
         hud_visible=True, collection=False, source_transform=None, renderer_name='hors-renderer-v3',
         allow_hud_toggle=None, exhibition_default='disabled', exhibition_order='sequential',
         exhibition_interval=5, optimize=False, draw_gap=None, **kwargs):
-    from . import hors_v3_controls as ctrl, hors_v3_speed as sp, hors_v3_help as hp
-    from . import hors_v3_hud as ui, hors_v3_exhibition as ex, hors_v3_intro as intro
-    from . import hors_v3_effects as fx, hors_v3_density as sd, hors_v3_star_modes as sl
-    from .hors_v3_occlusion import configure as opaque
+    from . import interactive_cart_baseline as baseline, hors_v3_intro as intro
     root = Path(root)
     original = frames
     base = (kwargs.get('color_index', 1) << 4) | kwargs.get('background_color', 0)
@@ -68,25 +65,14 @@ def assemble_cartridge(root, frames, mesh, *, color_encoding='literal', interact
     source = (root/'c64/gmod3/renderer.asm').read_text()
     if colors:
         source = patch_literal_runtime(source, runs, palette) if literal else patch_runtime(source)
-    if interactive:
-        source = ctrl.configure(source, palette=palette)
-        source = source.replace("v3_background: .byte 0", f"v3_background: .byte {base&15}", 1)
-    if effects:
-        source = fx.configure(source, starfield=background_effect!='none', interactive=interactive,
-            mode_frames=mode_frames, include_starfield=include_starfield, variants=presentation_variants)
-    if interactive:
-        source = sp.configure(source, samples=mode_frames or kwargs.get("page_frames") or len(frames))
-        source = hp.configure(source, version=__version__, effects=effects, modes=bool(mode_frames),
-            stars=include_starfield, variants=presentation_variants, hud=toggle, interval=exhibition_interval)
-        if include_starfield:
-            if occlusion_bounds is not None:
-                source = opaque(source, occlusion_bounds)
-            source = sd.configure(source, opaque=occlusion_bounds is not None)
-            source = sl.configure(source, default_profile=starfield_profile or 'light')
-    source = ui.configure(source, effects=effects, visible=hud_visible, toggle=toggle, internal=interactive)
-    if interactive:
-        source = ex.configure(source, mode_frames=mode_frames, variants=presentation_variants,
-            stars=include_starfield, enabled=exhibition_default=='enabled', order=exhibition_order, interval=exhibition_interval)
+    baseline_options = dict(version=__version__, interactive=interactive, palette=palette,
+        base=base, samples=mode_frames or kwargs.get('page_frames') or len(frames), effects=effects,
+        include_starfield=include_starfield, background_effect=background_effect,
+        mode_frames=mode_frames, presentation_variants=presentation_variants,
+        occlusion_bounds=occlusion_bounds, starfield_profile=starfield_profile,
+        hud_visible=hud_visible, toggle=toggle, exhibition_default=exhibition_default,
+        exhibition_order=exhibition_order, exhibition_interval=exhibition_interval)
+    source = baseline.configure_runtime(source, **baseline_options)
     capacity = None
     if not collection:
         source, _ = intro.configure(source, (root/'c64/gmod3/boot.asm').read_text(),
@@ -109,24 +95,7 @@ def assemble_cartridge(root, frames, mesh, *, color_encoding='literal', interact
         color_policy=policy, wire_format='hors-v3-color-indexed4-v1' if palette is not None else
         'hors-v3-color-literals-v1' if literal else 'hors-v3-complete-color-runs-v1',
         cartridge_capacity=capacity, interactive=interactive)
-    if interactive:
-        ctrl.describe(manifest)
-        sp.describe(manifest, mode_frames or len(frames))
-        hp.describe(manifest, __version__, effects=effects, modes=bool(mode_frames),
-            variants=presentation_variants, hud=toggle, interval=exhibition_interval)
-        ex.describe(manifest, mode_frames=mode_frames, variants=presentation_variants,
-            enabled=exhibition_default=='enabled', order=exhibition_order, interval=exhibition_interval)
-    ui.describe(manifest, visible=hud_visible, toggle=toggle)
-    if effects:
-        fx.describe(manifest, starfield=background_effect!='none', mode_frames=mode_frames,
-            include_starfield=include_starfield, variants=presentation_variants)
-        if occlusion_bounds is not None:
-            manifest['background_effect']['opaque_bounds'] = occlusion_bounds
-        if interactive and include_starfield:
-            sd.describe(manifest)
-            sl.describe(manifest, default_profile=starfield_profile or 'light')
-    else:
-        manifest['background_effect'] = dict(name='none', included=False, extra_reserved_RAM_bytes=0)
+    baseline.describe_runtime(manifest, **baseline_options)
     if not collection:
         intro.describe(manifest, __version__, interactive=interactive)
         manifest['build_screen']['renderer']=display_name(renderer_name,'gmod3')

@@ -77,7 +77,7 @@ def verify(crt,vice,data,out):
         with (dest/'vice.log').open('w') as log:
             subprocess.run([str(vice),'-console','-default','-pal','+sound','-warp','-seed','1','+easyflashcrtwrite',
                 '-directory',str(data),'-keymap',str(index),f'-{mode}keymap',str(data/'C64'/f'gtk3_{mode}.vkm'),
-                '-monlog','-monlogname',str(dest/'monitor.log'),'-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(dest/'run.mon'),'-limitcycles','800000000'],env=env,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=240)
+                '-monlogname', str(dest/'monitor.log'), '-monlog','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(dest/'run.mon'),'-limitcycles','800000000'],env=env,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=240)
         actual=[x for x in (dest/'vice.log').read_text().splitlines() if x.startswith('HOSTKEY ')]
         assert actual==[f'HOSTKEY {k} {m} {d}' for k,m,d in events],(mode,'host events')
         for name,expected in checks:

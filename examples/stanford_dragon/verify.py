@@ -90,8 +90,7 @@ def capture_display(cart, oracle, vice, data, output):
         command = [vice, '-default', '-console', '+easyflashcrtwrite', '+saveres',
                    '-pal', '+sound', '-warp', '-seed', '1', '-jamaction', '5',
                    '-directory', str(data), '-cartcrt', str(cart), '-initbreak', 'reset',
-                   '-moncommands', str(tmp / 'run.mon'), '-monlog',
-                   '-monlogname', str(tmp / 'monitor.log'), '-limitcycles', '200000000']
+                   '-moncommands', str(tmp / 'run.mon'), '-monlogname', str(tmp / 'monitor.log'), '-monlog', '-limitcycles', '200000000']
         with (tmp / 'vice.txt').open('w') as log:
             proc = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, timeout=240)
         if proc.returncode:

@@ -52,7 +52,7 @@ def benchmark(crt, vice, vice_data, loops=3):
              '-directory',str(vice_data),'-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(tmp/'run.mon'),
              # Keep the per-entry load/startup margin. Even a one-entry cart
              # also needs the ten-second thank-you screen between loops.
-             '-monlog','-monlogname',str(tmp/'monitor.log'),'-limitcycles',str((((seconds+6)*len(entries)+12)*loops+5)*1000000)]
+             '-monlogname', str(tmp/'monitor.log'), '-monlog','-limitcycles',str((((seconds+6)*len(entries)+12)*loops+5)*1000000)]
         with (tmp/'vice.log').open('w') as log:
             subprocess.run(cmd,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=max(120,loops*90))
         events=[(int(m[0],16),int(m[1])) for m in re.findall(r'^\.C:([0-9a-fA-F]{4})\s.*?\s(\d+)\s*$',(tmp/'monitor.log').read_text(),re.M)]

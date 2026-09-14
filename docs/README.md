@@ -1,5 +1,7 @@
 # Documentation — 0.8.0
 
+[v0.8.1 release](RELEASE_0.8.1.md) · [Installation/repair](INSTALLATION.md) · [CLI options](CLI.md) · [Interactive baseline](INTERACTIVE_CART_BASELINE.md) · [Blender colour calibration](../examples/blender_color_calibration/README.md)
+
 - [0.8.0: GMod3 cartridge support added, switch to HORS-V4](RELEASE_0.8.0.md).
 
 - [0.7.9: The Golden Dragon & SAKU 2026](RELEASE_0.7.9.md).

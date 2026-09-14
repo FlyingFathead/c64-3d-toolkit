@@ -1,5 +1,7 @@
 # SVG artwork in HORS-V3
 
+[Installation and dependency repair](INSTALLATION.md) · [Shared interactive cart controls](INTERACTIVE_CART_BASELINE.md). The full installer now includes SVG Python requirements; stars remain disabled by default.
+
 `build --svg artwork.svg` uses HORS-V4 / GMod3 by default. Its picture generation retains the V3 pipeline. It preserves the painted
 fills **and strokes**, holes, proportions and local transforms, fits the whole
 rotation inside the viewport, and maps source paint to the nearest C64 colour.

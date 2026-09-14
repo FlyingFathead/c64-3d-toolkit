@@ -3,6 +3,7 @@ import argparse, json, math, re, shutil, subprocess, sys, tempfile
 from pathlib import Path
 from . import __version__
 from .cartlaunch import run as run_cartridge
+from .monitor_logs import archive_root_monitor, vice_monitor_args
 from .mesh import Mesh, normalize_mesh, transform_mesh, fix_winding_outward, mesh_diagnostics
 from .shapes import (
     torus, cube, sphere, choose_torus_segments, choose_sphere_segments,
@@ -116,7 +117,10 @@ def preflight(*, tass_name='64tass', vice_name='x64sc', tass_args=(), vice_args=
 
 
 def cmd_doctor(a):
+    from .dependencies import check
+    python_ok=check(svg=True,verbose=True,stream=sys.stdout)
     ok,_,_=preflight(tass_name=a.tass,vice_name=a.vice,tass_args=a.tass_args,vice_args=a.vice_args,need_assemble=True,need_run=False,verbose=True)
+    ok=ok and python_ok
     print(f'python:    {sys.executable} ({sys.version.split()[0]})')
     print(f'platform:  {getattr(a,"_tool_platform",sys.platform)}')
     cfg=getattr(a,'_tool_config_path',None)
@@ -827,7 +831,7 @@ def cmd_build(a):
     print(f'built {_display_path(prg)}')
     if a.run:
         vice=vice_found or resolve_executable(a.vice,'vice')
-        subprocess.run(tool_command(vice,a.vice_args,[str(prg)]),cwd=ROOT,check=False)
+        subprocess.run(tool_command(vice,vice_monitor_args(a.vice_args,root=ROOT),[str(prg)]),cwd=ROOT,check=False)
     return 0
 
 
@@ -889,6 +893,7 @@ def cmd_build_scene(a):
                     a.blend,exported,blender=blender_found,
                     frame_start=a.frame_start,frame_end=a.frame_end,
                     sample_step=a.sample_step,system=getattr(a,'_tool_platform',None),root=ROOT,
+                    blender_color_space=getattr(a,'blender_color_space','linear'),ignore_warnings=getattr(a,'ignore_warnings',False),
                     blender_is_verified=True,viewport_height=viewport_height,viewport_width=getattr(a,'viewport_width',None) or 320,
                 )
                 scene=load_scene(exported)
@@ -914,7 +919,7 @@ def cmd_build_scene(a):
     print(f'materials:  {palette}; {"source colours enabled" if use_source_colors else color_name+" monochrome"}',flush=True)
     try:
         frames,candidate_edges=build_scene_frames(
-            scene,visibility_mode=visibility,z_tolerance=z_tolerance,
+            scene,ignore_warnings=getattr(a,'ignore_warnings',False),visibility_mode=visibility,z_tolerance=z_tolerance,
             feature_angle=feature_angle,enable_source_colors=per_cell_colors,
             fallback_color=c64_color_index(color_name),background_color=c64_color_index(getattr(a,"background_color",0)),height=viewport_height,width=width,**flip_options(a),
         )
@@ -989,7 +994,7 @@ def cmd_build_scene(a):
     print(f'built {_display_path(prg)}')
     if a.run:
         vice=vice_found or resolve_executable(a.vice,'vice')
-        subprocess.run(tool_command(vice,a.vice_args,[str(prg)]),cwd=ROOT,check=False)
+        subprocess.run(tool_command(vice,vice_monitor_args(a.vice_args,root=ROOT),[str(prg)]),cwd=ROOT,check=False)
     return 0
 
 
@@ -1292,6 +1297,9 @@ def _add_toolchain_args(q,settings):
     _add_config_args(q)
     q.add_argument('--tass',default=settings.tass,help='64tass executable name, path, or containing directory')
     q.add_argument('--vice',default=settings.vice,help='x64sc executable name/path, VICE directory, or macOS .app bundle')
+    q.add_argument('--blender-color-space',choices=('linear','srgb'),default=settings.blender_color_space,help='interpret Blender material numbers as linear (default) or already-sRGB; CLI overrides INI')
+    q.add_argument('--ignore-warnings',action='store_true',help='suppress scene clipping and Blender export warnings; errors remain fatal')
+    q.add_argument('--configure-blender-color-space','--configure-blender-color',nargs='?',const='ask',choices=('linear','srgb','ask'),metavar='linear|srgb',help='save Blender colour interpretation to INI and exit; omit value for an interactive chooser')
     q.add_argument('--blender',default=settings.blender,help='Blender executable name/path, installation directory, or macOS .app bundle')
     q.add_argument('--cartconv',default=settings.cartconv,help='cartconv executable name, path, or containing VICE directory (required only for cartridge/.crt builds)')
     q.add_argument('--tass-arg',dest='tass_args',action='append',default=None,metavar='ARG',help='64tass argument; repeatable; when used, replaces configured default args')
@@ -1302,9 +1310,13 @@ def _add_toolchain_args(q,settings):
 
 
 def make_parser(settings):
-    p=argparse.ArgumentParser(prog='c643d',description='C64 3D wireframe compiler/toolkit')
+    from .cli_help import ToolkitParser, FullHelp
+    p=ToolkitParser(prog='c643d',description='C64 3D compiler/toolkit. Default build: HORS-V4 / GMod3, non-interactive automatic playback. Interactive object/SVG spins require --interactive-cart; stars start disabled.',epilog='All build options are listed below. Other commands: c643d COMMAND --help. Every command: c643d --help-all. Installation/repair: setup-python.py; dependency checks: c643d dependencies. See docs/CLI.md.')
     p.add_argument('--version',action='version',version=__version__)
+    p.add_argument('--help-all',action=FullHelp,nargs=0,help='show build options and complete help for every command')
     sub=p.add_subparsers(dest='command')
+    conf=sub.add_parser('configure',help='choose and save Blender material colour interpretation')
+    _add_toolchain_args(conf,settings)
     def common(q):
         def background_boolean(value):
             value=value.lower()
@@ -1355,7 +1367,7 @@ def make_parser(settings):
         q.add_argument('--feature-angle',type=float,help='surface_creases threshold in degrees; sharp manifold edges at/above this angle are preserved')
     from .surface_palettes import SHADE_PALETTES, palette_name, parse_ramp
     from .renderer_names import DEFAULT_RENDERER, SHORT_ALIASES
-    b=sub.add_parser('build',help='compile geometry and assemble a HORS-V3 CRT by default'); common(b)
+    b=sub.add_parser('build',help='compile geometry into a HORS-V4 / GMod3 CRT by default',description='Default: automatic playback, HORS-V4 / GMod3. --interactive-cart opts into controls for object/SVG spins. Authored --blend/--scene animations use automatic playback. Stars default to disabled.'); common(b)
     from .gmod3_cli import add_flags as add_cart_type_flags
     add_cart_type_flags(b, build=True, settings=settings)
     for direction in ('horizontal','vertical'):
@@ -1418,7 +1430,7 @@ def make_parser(settings):
     b.set_defaults(text_overlay=settings.text_overlay)
     profiler=b.add_mutually_exclusive_group()
     profiler.add_argument('--rastertime-profiler',dest='rastertime_profiler',action='store_true',help='use derivative yunroll debug ASM that marks render CPU time in the border')
-    profiler.add_argument('--no-rastertime-profiler',dest='rastertime_profiler',action='store_false',help=argparse.SUPPRESS)
+    profiler.add_argument('--no-rastertime-profiler',dest='rastertime_profiler',action='store_false',help='disable raster-time profiling (default)')
     b.set_defaults(rastertime_profiler=settings.rastertime_profiler)
     b.add_argument('--viewport-width',type=int,choices=(256,320),help='Blender/scene drawing width; .blend defaults to 320, .scene retains recorded width (legacy files: 256)')
     b.add_argument('--viewport-height',type=_viewport_height_arg,default=settings.viewport_height,metavar='LINES',help='drawable height, multiple of 8 from 8..200; default auto=192 with overlay, 200 without')
@@ -1491,7 +1503,7 @@ def make_parser(settings):
     cd.add_argument('--prefer',choices=('fps','ram'),default='fps',help='V7/V8: prioritize FPS (default) or smaller Y drawing kernels')
     cd.add_argument('--play-all-seconds',type=int,default=10,help='V7/V8 PLAY ALL duration per animation, 1..255 seconds (default 10; PAL)')
     cd.add_argument('--stream-renderer',choices=('hors-v2', 'hors-v1', 'hors-renderer-v2', 'hors-renderer-v1', 'hors-render-v2', 'hors-render-v1', 'yunroll-cart-v2','yunroll-cart-v3','yunroll-cart-v4','yunroll-cart-v5','yunroll-cart-v6','yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10'),default='hors-render-v2',help='one renderer for every demo; writes a separate version-labelled comparison cart')
-    cda=sub.add_parser('cartridge-demo',help=argparse.SUPPRESS)
+    cda=sub.add_parser('cartridge-demo',help='compatibility alias for cart-demos')
     _add_toolchain_args(cda,settings)
     add_legacy_cart_argument(cda)
     cda.add_argument('--output',help='output basename (default: version and renderer-labelled cart name)')
@@ -1516,19 +1528,47 @@ def make_parser(settings):
     add_cart_type_flags(launch, settings=settings)
     _add_toolchain_args(launch,settings)
     launch.add_argument('crt',type=Path)
-    sub.add_parser('cart-stream',help='build a HORS-V3 streamed EasyFlash CRT by default (same source flags as build)')
-    doc=sub.add_parser('doctor',help='check local 64tass/VICE and optional Blender/cartconv availability')
+    sub.add_parser('cart-stream',help='alias for build: HORS-V4 / GMod3 by default; same source flags')
+    deps=sub.add_parser('dependencies',help='check Python requirements without running the external toolchain')
+    deps.add_argument('--svg',dest='svg',action='store_true',default=True,help='check full requirements including native Cairo (default)')
+    deps.add_argument('--core',dest='svg',action='store_false',help='check only core object/image requirements')
+    doc=sub.add_parser('doctor',help='check Python dependencies, 64tass/VICE and optional Blender/cartconv')
     _add_toolchain_args(doc,settings)
     sub.add_parser('list-shapes',help='list procedural/built-in shapes')
     sub.add_parser('list-objects',help='list imported OBJ/SVG presets in objects/')
+    from .cli_help import group_build_options
+    group_build_options(b)
+    p.build_help_parser=b
     return p
 
 
 def main(argv=None):
+    try:
+        archive = archive_root_monitor(ROOT)
+        if archive:
+            print('Archived root monitor.log to '+str(archive.relative_to(ROOT)),file=sys.stderr)
+    except OSError as exc:
+        print(f'error: monitor log maintenance failed: {exc}',file=sys.stderr)
+        return 2
+    try:
+        return _main(argv)
+    except ModuleNotFoundError as exc:
+        from .dependencies import installer_command
+        name=exc.name or 'unknown'
+        print(f'error: Python module {name!r} is unavailable in {sys.executable}.',file=sys.stderr)
+        print('Rerun the dependency installer, then retry:',file=sys.stderr)
+        print('  '+installer_command(name.split('.')[0] in ('cairosvg','defusedxml','cairocffi')),file=sys.stderr)
+        print('If a toolkit module is missing, extract the complete release first. See docs/INSTALLATION.md.',file=sys.stderr)
+        return 2
+
+
+def _main(argv=None):
     argv=list(sys.argv[1:] if argv is None else argv)
+    if argv and argv[0]=='--configure':argv=['configure']+argv[1:]
+    configuring=any(arg.split('=')[0] in ('configure','--configure-blender-color-space','--configure-blender-color') for arg in argv)
     config_path,config_explicit,config_disabled=config_request(argv,ROOT)
     try:
-        settings=load_toolchain_settings(config_path,require=config_explicit and not config_disabled)
+        settings=load_toolchain_settings(config_path,require=config_explicit and not config_disabled and not configuring)
     except (OSError,ValueError) as e:
         print(f'error: could not load toolchain config: {e}',file=sys.stderr)
         return 2
@@ -1541,9 +1581,27 @@ def main(argv=None):
         argv=['generate-examples']+argv[1:]
     elif argv[0]=='--generate-cart-demos':
         argv=['cart-demos']+argv[1:]
-    elif argv[0].startswith('-') and argv[0] not in ('-h','--help','--version'):
+    elif argv[0].startswith('-') and argv[0] not in ('-h','--help','--help-all','--version'):
         argv=['build']+argv
     a=p.parse_args(argv)
+    if a.command=='configure' or getattr(a,'configure_blender_color_space',None) is not None:
+        from .configure import configure_blender_color_space
+        value=getattr(a,'configure_blender_color_space',None)
+        if value is None:
+            explicit_color=any(v.split('=')[0]=='--blender-color-space' for v in argv)
+            value=a.blender_color_space if explicit_color else 'ask'
+        try:
+            return configure_blender_color_space(config_path,value,settings.blender_color_space)
+        except (OSError,ValueError) as exc:
+            print(f'error: {exc}',file=sys.stderr)
+            return 2
+    from .dependencies import check as check_dependencies
+    if a.command=='dependencies':
+        return 0 if check_dependencies(a.svg,verbose=True,stream=sys.stdout) else 2
+    if a.command in ('build','generate-examples','cart-demos','cartridge-demo','color-combo-test','import-svg'):
+        need_svg=bool(getattr(a,'svg',None)) and getattr(a,'surface_fill','none')!='none'
+        if not check_dependencies(svg=need_svg):
+            return 2
     from .renderer_names import canonical_selector, selector_cartridge
     for key in ('renderer','stream_renderer'):
         if hasattr(a,key):

@@ -1,0 +1,25 @@
+{
+  "index": 31,
+  "name": "DON'T LOSE YOUR MARBLES",
+  "passed": true,
+  "frames": 640,
+  "stored_frames": 640,
+  "pictures_checked": 1283,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 723,
+  "observed_refreshes": 2400,
+  "average_fps": 15.100018315018314,
+  "high_fps": 25.062271062271062,
+  "low_fps": 8.354090354090355,
+  "mean_render_cycles": 64457.00466562986,
+  "max_render_cycles": 104941,
+  "picture_sha256": "920d037baae6fc1368b73fc95d34cc338c302de6d320908888c3da1a6b05365d",
+  "allocated_kib": 1384,
+  "bank_range": [
+    634,
+    806
+  ],
+  "target_fps": 16,
+  "crt_sha256": "86ab08c0e3484215d4548c28a17968111d7f44fd65b7c23a6be20d9557aa63a3"
+}

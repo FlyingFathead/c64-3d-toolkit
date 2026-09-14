@@ -30,7 +30,7 @@ def verify(crt,vice,data,out):
             if i==1: mon += startup
             mon += [f'break ${syms[name]:04x}',first_go if i==1 else 'g','bank ram',f'bsave "{tmp/i.__str__()}.ram" 0 $0000 $ffff','bank cpu',f'bsave "{tmp/i.__str__()}.io" 0 $d000 $dbff','stopwatch','delete']
         mon += ['quit'];(tmp/'run.mon').write_text('\n'.join(mon)+'\n')
-        cmd=[vice,'-console', '+easyflashcrtwrite','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(tmp/'run.mon'),'-monlog','-monlogname',str(tmp/'monitor.log'),'-limitcycles','160000000']
+        cmd=[vice,'-console', '+easyflashcrtwrite','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(tmp/'run.mon'),'-monlogname', str(tmp/'monitor.log'), '-monlog','-limitcycles','160000000']
         if data:cmd+=['-directory',str(data)]
         with (out/'vice-ending.log').open('w') as f:subprocess.run(cmd,stdout=f,stderr=subprocess.STDOUT,check=True,timeout=180)
         log=(tmp/'monitor.log').read_text();ticks=[int(t) for t in re.findall(r'Stopwatch:\s*(\d+)',log)]
@@ -39,7 +39,7 @@ def verify(crt,vice,data,out):
         for i in range(len(stages)):
             r=bytearray((tmp/f'{i}.ram').read_bytes());r[0xd000:0xdc00]=(tmp/f'{i}.io').read_bytes();rams.append(r)
         for i,r in enumerate(rams):(out/f'{i}.ram').write_bytes(r)
-        (out/'monitor.log').write_text(log)
+        (out/'vice-ending-monitor.log').write_text(log)
         assert rams[3][0x590:0x590+len('GREETINGS TO ALL OLD DEMOSCENE WANKE')]==screen('GREETINGS TO ALL OLD DEMOSCENE WANKE'),repr(rams[3][0x590:0x590+40])
         assert rams[4][0x590:0x590+len(GREETING)]==screen(GREETING)
         for i in (6,7,8,9):

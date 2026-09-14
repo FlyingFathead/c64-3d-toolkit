@@ -1,0 +1,12 @@
+{
+  "viewport_width": 320,
+  "blender": "4.0.2",
+  "frames": 2,
+  "objects": 2,
+  "mirrored_object": true,
+  "shifted_rotated_camera": true,
+  "scaled_camera": true,
+  "max_projection_error_pixels": 3.4675423137287e-05,
+  "min_outward_normal_dot": 0.9999999701976776,
+  "face_material_ids_preserved": true
+}

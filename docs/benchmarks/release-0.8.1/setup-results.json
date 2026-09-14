@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "linux_script_syntax": true,
+  "linux_execution": "Separate venv with system-site-packages; full packages already present; pip --no-index and fresh subprocess import check passed.",
+  "windows_execution": false,
+  "windows_validation": "Reviewed; no PowerShell/Windows runtime available.",
+  "requirements": [
+    "numpy>=1.24",
+    "Pillow>=10",
+    "CairoSVG>=2.9.1,<3",
+    "defusedxml>=0.7"
+  ],
+  "versions": {
+    "numpy": "2.3.5",
+    "Pillow": "12.3.0",
+    "CairoSVG": "2.9.1",
+    "defusedxml": "0.7.1"
+  },
+  "missing_dependencies_tested": true,
+  "broken_native_import_tested": true,
+  "top_level_help_all_build_flags_verified": true
+}

@@ -19,6 +19,7 @@ import bpy
 TOOLKIT_ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(TOOLKIT_ROOT))
 from tools.c643d.colors import nearest_c64_color_index, c64_color_index
+from tools.c643d.blender_colors import material_color_index
 from tools.c643d.blender import blender_frame_plan, output_frame_plan
 
 
@@ -26,6 +27,8 @@ def _args():
     argv=sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
     p=argparse.ArgumentParser(description='Export evaluated Blender animation for c64-3d-toolkit')
     p.add_argument('--output',required=True)
+    p.add_argument('--blender-color-space',choices=('linear','srgb'),default='linear')
+    p.add_argument('--ignore-warnings',action='store_true')
     p.add_argument('--frame-start',type=int)
     p.add_argument('--frame-end',type=int)
     p.add_argument('--output-fps',type=int)
@@ -41,7 +44,7 @@ def _nearest_c64(rgb):
     return nearest_c64_color_index((r,g,b))
 
 
-def _property_color(obj,material):
+def _property_color(obj,material,color_space='linear'):
     for owner in (material,obj):
         if owner is not None and 'c643d_color' in owner:
             try:
@@ -60,10 +63,7 @@ def _property_color(obj,material):
             base = shader.inputs.get('Base Color')
             if base and not base.is_linked:
                 rgb = base.default_value
-    # Blender material values are scene-linear; the palette reference is sRGB.
-    return _nearest_c64(tuple(12.92 * max(0., v) if v <= 0.0031308
-                              else 1.055 * max(0., v) ** (1 / 2.4) - 0.055
-                              for v in rgb[:3]))
+    return material_color_index(rgb,color_space)
 
 
 def _export_objects():
@@ -74,14 +74,14 @@ def _export_objects():
     )
 
 
-def _validate_mesh_caches(objects):
+def _validate_mesh_caches(objects, *, ignore_warnings=False):
     """Fail clearly on unavailable external caches before exporting a static mesh."""
     for original in objects:
         for modifier in original.modifiers:
             if modifier.type not in ('MESH_SEQUENCE_CACHE', 'MESH_CACHE'):
                 continue
             if not modifier.show_viewport:
-                print(f'WARNING: {original.name}: cache modifier {modifier.name} is disabled in the viewport; evaluated export will omit it', flush=True)
+                if not ignore_warnings:print(f'WARNING: {original.name}: cache modifier {modifier.name} is disabled in the viewport; evaluated export will omit it', flush=True)
                 continue
             cache = getattr(modifier, 'cache_file', None)
             if modifier.type == 'MESH_SEQUENCE_CACHE' and cache is None:
@@ -129,7 +129,7 @@ def main():
     objects=_export_objects()
     if not objects:
         raise RuntimeError('scene has no exportable mesh objects')
-    _validate_mesh_caches(objects)
+    _validate_mesh_caches(objects,ignore_warnings=args.ignore_warnings)
     start=scene.frame_start if args.frame_start is None else args.frame_start
     end=scene.frame_end if args.frame_end is None else args.frame_end
     if start>end:
@@ -151,7 +151,7 @@ def main():
         source_rate=float(scene.render.fps)/scene.render.fps_base
         rounded=sum(abs((start+i*source_rate/args.output_fps)-f)>1e-8 for i,f in enumerate(source_frames))
         repeated=len(source_frames)-len(set(source_frames))
-        if rounded or repeated:
+        if (rounded or repeated) and not args.ignore_warnings:
             print(f'WARNING: {rounded} requested sample times rounded/clamped to nearest integer Blender frame; {repeated} repeated samples retained. No fractional geometry evaluation; requested playback duration retained.',flush=True)
 
     if not 1<=len(source_frames)<=args.max_frames:
@@ -205,7 +205,7 @@ def main():
                     faces.append([offset+i for i in indices])
                     material=(obj.material_slots[polygon.material_index].material
                               if polygon.material_index<len(obj.material_slots) else None)
-                    face_colors.append(_property_color(original,material))
+                    face_colors.append(_property_color(original,material,args.blender_color_space))
             if topology is None:
                 expected=counts
                 topology={'faces':faces,'line_edges':[],'face_colors':face_colors,'line_colors':[]}
@@ -239,13 +239,13 @@ def main():
         previous['vertices']!=current['vertices'] or previous['projection']!=current['projection']
         for previous,current in zip(out_frames,out_frames[1:])
     )
-    if len(out_frames)>1 and changed_transitions==0:
+    if len(out_frames)>1 and changed_transitions==0 and not args.ignore_warnings:
         print(
             'c643d: WARNING: all sampled frames are geometrically identical; '
             'the resulting C64 scene will be static',
             file=sys.stderr,
         )
-    elif len(out_frames)>1:
+    elif len(out_frames)>1 and changed_transitions:
         print(
             f'c643d: motion check: {changed_transitions}/{len(out_frames)-1} '
             'sampled transitions changed'
@@ -256,6 +256,7 @@ def main():
         'viewport':{'width':width,'height':height},
         'name':str(scene.get('c643d_title') or Path(bpy.data.filepath).stem.upper() or 'BLENDER SCENE'),
         'source':{
+            'blender_color_space':args.blender_color_space,
             'output_fps':args.output_fps,
             'resampling':'nearest-integer-source-frame' if args.output_fps is not None else 'sample-step',
             'kind':'blender','file':Path(bpy.data.filepath).name,

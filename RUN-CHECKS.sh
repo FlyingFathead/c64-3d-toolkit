@@ -12,6 +12,7 @@ fi
 mkdir -p -- "$results_dir"
 results_dir=$(cd -- "$results_dir" && pwd)
 python_bin=${PYTHON:-python}
+"$python_bin" tools/maintenance.py
 vice_bin=${VICE:-x64sc}
 tass_bin=${TASS:-64tass}
 cartconv_bin=${CARTCONV:-cartconv}

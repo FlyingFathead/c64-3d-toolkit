@@ -291,3 +291,33 @@ long names. `hors-renderer-v4` remains supported. The current default is
 `--renderer hors-v4-ef` and `--renderer hors-v4-gmod3` select hardware explicitly,
 overriding `[cartridge_defaults]`. A suffix conflicting with `--cart-type`
 is an error. See [renderer names and compatibility](GMOD3.md#names-and-aliases).
+
+## Blender material colour interpretation
+
+```ini
+[render_defaults]
+blender_color_space = linear
+```
+
+`linear` is the compatibility default: convert standard scene-linear Blender
+material values to sRGB before palette matching. `srgb` uses the stored numbers
+directly for imports already encoding sRGB. CLI `--blender-color-space` wins over
+this default. Existing exported scene files already contain palette indices.
+
+```sh
+python c643d.py --configure-blender-color-space srgb
+python c643d.py --configure-blender-color-space linear
+python c643d.py --configure-blender-color-space
+python c643d.py configure --blender-color-space srgb --config config/custom.ini
+```
+
+The first two commands write the setting and exit without prompting or building.
+The third opens a chooser; Enter retains the current default. `--configure` and
+`configure` also open the chooser. `--configure-blender-color` aliases the full
+flag. `--config` and `C643D_CONFIG` choose the target; the default target is
+`config/c643d.ini`. Other INI settings and comments are preserved. A missing
+configuration file is created. `--no-config` rejects configuration writes.
+
+Builds with `--ignore-warnings` suppress toolkit scene-clipping and Blender
+export warnings. Dependency failures, invalid configuration, topology changes,
+missing caches and cartridge capacity failures still abort with errors.

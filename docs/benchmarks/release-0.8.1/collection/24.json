@@ -1,0 +1,25 @@
+{
+  "index": 24,
+  "name": "TWIST TUNNEL",
+  "passed": true,
+  "frames": 48,
+  "stored_frames": 48,
+  "pictures_checked": 99,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 565,
+  "observed_refreshes": 2400,
+  "average_fps": 11.800152625152625,
+  "high_fps": 12.531135531135531,
+  "low_fps": 10.024908424908425,
+  "mean_render_cycles": 83217.60784313726,
+  "max_render_cycles": 84745,
+  "picture_sha256": "7f840a5fdf87b8aceb1443b40094e41451ffdb7171b97d027ca0da989df93183",
+  "allocated_kib": 152,
+  "bank_range": [
+    472,
+    490
+  ],
+  "target_fps": null,
+  "crt_sha256": "d1c23418a83cde9d43adb5e2dd2808303000cb8e7e0864a617ea0fd95ac6cb77"
+}

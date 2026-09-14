@@ -60,8 +60,7 @@ def measure(crt, oracle, vice, vice_data, refreshes, cycle_ticks=None):
         command = [str(vice), '-default', '-console', '+easyflashcrtwrite', '+saveres',
                    '-pal', '+sound', '-warp', '-seed', '1', '-jamaction', '5',
                    '-cartcrt', str(crt), '-initbreak', 'reset',
-                   '-moncommands', str(tmp / 'run.mon'), '-monlog',
-                   '-monlogname', str(tmp / 'monitor.log'), '-limitcycles',
+                   '-moncommands', str(tmp / 'run.mon'), '-monlogname', str(tmp / 'monitor.log'), '-monlog', '-limitcycles',
                    str(warmup * 1000000 + (refreshes + 1) * PAL_CYCLES + 20000000)]
         if vice_data:
             command += ['-directory', str(vice_data)]

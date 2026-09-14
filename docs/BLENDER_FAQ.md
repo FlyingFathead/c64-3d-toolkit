@@ -1,5 +1,7 @@
 # Blender FAQ and troubleshooting
 
+[Colour calibration and nearest-palette diagnostics](../examples/blender_color_calibration/README.md) · [Installation and dependency repair](INSTALLATION.md).
+
 Practical notes from the Blender-to-C64 pipeline. Start with the
 [Blender guide](BLENDER_PIPELINE.md) for setup and build commands. The current
 default renderer is **HORS-V4 / GMod3**.
@@ -111,10 +113,12 @@ new viewport ends at x=319 and y=191, not at the outer emulator window or
 physical border. A test grid with crossing lines is useful: a rectangle's
 outline alone can disappear once all its edges lie outside the camera view.
 
-Keep test geometry in front of the camera. Near-plane crossings remain an
-unsupported case in this pipeline; the full-width fix does not change that.
-Use the supplied lens-zoom scene to exercise screen boundaries without moving
-the card through the camera.
+Near-plane crossings are supported in the recovery update. Edges and occluding
+triangles clip before projection; geometry behind the camera disappears. Fully
+invisible samples retain their position and duration, so geometry can reappear
+without skipped frames. The [camera-crossing road](../examples/camera_crossing/README.md)
+exercises this, including consecutive invisible samples. A single clipping
+summary can be suppressed with `--ignore-warnings`.
 
 ## Does full width cost more FPS or RAM?
 
@@ -140,3 +144,29 @@ and all three buffers, including HUD preservation.
 
 For missing animation caches, unchanged frames or material-colour problems,
 see [Blender cache and colour troubleshooting](HORS_V3_DEFAULTS_CHECKPOINT.md).
+
+## Why can red become orange?
+
+Material numbers and their colour-space interpretation are separate inputs.
+The exact diagnostic value illustrates the difference:
+
+| Interpretation of `(152, 53, 45) / 255` | RGB passed to palette matching | C64 result |
+| --- | --- | --- |
+| Already sRGB, `--blender-color-space srgb` | `(152, 53, 45)` / `#98352D` | red |
+| Scene-linear, default `--blender-color-space linear` | `(203, 126, 117)` / `#CB7E75` | orange |
+
+Standard Blender materials normally need `linear`. Use `srgb` when an import
+stored sRGB numbers directly in the material fields. This is explicit;
+the exporter cannot reliably infer the convention from the numbers alone.
+The palette and perceptual matching algorithm have not changed.
+
+```sh
+python c643d.py build --blend scene.blend --blender-color-space srgb
+python c643d.py --configure-blender-color-space srgb
+python c643d.py --configure-blender-color-space
+```
+
+The last command opens the chooser. `--configure`/`configure` opens the same
+configuration flow. `--configure-blender-color` is a short alias. A per-build
+CLI choice overrides `[render_defaults] blender_color_space` in the INI.
+Explicit `c643d_color` indices override automatic material mapping in both modes.

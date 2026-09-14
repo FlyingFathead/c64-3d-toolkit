@@ -16,7 +16,7 @@ def capture(crt,vice,vice_data,out):
         for stage,name in stages:
             mon += [f'break ${syms[f"intro_stage_{stage}"]:04x}','g','bank ram',f'bsave "{td/name}.ram" 0 $0000 $ffff','delete']
         mon+=['quit'];(td/'intro.mon').write_text('\n'.join(mon)+'\n')
-        cmd=[vice,'-console','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(td/'intro.mon'),'-limitcycles','30000000']
+        cmd=[vice,'-console','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-monlogname',str(td/'monitor.log'),'-moncommands',str(td/'intro.mon'),'-limitcycles','30000000']
         if vice_data:cmd+=['-directory',vice_data]
         with (td/'vice.log').open('w') as log:subprocess.run(cmd,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=90)
         from PIL import Image,ImageDraw

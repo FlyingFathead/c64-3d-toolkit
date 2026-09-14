@@ -66,7 +66,7 @@ def profile(crt, vice, vice_data=None, menu_entry=None):
         (td/'run.mon').write_text('\n'.join(mon)+'\n')
         cmd = [str(vice), '-console', '+easyflashcrtwrite', '-pal', '+sound', '-warp', '-seed', '1',
                '-cartcrt', str(crt), '-initbreak', 'reset', '-moncommands', str(td/'run.mon'),
-               '-monlog', '-monlogname', str(td/'monitor.log'),
+               '-monlogname', str(td/'monitor.log'), '-monlog',
                '-limitcycles', str(count*1000000+40000000)]
         if vice_data:
             cmd += ['-directory', str(vice_data)]

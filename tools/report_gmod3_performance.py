@@ -29,7 +29,7 @@ def section(root=ROOT):
     assert all(r['encoded_payloads_identical'] and r['gmod3']['passed'] and r['easyflash']['passed'] for r in rows)
     wins=sum(r['difference_fps']>0 for r in rows);ties=sum(r['difference_fps']==0 for r in rows)
     deltas=[r['difference_fps'] for r in rows]
-    lines=[BEGIN,'## HORS-V4 / GMod3: current matched comparison','',
+    lines=[BEGIN,'## HORS-V4 / GMod3: v0.8.0 matched comparison','',
         '`hors-v4-gmod3` identifies HORS-V4 using its default GMod3 backend. '
         'The baseline is `hors-v3` on EasyFlash. Both receive identical pictures, colours, '
         'sample order, encoding policy and HUD settings. These are automatic standalone tests: '
@@ -70,6 +70,7 @@ def section(root=ROOT):
         lines.append('')
     actual=json.loads((root/'docs/benchmarks/gmod3-collection/interactive/results.json').read_text())
     lines+=['### Actual All-in-One interactive defaults','',
+        'Historical v0.8.0 / Demo Cart v3.0 measurements. For the v0.8.1 / v3.1 interactive hotfix, see [the fresh A/B tables](INTERACTIVE_BASELINE_PERFORMANCE.md).','',
         'These figures include the collection navigation, the complete interactive runtime, HUD and '
         'disabled-but-available starfield. Authored pacing remains enabled where supplied. '
         'They are not mixed into the automatic A/B ranking above. Each entry is individually checked '
@@ -82,7 +83,7 @@ def section(root=ROOT):
         'Different scenes contain different work. The interactive cart uses 13,448 KiB and leaves '
         '2,936 KiB free; its automatic companion uses 13,416 KiB and leaves 2,968 KiB.','',
         '### Reproduce these results','', '```sh',
-        'python examples/gmod3_cart_demos/build.py --tass 64tass --cartconv cartconv',
+        '# These historical interactive measurements use the preserved v3.0 CRT.',
         'python tools/compare_gmod3_catalog.py --tass 64tass --cartconv cartconv --vice x64sc --vice-data /path/to/vice/data',
         'python tools/verify_gmod3_collection.py examples/gmod3_cart_demos/demo-cart-v3.0-gmod3-all-in-one.crt --vice x64sc --vice-data /path/to/vice/data --output docs/benchmarks/gmod3-collection/interactive',
         'python tools/report_gmod3_performance.py', 'python tools/report_gmod3_performance.py --check','```','',

@@ -2,6 +2,7 @@
 from pathlib import Path
 import subprocess
 from .cartridge import inspect_easyflash_crt
+from .monitor_logs import vice_monitor_args
 
 
 def command(vice, crt, args=(), *, clean_settings=False):
@@ -17,7 +18,7 @@ def command(vice, crt, args=(), *, clean_settings=False):
     # mode before them, so diagnostics also work without a display server.
     console = ['-console'] if '-console' in args else []
     window = [] if console else ['+VICIIfull']
-    options = [arg for arg in args if arg != '-console']
+    options = vice_monitor_args([arg for arg in args if arg != '-console'])
     return [str(vice), *console, *defaults, '-pal', *window, '+warp', '+easyflashcrtwrite', *options,
             '+saveres', '+easyflashcrtwrite', '+cart', '-cartcrt', str(crt)]
 

@@ -1,0 +1,25 @@
+{
+  "index": 50,
+  "name": "SAKU SOLID",
+  "passed": true,
+  "frames": 48,
+  "stored_frames": 48,
+  "pictures_checked": 99,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 1521,
+  "observed_refreshes": 2400,
+  "average_fps": 31.76642857142857,
+  "high_fps": 50.124542124542124,
+  "low_fps": 25.062271062271062,
+  "mean_render_cycles": 31024.960784313724,
+  "max_render_cycles": 35479,
+  "picture_sha256": "fac1512538ccd349b31eab93fc85492a0d83688a9f4ebeab609f51c974232e67",
+  "allocated_kib": 72,
+  "bank_range": [
+    1415,
+    1423
+  ],
+  "target_fps": null,
+  "crt_sha256": "d1c23418a83cde9d43adb5e2dd2808303000cb8e7e0864a617ea0fd95ac6cb77"
+}

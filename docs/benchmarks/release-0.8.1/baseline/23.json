@@ -1,0 +1,25 @@
+{
+  "index": 23,
+  "name": "COLOUR TORUS 18",
+  "passed": true,
+  "frames": 18,
+  "stored_frames": 18,
+  "pictures_checked": 39,
+  "all_three_buffers": true,
+  "stars_off": true,
+  "display_frames": 1074,
+  "observed_refreshes": 2400,
+  "average_fps": 22.4307326007326,
+  "high_fps": 25.062271062271062,
+  "low_fps": 16.70818070818071,
+  "mean_render_cycles": 44189.28571428572,
+  "max_render_cycles": 48164,
+  "picture_sha256": "347440bd9ad86e333c16c0cd065117c4af5ab6e41657c7877dd688900bad82c0",
+  "allocated_kib": 48,
+  "bank_range": [
+    466,
+    471
+  ],
+  "target_fps": null,
+  "crt_sha256": "86ab08c0e3484215d4548c28a17968111d7f44fd65b7c23a6be20d9557aa63a3"
+}

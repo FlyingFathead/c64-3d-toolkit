@@ -11,6 +11,9 @@ build/*.zip
 
 config/c643d.ini
 
+# Maintainer publication scripts are delivered and run outside this checkout.
+/RELEASE-*.sh
+
 # Generated build output
 build/*
 !build/.gitkeep
@@ -23,6 +26,8 @@ examples/cart_demos/c643d-demo-v0.6.7-rc2-yunroll-cart-v5-all*
 examples/cart_demos/c643d-demo-v0.6.7-rc3-yunroll-cart-v6-all*
 
 # Generated videos, Blender recovery copies, emulator logs and Python caches.
+# Generated VICE monitor transcripts are never source, at any directory depth.
+monitor.log
 *.mp4
 *.m4v
 *.mov
