@@ -6,7 +6,7 @@ triangle rasterizer or a promise of a fixed FPS improvement.
 """
 NAME='hors-renderer-v4'
 ALIASES=(NAME,'hors-render-v4','hors-v4','hors-v4-gmod3','hors-v4-ef')
-DEFAULT_CARTRIDGE='gmod3'
+DEFAULT_CARTRIDGE='easyflash'
 
 
 def build(args):

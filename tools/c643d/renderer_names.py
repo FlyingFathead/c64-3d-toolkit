@@ -17,6 +17,12 @@ SHORT_ALIASES = {
     'hors-v3':'hors-renderer-v3', 'hors-render-v3':'hors-renderer-v3',
     'hors-v4':'hors-renderer-v4', 'hors-render-v4':'hors-renderer-v4',
     'hors-v4-gmod3':'hors-renderer-v4', 'hors-v4-ef':'hors-renderer-v4',
+    'hors-v5':'hors-renderer-v5', 'hors-render-v5':'hors-renderer-v5',
+    'hors-renderer-v5':'hors-renderer-v5', 'hors-v5-ef':'hors-renderer-v5',
+    'hors-v5-c1':'hors-renderer-v5', 'hors-v5-c1-ef':'hors-renderer-v5',
+    'hors-render-v5-c1':'hors-renderer-v5', 'hors-renderer-v5-c1':'hors-renderer-v5',
+    'hors-v5-c2':'hors-renderer-v5-c2', 'hors-v5-c2-ef':'hors-renderer-v5-c2',
+    'hors-render-v5-c2':'hors-renderer-v5-c2', 'hors-renderer-v5-c2':'hors-renderer-v5-c2',
 }
 
 
@@ -25,11 +31,13 @@ def canonical_selector(name):
 
 
 def selector_cartridge(name):
-    return {'hors-v4-gmod3':'gmod3', 'hors-v4-ef':'easyflash'}.get(name)
+    return {'hors-v4-gmod3':'gmod3', 'hors-v4-ef':'easyflash', 'hors-v5-ef':'easyflash', 'hors-v5-c1-ef':'easyflash', 'hors-v5-c2-ef':'easyflash'}.get(name)
 
 
 def display_name(name, cartridge=None):
     name=canonical_selector(name)
+    if name=='hors-renderer-v5':return 'hors-v5-c1'
+    if name=='hors-renderer-v5-c2':return 'hors-v5-c2'
     if name=='hors-renderer-v4':
         return 'hors-v4-'+('ef' if cartridge=='easyflash' else 'gmod3')
     if name=='hors-renderer-v3':

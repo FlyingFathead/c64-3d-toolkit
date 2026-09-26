@@ -1,6 +1,11 @@
-# Documentation — 0.8.0
+# Documentation — 0.8.2
 
-[v0.8.1 release](RELEASE_0.8.1.md) · [Installation/repair](INSTALLATION.md) · [CLI options](CLI.md) · [Interactive baseline](INTERACTIVE_CART_BASELINE.md) · [Blender colour calibration](../examples/blender_color_calibration/README.md)
+[v0.8.2 release](RELEASE_0.8.2.md) · [Installation/repair](INSTALLATION.md) · [CLI options](CLI.md) · [Interactive baseline](INTERACTIVE_CART_BASELINE.md) · [Blender colour calibration](../examples/blender_color_calibration/README.md)
+
+- [0.8.2: Renderer contests and V5 candidates](RELEASE_0.8.2.md).
+- [HORS-V1 through V5 measurements](RELEASE_0.8.2_PERFORMANCE.md).
+- [Renderer contest and optimizer-profiler](OPTIMIZER_PROFILER.md).
+- [0.8.1: Camera crossings and Demo Cart v3.1](RELEASE_0.8.1.md).
 
 - [0.8.0: GMod3 cartridge support added, switch to HORS-V4](RELEASE_0.8.0.md).
 
@@ -31,7 +36,8 @@
 - [Architecture](ARCHITECTURE.md), [pipeline versioning](PIPELINE_VERSIONING.md).
 
 Version-specific V2–V10 and earlier upgrade notes are historical references;
-HORS-V4 is the default conversion renderer and GMod3 its default cartridge.
+HORS-V4 is the default conversion renderer and EasyFlash its default cartridge.
+GMod3 remains an explicit option; GMod4 remains on the roadmap.
 Explicit older renderers retain EasyFlash defaults. A universal config preference
 and explicit CLI switches can override the cartridge choice. The preserved
 EasyFlash comparison/menu builder remains V2. Beta reports retain their original

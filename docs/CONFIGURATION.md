@@ -1,19 +1,21 @@
-> Current conversion default: **hors-v4 / GMod3**. Explicit HORS-V3 retains EasyFlash. [v0.8.0 release notes](RELEASE_0.8.0.md).
+> Current conversion default: **hors-v4 / EasyFlash**. GMod3 remains an explicit option.
 
 ## Universal cartridge default
 
-`build` and `cart-stream` default to HORS-V4 / GMod3. Explicit older renderers
+`build` and `cart-stream` default to HORS-V4 / EasyFlash. Explicit older renderers
 retain EasyFlash. Cartridge choice follows **CLI > universal config > renderer
 default**. To choose a preference for your own builds, copy
 [`config/gmod3.ini.example`](../config/gmod3.ini.example) or add this to your config:
 
 ```ini
 [cartridge_defaults]
-cart_type = gmod3
+cart_type = easyflash
 ```
 
-Use `easyflash` for a universal EasyFlash preference, or `auto` to follow each
-renderer. An explicit `--cart-type easyflash` or `--cart-type gmod3` wins over
+Use `gmod3` for a universal GMod3 preference, or `auto` to follow each
+renderer (currently EasyFlash unless a hardware suffix selects GMod3).
+An existing explicit `cart_type = gmod3` preference is preserved; change it to
+`auto` or `easyflash` to use the new default. An explicit `--cart-type easyflash` or `--cart-type gmod3` wins over
 config. HORS-V4 with EasyFlash dispatches to the preserved V3 implementation;
 older engines that have no GMod3 backend reject that combination explicitly.
 `cart-demos` remains the historical EasyFlash comparison builder. Resident PRG

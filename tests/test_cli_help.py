@@ -17,7 +17,7 @@ class HelpTests(unittest.TestCase):
         for action in parser.build_help_parser._actions:
             for flag in action.option_strings:
                 assert flag in result.stdout, flag
-        assert 'HORS-V4 / GMod3' in result.stdout
+        assert 'HORS-V4 / EasyFlash' in result.stdout
         assert 'non-interactive automatic playback' in ' '.join(result.stdout.split())
         assert '==SUPPRESS==' not in result.stdout
         assert 'HORS-V3 CRT by default' not in result.stdout

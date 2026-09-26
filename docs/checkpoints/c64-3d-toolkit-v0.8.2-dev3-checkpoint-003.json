@@ -1,0 +1,61 @@
+{
+  "checkpoint": 3,
+  "version": "0.8.2-dev3",
+  "kind": "incremental",
+  "created_utc": "2026-09-25T20:17:02.857941+00:00",
+  "baseline_sha256": "3b9bea8a07283481cc2dda62c8044dd37dcd50b1d37f6a7383368ad7a1c6c728",
+  "completed": [
+    "Opt-in HORS-V5 EasyFlash clear planner; HORS-V4 remains default and preserves previous kernels.",
+    "Private scene-pair runner, matched stage/display/pixel comparator and Nightdrive Test documentation.",
+    "EasyFlash default, GMod3 option, GMod4 roadmap and checkpoint-NNN naming retained cumulatively."
+  ],
+  "pending": [
+    "Original Nightdrive V5 measurement needs matching scene/build parameters.",
+    "Physical C64, NTSC and all collection/starfield/exhibition combinations remain unmeasured."
+  ],
+  "validation": [
+    "331 unit tests passed; 8 skipped.",
+    "Five matched V4/V5 pairs passed pixel checks and the stated 0.5 percent aggregate performance gate.",
+    "1275 byte-clear kernel cases; 242 interactive traversal pictures and 20 input checks passed in VICE.",
+    "Three public V4 cores unchanged after V5 in-process builds; two private V4 carts match pre-V5 bytes.",
+    "Private scene-pair tool exercised end to end on one 120-picture scene; matching result reproduced."
+  ],
+  "deleted_paths": [],
+  "files": {
+    "CHANGELOG.md": "ac94fa44d8fc463dde16f083186a7826c8d2311731ff0c74bcc7ce92a84a810e",
+    "README.md": "938876b0d15fe148c5a35f381e3e413bd989af3e54ebcb6359ba585db31ee384",
+    "VERSION": "6026e40e4b29201070ebf4d833dfa1790ad7fb67495cf39fbd6be701eaa1a439",
+    "config/c643d.ini.example": "453ede8e5f0221091ae15f92ef18a4055d5541139270e969fd9db996cf5baae0",
+    "docs/BLENDER_PIPELINE.md": "86d1626ea4a62a84d96607f0be2b3df2e19d89a94bb1c378efd048f78b786ec1",
+    "docs/CARTRIDGE_PIPELINE.md": "dc4fb9f8a7aff174bc9bb03fc0d3ca9a36a1737bf23e73402e7733ac095fa5e6",
+    "docs/CHECKPOINTING.md": "5ee8e6501e2ff211c9e4c813b373e53914925720ad0d0ca201903f5c29d5f47a",
+    "docs/CLI.md": "9af9c14a9a19ca13dedb7c81a6445e4458e96dc6b09b9482ac763f371c5b7fa2",
+    "docs/CONFIGURATION.md": "8d235bbfc866f7f0d1baae1ed34c81ccdaf3ab5f1d39c5606479905b61e020af",
+    "docs/GMOD3.md": "9774016788c9e5b88380fdc05c83df65975ef75d7c4798beb14b4b33adb61cb8",
+    "docs/GMOD_BACKENDS.md": "22fc56fce84ed64e0d3fe5c621af19b75cadb2fd867ccb217830291109600573",
+    "docs/HORS_V5_PREVIEW.md": "9ef82e415415e3c15d08dc0cb60581d76421256df7cbc381037ff2f2125070f9",
+    "docs/OBJ_PIPELINE.md": "b26418f653ca482bf9ab7affbe29fcc807ab5cf3a5f1f7cb8b0d20a394168fb7",
+    "docs/PERFORMANCE_COMPARISON.md": "4434bca2932524882105391f1ebd4fb2dbecfd0d267b952049160dc39f50c6bd",
+    "docs/ROADMAP.md": "fb860b502097692ca41810e7673da57ffd54797c361edada9595a2c40a642ea8",
+    "docs/WINDOWS_SETUP.md": "d0eef54cc47558ef7be894e09cceb89bbb027929d98bd4ec1a10750cf7f55e29",
+    "docs/benchmarks/hors-v5-preview/results.json": "986925541092290cd7965d5bc5034aef262d82b7cd0de2c42a24677271655d09",
+    "docs/checkpoints/c64-3d-toolkit-v0.8.2-dev1-checkpoint-001.json": "57e38a0a64d613236d5ba9e5a1548dbf603fef8c1e2210b9a644de90455ad92e",
+    "docs/checkpoints/c64-3d-toolkit-v0.8.2-dev2-checkpoint-002.json": "d4887130a009312cf825f48bfc78080eb2c9429862d14beb625a504dfc0178a5",
+    "tests/test_checkpoint.py": "bede2d65dd6565d912d3c5f6518c41a44f4199c32f71ade20c7335288e8655e7",
+    "tests/test_cli_help.py": "2230f7d33e08e917bb71bfcea5f2a1f71f6b3a7d3dd00a113db115852ad0726a",
+    "tests/test_compare_cart_stream.py": "c66abc3b8ae7b10392a9a942153400e92c0a043e497098031a03eb360e85b09a",
+    "tests/test_gmod3.py": "16f155f801fee2498bf99f36f74af088ed1724ab0682ca33358072716e8e6036",
+    "tests/test_hors_v5.py": "6596177c8e34780bd358f2b2369c3571d913b175bd188e750464f1688574678e",
+    "tools/benchmark_scene_pair.py": "e9a9696bee51dcdad19b946fe8207ecfdbc3cf21eb86d013dc9e42d396c1c455",
+    "tools/checkpoint.py": "4991a112262336b872003b3f16d2f29f375c4b94c61e43b21cf81aec35530278",
+    "tools/compare_cart_stream.py": "be67ed860cd2c7ec758be3dbb49060f753a81dea7a200db9be166a247f38a04c",
+    "tools/profile_cart_stream.py": "c19bf130849471e7ad2ea0a54e3dc5aec309eb1b904b4b386df61665a5b5efc4",
+    "tools/verify_cart_stream.py": "b57b92e300825abc61e30d3ff02b37872c1345db386d3853850ced240f9c2c9b",
+    "tools/c643d/cartridge_defaults.py": "0120f8b5bc745b2ba700c874602df83e13edcaae0646e17cd8c49d4da32a64ca",
+    "tools/c643d/cli.py": "a0521127d6f189ce90891ac5ff7ab34a8fb59f48af0ffb5dbf66abe84131de67",
+    "tools/c643d/hors_v4.py": "ca53325f8438ec411ccf6f19f1863dbb7eb5fca374a3f1139ae364249d8566c7",
+    "tools/c643d/hors_v5.py": "51234f973b8579146e26f3553206001430829d914981a86cf236c27af786f506",
+    "tools/c643d/renderer_names.py": "42b461d7fea9b08775a5eb13557fc2d7087f8dcdc4a4e2e9354d0aed68c98f78"
+  },
+  "apply": "Extract from the parent of c64-3d-toolkit. Incrementals are cumulative against the named baseline. Review deleted_paths manually."
+}

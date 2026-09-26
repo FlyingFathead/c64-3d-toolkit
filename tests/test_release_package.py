@@ -9,6 +9,13 @@ import zipfile
 from tools.compile_release import package
 
 class ReleasePackageTests(unittest.TestCase):
+    def test_existing_package_is_never_overwritten(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp)/'source';root.mkdir();(root/'VERSION').write_text('0.8.2\n')
+            output=Path(temp)/'release.zip';output.write_bytes(b'previous immutable release')
+            with self.assertRaises(FileExistsError):package(root,output)
+            self.assertEqual(output.read_bytes(),b'previous immutable release')
+
     def test_incremental_does_not_overwrite_complete_archive(self):
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp)/'source';root.mkdir()

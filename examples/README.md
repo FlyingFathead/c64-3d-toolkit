@@ -1,5 +1,11 @@
 # Examples: toolkit 0.8.0
 
+Development checkpoint 0.8.2-dev5 keeps these released artifacts intact. New
+HORS-V4 builds default to EasyFlash; GMod3 is explicit. The historical defaults
+and measurements below describe their recorded releases. See
+[performance comparisons](../docs/PERFORMANCE_COMPARISON.md) and the
+[full-history renderer contest](../docs/OPTIMIZER_PROFILER.md).
+
 [Demo Cart v3.0: GMod3 All-in-One](gmod3_cart_demos/README.md) combines all 58 distinct released entries in one interactive 16 MiB cartridge, with an automatic benchmark companion.
 
 

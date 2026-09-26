@@ -2,12 +2,14 @@
 
 [Back to the main page](../README.md)
 
-The main page features **v0.8.0: GMod3 cartridge support added, switch to HORS-V4**, followed by the earlier Dragon, SAKU and Pretzel updates. Earlier releases and announcements are collected here.
+The main page features **v0.8.2: Renderer contests and V5 candidates**, followed by the earlier Dragon, SAKU and Pretzel updates. Earlier releases and announcements are collected here.
 
 ## Release notes
 
 | Version | Release notes and highlights |
 | --- | --- |
+| [v0.8.2](RELEASE_0.8.2.md) | EasyFlash default, renderer contests, V5-c1/c2 and full HORS-family measurements |
+| [v0.8.1](RELEASE_0.8.1.md) | Camera clipping, Blender colour-space choice and Demo Cart v3.1 controls |
 | [v0.8.0](RELEASE_0.8.0.md) | HORS-V4 / GMod3 default, All-in-One collection, measured per-scene comparisons and universal cartridge config |
 | [v0.7.9](RELEASE_0.7.9.md) | The Golden Dragon & SAKU 2026: V3 default, SVG paint/gradients and shared interactive controls |
 | [v0.7.8](RELEASE_0.7.8.md) | The Stanford Dragon Has Arrived! Five Dragon carts and red, green and blue surface-shading ramps |

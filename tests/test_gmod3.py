@@ -82,7 +82,7 @@ class GMod3Tests(unittest.TestCase):
     def test_defaults_and_separate_explicit_hardware_choice(self):
         parser = make_parser(load_toolchain_settings(None))
         for command in ('build', 'cartridge-smoke'):
-            self.assertEqual(resolve(parser.parse_args([command]),None), 'gmod3' if command=='build' else 'easyflash')
+            self.assertEqual(resolve(parser.parse_args([command]),None), 'easyflash')
             self.assertEqual(parser.parse_args([command, '--cart-type', 'gmod3']).cart_type, 'gmod3')
         self.assertEqual(parser.parse_args(['build']).renderer, 'hors-v4')
         self.assertEqual(parser.parse_args(['build','--cart-type','gmod3']).renderer, 'hors-v4')
@@ -90,29 +90,45 @@ class GMod3Tests(unittest.TestCase):
     def test_configured_cart_default_and_cli_override(self):
         with tempfile.TemporaryDirectory() as td:
             path=Path(td)/'user.ini'
-            for setting,expected in [('auto','gmod3'),('easyflash','easyflash'),('gmod3','gmod3')]:
+            for setting,expected in [('auto','easyflash'),('easyflash','easyflash'),('gmod3','gmod3')]:
                 path.write_text('[cartridge_defaults]\ncart_type = '+setting+'\n')
                 parser=make_parser(load_toolchain_settings(path))
                 self.assertEqual(resolve(parser.parse_args(['build']),load_toolchain_settings(path)),expected)
                 self.assertEqual(resolve(parser.parse_args(['build','--renderer','hors-renderer-v3']),load_toolchain_settings(path)), 'easyflash' if setting=='auto' else expected)
-                self.assertEqual(parser.parse_args(['build','--cart-type','easyflash']).cart_type,'easyflash')
-                self.assertEqual(parser.parse_args(['build','--cart-type','gmod3']).cart_type,'gmod3')
+                for explicit in ('easyflash','gmod3'):
+                    args=parser.parse_args(['build','--cart-type',explicit])
+                    self.assertEqual(resolve(args,load_toolchain_settings(path)),explicit)
+                for alias,cart in [('hors-v4-ef','easyflash'),('hors-v4-gmod3','gmod3')]:
+                    args=parser.parse_args(['build','--renderer',alias])
+                    self.assertEqual(resolve(args,load_toolchain_settings(path)),cart)
                 for command in ('doctor','list-shapes','cart-demos'):
                     self.assertEqual(resolve(parser.parse_args([command]),load_toolchain_settings(path)), 'easyflash')
                 self.assertEqual(resolve(parser.parse_args(['build','--renderer','yunroll']),load_toolchain_settings(path)), 'easyflash')
 
     def test_cli_routes_default_v4_and_preserved_explicit_easyflash(self):
         from tools.c643d import cli
-        from tools.c643d import hors_v4, gmod3_cli
+        from tools.c643d import hors_v4, hors_v4_easyflash, gmod3_cli
         with patch.object(hors_v4,'build',return_value=41) as v4, \
              patch.object(gmod3_cli,'build',return_value=42) as gm, \
-             patch.object(cli,'cmd_build',return_value=43) as ef:
-            self.assertEqual(cli.main(['build','--no-config']),41)
-            self.assertEqual(cli.main(['cart-stream','--no-config','--renderer','hors-render-v4']),41)
+             patch.object(cli,'cmd_build',return_value=43) as ef, \
+             patch.object(hors_v4_easyflash,'build',return_value=44) as v4ef:
+            self.assertEqual(cli.main(['build','--no-config']),44)
+            self.assertEqual(v4ef.call_args.args[0].cart_type,'easyflash')
+            self.assertEqual(cli.main(['cart-stream','--no-config','--renderer','hors-render-v4']),44)
             self.assertEqual(cli.main(['build','--no-config','--renderer','hors-renderer-v3']),43)
-            self.assertEqual(cli.main(['build','--no-config','--cart-type','easyflash']),43)
+            self.assertEqual(cli.main(['build','--no-config','--cart-type','easyflash']),44)
+            self.assertEqual(cli.main(['build','--no-config','--cart-type','gmod3']),41)
+            self.assertEqual(cli.main(['build','--no-config','--renderer','hors-v4-gmod3']),41)
             self.assertEqual(cli.main(['build','--no-config','--renderer','hors-renderer-v3','--cart-type','gmod3']),42)
-            self.assertEqual((v4.call_count,gm.call_count,ef.call_count),(2,1,2))
+            self.assertEqual((v4.call_count,gm.call_count,ef.call_count,v4ef.call_count),(2,1,1,3))
+
+    def test_run_cart_still_detects_existing_gmod3_header(self):
+        parser=make_parser(load_toolchain_settings(None))
+        with tempfile.TemporaryDirectory() as td:
+            path=Path(td)/'existing.crt'
+            path.write_bytes(crt_bytes())
+            self.assertEqual(resolve(parser.parse_args(['run-cart',str(path)]),None),'gmod3')
+            self.assertEqual(resolve(parser.parse_args(['run-cart','--cart-type','easyflash',str(path)]),None),'easyflash')
 
     def test_short_aliases_and_explicit_hardware_suffixes(self):
         from tools.c643d.renderer_names import canonical_selector, display_name
@@ -122,7 +138,7 @@ class GMod3Tests(unittest.TestCase):
             for alias in (f'hors-v{version}',f'hors-renderer-v{version}'):
                 args=parser.parse_args(['build','--renderer',alias])
                 self.assertEqual(canonical_selector(args.renderer),name)
-                self.assertEqual(resolve(args,None),'gmod3' if version==4 else 'easyflash')
+                self.assertEqual(resolve(args,None),'easyflash')
         for alias,cart in [('hors-v4-ef','easyflash'),('hors-v4-gmod3','gmod3')]:
             args=parser.parse_args(['build','--renderer',alias])
             self.assertEqual(resolve(args,None),cart)

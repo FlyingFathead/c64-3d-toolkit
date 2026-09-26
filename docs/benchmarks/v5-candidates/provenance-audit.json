@@ -1,0 +1,9 @@
+{
+  "measured_source_sha256": "2c140a9af055d08b8c82016051c91d45ee8af2f7c35359ceab134d197deb0286",
+  "packaged_source_sha256": "3595cdef8e4e2b06522f167840df1c60bc0a085c2e13667c213f82eb1b44f006",
+  "changed_paths": [
+    "tools/optimizer_profiler.py"
+  ],
+  "reason": "Final CLI compatibility alias accepts the previous optimizer --renderers hors-v5-ef spelling as c1. Measured renderer/encoder/runtime/verification paths are identical.",
+  "verification": "Exact expected one-line argument-parser diff; matching native/public measurement fingerprints."
+}

@@ -1,0 +1,40 @@
+{
+  "checkpoint": 1,
+  "version": "0.8.2-dev1",
+  "kind": "incremental",
+  "created_utc": "2026-09-25T19:32:42.616963+00:00",
+  "baseline_sha256": "3b9bea8a07283481cc2dda62c8044dd37dcd50b1d37f6a7383368ad7a1c6c728",
+  "completed": [
+    "HORS-V4 defaults to EasyFlash; explicit GMod3 selections and existing config preferences remain available; GMod4 remains planned.",
+    "Current CLI/configuration/pipeline documentation updated."
+  ],
+  "pending": [
+    "Unified HORS-V4 profiling/autotuning remains future work; no renderer kernel optimization is included."
+  ],
+  "validation": [
+    "19 focused unittest cases passed: GMod3/default selection, dependency-free CLI help and V3 scene/color plans.",
+    "Five actual cartridge builds: implicit and explicit EasyFlash object/scene outputs are byte-identical; explicit GMod3 produces CRT type 62."
+  ],
+  "deleted_paths": [],
+  "files": {
+    "CHANGELOG.md": "3a697ce60252115bb3677661f135e2c09ec3cc74a1935f508b5847944ee74b4e",
+    "README.md": "10e6d6dcc8dbe5d3bcf81c5768c8593e9a834c973c187e9fd133af8ffb2c0f29",
+    "VERSION": "b2e3182ea711ef4f70b2b562b39c797b174dc5a66bc12a3f18cf3061ff38dd9c",
+    "config/c643d.ini.example": "453ede8e5f0221091ae15f92ef18a4055d5541139270e969fd9db996cf5baae0",
+    "docs/BLENDER_PIPELINE.md": "86d1626ea4a62a84d96607f0be2b3df2e19d89a94bb1c378efd048f78b786ec1",
+    "docs/CARTRIDGE_PIPELINE.md": "dc4fb9f8a7aff174bc9bb03fc0d3ca9a36a1737bf23e73402e7733ac095fa5e6",
+    "docs/CLI.md": "5ab12bf9b0c6b8db664f5c5bfb8bcf76ace51e1987f4113de3533fad9e292d1e",
+    "docs/CONFIGURATION.md": "8d235bbfc866f7f0d1baae1ed34c81ccdaf3ab5f1d39c5606479905b61e020af",
+    "docs/GMOD3.md": "9774016788c9e5b88380fdc05c83df65975ef75d7c4798beb14b4b33adb61cb8",
+    "docs/GMOD_BACKENDS.md": "22fc56fce84ed64e0d3fe5c621af19b75cadb2fd867ccb217830291109600573",
+    "docs/OBJ_PIPELINE.md": "b26418f653ca482bf9ab7affbe29fcc807ab5cf3a5f1f7cb8b0d20a394168fb7",
+    "docs/ROADMAP.md": "2b7bb600cf08716ff91449ecd1a7ec8433b2120159dfccf466067a8ed3e77f4d",
+    "docs/WINDOWS_SETUP.md": "d0eef54cc47558ef7be894e09cceb89bbb027929d98bd4ec1a10750cf7f55e29",
+    "tests/test_cli_help.py": "2230f7d33e08e917bb71bfcea5f2a1f71f6b3a7d3dd00a113db115852ad0726a",
+    "tests/test_gmod3.py": "16f155f801fee2498bf99f36f74af088ed1724ab0682ca33358072716e8e6036",
+    "tools/c643d/cartridge_defaults.py": "0120f8b5bc745b2ba700c874602df83e13edcaae0646e17cd8c49d4da32a64ca",
+    "tools/c643d/cli.py": "3a1599c20f65584b3df8f6ded11db1a9b179945204ffce656ae9276e9beb098f",
+    "tools/c643d/hors_v4.py": "ca53325f8438ec411ccf6f19f1863dbb7eb5fca374a3f1139ae364249d8566c7"
+  },
+  "apply": "Extract from the parent of c64-3d-toolkit. Incrementals are cumulative against the named baseline. Review deleted_paths manually."
+}

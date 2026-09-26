@@ -42,7 +42,7 @@ def group_build_options(parser):
             name='Inputs and scene sampling'
         elif dest.startswith(('surface','svg_')) or dest in ('color','background_color','border_color','ignore_colors','fill_style','v3_color_encoding'):
             name='Materials and colours'
-        elif dest.startswith(('renderer','cart_','gmod3_','v2_','v3_','v4_','v5_','v6_','v7_','v8_','v9_','v10_')) or dest in ('prefer','legacy_cart'):
+        elif dest.startswith(('renderer','contest_','cart_','gmod3_','v2_','v3_','v4_','v5_','v6_','v7_','v8_','v9_','v10_')) or dest in ('prefer','legacy_cart'):
             name='Renderer and cartridge'
         elif dest.startswith(('hud','text_overlay','star','include_star','interactive','exhibition','rotation','tempo')) or dest in ('frame_ticks','intro','ending','fps_lock','animation'):
             name='Playback and controls'

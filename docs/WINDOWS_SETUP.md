@@ -1,4 +1,4 @@
-> Current conversion default: **hors-renderer-v4 / GMod3**. Explicit HORS-V3 retains EasyFlash. [v0.8.0 release notes](RELEASE_0.8.0.md).
+> Current conversion default: **hors-renderer-v4 / EasyFlash**. GMod3 remains an explicit option.
 
 [Current Windows/Linux installation and dependency repair](INSTALLATION.md). Python libraries are now checked and installed through the root setup scripts.
 

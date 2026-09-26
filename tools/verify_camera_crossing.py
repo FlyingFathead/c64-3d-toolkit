@@ -57,9 +57,9 @@ def main():
     assert len(frames)==17 and stats['empty_frames']==9
     assert frames[0]==frames[-1] and frames[0].unique_pixels
     results=dict(passed=True,source_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),clipping=stats)
-    for name,renderer in (('gmod3','hors-v4'),('easyflash','hors-v4-ef'),('resident','yunroll')):
+    for name,renderer in (('gmod3','hors-v4-gmod3'),('easyflash','hors-v4-ef'),('resident','yunroll')):
         stem='camera-crossing-'+name
-        args=['build','--scene',str(source),'--renderer',renderer,'--output-dir',str(out),'--output',stem,
+        args=['build','--no-config','--scene',str(source),'--renderer',renderer,'--output-dir',str(out),'--output',stem,
               '--tass',a.tass,'--cartconv',a.cartconv,'--vice',a.vice,'--overwrite-policy','allow','--ignore-warnings']
         args+=['--viewport-width','256'] if name=='resident' else ['--frame-ticks','2']
         if cli.main(args):raise RuntimeError(name+' build failed')
@@ -67,6 +67,7 @@ def main():
             resident,_=build_scene_frames(scene,width=256,height=192,enable_source_colors=True,ignore_warnings=True)
             results[name]=verify_resident(out/(stem+'.prg'),resident,vice=a.vice,vice_data=a.vice_data)
         else:
+            assert int.from_bytes((out/(stem+'.crt')).read_bytes()[22:24],'big') == (62 if name=='gmod3' else 32)
             results[name]=verify(out/(stem+'.crt'),a.vice,a.vice_data,cycles=3)
             if name=='gmod3':
                 meta=json.loads((out/(stem+'-manifest.json')).read_text())

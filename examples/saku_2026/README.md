@@ -1,5 +1,10 @@
 # SAKU 2026
 
+Separate solid/gradient logo-only renderer benchmarks are available through
+[the public benchmark runner](../../docs/PUBLIC_BENCHMARKS.md). They exclude the
+starfield and interactive presentation effects; the examples below remain intact.
+
+
 This cartridge defines the [shared interactive baseline](../../docs/INTERACTIVE_CART_BASELINE.md). Its explicitly enabled light stars are an example preset; new interactive builds and Demo Cart v3.1 start with stars disabled.
 
 The 2026 logo of Suomen Amiga-käyttäjät ry (Saku), supplied for this example.

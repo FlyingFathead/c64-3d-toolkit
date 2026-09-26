@@ -1,8 +1,8 @@
-> Current conversion default: **hors-renderer-v4 / GMod3**. Explicit HORS-V3 retains EasyFlash. [v0.8.0 release notes](RELEASE_0.8.0.md).
+> Current conversion default: **hors-renderer-v4 / EasyFlash**. GMod3 remains an explicit option.
 
 # OBJ pipeline
 
-v0.8.0 defaults to hors-renderer-v4 GMod3 output. Add `--renderer yunroll`
+New builds default to hors-renderer-v4 EasyFlash output. Add `--renderer yunroll`
 for resident PRG output; input parsing and visibility are shared. See
 [renderer formats](../README.md#renderers).
 

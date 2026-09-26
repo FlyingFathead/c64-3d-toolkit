@@ -2,7 +2,7 @@
 
 ## Current pipeline in 0.7.9
 
-`build` and `cart-stream` default to hors-renderer-v3 EasyFlash output,
+`build` and `cart-stream` default to hors-renderer-v4 EasyFlash output,
 including authored `.blend` / `.c643dscene` wireframe scenes.
 `cart-demos` retains hors-render-v2 for the comparison/menu pipeline.
 The current twelve-entry menu streams precomputed pictures from ROM; it does

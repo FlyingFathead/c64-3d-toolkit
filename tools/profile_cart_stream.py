@@ -7,7 +7,7 @@ is separate from rendering. Rebuild the cart for matching stage labels.
 from pathlib import Path
 from c643d.cartpaths import menu_manifest_path
 import argparse, hashlib, json, re, statistics, subprocess, tempfile
-from verify_cart_stream import labels, startup_monitor
+from verify_cart_stream import labels, startup_monitor, readonly_cartridge_flags
 
 CLOCK = 985248
 
@@ -64,10 +64,11 @@ def profile(crt, vice, vice_data=None, menu_entry=None):
         terminal = 'outro_start' if finite else 'frame_begin'
         mon += [f'break ${sym[terminal]:04x}', 'g', 'stopwatch', 'quit']
         (td/'run.mon').write_text('\n'.join(mon)+'\n')
-        cmd = [str(vice), '-console', '+easyflashcrtwrite', '-pal', '+sound', '-warp', '-seed', '1',
+        cmd = [str(vice), '-console', '-default', '+easyflashcrtwrite', '-pal', '+sound', '-warp', '-seed', '1',
                '-cartcrt', str(crt), '-initbreak', 'reset', '-moncommands', str(td/'run.mon'),
                '-monlogname', str(td/'monitor.log'), '-monlog',
                '-limitcycles', str(count*1000000+40000000)]
+        cmd += readonly_cartridge_flags(crt)
         if vice_data:
             cmd += ['-directory', str(vice_data)]
         with (td/'vice.log').open('w') as log:

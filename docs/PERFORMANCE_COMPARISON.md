@@ -1,5 +1,353 @@
 # Renderer performance comparison
 
+The [optimizer-profiler](OPTIMIZER_PROFILER.md) searches a scene at fixed pacing.
+The historical tables below retain their recorded versions and protocols.
+
+## v0.8.2: HORS-V1 through V5 average FPS
+
+Fresh PAL VICE measurements compare all six family choices against identical
+pictures and colours: **192 public combinations: 190 passes, two capacity N/As, zero failures**, with
+**21,322 completed-picture checks**. HORS-V1 is `yunroll-cart-v10`; V3 and V4 EF
+retain the same picture core. Both FPS and RAM preferences are measured.
+
+The summary below uses **FPS preference**, the uncapped common V9 normal PLAY ALL
+controller, three ten-second visits. Compare within each row. Bold marks the
+highest measured average; small differences are not a statistical confidence claim.
+
+| Public input | HORS-V1 | HORS-V2 | HORS-V3 | HORS-V4 EF | V5-c1 | V5-c2 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| DRAGON WIREFRAME | N/A | 19.387 | 19.387 | 19.387 | **19.454** | **19.454** |
+| DRAGON METALLIC | 11.250 | 11.452 | 14.265 | 14.265 | **14.366** | **14.366** |
+| SAKU SOLID LOGO ONLY | 36.966 | **38.808** | 32.010 | 32.010 | 32.214 | 38.773 |
+| SAKU GRADIENT LOGO ONLY | 31.107 | 32.013 | 31.209 | 31.209 | 31.335 | **32.109** |
+
+C2 improves the two SAKU logo-only inputs and ties c1 on the other fourteen
+public inputs in both preferences. V2 remains about 0.09% faster on solid SAKU.
+There is no universal renderer winner. No cross-scene arithmetic average is used
+as a release score. [All 16 inputs, both preferences and latency tails](RELEASE_0.8.2_PERFORMANCE.md).
+
+One private validation workload, **Sande's Nightdrive Test**, retains all 120
+pictures, four-refresh pacing, one warmup loop and two measured loops. These
+native results are separate from the uncapped public table. Draw gap 12 and
+batch budget 2048 apply to V2 and later; V1 does not implement those settings.
+
+| Native scene | HORS-V1 | HORS-V2 | HORS-V3 | HORS-V4 EF | V5-c1 | V5-c2 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Sande's Nightdrive Test | 6.312 | 7.716 | 7.039 | 7.039 | 7.477 | **7.796** |
+
+C2 gains **4.28% over c1** and **1.04% over V2** here. All 24 private family/setting
+combinations pass, with 5,832 completed-picture checks. Private source assets,
+carts, previews, filenames and raw results are not distributed with this release.
+
+V4/EasyFlash stays the default. V5-c1/c2 are opt-in; `hors-v5` still means c1.
+Colour mapping and overlap behaviour are unchanged. These tests verify matching
+encoded pictures, not absence of source palette/8×8 colour conflicts. PAL VICE
+only; physical hardware and NTSC remain unmeasured. Historical tables follow
+with their original workload definitions and measurement versions.
+
+## V5-c1 and V5-c2: checkpoint 006
+
+The existing V5 is now named **V5-c1**. Old `hors-v5` / `hors-v5-ef` selectors still
+mean c1. **V5-c2 is a separate opt-in candidate**, combining V5 clearing with a
+host-selected run/shared colour transport. Default colour mapping and overlap
+behaviour are unchanged; V4/EasyFlash remains the default renderer.
+
+[Implementation and build commands](HORS_V5_CANDIDATES.md) ·
+[All new candidate rows and tail holds](V5_CANDIDATE_COMPARISON.md).
+
+Fresh public measurements cover **16 inputs × 8 method/preference combinations:
+128 passes, 0 capacity N/As, 0 failures**, with **14,560
+completed-picture checks**. V2, V4, c1 and c2 are rebuilt at this checkpoint.
+These focused measurements supplement the full original-core tables below;
+they do not rerank unmeasured older implementations as current-checkpoint results.
+
+Public rows use the uncapped common V9 normal PLAY ALL harness, three ten-second
+visits, fixed complete pictures/colours and FPS preference in this summary.
+The twelve original corpus entries produce exactly matching c1/c2 measured
+FPS. The separate Dragon/SAKU results are:
+
+| Public case | V2 FPS | V4 FPS | V5-c1 FPS | V5-c2 FPS | C2 colour transport |
+| --- | ---: | ---: | ---: | ---: | --- |
+| DRAGON WIREFRAME | 19.387 | 19.387 | 19.454 | 19.454 | runs |
+| DRAGON METALLIC | 11.452 | 14.265 | 14.366 | 14.366 | shared |
+| SAKU SOLID LOGO ONLY | 38.808 | 32.010 | 32.214 | 38.773 | runs |
+| SAKU GRADIENT LOGO ONLY | 32.013 | 31.209 | 31.335 | 32.109 | runs |
+
+C2 improves both SAKU variants and exactly matches c1 on the other fourteen
+public inputs, in both preferences. Solid SAKU gains 20.36% over c1, but V2's
+38.808 FPS remains slightly above c2's 38.773 (about 0.09%). The heuristic is
+therefore useful on these inputs, not proof that every scene selects its
+fastest possible pipeline. Public p95/worst holds remain in the full tables.
+
+### Native Nightdrive Test: separate four-refresh protocol
+
+Both private exports keep all 120 authored samples, the same projection, HUD,
+pacing, bitmap and screen-colour bytes. One warmup loop and two measured loops;
+243 completed-picture checks per cart. These native rates are not compared with
+the uncapped public table. Test A is car-only; Test B includes the road.
+
+| Test | Draw gap | V2 FPS | V5-c1 FPS | V5-c2 FPS | C2 vs c1 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| A | 6 | 12.00588 | 12.10251 | 12.10251 | +0.00% |
+| A | 12 | 12.27540 | 12.35102 | 12.35102 | +0.00% |
+| B | 6 | 7.35773 | 7.13517 | 7.42586 | +4.07% |
+| B | 12 | 7.71641 | 7.47663 | 7.79643 | +4.28% |
+
+For Test B/gap 12, c2 is **4.28% faster than c1 and 1.04% faster than V2**.
+C2 uses 763,408 CRT bytes, V2 also 763,408, and c1 993,232. P95 is 159.603 ms
+and worst hold 159.608 ms for c1/c2. Forcing c2 to shared colour transport
+reproduces c1 FPS and stage totals, supporting transport cost as the cause of
+this improvement. The car-only c2 result ties c1 at both settings.
+
+| Test B/gap 12: mean elapsed cycles | V2 | V5-c1 | V5-c2 runs |
+| --- | ---: | ---: | ---: |
+| Recycle bitmap and colours | 47,879.24 | 36,605.69 | 46,836.73 |
+| Metadata fetch | 5,626.03 | 13,343.87 | 5,427.73 |
+| Apply colours | 11,193.05 | 18,921.03 | 11,183.81 |
+| Draw lines | 62,686.57 | 62,642.00 | 62,675.54 |
+| Total active render | 127,410.05 | 131,537.38 | 126,148.23 |
+
+C2 spends more than c1 recycling old colour runs, but saves more in colour
+metadata fetch and application. Its V5 clear planner then reduces active work
+relative to V2. Stage cycles include VIC/IRQ effects and are measured separately
+from actual display intervals. All 13 private comparison/transport-control
+carts pass (3,159 completed-picture checks). Private artwork, carts, raw reports
+and previews remain outside the repository.
+
+These results support c2 as a candidate, not a universal replacement. Neither
+candidate changes the 8×8 colour limitation or repairs existing road/car colour
+conflicts. Physical C64 and NTSC are unmeasured. The unchanged historical
+sections below preserve their original names and measured source versions.
+Where they say V5, that implementation is now c1.
+
+The final source differs from the measured fingerprint only by retaining the
+old optimizer `--renderers hors-v5-ef` spelling as a c1 alias. The exact change
+and both hashes are recorded in `benchmarks/v5-candidates/provenance-audit.json`;
+no measured encoder, renderer, timing or verification path changed.
+
+## Public corpus and renderer contest: checkpoint 005
+
+Fresh PAL VICE measurements cover **16 public inputs × 27 method/preference
+combinations: 386 passes, 46 capacity N/As, zero failures**, with **38,506
+completed-picture checks**. The established twelve-entry corpus is joined by
+Dragon wireframe/metallic and separate SAKU solid/gradient logo-only rotations.
+SAKU includes no starfield or interactive presentation effects. All original
+source samples and colours are retained; no input is simplified to fit a method.
+
+[Full per-renderer tables, p95/worst holds and N/A reasons](PUBLIC_RENDERER_COMPARISON.md)
+· [repeatable public command](PUBLIC_BENCHMARKS.md)
+· [scene contest CLI/config](OPTIMIZER_PROFILER.md).
+
+The following public rows share the uncapped common V9 normal PLAY ALL protocol;
+the twelve-entry menu uses a multi-entry cart, while Dragon/SAKU each use their
+own cart. Compare methods within each case. Values are **average displayed FPS**.
+
+| Case | Pictures | Fastest measured method / preference | Average FPS | V2 FPS | V4 FPS | V5 FPS |
+| --- | ---: | --- | ---: | ---: | ---: | ---: |
+| TORUS | 32 | hors-v5-ef / ram | 17.782 | 17.680 | 17.680 | 17.780 |
+| TORUS DENSE | 32 | hors-v5-ef / fps | 17.380 | 17.179 | 17.179 | 17.380 |
+| CUBE | 36 | yunroll / fps | 30.269 | 30.031 | 30.031 | 30.032 |
+| SPHERE | 24 | hors-v5-ef / ram | 17.480 | 17.379 | 17.379 | 17.478 |
+| HORSE HEAD | 32 | hors-v5-ef / ram | 29.434 | 29.335 | 29.335 | 29.432 |
+| SUNFLOWER TORUS | 28 | hors-v5-ef / ram | 28.931 | 28.730 | 28.730 | 28.927 |
+| SUNFLOWER COLOR | 20 | hors-v5-ef / fps | 22.733 | 20.891 | 22.701 | 22.733 |
+| SPACE HORSE SPIN | 24 | hors-v5-ef / fps | 19.288 | 19.083 | 19.086 | 19.288 |
+| SPACE HORSE CRAWL | 32 | hors-renderer-v3 / ram | 38.278 | 38.275 | 38.273 | 38.271 |
+| FALLING CUBES | 18 | hors-v5-ef / ram | 21.397 | 20.892 | 21.295 | 21.396 |
+| HORSE HEAD HIFI | 128 | hors-v5-ef / ram | 23.307 | 21.495 | 23.105 | 23.204 |
+| SUNFLOWER TORUS HIFI | 128 | hors-v5-ef / fps | 22.804 | 20.394 | 22.702 | 22.804 |
+| DRAGON WIREFRAME | 128 | hors-v5-ef / fps | 19.454 | 19.387 | 19.387 | 19.454 |
+| DRAGON METALLIC | 128 | hors-v5-ef / fps | 14.366 | 11.452 | 14.265 | 14.366 |
+| SAKU SOLID LOGO ONLY | 48 | hors-render-v2 / fps | 38.808 | 38.808 | 32.010 | 32.214 |
+| SAKU GRADIENT LOGO ONLY | 48 | hors-render-v2 / fps | 32.013 | 32.013 | 31.209 | 31.335 |
+
+V5 leads 12 of these 16 cases by measured average, including both Dragon variants.
+The resident yunroll wins CUBE; V3/RAM leads SPACE HORSE CRAWL by a tiny interval
+phase difference; V2 wins both SAKU logos. These per-case results do not establish
+a universal replacement or an old-release regression claim. In particular,
+metallic Dragon favours V4/V5's colour path, while solid SAKU favours V2.
+Keep all implementations available and compare a candidate with the best older
+compatible method, not only the current default.
+
+### Native fixed-picture contest: Nightdrive Test B
+
+This is a **separate protocol**: 120 pictures, four-refresh minimum hold, one
+warmup loop and two measured loops. All 23 native candidates pass; original-core
+history adds 23 passes and three resident capacity N/As. There are 11,178 completed
+picture checks in total. Private artwork, CRTs, previews and raw evidence remain
+outside the repository.
+
+| Renderer / draw gap | Average FPS | Meaning |
+| --- | ---: | --- |
+| V4 EasyFlash / 6 | 6.73566 | Preserved reference |
+| V5 EasyFlash / 6 | 7.13517 | Current V5 defaults |
+| V2 / 6 | 7.35773 | Older core still faster here |
+| V5 EasyFlash / 12 | 7.47663 | Tuned V5 |
+| V2 / 12 | **7.71641** | Highest tested average; stable and beta1 tie |
+
+The V2/gap-12 winner uses 763,408 CRT bytes. It is a measured selection for this
+scene, not a change to the default renderer. The public colour-cube and
+colour-torus exports also pass all 49 native/core candidates each (4,410 checks
+combined); their cheap native candidates reach the four-refresh pacing ceiling,
+so tiny differences there should not be promoted as a general speed advantage.
+
+The measurement inputs and tools are hashed in the raw reports. Subsequent
+checkpoint finalization adds the public runner, CLI configuration validation and
+P95 table formatting; no measured renderer/encoder instruction path changed.
+The original historical sections below retain their own recorded protocols.
+
+## Full renderer history: Nightdrive Test (2026-09-25)
+
+Fresh v0.8.2-dev4 measurements cover every distinct implementation represented
+by the current `--renderer` choices. Aliases are listed in the private report.
+The public CUBE / 36 control exercises the original resident methods. Nightdrive
+Test A is the private car-only export; Test B is the private car-and-road export,
+each with all 120 authored pictures. These exports are distinct from the original
+Nightdrive cartridge below. No private artwork or raw private evidence is stored here.
+
+[Repeatable full-history command and protocols](RENDERER_HISTORY_BENCHMARK.md).
+All values below are **high / average / low displayed FPS**, measured in PAL VICE 3.10.
+Compare within each table: core runs are uncapped PLAY ALL; native scene runs
+retain four-refresh pacing. VICE flash writeback is disabled.
+
+### Original cores: common normal PLAY ALL
+
+Three ten-second visits, identical frozen pictures, colours, HUD and order.
+V2 and later comparison encoders use gap 3 / budget 2048. Each case gets its
+own cartridge. FPS/RAM preferences are measured separately.
+
+| Renderer | Preference | CUBE / 36 | Nightdrive Test A / 120 | Nightdrive Test B / 120 |
+| --- | --- | ---: | ---: | ---: |
+| step | fps | 50.173 / 26.452 / 16.707 | N/A¹ | N/A¹ |
+| bytechunk | fps | 50.160 / 29.365 / 25.052 | N/A¹ | N/A¹ |
+| yunroll | fps | 50.165 / 30.168 / 25.051 | N/A¹ | N/A¹ |
+| yunroll-cart-v2 | fps | 44.363 / 23.036 / 16.707 | 3.366 / 2.913 / 2.772 | 2.947 / 2.511 / 2.378 |
+| yunroll-cart-v3 | fps | 50.135 / 24.609 / 16.708 | 3.564 / 3.314 / 3.113 | 3.604 / 2.813 / 2.621 |
+| yunroll-cart-v4 | fps | 50.127 / 24.610 / 16.707 | 3.598 / 3.315 / 3.143 | 3.349 / 2.813 / 2.618 |
+| yunroll-cart-v5 | fps | 50.135 / 25.581 / 16.705 | 4.558 / 3.817 / 3.550 | 3.862 / 3.214 / 2.955 |
+| yunroll-cart-v6 | fps | 55.544 / 26.720 / 16.707 | 4.560 / 3.918 / 3.580 | 4.182 / 3.315 / 3.133 |
+| yunroll-cart-v7 | fps | 55.818 / 26.854 / 16.707 | 5.582 / 4.520 / 4.177 | 5.074 / 3.918 / 3.580 |
+| yunroll-cart-v8 | fps | 55.818 / 26.854 / 16.707 | 16.831 / 4.721 / 4.177 | 5.074 / 3.918 / 3.580 |
+| yunroll-cart-v9 | fps | 55.642 / 26.820 / 16.708 | 25.208 / 4.822 / 4.177 | 5.079 / 3.918 / 3.580 |
+| HORS-V1 / yunroll-cart-v10 | fps | 51.039 / 27.490 / 16.640 | 25.208 / 10.246 / 8.353 | 10.025 / 6.730 / 5.012 |
+| yunroll-cart-v7 | ram | 52.729 / 24.644 / 16.014 | 5.634 / 4.420 / 3.856 | 4.614 / 3.717 / 3.342 |
+| yunroll-cart-v8 | ram | 52.729 / 24.644 / 16.014 | 17.477 / 4.621 / 4.177 | 4.614 / 3.717 / 3.342 |
+| yunroll-cart-v9 | ram | 53.366 / 24.644 / 16.033 | 25.106 / 4.721 / 4.177 | 4.607 / 3.817 / 3.342 |
+| HORS-V1 / yunroll-cart-v10 | ram | 50.778 / 27.422 / 16.673 | 25.106 / 10.246 / 8.354 | 10.065 / 6.730 / 5.012 |
+| HORS-V2 | fps | 55.859 / 29.967 / 23.123 | 25.420 / 11.151 / 8.353 | 12.656 / 7.133 / 5.569 |
+| HORS-V2 | ram | 55.916 / 30.000 / 23.127 | 25.594 / 11.151 / 8.354 | 10.025 / 7.132 / 5.569 |
+| HORS-V3 | fps | 55.859 / 29.967 / 23.123 | 25.420 / 11.151 / 8.353 | 8.466 / 6.630 / 5.569 |
+| HORS-V3 | ram | 55.916 / 30.000 / 23.127 | 25.594 / 11.151 / 8.354 | 10.025 / 6.629 / 5.569 |
+| HORS-V2 beta1 | fps | 55.859 / 29.967 / 23.123 | 25.420 / 11.151 / 8.353 | 12.656 / 7.133 / 5.569 |
+| HORS-V2 beta1 | ram | 55.916 / 30.000 / 23.127 | 25.594 / 11.151 / 8.354 | 10.025 / 7.132 / 5.569 |
+| HORS-V4 / EasyFlash | fps | 55.859 / 29.967 / 23.123 | 25.420 / 11.151 / 8.353 | 8.466 / 6.630 / 5.569 |
+| HORS-V4 / EasyFlash | ram | 55.916 / 30.000 / 23.127 | 25.594 / 11.151 / 8.354 | 10.025 / 6.629 / 5.569 |
+| HORS-V5 / EasyFlash | fps | 56.471 / 30.035 / 23.166 | 25.576 / 11.284 / 8.354 | 8.505 / 6.831 / 5.569 |
+| HORS-V5 / EasyFlash | ram | 55.373 / 30.031 / 23.166 | 16.964 / 11.350 / 8.354 | 10.025 / 6.831 / 5.569 |
+
+¹ Exact recorded reason for each resident N/A: **resident record count exceeds 255**
+(the eight-bit line-record count per picture). This is a capacity result, not
+zero FPS. The same methods pass on CUBE. No pictures or geometry were dropped.
+
+### Native scene backends: four-refresh minimum hold
+
+One complete warmup loop, then two measured loops (240 display intervals).
+CLI encoding defaults: gap 6 / budget 2048. Each result passes 243 completed
+picture/colour checks across all three buffers against identical input pictures.
+GMod3 retains its own HUD/controller; that row compares native backend behavior.
+
+| Renderer | Nightdrive Test A / 120 | Nightdrive Test B / 120 | B worst hold (ms) |
+| --- | ---: | ---: | ---: |
+| yunroll-cart-v4-scene | 3.619 / 3.241 / 2.928 | 3.160 / 2.375 / 1.667 | 600.011 |
+| yunroll-cart-v5-scene | 4.220 / 3.716 / 3.312 | 3.615 / 2.764 / 2.001 | 499.787 |
+| yunroll-cart-v6-scene | 4.177 / 3.821 / 3.342 | 3.580 / 2.873 / 2.089 | 478.803 |
+| yunroll-cart-v7-scene | 5.013 / 4.405 / 3.856 | 4.177 / 3.357 / 2.506 | 399.010 |
+| yunroll-cart-v8-scene | 12.530 / 4.645 / 3.856 | 4.177 / 3.357 / 2.506 | 399.010 |
+| yunroll-cart-v9-scene | 12.677 / 4.718 / 3.856 | 4.177 / 3.378 / 2.506 | 399.009 |
+| yunroll-cart-v10-scene | 12.630 / 10.552 / 8.354 | 8.354 / 6.312 / 5.012 | 199.506 |
+| hors-render-v2-beta1-scene | 12.829 / 12.006 / 10.025 | 10.025 / 7.358 / 5.569 | 179.555 |
+| hors-v2-scene | 12.829 / 12.006 / 10.025 | 10.025 / 7.358 / 5.569 | 179.555 |
+| hors-v3 | 12.829 / 12.006 / 10.025 | 8.354 / 6.736 / 5.569 | 179.557 |
+| HORS-V4 / EasyFlash | 12.829 / 12.006 / 10.025 | 8.354 / 6.736 / 5.569 | 179.557 |
+| hors-v4-gmod3 | 12.773 / 12.078 / 10.025 | 8.354 / 6.789 / 5.569 | 179.558 |
+| HORS-V5 / EasyFlash | 12.750 / 12.103 / 10.025 | 10.025 / 7.135 / 5.569 | 179.554 |
+
+### What the broader comparison changes
+
+HORS-V5 improves on preserved V4, but HORS-V2 is faster on Test B. Newer is
+not universally faster. The stage profile identifies why: V5 saves clearing
+work, while V2 has cheaper frame fetch and colour application for this input.
+The next optimization candidate is the colour/metadata policy; this checkpoint
+does not change rendering or choose a new default.
+
+| Test B stage, mean elapsed cycles | HORS-V2 scene | HORS-V4 EasyFlash | HORS-V5 EasyFlash |
+| --- | ---: | ---: | ---: |
+| recycle bitmap and colors | 47,857.36 | 45,157.73 | 36,620.17 |
+| fetch | 5,647.07 | 12,969.38 | 13,361.26 |
+| apply colors | 11,198.34 | 18,880.04 | 18,919.62 |
+| draw lines | 68,928.77 | 68,957.16 | 68,951.44 |
+
+98 combinations pass; 6 capacity N/As; 19,446 completed-picture checks. No unexplained build or pixel failures remain.
+All 77 original assembly files and the source geometry/colour pipeline are
+byte-identical to the supplied v0.8.1 baseline. The public cube raw report is
+[here](benchmarks/renderer-history/cube.json); private raw evidence remains external.
+This is a fixed-input renderer comparison, not a rerun of every historical
+workload, physical C64 hardware or NTSC. Existing historical tables below remain
+labelled with their original protocols and dates.
+
+## HORS-V5 preview / EasyFlash: Nightdrive Test (2026-09-25)
+
+HORS-V5 is an opt-in experiment; HORS-V4 / EasyFlash remains the default.
+The **Nightdrive Test** row below identifies the unchanged private cartridge.
+Its matching scene/build settings are not available, so it has no V5 result.
+The two separately exported private scenes are matched V4/V5 comparisons with
+identical pictures, colours, order, HUD and pacing. They are not rebuilds of
+that original cartridge. Assets, previews, carts and private raw evidence are
+kept outside this repository. [Method, tools and limits](HORS_V5_PREVIEW.md).
+
+| Test | HORS-V4 FPS | HORS-V5 FPS | Change | Worst display hold V4 → V5 |
+| --- | ---: | ---: | ---: | ---: |
+| Nightdrive Test — original private cartridge | 10.143 | — | unmeasured | 119.705 ms → — |
+| Private car-only scene / 120 pictures | 12.006 | 12.103 | +0.805% | 99.752 → 99.748 ms |
+| Private car-and-road scene / 120 pictures | 6.736 | 7.135 | +5.931% | 179.557 → 179.554 ms |
+
+These are actual display flips in PAL VICE 3.10: one full warmup loop, then
+240 intervals (two loops). Both new scenes pass 243 completed-picture checks
+against the same host oracle across all three buffers, including bitmap,
+colour, border and HUD checks. All 120 samples are retained. The four-refresh
+minimum hold gives a roughly 12.531 FPS ceiling; this is the current build
+pacing, not the exports' 24 FPS source rate. No original-duration claim is made.
+Physical hardware and NTSC are unmeasured.
+
+The car-only CRT shrinks by one 8 KiB ROM bank; the car-and-road CRT grows by
+one bank. Mean active render cycles fall from 77,329.26 to 76,337.12 and from
+145,988.74 to 137,877.28 respectively. Worst active cycles also improve;
+worst visible holds remain effectively unchanged. This is not a universal
+speedup or proof of regression freedom in every workload.
+
+### Public regression controls
+
+Same V4 EasyFlash core versus V5, frozen public pictures, normal automatic
+playback or interactive idle as labelled. Stars are excluded. Each case uses
+one warmup loop and two measured loops; this protocol is separate from the
+historical PLAY ALL matrices below. [Raw public results](benchmarks/hors-v5-preview/results.json).
+
+| Workload | V4 average FPS | V5 average FPS | Change | Worst hold V4 → V5 |
+| --- | ---: | ---: | ---: | ---: |
+| Metallic torus / 48 | 9.840 | 9.881 | +0.411% | 119.705 → 119.707 ms |
+| Golden dragon / 128 | 15.132 | 15.186 | +0.355% | 82.402 → 82.425 ms |
+| Interactive metallic torus / 48 | 9.605 | 9.702 | +1.008% | 119.706 → 119.705 ms |
+
+All five matched pairs pass the declared 0.5% aggregate regression tolerance
+for displayed average, worst display hold, mean and worst active render cycles.
+Small individual regressions remain visible above: the dragon's worst hold
+increases by 0.023 ms. Per-frame phase/stall differences are not hidden by this
+gate. V4 core CRTs are byte-identical when rebuilt after V5 in the same process;
+the two private V4 scene CRTs also match their pre-V5 baselines exactly.
+Interactive validation covers 242 forward/reverse pictures and 20 input checks.
+The new byte-clear kernel passes 1,275 VICE cases (all lengths 1..255 at five
+alignments, including page crossings), with guard bytes unchanged.
+
 For the v0.8.1 interactive hotfix, see the [matched v3.0/v3.1 A/B tables](INTERACTIVE_BASELINE_PERFORMANCE.md): all 58 entries, high/average/low FPS, and measured input-service overhead. The v0.8.0 renderer comparison below remains a historical measurement; the benchmark cartridge is unchanged.
 
 

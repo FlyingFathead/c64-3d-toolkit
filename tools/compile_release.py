@@ -29,7 +29,10 @@ def source_files(root):
 
 def package(root, output, baseline=None):
     current={p.relative_to(root).as_posix():p for p in source_files(root)}
-    with zipfile.ZipFile(output,'w',zipfile.ZIP_DEFLATED,compresslevel=9) as z:
+    patch=output.with_name(output.stem.removesuffix('-complete')+'-incremental.zip') if baseline else None
+    for target in (output,patch):
+        if target is not None and target.exists():raise FileExistsError('Refusing to overwrite '+str(target))
+    with zipfile.ZipFile(output,'x',zipfile.ZIP_DEFLATED,compresslevel=9) as z:
         for rel,path in current.items():z.write(path,'c64-3d-toolkit/'+rel)
     with zipfile.ZipFile(output) as z:
         if z.testzip() is not None:raise ValueError('Package CRC failure')
@@ -37,8 +40,7 @@ def package(root, output, baseline=None):
         with zipfile.ZipFile(baseline) as z:
             prefix='' if 'VERSION' in z.namelist() else next(n[:-7] for n in z.namelist() if n.endswith('/VERSION'))
             old={n[len(prefix):]:hashlib.sha256(z.read(n)).digest() for n in z.namelist() if n.startswith(prefix) and not n.endswith('/')}
-        patch=output.with_name(output.stem.removesuffix('-complete')+'-incremental.zip')
-        with zipfile.ZipFile(patch,'w',zipfile.ZIP_DEFLATED,compresslevel=9) as z:
+        with zipfile.ZipFile(patch,'x',zipfile.ZIP_DEFLATED,compresslevel=9) as z:
             for rel,path in current.items():
                 if old.get(rel)!=hashlib.sha256(path.read_bytes()).digest():z.write(path,'c64-3d-toolkit/'+rel)
         return [output,patch]
@@ -73,6 +75,17 @@ def main():
             proc=subprocess.Popen(args,cwd=stage,env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)
             for line in proc.stdout:print(line,end='',flush=True);log.write(line)
             if proc.wait():raise RuntimeError(label+' failed; see '+str(logs/(label+'.log')))
+    version=(stage/'VERSION').read_text().strip()
+    if version=='0.8.2':
+        run('release-check',[sys.executable,'tools/release_check.py','--out',str(work/'checks'),'--native',
+            '--tass',a.tass,'--cartconv',a.cartconv,'--vice',a.vice,'--vice-data',env['VICE_DATA']])
+        outputs=package(stage,work/f'c64-3d-toolkit-v{version}.zip',a.baseline_zip)
+        report=dict(passed=True,version=version,renderer='hors-v4',cartridge='easyflash',installed=False,
+            note='Historical example binaries are preserved. --install has nothing to copy for this release.',
+            packages=[dict(file=x.name,sha256=hashlib.sha256(x.read_bytes()).hexdigest()) for x in outputs])
+        (work/'release.json').write_text(json.dumps(report,indent=2)+'\n')
+        print('Release checks passed. Packages and evidence:',work)
+        print('No Git commit, tag or push was performed.');return
     run('build-examples',[sys.executable,'tools/build_hors_v2_examples.py','--tass',a.tass,'--cartconv',a.cartconv])
     run('build-showcase',[sys.executable,'tools/build_demo_cart_v2.py','--tass',a.tass,'--cartconv',a.cartconv])
     run('build-color-combos',[sys.executable,'c643d.py','color-combo-test','--tass',a.tass,'--cartconv',a.cartconv,'--overwrite-policy','allow'])

@@ -14,7 +14,8 @@ and remains available without NumPy, Pillow or the external toolchain.
 | Choice | Default | Explicit selection |
 | --- | --- | --- |
 | Renderer | HORS-V4 | `--renderer hors-v4` (long aliases still work) |
-| Cartridge | GMod3 for HORS-V4, unless overridden by config | `--cart-type gmod3` or `--cart-type easyflash` |
+| Experimental V5 candidates | Preserved c1; separate c2 colour-transport selection | `--renderer hors-v5-c1` or `--renderer hors-v5-c2`; old `hors-v5` means c1 ([candidate details](HORS_V5_CANDIDATES.md); [full renderer history](RENDERER_HISTORY_BENCHMARK.md)) |
+| Cartridge | EasyFlash, unless overridden by config | `--cart-type gmod3` or `--cart-type easyflash` |
 | Playback | Non-interactive automatic playback | `--interactive-cart` for supported object/SVG spins |
 | Stars in interactive builds | Disabled | `--starfield-default enabled`; `--no-starfield` excludes them |
 | HUD | Visible | `--hide-hud`; interactive Shift+I/F/U toggles it |
@@ -53,3 +54,12 @@ for Demo Cart v3.1.
 Help includes the toolkit version and author. Configuration commands do not
 require Blender or Python build dependencies. See [the colour chooser and
 INI precedence](CONFIGURATION.md#blender-material-colour-interpretation).
+
+## Measured renderer selection
+
+For exported scenes, `build --renderer-selection best-fps --scene input.c643dscene
+--contest-out /path/to/new-private-run` runs the full-history contest selecting an EasyFlash scene winner.
+`--renderer-contest` is the short alias; `--renderer-selection manual` retains
+explicit renderer selection. Config: `[render_defaults] renderer_selection = manual|best-fps`.
+See [optimizer-profiler](OPTIMIZER_PROFILER.md) for fixed-picture constraints,
+measurement, colour diagnostics, candidate outputs and selection rules.

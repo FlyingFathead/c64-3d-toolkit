@@ -5,6 +5,11 @@ repo_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 cd -- "$repo_dir"
 toolkit_version=$(tr -d '\r\n' < "$repo_dir/VERSION")
 results_dir=${1:-"$repo_dir/../c64-${toolkit_version//./}-local-tests"}
+if [[ "$toolkit_version" == 0.8.2 ]]; then
+  exec "${PYTHON:-python3}" tools/release_check.py --out "$results_dir" --native \
+    --tass "${TASS:-64tass}" --cartconv "${CARTCONV:-cartconv}" \
+    --vice "${VICE:-x64sc}" --vice-data "${VICE_DATA:-/usr/local/share/vice}"
+fi
 if [[ -e "$results_dir" ]]; then
   echo "Results directory already exists: $results_dir. Choose a new directory." >&2
   exit 2

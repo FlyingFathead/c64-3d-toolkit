@@ -1,6 +1,30 @@
 # Roadmap
 
+## Current work (2026-09-25)
+
+- EasyFlash is the default cartridge for new HORS-V4 builds. GMod3 remains
+  available explicitly; GMod4 remains a separate future backend.
+- HORS-V5-c1 preserves the original V5 clear optimizer; the separate V5-c2
+  candidate combines it with per-animation colour-transport selection.
+  [Candidate details and measured limits](HORS_V5_CANDIDATES.md).
+- The [full renderer history benchmark](RENDERER_HISTORY_BENCHMARK.md) now
+  measures original cores and native EasyFlash/GMod3 scenes on frozen inputs,
+  with explicit capacity N/As. C2 evaluates both V2-style runs and V3-style
+  shared colour transport; continue checking its heuristic against the best
+  older method on each workload before promoting it.
+- The [optimizer-profiler](OPTIMIZER_PROFILER.md) searches fixed-picture full-history
+  EasyFlash candidates with stage measurements and tail-latency reporting. Extend
+  its search to additional colour encodings, GMod3 and explicit RAM budgets.
+- Investigate span/batch choices and redundant clear/write work before claiming
+  speed gains. Preserve authored duration when evaluating smoother scene playback.
+
+Older milestone sections below retain their historical context.
+
 **0.7.2 update:** hors-render-v2 is the default. The measured scene search and full release compiler are available; see [stable v2](HORS_RENDER_V2.md) and [release automation](RELEASE_0.7.2.md). Older milestone descriptions below are retained as history.
+
+The [public corpus runner](PUBLIC_BENCHMARKS.md) supplies sixteen fixed-picture
+controls, including separate SAKU logos and Dragon. Compare against each case's
+best older method before promoting a replacement.
 
 ## Renderer / performance
 

@@ -1,7 +1,7 @@
 # GMod cartridge backend plan
 
-Status at 0.8.0: HORS-V4 defaults to GMod3, with independent object/SVG/scene
-processing and an All-in-One collection. [Implementation and measurements](GMOD3.md)
+Current status: HORS-V4 defaults to EasyFlash. GMod3 remains an explicit option,
+with independent object/SVG/scene processing and an All-in-One collection. [Implementation and measurements](GMOD3.md)
 supersede the earlier GMod3 plan below. Explicit older renderers retain
 EasyFlash defaults. GMod4, audio coexistence and physical-hardware validation
 remain future work.

@@ -2,6 +2,28 @@
 
 > **ATTENTION:** [FlyingFathead/c64-3d-toolkit](https://github.com/FlyingFathead/c64-3d-toolkit/) is the one and only official, original source for `c64-3d-toolkit`. Steer clear of other sources or repositories claiming to be the official project.
 
+## v0.8.2: Renderer contests and V5 candidates
+
+New HORS-V4 builds default to EasyFlash.
+GMod3 remains available through `--cart-type gmod3`, `--renderer hors-v4-gmod3`,
+or an explicit config preference. GMod4 remains on the roadmap.
+
+The existing V5 is now **V5-c1** (`--renderer hors-v5-c1`); `hors-v5` still selects
+c1. Opt-in **V5-c2** adds per-animation colour-transport selection to V5 clearing.
+[Candidate details and comparisons](docs/HORS_V5_CANDIDATES.md) ·
+[V5-c1 and private comparison workflow](docs/HORS_V5_PREVIEW.md) ·
+[HORS-V1 through V5 comparisons](docs/PERFORMANCE_COMPARISON.md).
+The [full renderer history benchmark](docs/RENDERER_HISTORY_BENCHMARK.md) includes
+the original `step`, `bytechunk`, `yunroll`, streamed and authored-scene variants.
+The [optimizer-profiler](docs/OPTIMIZER_PROFILER.md) measures fixed-picture full-history
+build choices and reports colour mapping separately from cell conflicts.
+
+[Release notes and validation](docs/RELEASE_0.8.2.md) ·
+[All fresh family measurements](docs/RELEASE_0.8.2_PERFORMANCE.md).
+
+The [public corpus runner](docs/PUBLIC_BENCHMARKS.md) includes the established twelve
+examples, Stanford Dragon and separate SAKU logo-only versions.
+
 ## v0.8.1: Camera crossings, Blender colours and Demo Cart v3.1
 
 Authored scenes now clip geometry at the camera near plane and viewport.
@@ -49,7 +71,7 @@ were checked separately.
 Root Windows/Linux installers now install the full Python build requirement
 set. Missing libraries produce a short explanation and repair commands.
 `python c643d.py --help` lists all build options; `--help-all` covers every command.
-Normal builds remain **automatic, non-interactive HORS-V4/GMod3 playback**;
+Normal builds use **automatic, non-interactive HORS-V4/EasyFlash playback**;
 `--interactive-cart` enables controls for supported object/SVG spins.
 
 [Install or repair](docs/INSTALLATION.md) · [Release and verification](docs/RELEASE_0.8.1.md) ·
@@ -68,11 +90,11 @@ returns to the collection menu; Shift+H opens help.
 
 ![GMod3 All-in-One menu captured in PAL VICE](docs/benchmarks/gmod3-features/menu.png)
 
-HORS-V4 (`hors-v4`, also `hors-renderer-v4`) is the new default, using independent GMod3
-processing and runtime modules. Explicit older renderers retain EasyFlash
-defaults; a CLI switch or universal config preference chooses your cartridge.
+HORS-V4 (`hors-v4`, also `hors-renderer-v4`) is the default renderer. New builds
+default to EasyFlash; independent GMod3 processing and runtime modules remain
+available with `--cart-type gmod3` or `--renderer hors-v4-gmod3`.
 The V3 picture core and all existing EasyFlash backend/cartridge bytes are preserved.
-Use `--renderer hors-v4-ef` for the new pipeline with EasyFlash. VICE 3.10
+Use `--renderer hors-v4-ef` to select EasyFlash explicitly. GMod3 VICE 3.10
 playback is verified; physical devices must support the GMod3 mapper and the
 16 MiB image. [Compatibility and EasyFlash fallback](docs/GMOD3.md#compatibility).
 
@@ -161,7 +183,7 @@ cartridges do not share a soundtrack.
 
 ## Try the toolkit
 
-HORS-V4 / GMod3 is the default conversion renderer; use `--surface-fill material`, `textured` or `metallic` to select filled surfaces. The prebuilt cartridges below are ready to run. See [cartridge loading](docs/CARTRIDGE_LOADING.md) and [output colours](docs/OUTPUT_COLORS.md) for setup and controls.
+HORS-V4 / EasyFlash is the default conversion renderer; use `--surface-fill material`, `textured` or `metallic` to select filled surfaces. The prebuilt cartridges below are ready to run. See [cartridge loading](docs/CARTRIDGE_LOADING.md) and [output colours](docs/OUTPUT_COLORS.md) for setup and controls.
 
 **Performance tables:** [Original twelve animations](docs/PERFORMANCE_COMPARISON.md#best-method-for-each-animation) · [Demo Cart 2.0: all seven scenes](docs/PERFORMANCE_COMPARISON.md#demo-cart-20) · [Sande test kit](docs/PERFORMANCE_COMPARISON.md#sandes-models)
 
@@ -263,7 +285,7 @@ python c643d.py color-combo-test
 python c643d.py build --shape torus --foreground-color black --background-color white --border-color white
 ```
 
-`build` and `cart-stream` default to **hors-v4 / GMod3**, with non-interactive automatic playback.
+`build` and `cart-stream` default to **hors-v4 / EasyFlash**, with non-interactive automatic playback.
 Object/SVG spins opt into controls with `--interactive-cart`; authored Blender/scene animation remains automatic.
 Stars default to disabled; `--starfield-default enabled` opts in for interactive builds.
 Use `python c643d.py --help` for all build flags or `--help-all` for every command.

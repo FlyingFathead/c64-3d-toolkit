@@ -1,5 +1,79 @@
 # Changelog
 
+## 0.8.2: Renderer contests and V5 candidates (2026-09-26)
+
+- Restore EasyFlash as the default for new HORS-V4 builds; retain explicit GMod3.
+- Add fixed-picture renderer contests, ranked CLI tables, winner-labelled carts,
+  stage profiling and full original-renderer comparisons. Capacity limits remain
+  N/A with their reasons; build/verification failures remain FAIL.
+- Name the existing experimental V5 as c1 and add opt-in c2, which selects
+  run/shared colour transport while retaining V5 clearing. Old V5 aliases mean c1.
+- Measure HORS-V1, V2, V3, V4 EF, V5-c1 and V5-c2 on 16 public inputs, including
+  separate Dragon and SAKU logo-only cases: 190 passes, two capacity N/As, no failures.
+- Preserve V4, all historical cartridge binaries, palette conversion and default
+  colour-overlap policy. Neither candidate resolves 8x8 colour conflicts.
+- Use checkpoint-NNN naming and isolate release checks from historical examples.
+- Check timed and SPACE-start cartridge title screens using their declared mode.
+- Correct the camera-crossing check to explicitly request GMod3 after the default
+  changed to EasyFlash; verify the CRT hardware type before testing playback.
+
+See [release details](docs/RELEASE_0.8.2.md) and [performance](docs/PERFORMANCE_COMPARISON.md).
+
+## 0.8.2-dev6: V5 candidate colour transport (development checkpoint, 2026-09-26)
+
+- Keep the existing V5 as c1; add separate c2 run/shared colour-transport selection.
+- Retain V4 and default colour mapping/overlap behaviour.
+- Verify 128 public candidate combinations and 13 private controls; keep private
+  assets and results outside the repository.
+
+## 0.8.2-dev5: Measured scene optimizer-profiler (development checkpoint, 2026-09-25)
+
+- Search fixed-picture full-history EasyFlash candidates and draw encoding settings.
+- Add CLI/config renderer contests with ranked terminal tables and winner-labelled CRTs.
+- Compare the established twelve public examples, Dragon wireframe/metallic, and
+  separate SAKU solid/gradient logo-only rotations across original cores.
+- Require pixel/colour verification and tail-latency reporting; keep capacity N/A
+  and build/verification FAIL results visible. Recommend without installing.
+- Report rendering stage costs, colour-space metadata, palette counts and
+  conflicting cells. Preserve all renderers and the default colour policy.
+
+## 0.8.2-dev4: Complete renderer history comparison (development checkpoint, 2026-09-25)
+
+- Add a repeatable external matrix covering the original resident renderers,
+  every streamed generation, HORS variants, and native scene backends.
+- Record capacity limits as N/A with exact reasons; retain build and pixel
+  failures as FAIL. Freeze complete source pictures, colours and sample order.
+- Keep private artifacts outside the repository and retain the public cube
+  control plus the earlier historical tables.
+- Isolate V3/V4/V5 comparison work directories, shorten external menu captions,
+  and disable GMod3 flash writeback during measurement.
+- Preserve renderer assembly, colour mapping, EasyFlash defaults and V4.
+
+## 0.8.2-dev3: HORS-V5 preview (development checkpoint, 2026-09-25)
+
+- Add opt-in EasyFlash HORS-V5 with bounded per-picture clear planning and
+  an unrolled byte-clear routine. Preserve V4 and the existing hardware defaults.
+- Add a private scene-pair builder and matched VICE comparison tool with pixel
+  checks, displayed FPS, stage costs, worst holds, hashes and regression gates.
+- Document the Nightdrive Test separately from matched exported-scene results;
+  keep all private art, CRTs, previews and raw evidence outside the repository.
+- Validate the complete unit suite, public pixel/input controls, exhaustive
+  byte-clear lengths, and preserved V4 build bytes. See the preview's limits.
+
+## 0.8.2-dev2: Checkpoint naming (development checkpoint, 2026-09-25)
+
+- Name new archives and records `checkpoint-NNN` instead of `cpNNN`.
+- Continue numbering from both naming formats, including records already
+  applied under `docs/checkpoints/`; preserve all existing archives and records.
+
+## 0.8.2-dev1: EasyFlash default (development checkpoint, 2026-09-25)
+
+- Default HORS-V4 builds and `cart-stream` to EasyFlash. Keep GMod3 available
+  through `--cart-type gmod3`, `--renderer hors-v4-gmod3`, or explicit config.
+- Preserve configuration precedence and GMod3 header detection for existing CRTs.
+- Update CLI help and current pipeline guides; preserve historical benchmark
+  evidence, renderer kernels and released cartridges. GMod4 remains planned.
+
 ## 0.8.1: Camera crossings, Blender colours and Demo Cart v3.1 (2026-09-14)
 
 - Clip authored edges and occluding triangles at the camera near plane; preserve

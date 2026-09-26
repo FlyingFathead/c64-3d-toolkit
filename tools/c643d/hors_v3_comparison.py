@@ -10,13 +10,14 @@ from .hors_v3 import encoding_plan, patch_literal_runtime
 
 
 def prepare_menu(root,renderer,tass,tass_args=(),sources=None,prefer='fps',
-                 work_prefix='comparison-hors-v3',prepare=None,**unused):
+                 work_prefix='comparison-hors-v3',prepare=None,plan=None,**unused):
     from . import cartuniform
     prepare=prepare or cartuniform.prepare
+    plan=plan or encoding_plan
     if sources is None:sources=cartuniform.demos(root)
     plans={};encoders={}
     def frames(demo):
-        rows,encode,policy,literal,runs,palette=encoding_plan(demo.frames,demo.colors,demo.screen,3,2048,'literal')
+        rows,encode,policy,literal,runs,palette=plan(demo.frames,demo.colors,demo.screen,3,2048,'literal')
         assert literal or not demo.colors
         plans[demo.name]=(policy,runs)
         encoders[demo.name]=encode

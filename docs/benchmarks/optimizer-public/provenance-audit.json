@@ -1,0 +1,15 @@
+{
+  "measured_source_sha256": "31dd24054fd3ca251282d23ecf868d805949e53aa035e5d8f67b057a4aa63f52",
+  "packaged_source_sha256": "4237e9c4ffc6e5e591ef006e8bb4b4042c512ab10cb2b92696cfef0b98adef1c",
+  "post_measurement_changes": [
+    "tools/benchmark_repo_examples.py",
+    "tools/c643d/cli.py",
+    "tools/c643d/renderer_contest.py",
+    "tools/optimizer_profiler.py"
+  ],
+  "reason": "Public runner reproduces all four added inputs byte-for-byte; CLI honours configured hardware/tool-argument restrictions; core terminal tables show available P95. Measured renderer/encoder code is unchanged.",
+  "public_cases": 16,
+  "passed_rows": 386,
+  "capacity_na": 46,
+  "verified_pictures": 38506
+}

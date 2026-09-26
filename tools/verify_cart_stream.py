@@ -23,6 +23,13 @@ def startup_monitor(manifest, sym):
     return [f'break ${sym["build_screen_visible"]:04x}', 'g', 'delete'], f'g ${sym["build_screen_done"]:04x}'
 
 
+def readonly_cartridge_flags(crt):
+    """VICE GMod3 may rewrite its CRT on exit unless explicitly disabled."""
+    with Path(crt).open('rb') as source:
+        header=source.read(24)
+    return ['+gmod3flashwrite'] if int.from_bytes(header[22:24],'big')==62 else []
+
+
 def labels(path):
     return {s[2].lstrip('.'):int(s[1],16) for line in path.read_text().splitlines() if len(s:=line.split())==3 and s[0]=='al'}
 def expected_frame(f,screen):
@@ -103,7 +110,8 @@ def verify(crt,vice,vice_data=None,cycles=2,capture=None,menu_entry=None,oracle_
             if border is not None:
                 mon += ['bank cpu',f'bsave "{td/f"frame-{i:04d}.vic"}" 0 $d020 $d021','bank ram']
         mon += ['quit'];(td/'run.mon').write_text('\n'.join(mon)+'\n')
-        cmd=[vice,'-console', '+easyflashcrtwrite','-pal','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(td/'run.mon'),'-monlogname', str(td/'monitor.log'), '-monlog','-limitcycles',str(count*1000000+2000000)]
+        cmd=[vice,'-console','-default', '+easyflashcrtwrite','-pal','+sound','-warp','-seed','1','-cartcrt',str(crt),'-initbreak','reset','-moncommands',str(td/'run.mon'),'-monlogname', str(td/'monitor.log'), '-monlog','-limitcycles',str(count*1000000+2000000)]
+        cmd+=readonly_cartridge_flags(crt)
         if vice_data:cmd+=['-directory',str(vice_data)]
         try:
             with (td/'vice.log').open('w') as log:

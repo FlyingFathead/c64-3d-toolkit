@@ -22,6 +22,8 @@ class UnsupportedResident(Exception):
 RESIDENT=('step','bytechunk','yunroll','yunroll-cart')
 METHODS=[(m,'fps') for m in RESIDENT]+[(f'yunroll-cart-v{i}','fps') for i in range(2,11)]+[(f'yunroll-cart-v{i}','ram') for i in (7,8,9,10)]
 METHODS += [('hors-render-v2','fps'),('hors-render-v2','ram'),('hors-renderer-v3','fps'),('hors-renderer-v3','ram')]
+# Explicit experiments only: keep the recorded historical release matrix stable.
+EXTRA_METHODS = [(m,p) for m in ('hors-render-v2-beta1','hors-v4-ef','hors-v5-ef','hors-v5-c1','hors-v5-c2') for p in ('fps','ram')]
 
 SHOWCASE_REPORTS=tuple(f'docs/benchmarks/hors-v2/showcase/{variant}/play-all.json' for variant in ('v1','v2'))
 SHOWCASE_CART='examples/cart_demos_v2/demo-cart-2-preview-hors-v2.crt'
@@ -179,6 +181,12 @@ def once(text,old,new):
     return text.replace(old,new,1)
 
 def adapt_snapshot(root):
+    # Long development versions otherwise exceed the historical 40-column
+    # menu heading. Shorten only the external harness's renderer caption.
+    p=root/'tools/c643d/cartuniform.py';s=p.read_text()
+    s=once(s,'menu_title_lines(__version__, public_renderer)',
+        "menu_title_lines(__version__, public_renderer.replace('yunroll-cart-', '').replace('hors-render', 'hors'))")
+    p.write_text(s)
     # Only the isolated snapshot is changed. All generations use V9 normal
     # PLAY ALL, with the same timer instructions relocated out of resident data.
     p=root/'tools/c643d/cartuniform.py';s=p.read_text()
@@ -209,7 +217,9 @@ def adapt_snapshot(root):
     p=root/'c64/cart/easyflash-demo-control-v9.asm';p.write_text(once(p.read_text(),'jsr $c700','jsr $0334'))
     # Pin the same emulator defaults for image checks and scene diagnostics.
     for name in ('verify_cart_stream.py','profile_cart_stream.py'):
-        p=root/'tools'/name;s=p.read_text();s=once(s,"'-console'","'-default','-console'");p.write_text(s)
+        p=root/'tools'/name;s=p.read_text()
+        if "'-default'" not in s:s=once(s,"'-console'","'-default','-console'")
+        p.write_text(s)
     p=root/'tools/benchmark_play_all.py';s=p.read_text()
     s=s.replace("s['irq_no_flip']-5","s.get('comparison_flip',s['irq_no_flip']-5)").replace('s["irq_no_flip"]-5',"s.get('comparison_flip',s['irq_no_flip']-5)")
     # The shared benchmark now records intervals natively; adapt only the
@@ -326,14 +336,26 @@ def menu_worker(method,pref,loops):
     if stable:
         from c643d.hors_v2_stable import prepare_menu
         cartuniform.prepare=lambda *args,**kw:prepare_menu(*args,prepare=ORIGINAL_PREPARE,**kw)
-    v3=METHOD=='hors-renderer-v3'
+    c2=METHOD=='hors-v5-c2'
+    if c2:
+        from c643d.hors_v5_c2 import prepare_menu
+        cartuniform.prepare=lambda *args,**kw:prepare_menu(*args,prepare=ORIGINAL_PREPARE,**kw)
+    v3=METHOD in ('hors-renderer-v3','hors-v4-ef','hors-v5-ef','hors-v5-c1')
     if v3:
         from c643d.hors_v3_comparison import prepare_menu
-        cartuniform.prepare=lambda *args,**kw:prepare_menu(*args,prepare=ORIGINAL_PREPARE,**kw)
+        def versioned_prepare(*args,**kw):
+            from contextlib import nullcontext
+            from c643d import hors_v3,hors_v5
+            with hors_v5.installed() if METHOD in ('hors-v5-ef','hors-v5-c1') else nullcontext():
+                result=prepare_menu(*args,prepare=ORIGINAL_PREPARE,plan=hors_v3.encoding_plan,
+                    work_prefix='comparison-'+METHOD,**kw)
+            for entry in result[2]:entry['renderer']=METHOD
+            return result
+        cartuniform.prepare=versioned_prepare
     parser=cli.make_parser(load_toolchain_settings(ROOT/'config/c643d.ini'))
-    a=parser.parse_args(['cart-demos','--stream-renderer','yunroll-cart-v9' if resident else 'yunroll-cart-v10' if beta or stable or v3 else METHOD,'--prefer',pref,'--output',name,'--output-dir',str(OUT),'--tass',TASS,'--cartconv',CARTCONV,'--overwrite-policy','allow'])
-    if v3:
-        a.cartridge_name='C643D '+(ROOT/'VERSION').read_text().strip()+' HORS V3 '+pref.upper()
+    a=parser.parse_args(['cart-demos','--stream-renderer','yunroll-cart-v9' if resident else 'yunroll-cart-v10' if beta or stable or v3 or c2 else METHOD,'--prefer',pref,'--output',name,'--output-dir',str(OUT),'--tass',TASS,'--cartconv',CARTCONV,'--overwrite-policy','allow'])
+    if v3 or c2:
+        a.cartridge_name='C643D '+(ROOT/'VERSION').read_text().strip()+' '+METHOD.upper()+' '+pref.upper()
     crt=OUT/(name+'.crt')
     if not crt.exists():
         try:cartuniform.build(a,sources=SOURCES)
@@ -342,7 +364,8 @@ def menu_worker(method,pref,loops):
             # capacity limit as N/A. Coding/verification errors still fail.
             capacity = ('staging buffer', 'per-slot cache', 'frame arena',
                         'capacity exceeded', 'exceed EasyFlash capacity', 'stream pool exhausted', 'frame-data chips',
-                        '8 KiB bank', '8-bit (maximum 255 each)')
+                        '8 KiB bank', '8-bit (maximum 255 each)', 'metadata span count exceeds one byte',
+                        'metadata exceeds its 1 KiB cache', 'exceeds its 1 KiB cache per frame')
             if not isinstance(error, UnsupportedResident) and not (
                     (BASE/'menu-input.json').exists() and len(SOURCES)==1 and
                     any(text in str(error) for text in capacity)):
@@ -658,7 +681,9 @@ def main():
                 row=asdict(demo);row['hud']=demo.hud.hex();rows.append(row)
             (a.workspace/'menu-input.json').write_text(json.dumps(dict(format='c643d-vector-reference-v1',demos=rows)))
         stamp.write_text(json.dumps(provenance,indent=2)+'\n')
-    jobs=['menu:'+m+':'+pref for m,pref in METHODS]+['scene:'+str(v) for v in range(4,11)]
+    selected_methods=METHODS+EXTRA_METHODS if a.methods else METHODS
+    if a.methods and set(a.methods)-{m for m,_ in selected_methods}:p.error('unknown comparison method')
+    jobs=['menu:'+m+':'+pref for m,pref in selected_methods]+['scene:'+str(v) for v in range(4,11)]
     if a.methods:jobs=[j for j in jobs if j.startswith('menu:') and j.split(':')[1] in a.methods]
     if MAX_FPS or LOCK_MIN:jobs=[j for j in jobs if j.startswith('menu:')]
     if not jobs:p.error('no matching methods')

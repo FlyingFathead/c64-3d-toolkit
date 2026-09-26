@@ -1,4 +1,4 @@
-> Current conversion default: **hors-renderer-v4 / GMod3**. Explicit HORS-V3 retains EasyFlash. [v0.8.0 release notes](RELEASE_0.8.0.md).
+> Current conversion default: **hors-renderer-v4 / EasyFlash**. GMod3 remains an explicit option.
 
 [Colour calibration and material diagnostics](../examples/blender_color_calibration/README.md) · [Installation/repair](INSTALLATION.md). Authored Blender animations use automatic playback, not the interactive object-spin mode.
 
@@ -7,7 +7,7 @@
 [Blender FAQ and troubleshooting](BLENDER_FAQ.md) covers the old right-edge
 cutoff, full-width rebuilding, camera framing, mirroring and calibration scenes.
 
-The v0.7.2 release used hors-render-v2-scene EasyFlash output; v0.8.0 defaults to HORS-V4 / GMod3. See
+The v0.7.2 release used hors-render-v2-scene EasyFlash output; current builds default to HORS-V4 / EasyFlash. See
 [current scene streaming](CARTRIDGE_SCENES.md) and [build targets](HORS_RENDER_V2.md).
 Use `--renderer yunroll` explicitly for the preserved resident PRG path. Its
 255-sample/table-RAM limits differ from streamed scene limits. GMod3 currently
@@ -27,12 +27,12 @@ scene.blend
     -> evaluated objects + active camera for each sampled frame
     -> temporary .c643dscene interchange data
     -> existing hidden-line / colour / DDA compiler
-    -> HORS-V4 / GMod3 scene stream by default, or an explicitly selected renderer
+    -> HORS-V4 / EasyFlash scene stream by default, or an explicitly selected renderer
 ```
 
 Blender exports geometry, motion, deformation, materials and camera state.
 The host projects/clips that geometry and encodes it for the selected renderer.
-HORS-V4 / GMod3 is the current default; older stream formats and explicit resident PRG
+HORS-V4 / EasyFlash is the current default; older stream formats and explicit resident PRG
 renderers retain their own frame, metadata and memory limits.
 
 ## Install and verify Blender
@@ -184,6 +184,15 @@ Blender material diffuse colours are mapped to the nearest VIC-II palette
 entry during export. For exact selection, add a custom integer property named
 `c643d_color` with a value from 0 through 15 to a material or mesh object.
 Material properties take precedence over object properties.
+
+The material's name does not force its C64 hue: a material named `red` can
+map to orange or light red if its numeric Base Color is closer to that palette
+entry. For exact C64 red, set that material's `c643d_color` to `2` (the string
+`red` is also accepted) and re-export. This preserves other materials, such as
+a blue road. A global `--color red` would instead force the whole scene red.
+Colour selection happens on the host before any renderer runs; changing a
+clear/drawing kernel cannot recover the original RGB from an exported palette
+index. This is separate from the hires 8x8-cell colour-sharing limitation.
 
 `--blender-color-space linear` (default) converts scene-linear material numbers
 to sRGB before matching. Use `--blender-color-space srgb` for imports whose

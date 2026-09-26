@@ -25,11 +25,15 @@ def checkpoint(root, destination, *, baseline=None, full=False, completed=(), pe
     if not re.fullmatch(r'[A-Za-z0-9._-]+',version):raise ValueError('Invalid VERSION filename component')
     destination.mkdir(parents=True,exist_ok=True)
     prior=[]
-    for p in destination.glob('c64-3d-toolkit-*-cp*.zip'):
-        match=re.search(r'-cp(\d+)-',p.name)
-        if match:prior.append(int(match.group(1)))
+    # Count both archive generations and records already applied to the checkout.
+    # Renaming a legacy record must not restart or reuse its checkpoint number.
+    candidates=list(destination.glob('c64-3d-toolkit-*.zip'))
+    candidates+=list((root/'docs/checkpoints').glob('c64-3d-toolkit-*.json'))
+    for p in candidates:
+        match=re.fullmatch(r'c64-3d-toolkit-v.+-(?:checkpoint-(\d+)|cp(\d+))(?:-(?:full|incremental)\.zip|\.json)',p.name)
+        if match:prior.append(int(match.group(1) or match.group(2)))
     number=max(prior,default=0)+1
-    prefix=f'c64-3d-toolkit-v{version}-cp{number:03d}'
+    prefix=f'c64-3d-toolkit-v{version}-checkpoint-{number:03d}'
     old={};baseline_sha=None
     if baseline is not None:
         baseline=Path(baseline)

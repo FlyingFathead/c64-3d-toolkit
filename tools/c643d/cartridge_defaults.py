@@ -20,7 +20,7 @@ def resolve(args, settings):
     # Listing/doctor and preserved legacy demo builders have their own routes.
     if args.command not in ('build','cartridge-smoke','run-cart'):
         return 'easyflash'
-    from .renderer_names import canonical_selector, selector_cartridge
+    from .renderer_names import selector_cartridge
     named=selector_cartridge(getattr(args,'renderer',''))
     explicit=getattr(args,'cart_type',None)
     if named and explicit not in (None,named):raise ValueError('Renderer suffix conflicts with --cart-type')
@@ -30,8 +30,6 @@ def resolve(args, settings):
         return 'easyflash'  # These produce resident PRGs, not cartridge images.
     configured=configured_default(settings)
     if configured:return configured
-    if args.command=='build' and canonical_selector(args.renderer)=='hors-renderer-v4':
-        return 'gmod3'
     if args.command=='run-cart' and Path(args.crt).expanduser().is_file():
         # The container identifies existing images; no guesses from filenames.
         with Path(args.crt).expanduser().open('rb') as handle:header=handle.read(26)

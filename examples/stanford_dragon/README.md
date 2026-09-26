@@ -1,5 +1,9 @@
 # Stanford Dragon: HORS-V3
 
+The [public benchmark runner](../../docs/PUBLIC_BENCHMARKS.md) compares all original
+cores on the full wireframe and metallic rotations, retaining capacity N/As.
+
+
 Six standalone EasyFlash demos, introduced in **v0.7.8: The Stanford Dragon Has Arrived!** and rebuilt for **v0.7.9**: wireframe and metallic (grey), golden, red, green and blue shaded surfaces. All use Stanford's official res4 mesh: **5,205 vertices, 15,796 edges and 11,102 triangles**, with **128 orientations** and `--prefer fps`.
 
 Model data: **Stanford University Computer Graphics Laboratory**. [Original source, usage terms and conversion provenance](SOURCE.md).

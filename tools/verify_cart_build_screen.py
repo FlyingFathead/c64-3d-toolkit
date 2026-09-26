@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify the V5 build screen, timeout and CIA SPACE-skip path in PAL VICE."""
+"""Verify timed or SPACE-start build screens and the CIA input path in PAL VICE."""
 import argparse,json,re,subprocess,tempfile
 from pathlib import Path
 from c643d.cartpaths import menu_manifest_path
@@ -18,9 +18,11 @@ def verify(crt, vice, vice_data, output):
         next_label='menu_wait_key'
     else:
         m=json.loads(crt.with_name(crt.stem+'-manifest.json').read_text())
-        sym=labels(crt.with_suffix('.lbl'));next_label='intro_stage_1'
+        sym=labels(crt.with_suffix('.lbl'))
+        next_label='intro_stage_1' if 'intro_stage_1' in sym else 'frame_begin'
     result=dict(cartridge=crt.name,tests={})
-    for skip in (False,True):
+    wait_for_space=bool(m['build_screen'].get('wait_for_space'))
+    for skip in ((True,) if wait_for_space else (False,True)):
         with tempfile.TemporaryDirectory(prefix='c643d-screen-') as tmp:
             tmp=Path(tmp)
             mon=['delete',f'break ${sym["build_screen_visible"]:04x}','g','stopwatch',
@@ -37,7 +39,8 @@ def verify(crt, vice, vice_data, output):
             cmd=[str(vice),'-console', '+easyflashcrtwrite','-pal','+sound','-warp','-seed','1','-cartcrt',str(crt),
                  '-initbreak','reset','-moncommands',str(tmp/'run.mon'),'-monlogname', str(tmp/'monitor.log'), '-monlog','-directory',str(vice_data),'-limitcycles','20000000']
             with (tmp/'vice.log').open('w') as log:
-                subprocess.run(cmd,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=60)
+                proc=subprocess.run(cmd,stdout=log,stderr=subprocess.STDOUT,timeout=60)
+            if proc.returncode:raise RuntimeError((tmp/'vice.log').read_text()[-5000:])
             text=(tmp/'monitor.log').read_text();ticks=[int(t) for t in re.findall(r'Stopwatch:\s*(\d+)',text)]
             assert len(ticks)==3,text[-1000:]
             elapsed=(ticks[1]-ticks[0])/985248
@@ -49,11 +52,12 @@ def verify(crt, vice, vice_data, output):
             for line in ['c64-3d-toolkit','v. '+m['build_screen']['version'],m['build_screen']['renderer'],
                          'github.com/FlyingFathead/c64-3d-toolkit','SPACE to start']:
                 assert bytes(screen_codes(line)) in r[0x400:0x7e8],line
-            if not skip:
+            if not skip or wait_for_space:
                 char=next((Path(vice_data)/'C64').glob('chargen-901225*')).read_bytes()[0x800:]
                 from PIL import Image
                 text_image(r,char,0).resize((960,600),Image.Resampling.NEAREST).save(output/'build-screen.png')
             result['tests']['space_scan' if skip else 'timeout']=dict(seconds=elapsed,following_screen_reached=True)
+    result['wait_for_space']=wait_for_space
     result['skip_input']='CIA column driven low in monitor; host keyboard event injection not exercised'
     (output/'validation.json').write_text(json.dumps(result,indent=2)+'\n')
     return result

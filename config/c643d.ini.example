@@ -60,6 +60,9 @@ vice_args = +VICIIfull
 [render_defaults]
 # Standard Blender values are linear; use srgb for imports with raw sRGB material numbers.
 blender_color_space = linear
+# Optional full-history contest selecting an EasyFlash winner for exported scenes.
+# best-fps requires a new --contest-out; manual keeps explicit renderer selection.
+renderer_selection = manual
 
 # Output colours: C64 names, palette indices 0..15, 0x/$/0b/% indices,
 # #RGB/#RRGGBB or rgb(r,g,b). RGB values map to the nearest C64 colour.
@@ -85,6 +88,6 @@ rastertime_profiler = false
 
 # Universal hardware default for supported cartridge build/smoke/run commands.
 # Explicit --cart-type always takes precedence. "auto" keeps renderer defaults.
-# HORS-V4 defaults to GMod3; explicit older renderers default to EasyFlash.
+# HORS-V4 defaults to EasyFlash. Set gmod3 explicitly to prefer that backend.
 [cartridge_defaults]
 cart_type = auto

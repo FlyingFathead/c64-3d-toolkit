@@ -1,0 +1,255 @@
+{
+  "passed": true,
+  "version": "0.8.2",
+  "preserved_files": 153,
+  "preserved_cartridges": 73,
+  "public_combinations": 192,
+  "public_passes": 190,
+  "public_capacity": 2,
+  "public_picture_checks": 21322,
+  "measured_source_sha256": "eead9753ab5fb340b9660dac444173c8c504e128749fddc3c5efe75346a746d7",
+  "current_source_sha256": "775e0cbcec9d6140b25407ac4f4a68e4c683bbfd2a8923ba0589c84e73c18430",
+  "release_orchestration_differences": [
+    "tools/compile_release.py",
+    "tools/release_check.py",
+    "tools/release_smoke.py",
+    "tools/verify_cart_build_screen.py"
+  ],
+  "note": "Saved matrix evidence checked against the current renderer source; this does not rerun that full matrix.",
+  "unit_suite_passed": true,
+  "native": {
+    "passed": true,
+    "version": "0.8.2",
+    "camera": {
+      "passed": true,
+      "source_sha256": "7f8e99b9e0d92e0b354d4cde6037b95b13a0ecdf65053b14e7e3dbdff531549a",
+      "clipping": {
+        "outside_edges": 318,
+        "viewport_edges": 56,
+        "near_vertices": 528,
+        "near_triangles": 848,
+        "near_edges": 56,
+        "behind_edges": 764,
+        "empty_frames": 9,
+        "affected_frames": 17,
+        "total_frames": 17
+      },
+      "gmod3": {
+        "cartridge": "camera-crossing-gmod3.crt",
+        "menu_entry": null,
+        "verified_frames": 54,
+        "orientations": 17,
+        "bitmap_bytes_checked": 414720,
+        "color_bytes_checked": 51840,
+        "slots": {
+          "1": 18,
+          "2": 18,
+          "0": 18
+        },
+        "average_fps": 25.333167738505068,
+        "min_frame_cycles": 23273,
+        "max_frame_cycles": 48451,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0
+      },
+      "gmod3_display": {
+        "passed": true,
+        "cartridge": "camera-crossing-gmod3.crt",
+        "crt_sha256": "2d03bf493de3714a722ac79d6c7d40d9e26369f526f28129c711f87477d72958",
+        "observed_refreshes": 300,
+        "clock_hz": 985248,
+        "pal_cycles": 19656,
+        "elapsed_monitor_cycles": 5896803,
+        "displayed_frames": 150,
+        "displayed_fps": 25.062271062271062,
+        "all_orientations": true,
+        "all_three_slots": true,
+        "bitmap_and_color_match": true,
+        "default_forward_sequence": true,
+        "loop_holds_pal_ticks": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "gif_duration_ms": 680,
+        "actual_loop_seconds": 0.6783104355451622,
+        "scope": "Actual VIC display slots sampled after each raster publication; one full warmup turn; native frame holds"
+      },
+      "easyflash": {
+        "cartridge": "camera-crossing-easyflash.crt",
+        "menu_entry": null,
+        "verified_frames": 54,
+        "orientations": 17,
+        "bitmap_bytes_checked": 414720,
+        "color_bytes_checked": 51840,
+        "slots": {
+          "1": 18,
+          "2": 18,
+          "0": 18
+        },
+        "average_fps": 25.46226676841533,
+        "min_frame_cycles": 22647,
+        "max_frame_cycles": 48569,
+        "pixel_match": true,
+        "color_match": true,
+        "reused_samples": 0,
+        "border_match": true,
+        "border_color": 0,
+        "loop_seconds": 0.6783104355451622,
+        "target_fps": 25.0,
+        "hud_match": true,
+        "text_overlay": true,
+        "frame_index_bits": 16
+      },
+      "resident": {
+        "passed": true,
+        "verified_frames": 54,
+        "all_three_buffers": true,
+        "bitmap_match": true,
+        "color_match": true,
+        "prg_sha256": "f5f7d9671fb0d5a034b25b5f2f37246298e77fc141f07cf1a3e328ec01105dc1"
+      }
+    },
+    "objects": [
+      {
+        "renderer": "default-v4-easyflash",
+        "crt_sha256": "cc991ca09ed3a4887d15fc41836f6fe9e37e0134bbdfb8e5c762591f4af214cf",
+        "version": "0.8.2",
+        "build_screen": null,
+        "picture_sha256": "5dfb4f733b7076bf45a96ba495a25bfded3f0f8ab83c541b9acfedff5fc4640a",
+        "verification": {
+          "cartridge": "default-v4-easyflash.crt",
+          "menu_entry": null,
+          "verified_frames": 27,
+          "orientations": 12,
+          "bitmap_bytes_checked": 207360,
+          "color_bytes_checked": 25920,
+          "slots": {
+            "1": 9,
+            "2": 9,
+            "0": 9
+          },
+          "average_fps": 10.01795739079323,
+          "min_frame_cycles": 69302,
+          "max_frame_cycles": 103084,
+          "pixel_match": true,
+          "color_match": true,
+          "reused_samples": 0,
+          "border_match": true,
+          "border_color": 0
+        }
+      },
+      {
+        "renderer": "hors-v5-c1",
+        "crt_sha256": "1717a154577bafe5e4803be6475a364c1dbb669ab15f494e4e1cd61fb8fb8f01",
+        "version": "0.8.2",
+        "build_screen": {
+          "cartridge": "hors-v5-c1.crt",
+          "tests": {
+            "space_scan": {
+              "seconds": 1.1164701679171132e-05,
+              "following_screen_reached": true
+            }
+          },
+          "wait_for_space": true,
+          "skip_input": "CIA column driven low in monitor; host keyboard event injection not exercised"
+        },
+        "picture_sha256": "5dfb4f733b7076bf45a96ba495a25bfded3f0f8ab83c541b9acfedff5fc4640a",
+        "verification": {
+          "cartridge": "hors-v5-c1.crt",
+          "menu_entry": null,
+          "verified_frames": 27,
+          "orientations": 12,
+          "bitmap_bytes_checked": 207360,
+          "color_bytes_checked": 25920,
+          "slots": {
+            "1": 9,
+            "2": 9,
+            "0": 9
+          },
+          "average_fps": 10.076408808049658,
+          "min_frame_cycles": 69303,
+          "max_frame_cycles": 102621,
+          "pixel_match": true,
+          "color_match": true,
+          "reused_samples": 0,
+          "border_match": true,
+          "border_color": 0
+        }
+      },
+      {
+        "renderer": "hors-v5-c2",
+        "crt_sha256": "15158cc7e5ab3d1cdda394767314178b76e1216c38f3537a8734e4279a1b2d53",
+        "version": "0.8.2",
+        "build_screen": {
+          "cartridge": "hors-v5-c2.crt",
+          "tests": {
+            "space_scan": {
+              "seconds": 1.1164701679171132e-05,
+              "following_screen_reached": true
+            }
+          },
+          "wait_for_space": true,
+          "skip_input": "CIA column driven low in monitor; host keyboard event injection not exercised"
+        },
+        "picture_sha256": "5dfb4f733b7076bf45a96ba495a25bfded3f0f8ab83c541b9acfedff5fc4640a",
+        "verification": {
+          "cartridge": "hors-v5-c2.crt",
+          "menu_entry": null,
+          "verified_frames": 27,
+          "orientations": 12,
+          "bitmap_bytes_checked": 207360,
+          "color_bytes_checked": 25920,
+          "slots": {
+            "1": 9,
+            "2": 9,
+            "0": 9
+          },
+          "average_fps": 10.076408808049658,
+          "min_frame_cycles": 69303,
+          "max_frame_cycles": 102621,
+          "pixel_match": true,
+          "color_match": true,
+          "reused_samples": 0,
+          "border_match": true,
+          "border_color": 0
+        }
+      }
+    ]
+  },
+  "unit_tests": {
+    "run": 346,
+    "skipped": 8,
+    "passed": 338
+  },
+  "publisher_fixture": {
+    "passed": true,
+    "checks": [
+      "private staged files rejected",
+      "check-only does not stage",
+      "exact reviewed Git tree archived",
+      "local bare-remote atomic main/tag push",
+      "untracked private files excluded",
+      "existing tag rejected",
+      "changed source rejected"
+    ],
+    "scope": "Isolated local Git fixture and stub GitHub command; no public repository mutation"
+  }
+}

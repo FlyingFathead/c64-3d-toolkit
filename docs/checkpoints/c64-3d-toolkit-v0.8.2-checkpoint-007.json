@@ -1,0 +1,47 @@
+{
+  "checkpoint": 7,
+  "version": "0.8.2",
+  "kind": "incremental",
+  "created_utc": "2026-09-25T23:57:04.454537+00:00",
+  "baseline_sha256": "49ad58132444d0e4882c82b219e0efcfeaf6dc81674404f5cc96a7020f7357d7",
+  "completed": [
+    "Prepare v0.8.2 with EasyFlash default, optional GMod3, preserved V4 and opt-in V5-c1/c2.",
+    "Expand the average FPS comparison to HORS-V1 through V5 on the public corpus; retain complete original-renderer history.",
+    "Keep private scene assets and raw results out of public source and release assets.",
+    "Validate isolated release checks and allowlisted publishing helper."
+  ],
+  "pending": [
+    "User publishes the checked release with the external helper after remote tag checks.",
+    "Physical hardware and NTSC testing remain unmeasured."
+  ],
+  "validation": [
+    "346 unit tests: 338 passed, eight skipped.",
+    "Public family matrix: 190 passes, two explained HORS-V1 capacity N/As, zero failures; 21322 complete-picture checks.",
+    "Private family controls: 24 passes and 5832 complete-picture checks; assets remain external.",
+    "Native release smoke: 243 complete-picture checks, 300 GMod3 display refreshes, both V5 title screens passed.",
+    "153 preserved baseline files, including all 73 CRTs and 77 assembly sources, match exactly."
+  ],
+  "deleted_paths": [],
+  "files": {
+    "CHANGELOG.md": "26d263225093ad8efe3e235bc42b71b8fad89910e0ee3d29ab924356ce34b934",
+    "README.md": "f1e58e442df12cace555240b56077fe738466a3d3e40e14424e725f8deb369e6",
+    "RUN-CHECKS.sh": "ef9f3037f11f980db2ba3cededd9bcad352af8411d027dd41883bade4f75cf1d",
+    "VERSION": "ceb9b2c03afb769df3b1e518520c4e1798e9a3313a1c5ffffcb054fef5d6d6fb",
+    "docs/PERFORMANCE_COMPARISON.md": "255165cc260f4ef177123569013bdae9dd4f715f6ac31b5955465c9b8b17fa54",
+    "docs/README.md": "91fbb14da5385fb53a3e1181bcb4fc188322e990fd79b1cff5889dc60d3ae0f3",
+    "docs/RELEASE_0.8.2.md": "ef7fd13862e53f5632d289f0b8916cfcb131fb89ad4d854a49800cbbeb480ad3",
+    "docs/RELEASE_0.8.2_GITHUB.md": "979686402907d9a46a8336a964f61b06e2476f18c5f96db50a61d140fe7ecfa6",
+    "docs/RELEASE_0.8.2_PERFORMANCE.md": "f4e603e7667c64f220b160f4d43003c0fa0f4f4503ca11f14c6500308baa4518",
+    "docs/RELEASE_HISTORY.md": "7e292b9ffc9c1bbd4d3d29565edea5a72d3ead14336b0859f6b4ade05e0d8a68",
+    "docs/benchmarks/release-0.8.2/preserved-files.json": "f3ca43d6f1df69eb653d3d0452f09b21c4344ea7ec2b416c9007d0e8e8c62f64",
+    "docs/benchmarks/release-0.8.2/public-family.json": "5831bc76e7b5cea66675ae4d0a464a423fabcdac865f6ce156be8d745ddb11db",
+    "docs/benchmarks/release-0.8.2/validation.json": "21eab2e4d9aadb24862622f1b9966739ca877b2e6cdcb1bfd57e75c5dd63d900",
+    "tests/test_release_package.py": "90c16372c34a5468ef6a25f3e8f13917d6fba090f95d2768153bf5c2f0973d69",
+    "tools/compile_release.py": "3e26e7459465ed65e1e6988744f9e024fa231774efd7a9879dacef45ed402698",
+    "tools/release_check.py": "0db1e5b1da9b05b792421d18ae92acece0322ac95c23fd65f778ecebe7f48957",
+    "tools/release_smoke.py": "8ec8bfd7e40df20103a902171a2872758e53af9ee8e0189206e685818425e0ba",
+    "tools/verify_camera_crossing.py": "0c8ade955c63a46ee5c604822b1d8798a7b174def15c5d44cf02de61160fb5f2",
+    "tools/verify_cart_build_screen.py": "16c88eb1a056bd6d6c213d246fdc72c179ccf5c48859f2cad987115ecb4210de"
+  },
+  "apply": "Extract from the parent of c64-3d-toolkit. Incrementals are cumulative against the named baseline. Review deleted_paths manually."
+}

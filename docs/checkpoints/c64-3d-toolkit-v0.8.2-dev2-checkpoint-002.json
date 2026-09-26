@@ -1,0 +1,45 @@
+{
+  "checkpoint": 2,
+  "version": "0.8.2-dev2",
+  "kind": "incremental",
+  "created_utc": "2026-09-25T19:40:54.272437+00:00",
+  "baseline_sha256": "3b9bea8a07283481cc2dda62c8044dd37dcd50b1d37f6a7383368ad7a1c6c728",
+  "completed": [
+    "New archives and records use checkpoint-NNN naming; both legacy and new names preserve numbering.",
+    "Preserved the supplied checkpoint-001 record under its user-selected filename.",
+    "Cumulative update retains EasyFlash default, explicit GMod3, and GMod4 roadmap."
+  ],
+  "pending": [
+    "Private scene profiling and optimization experiments await evaluated Blender scene exports."
+  ],
+  "validation": [
+    "Four checkpoint tests passed, including mixed legacy/new archives and applied records in a fresh output directory.",
+    "Previous checkpoint: 19 focused tests and five real cartridge builds; rendering code unchanged in this naming update."
+  ],
+  "deleted_paths": [],
+  "files": {
+    "CHANGELOG.md": "40ce9d218347eb2f54261cb9ca058b8ac232982f8c0e7072ae4c789abb15a8b8",
+    "README.md": "4d6c4dba8470a67f9dee090d70696332b754652c03f647f1bcae1dbc6c665264",
+    "VERSION": "f2156c4019899672a388bd06ddcc8464f75538767a99674045abb146dd7c4f98",
+    "config/c643d.ini.example": "453ede8e5f0221091ae15f92ef18a4055d5541139270e969fd9db996cf5baae0",
+    "docs/BLENDER_PIPELINE.md": "86d1626ea4a62a84d96607f0be2b3df2e19d89a94bb1c378efd048f78b786ec1",
+    "docs/CARTRIDGE_PIPELINE.md": "dc4fb9f8a7aff174bc9bb03fc0d3ca9a36a1737bf23e73402e7733ac095fa5e6",
+    "docs/CHECKPOINTING.md": "5ee8e6501e2ff211c9e4c813b373e53914925720ad0d0ca201903f5c29d5f47a",
+    "docs/CLI.md": "5ab12bf9b0c6b8db664f5c5bfb8bcf76ace51e1987f4113de3533fad9e292d1e",
+    "docs/CONFIGURATION.md": "8d235bbfc866f7f0d1baae1ed34c81ccdaf3ab5f1d39c5606479905b61e020af",
+    "docs/GMOD3.md": "9774016788c9e5b88380fdc05c83df65975ef75d7c4798beb14b4b33adb61cb8",
+    "docs/GMOD_BACKENDS.md": "22fc56fce84ed64e0d3fe5c621af19b75cadb2fd867ccb217830291109600573",
+    "docs/OBJ_PIPELINE.md": "b26418f653ca482bf9ab7affbe29fcc807ab5cf3a5f1f7cb8b0d20a394168fb7",
+    "docs/ROADMAP.md": "2b7bb600cf08716ff91449ecd1a7ec8433b2120159dfccf466067a8ed3e77f4d",
+    "docs/WINDOWS_SETUP.md": "d0eef54cc47558ef7be894e09cceb89bbb027929d98bd4ec1a10750cf7f55e29",
+    "docs/checkpoints/c64-3d-toolkit-v0.8.2-dev1-checkpoint-001.json": "57e38a0a64d613236d5ba9e5a1548dbf603fef8c1e2210b9a644de90455ad92e",
+    "tests/test_checkpoint.py": "bede2d65dd6565d912d3c5f6518c41a44f4199c32f71ade20c7335288e8655e7",
+    "tests/test_cli_help.py": "2230f7d33e08e917bb71bfcea5f2a1f71f6b3a7d3dd00a113db115852ad0726a",
+    "tests/test_gmod3.py": "16f155f801fee2498bf99f36f74af088ed1724ab0682ca33358072716e8e6036",
+    "tools/checkpoint.py": "4991a112262336b872003b3f16d2f29f375c4b94c61e43b21cf81aec35530278",
+    "tools/c643d/cartridge_defaults.py": "0120f8b5bc745b2ba700c874602df83e13edcaae0646e17cd8c49d4da32a64ca",
+    "tools/c643d/cli.py": "3a1599c20f65584b3df8f6ded11db1a9b179945204ffce656ae9276e9beb098f",
+    "tools/c643d/hors_v4.py": "ca53325f8438ec411ccf6f19f1863dbb7eb5fca374a3f1139ae364249d8566c7"
+  },
+  "apply": "Extract from the parent of c64-3d-toolkit. Incrementals are cumulative against the named baseline. Review deleted_paths manually."
+}

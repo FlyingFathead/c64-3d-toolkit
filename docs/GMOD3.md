@@ -25,8 +25,8 @@ centres the same total figures at rows 22 and 23. KiB fits the standard
 
 ## Renderer and cartridge are separate choices
 
-Version 0.8.0 defaults to HORS-V4 (`hors-v4`, also `hors-renderer-v4` and
-`hors-render-v4`) and GMod3. HORS-V4 retains the V3 picture core and adds the
+New builds default to HORS-V4 (`hors-v4`, also `hors-renderer-v4` and
+`hors-render-v4`) and EasyFlash. GMod3 remains an explicit option. HORS-V4 retains the V3 picture core and adds the
 independent GMod3 cartridge architecture. Explicit older renderer selections
 retain EasyFlash defaults. The historical `cart-demos` comparison builder
 retains its preserved V2 EasyFlash path. Select hardware with `--cart-type`,
@@ -60,7 +60,7 @@ screens and in charts; established long CLI spellings remain supported.
 | `hors-v1` | `hors-render-v1`, `hors-renderer-v1` | EasyFlash |
 | `hors-v2` | `hors-render-v2`, `hors-renderer-v2` | EasyFlash |
 | `hors-v3` | `hors-renderer-v3`, `hors-render-v3` | EasyFlash |
-| `hors-v4` | `hors-renderer-v4`, `hors-render-v4` | GMod3 |
+| `hors-v4` | `hors-renderer-v4`, `hors-render-v4` | EasyFlash |
 | `hors-v4-gmod3` | `hors-v4 --cart-type gmod3` | Explicit GMod3 |
 | `hors-v4-ef` | `hors-v4 --cart-type easyflash` | Explicit EasyFlash |
 

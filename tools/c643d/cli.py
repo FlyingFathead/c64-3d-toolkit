@@ -637,6 +637,12 @@ def cmd_build(a):
             raise ValueError("Renderer suffix conflicts with --cart-type")
         a.cart_type=implied
     a.renderer=canonical_selector(a.renderer)
+    if a.renderer == 'hors-renderer-v5-c2':
+        from .hors_v5_c2 import build
+        return build(a)
+    if a.renderer == 'hors-renderer-v5':
+        from .hors_v5 import build
+        return build(a)
     if a.renderer == 'hors-renderer-v4':
         from .hors_v4 import build
         return build(a)
@@ -1311,7 +1317,7 @@ def _add_toolchain_args(q,settings):
 
 def make_parser(settings):
     from .cli_help import ToolkitParser, FullHelp
-    p=ToolkitParser(prog='c643d',description='C64 3D compiler/toolkit. Default build: HORS-V4 / GMod3, non-interactive automatic playback. Interactive object/SVG spins require --interactive-cart; stars start disabled.',epilog='All build options are listed below. Other commands: c643d COMMAND --help. Every command: c643d --help-all. Installation/repair: setup-python.py; dependency checks: c643d dependencies. See docs/CLI.md.')
+    p=ToolkitParser(prog='c643d',description='C64 3D compiler/toolkit. Default build: HORS-V4 / EasyFlash, non-interactive automatic playback. Interactive object/SVG spins require --interactive-cart; stars start disabled.',epilog='All build options are listed below. Other commands: c643d COMMAND --help. Every command: c643d --help-all. Installation/repair: setup-python.py; dependency checks: c643d dependencies. See docs/CLI.md.')
     p.add_argument('--version',action='version',version=__version__)
     p.add_argument('--help-all',action=FullHelp,nargs=0,help='show build options and complete help for every command')
     sub=p.add_subparsers(dest='command')
@@ -1367,14 +1373,22 @@ def make_parser(settings):
         q.add_argument('--feature-angle',type=float,help='surface_creases threshold in degrees; sharp manifold edges at/above this angle are preserved')
     from .surface_palettes import SHADE_PALETTES, palette_name, parse_ramp
     from .renderer_names import DEFAULT_RENDERER, SHORT_ALIASES
-    b=sub.add_parser('build',help='compile geometry into a HORS-V4 / GMod3 CRT by default',description='Default: automatic playback, HORS-V4 / GMod3. --interactive-cart opts into controls for object/SVG spins. Authored --blend/--scene animations use automatic playback. Stars default to disabled.'); common(b)
+    b=sub.add_parser('build',help='compile geometry into a HORS-V4 / EasyFlash CRT by default',description='Default: automatic playback, HORS-V4 / EasyFlash. --interactive-cart opts into controls for object/SVG spins. Authored --blend/--scene animations use automatic playback. Stars default to disabled.'); common(b)
     from .gmod3_cli import add_flags as add_cart_type_flags
     add_cart_type_flags(b, build=True, settings=settings)
     for direction in ('horizontal','vertical'):
         b.add_argument('--flip-input-'+direction,'--flip-'+direction,'--mirror-'+direction,
             dest='flip_input_'+direction,action='store_true',help='flip input artwork '+direction+'ly in the viewport during conversion; HUD/effects unchanged')
-    b.add_argument('--renderer',choices=(*SHORT_ALIASES, 'hors-renderer-v4', 'hors-render-v4', 'hors-renderer-v3', 'hors-render-v3', 'hors-render-v2', 'hors-render-v2-scene', 'hors-render-v2-beta1', 'hors-render-v2-beta1-scene', 'hors-render-v1', 'hors-render-v1-scene', *RENDERERS, 'yunroll-cart-v2', 'yunroll-cart-v3', 'yunroll-cart-v4', 'yunroll-cart-v4-scene', 'yunroll-cart-v5', 'yunroll-cart-v5-scene', 'yunroll-cart-v6', 'yunroll-cart-v6-scene', 'yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10', 'yunroll-cart-v7-scene', 'yunroll-cart-v8-scene', 'yunroll-cart-v9-scene', 'yunroll-cart-v10-scene'),default=DEFAULT_RENDERER,help='default HORS-V4 GMod3 CRT; V3 and earlier default to EasyFlash; explicit v2 remains available; v1 and v2-beta1 remain explicit historical choices; step/bytechunk/yunroll=PRG; yunroll-cart-v2 through v10=streamed EasyFlash CRT')
+    b.add_argument('--v5-color-plan',choices=('auto','runs','shared'),default='auto',help='V5-c2 colour transport: auto uses a host cost estimate; runs/shared force a lossless alternative')
+    b.add_argument('--renderer',choices=(*SHORT_ALIASES, 'hors-renderer-v4', 'hors-render-v4', 'hors-renderer-v3', 'hors-render-v3', 'hors-render-v2', 'hors-render-v2-scene', 'hors-render-v2-beta1', 'hors-render-v2-beta1-scene', 'hors-render-v1', 'hors-render-v1-scene', *RENDERERS, 'yunroll-cart-v2', 'yunroll-cart-v3', 'yunroll-cart-v4', 'yunroll-cart-v4-scene', 'yunroll-cart-v5', 'yunroll-cart-v5-scene', 'yunroll-cart-v6', 'yunroll-cart-v6-scene', 'yunroll-cart-v7', 'yunroll-cart-v8', 'yunroll-cart-v9', 'yunroll-cart-v10', 'yunroll-cart-v7-scene', 'yunroll-cart-v8-scene', 'yunroll-cart-v9-scene', 'yunroll-cart-v10-scene'),default=DEFAULT_RENDERER,help='default HORS-V4 EasyFlash CRT; opt-in hors-v5-c1 / hors-v5-c2 candidates; hors-v5 retains c1; V3 and earlier default to EasyFlash; explicit v2 remains available; v1 and v2-beta1 remain explicit historical choices; step/bytechunk/yunroll=PRG; yunroll-cart-v2 through v10=streamed EasyFlash CRT')
     b.add_argument('--prefer',choices=('fps','ram'),default='fps',help='V7/V8: prioritize FPS (default) or smaller Y drawing kernels; geometry and pacing stay the same')
+    selection=b.add_mutually_exclusive_group()
+    selection.add_argument('--renderer-selection',choices=('manual','best-fps'),default=settings.renderer_selection,help='manual (default) or measured fixed-picture full-history scene contest; requires --contest-out')
+    selection.add_argument('--renderer-contest',dest='renderer_selection',action='store_const',const='best-fps',help='alias for --renderer-selection best-fps')
+    b.add_argument('--contest-out',type=Path,help='new external directory for candidate CRTs, profiles and recommendation')
+    b.add_argument('--contest-workers',type=int,default=3,help='independent contest processes, 1..4 (default 3)')
+    b.add_argument('--contest-capture',action='store_true',help='capture each verified contest candidate')
+    b.add_argument('--contest-vice-data',type=Path,help='VICE system ROM directory for the contest')
     b.add_argument('--interactive-cart',action='store_true',help='standalone spins: cursor/joystick direction; V3 adds RUN/STOP (Esc in VICE) and Shift+H help, + / - / 0 speed, background controls and a disabled-by-default starfield; V2 retains historical controls')
     b.add_argument('--surface-fill', '--surface-fills', type=lambda value: 'metallic' if value in ('grey', 'gray') else value, choices=('none', 'metallic', 'material', 'textured', 'gradient'), default=None, nargs='?', const='material', help='HORS-V3 surfaces; SVG defaults to mapped source fills/strokes, other sources to wireframe')
     b.add_argument('--fill-style', choices=('wireframe','solid','gradient','textured','metallic'), help='solid source colours, source-colour lighting ramps, image paint, one metallic ramp, or wireframe')
@@ -1528,7 +1542,7 @@ def make_parser(settings):
     add_cart_type_flags(launch, settings=settings)
     _add_toolchain_args(launch,settings)
     launch.add_argument('crt',type=Path)
-    sub.add_parser('cart-stream',help='alias for build: HORS-V4 / GMod3 by default; same source flags')
+    sub.add_parser('cart-stream',help='alias for build: HORS-V4 / EasyFlash by default; same source flags')
     deps=sub.add_parser('dependencies',help='check Python requirements without running the external toolchain')
     deps.add_argument('--svg',dest='svg',action='store_true',default=True,help='check full requirements including native Cairo (default)')
     deps.add_argument('--core',dest='svg',action='store_false',help='check only core object/image requirements')
@@ -1595,6 +1609,13 @@ def _main(argv=None):
         except (OSError,ValueError) as exc:
             print(f'error: {exc}',file=sys.stderr)
             return 2
+    if a.command=='build' and getattr(a,'renderer_selection','manual')=='best-fps':
+        from .renderer_contest import run as run_contest
+        try:
+            return run_contest(a, settings)
+        except (OSError, ValueError, RuntimeError, subprocess.SubprocessError) as exc:
+            print(f'error: renderer contest: {exc}',file=sys.stderr)
+            return 2
     from .dependencies import check as check_dependencies
     if a.command=='dependencies':
         return 0 if check_dependencies(a.svg,verbose=True,stream=sys.stdout) else 2
@@ -1626,8 +1647,22 @@ def _main(argv=None):
     except (OSError,ValueError) as e:
         p.error(str(e))
     a.requested_renderer=getattr(a,'renderer',None)
+    if getattr(a,'v5_color_plan','auto')!='auto' and a.requested_renderer!='hors-renderer-v5-c2':
+        p.error('--v5-color-plan requires --renderer hors-v5-c2')
+    if a.requested_renderer in ('hors-renderer-v5','hors-renderer-v5-c2'):
+        if a.command!='build' or a.cart_type!='easyflash':
+            p.error('HORS-V5 currently supports build --cart-type easyflash; HORS-V4 retains GMod3')
+        if getattr(a, 'gmod3_size_mib', None) is not None or getattr(a, 'gmod3_first_bank', None) is not None:
+            p.error('--gmod3-* options require --cart-type gmod3')
+        from .hors_v5 import build as build_c1
+        from .hors_v5_c2 import build as build_c2
+        try:
+            return (build_c2 if a.requested_renderer=='hors-renderer-v5-c2' else build_c1)(a)
+        except (OSError, ValueError, subprocess.SubprocessError) as e:
+            print(f'error: HORS-V5 EasyFlash: {e}', file=sys.stderr)
+            return 2
     if a.requested_renderer in ('hors-renderer-v4','hors-render-v4'):
-        # V4 owns GMod3 assembly. Explicit EasyFlash uses the preserved V3 core.
+        # V4 selects independent GMod3 assembly or the preserved EasyFlash core.
         a.renderer='hors-renderer-v3'
     if getattr(a, 'cart_type', 'easyflash') == 'gmod3':
         from . import gmod3_cli

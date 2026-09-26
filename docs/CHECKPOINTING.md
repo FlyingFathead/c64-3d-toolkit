@@ -12,7 +12,13 @@ python tools/checkpoint.py --destination ../c64-checkpoints --baseline-zip ../ba
 python tools/checkpoint.py --destination ../c64-checkpoints --full --done "Verified source snapshot"
 ```
 
-Each invocation allocates the next `cpNNN` number and uses exclusive creation.
+Each invocation allocates the next `checkpoint-NNN` number and uses exclusive creation.
+For example: `c64-3d-toolkit-v0.8.2-dev2-checkpoint-002-incremental.zip`,
+with `c64-3d-toolkit-v0.8.2-dev2-checkpoint-002.json` inside `docs/checkpoints/`.
+Numbering considers archives in the destination and records already applied
+under `docs/checkpoints/`. Both `checkpoint-001` and historical `cp001` names
+are recognized; new output always spells out `checkpoint`. Existing archives
+and records are never renamed automatically.
 It cannot overwrite an existing archive. It writes a SHA-256 sidecar and embeds
 `docs/checkpoints/<checkpoint-name>.json` with completed/pending items, supplied
 validation results, baseline checksum and per-file checksums. The command
